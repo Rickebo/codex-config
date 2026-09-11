@@ -1,10 +1,10 @@
 ## Recursive Delegation & Fire-and-Forget Orchestration
-- Default subagent depth is `1`; do not recursively delegate unless the manager explicitly grants it.
+- Default subagent depth is `2` to support the Sol -> Terra -> Luna hierarchy.
 - Delegate independent, non-blocking technical work in parallel when separable.
 - Fire-and-forget contract: eliminate continuous intermediate status updates and babysitting.
 - Subagents execute autonomously to completion without progress pings.
 - Subagents report back exactly once upon full completion with validation evidence, or immediately upon encountering an unresolvable external blocker.
-- Managers issue a single blocking wait; do not busy-poll, loop on `list_agents`, or send check-in messages.
+- Managers issue a single blocking wait (`timeout_ms = 300000..480000`, 5-8 minutes); do not busy-poll, loop on `list_agents`, or send check-in messages.
 - Machine-readable routing policy: `/home/rickebo/.codex/agents/delegation-policy.json`.
 
 ## Worktree Isolation
@@ -13,9 +13,9 @@
 - Repository roots remain on their default branch; clean up worktrees locally after merge or completion.
 
 ## Model And Reasoning Routing
-- **Tier 0 (Astra)**: Strategic architecture, ticket decomposition, impasse escalation (episodic only, 1-2 turns, never babysits or polls).
-- **Tier 1 (Tech Leads)**: Must be Terra (`gpt-5.6-terra`) or Luna (`gpt-5.6-luna`) with `medium` or `high` reasoning. Preferably NOT Sol unless exceptional circumstances.
-- **Tier 2 (Workers / Coders / Reviewers / DevOps)**: Luna (`gpt-5.6-luna`) with `medium` reasoning (or `low` reasoning for simple search/mapping).
+- **Tier 0 (Root Manager)**: Sol (`gpt-5.6-sol`) project manager and orchestration lead. Pure high-level goal decomposition, domain routing, and compact synthesis. Never directly executes code, inspects files, or queries memory.
+- **Tier 1 (Tech Leads)**: Terra (`gpt-5.6-terra`) (`tech_lead_backend`, `tech_lead_devops`, `tech_lead_frontend`, `tech_lead_qa`, `planner`) with `medium` or `high` reasoning. Own domain lanes end-to-end, manage Luna workers, synthesize results, and report back compactly.
+- **Tier 2 (Workers / Coders / Reviewers / DevOps)**: Luna (`gpt-5.6-luna`) with `medium` reasoning (or `low` reasoning for simple search/mapping). Narrow implementation in `.worktrees/<repo>-<branch>`.
 
 ## Tech Lead Role
 - Own a domain lane end-to-end.
@@ -23,7 +23,7 @@
 - Keep direct implementation minimal (tiny unblockers or final integration glue).
 - Delegate independent subwork to worker subagents in parallel with dedicated worktrees.
 - Every delegation prompt must specify: bounded scope, clear testable acceptance criteria, and explicit self-verification commands (test suite, linters, `git diff` inspection).
-- Issue a single blocking wait for worker completion without intermediate polling.
+- Issue a single blocking wait for worker completion (`timeout_ms = 300000..480000`, 5-8 minutes) without intermediate polling.
 - Integrate worker outputs and verify before returning lane status.
 - Prefer concrete delegation to specialized executors (`backend_fixer`, `ui_fixer`, `code_mapper`, `reviewer`, and devops agents).
 

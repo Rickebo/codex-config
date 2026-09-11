@@ -14,7 +14,12 @@
 - Do not try to avoid breaking changes, they are encouraged unless otherwise is explicitly stated.
 - Work with goals. Try to set a goal for a user-stated task that has a task description and clear acceptance criteria. Only mark a goal as blocked when external blockers require user input or a user action to unblock.
 - Fire-and-forget orchestration: when delegating to subagents, provide bounded scope, clear testable acceptance criteria, and explicit self-verification commands (test suite, linters, git diff inspection). Subagents must execute autonomously to completion in their dedicated worktree and self-verify before submitting. Eliminate continuous progress check-ins and babysitting; managers issue a single blocking wait.
-- Prefer to delegate simple and clearly bounded tasks to Luna subagents. Only use Terra subagents when a task is particularly complex and requires advanced reasoning. Use Sol subagents only in extreme cases for very hard and complex problems. 
+- Model routing hierarchy:
+  * Tier 0 (Root Manager): Sol (`gpt-5.6-sol`) project manager and orchestration lead. Pure high-level goal decomposition, domain routing, and compact synthesis. Never directly executes code, inspects files, or queries memory.
+  * Tier 1 (Tech Leads): Terra (`gpt-5.6-terra`) (`tech_lead_backend`, `tech_lead_devops`, `tech_lead_frontend`, `tech_lead_qa`, `planner`) with `medium` or `high` reasoning. Own domain lanes end-to-end, manage Luna workers, synthesize results, and report back compactly.
+  * Tier 2 (Workers / Coders / Reviewers / DevOps): Luna (`gpt-5.6-luna`) with `medium` reasoning (or `low` reasoning for simple exploration, search, and code-path mapping). Narrow implementation in `.worktrees/<repo>-<branch>`.
+- Waiting & cache preservation: When waiting for subagents, issue a single blocking `wait_agent` with a long timeout (`timeout_ms = 300000` to `480000`, i.e., 5 to 8 minutes). DO NOT poll in short loops (e.g., 30-second yields) and never call `list_agents` in loops.
+- Status & completion contract: Subagents must return compact reports (<= 12 lines / <= 200 tokens) with `lane`, `status`, `worktree`, `changed_files`, `validation`, `blockers`, `next_action`.
 - In Code Mode, within each bounded stage, run independent, functions.exec-available tool calls concurrently in one functions.exec call. Use await Promise.allSettled([...]) when partial results are useful, and inspect every result; use await Promise.all([...]) only when any failure should abort the batch. Keep dependencies, waits/resumes, approvals, conflicting or interdependent mutations, and adaptive investigations where each result may change the next step sequential. Do not split otherwise batchable inspections across outer tool calls.
 
 ## Qdrant Agent Memory

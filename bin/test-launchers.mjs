@@ -20,7 +20,12 @@ fs.writeFileSync(
 );
 fs.chmodSync(stub, 0o755);
 
-const env = { ...process.env, PATH: `${tmp}:${process.env.PATH || ""}` };
+const env = {
+  ...process.env,
+  PATH: `${tmp}:${process.env.PATH || ""}`,
+  CODEX_STABILITY_CLI: stub,
+  CODEX_STABILITY_UNWRAPPED: "1",
+};
 
 function run(script, args) {
   const result = spawnSync(path.join(root, "bin", script), args, {
@@ -89,5 +94,18 @@ const pipelineLite = run("codex-pipeline-lite", ["run compact pipeline"]);
 assert(includesPair(pipelineLite, "-p", "manager"), "codex-pipeline-lite must use manager profile");
 assert(includesPair(pipelineLite, "-c", "agents.max_depth=1"), "codex-pipeline-lite must force depth 1");
 assert(finalPrompt(pipelineLite).includes("pipeline-controller.mjs init --profile lite"), "pipeline-lite seed must mention lite profile");
+
+const managerHelp = run("codex-manager", ["--help"]);
+assert(
+  JSON.stringify(managerHelp) === JSON.stringify(["--help"]),
+  "codex-manager --help must forward unchanged",
+);
+
+const manager = run("codex-manager", ["-C", "/tmp", "orchestrate task"]);
+assert(includesPair(manager, "-p", "manager"), "codex-manager must use manager profile");
+assert(includesPair(manager, "-s", "read-only"), "codex-manager must default read-only");
+assert(includesPair(manager, "-c", "agents.max_depth=2"), "codex-manager must force depth 2");
+assert(includesPair(manager, "-c", "agents.max_threads=4"), "codex-manager must force threads 4");
+assert(finalPrompt(manager).includes("Operating mode: manager-manager"), "manager-manager seed missing");
 
 process.stdout.write("launcher-contracts-ok\n");

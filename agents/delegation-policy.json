@@ -1,84 +1,84 @@
 {
   "version": 1,
-  "default_max_depth": 1,
+  "default_max_depth": 2,
   "default_max_threads": 6,
   "rules": [
     {
       "task_shape": "tiny_low_risk_patch",
       "triggers": ["literal edit", "one-file tweak", "mechanical simple code change", "clear acceptance criteria"],
-      "plan": ["root_direct", "backend_fixer", "ui_fixer"],
-      "max_agents": 1,
-      "notes": "Use only when the parent can provide exact files, desired behavior, and fast validation. If discovery is needed, use code_mapper or a normal fixer first."
+      "plan": ["tech_lead_backend", "tech_lead_frontend", "tech_lead_devops"],
+      "max_agents": 2,
+      "notes": "Root Sol delegates to the relevant Terra Tech Lead, who delegates to a Luna worker in a dedicated worktree."
     },
     {
       "task_shape": "trivial_read_only_lookup",
       "triggers": ["find where X lives", "identify owner file", "quick config lookup"],
-      "plan": ["root_direct", "code_mapper"],
-      "max_agents": 1,
-      "notes": "Prefer root direct when the lookup is immediate; use code_mapper for unfamiliar code paths."
+      "plan": ["tech_lead_backend", "tech_lead_frontend", "tech_lead_devops"],
+      "max_agents": 2,
+      "notes": "Root Sol never inspects files directly; delegate discovery via Tech Lead who spawns code_mapper."
     },
     {
       "task_shape": "single_file_or_single_module_bug",
       "triggers": ["narrow bug", "known owner file", "small config fix"],
-      "plan": ["root_direct", "backend_fixer", "ui_fixer"],
-      "max_agents": 1,
-      "notes": "Use the unified fixer only when the cause and edit are already clear; otherwise perform discovery first."
+      "plan": ["tech_lead_backend", "tech_lead_frontend", "tech_lead_devops"],
+      "max_agents": 2,
+      "notes": "Root Sol delegates to Terra Tech Lead, who scopes and delegates to Luna fixer."
     },
     {
       "task_shape": "single_domain_feature",
       "triggers": ["backend only", "frontend only", "CLI only", "small feature"],
-      "plan": ["one_worker", "optional_reviewer"],
-      "max_agents": 2,
-      "notes": "Skip tech leads unless integration or ownership risk is material."
+      "plan": ["tech_lead_backend", "tech_lead_frontend", "tech_lead_devops"],
+      "max_agents": 3,
+      "notes": "Root Sol delegates domain lane to Terra Tech Lead; Tech Lead coordinates Luna workers and self-verifies."
     },
     {
       "task_shape": "frontend_backend_feature",
       "triggers": ["frontend plus backend", "API plus UI", "shared contract change"],
-      "plan": ["tech_lead_frontend", "tech_lead_backend", "reviewer"],
+      "plan": ["tech_lead_frontend", "tech_lead_backend", "tech_lead_qa"],
       "max_agents": 4,
-      "notes": "Use direct workers instead of leads when the contract is already obvious and write scopes are disjoint."
+      "notes": "Root Sol delegates parallel domain lanes to Terra Tech Leads; Tech Leads manage isolated worktrees."
     },
     {
       "task_shape": "ui_visual_unknown",
       "triggers": ["visual bug", "responsive issue", "unknown browser behavior"],
-      "plan": ["ui_fixer"],
+      "plan": ["tech_lead_frontend"],
       "max_agents": 2,
-      "notes": "Gather browser evidence first; do not spend implementation tokens until reproduction is clear."
+      "notes": "Root Sol delegates to tech_lead_frontend; lead uses ui_fixer to gather Playwright evidence and implement fix."
     },
     {
       "task_shape": "runtime_browser_bug",
       "triggers": ["console error", "network failure", "browser runtime defect"],
-      "plan": ["ui_fixer", "backend_fixer"],
+      "plan": ["tech_lead_frontend", "tech_lead_backend"],
       "max_agents": 3,
-      "notes": "Route to the owner after evidence identifies frontend or backend cause."
+      "notes": "Root Sol delegates to frontend or backend Tech Lead based on initial symptom."
     },
     {
       "task_shape": "ci_failure",
       "triggers": ["GitHub Actions failure", "workflow failure", "test logs"],
-      "plan": ["github_operator", "backend_fixer", "ui_fixer"],
-      "max_agents": 2,
-      "notes": "Fetch only the failing job/log slice before assigning a fixer."
+      "plan": ["tech_lead_devops", "tech_lead_backend", "tech_lead_frontend"],
+      "max_agents": 3,
+      "notes": "Root Sol delegates to devops or backend Tech Lead; lead investigates failure and delegates fix."
     },
     {
       "task_shape": "infra_gitops",
       "triggers": ["Argo", "Kubernetes", "Terraform", "GitOps", "deployment"],
-      "plan": ["tech_lead_devops", "environment_devops_agent"],
+      "plan": ["tech_lead_devops"],
       "max_agents": 3,
-      "notes": "Use the environment-specific devops agent directly when the affected environment is singular and known."
+      "notes": "Root Sol delegates to tech_lead_devops; lead coordinates environment devops agents or Luna workers."
     },
     {
       "task_shape": "security_ci_release_high_risk",
       "triggers": ["security", ".github/workflows", "release", "migration", "data loss risk"],
-      "plan": ["codex-pipeline", "planner", "reviewer", "tech_lead_qa"],
-      "max_agents": 8,
-      "notes": "Use pipeline or deep review; do not optimize away stage gates for high-risk paths."
+      "plan": ["planner", "tech_lead_devops", "tech_lead_qa"],
+      "max_agents": 6,
+      "notes": "Root Sol engages planner and relevant leads; do not bypass validation gates."
     },
     {
       "task_shape": "repeated_failure",
       "triggers": ["same validation failed twice", "unclear after one focused loop"],
-      "plan": ["escalate_reasoning", "planner", "reviewer"],
+      "plan": ["planner", "tech_lead_qa"],
       "max_agents": 3,
-      "notes": "Escalate model or reasoning before increasing fan-out blindly."
+      "notes": "Escalate analysis to planner or QA lead to diagnose root cause before re-delegating."
     }
   ]
 }

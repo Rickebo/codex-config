@@ -97,10 +97,10 @@ That launcher reads the bearer token from `HOMELAB_OBSERVABILITY_TOKEN` or `/hom
 
 ## Model Routing Policy
 
-- Root manager should route by complexity and task type, not by one fixed default.
-- Implementation work should use `gpt-5.6-luna` with `medium` reasoning effort.
-- Complex work, review, and research should use `gpt-5.6-luna` with `high` reasoning effort.
-- Simple or tiny work, lightweight exploration, and codebase mapping should use `gpt-5.6-luna` with `low` reasoning effort.
+Hierarchical routing is strictly enforced across three tiers:
+- **Tier 0 (Root Manager)**: `gpt-5.6-sol` project manager. Pure orchestration, goal decomposition, workstream routing, and compact synthesis. Never directly executes code, inspects files, or queries memory.
+- **Tier 1 (Tech Leads)**: `gpt-5.6-terra` (`tech_lead_backend`, `tech_lead_devops`, `tech_lead_frontend`, `tech_lead_qa`, `planner`) with `medium` or `high` reasoning. Own domain lanes end-to-end, manage Luna workers, synthesize results, and report back compactly.
+- **Tier 2 (Workers / Coders / Reviewers / DevOps)**: `gpt-5.6-luna` (`backend_fixer`, `ui_fixer`, `code_mapper`, `homelab_devops`, `codicarium_devops`, `reviewer`) with `medium` reasoning (or `low` reasoning for simple search and code-path mapping). Narrow implementation in `.worktrees/<repo>-<branch>`.
 
 ## Delegation Policy
 
@@ -110,10 +110,11 @@ Machine-readable routing lives in:
 
 Defaults:
 
-- root direct or one worker for single-domain work
-- `backend_fixer` and `ui_fixer` for bounded implementation patches after the relevant diagnosis is complete
-- tech leads only for multi-domain ownership or integration risk
-- recursive lead-to-worker delegation only through explicit manager authorization
+- Root Sol delegates all tasks exclusively to Terra Tech Leads (`tech_lead_*` or `planner`)
+- Terra Tech Leads delegate implementation to Luna workers in dedicated git worktrees
+- No direct code writing or command execution in the root manager session
+- Blocking wait with 5–8 minute timeout (`timeout_ms = 300000..480000`) to preserve cache warmth and prevent polling loops
+- Strict compact completion contract (<= 12 lines / <= 200 tokens)
 
 ## Next Wiring Steps
 
@@ -254,8 +255,8 @@ Override only when needed with an explicit sandbox flag, for example `-s workspa
 Local agent capacity is configured in `/home/rickebo/.codex/config.toml` with:
 
 - `features.multi_agent = true`
-- `agents.max_threads = 6`
-- `agents.max_depth = 1`
+- `agents.max_threads = 4`
+- `agents.max_depth = 2`
 
 ## Skill Fast Paths
 

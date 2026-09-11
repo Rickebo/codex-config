@@ -1,0 +1,45 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Clean HEAD 407110f closes every loop-3 blocker: authenticated Source workload proofs, typed deletion/429 outcomes, complete negative matrices, aligned contracts/docs, deletion-ingestion serialization, and retryable bounded system cleanup/diagnostics. Independent preflight reviews found no remaining blocker, and the real Source-to-Knowledge flow passes with no leaked resources.",
+  "changed_files": [
+    "contracts/model-service/v1/openapi.yaml",
+    "contracts/source-service/v1/openapi.yaml",
+    "services/knowledge-service/README.md",
+    "services/knowledge-service/CONTRACT_GAPS.md",
+    "services/knowledge-service/src/KnowledgeService.Infrastructure/**",
+    "services/knowledge-service/src/KnowledgeService.Worker/**",
+    "services/model-service/README.md",
+    "services/model-service/src/**",
+    "services/source-service/README.md",
+    "services/source-service/src/**",
+    "tests/knowledge-service/KnowledgeService.IntegrationTests/**",
+    "tests/model-service/ModelService.IntegrationTests/**",
+    "tests/source-service/SourceService.Integration.Tests/**",
+    "tests/system/WorkspaceManager.SystemTests/Infrastructure/KnowledgeGenerationSystemFixture.cs",
+    "tests/system/WorkspaceManager.SystemTests/Infrastructure/LocalDotNetProcess.cs",
+    "tests/system/WorkspaceManager.SystemTests/KnowledgeGenerationSystemFixtureTests.cs",
+    "tests/system/WorkspaceManager.SystemTests/LocalDotNetProcessTests.cs",
+    "tests/system/WorkspaceManager.SystemTests/Program.cs"
+  ],
+  "validation": [
+    "Knowledge focused Release integration tests passed: 28/28; independent repeat selected 17/17 including deletion-ingestion fencing",
+    "Source API proof matrix 1/1 and Source contract tests 3/3 passed; Model API proof matrix 1/1 passed",
+    "Knowledge, Source, and Model builds passed; scripts/validate-specs.py and git diff --check passed",
+    "System Release build passed with 0 warnings/errors; focused process and HTTP fixture tests passed 10/10",
+    "LocalDotNetProcess lifecycle suite passed 7/7 in each of three sequential repeats",
+    "Explicit Docker FastSystem Source-to-Knowledge flow passed 1/1 in 30 seconds on HEAD ec20f41 plus system work",
+    "Post-run audit found no scoped containers, networks, volumes, processes, PID files, or temporary run directories",
+    "Independent backend and complete system-lane reviews report no blocking or nonblocking findings",
+    "Canonical branch HEAD is 407110fa9f6e18c05458dfdf8b166b9e5f22fd23 and the worktree is clean"
+  ],
+  "blockers": [],
+  "next_action": "Advance to a fresh full-branch backend and QA/system review at clean HEAD 407110f; do not waive any new finding.",
+  "route_to": "review",
+  "risk_level": "high",
+  "independent_lanes": [
+    "backend authentication, lifecycle, contracts, and negative coverage",
+    "system process cleanup, bounded HTTP diagnostics, and real-flow proof"
+  ],
+  "requires_council": false
+}

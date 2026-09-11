@@ -1,0 +1,61 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Review loop 1 remediation is integrated at df298af. All five backend and five system findings received targeted fixes/tests: active-head reconciliation, infrastructure retry/DLQ, replay identity reuse, event validation, OpenAPI auth response, real Model worker/provider fixture, Kafka high-watermark replay proof, diagnostic redaction, bounded cleanup, and owned ports.",
+  "changed_files": [
+    "contracts/model-service/v1/openapi.yaml",
+    "services/knowledge-service/src/KnowledgeService.Infrastructure/KnowledgeEventRetryPolicy.cs",
+    "services/knowledge-service/src/KnowledgeService.Infrastructure/NpgsqlKnowledgeRepository.cs",
+    "tests/knowledge-service/KnowledgeService.IntegrationTests/KafkaIntegrationTests.cs",
+    "tests/knowledge-service/KnowledgeService.IntegrationTests/KnowledgeGenerationResolverTests.cs",
+    "tests/knowledge-service/KnowledgeService.IntegrationTests/PostgresLifecycleTests.cs",
+    "tests/knowledge-service/KnowledgeService.IntegrationTests/ReconciliationTests.cs",
+    "tests/system/WorkspaceManager.SystemTests/Infrastructure/KafkaTopicBoundary.cs",
+    "tests/system/WorkspaceManager.SystemTests/Infrastructure/KnowledgeGenerationSystemFixture.cs",
+    "tests/system/WorkspaceManager.SystemTests/Infrastructure/LocalDotNetProcess.cs",
+    "tests/system/WorkspaceManager.SystemTests/Infrastructure/LoopbackHttpFixtures.cs",
+    "tests/system/WorkspaceManager.SystemTests/Infrastructure/OwnedResource.cs",
+    "tests/system/WorkspaceManager.SystemTests/KafkaTopicBoundaryTests.cs",
+    "tests/system/WorkspaceManager.SystemTests/KnowledgeGenerationFlowTests.cs",
+    "tests/system/WorkspaceManager.SystemTests/LocalDotNetProcessTests.cs",
+    "tests/system/WorkspaceManager.SystemTests/LoopbackHttpFixtureTests.cs",
+    "tests/system/WorkspaceManager.SystemTests/OwnedResourceTests.cs",
+    "tests/system/WorkspaceManager.SystemTests/WorkspaceManager.SystemTests.csproj"
+  ],
+  "validation": [
+    "Backend focused Knowledge tests: 35/35 passed",
+    "Model KnowledgeGeneration tests: 2/2 passed",
+    "Knowledge and Model Release builds: 0 warnings/errors",
+    "validate-specs and backend diff checks passed",
+    "System focused remediation tests: 10/10 passed",
+    "System Release build: 0 warnings/errors",
+    "System child branch real flow: 3/3 sequential passes in 24.2s, 23.6s, 25.1s",
+    "Canonical integrated real flow: 1/1 passed in 41.12s",
+    "Format, diff, source-tree equivalence, index/worktree checks passed",
+    "Every system run left zero scoped containers, networks, temp roots, or service child processes"
+  ],
+  "blockers": [],
+  "next_action": "Repeat independent backend and system review specifically against the ten prior findings and corrected HEAD df298af.",
+  "route_to": "review",
+  "risk_level": "high",
+  "independent_lanes": [
+    "Backend review-finding remediation commit 963ffc3",
+    "System review-finding remediation commit df298af"
+  ],
+  "issues": [
+    {
+      "id": "TESTHOST-SIGSEGV",
+      "title": "Aggregate Model integration test host crash remains unclassified",
+      "severity": "high",
+      "details": "Focused Model tests pass; clean-main versus corrected-candidate classification remains mandatory in formal test stage.",
+      "owner_stage": "test"
+    },
+    {
+      "id": "PROVIDER-CALL-SCOPE",
+      "title": "Queued-build flow does not invoke configured upstream provider",
+      "severity": "low",
+      "details": "The #28 flow ends at durable queued build; dedicated focused tests prove the OpenAI-compatible fixture while the real Model worker is live. Review must confirm this matches issue #28 rather than later publication/provider scenarios.",
+      "owner_stage": "review"
+    }
+  ]
+}

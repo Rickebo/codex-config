@@ -1,0 +1,26 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Luna completed PR #156 documentation and trusted-main bootstrap at exact head 229df7bd30f6410b4b057565f398281762ecf134: shared release-mutation group documentation plus CODEOWNERS and static coverage for release-control paths.",
+  "changed_files": [
+    "docs/releasing.md",
+    ".github/CODEOWNERS",
+    "hack/test-repository-policy.py",
+    "Makefile",
+    "hack/validate-repository.sh"
+  ],
+  "validation": [
+    "Full make test-release-flow passed",
+    "Repository validation and new two-test CODEOWNERS policy suite passed",
+    "Actionlint passed for automatic-release.yaml and publish-release.yaml",
+    "git diff --check passed and worktree is clean",
+    "Current live human writer inventory is platform administrator only for deployment-controller",
+    "Broad automation App remains tracked by infra #1187; CODEOWNERS plus live ruleset enforcement is the immediate repository containment"
+  ],
+  "blockers": [
+    "Independent Luna exact-head review and fresh protected CI required",
+    "Before merge, main ruleset must require code-owner review without weakening existing checks or bypass controls; last-push approval follows bootstrap merge"
+  ],
+  "next_action": "Push exact head, update PR #156 to reference #157, obtain independent Luna review and fresh protected CI, then apply and verify the staged ruleset tightening before exact-head merge.",
+  "risk_level": "critical"
+}

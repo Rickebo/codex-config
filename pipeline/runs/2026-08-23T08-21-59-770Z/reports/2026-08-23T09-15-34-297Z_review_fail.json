@@ -1,0 +1,27 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Review rejected commit 8565c45: the intended empty-default change is correct, but the source-wide regex guard is decoy-bypassable and is not guaranteed to run for these PR paths; rendered/semantic evidence is also absent.",
+  "changed_files": [],
+  "validation": [
+    "Independent security review reproduced source-scoping and rendered-output gaps.",
+    "Independent QA mutation test bypassed the guard with malformed real keys plus a valid-looking decoy block.",
+    "Root review confirmed check-mgmt-topology.sh is only conditionally reached in current PR validation paths."
+  ],
+  "blockers": [
+    "Guard must parse the actual Terraform RBAC map and execute/inspect the actual bootstrap renderer output.",
+    "Decoy and malformed-renderer regression tests are required.",
+    "Focused RBAC contract must run in PR validation for all changed Phase 0 paths.",
+    "Version-matched Argo v3.4.4 policy validation/evaluation is required before release."
+  ],
+  "next_action": "Return to code: replace source-wide regexes with a scoped/rendered contract, add bypass regression tests, and wire it into PR validation; keep version-matched Argo evaluation as the test-stage gate.",
+  "requires_council": false,
+  "independent_lanes": ["security compact review", "QA mutation review", "root critical review"],
+  "route_to": "code",
+  "risk_level": "critical",
+  "issues": [
+    {"id":"review-parser-bypass","title":"RBAC guard accepts decoy source text","severity":"high","details":"Malformed effective keys can pass if a valid-looking decoy is appended.","owner_stage":"code"},
+    {"id":"review-pr-coverage","title":"RBAC guard not guaranteed in PR validation","severity":"high","details":"Current parity trigger excludes prod RBAC and bootstrap paths.","owner_stage":"code"},
+    {"id":"review-semantic-test","title":"No version-matched Argo RBAC evaluation","severity":"high","details":"Static empty-default presence does not prove v3.4.4 authorization semantics.","owner_stage":"test"}
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "verified_tags": [
+    {
+      "tag": "v0.7.1",
+      "verified": true,
+      "source": "frozen-read-only-tag-snapshot",
+      "commit": "2724b4f1663e705871656c1f0626cdd0773f130aad5b2b13e54c5348a29a9f5e"
+    },
+    {
+      "tag": "v0.7.5",
+      "verified": true,
+      "source": "frozen-read-only-tag-snapshot",
+      "commit": "0a73d951a4f9a178b79ff36a6fd89ee27532c60c2ccb1cd2d0217a20d6f6483d"
+    },
+    {
+      "tag": "v0.8.0",
+      "verified": true,
+      "source": "frozen-read-only-tag-snapshot",
+      "commit": "cf7e01d12b432dc13b6ec03bbd566fb70f92d1a604902f5bb27ca2228415b13b"
+    }
+  ],
+  "frozen_next_semver": "v0.8.1",
+  "freeze_node": "X39",
+  "refresh_required_before_mutation": true
+}

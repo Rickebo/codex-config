@@ -1,0 +1,15 @@
+{
+  "risk": "critical",
+  "decision": "IMPLEMENTATION_ALLOWED_DEPLOYMENT_BLOCKED",
+  "perspectives": {
+    "security": "Empty policy.default is valid; update Terraform and bootstrap together and prove admin plus Kubernetes recovery before rollout.",
+    "quality": "Contract tests must cover parity, negative fallback, admin mappings, group scopes, version-matched evaluation, exact plan, and live identity behavior.",
+    "operations": "codicarium-dev is reachable and currently role:readonly; live RBAC ownership is drifted/unmanaged, direct Authentik sessions are unverified, and no ordinary-user test session exists."
+  },
+  "hard_merge_blockers": [
+    "No verified real ordinary Authentik user session for negative Argo tests.",
+    "No directly verified real SSO administrator session/group claim.",
+    "Live argocd-rbac-cm ownership does not map cleanly to the expected Argo application.",
+    "Production endpoints are unreachable and their retirement/topology status is not conclusively proven."
+  ]
+}

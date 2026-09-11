@@ -1,0 +1,30 @@
+{
+  "stage": "spec",
+  "status": "pass",
+  "summary": "Three-perspective council rejected both existing PRs and approved a traceable design for one clean consolidation PR. The spec binds one exact authority contract/package, fail-closed transactional publication, bounded privileged input, no identity fallback, descriptor-safe verification, cross-job cleanup capability, exact sudo, protected evidence, and non-mutation rollout gates.",
+  "changed_files": [
+    "/home/rickebo/.codex/pipeline/runs/2026-08-30T10-43-46-979Z/council.json",
+    "/home/rickebo/.codex/pipeline/runs/2026-08-30T10-43-46-979Z/feature-spec.json",
+    "/home/rickebo/.codex/pipeline/runs/2026-08-30T10-43-46-979Z/spec-check.json"
+  ],
+  "validation": [
+    "Three independent council perspectives completed: architecture, security review, and QA validation.",
+    "pipeline-spec-check --strict: PASS; 12 requirements, 8 acceptance criteria, 8 tests, 12 trace rows.",
+    "All feature-spec quality gates are true with zero errors and zero warnings.",
+    "Live GitHub evidence reconfirmed PR heads, group 6 runner 6252 online/reconciliation-only, and group 7 with zero runners.",
+    "Local source confirmed PR 1293 four-file argv contract conflicts with PR 1294 eight-file stdin package."
+  ],
+  "blockers": [],
+  "next_action": "Advance to code after recorded approval; assign one Luna implementation owner to a new clean infra worktree branch from exact current main.",
+  "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T10-43-46-979Z/feature-spec.json",
+  "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T10-43-46-979Z/spec-check.json",
+  "council_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T10-43-46-979Z/council.json",
+  "requires_council": true,
+  "independent_lanes": [
+    "architecture and authority ownership",
+    "security and privilege boundary",
+    "QA, fault injection, and protected validation"
+  ],
+  "route_to": "code",
+  "risk_level": "critical"
+}

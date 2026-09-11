@@ -1,0 +1,70 @@
+{
+  "stage": "code",
+  "status": "blocked",
+  "summary": "Existing target-only commits and available static checks are reconciled and passing, but CODE acceptance is incomplete because application value wiring, LLM Proxy storage safety, and executable consistency-evidence wiring remain unresolved.",
+  "changed_files": [
+    "apps/llm-proxy.yaml",
+    "apps/workspace-context.yaml",
+    "docs/workspace-context-llm-proxy.md",
+    "llm-proxy/charts/llm-proxy-0.3.19-r.1.homelab.1.tgz",
+    "llm-proxy/templates/database-backup.yaml",
+    "llm-proxy/templates/oidc-secret-replication.yaml",
+    "llm-proxy/templates/target-gates.yaml",
+    "llm-proxy/values.yaml",
+    "llm-proxy/vendor/llm-proxy/templates/deployment-api.yaml",
+    "llm-proxy/vendor/llm-proxy/templates/deployment-web.yaml",
+    "tests/test_workspace_context_llm_proxy_gitops.py",
+    "workspace-context/Chart.yaml",
+    "workspace-context/templates/_helpers.tpl",
+    "workspace-context/templates/alerts.yaml",
+    "workspace-context/templates/gated.yaml",
+    "workspace-context/templates/networkpolicy.yaml",
+    "workspace-context/templates/storage.yaml",
+    "workspace-context/templates/workload.yaml",
+    "workspace-context/tests/static.sh",
+    "workspace-context/values.yaml"
+  ],
+  "validation": [
+    "Helm lint and helm template passed for workspace-context and llm-proxy.",
+    "workspace-context/tests/static.sh and bash -n passed.",
+    "Repository unittest passed: 5 tests; Python compilation passed.",
+    "Application YAML parsing passed; explicit target and no-automated-sync checks passed.",
+    "Default llm-proxy render has no Deployment, Job, or Longhorn reference.",
+    "git diff --check passed; protected worker/bridge files and graphify-out are absent from implementation commits.",
+    "Current-run pipeline CI passed with no warnings or errors.",
+    "kubeconform, kubeval, and conftest are unavailable; no cluster or Argo validation was run."
+  ],
+  "blockers": [
+    "apps/workspace-context.yaml uses className/accessMode/nas keys instead of the chart's storageClassName/accessModes/storage.graphArtifacts.nfs keys, so effective NAS wiring is not explicit.",
+    "apps/llm-proxy.yaml has stale source-secret fields and does not align with the chart's targetGates and nested llm-proxy values, so application-level safety and identity overrides are not trustworthy.",
+    "LLM Proxy has no 70% warning/85% critical PrometheusRule for its local-path PostgreSQL claim.",
+    "LLM Proxy backup scratch remains local-path instead of approved temporary/NFS scratch, and its worker static guard is absent from the commit.",
+    "Workspace Context evidence tooling references scratch/artifact paths but the gated job does not mount the configured PVCs, so the consistency bundle is not executable when enabled."
+  ],
+  "next_action": "Keep the run at CODE. A future bounded CODE pass must resolve the listed wiring, storage-alert/scratch, and evidence-volume blockers before review; do not sync or deploy.",
+  "route_to": "code",
+  "risk_level": "high",
+  "issues": [
+    {
+      "id": "CODE-APP-VALUE-WIRING",
+      "title": "Align target Argo value blocks with chart schemas",
+      "severity": "high",
+      "details": "Current committed app overrides do not target all values consumed by the two charts and include stale source-secret references.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "CODE-LLM-STORAGE-ALERTS",
+      "title": "Add LLM Proxy storage alerts and approved scratch",
+      "severity": "high",
+      "details": "The LLM Proxy database lacks the required 70/85 capacity rules and backup scratch is not the approved temporary/NFS layout.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "CODE-CONSISTENCY-BUNDLE-WIRING",
+      "title": "Wire graph and logical dump evidence volumes",
+      "severity": "high",
+      "details": "The gated Workspace Context evidence job needs explicit configured PVC mounts before it can produce the coupled checksum and manifest bundle.",
+      "owner_stage": "code"
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "schema": "codicarium.release-identity-negative-vectors/v1",
+  "positive_fixture_count": 2,
+  "negative_fixture_count": 6,
+  "vectors": [
+    {
+      "name": "handoff-duplicate-key",
+      "identity": "handoff",
+      "failure": "DUPLICATE_KEY",
+      "raw": "{\"authorization_sha256\":\"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\",\"authorizer_run_attempt\":\"1\",\"authorizer_run_id\":\"9004001\",\"candidate_evidence_sha256\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"ci_run_attempt\":\"1\",\"ci_run_id\":\"9001001\",\"coordinator_check_run_id\":\"9002003\",\"coordinator_run_attempt\":\"1\",\"coordinator_run_id\":\"9002001\",\"kind\":\"publish-handoff\",\"publisher_revision\":\"2222222222222222222222222222222222222222\",\"repository\":\"codicarium/deployment-controller\",\"schema\":\"codicarium.release-identity/v1\",\"source_revision\":\"1111111111111111111111111111111111111111\",\"tag\":\"v0.6.14\",\"verifier_run_attempt\":\"1\",\"verifier_run_id\":\"9003001\",\"tag\":\"v0.6.14\"}"
+    },
+    {
+      "name": "handoff-unknown-key",
+      "identity": "handoff",
+      "failure": "UNKNOWN_KEY",
+      "raw": "{\"authorization_sha256\":\"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\",\"authorizer_run_attempt\":\"1\",\"authorizer_run_id\":\"9004001\",\"candidate_evidence_sha256\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"ci_run_attempt\":\"1\",\"ci_run_id\":\"9001001\",\"coordinator_check_run_id\":\"9002003\",\"coordinator_run_attempt\":\"1\",\"coordinator_run_id\":\"9002001\",\"kind\":\"publish-handoff\",\"publisher_revision\":\"2222222222222222222222222222222222222222\",\"repository\":\"codicarium/deployment-controller\",\"schema\":\"codicarium.release-identity/v1\",\"source_revision\":\"1111111111111111111111111111111111111111\",\"tag\":\"v0.6.14\",\"verifier_run_attempt\":\"1\",\"verifier_run_id\":\"9003001\",\"unknown\":true}"
+    },
+    {
+      "name": "handoff-mutated-byte",
+      "identity": "handoff",
+      "failure": "DIGEST_MISMATCH",
+      "raw": "{\"authorization_sha256\":\"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\",\"authorizer_run_attempt\":\"1\",\"authorizer_run_id\":\"9004001\",\"candidate_evidence_sha256\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"ci_run_attempt\":\"1\",\"ci_run_id\":\"9001001\",\"coordinator_check_run_id\":\"9002003\",\"coordinator_run_attempt\":\"1\",\"coordinator_run_id\":\"9002001\",\"kind\":\"publish-handoff\",\"publisher_revision\":\"2222222222222222222222222222222222222222\",\"repository\":\"codicarium/deployment-controller\",\"schema\":\"codicarium.release-identity/v1\",\"source_revision\":\"1111111111111111111111111111111111111111\",\"tag\":\"v0.6.14\",\"verifier_run_attempt\":\"1\",\"verifier_run_id\":\"9003002\"}"
+    },
+    {
+      "name": "dispatch-duplicate-key",
+      "identity": "dispatch",
+      "failure": "DUPLICATE_KEY",
+      "raw": "{\"authorizer_run_attempt\":\"1\",\"authorizer_run_id\":\"9004001\",\"handoff_check_run_id\":\"9004003\",\"handoff_sha256\":\"8abe528bb32aaa47f8fc496c3571d4b91248f3ebfe4c8be29463a25277bd9e88\",\"kind\":\"publisher-dispatch\",\"publisher_revision\":\"2222222222222222222222222222222222222222\",\"repository\":\"codicarium/deployment-controller\",\"schema\":\"codicarium.release-identity/v1\",\"source_revision\":\"1111111111111111111111111111111111111111\",\"tag\":\"v0.6.14\",\"tag\":\"v0.6.14\"}"
+    },
+    {
+      "name": "dispatch-unknown-key",
+      "identity": "dispatch",
+      "failure": "UNKNOWN_KEY",
+      "raw": "{\"authorizer_run_attempt\":\"1\",\"authorizer_run_id\":\"9004001\",\"handoff_check_run_id\":\"9004003\",\"handoff_sha256\":\"8abe528bb32aaa47f8fc496c3571d4b91248f3ebfe4c8be29463a25277bd9e88\",\"kind\":\"publisher-dispatch\",\"publisher_revision\":\"2222222222222222222222222222222222222222\",\"repository\":\"codicarium/deployment-controller\",\"schema\":\"codicarium.release-identity/v1\",\"source_revision\":\"1111111111111111111111111111111111111111\",\"tag\":\"v0.6.14\",\"unknown\":true}"
+    },
+    {
+      "name": "dispatch-mutated-byte",
+      "identity": "dispatch",
+      "failure": "DIGEST_MISMATCH",
+      "raw": "{\"authorizer_run_attempt\":\"1\",\"authorizer_run_id\":\"9004001\",\"handoff_check_run_id\":\"9004004\",\"handoff_sha256\":\"8abe528bb32aaa47f8fc496c3571d4b91248f3ebfe4c8be29463a25277bd9e88\",\"kind\":\"publisher-dispatch\",\"publisher_revision\":\"2222222222222222222222222222222222222222\",\"repository\":\"codicarium/deployment-controller\",\"schema\":\"codicarium.release-identity/v1\",\"source_revision\":\"1111111111111111111111111111111111111111\",\"tag\":\"v0.6.14\"}"
+    }
+  ]
+}

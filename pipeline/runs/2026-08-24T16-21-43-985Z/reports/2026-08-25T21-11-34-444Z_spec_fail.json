@@ -1,0 +1,46 @@
+{
+  "stage": "spec",
+  "status": "fail",
+  "summary": "v2.0 is deterministic and structurally valid, but three of four council lanes rejected implementation because baselines moved and live authorization, migration, retirement, readback, PostgreSQL, network, and archive gates remain non-executable or unsafe.",
+  "changed_files": [
+    "/home/rickebo/.codex/pipeline/runs/2026-08-24T16-21-43-985Z/build-v2.0-spec.mjs",
+    "/home/rickebo/.codex/pipeline/runs/2026-08-24T16-21-43-985Z/validate-v2.0.py",
+    "/home/rickebo/.codex/pipeline/runs/2026-08-24T16-21-43-985Z/feature-spec.v2.0.draft.json",
+    "/home/rickebo/.codex/pipeline/runs/2026-08-24T16-21-43-985Z/feature-spec.v2.0.annex.json",
+    "/home/rickebo/.codex/pipeline/runs/2026-08-24T16-21-43-985Z/spec-check.v2.0.root-final.json",
+    "/home/rickebo/.codex/pipeline/runs/2026-08-24T16-21-43-985Z/council-v2.0.json"
+  ],
+  "validation": [
+    "Spec SHA-256 21135d88172a6aca570bd85f307ac0d6336f874ebc3e9d225a2d5e6319a95cf3.",
+    "Annex SHA-256 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0.",
+    "Two root regenerations preserved combined artifact digest de5a9e6886bc9f44f1de6e7c5bc27c1bdf77acf13d483d8640714ebd9557df6c.",
+    "Strict spec check passed 36 MUSTs, 18 acceptance criteria, 18 tests, and 36 trace rows.",
+    "Validator passed 35 JSON documents, 13 schemas, 66 signatures, 45 journal entries, 20 receipts, and 36 manifest files.",
+    "Exact active pipeline-run check passed with no warnings.",
+    "Planner, security, and DevOps returned NO-GO; QA returned GO.",
+    "No repository, GitHub, cluster, Vault, registry, release, or database mutation occurred."
+  ],
+  "blockers": [
+    "Re-audit and freeze current deployment-controller, vault-config, and app-config heads.",
+    "Replace prose live blockers/tests with structured evidence gates and a machine-checkable cross-repository DAG.",
+    "Require independent authenticated canonical readback for every target mutation receipt.",
+    "Drain/cancel all legacy runs and prove issued credentials/sessions cannot mutate before the first claim.",
+    "Define a durable writer fence and safe adoption activation contract for grant replacement.",
+    "Enumerate exact apiGroup/kind scopes and use enforceable workload identity instead of ServiceAccount claims in standard NetworkPolicy.",
+    "Use the actual CNPG bootstrap Secret and define verify-full CA delivery, rotation, and negative probes.",
+    "Add hard archive entry/path/expansion/ratio/CPU/memory/deadline ceilings and negative tests."
+  ],
+  "next_action": "Revise to v2.1 against current heads with executable evidence DAG/gates, independent readback, quiescent retirement, fenced adoption, exact authorization, corrected CNPG/TLS, and bounded archive handling; then rerun council.",
+  "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T16-21-43-985Z/feature-spec.v2.0.draft.json",
+  "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T16-21-43-985Z/spec-check.v2.0.root-final.json",
+  "council_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T16-21-43-985Z/council-v2.0.json",
+  "requires_council": true,
+  "independent_lanes": [
+    "current-main and executable cross-repository plan",
+    "release security and independent evidence",
+    "GitOps migration, network, PostgreSQL, and live gates",
+    "schema, cryptographic, archive, and trace validation"
+  ],
+  "route_to": "spec",
+  "risk_level": "critical"
+}

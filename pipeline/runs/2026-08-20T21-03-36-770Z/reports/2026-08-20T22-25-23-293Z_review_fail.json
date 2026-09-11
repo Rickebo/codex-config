@@ -1,0 +1,23 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Second exact-head review clears the original four blockers but finds three bounded P2 issues: unbounded server retry hints, non-cancelable per-installation gate waits, and configurable mandatory-permission elevation.",
+  "changed_files": [],
+  "validation": [
+    "Independent re-review completed at da4f1278f89de0e8d36385d1183f8ac99006a81d",
+    "Focused tests, race tests, vet, and diff checks pass for the reviewed head"
+  ],
+  "blockers": [
+    "Retry-After/X-RateLimit-Reset hints can cause indefinite sleep when the caller has no deadline.",
+    "A canceled caller can wait indefinitely on the per-installation exchange mutex.",
+    "RequiredPermissions configuration can elevate a mandatory permission level and have that elevation accepted."
+  ],
+  "next_action": "Return to code for bounded retry delay, context-aware exchange gating, and rejection of mandatory-permission elevation, then repeat independent review and hosted validation.",
+  "route_to": "code",
+  "risk_level": "high",
+  "issues": [
+    {"id":"REV-125-5","title":"Bound server retry hints explicitly","severity":"medium","details":"Return a bounded retryable error when a server hint exceeds the configured maximum instead of sleeping indefinitely.","owner_stage":"code"},
+    {"id":"REV-125-6","title":"Make installation exchange gate context-aware","severity":"medium","details":"Canceled callers must not wait behind a stalled per-installation exchange.","owner_stage":"code"},
+    {"id":"REV-125-7","title":"Reject mandatory permission elevation in overrides","severity":"medium","details":"Custom required-permission config may extend but cannot raise mandatory levels.","owner_stage":"code"}
+  ]
+}

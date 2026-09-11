@@ -1,0 +1,12 @@
+{
+  "stage": "spec",
+  "status": "consensus",
+  "perspectives": [
+    {"role":"security","summary":"Secrets are confined to protected-main preparation jobs and candidate execution is isolated."},
+    {"role":"GitHub Actions","summary":"Land base-controlled prerequisite workflows before changing candidate checks."},
+    {"role":"supply chain","summary":"Use fixed exact-hash Nexus inputs and authenticated exact private-repository revisions."},
+    {"role":"GitOps","summary":"Keep bootstrap unsyncable and emit review-only post-merge lock artifacts."}
+  ],
+  "consensus_summary": "Proceed prerequisite-first, then make both existing PR validation paths secretless.",
+  "open_questions": []
+}

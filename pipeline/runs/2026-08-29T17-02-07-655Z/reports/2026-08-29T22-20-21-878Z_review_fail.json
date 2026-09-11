@@ -1,0 +1,18 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Independent Luna review of PR #156 exact head 68ca2583cb2a4050a6440e3b88b8d11e6b7f32c6 found one P2 documentation-contract defect: docs/releasing.md still names the obsolete automatic-release concurrency group instead of the shared codicarium-release-mutations group used by every automated ref/release-shell writer.",
+  "changed_files": [],
+  "validation": [
+    "Reviewer otherwise cleared the signed two-file failure artifact and exact Sigstore/OIDC identity verification",
+    "Reviewer otherwise cleared exact cross-run/check verification, publisher failure behavior, shared automated-writer concurrency, create-only semantics, and final live-state rereads",
+    "Full local make test-release-flow passed at exact head"
+  ],
+  "blockers": [
+    "Update docs/releasing.md to name codicarium-release-mutations and require every automated ref/release-shell writer to use it",
+    "Pipeline loop budget is already 6/6; controller must decide whether another remediation is permitted"
+  ],
+  "next_action": "Return to code only if the controller permits it; use Luna for the focused documentation correction and repeat independent exact-head review and protected CI.",
+  "route_to": "code",
+  "risk_level": "critical"
+}

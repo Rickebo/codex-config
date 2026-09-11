@@ -1,0 +1,394 @@
+{
+  "meta": {
+    "id": "SPEC-METAMCP-HOMELAB-20260820",
+    "title": "Operationalize homelab MetaMCP with environment-correct MCPs and ChatGPT OAuth readiness",
+    "author": "codex-manager",
+    "created_at": "2026-08-20T20:55:00Z",
+    "version": "1.0.0"
+  },
+  "feature": {
+    "problem_statement": "The homelab MetaMCP deployment tracks a mutable image and its application state does not contain the requested MCP server registry. The Codicarium reference deployment provides a working subset and OAuth pattern, but its live registry lacks Loki and Tempo entries and homelab live Kubernetes access is currently unauthorized. The task must produce a reproducible, secret-safe homelab setup without crossing environment boundaries.",
+    "goals": [
+      "Run the latest normal MetaMCP release available on 2026-08-20, pinned to an immutable image reference.",
+      "Create the requested homelab MetaMCP server set: Prometheus, Loki, Tempo, GitHub-p, GitHub-p_Actions, Kubernetes, and ArgoCD, using authoritative implementations and explicit homelab targets.",
+      "Copy the two GitHub server definitions and their existing user/Codicarium-capable token through a secret-safe runtime or Bitwarden path without exposing token material.",
+      "Prove MetaMCP can discover each server, list its tools, and complete a safe representative call.",
+      "Expose a standards-compliant HTTPS Streamable HTTP endpoint with OAuth 2.1/PKCE readiness for a later ChatGPT website connection."
+    ],
+    "non_goals": [
+      "Changing the Codicarium deployment or its live MCP registry.",
+      "Deploying to a production cluster or promoting unrelated homelab applications.",
+      "Inventing Loki/Tempo endpoints when no authoritative implementation or target is available.",
+      "Rotating the user's GitHub token automatically without an explicit security decision; any existing historical exposure must be reported separately."
+    ],
+    "scope_in": [
+      "The homelab pve-infra GitOps MetaMCP chart and ArgoCD application.",
+      "Homelab-only observability, Kubernetes, and ArgoCD target wiring.",
+      "The MetaMCP application registry and namespace/endpoint state required for the requested servers.",
+      "Secret references, OAuth discovery metadata, and end-to-end validation evidence."
+    ],
+    "scope_out": [
+      "Codicarium GitOps or database writes.",
+      "Unrelated dirty worktree changes.",
+      "Permanent deletion or history rewriting of existing repositories without an explicit approved remediation plan."
+    ]
+  },
+  "requirements": [
+    {
+      "id": "REQ-001",
+      "priority": "MUST",
+      "statement": "Pin homelab MetaMCP to the latest normal upstream release, v2.4.22 as of 2026-08-20, using an immutable digest or equivalent immutable image reference and remove the floating latest reference.",
+      "rationale": "Mutable image tags make the rollout non-reproducible and can change behavior without a GitOps change."
+    },
+    {
+      "id": "REQ-002",
+      "priority": "MUST",
+      "statement": "Keep application, database, OIDC, GitHub, Kubernetes, and ArgoCD credentials out of Git, logs, reports, tool outputs, and copied configuration; use ExternalSecrets/Bitwarden or an equivalent runtime secret path.",
+      "rationale": "The current homelab manifest history contains a plaintext Better Auth value and live MCP records contain bearer credentials."
+    },
+    {
+      "id": "REQ-003",
+      "priority": "MUST",
+      "statement": "Represent a reviewable server matrix for Prometheus, Loki, Tempo, GitHub-p, GitHub-p_Actions, Kubernetes, and ArgoCD, with names, transports, homelab target identifiers, secret references, and expected validation checks; stop if Loki or Tempo cannot be mapped to an authoritative implementation.",
+      "rationale": "The live Codicarium registry currently contains Prometheus, GitHub-p, GitHub-p_Actions, Kubernetes, and ArgoCD but no Loki or Tempo, so copying by name alone would be unsafe."
+    },
+    {
+      "id": "REQ-004",
+      "priority": "MUST",
+      "statement": "Target all non-GitHub servers at homelab services or homelab cluster credentials only; the two GitHub servers must preserve their Codicarium/user-capable upstream URLs and token semantics while sourcing the token without plaintext duplication.",
+      "rationale": "The user requires environment isolation for infrastructure and observability while intentionally reusing the GitHub access token."
+    },
+    {
+      "id": "REQ-005",
+      "priority": "MUST",
+      "statement": "Use explicit homelab kubeconfig/context, Argo destination/project, namespace, and least-privilege Kubernetes/ArgoCD credentials for all rollout and validation commands.",
+      "rationale": "The workspace policy forbids relying on CLI defaults and the current homelab credential returns Unauthorized."
+    },
+    {
+      "id": "REQ-006",
+      "priority": "MUST",
+      "statement": "Make the homelab endpoint publicly reachable over HTTPS at a stable /mcp path, or document the exact supported private-tunnel alternative, and expose protected-resource and authorization-server metadata with PKCE S256.",
+      "rationale": "ChatGPT website connections require a remote Streamable HTTP endpoint and standards-compliant OAuth discovery; application UI OIDC alone is insufficient."
+    },
+    {
+      "id": "REQ-007",
+      "priority": "MUST",
+      "statement": "After rollout, verify MetaMCP discovery, tool schemas/counts, and one safe representative tool call for every requested server, including target-isolation evidence and failure evidence for an intentionally mismatched target.",
+      "rationale": "A synced Deployment or successful Helm render does not prove upstream MCP connectivity or correct environment targeting."
+    },
+    {
+      "id": "REQ-008",
+      "priority": "MUST",
+      "statement": "Deliver the change through the homelab GitOps PR/Argo flow, with rendered-manifest validation, secret scanning, rollout health, and rollback evidence.",
+      "rationale": "The homelab repository is managed by GitOps and the desired state must remain reviewable and recoverable."
+    }
+  ],
+  "acceptance_criteria": [
+    {
+      "id": "AC-001",
+      "requirement_ids": [
+        "REQ-001",
+        "REQ-008"
+      ],
+      "scenario": "Given a clean homelab worktree, when the chart is rendered, then the MetaMCP Deployment uses v2.4.22 at an immutable digest/reference, no image or PostgreSQL tag is latest, and Helm lint/template/schema validation pass."
+    },
+    {
+      "id": "AC-002",
+      "requirement_ids": [
+        "REQ-002",
+        "REQ-008"
+      ],
+      "scenario": "Given the final diff and rendered output, when secret scanning runs, then no credential values are present and Better Auth, OIDC, database, GitHub, Kubernetes, and ArgoCD secrets are runtime references with required keys and readiness checks."
+    },
+    {
+      "id": "AC-003",
+      "requirement_ids": [
+        "REQ-003",
+        "REQ-004"
+      ],
+      "scenario": "Given the authoritative server matrix, when MetaMCP state is inspected, then all seven requested names exist, Loki and Tempo are backed by identified maintained implementations, and every non-GitHub target resolves only to homelab services or credentials."
+    },
+    {
+      "id": "AC-004",
+      "requirement_ids": [
+        "REQ-004",
+        "REQ-007"
+      ],
+      "scenario": "Given MetaMCP is authenticated, when the two GitHub servers are inspected and queried, then they use the same upstream URLs and token semantics as Codicarium, list the expected nonzero tools, and token values never appear in evidence."
+    },
+    {
+      "id": "AC-005",
+      "requirement_ids": [
+        "REQ-005",
+        "REQ-007"
+      ],
+      "scenario": "Given explicit homelab kubeconfig/context and Argo target parameters, when Kubernetes and ArgoCD are queried, then they list nonzero tools and complete safe read-only calls against homelab while a deliberately mismatched target is rejected or fails closed."
+    },
+    {
+      "id": "AC-006",
+      "requirement_ids": [
+        "REQ-003",
+        "REQ-007"
+      ],
+      "scenario": "Given the homelab observability stack, when Prometheus, Loki, and Tempo are queried, then each lists tools and completes a safe read-only query against homelab data with endpoint evidence showing no Codicarium target."
+    },
+    {
+      "id": "AC-007",
+      "requirement_ids": [
+        "REQ-006"
+      ],
+      "scenario": "Given the deployed public endpoint, when HTTPS /mcp and the well-known documents are fetched, then the endpoint is reachable, protected-resource metadata identifies the exact resource, authorization-server metadata advertises authorization code, refresh, and S256 PKCE, and an unauthenticated request produces a standards-compliant OAuth challenge or documented equivalent."
+    },
+    {
+      "id": "AC-008",
+      "requirement_ids": [
+        "REQ-006",
+        "REQ-007"
+      ],
+      "scenario": "Given ChatGPT developer mode or the supported connection flow, when the exact homelab /mcp URL is added, then OAuth consent completes with the registered redirect URI, tools are visible, and one safe tool call succeeds; if a user-side ChatGPT action is unavailable, the setup is left ready and the missing manual step is explicit."
+    },
+    {
+      "id": "AC-009",
+      "requirement_ids": [
+        "REQ-008"
+      ],
+      "scenario": "Given the homelab PR and Argo reconciliation, when the explicit homelab target is checked, then the Application is Synced/Healthy, the MetaMCP and PostgreSQL workloads are ready, and a documented rollback reference is available."
+    }
+  ],
+  "test_plan": [
+    {
+      "id": "TST-001",
+      "type": "manual",
+      "requirement_ids": [
+        "REQ-001",
+        "REQ-008"
+      ],
+      "approach": "Inspect upstream release metadata and OCI digest, render the exact chart from an isolated worktree, run helm lint/template/schema validation, and scan for mutable tags."
+    },
+    {
+      "id": "TST-002",
+      "type": "non_functional",
+      "requirement_ids": [
+        "REQ-002"
+      ],
+      "approach": "Run repository and rendered-output secret scans with redacted diagnostics; inspect ExternalSecret key names and readiness without printing values."
+    },
+    {
+      "id": "TST-003",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-003",
+        "REQ-004",
+        "REQ-005"
+      ],
+      "approach": "Apply the sanitized server matrix through the supported MetaMCP API/UI or controlled database migration, then verify each target URL, transport, namespace mapping, and secret reference against explicit homelab context."
+    },
+    {
+      "id": "TST-004",
+      "type": "e2e",
+      "requirement_ids": [
+        "REQ-007"
+      ],
+      "approach": "Use MCP Inspector or an equivalent protocol client to initialize the homelab endpoint, call tools/list for every server, and call one safe read-only tool per server; record counts and redacted results."
+    },
+    {
+      "id": "TST-005",
+      "type": "manual",
+      "requirement_ids": [
+        "REQ-006"
+      ],
+      "approach": "Fetch HTTPS /mcp, protected-resource metadata, authorization-server metadata, OIDC discovery, and OAuth challenge responses; verify exact resource, issuer, redirect, scopes, and S256."
+    },
+    {
+      "id": "TST-006",
+      "type": "e2e",
+      "requirement_ids": [
+        "REQ-006",
+        "REQ-007"
+      ],
+      "approach": "Connect the endpoint from ChatGPT developer mode when available, complete OAuth, refresh metadata, inspect tools, and execute a safe call; otherwise capture the precise remaining user-side action."
+    },
+    {
+      "id": "TST-007",
+      "type": "manual",
+      "requirement_ids": [
+        "REQ-008"
+      ],
+      "approach": "Verify explicit Argo Application destination/project, Synced/Healthy status, workload readiness, and a rollback revision without relying on default kube context."
+    }
+  ],
+  "traceability": [
+    {
+      "requirement_id": "REQ-001",
+      "acceptance_ids": [
+        "AC-001"
+      ],
+      "test_ids": [
+        "TST-001"
+      ],
+      "review_checks": [
+        "Image and dependency references are immutable and reproducible."
+      ],
+      "validation_checks": [
+        "Helm render contains the expected release digest/reference and no latest tag."
+      ]
+    },
+    {
+      "requirement_id": "REQ-002",
+      "acceptance_ids": [
+        "AC-002"
+      ],
+      "test_ids": [
+        "TST-002"
+      ],
+      "review_checks": [
+        "No secret values are stored in Git or evidence artifacts."
+      ],
+      "validation_checks": [
+        "Secret scan and ExternalSecret key/readiness checks pass without value output."
+      ]
+    },
+    {
+      "requirement_id": "REQ-003",
+      "acceptance_ids": [
+        "AC-003",
+        "AC-006"
+      ],
+      "test_ids": [
+        "TST-003",
+        "TST-004"
+      ],
+      "review_checks": [
+        "Every server has an authoritative implementation and no guessed Loki/Tempo adapter is used."
+      ],
+      "validation_checks": [
+        "Sanitized matrix and live MetaMCP registry contain all seven requested names."
+      ]
+    },
+    {
+      "requirement_id": "REQ-004",
+      "acceptance_ids": [
+        "AC-003",
+        "AC-004"
+      ],
+      "test_ids": [
+        "TST-003",
+        "TST-004"
+      ],
+      "review_checks": [
+        "Infrastructure targets are homelab-only; GitHub reuse is limited to the requested two servers."
+      ],
+      "validation_checks": [
+        "URLs, config paths, and redacted token fingerprints match the intended source semantics."
+      ]
+    },
+    {
+      "requirement_id": "REQ-005",
+      "acceptance_ids": [
+        "AC-005"
+      ],
+      "test_ids": [
+        "TST-003",
+        "TST-007"
+      ],
+      "review_checks": [
+        "All live commands name kubeconfig, context, namespace, and Argo target explicitly."
+      ],
+      "validation_checks": [
+        "Kubernetes/Argo calls succeed for homelab and fail closed for the mismatch probe."
+      ]
+    },
+    {
+      "requirement_id": "REQ-006",
+      "acceptance_ids": [
+        "AC-007",
+        "AC-008"
+      ],
+      "test_ids": [
+        "TST-005",
+        "TST-006"
+      ],
+      "review_checks": [
+        "ChatGPT OAuth is treated separately from MetaMCP UI OIDC."
+      ],
+      "validation_checks": [
+        "Public metadata, PKCE, challenge, redirect, and user-side connection evidence are captured."
+      ]
+    },
+    {
+      "requirement_id": "REQ-007",
+      "acceptance_ids": [
+        "AC-004",
+        "AC-005",
+        "AC-006",
+        "AC-008"
+      ],
+      "test_ids": [
+        "TST-004",
+        "TST-006"
+      ],
+      "review_checks": [
+        "Tool calls are read-only and results are redacted."
+      ],
+      "validation_checks": [
+        "All seven servers have nonzero discovery and a safe representative call."
+      ]
+    },
+    {
+      "requirement_id": "REQ-008",
+      "acceptance_ids": [
+        "AC-001",
+        "AC-002",
+        "AC-009"
+      ],
+      "test_ids": [
+        "TST-001",
+        "TST-002",
+        "TST-007"
+      ],
+      "review_checks": [
+        "Only the dedicated homelab worktree is changed; unrelated dirty files are preserved."
+      ],
+      "validation_checks": [
+        "PR checks, Argo sync/health, and rollback evidence are recorded."
+      ]
+    }
+  ],
+  "quality_gates": {
+    "spec_review_required": true,
+    "testability_required": true,
+    "traceability_required": true
+  },
+  "council": {
+    "perspectives": [
+      {
+        "role": "homelab_devops",
+        "summary": "Remote homelab main has MetaMCP at latest, no server registry in Git, and the current live kubeconfig default is Unauthorized; existing GitOps has OIDC/ExternalSecrets and a Prometheus MCP deployment."
+      },
+      {
+        "role": "codicarium_devops",
+        "summary": "Codicarium is Synced/Healthy on MetaMCP 2.4.22 with public API and internal VPN UI; its live registry has GitHub-p 44, GitHub-p_Actions 4, Kubernetes 20, ArgoCD 16, and Prometheus 6 tools, but no Loki or Tempo."
+      },
+      {
+        "role": "researcher",
+        "summary": "Upstream normal release v2.4.22 is current as of 2026-08-20; MetaMCP supports /mcp Streamable HTTP and OAuth metadata/PKCE, while OpenAI requires public HTTPS, protected-resource discovery, authorization-code PKCE S256, and exact redirect handling."
+      },
+      {
+        "role": "reviewer_lite",
+        "summary": "Homelab desired state contains mutable tags and a historical plaintext Better Auth value; UI OIDC does not prove MCP OAuth. Completion requires secret-safe references, explicit targets, protocol tool-call evidence, and rollback proof."
+      },
+      {
+        "role": "planner_lite",
+        "summary": "Treat this as a security-gated multi-lane implementation; do not copy unknown credentials or substitute absent server definitions, preserve environment boundaries, and record blockers."
+      }
+    ],
+    "consensus_summary": "Proceed with a GitOps-first, secret-safe homelab implementation only after resolving the authoritative Loki/Tempo implementation and restoring authorized homelab Kubernetes/Argo access.",
+    "open_questions": [
+      "Which maintained MCP implementation and exact homelab target does the user intend for Loki and Tempo?",
+      "Which authorized homelab kubeconfig/context and ArgoCD token source should be used?",
+      "Where should the existing GitHub token be sourced for the secure homelab copy?",
+      "Which homelab public DNS hostname and Authentik application/client are authoritative for ChatGPT?",
+      "Should the server set use an existing MetaMCP namespace/endpoint or a new one?"
+    ]
+  }
+}

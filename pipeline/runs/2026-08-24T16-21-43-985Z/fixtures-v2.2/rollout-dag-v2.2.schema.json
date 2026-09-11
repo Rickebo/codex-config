@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "array",
+  "minItems": 101,
+  "maxItems": 101,
+  "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "id",
+      "owner",
+      "action",
+      "depends_on",
+      "mode"
+    ],
+    "properties": {
+      "id": {
+        "pattern": "^(S0[01]|B1[0-5]|(CA|IF|PG|VA|RP|DC)2[0-5]|G3[0-5]|X4[0-2]|L4[0-4]|Q4[0-2]|A5[01]|F0[0-4]|M(0[1-9]|1[0-9])|F2[0-4]|U0[0-8])$"
+      },
+      "owner": {
+        "type": "string"
+      },
+      "action": {
+        "type": "string",
+        "minLength": 12
+      },
+      "depends_on": {
+        "type": "array",
+        "uniqueItems": true,
+        "items": {
+          "type": "string"
+        }
+      },
+      "mode": {
+        "enum": [
+          "normal",
+          "terminal-recovery"
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,351 @@
+{
+  "schema": "codicarium.typed-payload-schemas/v2.4",
+  "count": 7,
+  "schemas": [
+    {
+      "id": "command.v2.4",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://codicarium.local/v2.4/command.v2.4",
+        "title": "command.v2.4",
+        "type": "object",
+        "required": [
+          "command_id",
+          "argv",
+          "digest"
+        ],
+        "properties": {
+          "command_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "argv": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "digest": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "payload.v2.4",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://codicarium.local/v2.4/payload.v2.4",
+        "title": "payload.v2.4",
+        "type": "object",
+        "required": [
+          "command_id",
+          "signer_kind",
+          "authority",
+          "nonce",
+          "issued_at",
+          "schema_id",
+          "target_digest",
+          "argv"
+        ],
+        "properties": {
+          "command_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "signer_kind": {
+            "type": "string",
+            "minLength": 1
+          },
+          "authority": {
+            "type": "boolean"
+          },
+          "nonce": {
+            "type": "string",
+            "minLength": 1
+          },
+          "issued_at": {
+            "type": "string",
+            "minLength": 1
+          },
+          "schema_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "target_digest": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "argv": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "signature": {
+            "type": "string",
+            "minLength": 1
+          },
+          "record_hash": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sequence": {
+            "type": "integer"
+          },
+          "previous_hash": {
+            "type": "string",
+            "minLength": 1
+          },
+          "identity": {
+            "type": "string",
+            "minLength": 1
+          },
+          "approval_ttl_seconds": {
+            "type": "integer"
+          },
+          "credential_use": {
+            "type": "boolean"
+          },
+          "fsm_transition": {
+            "type": "string",
+            "minLength": 1
+          },
+          "app_config_scope": {
+            "type": "string",
+            "minLength": 1
+          },
+          "release_version": {
+            "type": "string",
+            "minLength": 1
+          },
+          "asset_media_type": {
+            "type": "string",
+            "minLength": 1
+          },
+          "asset_source_sha256": {
+            "type": "string",
+            "minLength": 1
+          },
+          "destination_binding": {
+            "type": "string",
+            "minLength": 1
+          },
+          "revoked": {
+            "type": "boolean"
+          },
+          "live_evidence": {
+            "type": "boolean"
+          },
+          "allowed_transitions": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "signature.v2.4",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://codicarium.local/v2.4/signature.v2.4",
+        "title": "signature.v2.4",
+        "type": "object",
+        "required": [
+          "payload",
+          "signature",
+          "public_key",
+          "signer_kind",
+          "authority"
+        ],
+        "properties": {
+          "payload": {
+            "type": "object"
+          },
+          "signature": {
+            "type": "string",
+            "minLength": 1
+          },
+          "public_key": {
+            "type": "string",
+            "minLength": 1
+          },
+          "signer_kind": {
+            "type": "string",
+            "minLength": 1
+          },
+          "authority": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "mutation.v2.4",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://codicarium.local/v2.4/mutation.v2.4",
+        "title": "mutation.v2.4",
+        "type": "object",
+        "required": [
+          "mutation_id",
+          "records"
+        ],
+        "properties": {
+          "mutation_id": {
+            "type": "string",
+            "pattern": "^M[0-9]{2}$"
+          },
+          "records": {
+            "type": "array",
+            "minItems": 4,
+            "maxItems": 4,
+            "items": {
+              "type": "object"
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "asset.v2.4",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://codicarium.local/v2.4/asset.v2.4",
+        "title": "asset.v2.4",
+        "type": "object",
+        "required": [
+          "filename",
+          "media_type",
+          "source_sha256",
+          "destination_binding"
+        ],
+        "properties": {
+          "filename": {
+            "type": "string",
+            "minLength": 1
+          },
+          "media_type": {
+            "type": "string",
+            "minLength": 1
+          },
+          "source_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "destination_binding": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "admin.v2.4",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://codicarium.local/v2.4/admin.v2.4",
+        "title": "admin.v2.4",
+        "type": "object",
+        "required": [
+          "requester",
+          "executor",
+          "one_use",
+          "audit_required",
+          "revocation_required"
+        ],
+        "properties": {
+          "requester": {
+            "type": "string",
+            "minLength": 1
+          },
+          "approver": {
+            "type": "string",
+            "minLength": 1
+          },
+          "approver_one": {
+            "type": "string",
+            "minLength": 1
+          },
+          "approver_two": {
+            "type": "string",
+            "minLength": 1
+          },
+          "executor": {
+            "type": "string",
+            "minLength": 1
+          },
+          "approval_ttl_seconds": {
+            "type": "integer"
+          },
+          "credential_ttl_seconds": {
+            "type": "integer"
+          },
+          "one_use": {
+            "type": "boolean"
+          },
+          "audit_required": {
+            "type": "boolean"
+          },
+          "revocation_required": {
+            "type": "boolean"
+          },
+          "forbidden_operations": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "fsm.v2.4",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://codicarium.local/v2.4/fsm.v2.4",
+        "title": "fsm.v2.4",
+        "type": "object",
+        "required": [
+          "from",
+          "to",
+          "outcomes"
+        ],
+        "properties": {
+          "from": {
+            "type": "string",
+            "minLength": 1
+          },
+          "to": {
+            "type": "string",
+            "minLength": 1
+          },
+          "outcomes": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  ]
+}

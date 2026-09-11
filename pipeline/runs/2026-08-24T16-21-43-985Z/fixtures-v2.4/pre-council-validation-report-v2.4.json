@@ -1,0 +1,17 @@
+{
+  "schema": "codicarium.pre-council-validation/v2.4",
+  "status": "PASS_PRE_COUNCIL_ONLY",
+  "fixed_clock": "2026-08-26T12:00:00Z",
+  "bundle_manifest_sha256": "01e66d00f59f17e89c268fc69b9a0ce56478640600885d0c5dd82366a185e1c8",
+  "results": {
+    "spec_check_sha256": "b64362836e68daae286a70b70da07fdeb31a5b4e6905e4f0f2d4d55fc79b9ee3",
+    "negative_vectors": 24,
+    "negative_effect_count": 0,
+    "mutation_count": 19,
+    "records_per_mutation": 4,
+    "fsm_nodes": 50,
+    "live_gate_count": 0
+  },
+  "validator_read_only": true,
+  "builder_not_invoked_by_validator": true
+}

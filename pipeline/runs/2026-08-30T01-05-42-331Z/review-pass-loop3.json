@@ -1,0 +1,23 @@
+{
+  "stage": "review",
+  "status": "pass",
+  "summary": "Independent Luna review found no blocking issues at exact head dbaccadb. The approved-default guard, JSON Patch/resourceVersion tests, policy preservation, fail-closed drift handling, and revocation ordering are correct with focused tests passing.",
+  "changed_files": [
+    "scripts/revoke-legacy-metamcp-argocd-credentials.sh",
+    "tests/test-revoke-legacy-metamcp-argocd-credentials.py",
+    "tests/test-revoke-legacy-metamcp-argocd-credentials-transaction.py"
+  ],
+  "validation": [
+    "Reviewer verified exact head dbaccadbb857a6c853c382aac6bd93862fd8073d and base 09e6e5405d799446354d531ae76c314374576e74",
+    "Exactly role:readonly and empty defaults are accepted; unknown values fail before mutation",
+    "JSON Patch pins resourceVersion, observed default including empty, and policy CSV",
+    "Post-state preserves the original default and ordering remains token then account then RBAC",
+    "All revocation suites, RBAC contract, real kubectl parser, actionlint, shell, and diff checks passed"
+  ],
+  "blockers": [
+    "Protected ARC producer runner and live identity/break-glass gates remain external blockers to merge/deploy"
+  ],
+  "next_action": "Perform exact-lease push only if canonical main and remote PR head still match the reviewed preconditions, then require protected exact-head CI.",
+  "route_to": "test",
+  "risk_level": "critical"
+}

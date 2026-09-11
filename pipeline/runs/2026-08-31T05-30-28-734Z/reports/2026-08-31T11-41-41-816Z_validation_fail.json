@@ -1,0 +1,27 @@
+{
+  "stage": "validation",
+  "status": "fail",
+  "summary": "Independent validation confirms the dev-only admission contract and chart safety at exact head d8dce907, but rejects delivery: no immutable artifact exists under the unchanged cap and the branch cannot reconcile onto unsafe main while correction PR #172 is structurally blocked.",
+  "changed_files": [],
+  "validation": [
+    "Admission enforces exact writer, fixed dev environment, central namespace allowlist, update denial, pre-read create/delete fencing, production denial, and canonical subject/group/ClusterRole.",
+    "Defaults remain disabled; chart/config/schema and focused/full Go, race, vet, build, cross-build, repository, action-pin, and release-fixture tests passed.",
+    "Worktree is clean at d8dce907 with base 26e4b12.",
+    "PR #172 exact 4608c706 has all five checks green but is BLOCKED by code-owner and non-last-pusher approval requirements."
+  ],
+  "blockers": [
+    "No published immutable artifact contains this exact source; prior Publish Release run 33356650234 failed at 154537984 bytes over the 134217728 cap and v0.14.0 does not exist.",
+    "Unsafe current main a893e36 must not be used as the reconciliation base; correction PR #172 requires an eligible external code-owner approval and safe merge first.",
+    "Local host cannot repeat the OCI/supply-chain build because Docker buildx is absent and NFS cache bind mounts fail."
+  ],
+  "next_action": "Route back to code, wait for eligible approval/merge of PR #172, then reconcile onto corrected main and repeat exact-head review, CI, release, artifact, and disabled-runtime evidence.",
+  "route_to": "code",
+  "risk_level": "critical",
+  "independent_lanes": [
+    "Luna validator /root/validate_dc_150_d8d"
+  ],
+  "issues": [
+    {"id":"VAL-150-001","title":"Immutable artifact under publisher cap is absent","severity":"critical","owner_stage":"code"},
+    {"id":"VAL-150-002","title":"Corrected protected-main prerequisite is externally blocked","severity":"critical","owner_stage":"code"}
+  ]
+}

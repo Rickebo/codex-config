@@ -1,0 +1,1 @@
+Complete deployment-controller PR #156 terminal failed-candidate recovery after the exhausted prior pipeline: correct the shared release-mutation concurrency documentation contract using Luna, obtain independent exact-head review and protected CI, merge safely, and verify immutable release recovery without deployment or live authorization activation

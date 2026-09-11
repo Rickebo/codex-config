@@ -1,0 +1,24 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Luna completed the REV8 authority-runner correction at exact head 0f4769b0: canonical inventory and staging fixes remain intact, the installed manifest contract now matches the current installer order and bytes, and the over-escaped README guard is corrected.",
+  "changed_files": [
+    "contracts/authority-runner-ownership.json",
+    "tests/test-authority-runner-installed-root.py",
+    "tests/test-codicarium-artifact-seal-package.sh"
+  ],
+  "validation": [
+    "python3 tests/test-authority-runner-contract.py: PASS, 12/12",
+    "bash tests/test-codicarium-artifact-seal-package.sh: PASS",
+    "disposable-root python:3.13-slim test: PASS, 11/11",
+    "Exact committed head: 0f4769b0b5d7aa12a72cc194c9269186fc3f9e61",
+    "No push, host install, workflow dispatch, runner mutation, or live change occurred"
+  ],
+  "blockers": [],
+  "next_action": "Run a fresh independent Luna security review of the full branch diff and exact head before any push.",
+  "route_to": "review",
+  "risk_level": "critical",
+  "independent_lanes": [
+    "Fresh Luna full-diff security review"
+  ]
+}

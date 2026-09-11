@@ -1,0 +1,412 @@
+[
+  {
+    "id": "N01",
+    "base_fixture": "fixtures-v2.4/base-command-v2.4.json",
+    "path": "/payload/command_id",
+    "replacement": "cmd.publish.unbound",
+    "expected_failure": "COMMAND_NOT_CONST",
+    "pre_target_sha256": "79f2022b31c75535fdc0d915fa59cca54b185e597e88f9670d82b329d349e232",
+    "post_target_sha256": "79f2022b31c75535fdc0d915fa59cca54b185e597e88f9670d82b329d349e232",
+    "declared_effect_count": 0,
+    "evaluator": [
+      "schema",
+      "signature",
+      "predicate",
+      "ledger"
+    ],
+    "process_replay_test": false
+  },
+  {
+    "id": "N02",
+    "base_fixture": "fixtures-v2.4/base-command-v2.4.json",
+    "path": "/payload/signer_kind",
+    "replacement": "sigstore_live",
+    "expected_failure": "LIVE_SIGNER_UNVERIFIED",
+    "pre_target_sha256": "79f2022b31c75535fdc0d915fa59cca54b185e597e88f9670d82b329d349e232",
+    "post_target_sha256": "79f2022b31c75535fdc0d915fa59cca54b185e597e88f9670d82b329d349e232",
+    "declared_effect_count": 0,
+    "evaluator": [
+      "schema",
+      "signature",
+      "predicate",
+      "ledger"
+    ],
+    "process_replay_test": false
+  },
+  {
+    "id": "N03",
+    "base_fixture": "fixtures-v2.4/base-command-v2.4.json",
+    "path": "/payload/authority",
+    "replacement": true,
+    "expected_failure": "AUTHORITY_FORGED",
+    "pre_target_sha256": "79f2022b31c75535fdc0d915fa59cca54b185e597e88f9670d82b329d349e232",
+    "post_target_sha256": "79f2022b31c75535fdc0d915fa59cca54b185e597e88f9670d82b329d349e232",
+    "declared_effect_count": 0,
+    "evaluator": [
+      "schema",
+      "signature",
+      "predicate",
+      "ledger"
+    ],
+    "process_replay_test": false
+  },
+  {
+    "id": "N04",
+    "base_fixture": "fixtures-v2.4/base-command-v2.4.json",
+    "path": "/payload/nonce",
+    "replacement": "nonce-consumed-v2.4",
+    "expected_failure": "REPLAY",
+    "pre_target_sha256": "79f2022b31c75535fdc0d915fa59cca54b185e597e88f9670d82b329d349e232",
+    "post_target_sha256": "79f2022b31c75535fdc0d915fa59cca54b185e597e88f9670d82b329d349e232",
+    "declared_effect_count": 0,
+    "evaluator": [
+      "schema",
+      "signature",
+      "predicate",
+      "ledger"
+    ],
+    "process_replay_test": true
+  },
+  {
+    "id": "N05",
+    "base_fixture": "fixtures-v2.4/base-command-v2.4.json",
+    "path": "/payload/issued_at",
+    "replacement": "2020-01-01T00:00:00Z",
+    "expected_failure": "STALE_TIMESTAMP",
+    "pre_target_sha256": "79f2022b31c75535fdc0d915fa59cca54b185e597e88f9670d82b329d349e232",
+    "post_target_sha256": "79f2022b31c75535fdc0d915fa59cca54b185e597e88f9670d82b329d349e232",
+    "declared_effect_count": 0,
+    "evaluator": [
+      "schema",
+      "signature",
+      "predicate",
+      "ledger"
+    ],
+    "process_replay_test": false
+  },
+  {
+    "id": "N06",
+    "base_fixture": "fixtures-v2.4/base-command-v2.4.json",
+    "path": "/payload/schema_id",
+    "replacement": "schema.unknown.v2.4",
+    "expected_failure": "SCHEMA_UNKNOWN",
+    "pre_target_sha256": "79f2022b31c75535fdc0d915fa59cca54b185e597e88f9670d82b329d349e232",
+    "post_target_sha256": "79f2022b31c75535fdc0d915fa59cca54b185e597e88f9670d82b329d349e232",
+    "declared_effect_count": 0,
+    "evaluator": [
+      "schema",
+      "signature",
+      "predicate",
+      "ledger"
+    ],
+    "process_replay_test": false
+  },
+  {
+    "id": "N07",
+    "base_fixture": "fixtures-v2.4/base-command-v2.4.json",
+    "path": "/payload/target_digest",
+    "replacement": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+    "expected_failure": "TARGET_MISMATCH",
+    "pre_target_sha256": "79f2022b31c75535fdc0d915fa59cca54b185e597e88f9670d82b329d349e232",
+    "post_target_sha256": "79f2022b31c75535fdc0d915fa59cca54b185e597e88f9670d82b329d349e232",
+    "declared_effect_count": 0,
+    "evaluator": [
+      "schema",
+      "signature",
+      "predicate",
+      "ledger"
+    ],
+    "process_replay_test": false
+  },
+  {
+    "id": "N08",
+    "base_fixture": "fixtures-v2.4/base-command-v2.4.json",
+    "path": "/payload/argv/1",
+    "replacement": "--force",
+    "expected_failure": "ARGV_MISMATCH",
+    "pre_target_sha256": "79f2022b31c75535fdc0d915fa59cca54b185e597e88f9670d82b329d349e232",
+    "post_target_sha256": "79f2022b31c75535fdc0d915fa59cca54b185e597e88f9670d82b329d349e232",
+    "declared_effect_count": 0,
+    "evaluator": [
+      "schema",
+      "signature",
+      "predicate",
+      "ledger"
+    ],
+    "process_replay_test": false
+  },
+  {
+    "id": "N09",
+    "base_fixture": "fixtures-v2.4/base-command-v2.4.json",
+    "path": "/payload/signature",
+    "replacement": "AA==",
+    "expected_failure": "SIGNATURE_INVALID",
+    "pre_target_sha256": "79f2022b31c75535fdc0d915fa59cca54b185e597e88f9670d82b329d349e232",
+    "post_target_sha256": "79f2022b31c75535fdc0d915fa59cca54b185e597e88f9670d82b329d349e232",
+    "declared_effect_count": 0,
+    "evaluator": [
+      "schema",
+      "signature",
+      "predicate",
+      "ledger"
+    ],
+    "process_replay_test": false
+  },
+  {
+    "id": "N10",
+    "base_fixture": "fixtures-v2.4/base-command-v2.4.json",
+    "path": "/payload/record_hash",
+    "replacement": "0000000000000000000000000000000000000000000000000000000000000000",
+    "expected_failure": "RECORD_HASH_MISMATCH",
+    "pre_target_sha256": "79f2022b31c75535fdc0d915fa59cca54b185e597e88f9670d82b329d349e232",
+    "post_target_sha256": "79f2022b31c75535fdc0d915fa59cca54b185e597e88f9670d82b329d349e232",
+    "declared_effect_count": 0,
+    "evaluator": [
+      "schema",
+      "signature",
+      "predicate",
+      "ledger"
+    ],
+    "process_replay_test": false
+  },
+  {
+    "id": "N11",
+    "base_fixture": "fixtures-v2.4/base-command-v2.4.json",
+    "path": "/payload/sequence",
+    "replacement": 99,
+    "expected_failure": "SEQUENCE_MISMATCH",
+    "pre_target_sha256": "79f2022b31c75535fdc0d915fa59cca54b185e597e88f9670d82b329d349e232",
+    "post_target_sha256": "79f2022b31c75535fdc0d915fa59cca54b185e597e88f9670d82b329d349e232",
+    "declared_effect_count": 0,
+    "evaluator": [
+      "schema",
+      "signature",
+      "predicate",
+      "ledger"
+    ],
+    "process_replay_test": false
+  },
+  {
+    "id": "N12",
+    "base_fixture": "fixtures-v2.4/base-command-v2.4.json",
+    "path": "/payload/previous_hash",
+    "replacement": "bad-predecessor",
+    "expected_failure": "PREDECESSOR_MISMATCH",
+    "pre_target_sha256": "79f2022b31c75535fdc0d915fa59cca54b185e597e88f9670d82b329d349e232",
+    "post_target_sha256": "79f2022b31c75535fdc0d915fa59cca54b185e597e88f9670d82b329d349e232",
+    "declared_effect_count": 0,
+    "evaluator": [
+      "schema",
+      "signature",
+      "predicate",
+      "ledger"
+    ],
+    "process_replay_test": false
+  },
+  {
+    "id": "N13",
+    "base_fixture": "fixtures-v2.4/base-command-v2.4.json",
+    "path": "/payload/identity",
+    "replacement": "other-principal",
+    "expected_failure": "IDENTITY_MISMATCH",
+    "pre_target_sha256": "79f2022b31c75535fdc0d915fa59cca54b185e597e88f9670d82b329d349e232",
+    "post_target_sha256": "79f2022b31c75535fdc0d915fa59cca54b185e597e88f9670d82b329d349e232",
+    "declared_effect_count": 0,
+    "evaluator": [
+      "schema",
+      "signature",
+      "predicate",
+      "ledger"
+    ],
+    "process_replay_test": false
+  },
+  {
+    "id": "N14",
+    "base_fixture": "fixtures-v2.4/base-command-v2.4.json",
+    "path": "/payload/approval_ttl_seconds",
+    "replacement": 7200,
+    "expected_failure": "ADMIN_TTL_EXCEEDED",
+    "pre_target_sha256": "79f2022b31c75535fdc0d915fa59cca54b185e597e88f9670d82b329d349e232",
+    "post_target_sha256": "79f2022b31c75535fdc0d915fa59cca54b185e597e88f9670d82b329d349e232",
+    "declared_effect_count": 0,
+    "evaluator": [
+      "schema",
+      "signature",
+      "predicate",
+      "ledger"
+    ],
+    "process_replay_test": false
+  },
+  {
+    "id": "N15",
+    "base_fixture": "fixtures-v2.4/base-command-v2.4.json",
+    "path": "/payload/credential_use",
+    "replacement": true,
+    "expected_failure": "CREDENTIAL_REUSE",
+    "pre_target_sha256": "79f2022b31c75535fdc0d915fa59cca54b185e597e88f9670d82b329d349e232",
+    "post_target_sha256": "79f2022b31c75535fdc0d915fa59cca54b185e597e88f9670d82b329d349e232",
+    "declared_effect_count": 0,
+    "evaluator": [
+      "schema",
+      "signature",
+      "predicate",
+      "ledger"
+    ],
+    "process_replay_test": false
+  },
+  {
+    "id": "N16",
+    "base_fixture": "fixtures-v2.4/base-command-v2.4.json",
+    "path": "/payload/fsm_transition",
+    "replacement": "M01->M19",
+    "expected_failure": "FSM_TRANSITION_INVALID",
+    "pre_target_sha256": "79f2022b31c75535fdc0d915fa59cca54b185e597e88f9670d82b329d349e232",
+    "post_target_sha256": "79f2022b31c75535fdc0d915fa59cca54b185e597e88f9670d82b329d349e232",
+    "declared_effect_count": 0,
+    "evaluator": [
+      "schema",
+      "signature",
+      "predicate",
+      "ledger"
+    ],
+    "process_replay_test": false
+  },
+  {
+    "id": "N17",
+    "base_fixture": "fixtures-v2.4/base-command-v2.4.json",
+    "path": "/payload/app_config_scope",
+    "replacement": "workload-values",
+    "expected_failure": "APP_CONFIG_SCOPE",
+    "pre_target_sha256": "79f2022b31c75535fdc0d915fa59cca54b185e597e88f9670d82b329d349e232",
+    "post_target_sha256": "79f2022b31c75535fdc0d915fa59cca54b185e597e88f9670d82b329d349e232",
+    "declared_effect_count": 0,
+    "evaluator": [
+      "schema",
+      "signature",
+      "predicate",
+      "ledger"
+    ],
+    "process_replay_test": false
+  },
+  {
+    "id": "N18",
+    "base_fixture": "fixtures-v2.4/base-command-v2.4.json",
+    "path": "/payload/release_version",
+    "replacement": "v0.6.14",
+    "expected_failure": "RELEASE_NOT_MONOTONIC",
+    "pre_target_sha256": "79f2022b31c75535fdc0d915fa59cca54b185e597e88f9670d82b329d349e232",
+    "post_target_sha256": "79f2022b31c75535fdc0d915fa59cca54b185e597e88f9670d82b329d349e232",
+    "declared_effect_count": 0,
+    "evaluator": [
+      "schema",
+      "signature",
+      "predicate",
+      "ledger"
+    ],
+    "process_replay_test": false
+  },
+  {
+    "id": "N19",
+    "base_fixture": "fixtures-v2.4/base-command-v2.4.json",
+    "path": "/payload/asset_media_type",
+    "replacement": "application/octet-stream",
+    "expected_failure": "ASSET_MEDIA_TYPE",
+    "pre_target_sha256": "79f2022b31c75535fdc0d915fa59cca54b185e597e88f9670d82b329d349e232",
+    "post_target_sha256": "79f2022b31c75535fdc0d915fa59cca54b185e597e88f9670d82b329d349e232",
+    "declared_effect_count": 0,
+    "evaluator": [
+      "schema",
+      "signature",
+      "predicate",
+      "ledger"
+    ],
+    "process_replay_test": false
+  },
+  {
+    "id": "N20",
+    "base_fixture": "fixtures-v2.4/base-command-v2.4.json",
+    "path": "/payload/asset_source_sha256",
+    "replacement": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "expected_failure": "ASSET_SOURCE_DIGEST",
+    "pre_target_sha256": "79f2022b31c75535fdc0d915fa59cca54b185e597e88f9670d82b329d349e232",
+    "post_target_sha256": "79f2022b31c75535fdc0d915fa59cca54b185e597e88f9670d82b329d349e232",
+    "declared_effect_count": 0,
+    "evaluator": [
+      "schema",
+      "signature",
+      "predicate",
+      "ledger"
+    ],
+    "process_replay_test": false
+  },
+  {
+    "id": "N21",
+    "base_fixture": "fixtures-v2.4/base-command-v2.4.json",
+    "path": "/payload/destination_binding",
+    "replacement": "github://other/release",
+    "expected_failure": "DESTINATION_BINDING",
+    "pre_target_sha256": "79f2022b31c75535fdc0d915fa59cca54b185e597e88f9670d82b329d349e232",
+    "post_target_sha256": "79f2022b31c75535fdc0d915fa59cca54b185e597e88f9670d82b329d349e232",
+    "declared_effect_count": 0,
+    "evaluator": [
+      "schema",
+      "signature",
+      "predicate",
+      "ledger"
+    ],
+    "process_replay_test": false
+  },
+  {
+    "id": "N22",
+    "base_fixture": "fixtures-v2.4/base-command-v2.4.json",
+    "path": "/payload/revoked",
+    "replacement": true,
+    "expected_failure": "SIGNER_REVOKED",
+    "pre_target_sha256": "79f2022b31c75535fdc0d915fa59cca54b185e597e88f9670d82b329d349e232",
+    "post_target_sha256": "79f2022b31c75535fdc0d915fa59cca54b185e597e88f9670d82b329d349e232",
+    "declared_effect_count": 0,
+    "evaluator": [
+      "schema",
+      "signature",
+      "predicate",
+      "ledger"
+    ],
+    "process_replay_test": false
+  },
+  {
+    "id": "N23",
+    "base_fixture": "fixtures-v2.4/base-command-v2.4.json",
+    "path": "/payload/live_evidence",
+    "replacement": true,
+    "expected_failure": "LIVE_EVIDENCE_REJECTED",
+    "pre_target_sha256": "79f2022b31c75535fdc0d915fa59cca54b185e597e88f9670d82b329d349e232",
+    "post_target_sha256": "79f2022b31c75535fdc0d915fa59cca54b185e597e88f9670d82b329d349e232",
+    "declared_effect_count": 0,
+    "evaluator": [
+      "schema",
+      "signature",
+      "predicate",
+      "ledger"
+    ],
+    "process_replay_test": false
+  },
+  {
+    "id": "N24",
+    "base_fixture": "fixtures-v2.4/base-command-v2.4.json",
+    "path": "/payload/allowed_transitions",
+    "replacement": [
+      "S00->M19"
+    ],
+    "expected_failure": "FSM_ALLOWED_TRANSITION",
+    "pre_target_sha256": "79f2022b31c75535fdc0d915fa59cca54b185e597e88f9670d82b329d349e232",
+    "post_target_sha256": "79f2022b31c75535fdc0d915fa59cca54b185e597e88f9670d82b329d349e232",
+    "declared_effect_count": 0,
+    "evaluator": [
+      "schema",
+      "signature",
+      "predicate",
+      "ledger"
+    ],
+    "process_replay_test": false
+  }
+]

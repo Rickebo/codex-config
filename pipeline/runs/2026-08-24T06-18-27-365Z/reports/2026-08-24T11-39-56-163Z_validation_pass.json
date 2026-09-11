@@ -1,0 +1,16 @@
+{
+  "stage": "validation",
+  "status": "pass",
+  "summary": "All pre-PR requirements are directly covered: prior-flow diagnosis, secure automatic SemVer allocation, exact CI SHA binding, serialization, idempotence, preserved verifier/publisher stages, recursion-safe authenticated dispatch, restricted writes, focused tests, issue/worktree workflow, and v0.6.13 expectation.",
+  "changed_files": [],
+  "validation": [
+    "Explicit former tag-first root cause is documented in docs/releasing.md",
+    "Latest release remains v0.6.12 and no v0.6.13 tag or release exists",
+    "Planner selects patch v0.6.13 from history containing Kafka fix 989799c",
+    "Issue #91 is open and isolated branch/worktree are ready for PR",
+    "Complete content hash 4cf8b48c0c96a35b8c43873193bfc3f2a4f6e58d40476d9f9c53e8c05269435d passed review and tests"
+  ],
+  "blockers": [],
+  "next_action": "Commit with a releasable conventional subject, open and merge the protected PR after checks, then observe and verify the automatic v0.6.13 release chain.",
+  "route_to": "done"
+}

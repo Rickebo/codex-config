@@ -1,0 +1,15 @@
+{
+  "nonce": "nonce-race-v2.6",
+  "attempts": [
+    {
+      "result": "REPLAY"
+    },
+    {
+      "result": "SUCCESS"
+    }
+  ],
+  "successes": 1,
+  "replays": 1,
+  "after_restart_count": 1,
+  "durable": true
+}

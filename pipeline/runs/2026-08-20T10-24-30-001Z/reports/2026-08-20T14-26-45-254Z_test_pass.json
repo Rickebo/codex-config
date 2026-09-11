@@ -1,0 +1,23 @@
+{
+  "stage": "test",
+  "status": "pass",
+  "summary": "Stage 5 transport and regression tests pass in the required feature worktree.",
+  "changed_files": [
+    "tests/integration/test_http_transports.py",
+    "tests/integration/test_stdio.py",
+    "tests/test_cli.py"
+  ],
+  "validation": [
+    "uv run pytest tests/integration: 7 passed",
+    "uv run pytest: 84 passed",
+    "uv run ruff check src/agent_mcp tests: passed",
+    "uv run mypy src: passed",
+    "uv run agent-mcp serve --help: passed",
+    "uv run agent-mcp stdio --help: passed"
+  ],
+  "blockers": [],
+  "next_action": "Record final Stage 5 validation evidence and advance the pipeline to done for this implementation slice.",
+  "route_to": "validation",
+  "risk_level": "medium",
+  "independent_lanes": ["integration suite", "full regression suite", "static checks"]
+}

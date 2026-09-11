@@ -1,0 +1,6 @@
+{
+  "role": "release-platform-v2.6",
+  "principal": "system:serviceaccount:release-platform:controller",
+  "transit_key_fingerprint": "f8fdd095b4a85f277a31a333c0ca198a61437b50389ec31fecd1ef8ad866f649",
+  "revoked": false
+}

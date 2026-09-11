@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="28c14448-c736-4984-9325-01726948d06e" name="@RICKEBO 2026-08-27 06:53:19" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2026-08-27T06:53:19.9445725+02:00" queuing="2026-08-27T06:53:19.9445725+02:00" start="2026-08-27T06:52:55.9898362+02:00" finish="2026-08-27T06:53:19.9476234+02:00" />
+  <TestSettings name="default" id="95f6e2c1-a023-4a7a-964b-a40a92042cb7">
+    <Deployment runDeploymentRoot="_RICKEBO_2026-08-27_06_53_19" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="c624bfe5-a752-4cfd-8cd6-3a3c660090ca" testId="e3e4a78e-7353-6546-29d7-93b35f485d98" testName="WorkspaceManager.SystemTests.KnowledgeGenerationFlowTests.Source_snapshot_replay_after_bounded_model_outage_creates_one_persisted_build" computerName="RICKEBO" duration="00:00:23.3081294" startTime="2026-08-27T06:52:56.5783028+02:00" endTime="2026-08-27T06:53:19.8921225+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="c624bfe5-a752-4cfd-8cd6-3a3c660090ca">
+      <Output>
+        <StdOut>FastSystem ready: Workspace=http://127.0.0.1:34869/, Source=http://127.0.0.1:45529/, Model=http://127.0.0.1:45133/, Knowledge=http://127.0.0.1:40701/
+Source snapshot 01a04190-85d3-73d2-b028-a4b550d3ed24 observed on source.events.v1 partition 2; Knowledge worker started.
+Knowledge build 01a04190-8f4e-791c-a670-0412bacad346 reached queued after 1 injected Model 503 response(s).</StdOut>
+      </Output>
+    </UnitTestResult>
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="WorkspaceManager.SystemTests.KnowledgeGenerationFlowTests.Source_snapshot_replay_after_bounded_model_outage_creates_one_persisted_build" storage="/tmp/workspace-manager-ac005-green.d9pbni/src/tests/system/workspacemanager.systemtests/bin/release/net10.0/workspacemanager.systemtests.dll" id="e3e4a78e-7353-6546-29d7-93b35f485d98">
+      <Execution id="c624bfe5-a752-4cfd-8cd6-3a3c660090ca" />
+      <TestMethod codeBase="/tmp/workspace-manager-ac005-green.D9pbnI/src/tests/system/WorkspaceManager.SystemTests/bin/Release/net10.0/WorkspaceManager.SystemTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="WorkspaceManager.SystemTests.KnowledgeGenerationFlowTests" name="Source_snapshot_replay_after_bounded_model_outage_creates_one_persisted_build" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="e3e4a78e-7353-6546-29d7-93b35f485d98" executionId="c624bfe5-a752-4cfd-8cd6-3a3c660090ca" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Completed">
+    <Counters total="1" executed="1" passed="1" failed="0" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v4.0.0+05679a7ab5 (64-bit .NET 10.0.11)
+[xUnit.net 00:00:00.08]   Discovering: WorkspaceManager.SystemTests
+[xUnit.net 00:00:00.17]   Discovered:  WorkspaceManager.SystemTests
+[xUnit.net 00:00:00.19]   Starting:    WorkspaceManager.SystemTests
+[testcontainers.org 00:00:00.18] Connected to Docker:
+  Host: unix:///var/run/docker.sock
+  Server Version: 29.7.2
+  Kernel Version: 6.18.44-1-lts
+  API Version: 1.55
+  Operating System: Arch Linux
+  Total Memory: 60.48 GB
+[testcontainers.org 00:00:00.24] Docker network 56f266751bfd created
+[testcontainers.org 00:00:00.58] Docker container 417adeb929a7 created
+[testcontainers.org 00:00:00.60] Start Docker container 417adeb929a7
+[testcontainers.org 00:00:00.72] Wait for Docker container 417adeb929a7 to complete readiness checks
+[testcontainers.org 00:00:01.73] Docker container 417adeb929a7 ready
+[testcontainers.org 00:00:01.83] Docker container 352d41021a46 created
+[testcontainers.org 00:00:01.83] Start Docker container 352d41021a46
+[testcontainers.org 00:00:01.85] Docker container 0b8efb49bf56 created
+[testcontainers.org 00:00:01.85] Start Docker container 0b8efb49bf56
+[testcontainers.org 00:00:01.86] Docker container 25633506a1e9 created
+[testcontainers.org 00:00:01.87] Start Docker container 25633506a1e9
+[testcontainers.org 00:00:01.96] Wait for Docker container 352d41021a46 to complete readiness checks
+[testcontainers.org 00:00:01.97] Wait for Docker container 0b8efb49bf56 to complete readiness checks
+[testcontainers.org 00:00:01.98] Execute "pg_isready --host localhost --dbname postgres --username postgres" at Docker container 0b8efb49bf56
+[testcontainers.org 00:00:02.01] Add file to tar archive: Content length: 149 byte(s), Target file: "/testcontainers.sh", UID: 0, GID: 0, Mode: 0755
+[testcontainers.org 00:00:02.02] Copy tar archive to container: Content length: 149 byte(s), Docker container: 25633506a1e9
+[testcontainers.org 00:00:02.02] Wait for Docker container 25633506a1e9 to complete readiness checks
+[testcontainers.org 00:00:02.98] Docker container 352d41021a46 ready
+[testcontainers.org 00:00:03.02] Execute "pg_isready --host localhost --dbname postgres --username postgres" at Docker container 0b8efb49bf56
+[testcontainers.org 00:00:04.04] Execute "pg_isready --host localhost --dbname postgres --username postgres" at Docker container 0b8efb49bf56
+[testcontainers.org 00:00:04.07] Docker container 0b8efb49bf56 ready
+[testcontainers.org 00:00:05.02] Docker container 25633506a1e9 ready
+[testcontainers.org 00:00:21.68] Delete Docker container 352d41021a46
+[testcontainers.org 00:00:22.12] Delete Docker container 25633506a1e9
+[testcontainers.org 00:00:22.57] Delete Docker container 0b8efb49bf56
+[testcontainers.org 00:00:22.89] Delete Docker network 56f266751bfd
+[xUnit.net 00:00:23.57]   Finished:    WorkspaceManager.SystemTests
+</StdOut>
+    </Output>
+  </ResultSummary>
+</TestRun>

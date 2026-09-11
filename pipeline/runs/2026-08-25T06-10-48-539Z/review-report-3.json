@@ -1,0 +1,67 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Formal full-branch backend and QA review accepts the real Source-to-Knowledge queued-build/replay/outage proof, but found merge-blocking production authentication, delivery classification, cleanup/diagnostic, negative-coverage, and contract/documentation gaps. No finding is waived.",
+  "changed_files": [],
+  "validation": [
+    "Independent backend reviewer inspected the full origin/main...58e90ae production, contract, migration, retry, lifecycle, and security diff",
+    "Independent QA lead and two read-only subreviews inspected real-process authenticity, Kafka replay boundaries, cleanup, diagnostics, acceptance mapping, and documentation",
+    "Review confirmed the FastSystem flow launches real Source, Workspace, Model, and Knowledge assemblies; one injected Model 503 recovers to one durable queued build",
+    "Review confirmed duplicate replay is bounded by committed offsets and broker high-watermarks and reuses the original build identity",
+    "Review confirmed queued-build scope is the correct issue #28 boundary; publication/provider execution and direct port-branch tests remain parent issue #26 scope"
+  ],
+  "blockers": [
+    "Source internal snapshot reads trust only spoofable X-Workload-Identity instead of the required request/workspace-bound proof or enforced mTLS.",
+    "Post-deletion Source events throw uncaught InvalidOperationException, and resolver HTTP 429 is treated as terminal, violating durable retry/DLQ consumer semantics.",
+    "Local child-process disposal can become non-retryable before exit is verified, and unexpected fixture HTTP bodies are copied unbounded and unredacted into test diagnostics.",
+    "Required forged, expired, wrong-audience/route proof cases and malformed, unauthorized, partial, and stale dependency matrices are not directly covered.",
+    "Knowledge documentation still says the resolver is missing; Model README omits X-Workload-Nonce; Model OpenAPI declares mutualTLS while runtime requires HMAC headers."
+  ],
+  "next_action": "Return to code for coordinated backend, system-test, test-coverage, and documentation/contract remediation, then repeat independent review at a new clean HEAD.",
+  "route_to": "code",
+  "risk_level": "high",
+  "issues": [
+    {
+      "id": "REV3-BE-001",
+      "title": "Source snapshot workload authentication is spoofable",
+      "severity": "high",
+      "details": "KnowledgeWorker Program sends only X-Workload-Identity and Source ApiAuthorization.RequireWorkload checks only that string. Implement and document request/workspace-bound proof verification with replay protection, or enforce the declared mTLS boundary consistently; add forged/replay/wrong-workspace negatives.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV3-BE-002",
+      "title": "Consumer terminal and transient outcomes are misclassified",
+      "severity": "high",
+      "details": "IngestSnapshotAsync throws unhandled InvalidOperationException after workspace deletion, stopping consumption without a durable terminal outcome. HttpKnowledgeGenerationResolver maps HTTP 429 to ContractValidationException and immediate DLQ. Use typed redacted terminal handling for deletion and bounded retry for 429, with offset/DLQ/recovery tests.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV3-SYS-001",
+      "title": "System cleanup and HTTP diagnostics can leak or orphan resources",
+      "severity": "high",
+      "details": "LocalDotNetProcess disposal marks itself complete before child-tree exit is confirmed, so kill failures can orphan children and suppress retry. SendJsonAsync reads and embeds arbitrary response bodies. Keep cleanup retryable until verified exit and bound/redact error diagnostics, with focused failure tests.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV3-QA-001",
+      "title": "Acceptance-negative matrices are incomplete",
+      "severity": "high",
+      "details": "Add table-driven forged, expired, wrong-audience/route proof tests that show invalid proofs do not consume nonces, plus malformed, unauthorized, partial, stale, and missing dependency response tests required by AC-002/TST-001/TST-002.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV3-CONTRACT-001",
+      "title": "Authentication contracts and resolver documentation contradict runtime",
+      "severity": "high",
+      "details": "Update Knowledge README and CONTRACT_GAPS to describe the implemented resolver and exact FastSystem proof; add Model X-Workload-Nonce semantics; align Model OpenAPI security/header declarations with the implemented HMAC contract.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV3-RESIDUAL-001",
+      "title": "Direct port-ownership branches and startup cancellation remain untested",
+      "severity": "low",
+      "details": "Direct port-collision/foreign-version branch coverage, loopback bind-race hardening, and broader startup cancellation remain nonblocking parent issue #26 harness debt.",
+      "owner_stage": "test"
+    }
+  ]
+}

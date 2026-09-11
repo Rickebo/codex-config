@@ -1,0 +1,28 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Final hardening is complete at b1b85c624c28b7a1616350cdcfeba14673bfcc7c: retry waits are explicitly bounded, exchange gates honor cancellation, and mandatory permission levels cannot be elevated by overrides.",
+  "changed_files": [
+    "internal/githubproject/app_token.go",
+    "internal/githubproject/client.go",
+    "internal/githubproject/installation_projection_test.go"
+  ],
+  "validation": [
+    "make ci passed",
+    "Go tests, race, vet, formatting, and diff checks passed"
+  ],
+  "blockers": [
+    "Independent review must confirm the final exact head.",
+    "Hosted validate must pass at the final remote head.",
+    "Live App permission and DEV projection read/write evidence remains required before closure."
+  ],
+  "next_action": "Push b1b85c624c28b7a1616350cdcfeba14673bfcc7c to PR #150 and run final independent review and hosted validation.",
+  "route_to": "review",
+  "risk_level": "high",
+  "independent_lanes": [
+    "Final security re-review",
+    "Final exact-head QA and hosted checks",
+    "GitHub PR/project bookkeeping and live-gate tracking"
+  ],
+  "requires_council": true
+}

@@ -1,0 +1,65 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Independent exact-SHA review of deployment-controller f9a51c05 found five blocking fail-closed gaps in the legacy pre-approval quarantine path; current tests pass but do not cover the risky activation-event and audit-state cases.",
+  "changed_files": [
+    "internal/controller/activation/legacy_preapproval.go",
+    "internal/controller/activation/legacy_preapproval_test.go",
+    "internal/controller/activation/reconciler.go",
+    "docs/operations.md"
+  ],
+  "validation": [
+    "Independent diff review: f9a51c05b2a6941fc1152a413f70ff3c808ae5cd vs 989799cc99a4e9577bfd100dde320a71f7e7fb9f",
+    "Reviewer confirmed focused go test passes",
+    "Reviewer confirmed go test -race passes",
+    "Reviewer confirmed go vet passes",
+    "Reviewer confirmed go test ./... passes"
+  ],
+  "blockers": [
+    "Activation-event reconciliation does not require exactly one linked activation and can fall through to mutating normal reconciliation on missing/mismatched legacy state.",
+    "Legacy Work validation accepts nonterminal/unknown phases and can miss unexpected linked Work when repositoryDeploymentRef is nil.",
+    "Generation matching accepts generation 3+ instead of exact v0.6.4 Activate generation 2.",
+    "Referenced proof, issuance Lease, and Work deletion timestamps are not rejected.",
+    "High-risk activation-event, work-phase, deletion-timestamp, and generation-drift cases lack CRD/status-subresource coverage."
+  ],
+  "next_action": "Remediate the five findings with exact fail-closed classifiers, zero-write mismatch behavior, and focused status-subresource tests, then commit and re-review the new exact SHA.",
+  "route_to": "code",
+  "risk_level": "critical",
+  "issues": [
+    {
+      "id": "LEGACY-REVIEW-001",
+      "title": "Activation-event path can bypass exact linked-state validation",
+      "severity": "high",
+      "details": "Require a complete linked-activation list and exact name+UID match; missing or mismatched legacy request state must return a terminal zero-write error.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "LEGACY-REVIEW-002",
+      "title": "Work terminal-state validation is incomplete",
+      "severity": "high",
+      "details": "Whitelist terminal legacy Work phases only and detect all unexpected linked Work, including nil repositoryDeploymentRef cases.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "LEGACY-REVIEW-003",
+      "title": "Legacy Activate generation classifier is too broad",
+      "severity": "high",
+      "details": "Require Generation exactly 2 for the v0.6.4 Activate transition.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "LEGACY-REVIEW-004",
+      "title": "Deleting audit objects are accepted",
+      "severity": "high",
+      "details": "Reject non-zero deletion timestamps on referenced proofs, issuance Leases, and linked Work before any write.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "LEGACY-REVIEW-005",
+      "title": "Risky legacy migration cases lack integration-level coverage",
+      "severity": "medium",
+      "details": "Add the strongest available CRD/status-subresource tests plus race coverage for duplicate/mismatch/missing activation-event state, Work phases, deletion timestamps, and generation drift.",
+      "owner_stage": "code"
+    }
+  ]
+}

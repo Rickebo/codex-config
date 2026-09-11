@@ -1,0 +1,32 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Issue #131 implementation is committed at the exact worktree head with pod and ServiceAccount automount hardening, Helm contract negatives, and deployment guidance.",
+  "changed_files": [
+    "charts/agent-orchestrator/templates/deployment.yaml",
+    "charts/agent-orchestrator/templates/serviceaccount.yaml",
+    "docs/deployment.md",
+    "tools/helmcontract/main.go",
+    "tools/helmcontract/main_test.go"
+  ],
+  "validation": [
+    "go test ./...",
+    "go test -race ./...",
+    "go vet ./...",
+    "go test ./tools/helmcontract",
+    "make helm-contract",
+    "make helm-lint",
+    "make helm-validate/kubeconform",
+    "make ci-go",
+    "Python checker tests",
+    "actionlint",
+    "workflow/docs checks",
+    "git diff --check"
+  ],
+  "blockers": [],
+  "next_action": "Independent exact-head review and QA must confirm both rendered environments, negative fixtures, and preserved Vault/migration contracts.",
+  "route_to": "review",
+  "risk_level": "low",
+  "commit": "69554eb281acf3b81fdbf21366650669e3ce0896",
+  "worktree": "/mnt/rickebo-p/agent-orchestrator/.worktrees/agent-orchestrator-issue_131"
+}

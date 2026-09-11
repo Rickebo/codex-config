@@ -1,0 +1,26 @@
+{
+  "run_dir": "/home/rickebo/.codex/pipeline/runs/2026-08-24T05-26-25-384Z",
+  "risk_level": "critical",
+  "workspace_revision": "6c3def5c-c709-4464-96e6-9d379ddda504",
+  "perspectives": [
+    {
+      "role": "planner",
+      "agent": "/root/legacy_emergency_spec_planner",
+      "decision": "NO-GO until exact modern routing, terminal no-op, old-CRD envtest, and conditional narrow CEL handling are specified and tested."
+    },
+    {
+      "role": "reviewer",
+      "agent": "/root/legacy_emergency_spec_reviewer",
+      "decision": "NO-GO until consumed-proof/absent-Lease compatibility and failedEpochRecovery exclusion are included without audit mutation."
+    },
+    {
+      "role": "quality",
+      "agent": "/root/legacy_emergency_spec_qa",
+      "decision": "NO-GO until real envtest covers modern regressions and immutable v0.6.4 CRD upgrade/status-subresource behavior."
+    }
+  ],
+  "consensus": "The bounded test-first specification is sufficient to enter code. Release, import, preflight, and live mutation remain outside this pipeline and separately gated.",
+  "unresolved_questions": [
+    "Whether current CRD CEL requires a narrowly scoped persisted-legacy status-update exception must be determined empirically by envtest."
+  ]
+}

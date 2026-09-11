@@ -1,0 +1,102 @@
+{
+  "schema": "codicarium.grant-migration/v1",
+  "repository_id": "1303372884",
+  "environment": "dev",
+  "uniqueness_key": "repository_id=1303372884/environment=dev/max_grants=1",
+  "current_grant": {
+    "name": "runner-config-dev",
+    "uid": "60cf8514-cbc3-4659-ba5c-22c4d4658bae",
+    "resource_version": "27561715",
+    "profile_ref": "arc-path-helm",
+    "profile_ref_immutable": true,
+    "profile_uid": "868dbd03-3a59-43bd-9c70-e393eb69d8eb",
+    "duplicate_repo_environment_grant_allowed": false
+  },
+  "new_profile": {
+    "name": "artifact-capability-path-helm",
+    "create_before_grant_retirement": true,
+    "preserve_existing_arc_scopes": true,
+    "resources": [
+      "Certificate",
+      "Deployment",
+      "Issuer",
+      "Job",
+      "NetworkPolicy",
+      "PodDisruptionBudget",
+      "PrometheusRule",
+      "Service",
+      "ServiceAccount",
+      "ServiceMonitor"
+    ],
+    "destinations": [
+      "arc-runners",
+      "arc-systems",
+      "artifact-capability"
+    ]
+  },
+  "activation_compatibility": {
+    "chosen_runtime_mode": "event-driven",
+    "environment": "dev",
+    "deployment_activation_source": null,
+    "request_ref_required": true,
+    "kafka_required": true,
+    "poll_only_admissible": false,
+    "current_main_impact": "#103 PollOnly remains prod-only; dev runner-config-dev preserves event-driven RequestRef+Kafka authority and tests reject PollOnly/dev."
+  },
+  "preserved_objects": [
+    {
+      "kind": "AppProject",
+      "namespace": "argocd",
+      "name": "repo-runner-config-dev",
+      "uid": "59f950a3-11f2-49c7-bd38-90948df75872",
+      "resource_version": "26616740",
+      "spec_sha256": "78f44d4efdc2ea55c1ea7b527d863fb8c8c15170909750bb17d3e84b8670e468"
+    },
+    {
+      "kind": "Application",
+      "namespace": "argocd",
+      "name": "actions-runner-controller-codicarium",
+      "uid": "ff536ac7-51db-4256-8c81-6b8ef3ffda26",
+      "resource_version": "43334823",
+      "spec_sha256": "8f0e23deb6dd6c99879342af99c967ac2289834af9f989088c335cc33b7612fd"
+    },
+    {
+      "kind": "Application",
+      "namespace": "argocd",
+      "name": "actions-runner-scale-set-codicarium",
+      "uid": "586b3e1e-c5bb-4bf0-b7a9-fcaa9446ded7",
+      "resource_version": "43335012",
+      "spec_sha256": "b33e3502fd7b12cbb4f72b8524a2db97b8b2232e0b7d2363b8bd22cd6c0d9553"
+    },
+    {
+      "kind": "AutoscalingRunnerSet",
+      "namespace": "arc-runners",
+      "name": "codicarium-linux",
+      "uid": "4ef54624-27dc-464a-9215-54cc0b4b1eb9",
+      "resource_version": "43332160",
+      "spec_sha256": "1bd8af51c30bd7204cf1aec21684566fa3c5f4a28d3fa1c66477d7bf35d0809e"
+    },
+    {
+      "kind": "AutoscalingListener",
+      "namespace": "arc-systems",
+      "name": "codicarium-linux-5b84bf57-listener",
+      "uid": "c79f2712-6e1b-49d4-988c-ca1e73873ce1",
+      "resource_version": "26616851",
+      "spec_sha256": "9c1ed0b3dbf84e2a4b51adf583b76aa9d04a44251aba11cc5305703ee06a9d69"
+    }
+  ],
+  "steps": [
+    "verify exact kube binding before any mutation",
+    "create artifact-capability-path-helm before touching runner-config-dev",
+    "freeze delivery activation reconciliation and generated-write actors",
+    "snapshot exact UIDs resourceVersions managed fields and canonical spec hashes",
+    "delete old runner-config-dev with exact UID and resourceVersion preconditions",
+    "prove runner-config-dev absent and no duplicate repository/environment grant exists",
+    "prove old RepositoryDeployment activation proof and work are orphaned fail-closed",
+    "prove preserved AppProject Applications and ARC workloads retain exact UIDs and specs",
+    "recreate runner-config-dev with the same name and new profile as a new authorization epoch",
+    "reject every old activation proof work item UID and epoch",
+    "activate only after journal network Kata proxy Vault TLS and three-node gates pass"
+  ],
+  "rollback": "preactivation-only; after new authorization epoch activation use forward remediation, never restore old UID, proof, activation, work, or dual ownership"
+}

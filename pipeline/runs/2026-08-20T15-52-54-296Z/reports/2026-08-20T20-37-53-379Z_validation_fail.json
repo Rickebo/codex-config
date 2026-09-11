@@ -1,0 +1,27 @@
+{
+  "stage": "validation",
+  "status": "fail",
+  "summary": "Repository-side controls and exact hosted validation pass, but issue #123 acceptance is not proven without platform-admin runner and cleanup attestations.",
+  "changed_files": [],
+  "validation": [
+    "Exact PR head 612446f and hosted validate run 32413508440 verified",
+    "PR workflow, release selector, permissions, checkout, ci-pr boundary, and trust checker satisfy repository contract",
+    "No fork canary, VM lifecycle, trusted release pool, cancellation cleanup, egress, cache, or credential attestation found"
+  ],
+  "blockers": [
+    "Platform owners must provide fork-canary and dedicated trusted-runner evidence before #123 can close.",
+    "Static repository checks cannot prove VM destruction, host/Docker isolation, network egress, or cleanup on failure/cancellation."
+  ],
+  "next_action": "Merge the repository-side PR as tracked progress, keep #123 open/blocked with an evidence checklist, and await platform validation.",
+  "route_to": "test",
+  "risk_level": "critical",
+  "independent_lanes": [
+    "Repository-side controls validated",
+    "Hosted exact-head check validated",
+    "External platform evidence missing"
+  ],
+  "requires_council": true,
+  "issues": [
+    {"id":"VAL-123-001","title":"Missing platform runner and teardown evidence","severity":"critical","details":"No fork canary, ephemeral VM teardown, dedicated release pool, failure/cancellation cleanup, or restricted egress/cache/credential attestation is available.","owner_stage":"validation"}
+  ]
+}

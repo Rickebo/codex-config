@@ -1,0 +1,193 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.codicarium.com/release/publisher-dispatch-receipt-v2.schema.json",
+  "title": "Signed publisher dispatch sequence-zero receipt",
+  "type": "object",
+  "required": [
+    "body",
+    "signature"
+  ],
+  "properties": {
+    "body": {
+      "type": "object",
+      "required": [
+        "schema",
+        "evidence_class",
+        "publication_authority",
+        "fixture_set",
+        "fixture_identity_jcs_sha256",
+        "kind",
+        "claim_key",
+        "active_source_revision",
+        "claim_identity_jcs_sha256",
+        "protected_main_revision",
+        "sequence",
+        "previous_receipt_sha256",
+        "reservation_entry_sha256",
+        "authorization_sha256",
+        "handoff_sha256",
+        "legacy_raw_identity_authority",
+        "dispatch_request_sha256",
+        "dispatch_readback_sha256",
+        "publisher_workflow",
+        "publisher_workflow_sha",
+        "publisher_ref",
+        "publisher_revision",
+        "publisher_run_id",
+        "publisher_run_attempt",
+        "issued_at",
+        "issuer"
+      ],
+      "properties": {
+        "schema": {
+          "const": "codicarium.publisher-dispatch-receipt/v2"
+        },
+        "evidence_class": {
+          "const": "synthetic-conformance-fixture"
+        },
+        "publication_authority": {
+          "const": false
+        },
+        "fixture_set": {
+          "const": "issue93-v2.0"
+        },
+        "fixture_identity_jcs_sha256": {
+          "const": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9"
+        },
+        "kind": {
+          "const": "publisher-dispatch"
+        },
+        "claim_key": {
+          "type": "string",
+          "pattern": "^rel-v2-sha256:[0-9a-f]{64}$"
+        },
+        "active_source_revision": {
+          "const": "2aee9b5ba6ed8be8dc848df482a43f6a3f33b712"
+        },
+        "claim_identity_jcs_sha256": {
+          "const": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9"
+        },
+        "protected_main_revision": {
+          "const": "6b82f94bf0c41381bd43f96a04baf909dac7ec52"
+        },
+        "sequence": {
+          "const": "0"
+        },
+        "previous_receipt_sha256": {
+          "const": "0000000000000000000000000000000000000000000000000000000000000000"
+        },
+        "reservation_entry_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "authorization_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "handoff_sha256": {
+          "const": "8abe528bb32aaa47f8fc496c3571d4b91248f3ebfe4c8be29463a25277bd9e88"
+        },
+        "legacy_raw_identity_authority": {
+          "const": false
+        },
+        "dispatch_request_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "dispatch_readback_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "publisher_workflow": {
+          "const": "codicarium/deployment-controller/.github/workflows/publish-release-v2.yaml"
+        },
+        "publisher_workflow_sha": {
+          "const": "6b82f94bf0c41381bd43f96a04baf909dac7ec52"
+        },
+        "publisher_ref": {
+          "const": "refs/heads/main"
+        },
+        "publisher_revision": {
+          "const": "6b82f94bf0c41381bd43f96a04baf909dac7ec52"
+        },
+        "publisher_run_id": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        },
+        "publisher_run_attempt": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        },
+        "issued_at": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])-([0-2][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]Z$"
+        },
+        "issuer": {
+          "type": "object",
+          "required": [
+            "kind",
+            "principal",
+            "vault_role",
+            "can_mutate_targets",
+            "can_commit_journal"
+          ],
+          "properties": {
+            "kind": {
+              "const": "vault-transit"
+            },
+            "principal": {
+              "const": "release-journal-signer"
+            },
+            "vault_role": {
+              "const": "release-journal-sign-v1"
+            },
+            "can_mutate_targets": {
+              "const": false
+            },
+            "can_commit_journal": {
+              "const": false
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "signature": {
+      "type": "object",
+      "required": [
+        "format",
+        "transit_key",
+        "transit_key_version",
+        "kid",
+        "payload_sha256",
+        "signature_base64url"
+      ],
+      "properties": {
+        "format": {
+          "const": "vault-transit-ed25519-jcs/v1"
+        },
+        "transit_key": {
+          "const": "release-journal-v1"
+        },
+        "transit_key_version": {
+          "const": "1"
+        },
+        "kid": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "payload_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "signature_base64url": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]+$"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

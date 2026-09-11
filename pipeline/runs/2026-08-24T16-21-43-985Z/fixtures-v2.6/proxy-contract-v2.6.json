@@ -1,0 +1,12 @@
+{
+  "listener": "release-proxy.internal:8443",
+  "host": "api.github.com",
+  "audience": "release-platform",
+  "sni": "api.github.com",
+  "operations": [
+    "create-tag",
+    "draft-release",
+    "upload-release-asset",
+    "readback-release"
+  ]
+}

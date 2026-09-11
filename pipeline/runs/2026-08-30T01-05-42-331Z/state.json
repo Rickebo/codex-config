@@ -1,0 +1,365 @@
+{
+  "version": 1,
+  "created_at": "2026-08-30T01:05:42.331Z",
+  "updated_at": "2026-08-30T02:21:45.883Z",
+  "task": "Refresh infra PR #1155 on canonical main, fix invalid MetaMCP revocation parser with real parser coverage, preserve lockout safety, and stop before merge/deploy or live authorization mutation",
+  "policy_path": "/home/rickebo/.codex/pipeline/transitions.json",
+  "approval_rules_path": "/home/rickebo/.codex/pipeline/approval-rules.json",
+  "initial_stage": "spec",
+  "current_stage": "test",
+  "pipeline_profile": "full",
+  "done": false,
+  "max_loops": 6,
+  "loop_count": 3,
+  "approval_required_count": 10,
+  "approvals": [
+    {
+      "at": "2026-08-30T01:17:39.777Z",
+      "approver": "user",
+      "note": "Explicit Proceed and request to go further with authorization authorize Luna to refresh infra PR #1155 and add parser-level tests under the approved bounded spec. No merge, workflow dispatch, deployment, credential access, environment change, or live authorization mutation.",
+      "gate": "spec_to_code",
+      "reason": "Spec pass requires explicit approval before implementation starts.",
+      "risk_level": "critical",
+      "from_stage": "spec",
+      "next_stage": "code",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T01-05-42-331Z/reports/2026-08-30T01-17-27-993Z_spec_pass.json"
+    },
+    {
+      "at": "2026-08-30T01:34:53.043Z",
+      "approver": "user",
+      "note": "Explicit Proceed authorizes independent Luna exact-head review of refreshed local Phase 0 head ca9c8fdacfa0f55e23e7bead366dc6f7b8c4bf3e. No push, merge, dispatch, deployment, credential/environment access, or live authorization mutation at this gate.",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "from_stage": "code",
+      "next_stage": "review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T01-05-42-331Z/reports/2026-08-30T01-34-41-667Z_code_ready_for_review.json"
+    },
+    {
+      "at": "2026-08-30T01:43:40.125Z",
+      "approver": "user",
+      "note": "Explicit Proceed authorizes Luna to wire the missing revocation suites and use a checksummed exact kubectl for parser CI. Scope remains PR #1155 code/tests only; no push until re-review, and no merge/dispatch/deploy/live mutation.",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "from_stage": "review",
+      "next_stage": "code",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T01-05-42-331Z/reports/2026-08-30T01-43-31-156Z_review_fail.json"
+    },
+    {
+      "at": "2026-08-30T01:49:07.369Z",
+      "approver": "user",
+      "note": "Explicit Proceed authorizes fresh independent Luna re-review of exact amended head fc75180f233f5068f2843ee6c8329d5628f600e5. No push, merge, dispatch, deployment, credential/environment access, or live authorization mutation at this gate.",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "from_stage": "code",
+      "next_stage": "review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T01-05-42-331Z/reports/2026-08-30T01-48-48-967Z_code_ready_for_review.json"
+    },
+    {
+      "at": "2026-08-30T01:51:25.282Z",
+      "approver": "user",
+      "note": "Explicit Proceed authorizes exact-lease push of independently reviewed Phase 0 head fc75180f233f5068f2843ee6c8329d5628f600e5 only if canonical main remains 4096b5da and PR head remains b6bed307, followed by protected exact-head checks. Merge/dispatch/deploy/live mutation remain separate gates.",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "from_stage": "review",
+      "next_stage": "test",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T01-05-42-331Z/reports/2026-08-30T01-51-09-737Z_review_pass.json"
+    },
+    {
+      "at": "2026-08-30T02:06:20.007Z",
+      "approver": "user",
+      "note": "User explicitly said proceed here. Authorization covers a Luna-owned minimal refresh of infra PR #1155 onto canonical main and renewed exact-head review/CI. No merge, workflow dispatch, deployment, credential/environment mutation, or live authorization change is authorized by this transition.",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "from_stage": "test",
+      "next_stage": "code",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T01-05-42-331Z/reports/2026-08-30T02-06-12-578Z_test_fail.json"
+    },
+    {
+      "at": "2026-08-30T02:09:42.624Z",
+      "approver": "user",
+      "note": "User explicitly said proceed here. This authorizes an independent Luna review of exact rebased local head e1ede4d3fbb0f17798361ec364a500cbca578ce6. No push, merge, dispatch, deployment, credential/environment access, or live authorization mutation is authorized at this gate.",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "from_stage": "code",
+      "next_stage": "review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T01-05-42-331Z/reports/2026-08-30T02-09-28-187Z_code_ready_for_review.json"
+    },
+    {
+      "at": "2026-08-30T02:11:50.338Z",
+      "approver": "user",
+      "note": "User explicitly said proceed here and requested Luna code changes. This authorizes only the minimal fail-closed MetaMCP revocation two-state fix and focused tests in the existing worktree. No push, merge, dispatch, deployment, credential/environment access, or live authorization mutation is authorized.",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "from_stage": "review",
+      "next_stage": "code",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T01-05-42-331Z/reports/2026-08-30T02-11-40-086Z_review_fail.json"
+    },
+    {
+      "at": "2026-08-30T02:18:47.424Z",
+      "approver": "user",
+      "note": "User explicitly said proceed here. This authorizes independent Luna review of exact local head dbaccadbb857a6c853c382aac6bd93862fd8073d only. No push, merge, dispatch, deployment, credential/environment access, or live authorization mutation is authorized.",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "from_stage": "code",
+      "next_stage": "review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T01-05-42-331Z/reports/2026-08-30T02-18-47-394Z_code_ready_for_review.json"
+    },
+    {
+      "at": "2026-08-30T02:21:45.882Z",
+      "approver": "user",
+      "note": "User explicitly said proceed here. This authorizes an exact-lease push of independently reviewed head dbaccadbb857a6c853c382aac6bd93862fd8073d only if canonical main remains 09e6e540 and remote PR head remains fc75180f, followed by protected exact-head CI. Merge, dispatch, deployment, credentials/environments, and live authorization mutation remain unauthorized.",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "from_stage": "review",
+      "next_stage": "test",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T01-05-42-331Z/reports/2026-08-30T02-21-45-865Z_review_pass.json"
+    }
+  ],
+  "awaiting_approval": null,
+  "spec_gate": {
+    "passed": true,
+    "passed_at": "2026-08-30T01:17:39.777Z",
+    "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T01-05-42-331Z/feature-spec.json",
+    "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T01-05-42-331Z/spec-check.json",
+    "council_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T01-05-42-331Z/council.md"
+  },
+  "council_policy": {
+    "required": "always"
+  },
+  "history": [
+    {
+      "at": "2026-08-30T01:17:27.994Z",
+      "event": "approval_required",
+      "stage": "spec",
+      "status": "pass",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T01-05-42-331Z/reports/2026-08-30T01-17-27-993Z_spec_pass.json",
+      "requested_next_stage": "code",
+      "gate": "spec_to_code",
+      "reason": "Spec pass requires explicit approval before implementation starts.",
+      "risk_level": "critical",
+      "spec_gate": {
+        "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T01-05-42-331Z/feature-spec.json",
+        "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T01-05-42-331Z/spec-check.json",
+        "council_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T01-05-42-331Z/council.md",
+        "checked_at": "2026-08-30T01:17:02.914Z"
+      }
+    },
+    {
+      "at": "2026-08-30T01:17:39.777Z",
+      "event": "approved_transition",
+      "stage": "spec",
+      "status": "pass",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T01-05-42-331Z/reports/2026-08-30T01-17-27-993Z_spec_pass.json",
+      "approver": "user",
+      "note": "Explicit Proceed and request to go further with authorization authorize Luna to refresh infra PR #1155 and add parser-level tests under the approved bounded spec. No merge, workflow dispatch, deployment, credential access, environment change, or live authorization mutation.",
+      "next_stage": "code"
+    },
+    {
+      "at": "2026-08-30T01:34:41.668Z",
+      "event": "approval_required",
+      "stage": "code",
+      "status": "ready_for_review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T01-05-42-331Z/reports/2026-08-30T01-34-41-667Z_code_ready_for_review.json",
+      "requested_next_stage": "review",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "spec_gate": null
+    },
+    {
+      "at": "2026-08-30T01:34:53.043Z",
+      "event": "approved_transition",
+      "stage": "code",
+      "status": "ready_for_review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T01-05-42-331Z/reports/2026-08-30T01-34-41-667Z_code_ready_for_review.json",
+      "approver": "user",
+      "note": "Explicit Proceed authorizes independent Luna exact-head review of refreshed local Phase 0 head ca9c8fdacfa0f55e23e7bead366dc6f7b8c4bf3e. No push, merge, dispatch, deployment, credential/environment access, or live authorization mutation at this gate.",
+      "next_stage": "review"
+    },
+    {
+      "at": "2026-08-30T01:43:31.157Z",
+      "event": "approval_required",
+      "stage": "review",
+      "status": "fail",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T01-05-42-331Z/reports/2026-08-30T01-43-31-156Z_review_fail.json",
+      "requested_next_stage": "code",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "spec_gate": null
+    },
+    {
+      "at": "2026-08-30T01:43:40.125Z",
+      "event": "approved_transition",
+      "stage": "review",
+      "status": "fail",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T01-05-42-331Z/reports/2026-08-30T01-43-31-156Z_review_fail.json",
+      "approver": "user",
+      "note": "Explicit Proceed authorizes Luna to wire the missing revocation suites and use a checksummed exact kubectl for parser CI. Scope remains PR #1155 code/tests only; no push until re-review, and no merge/dispatch/deploy/live mutation.",
+      "next_stage": "code"
+    },
+    {
+      "at": "2026-08-30T01:48:48.967Z",
+      "event": "approval_required",
+      "stage": "code",
+      "status": "ready_for_review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T01-05-42-331Z/reports/2026-08-30T01-48-48-967Z_code_ready_for_review.json",
+      "requested_next_stage": "review",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "spec_gate": null
+    },
+    {
+      "at": "2026-08-30T01:49:07.369Z",
+      "event": "approved_transition",
+      "stage": "code",
+      "status": "ready_for_review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T01-05-42-331Z/reports/2026-08-30T01-48-48-967Z_code_ready_for_review.json",
+      "approver": "user",
+      "note": "Explicit Proceed authorizes fresh independent Luna re-review of exact amended head fc75180f233f5068f2843ee6c8329d5628f600e5. No push, merge, dispatch, deployment, credential/environment access, or live authorization mutation at this gate.",
+      "next_stage": "review"
+    },
+    {
+      "at": "2026-08-30T01:51:09.737Z",
+      "event": "approval_required",
+      "stage": "review",
+      "status": "pass",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T01-05-42-331Z/reports/2026-08-30T01-51-09-737Z_review_pass.json",
+      "requested_next_stage": "test",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "spec_gate": null
+    },
+    {
+      "at": "2026-08-30T01:51:25.282Z",
+      "event": "approved_transition",
+      "stage": "review",
+      "status": "pass",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T01-05-42-331Z/reports/2026-08-30T01-51-09-737Z_review_pass.json",
+      "approver": "user",
+      "note": "Explicit Proceed authorizes exact-lease push of independently reviewed Phase 0 head fc75180f233f5068f2843ee6c8329d5628f600e5 only if canonical main remains 4096b5da and PR head remains b6bed307, followed by protected exact-head checks. Merge/dispatch/deploy/live mutation remain separate gates.",
+      "next_stage": "test"
+    },
+    {
+      "at": "2026-08-30T02:06:12.578Z",
+      "event": "approval_required",
+      "stage": "test",
+      "status": "fail",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T01-05-42-331Z/reports/2026-08-30T02-06-12-578Z_test_fail.json",
+      "requested_next_stage": "code",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "spec_gate": null
+    },
+    {
+      "at": "2026-08-30T02:06:20.008Z",
+      "event": "approved_transition",
+      "stage": "test",
+      "status": "fail",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T01-05-42-331Z/reports/2026-08-30T02-06-12-578Z_test_fail.json",
+      "approver": "user",
+      "note": "User explicitly said proceed here. Authorization covers a Luna-owned minimal refresh of infra PR #1155 onto canonical main and renewed exact-head review/CI. No merge, workflow dispatch, deployment, credential/environment mutation, or live authorization change is authorized by this transition.",
+      "next_stage": "code"
+    },
+    {
+      "at": "2026-08-30T02:09:28.188Z",
+      "event": "approval_required",
+      "stage": "code",
+      "status": "ready_for_review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T01-05-42-331Z/reports/2026-08-30T02-09-28-187Z_code_ready_for_review.json",
+      "requested_next_stage": "review",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "spec_gate": null
+    },
+    {
+      "at": "2026-08-30T02:09:42.625Z",
+      "event": "approved_transition",
+      "stage": "code",
+      "status": "ready_for_review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T01-05-42-331Z/reports/2026-08-30T02-09-28-187Z_code_ready_for_review.json",
+      "approver": "user",
+      "note": "User explicitly said proceed here. This authorizes an independent Luna review of exact rebased local head e1ede4d3fbb0f17798361ec364a500cbca578ce6. No push, merge, dispatch, deployment, credential/environment access, or live authorization mutation is authorized at this gate.",
+      "next_stage": "review"
+    },
+    {
+      "at": "2026-08-30T02:11:40.086Z",
+      "event": "approval_required",
+      "stage": "review",
+      "status": "fail",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T01-05-42-331Z/reports/2026-08-30T02-11-40-086Z_review_fail.json",
+      "requested_next_stage": "code",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "spec_gate": null
+    },
+    {
+      "at": "2026-08-30T02:11:50.338Z",
+      "event": "approved_transition",
+      "stage": "review",
+      "status": "fail",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T01-05-42-331Z/reports/2026-08-30T02-11-40-086Z_review_fail.json",
+      "approver": "user",
+      "note": "User explicitly said proceed here and requested Luna code changes. This authorizes only the minimal fail-closed MetaMCP revocation two-state fix and focused tests in the existing worktree. No push, merge, dispatch, deployment, credential/environment access, or live authorization mutation is authorized.",
+      "next_stage": "code"
+    },
+    {
+      "at": "2026-08-30T02:18:47.394Z",
+      "event": "approval_required",
+      "stage": "code",
+      "status": "ready_for_review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T01-05-42-331Z/reports/2026-08-30T02-18-47-394Z_code_ready_for_review.json",
+      "requested_next_stage": "review",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "spec_gate": null
+    },
+    {
+      "at": "2026-08-30T02:18:47.424Z",
+      "event": "approved_transition",
+      "stage": "code",
+      "status": "ready_for_review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T01-05-42-331Z/reports/2026-08-30T02-18-47-394Z_code_ready_for_review.json",
+      "approver": "user",
+      "note": "User explicitly said proceed here. This authorizes independent Luna review of exact local head dbaccadbb857a6c853c382aac6bd93862fd8073d only. No push, merge, dispatch, deployment, credential/environment access, or live authorization mutation is authorized.",
+      "next_stage": "review"
+    },
+    {
+      "at": "2026-08-30T02:21:45.866Z",
+      "event": "approval_required",
+      "stage": "review",
+      "status": "pass",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T01-05-42-331Z/reports/2026-08-30T02-21-45-865Z_review_pass.json",
+      "requested_next_stage": "test",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "spec_gate": null
+    },
+    {
+      "at": "2026-08-30T02:21:45.883Z",
+      "event": "approved_transition",
+      "stage": "review",
+      "status": "pass",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T01-05-42-331Z/reports/2026-08-30T02-21-45-865Z_review_pass.json",
+      "approver": "user",
+      "note": "User explicitly said proceed here. This authorizes an exact-lease push of independently reviewed head dbaccadbb857a6c853c382aac6bd93862fd8073d only if canonical main remains 09e6e540 and remote PR head remains fc75180f, followed by protected exact-head CI. Merge, dispatch, deployment, credentials/environments, and live authorization mutation remain unauthorized.",
+      "next_stage": "test"
+    }
+  ]
+}

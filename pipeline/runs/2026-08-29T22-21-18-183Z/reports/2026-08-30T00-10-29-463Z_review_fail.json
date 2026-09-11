@@ -1,0 +1,28 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Independent Luna review of exact head 8c9b076587c4aa8826ede15abfed6a26a468474f found the JSON behavior correct but the regression test bypasses the actual Plan shell block and workflow env wiring.",
+  "changed_files": [],
+  "validation": [
+    "Exact SHA and clean worktree confirmed",
+    "Only the two intended files differ from c540d017698699c39c9fd97a3920d3a5d205e701",
+    "Focused regression test passed",
+    "Direct probes confirmed unset, empty, object, malformed, and non-object behavior",
+    "Prior full 49-test suite, actionlint, repository validation, and diff check passed"
+  ],
+  "blockers": [
+    "P2: test executes only the Python heredoc body and does not prove the workflow env mapping and actual Plan shell invocation preserve RETIRED_CANDIDATES_JSON"
+  ],
+  "next_action": "Have Luna minimally extend the regression test to exercise the actual Plan shell block or explicitly assert complete env wiring and invocation, then rerun validation.",
+  "route_to": "code",
+  "risk_level": "critical",
+  "issues": [
+    {
+      "id": "DC158-TEST-WIRING",
+      "title": "Regression test bypasses workflow env and shell wiring",
+      "severity": "medium",
+      "details": "A typo or removal in Plan-step env wiring could drop retirement state while the extracted Python-only test remains green.",
+      "owner_stage": "code"
+    }
+  ]
+}

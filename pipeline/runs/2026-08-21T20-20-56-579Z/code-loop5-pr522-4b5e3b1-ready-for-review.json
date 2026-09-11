@@ -1,0 +1,13 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "PR #522 commit 4b5e3b1 closed exactly the three review omissions: executable fake-Kopia restore fixture, read-only graph-artifacts backup mount and manifest inventory, and dual-snapshot disposable restore with restored-byte SHA validation.",
+  "changed_files": ["tests/fixtures/workspace_context_restore/run.sh", "tests/fixtures/workspace_context_restore/README.md", "tests/test_workspace_context_llm_proxy_gitops.py", "workspace-context/templates/gated.yaml"],
+  "validation": ["workspace-context/tests/static.sh passed", "bash -n tests/fixtures/workspace_context_restore/run.sh passed", "pytest -q tests/test_workspace_context_llm_proxy_gitops.py: 12 passed, 1 skipped", "helm lint workspace-context and helm lint llm-proxy passed", "helm template enabled workspace-context render and YAML parse passed", "git diff --check passed; fixture committed mode 100755", "fixture exited 77 because local PostgreSQL binaries and a usable container runtime are unavailable", "Exact tests for PR #522 commit 4b5e3b1: workspace-context/tests/static.sh; bash -n tests/fixtures/workspace_context_restore/run.sh; pytest -q tests/test_workspace_context_llm_proxy_gitops.py (12 passed, 1 skipped)", "Exact tests continued: helm lint workspace-context; helm lint llm-proxy; helm template enabled workspace-context with YAML parse; git diff --check"],
+  "blockers": ["shellcheck is not installed locally", "No current pipeline-controller run or GitHub Actions CI run exists for PR #522"],
+  "next_action": "Review the pushed commit on PR #522; no approval requested.",
+  "route_to": "review",
+  "risk_level": "medium",
+  "requires_council": false,
+  "independent_lanes": ["fixture behavior", "backup/restore manifest contract", "focused render assertions"]
+}

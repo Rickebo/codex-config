@@ -1,0 +1,25 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Luna fixed canonical admission body-size rendering at PR #151 exact head 6b468b4719040a560457c1b69ae14fd6d79a0ac2 and added an exact rendered-value assertion.",
+  "changed_files": [
+    "charts/deployment-controller/templates/rolebinding-admission.yaml",
+    "hack/test-rolebinding-admission-chart.py"
+  ],
+  "validation": [
+    "RoleBinding admission chart contract passed",
+    "Full chart validation passed",
+    "Direct Helm render emits exact maxBodyBytes value 1048576",
+    "git diff --check passed",
+    "Luna reviewer re-reviewed exact head 6b468b4719040a560457c1b69ae14fd6d79a0ac2 and found no blocking findings"
+  ],
+  "blockers": [
+    "Fresh exact-head protected CI is still running"
+  ],
+  "next_action": "Advance the unchanged reviewed head to protected test evidence and merge-readiness validation if CI passes.",
+  "independent_lanes": [
+    "PR #151 protected CI",
+    "infra PR #1272 queued protected ARC preparation"
+  ],
+  "risk_level": "critical"
+}

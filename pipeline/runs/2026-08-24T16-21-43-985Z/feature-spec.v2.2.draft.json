@@ -1,0 +1,1531 @@
+{
+  "meta": {
+    "id": "SPEC-deployment-controller-successor-v2-2",
+    "title": "Release platform v2.2 executable authority specification",
+    "author": "Codex release manager",
+    "created_at": "2026-08-26T10:00:00Z",
+    "version": "2.2.0-council-draft"
+  },
+  "feature": {
+    "problem_statement": "v2.1 was deterministic but temporally unschedulable and allowed forgeable evidence, incomplete bootstrap, broad proxy authority and absent admin, CNPG and recovery contracts.",
+    "goals": [
+      "Closed schedulable rollout DAG",
+      "Cryptographically verifiable typed evidence",
+      "No synthetic authorization",
+      "Forward-only recovery"
+    ],
+    "non_goals": [
+      "Live mutation or deployment",
+      "Backward compatibility",
+      "Activation before live evidence"
+    ],
+    "scope_in": [
+      "Seven repositories and future release-platform-config",
+      "v0.6.14 successor release",
+      "GitHub, Kubernetes, Vault, PostgreSQL and artifact evidence"
+    ],
+    "scope_out": [
+      "Changing v0.6.13",
+      "Reopening issue 93",
+      "Using release-security as an owner"
+    ]
+  },
+  "requirements": [
+    {
+      "id": "REQ-001",
+      "priority": "MUST",
+      "statement": "Freeze the seven authoritative heads and never require a later head to equal a preimplementation head; each lane instead binds its own candidate and postmerge head.",
+      "rationale": "Fail-closed v2.2 council closure."
+    },
+    {
+      "id": "REQ-002",
+      "priority": "MUST",
+      "statement": "Execute exactly the closed 101-node DAG with the six CA, IF, PG, VA, RP and DC lanes, explicit publication nodes, terminal U00-U08 recovery, and no retry edge.",
+      "rationale": "Fail-closed v2.2 council closure."
+    },
+    {
+      "id": "REQ-003",
+      "priority": "MUST",
+      "statement": "Define and validate all 37 typed payload schemas and a DSSE PAE envelope whose payload is exact RFC 8785 JCS bytes.",
+      "rationale": "Fail-closed v2.2 council closure."
+    },
+    {
+      "id": "REQ-004",
+      "priority": "MUST",
+      "statement": "Accept publication authority only for live evidence after Q42 and A51 with an unused 256-bit nonce, exact identity and target, fresh recomputed PASS predicate, claim, epoch and sequence.",
+      "rationale": "Fail-closed v2.2 council closure."
+    },
+    {
+      "id": "REQ-005",
+      "priority": "MUST",
+      "statement": "Force publication_authority false for synthetic evidence and keep activation BLOCKED_PREACTIVATION until every live gate exists.",
+      "rationale": "Fail-closed v2.2 council closure."
+    },
+    {
+      "id": "REQ-006",
+      "priority": "MUST",
+      "statement": "Bind each command to an exact executor digest, argv, identity, target union, request and payload hashes, nonce, time window, predicate evaluator and pre/effect/post evidence.",
+      "rationale": "Fail-closed v2.2 council closure."
+    },
+    {
+      "id": "REQ-007",
+      "priority": "MUST",
+      "statement": "Use candidate-source-capability/v2 with exact purpose, deterministic key, application/gzip, immutable create statuses 201/409/422 and one successful read followed by 410.",
+      "rationale": "Fail-closed v2.2 council closure."
+    },
+    {
+      "id": "REQ-008",
+      "priority": "MUST",
+      "statement": "Fetch candidate bytes without extraction and extract only inside a destroyed no-network Kata sandbox after digest and byte-length verification.",
+      "rationale": "Fail-closed v2.2 council closure."
+    },
+    {
+      "id": "REQ-009",
+      "priority": "MUST",
+      "statement": "Use four typed mutation records with distinct writer, collector, Vault transit signer and append-only committer identities, roles, networks and GitHub Apps.",
+      "rationale": "Fail-closed v2.2 council closure."
+    },
+    {
+      "id": "REQ-010",
+      "priority": "MUST",
+      "statement": "Expose only the exact GitHub proxy operation catalog; deny generic POST, redirects, path tricks, host changes and direct GitHub egress.",
+      "rationale": "Fail-closed v2.2 council closure."
+    },
+    {
+      "id": "REQ-011",
+      "priority": "MUST",
+      "statement": "Bind proxy access to TokenReview Pod and ServiceAccount identity, listener, nonce, expiry, audience, SNI and API version.",
+      "rationale": "Fail-closed v2.2 council closure."
+    },
+    {
+      "id": "REQ-012",
+      "priority": "MUST",
+      "statement": "Make vault-config own executable create-only Vault bootstrap, verify-full and teardown evidence with wrong-CA, wrong-SNI, expiry, plaintext and wildcard zero-effect negatives.",
+      "rationale": "Fail-closed v2.2 council closure."
+    },
+    {
+      "id": "REQ-013",
+      "priority": "MUST",
+      "statement": "Make postgres-config own executable three-node CNPG placement, synchronous replication, TLS, app and CA Secrets, execute-only runtime, backup, isolated restore and each-node-loss RPO zero and RTO at most 120 seconds.",
+      "rationale": "Fail-closed v2.2 council closure."
+    },
+    {
+      "id": "REQ-014",
+      "priority": "MUST",
+      "statement": "Retire all five legacy workflows, runs, credentials, routes and sessions and wait the maximum observed TTL plus skew before Q40.",
+      "rationale": "Fail-closed v2.2 council closure."
+    },
+    {
+      "id": "REQ-015",
+      "priority": "MUST",
+      "statement": "On ambiguity freeze the epoch, quarantine, repair forward at a new head, and allocate a later unused release ID, claim, epoch, nonce and work item without retag, resume or overwrite.",
+      "rationale": "Fail-closed v2.2 council closure."
+    },
+    {
+      "id": "REQ-016",
+      "priority": "MUST",
+      "statement": "Require normal administration to use distinct requester, approver and executor with bounded TTL and single-use credentials.",
+      "rationale": "Fail-closed v2.2 council closure."
+    },
+    {
+      "id": "REQ-017",
+      "priority": "MUST",
+      "statement": "Require break-glass dual independent approvers and a separate executor; forbid bypassing gates, minting candidates, mutating admission, publishing or clearing UNKNOWN, and prove zero target effects for negatives.",
+      "rationale": "Fail-closed v2.2 council closure."
+    },
+    {
+      "id": "REQ-018",
+      "priority": "MUST",
+      "statement": "Assign schemas and evaluators to codicarium-actions, configuration and policy to release-platform-config, central infrastructure to infra, data to postgres-config, secrets to vault-config and release orchestration to deployment-controller; release-security is not an owner.",
+      "rationale": "Fail-closed v2.2 council closure."
+    },
+    {
+      "id": "REQ-019",
+      "priority": "MUST",
+      "statement": "Create release-platform-config only after exact-hash council approval using one-use dual control, then independently bind its immutable numeric ID, node ID, settings, seed, tree, rulesets, checks and administrator-visible bypass actors.",
+      "rationale": "Fail-closed v2.2 council closure."
+    },
+    {
+      "id": "REQ-020",
+      "priority": "MUST",
+      "statement": "Require all six implementation lanes to pass signed exact-diff review, positive and negative tests, protected same-head checks, guarded exact merge and postmerge main readback.",
+      "rationale": "Fail-closed v2.2 council closure."
+    },
+    {
+      "id": "REQ-021",
+      "priority": "MUST",
+      "statement": "Materialize central capacity, Kata, namespaces, admission, proxy and RBAC before live probes and materialize CNPG and Vault before release-platform workloads.",
+      "rationale": "Fail-closed v2.2 council closure."
+    },
+    {
+      "id": "REQ-022",
+      "priority": "MUST",
+      "statement": "Prove all grant Applications absent before creating the complete set and prove health while runner-config descriptor, values and handoff blobs remain unchanged.",
+      "rationale": "Fail-closed v2.2 council closure."
+    },
+    {
+      "id": "REQ-023",
+      "priority": "MUST",
+      "statement": "Recompute fresh signed predicates at Q41 and authorize exactly one narrow work item at Q42 without side effects.",
+      "rationale": "Fail-closed v2.2 council closure."
+    },
+    {
+      "id": "REQ-024",
+      "priority": "MUST",
+      "statement": "Activate one exact epoch at A50 and independently prove authority isolation at A51 before candidate delivery.",
+      "rationale": "Fail-closed v2.2 council closure."
+    },
+    {
+      "id": "REQ-025",
+      "priority": "MUST",
+      "statement": "Use claim CAS, a verifier dispatch with exact HTTP 200 run details, signed authorization and a publisher dispatch with sequence zero.",
+      "rationale": "Fail-closed v2.2 council closure."
+    },
+    {
+      "id": "REQ-026",
+      "priority": "MUST",
+      "statement": "Execute M01 through M19 as sequential four-party mutations and verify their complete append-only hash chain.",
+      "rationale": "Fail-closed v2.2 council closure."
+    },
+    {
+      "id": "REQ-027",
+      "priority": "MUST",
+      "statement": "Read back the final tag, release, image, chart and fourteen assets before retiring temporary capabilities and revoking final sessions.",
+      "rationale": "Fail-closed v2.2 council closure."
+    },
+    {
+      "id": "REQ-028",
+      "priority": "MUST",
+      "statement": "Treat issue 93 as closed historical context, v0.6.13 as immutable, v0.6.14 as absent before execution, and account for PR 108 only as canonical ACTIONS_STORAGE_OVH recovery secrets plus docs and tests.",
+      "rationale": "Fail-closed v2.2 council closure."
+    },
+    {
+      "id": "REQ-029",
+      "priority": "MUST",
+      "statement": "Hash-bind the normalized pipeline spec-check output in the custom validator and exact-hash council inputs.",
+      "rationale": "Fail-closed v2.2 council closure."
+    },
+    {
+      "id": "REQ-030",
+      "priority": "MUST",
+      "statement": "Validate every schema, positive fixture and intentional negative vector and require two deterministic generations to be byte-identical.",
+      "rationale": "Fail-closed v2.2 council closure."
+    },
+    {
+      "id": "REQ-031",
+      "priority": "MUST",
+      "statement": "Trace every requirement to DAG nodes, commands, payload schemas, one positive oracle and at least one zero-effect negative oracle.",
+      "rationale": "Fail-closed v2.2 council closure."
+    },
+    {
+      "id": "REQ-032",
+      "priority": "MUST",
+      "statement": "Never authorize from prose, a manual assertion, a fixture, a writer-supplied readback digest or an unrecomputed PASS field.",
+      "rationale": "Fail-closed v2.2 council closure."
+    },
+    {
+      "id": "REQ-033",
+      "priority": "MUST",
+      "statement": "Use Sigstore keyless identity for an exact GitHub workflow or Vault transit for an exact Kubernetes ServiceAccount as the only live signing authorities.",
+      "rationale": "Fail-closed v2.2 council closure."
+    },
+    {
+      "id": "REQ-034",
+      "priority": "MUST",
+      "statement": "Verify freshness from issued, not-before, expiry, predicate computation time and command maximum age with bounded clock skew.",
+      "rationale": "Fail-closed v2.2 council closure."
+    },
+    {
+      "id": "REQ-035",
+      "priority": "MUST",
+      "statement": "Verify target authority using immutable repository IDs, Kubernetes context and UID, exact Vault or PostgreSQL SNI, or deterministic artifact key and digest.",
+      "rationale": "Fail-closed v2.2 council closure."
+    },
+    {
+      "id": "REQ-036",
+      "priority": "MUST",
+      "statement": "Publish only through the explicit F02, F04 and M01-M19 execution nodes; planning, review, tests, gates and activation cannot publish.",
+      "rationale": "Fail-closed v2.2 council closure."
+    },
+    {
+      "id": "REQ-037",
+      "priority": "MUST",
+      "statement": "End the normal DAG at F24 and the ambiguity DAG at U08 with signed evidence and no edge into an earlier claim or publication node.",
+      "rationale": "Fail-closed v2.2 council closure."
+    },
+    {
+      "id": "REQ-038",
+      "priority": "MUST",
+      "statement": "Require administrator bypass inventory to be unredacted and independently collected; omitted or redacted data is UNKNOWN and blocks activation.",
+      "rationale": "Fail-closed v2.2 council closure."
+    },
+    {
+      "id": "REQ-039",
+      "priority": "MUST",
+      "statement": "Require every denied administrative, capability, proxy, Vault, CNPG, archive, replay, readback and mutation test to report effect_count zero.",
+      "rationale": "Fail-closed v2.2 council closure."
+    },
+    {
+      "id": "REQ-040",
+      "priority": "MUST",
+      "statement": "Keep repository bootstrap, release platform and all new grants inactive until their preceding readbacks and protected checks pass.",
+      "rationale": "Fail-closed v2.2 council closure."
+    },
+    {
+      "id": "REQ-041",
+      "priority": "MUST",
+      "statement": "Use no backward-compatibility authority path and do not reactivate, adapt or preserve the five retired workflows.",
+      "rationale": "Fail-closed v2.2 council closure."
+    },
+    {
+      "id": "REQ-042",
+      "priority": "MUST",
+      "statement": "Prohibit direct runtime DML and schema creation; runtime receives execute-only procedures after a distinct migrator is retired.",
+      "rationale": "Fail-closed v2.2 council closure."
+    },
+    {
+      "id": "REQ-043",
+      "priority": "MUST",
+      "statement": "Bind release finalization to canonical independent readback rather than publisher responses or supplied digests.",
+      "rationale": "Fail-closed v2.2 council closure."
+    },
+    {
+      "id": "REQ-044",
+      "priority": "MUST",
+      "statement": "Require council review from planner, security, DevOps and QA against identical spec, annex, spec-check and validator report hashes.",
+      "rationale": "Fail-closed v2.2 council closure."
+    },
+    {
+      "id": "REQ-045",
+      "priority": "MUST",
+      "statement": "Keep every live mutation disabled in this specification stage; generated fixtures are synthetic, inert and non-authorizing.",
+      "rationale": "Fail-closed v2.2 council closure."
+    },
+    {
+      "id": "REQ-046",
+      "priority": "MUST",
+      "statement": "REQ46 closure: define signed typed DSSE/JCS command evidence with exact identity, target, nonce, authority, freshness and recomputed predicate semantics for all 37 payloads.",
+      "rationale": "Fail-closed v2.2 council closure."
+    },
+    {
+      "id": "REQ-047",
+      "priority": "MUST",
+      "statement": "REQ47 closure: define normal administrator and break-glass dual-control contracts, bounded single-use credentials, independent execution, audit, revocation and zero-effect negative tests.",
+      "rationale": "Fail-closed v2.2 council closure."
+    },
+    {
+      "id": "REQ-048",
+      "priority": "MUST",
+      "statement": "REQ48 closure: define candidate-source-capability/v2 with exact issuer, audience, subject, repository, commit, codeload URL, object key, media type, digest, length, run, Pod, ServiceAccount, listener, JTI, nonce and time bindings.",
+      "rationale": "Fail-closed v2.2 council closure."
+    },
+    {
+      "id": "REQ-049",
+      "priority": "MUST",
+      "statement": "REQ49 closure: assign schemas and evaluators to codicarium-actions and the remaining configuration, infra, PostgreSQL, Vault, bootstrap and orchestration boundaries without any release-security owner.",
+      "rationale": "Fail-closed v2.2 council closure."
+    },
+    {
+      "id": "REQ-050",
+      "priority": "MUST",
+      "statement": "REQ50 closure: define forward-only ambiguity repair with freeze, quarantine, new code/review/test/validation/merge, later unused release identity, new claim/epoch/nonce/work item and terminal successor handoff without retry.",
+      "rationale": "Fail-closed v2.2 council closure."
+    }
+  ],
+  "acceptance_criteria": [
+    {
+      "id": "AC-001",
+      "requirement_ids": [
+        "REQ-001",
+        "REQ-002"
+      ],
+      "scenario": "Given BLOCKED_PREACTIVATION and synthetic fixtures, When REQ-001 and REQ-002 are evaluated against exact typed evidence, Then only fresh live recomputed evidence may pass and every negative has zero effects."
+    },
+    {
+      "id": "AC-002",
+      "requirement_ids": [
+        "REQ-003",
+        "REQ-004"
+      ],
+      "scenario": "Given BLOCKED_PREACTIVATION and synthetic fixtures, When REQ-003 and REQ-004 are evaluated against exact typed evidence, Then only fresh live recomputed evidence may pass and every negative has zero effects."
+    },
+    {
+      "id": "AC-003",
+      "requirement_ids": [
+        "REQ-005",
+        "REQ-006"
+      ],
+      "scenario": "Given BLOCKED_PREACTIVATION and synthetic fixtures, When REQ-005 and REQ-006 are evaluated against exact typed evidence, Then only fresh live recomputed evidence may pass and every negative has zero effects."
+    },
+    {
+      "id": "AC-004",
+      "requirement_ids": [
+        "REQ-007",
+        "REQ-008"
+      ],
+      "scenario": "Given BLOCKED_PREACTIVATION and synthetic fixtures, When REQ-007 and REQ-008 are evaluated against exact typed evidence, Then only fresh live recomputed evidence may pass and every negative has zero effects."
+    },
+    {
+      "id": "AC-005",
+      "requirement_ids": [
+        "REQ-009",
+        "REQ-010"
+      ],
+      "scenario": "Given BLOCKED_PREACTIVATION and synthetic fixtures, When REQ-009 and REQ-010 are evaluated against exact typed evidence, Then only fresh live recomputed evidence may pass and every negative has zero effects."
+    },
+    {
+      "id": "AC-006",
+      "requirement_ids": [
+        "REQ-011",
+        "REQ-012"
+      ],
+      "scenario": "Given BLOCKED_PREACTIVATION and synthetic fixtures, When REQ-011 and REQ-012 are evaluated against exact typed evidence, Then only fresh live recomputed evidence may pass and every negative has zero effects."
+    },
+    {
+      "id": "AC-007",
+      "requirement_ids": [
+        "REQ-013",
+        "REQ-014"
+      ],
+      "scenario": "Given BLOCKED_PREACTIVATION and synthetic fixtures, When REQ-013 and REQ-014 are evaluated against exact typed evidence, Then only fresh live recomputed evidence may pass and every negative has zero effects."
+    },
+    {
+      "id": "AC-008",
+      "requirement_ids": [
+        "REQ-015",
+        "REQ-016"
+      ],
+      "scenario": "Given BLOCKED_PREACTIVATION and synthetic fixtures, When REQ-015 and REQ-016 are evaluated against exact typed evidence, Then only fresh live recomputed evidence may pass and every negative has zero effects."
+    },
+    {
+      "id": "AC-009",
+      "requirement_ids": [
+        "REQ-017",
+        "REQ-018"
+      ],
+      "scenario": "Given BLOCKED_PREACTIVATION and synthetic fixtures, When REQ-017 and REQ-018 are evaluated against exact typed evidence, Then only fresh live recomputed evidence may pass and every negative has zero effects."
+    },
+    {
+      "id": "AC-010",
+      "requirement_ids": [
+        "REQ-019",
+        "REQ-020"
+      ],
+      "scenario": "Given BLOCKED_PREACTIVATION and synthetic fixtures, When REQ-019 and REQ-020 are evaluated against exact typed evidence, Then only fresh live recomputed evidence may pass and every negative has zero effects."
+    },
+    {
+      "id": "AC-011",
+      "requirement_ids": [
+        "REQ-021",
+        "REQ-022"
+      ],
+      "scenario": "Given BLOCKED_PREACTIVATION and synthetic fixtures, When REQ-021 and REQ-022 are evaluated against exact typed evidence, Then only fresh live recomputed evidence may pass and every negative has zero effects."
+    },
+    {
+      "id": "AC-012",
+      "requirement_ids": [
+        "REQ-023",
+        "REQ-024"
+      ],
+      "scenario": "Given BLOCKED_PREACTIVATION and synthetic fixtures, When REQ-023 and REQ-024 are evaluated against exact typed evidence, Then only fresh live recomputed evidence may pass and every negative has zero effects."
+    },
+    {
+      "id": "AC-013",
+      "requirement_ids": [
+        "REQ-025",
+        "REQ-026"
+      ],
+      "scenario": "Given BLOCKED_PREACTIVATION and synthetic fixtures, When REQ-025 and REQ-026 are evaluated against exact typed evidence, Then only fresh live recomputed evidence may pass and every negative has zero effects."
+    },
+    {
+      "id": "AC-014",
+      "requirement_ids": [
+        "REQ-027",
+        "REQ-028"
+      ],
+      "scenario": "Given BLOCKED_PREACTIVATION and synthetic fixtures, When REQ-027 and REQ-028 are evaluated against exact typed evidence, Then only fresh live recomputed evidence may pass and every negative has zero effects."
+    },
+    {
+      "id": "AC-015",
+      "requirement_ids": [
+        "REQ-029",
+        "REQ-030"
+      ],
+      "scenario": "Given BLOCKED_PREACTIVATION and synthetic fixtures, When REQ-029 and REQ-030 are evaluated against exact typed evidence, Then only fresh live recomputed evidence may pass and every negative has zero effects."
+    },
+    {
+      "id": "AC-016",
+      "requirement_ids": [
+        "REQ-031",
+        "REQ-032"
+      ],
+      "scenario": "Given BLOCKED_PREACTIVATION and synthetic fixtures, When REQ-031 and REQ-032 are evaluated against exact typed evidence, Then only fresh live recomputed evidence may pass and every negative has zero effects."
+    },
+    {
+      "id": "AC-017",
+      "requirement_ids": [
+        "REQ-033",
+        "REQ-034"
+      ],
+      "scenario": "Given BLOCKED_PREACTIVATION and synthetic fixtures, When REQ-033 and REQ-034 are evaluated against exact typed evidence, Then only fresh live recomputed evidence may pass and every negative has zero effects."
+    },
+    {
+      "id": "AC-018",
+      "requirement_ids": [
+        "REQ-035",
+        "REQ-036"
+      ],
+      "scenario": "Given BLOCKED_PREACTIVATION and synthetic fixtures, When REQ-035 and REQ-036 are evaluated against exact typed evidence, Then only fresh live recomputed evidence may pass and every negative has zero effects."
+    },
+    {
+      "id": "AC-019",
+      "requirement_ids": [
+        "REQ-037",
+        "REQ-038"
+      ],
+      "scenario": "Given BLOCKED_PREACTIVATION and synthetic fixtures, When REQ-037 and REQ-038 are evaluated against exact typed evidence, Then only fresh live recomputed evidence may pass and every negative has zero effects."
+    },
+    {
+      "id": "AC-020",
+      "requirement_ids": [
+        "REQ-039",
+        "REQ-040"
+      ],
+      "scenario": "Given BLOCKED_PREACTIVATION and synthetic fixtures, When REQ-039 and REQ-040 are evaluated against exact typed evidence, Then only fresh live recomputed evidence may pass and every negative has zero effects."
+    },
+    {
+      "id": "AC-021",
+      "requirement_ids": [
+        "REQ-041",
+        "REQ-042"
+      ],
+      "scenario": "Given BLOCKED_PREACTIVATION and synthetic fixtures, When REQ-041 and REQ-042 are evaluated against exact typed evidence, Then only fresh live recomputed evidence may pass and every negative has zero effects."
+    },
+    {
+      "id": "AC-022",
+      "requirement_ids": [
+        "REQ-043",
+        "REQ-044"
+      ],
+      "scenario": "Given BLOCKED_PREACTIVATION and synthetic fixtures, When REQ-043 and REQ-044 are evaluated against exact typed evidence, Then only fresh live recomputed evidence may pass and every negative has zero effects."
+    },
+    {
+      "id": "AC-023",
+      "requirement_ids": [
+        "REQ-045",
+        "REQ-046"
+      ],
+      "scenario": "Given BLOCKED_PREACTIVATION and synthetic fixtures, When REQ-045 and REQ-046 are evaluated against exact typed evidence, Then only fresh live recomputed evidence may pass and every negative has zero effects."
+    },
+    {
+      "id": "AC-024",
+      "requirement_ids": [
+        "REQ-047",
+        "REQ-048"
+      ],
+      "scenario": "Given BLOCKED_PREACTIVATION and synthetic fixtures, When REQ-047 and REQ-048 are evaluated against exact typed evidence, Then only fresh live recomputed evidence may pass and every negative has zero effects."
+    },
+    {
+      "id": "AC-025",
+      "requirement_ids": [
+        "REQ-049",
+        "REQ-050"
+      ],
+      "scenario": "Given BLOCKED_PREACTIVATION and synthetic fixtures, When REQ-049 and REQ-050 are evaluated against exact typed evidence, Then only fresh live recomputed evidence may pass and every negative has zero effects."
+    }
+  ],
+  "test_plan": [
+    {
+      "id": "TST-001",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-001",
+        "REQ-002"
+      ],
+      "approach": "Run validate-v2.2.py and the mapped positive and negative oracles for REQ-001 and REQ-002; assert deterministic rejection and effect_count zero."
+    },
+    {
+      "id": "TST-002",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-003",
+        "REQ-004"
+      ],
+      "approach": "Run validate-v2.2.py and the mapped positive and negative oracles for REQ-003 and REQ-004; assert deterministic rejection and effect_count zero."
+    },
+    {
+      "id": "TST-003",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-005",
+        "REQ-006"
+      ],
+      "approach": "Run validate-v2.2.py and the mapped positive and negative oracles for REQ-005 and REQ-006; assert deterministic rejection and effect_count zero."
+    },
+    {
+      "id": "TST-004",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-007",
+        "REQ-008"
+      ],
+      "approach": "Run validate-v2.2.py and the mapped positive and negative oracles for REQ-007 and REQ-008; assert deterministic rejection and effect_count zero."
+    },
+    {
+      "id": "TST-005",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-009",
+        "REQ-010"
+      ],
+      "approach": "Run validate-v2.2.py and the mapped positive and negative oracles for REQ-009 and REQ-010; assert deterministic rejection and effect_count zero."
+    },
+    {
+      "id": "TST-006",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-011",
+        "REQ-012"
+      ],
+      "approach": "Run validate-v2.2.py and the mapped positive and negative oracles for REQ-011 and REQ-012; assert deterministic rejection and effect_count zero."
+    },
+    {
+      "id": "TST-007",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-013",
+        "REQ-014"
+      ],
+      "approach": "Run validate-v2.2.py and the mapped positive and negative oracles for REQ-013 and REQ-014; assert deterministic rejection and effect_count zero."
+    },
+    {
+      "id": "TST-008",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-015",
+        "REQ-016"
+      ],
+      "approach": "Run validate-v2.2.py and the mapped positive and negative oracles for REQ-015 and REQ-016; assert deterministic rejection and effect_count zero."
+    },
+    {
+      "id": "TST-009",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-017",
+        "REQ-018"
+      ],
+      "approach": "Run validate-v2.2.py and the mapped positive and negative oracles for REQ-017 and REQ-018; assert deterministic rejection and effect_count zero."
+    },
+    {
+      "id": "TST-010",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-019",
+        "REQ-020"
+      ],
+      "approach": "Run validate-v2.2.py and the mapped positive and negative oracles for REQ-019 and REQ-020; assert deterministic rejection and effect_count zero."
+    },
+    {
+      "id": "TST-011",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-021",
+        "REQ-022"
+      ],
+      "approach": "Run validate-v2.2.py and the mapped positive and negative oracles for REQ-021 and REQ-022; assert deterministic rejection and effect_count zero."
+    },
+    {
+      "id": "TST-012",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-023",
+        "REQ-024"
+      ],
+      "approach": "Run validate-v2.2.py and the mapped positive and negative oracles for REQ-023 and REQ-024; assert deterministic rejection and effect_count zero."
+    },
+    {
+      "id": "TST-013",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-025",
+        "REQ-026"
+      ],
+      "approach": "Run validate-v2.2.py and the mapped positive and negative oracles for REQ-025 and REQ-026; assert deterministic rejection and effect_count zero."
+    },
+    {
+      "id": "TST-014",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-027",
+        "REQ-028"
+      ],
+      "approach": "Run validate-v2.2.py and the mapped positive and negative oracles for REQ-027 and REQ-028; assert deterministic rejection and effect_count zero."
+    },
+    {
+      "id": "TST-015",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-029",
+        "REQ-030"
+      ],
+      "approach": "Run validate-v2.2.py and the mapped positive and negative oracles for REQ-029 and REQ-030; assert deterministic rejection and effect_count zero."
+    },
+    {
+      "id": "TST-016",
+      "type": "e2e",
+      "requirement_ids": [
+        "REQ-031",
+        "REQ-032"
+      ],
+      "approach": "Run validate-v2.2.py and the mapped positive and negative oracles for REQ-031 and REQ-032; assert deterministic rejection and effect_count zero."
+    },
+    {
+      "id": "TST-017",
+      "type": "e2e",
+      "requirement_ids": [
+        "REQ-033",
+        "REQ-034"
+      ],
+      "approach": "Run validate-v2.2.py and the mapped positive and negative oracles for REQ-033 and REQ-034; assert deterministic rejection and effect_count zero."
+    },
+    {
+      "id": "TST-018",
+      "type": "e2e",
+      "requirement_ids": [
+        "REQ-035",
+        "REQ-036"
+      ],
+      "approach": "Run validate-v2.2.py and the mapped positive and negative oracles for REQ-035 and REQ-036; assert deterministic rejection and effect_count zero."
+    },
+    {
+      "id": "TST-019",
+      "type": "e2e",
+      "requirement_ids": [
+        "REQ-037",
+        "REQ-038"
+      ],
+      "approach": "Run validate-v2.2.py and the mapped positive and negative oracles for REQ-037 and REQ-038; assert deterministic rejection and effect_count zero."
+    },
+    {
+      "id": "TST-020",
+      "type": "e2e",
+      "requirement_ids": [
+        "REQ-039",
+        "REQ-040"
+      ],
+      "approach": "Run validate-v2.2.py and the mapped positive and negative oracles for REQ-039 and REQ-040; assert deterministic rejection and effect_count zero."
+    },
+    {
+      "id": "TST-021",
+      "type": "e2e",
+      "requirement_ids": [
+        "REQ-041",
+        "REQ-042"
+      ],
+      "approach": "Run validate-v2.2.py and the mapped positive and negative oracles for REQ-041 and REQ-042; assert deterministic rejection and effect_count zero."
+    },
+    {
+      "id": "TST-022",
+      "type": "e2e",
+      "requirement_ids": [
+        "REQ-043",
+        "REQ-044"
+      ],
+      "approach": "Run validate-v2.2.py and the mapped positive and negative oracles for REQ-043 and REQ-044; assert deterministic rejection and effect_count zero."
+    },
+    {
+      "id": "TST-023",
+      "type": "e2e",
+      "requirement_ids": [
+        "REQ-045",
+        "REQ-046"
+      ],
+      "approach": "Run validate-v2.2.py and the mapped positive and negative oracles for REQ-045 and REQ-046; assert deterministic rejection and effect_count zero."
+    },
+    {
+      "id": "TST-024",
+      "type": "e2e",
+      "requirement_ids": [
+        "REQ-047",
+        "REQ-048"
+      ],
+      "approach": "Run validate-v2.2.py and the mapped positive and negative oracles for REQ-047 and REQ-048; assert deterministic rejection and effect_count zero."
+    },
+    {
+      "id": "TST-025",
+      "type": "e2e",
+      "requirement_ids": [
+        "REQ-049",
+        "REQ-050"
+      ],
+      "approach": "Run validate-v2.2.py and the mapped positive and negative oracles for REQ-049 and REQ-050; assert deterministic rejection and effect_count zero."
+    }
+  ],
+  "traceability": [
+    {
+      "requirement_id": "REQ-001",
+      "acceptance_ids": [
+        "AC-001"
+      ],
+      "test_ids": [
+        "TST-001"
+      ],
+      "review_checks": [
+        "Review REQ-001 against DAG nodes S00 and S01."
+      ],
+      "validation_checks": [
+        "Validate CMD-01-BASELINE-INVENTORY, schema codicarium.baseline-inventory/v2, positive signature and zero-effect negative vectors."
+      ]
+    },
+    {
+      "requirement_id": "REQ-002",
+      "acceptance_ids": [
+        "AC-001"
+      ],
+      "test_ids": [
+        "TST-001"
+      ],
+      "review_checks": [
+        "Review REQ-002 against DAG nodes S01 and B10."
+      ],
+      "validation_checks": [
+        "Validate CMD-02-COUNCIL-DECISION, schema codicarium.council-decision/v2, positive signature and zero-effect negative vectors."
+      ]
+    },
+    {
+      "requirement_id": "REQ-003",
+      "acceptance_ids": [
+        "AC-002"
+      ],
+      "test_ids": [
+        "TST-002"
+      ],
+      "review_checks": [
+        "Review REQ-003 against DAG nodes B10 and B11."
+      ],
+      "validation_checks": [
+        "Validate CMD-03-REPOSITORY-CREATE, schema codicarium.repository-create/v2, positive signature and zero-effect negative vectors."
+      ]
+    },
+    {
+      "requirement_id": "REQ-004",
+      "acceptance_ids": [
+        "AC-002"
+      ],
+      "test_ids": [
+        "TST-002"
+      ],
+      "review_checks": [
+        "Review REQ-004 against DAG nodes B11 and B12."
+      ],
+      "validation_checks": [
+        "Validate CMD-04-REPOSITORY-READBACK, schema codicarium.repository-readback/v2, positive signature and zero-effect negative vectors."
+      ]
+    },
+    {
+      "requirement_id": "REQ-005",
+      "acceptance_ids": [
+        "AC-003"
+      ],
+      "test_ids": [
+        "TST-003"
+      ],
+      "review_checks": [
+        "Review REQ-005 against DAG nodes B12 and B13."
+      ],
+      "validation_checks": [
+        "Validate CMD-05-REPOSITORY-BINDING, schema codicarium.repository-binding/v2, positive signature and zero-effect negative vectors."
+      ]
+    },
+    {
+      "requirement_id": "REQ-006",
+      "acceptance_ids": [
+        "AC-003"
+      ],
+      "test_ids": [
+        "TST-003"
+      ],
+      "review_checks": [
+        "Review REQ-006 against DAG nodes B13 and B14."
+      ],
+      "validation_checks": [
+        "Validate CMD-06-GIT-TREE-READBACK, schema codicarium.git-tree-readback/v2, positive signature and zero-effect negative vectors."
+      ]
+    },
+    {
+      "requirement_id": "REQ-007",
+      "acceptance_ids": [
+        "AC-004"
+      ],
+      "test_ids": [
+        "TST-004"
+      ],
+      "review_checks": [
+        "Review REQ-007 against DAG nodes B14 and B15."
+      ],
+      "validation_checks": [
+        "Validate CMD-07-GITHUB-POLICY-INVENTORY, schema codicarium.github-policy-inventory/v2, positive signature and zero-effect negative vectors."
+      ]
+    },
+    {
+      "requirement_id": "REQ-008",
+      "acceptance_ids": [
+        "AC-004"
+      ],
+      "test_ids": [
+        "TST-004"
+      ],
+      "review_checks": [
+        "Review REQ-008 against DAG nodes B15 and CA20."
+      ],
+      "validation_checks": [
+        "Validate CMD-08-ADMIN-BYPASS-INVENTORY, schema codicarium.admin-bypass-inventory/v2, positive signature and zero-effect negative vectors."
+      ]
+    },
+    {
+      "requirement_id": "REQ-009",
+      "acceptance_ids": [
+        "AC-005"
+      ],
+      "test_ids": [
+        "TST-005"
+      ],
+      "review_checks": [
+        "Review REQ-009 against DAG nodes CA20 and CA21."
+      ],
+      "validation_checks": [
+        "Validate CMD-09-LANE-REVIEW, schema codicarium.lane-review/v2, positive signature and zero-effect negative vectors."
+      ]
+    },
+    {
+      "requirement_id": "REQ-010",
+      "acceptance_ids": [
+        "AC-005"
+      ],
+      "test_ids": [
+        "TST-005"
+      ],
+      "review_checks": [
+        "Review REQ-010 against DAG nodes CA21 and CA22."
+      ],
+      "validation_checks": [
+        "Validate CMD-10-PROTECTED-CHECKS, schema codicarium.protected-checks/v2, positive signature and zero-effect negative vectors."
+      ]
+    },
+    {
+      "requirement_id": "REQ-011",
+      "acceptance_ids": [
+        "AC-006"
+      ],
+      "test_ids": [
+        "TST-006"
+      ],
+      "review_checks": [
+        "Review REQ-011 against DAG nodes CA22 and CA23."
+      ],
+      "validation_checks": [
+        "Validate CMD-11-GUARDED-MERGE, schema codicarium.guarded-merge/v2, positive signature and zero-effect negative vectors."
+      ]
+    },
+    {
+      "requirement_id": "REQ-012",
+      "acceptance_ids": [
+        "AC-006"
+      ],
+      "test_ids": [
+        "TST-006"
+      ],
+      "review_checks": [
+        "Review REQ-012 against DAG nodes CA23 and CA24."
+      ],
+      "validation_checks": [
+        "Validate CMD-12-POSTMERGE-MAIN, schema codicarium.postmerge-main/v2, positive signature and zero-effect negative vectors."
+      ]
+    },
+    {
+      "requirement_id": "REQ-013",
+      "acceptance_ids": [
+        "AC-007"
+      ],
+      "test_ids": [
+        "TST-007"
+      ],
+      "review_checks": [
+        "Review REQ-013 against DAG nodes CA24 and CA25."
+      ],
+      "validation_checks": [
+        "Validate CMD-13-NAMESPACE-ADMISSION, schema codicarium.namespace-admission/v2, positive signature and zero-effect negative vectors."
+      ]
+    },
+    {
+      "requirement_id": "REQ-014",
+      "acceptance_ids": [
+        "AC-007"
+      ],
+      "test_ids": [
+        "TST-007"
+      ],
+      "review_checks": [
+        "Review REQ-014 against DAG nodes CA25 and IF20."
+      ],
+      "validation_checks": [
+        "Validate CMD-14-NETWORK-CONFORMANCE, schema codicarium.network-conformance/v2, positive signature and zero-effect negative vectors."
+      ]
+    },
+    {
+      "requirement_id": "REQ-015",
+      "acceptance_ids": [
+        "AC-008"
+      ],
+      "test_ids": [
+        "TST-008"
+      ],
+      "review_checks": [
+        "Review REQ-015 against DAG nodes IF20 and IF21."
+      ],
+      "validation_checks": [
+        "Validate CMD-15-VAULT-BOOTSTRAP, schema codicarium.vault-bootstrap/v2, positive signature and zero-effect negative vectors."
+      ]
+    },
+    {
+      "requirement_id": "REQ-016",
+      "acceptance_ids": [
+        "AC-008"
+      ],
+      "test_ids": [
+        "TST-008"
+      ],
+      "review_checks": [
+        "Review REQ-016 against DAG nodes IF21 and IF22."
+      ],
+      "validation_checks": [
+        "Validate CMD-16-CNPG-CONTRACT, schema codicarium.cnpg-contract/v2, positive signature and zero-effect negative vectors."
+      ]
+    },
+    {
+      "requirement_id": "REQ-017",
+      "acceptance_ids": [
+        "AC-009"
+      ],
+      "test_ids": [
+        "TST-009"
+      ],
+      "review_checks": [
+        "Review REQ-017 against DAG nodes IF22 and IF23."
+      ],
+      "validation_checks": [
+        "Validate CMD-17-CNPG-FAILURE, schema codicarium.cnpg-failure/v2, positive signature and zero-effect negative vectors."
+      ]
+    },
+    {
+      "requirement_id": "REQ-018",
+      "acceptance_ids": [
+        "AC-009"
+      ],
+      "test_ids": [
+        "TST-009"
+      ],
+      "review_checks": [
+        "Review REQ-018 against DAG nodes IF23 and IF24."
+      ],
+      "validation_checks": [
+        "Validate CMD-18-SUCCESSOR-INERTNESS, schema codicarium.successor-inertness/v2, positive signature and zero-effect negative vectors."
+      ]
+    },
+    {
+      "requirement_id": "REQ-019",
+      "acceptance_ids": [
+        "AC-010"
+      ],
+      "test_ids": [
+        "TST-010"
+      ],
+      "review_checks": [
+        "Review REQ-019 against DAG nodes IF24 and IF25."
+      ],
+      "validation_checks": [
+        "Validate CMD-19-APPLICATION-SET, schema codicarium.application-set/v2, positive signature and zero-effect negative vectors."
+      ]
+    },
+    {
+      "requirement_id": "REQ-020",
+      "acceptance_ids": [
+        "AC-010"
+      ],
+      "test_ids": [
+        "TST-010"
+      ],
+      "review_checks": [
+        "Review REQ-020 against DAG nodes IF25 and PG20."
+      ],
+      "validation_checks": [
+        "Validate CMD-20-LEGACY-RETIREMENT, schema codicarium.legacy-retirement/v2, positive signature and zero-effect negative vectors."
+      ]
+    },
+    {
+      "requirement_id": "REQ-021",
+      "acceptance_ids": [
+        "AC-011"
+      ],
+      "test_ids": [
+        "TST-011"
+      ],
+      "review_checks": [
+        "Review REQ-021 against DAG nodes PG20 and PG21."
+      ],
+      "validation_checks": [
+        "Validate CMD-21-QUIESCENCE, schema codicarium.quiescence/v2, positive signature and zero-effect negative vectors."
+      ]
+    },
+    {
+      "requirement_id": "REQ-022",
+      "acceptance_ids": [
+        "AC-011"
+      ],
+      "test_ids": [
+        "TST-011"
+      ],
+      "review_checks": [
+        "Review REQ-022 against DAG nodes PG21 and PG22."
+      ],
+      "validation_checks": [
+        "Validate CMD-22-GATE-INVENTORY, schema codicarium.gate-inventory/v2, positive signature and zero-effect negative vectors."
+      ]
+    },
+    {
+      "requirement_id": "REQ-023",
+      "acceptance_ids": [
+        "AC-012"
+      ],
+      "test_ids": [
+        "TST-012"
+      ],
+      "review_checks": [
+        "Review REQ-023 against DAG nodes PG22 and PG23."
+      ],
+      "validation_checks": [
+        "Validate CMD-23-PREDICATE-RECOMPUTATION, schema codicarium.predicate-recomputation/v2, positive signature and zero-effect negative vectors."
+      ]
+    },
+    {
+      "requirement_id": "REQ-024",
+      "acceptance_ids": [
+        "AC-012"
+      ],
+      "test_ids": [
+        "TST-012"
+      ],
+      "review_checks": [
+        "Review REQ-024 against DAG nodes PG23 and PG24."
+      ],
+      "validation_checks": [
+        "Validate CMD-24-WORK-ITEM-AUTHORIZATION, schema codicarium.work-item-authorization/v2, positive signature and zero-effect negative vectors."
+      ]
+    },
+    {
+      "requirement_id": "REQ-025",
+      "acceptance_ids": [
+        "AC-013"
+      ],
+      "test_ids": [
+        "TST-013"
+      ],
+      "review_checks": [
+        "Review REQ-025 against DAG nodes PG24 and PG25."
+      ],
+      "validation_checks": [
+        "Validate CMD-25-ACTIVATION-EPOCH, schema codicarium.activation-epoch/v2, positive signature and zero-effect negative vectors."
+      ]
+    },
+    {
+      "requirement_id": "REQ-026",
+      "acceptance_ids": [
+        "AC-013"
+      ],
+      "test_ids": [
+        "TST-013"
+      ],
+      "review_checks": [
+        "Review REQ-026 against DAG nodes PG25 and VA20."
+      ],
+      "validation_checks": [
+        "Validate CMD-26-ISOLATION-READBACK, schema codicarium.isolation-readback/v2, positive signature and zero-effect negative vectors."
+      ]
+    },
+    {
+      "requirement_id": "REQ-027",
+      "acceptance_ids": [
+        "AC-014"
+      ],
+      "test_ids": [
+        "TST-014"
+      ],
+      "review_checks": [
+        "Review REQ-027 against DAG nodes VA20 and VA21."
+      ],
+      "validation_checks": [
+        "Validate CMD-27-CANDIDATE-SOURCE-CAPABILITY, schema codicarium.candidate-source-capability/v2, positive signature and zero-effect negative vectors."
+      ]
+    },
+    {
+      "requirement_id": "REQ-028",
+      "acceptance_ids": [
+        "AC-014"
+      ],
+      "test_ids": [
+        "TST-014"
+      ],
+      "review_checks": [
+        "Review REQ-028 against DAG nodes VA21 and VA22."
+      ],
+      "validation_checks": [
+        "Validate CMD-28-CLAIM-CAS, schema codicarium.claim-cas/v2, positive signature and zero-effect negative vectors."
+      ]
+    },
+    {
+      "requirement_id": "REQ-029",
+      "acceptance_ids": [
+        "AC-015"
+      ],
+      "test_ids": [
+        "TST-015"
+      ],
+      "review_checks": [
+        "Review REQ-029 against DAG nodes VA22 and VA23."
+      ],
+      "validation_checks": [
+        "Validate CMD-29-VERIFIER-DISPATCH, schema codicarium.verifier-dispatch/v2, positive signature and zero-effect negative vectors."
+      ]
+    },
+    {
+      "requirement_id": "REQ-030",
+      "acceptance_ids": [
+        "AC-015"
+      ],
+      "test_ids": [
+        "TST-015"
+      ],
+      "review_checks": [
+        "Review REQ-030 against DAG nodes VA23 and VA24."
+      ],
+      "validation_checks": [
+        "Validate CMD-30-PUBLICATION-AUTHORIZATION, schema codicarium.publication-authorization/v2, positive signature and zero-effect negative vectors."
+      ]
+    },
+    {
+      "requirement_id": "REQ-031",
+      "acceptance_ids": [
+        "AC-016"
+      ],
+      "test_ids": [
+        "TST-016"
+      ],
+      "review_checks": [
+        "Review REQ-031 against DAG nodes VA24 and VA25."
+      ],
+      "validation_checks": [
+        "Validate CMD-31-PUBLISHER-DISPATCH, schema codicarium.publisher-dispatch/v2, positive signature and zero-effect negative vectors."
+      ]
+    },
+    {
+      "requirement_id": "REQ-032",
+      "acceptance_ids": [
+        "AC-016"
+      ],
+      "test_ids": [
+        "TST-016"
+      ],
+      "review_checks": [
+        "Review REQ-032 against DAG nodes VA25 and RP20."
+      ],
+      "validation_checks": [
+        "Validate CMD-32-MUTATION-INTENT, schema codicarium.mutation-intent/v2, positive signature and zero-effect negative vectors."
+      ]
+    },
+    {
+      "requirement_id": "REQ-033",
+      "acceptance_ids": [
+        "AC-017"
+      ],
+      "test_ids": [
+        "TST-017"
+      ],
+      "review_checks": [
+        "Review REQ-033 against DAG nodes RP20 and RP21."
+      ],
+      "validation_checks": [
+        "Validate CMD-33-MUTATION-READBACK, schema codicarium.mutation-readback/v2, positive signature and zero-effect negative vectors."
+      ]
+    },
+    {
+      "requirement_id": "REQ-034",
+      "acceptance_ids": [
+        "AC-017"
+      ],
+      "test_ids": [
+        "TST-017"
+      ],
+      "review_checks": [
+        "Review REQ-034 against DAG nodes RP21 and RP22."
+      ],
+      "validation_checks": [
+        "Validate CMD-34-MUTATION-SIGNATURE, schema codicarium.mutation-signature/v2, positive signature and zero-effect negative vectors."
+      ]
+    },
+    {
+      "requirement_id": "REQ-035",
+      "acceptance_ids": [
+        "AC-018"
+      ],
+      "test_ids": [
+        "TST-018"
+      ],
+      "review_checks": [
+        "Review REQ-035 against DAG nodes RP22 and RP23."
+      ],
+      "validation_checks": [
+        "Validate CMD-35-MUTATION-COMMIT, schema codicarium.mutation-commit/v2, positive signature and zero-effect negative vectors."
+      ]
+    },
+    {
+      "requirement_id": "REQ-036",
+      "acceptance_ids": [
+        "AC-018"
+      ],
+      "test_ids": [
+        "TST-018"
+      ],
+      "review_checks": [
+        "Review REQ-036 against DAG nodes RP23 and RP24."
+      ],
+      "validation_checks": [
+        "Validate CMD-36-ADMIN-AUTHORIZATION, schema codicarium.admin-authorization/v2, positive signature and zero-effect negative vectors."
+      ]
+    },
+    {
+      "requirement_id": "REQ-037",
+      "acceptance_ids": [
+        "AC-019"
+      ],
+      "test_ids": [
+        "TST-019"
+      ],
+      "review_checks": [
+        "Review REQ-037 against DAG nodes RP24 and RP25."
+      ],
+      "validation_checks": [
+        "Validate CMD-37-FORWARD-RECOVERY, schema codicarium.forward-recovery/v2, positive signature and zero-effect negative vectors."
+      ]
+    },
+    {
+      "requirement_id": "REQ-038",
+      "acceptance_ids": [
+        "AC-019"
+      ],
+      "test_ids": [
+        "TST-019"
+      ],
+      "review_checks": [
+        "Review REQ-038 against DAG nodes RP25 and DC20."
+      ],
+      "validation_checks": [
+        "Validate CMD-01-BASELINE-INVENTORY, schema codicarium.baseline-inventory/v2, positive signature and zero-effect negative vectors."
+      ]
+    },
+    {
+      "requirement_id": "REQ-039",
+      "acceptance_ids": [
+        "AC-020"
+      ],
+      "test_ids": [
+        "TST-020"
+      ],
+      "review_checks": [
+        "Review REQ-039 against DAG nodes DC20 and DC21."
+      ],
+      "validation_checks": [
+        "Validate CMD-02-COUNCIL-DECISION, schema codicarium.council-decision/v2, positive signature and zero-effect negative vectors."
+      ]
+    },
+    {
+      "requirement_id": "REQ-040",
+      "acceptance_ids": [
+        "AC-020"
+      ],
+      "test_ids": [
+        "TST-020"
+      ],
+      "review_checks": [
+        "Review REQ-040 against DAG nodes DC21 and DC22."
+      ],
+      "validation_checks": [
+        "Validate CMD-03-REPOSITORY-CREATE, schema codicarium.repository-create/v2, positive signature and zero-effect negative vectors."
+      ]
+    },
+    {
+      "requirement_id": "REQ-041",
+      "acceptance_ids": [
+        "AC-021"
+      ],
+      "test_ids": [
+        "TST-021"
+      ],
+      "review_checks": [
+        "Review REQ-041 against DAG nodes DC22 and DC23."
+      ],
+      "validation_checks": [
+        "Validate CMD-04-REPOSITORY-READBACK, schema codicarium.repository-readback/v2, positive signature and zero-effect negative vectors."
+      ]
+    },
+    {
+      "requirement_id": "REQ-042",
+      "acceptance_ids": [
+        "AC-021"
+      ],
+      "test_ids": [
+        "TST-021"
+      ],
+      "review_checks": [
+        "Review REQ-042 against DAG nodes DC23 and DC24."
+      ],
+      "validation_checks": [
+        "Validate CMD-05-REPOSITORY-BINDING, schema codicarium.repository-binding/v2, positive signature and zero-effect negative vectors."
+      ]
+    },
+    {
+      "requirement_id": "REQ-043",
+      "acceptance_ids": [
+        "AC-022"
+      ],
+      "test_ids": [
+        "TST-022"
+      ],
+      "review_checks": [
+        "Review REQ-043 against DAG nodes DC24 and DC25."
+      ],
+      "validation_checks": [
+        "Validate CMD-06-GIT-TREE-READBACK, schema codicarium.git-tree-readback/v2, positive signature and zero-effect negative vectors."
+      ]
+    },
+    {
+      "requirement_id": "REQ-044",
+      "acceptance_ids": [
+        "AC-022"
+      ],
+      "test_ids": [
+        "TST-022"
+      ],
+      "review_checks": [
+        "Review REQ-044 against DAG nodes DC25 and G30."
+      ],
+      "validation_checks": [
+        "Validate CMD-07-GITHUB-POLICY-INVENTORY, schema codicarium.github-policy-inventory/v2, positive signature and zero-effect negative vectors."
+      ]
+    },
+    {
+      "requirement_id": "REQ-045",
+      "acceptance_ids": [
+        "AC-023"
+      ],
+      "test_ids": [
+        "TST-023"
+      ],
+      "review_checks": [
+        "Review REQ-045 against DAG nodes G30 and G31."
+      ],
+      "validation_checks": [
+        "Validate CMD-08-ADMIN-BYPASS-INVENTORY, schema codicarium.admin-bypass-inventory/v2, positive signature and zero-effect negative vectors."
+      ]
+    },
+    {
+      "requirement_id": "REQ-046",
+      "acceptance_ids": [
+        "AC-023"
+      ],
+      "test_ids": [
+        "TST-023"
+      ],
+      "review_checks": [
+        "Review REQ-046 against DAG nodes G31 and G32."
+      ],
+      "validation_checks": [
+        "Validate CMD-09-LANE-REVIEW, schema codicarium.lane-review/v2, positive signature and zero-effect negative vectors."
+      ]
+    },
+    {
+      "requirement_id": "REQ-047",
+      "acceptance_ids": [
+        "AC-024"
+      ],
+      "test_ids": [
+        "TST-024"
+      ],
+      "review_checks": [
+        "Review REQ-047 against DAG nodes G32 and G33."
+      ],
+      "validation_checks": [
+        "Validate CMD-10-PROTECTED-CHECKS, schema codicarium.protected-checks/v2, positive signature and zero-effect negative vectors."
+      ]
+    },
+    {
+      "requirement_id": "REQ-048",
+      "acceptance_ids": [
+        "AC-024"
+      ],
+      "test_ids": [
+        "TST-024"
+      ],
+      "review_checks": [
+        "Review REQ-048 against DAG nodes G33 and G34."
+      ],
+      "validation_checks": [
+        "Validate CMD-11-GUARDED-MERGE, schema codicarium.guarded-merge/v2, positive signature and zero-effect negative vectors."
+      ]
+    },
+    {
+      "requirement_id": "REQ-049",
+      "acceptance_ids": [
+        "AC-025"
+      ],
+      "test_ids": [
+        "TST-025"
+      ],
+      "review_checks": [
+        "Review REQ-049 against DAG nodes G34 and G35."
+      ],
+      "validation_checks": [
+        "Validate CMD-12-POSTMERGE-MAIN, schema codicarium.postmerge-main/v2, positive signature and zero-effect negative vectors."
+      ]
+    },
+    {
+      "requirement_id": "REQ-050",
+      "acceptance_ids": [
+        "AC-025"
+      ],
+      "test_ids": [
+        "TST-025"
+      ],
+      "review_checks": [
+        "Review REQ-050 against DAG nodes G35 and X40."
+      ],
+      "validation_checks": [
+        "Validate CMD-13-NAMESPACE-ADMISSION, schema codicarium.namespace-admission/v2, positive signature and zero-effect negative vectors."
+      ]
+    }
+  ],
+  "quality_gates": {
+    "spec_review_required": true,
+    "testability_required": true,
+    "traceability_required": true
+  },
+  "council": {
+    "perspectives": [
+      "planner",
+      "security",
+      "tech_lead_devops",
+      "tech_lead_qa"
+    ],
+    "consensus_summary": "Implementation remains prohibited until an exact-hash v2.2 council accepts the spec, annex, normalized spec-check and validator report together.",
+    "open_questions": []
+  }
+}

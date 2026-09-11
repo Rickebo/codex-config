@@ -1,0 +1,460 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="1ec44729-2bdf-4a77-a0ef-f7a2e8fef22e" name="@RICKEBO 2026-08-25 23:10:53" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2026-08-25T23:10:53.1574567+02:00" queuing="2026-08-25T23:10:53.1574567+02:00" start="2026-08-25T23:10:52.4303977+02:00" finish="2026-08-25T23:11:14.2831282+02:00" />
+  <TestSettings name="default" id="3ba18312-bbfb-4058-b3f7-82b1a3e9fffb">
+    <Deployment runDeploymentRoot="_RICKEBO_2026-08-25_23_10_53" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="31768096-6cb9-41b0-881e-e63b66bd2a20" testId="0e5ca85f-89b0-0f94-0a85-7ea91457f81c" testName="InsightsService.IntegrationTests.VerticalSliceTests.Missing_object_id_algorithm_is_rejected_before_source_materialization" computerName="RICKEBO" duration="00:00:00.1996643" startTime="2026-08-25T23:10:52.9813605+02:00" endTime="2026-08-25T23:11:00.5195967+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="31768096-6cb9-41b0-881e-e63b66bd2a20" />
+    <UnitTestResult executionId="91265e90-9a75-4c9a-a063-f65b9235e777" testId="4c4efb26-0d5a-822e-fa7d-f3162a46f610" testName="InsightsService.IntegrationTests.PostgresInsightsStoreTests.Per_track_heads_never_move_backwards_and_workspace_deletion_denies_queries" computerName="RICKEBO" duration="00:00:00.0398045" startTime="2026-08-25T23:10:59.9513382+02:00" endTime="2026-08-25T23:11:07.6641313+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="91265e90-9a75-4c9a-a063-f65b9235e777" />
+    <UnitTestResult executionId="86e42632-e10a-463c-af05-cbe4937eda93" testId="e6eeb16a-2242-2210-9c37-07479e5d28e6" testName="InsightsService.IntegrationTests.ApiQueryTests.Exact_summary_and_bounded_code_map_require_authorization_and_do_not_cross_workspaces" computerName="RICKEBO" duration="00:00:00.7944350" startTime="2026-08-25T23:10:52.9813445+02:00" endTime="2026-08-25T23:11:01.0663263+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="86e42632-e10a-463c-af05-cbe4937eda93">
+      <Output>
+        <ErrorInfo>
+          <Message>Amazon.S3.AmazonS3Exception : Storage backend has reached its minimum free drive threshold. Please delete a few objects to proceed.
+---- Amazon.Runtime.Internal.HttpErrorResponseException : Exception of type 'Amazon.Runtime.Internal.HttpErrorResponseException' was thrown.</Message>
+          <StackTrace>   at Amazon.Runtime.Internal.HttpErrorResponseExceptionHandler.HandleExceptionStream(IRequestContext requestContext, IWebResponseData httpErrorResponse, HttpErrorResponseException exception, Stream responseStream)
+   at Amazon.Runtime.Internal.HttpErrorResponseExceptionHandler.HandleExceptionAsync(IExecutionContext executionContext, HttpErrorResponseException exception)
+   at Amazon.Runtime.Internal.ExceptionHandler`1.HandleAsync(IExecutionContext executionContext, Exception exception)
+   at Amazon.Runtime.Internal.ErrorHandler.ProcessExceptionAsync(IExecutionContext executionContext, Exception exception)
+   at Amazon.Runtime.Internal.ErrorHandler.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.Runtime.Internal.CallbackHandler.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.Runtime.Internal.Signer.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.S3.Internal.S3Express.S3ExpressPreSigner.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.Runtime.Internal.EndpointDiscoveryHandler.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.Runtime.Internal.EndpointDiscoveryHandler.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.Runtime.Internal.RetryHandler.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.Runtime.Internal.RetryHandler.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.Runtime.Internal.CallbackHandler.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.Runtime.Internal.BaseAuthResolverHandler.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.Runtime.Internal.Marshaller.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.Runtime.Internal.CallbackHandler.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.S3.Internal.AmazonS3ExceptionHandler.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.Runtime.Internal.ErrorCallbackHandler.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.Runtime.Internal.MetricsHandler.InvokeAsync[T](IExecutionContext executionContext)
+   at InsightsService.Infrastructure.S3ArtifactStore.PutAsync(Guid workspaceId, ArtifactPayload artifact, CancellationToken cancellationToken) in /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/services/insights-service/src/InsightsService.Infrastructure/S3ArtifactStore.cs:line 88
+   at InsightsService.Infrastructure.S3ArtifactStore.PutAsync(Guid workspaceId, ArtifactPayload artifact, CancellationToken cancellationToken) in /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/services/insights-service/src/InsightsService.Infrastructure/S3ArtifactStore.cs:line 89
+   at InsightsService.IntegrationTests.ApiQueryTests.Exact_summary_and_bounded_code_map_require_authorization_and_do_not_cross_workspaces() in /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/InsightsService.IntegrationTests/ApiQueryTests.cs:line 76
+   at InsightsService.IntegrationTests.ApiQueryTests.Exact_summary_and_bounded_code_map_require_authorization_and_do_not_cross_workspaces() in /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/InsightsService.IntegrationTests/ApiQueryTests.cs:line 101
+--- End of stack trace from previous location ---
+----- Inner Stack Trace -----
+   at Amazon.Runtime.HttpWebRequestMessage.ProcessHttpResponseMessage(HttpResponseMessage responseMessage)
+   at Amazon.Runtime.HttpWebRequestMessage.GetResponseAsync(CancellationToken cancellationToken)
+   at Amazon.Runtime.Internal.HttpHandler`1.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.Runtime.Internal.RedirectHandler.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.Runtime.Internal.Unmarshaller.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.S3.Internal.AmazonS3ResponseHandler.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.Runtime.Internal.ErrorHandler.InvokeAsync[T](IExecutionContext executionContext)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="d52b3593-c46c-4718-9259-89b98dbe92c8" testId="a2729585-1e9f-7562-6aa3-0edbd47aea1b" testName="InsightsService.IntegrationTests.S3ArtifactStoreTests.Put_get_reuse_and_delete_are_checksum_verified" computerName="RICKEBO" duration="00:00:01.0330572" startTime="2026-08-25T23:10:52.9813519+02:00" endTime="2026-08-25T23:10:58.4074852+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="d52b3593-c46c-4718-9259-89b98dbe92c8">
+      <Output>
+        <ErrorInfo>
+          <Message>Amazon.S3.AmazonS3Exception : Storage backend has reached its minimum free drive threshold. Please delete a few objects to proceed.
+---- Amazon.Runtime.Internal.HttpErrorResponseException : Exception of type 'Amazon.Runtime.Internal.HttpErrorResponseException' was thrown.</Message>
+          <StackTrace>   at Amazon.Runtime.Internal.HttpErrorResponseExceptionHandler.HandleExceptionStream(IRequestContext requestContext, IWebResponseData httpErrorResponse, HttpErrorResponseException exception, Stream responseStream)
+   at Amazon.Runtime.Internal.HttpErrorResponseExceptionHandler.HandleExceptionAsync(IExecutionContext executionContext, HttpErrorResponseException exception)
+   at Amazon.Runtime.Internal.ExceptionHandler`1.HandleAsync(IExecutionContext executionContext, Exception exception)
+   at Amazon.Runtime.Internal.ErrorHandler.ProcessExceptionAsync(IExecutionContext executionContext, Exception exception)
+   at Amazon.Runtime.Internal.ErrorHandler.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.Runtime.Internal.CallbackHandler.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.Runtime.Internal.Signer.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.S3.Internal.S3Express.S3ExpressPreSigner.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.Runtime.Internal.EndpointDiscoveryHandler.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.Runtime.Internal.EndpointDiscoveryHandler.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.Runtime.Internal.RetryHandler.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.Runtime.Internal.RetryHandler.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.Runtime.Internal.CallbackHandler.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.Runtime.Internal.BaseAuthResolverHandler.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.Runtime.Internal.Marshaller.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.Runtime.Internal.CallbackHandler.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.S3.Internal.AmazonS3ExceptionHandler.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.Runtime.Internal.ErrorCallbackHandler.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.Runtime.Internal.MetricsHandler.InvokeAsync[T](IExecutionContext executionContext)
+   at InsightsService.Infrastructure.S3ArtifactStore.PutAsync(Guid workspaceId, ArtifactPayload artifact, CancellationToken cancellationToken) in /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/services/insights-service/src/InsightsService.Infrastructure/S3ArtifactStore.cs:line 88
+   at InsightsService.Infrastructure.S3ArtifactStore.PutAsync(Guid workspaceId, ArtifactPayload artifact, CancellationToken cancellationToken) in /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/services/insights-service/src/InsightsService.Infrastructure/S3ArtifactStore.cs:line 89
+   at InsightsService.IntegrationTests.S3ArtifactStoreTests.Put_get_reuse_and_delete_are_checksum_verified() in /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/InsightsService.IntegrationTests/S3ArtifactStoreTests.cs:line 26
+   at InsightsService.IntegrationTests.S3ArtifactStoreTests.Put_get_reuse_and_delete_are_checksum_verified() in /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/InsightsService.IntegrationTests/S3ArtifactStoreTests.cs:line 34
+--- End of stack trace from previous location ---
+----- Inner Stack Trace -----
+   at Amazon.Runtime.HttpWebRequestMessage.ProcessHttpResponseMessage(HttpResponseMessage responseMessage)
+   at Amazon.Runtime.HttpWebRequestMessage.GetResponseAsync(CancellationToken cancellationToken)
+   at Amazon.Runtime.Internal.HttpHandler`1.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.Runtime.Internal.RedirectHandler.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.Runtime.Internal.Unmarshaller.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.S3.Internal.AmazonS3ResponseHandler.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.Runtime.Internal.ErrorHandler.InvokeAsync[T](IExecutionContext executionContext)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="4044ea83-c372-445c-96d0-567ada68dcaf" testId="60d1f0ba-0121-d6b2-90b1-b037643e20cf" testName="InsightsService.IntegrationTests.SourceArtifactClientTests.Treats_a_replayed_one_time_lease_as_a_redacted_fetch_failure" computerName="RICKEBO" duration="00:00:00.0004465" startTime="2026-08-25T23:10:53.1334350+02:00" endTime="2026-08-25T23:10:53.1334814+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="4044ea83-c372-445c-96d0-567ada68dcaf" />
+    <UnitTestResult executionId="2d87c5cf-0afc-4f09-b431-12a323351bb4" testId="e43c9155-5558-fade-2034-fa907f48ebee" testName="InsightsService.IntegrationTests.PythonContentAnalyzerTests.Fixed_python_runtime_is_used_by_the_domain_engine" computerName="RICKEBO" duration="00:00:00.6898422" startTime="2026-08-25T23:10:52.9813339+02:00" endTime="2026-08-25T23:10:53.6740695+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="2d87c5cf-0afc-4f09-b431-12a323351bb4" />
+    <UnitTestResult executionId="159c2c31-887d-4443-89c0-9d5cb8ad739f" testId="60072519-2433-0f98-4a12-625c1ae9cd7e" testName="InsightsService.IntegrationTests.PostgresInsightsStoreTests.Migration_inbox_publication_head_and_outbox_are_atomic_and_idempotent" computerName="RICKEBO" duration="00:00:00.4174719" startTime="2026-08-25T23:10:52.9805767+02:00" endTime="2026-08-25T23:10:59.9511028+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="159c2c31-887d-4443-89c0-9d5cb8ad739f" />
+    <UnitTestResult executionId="09aaf9ca-0cfa-4ecc-b34e-3907567cd4d8" testId="5e0bacf2-e1d5-e303-2436-93f68ae52047" testName="InsightsService.IntegrationTests.PostgresInsightsStoreTests.Out_of_order_event_can_be_replayed_after_the_missing_sequence_arrives" computerName="RICKEBO" duration="00:00:00.0267742" startTime="2026-08-25T23:11:07.6644479+02:00" endTime="2026-08-25T23:11:14.1521979+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="09aaf9ca-0cfa-4ecc-b34e-3907567cd4d8" />
+    <UnitTestResult executionId="c08c6dbe-da34-4176-b651-320f5d730327" testId="dd93a314-56ec-40dd-f312-211d349aff71" testName="InsightsService.IntegrationTests.VerticalSliceTests.Two_commits_publish_full_then_incremental_and_fork_reuses_content_without_knowledge" computerName="RICKEBO" duration="00:00:00.0688365" startTime="2026-08-25T23:11:00.5198038+02:00" endTime="2026-08-25T23:11:09.1106907+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="c08c6dbe-da34-4176-b651-320f5d730327">
+      <Output>
+        <ErrorInfo>
+          <Message>Amazon.S3.AmazonS3Exception : Storage backend has reached its minimum free drive threshold. Please delete a few objects to proceed.
+---- Amazon.Runtime.Internal.HttpErrorResponseException : Exception of type 'Amazon.Runtime.Internal.HttpErrorResponseException' was thrown.</Message>
+          <StackTrace>   at Amazon.Runtime.Internal.HttpErrorResponseExceptionHandler.HandleExceptionStream(IRequestContext requestContext, IWebResponseData httpErrorResponse, HttpErrorResponseException exception, Stream responseStream)
+   at Amazon.Runtime.Internal.HttpErrorResponseExceptionHandler.HandleExceptionAsync(IExecutionContext executionContext, HttpErrorResponseException exception)
+   at Amazon.Runtime.Internal.ExceptionHandler`1.HandleAsync(IExecutionContext executionContext, Exception exception)
+   at Amazon.Runtime.Internal.ErrorHandler.ProcessExceptionAsync(IExecutionContext executionContext, Exception exception)
+   at Amazon.Runtime.Internal.ErrorHandler.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.Runtime.Internal.CallbackHandler.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.Runtime.Internal.Signer.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.S3.Internal.S3Express.S3ExpressPreSigner.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.Runtime.Internal.EndpointDiscoveryHandler.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.Runtime.Internal.EndpointDiscoveryHandler.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.Runtime.Internal.RetryHandler.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.Runtime.Internal.RetryHandler.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.Runtime.Internal.CallbackHandler.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.Runtime.Internal.BaseAuthResolverHandler.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.Runtime.Internal.Marshaller.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.Runtime.Internal.CallbackHandler.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.S3.Internal.AmazonS3ExceptionHandler.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.Runtime.Internal.ErrorCallbackHandler.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.Runtime.Internal.MetricsHandler.InvokeAsync[T](IExecutionContext executionContext)
+   at InsightsService.Infrastructure.S3ArtifactStore.PutAsync(Guid workspaceId, ArtifactPayload artifact, CancellationToken cancellationToken) in /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/services/insights-service/src/InsightsService.Infrastructure/S3ArtifactStore.cs:line 88
+   at InsightsService.Infrastructure.S3ArtifactStore.PutAsync(Guid workspaceId, ArtifactPayload artifact, CancellationToken cancellationToken) in /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/services/insights-service/src/InsightsService.Infrastructure/S3ArtifactStore.cs:line 89
+   at InsightsService.Infrastructure.SourceSnapshotProcessor.UploadAsync(InsightsPublication publication, CancellationToken cancellationToken) in /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/services/insights-service/src/InsightsService.Infrastructure/SourceSnapshotProcessor.cs:line 307
+   at InsightsService.Infrastructure.SourceSnapshotProcessor.ProcessAsync(CloudEvent`1 cloudEvent, CancellationToken cancellationToken) in /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/services/insights-service/src/InsightsService.Infrastructure/SourceSnapshotProcessor.cs:line 278
+   at InsightsService.Infrastructure.SourceSnapshotProcessor.ProcessAsync(CloudEvent`1 cloudEvent, CancellationToken cancellationToken) in /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/services/insights-service/src/InsightsService.Infrastructure/SourceSnapshotProcessor.cs:line 296
+   at InsightsService.IntegrationTests.VerticalSliceTests.Two_commits_publish_full_then_incremental_and_fork_reuses_content_without_knowledge() in /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/InsightsService.IntegrationTests/VerticalSliceTests.cs:line 65
+   at InsightsService.IntegrationTests.VerticalSliceTests.Two_commits_publish_full_then_incremental_and_fork_reuses_content_without_knowledge() in /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/InsightsService.IntegrationTests/VerticalSliceTests.cs:line 84
+--- End of stack trace from previous location ---
+----- Inner Stack Trace -----
+   at Amazon.Runtime.HttpWebRequestMessage.ProcessHttpResponseMessage(HttpResponseMessage responseMessage)
+   at Amazon.Runtime.HttpWebRequestMessage.GetResponseAsync(CancellationToken cancellationToken)
+   at Amazon.Runtime.Internal.HttpHandler`1.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.Runtime.Internal.RedirectHandler.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.Runtime.Internal.Unmarshaller.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.S3.Internal.AmazonS3ResponseHandler.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.Runtime.Internal.ErrorHandler.InvokeAsync[T](IExecutionContext executionContext)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="1af6d9e2-5f4b-4d2e-a21f-9694f2bd73f7" testId="ab58f3cb-c66d-e17c-2f79-7eb48b424a69" testName="InsightsService.IntegrationTests.SourceArtifactClientTests.Retrieves_an_artifact_through_the_lease_only_source_contract" computerName="RICKEBO" duration="00:00:00.0007107" startTime="2026-08-25T23:10:53.1258314+02:00" endTime="2026-08-25T23:10:53.1258535+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="1af6d9e2-5f4b-4d2e-a21f-9694f2bd73f7" />
+    <UnitTestResult executionId="cc8147b2-253d-4889-bd5b-4e5d096ed703" testId="6ab0780d-6090-b596-5ee6-04b38ad234f8" testName="InsightsService.IntegrationTests.SourceArtifactClientTests.Reprocessing_the_same_artifact_creates_a_fresh_lease_after_the_first_is_redeemed" computerName="RICKEBO" duration="00:00:00.1349183" startTime="2026-08-25T23:10:52.9813126+02:00" endTime="2026-08-25T23:10:53.1202840+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="cc8147b2-253d-4889-bd5b-4e5d096ed703" />
+    <UnitTestResult executionId="6472be1e-0a65-4449-8b18-65246ab2c471" testId="95bf26e9-cc4c-6352-1279-a816a16722d8" testName="InsightsService.IntegrationTests.SourceArtifactClientTests.Redacts_source_failure_bodies_and_bounds_retrieval" computerName="RICKEBO" duration="00:00:00.0016398" startTime="2026-08-25T23:10:53.1255249+02:00" endTime="2026-08-25T23:10:53.1255687+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="6472be1e-0a65-4449-8b18-65246ab2c471" />
+    <UnitTestResult executionId="9afa982c-e67b-4357-b645-6dc803db562c" testId="136e5f21-165b-3729-53f2-e83f30196c4a" testName="InsightsService.IntegrationTests.SourceArtifactClientTests.Rejects_a_lease_for_the_wrong_consumer_audience" computerName="RICKEBO" duration="00:00:00.0013089" startTime="2026-08-25T23:10:53.1259107+02:00" endTime="2026-08-25T23:10:53.1259319+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="9afa982c-e67b-4357-b645-6dc803db562c" />
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="InsightsService.IntegrationTests.SourceArtifactClientTests.Rejects_a_lease_for_the_wrong_consumer_audience" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/insightsservice.integrationtests/bin/release/net10.0/insightsservice.integrationtests.dll" id="136e5f21-165b-3729-53f2-e83f30196c4a">
+      <Execution id="9afa982c-e67b-4357-b645-6dc803db562c" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/InsightsService.IntegrationTests/bin/Release/net10.0/InsightsService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="InsightsService.IntegrationTests.SourceArtifactClientTests" name="Rejects_a_lease_for_the_wrong_consumer_audience" />
+    </UnitTest>
+    <UnitTest name="InsightsService.IntegrationTests.PostgresInsightsStoreTests.Migration_inbox_publication_head_and_outbox_are_atomic_and_idempotent" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/insightsservice.integrationtests/bin/release/net10.0/insightsservice.integrationtests.dll" id="60072519-2433-0f98-4a12-625c1ae9cd7e">
+      <Execution id="159c2c31-887d-4443-89c0-9d5cb8ad739f" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/InsightsService.IntegrationTests/bin/Release/net10.0/InsightsService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="InsightsService.IntegrationTests.PostgresInsightsStoreTests" name="Migration_inbox_publication_head_and_outbox_are_atomic_and_idempotent" />
+    </UnitTest>
+    <UnitTest name="InsightsService.IntegrationTests.ApiQueryTests.Exact_summary_and_bounded_code_map_require_authorization_and_do_not_cross_workspaces" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/insightsservice.integrationtests/bin/release/net10.0/insightsservice.integrationtests.dll" id="e6eeb16a-2242-2210-9c37-07479e5d28e6">
+      <Execution id="86e42632-e10a-463c-af05-cbe4937eda93" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/InsightsService.IntegrationTests/bin/Release/net10.0/InsightsService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="InsightsService.IntegrationTests.ApiQueryTests" name="Exact_summary_and_bounded_code_map_require_authorization_and_do_not_cross_workspaces" />
+    </UnitTest>
+    <UnitTest name="InsightsService.IntegrationTests.S3ArtifactStoreTests.Put_get_reuse_and_delete_are_checksum_verified" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/insightsservice.integrationtests/bin/release/net10.0/insightsservice.integrationtests.dll" id="a2729585-1e9f-7562-6aa3-0edbd47aea1b">
+      <Execution id="d52b3593-c46c-4718-9259-89b98dbe92c8" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/InsightsService.IntegrationTests/bin/Release/net10.0/InsightsService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="InsightsService.IntegrationTests.S3ArtifactStoreTests" name="Put_get_reuse_and_delete_are_checksum_verified" />
+    </UnitTest>
+    <UnitTest name="InsightsService.IntegrationTests.SourceArtifactClientTests.Treats_a_replayed_one_time_lease_as_a_redacted_fetch_failure" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/insightsservice.integrationtests/bin/release/net10.0/insightsservice.integrationtests.dll" id="60d1f0ba-0121-d6b2-90b1-b037643e20cf">
+      <Execution id="4044ea83-c372-445c-96d0-567ada68dcaf" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/InsightsService.IntegrationTests/bin/Release/net10.0/InsightsService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="InsightsService.IntegrationTests.SourceArtifactClientTests" name="Treats_a_replayed_one_time_lease_as_a_redacted_fetch_failure" />
+    </UnitTest>
+    <UnitTest name="InsightsService.IntegrationTests.SourceArtifactClientTests.Redacts_source_failure_bodies_and_bounds_retrieval" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/insightsservice.integrationtests/bin/release/net10.0/insightsservice.integrationtests.dll" id="95bf26e9-cc4c-6352-1279-a816a16722d8">
+      <Execution id="6472be1e-0a65-4449-8b18-65246ab2c471" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/InsightsService.IntegrationTests/bin/Release/net10.0/InsightsService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="InsightsService.IntegrationTests.SourceArtifactClientTests" name="Redacts_source_failure_bodies_and_bounds_retrieval" />
+    </UnitTest>
+    <UnitTest name="InsightsService.IntegrationTests.PostgresInsightsStoreTests.Out_of_order_event_can_be_replayed_after_the_missing_sequence_arrives" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/insightsservice.integrationtests/bin/release/net10.0/insightsservice.integrationtests.dll" id="5e0bacf2-e1d5-e303-2436-93f68ae52047">
+      <Execution id="09aaf9ca-0cfa-4ecc-b34e-3907567cd4d8" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/InsightsService.IntegrationTests/bin/Release/net10.0/InsightsService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="InsightsService.IntegrationTests.PostgresInsightsStoreTests" name="Out_of_order_event_can_be_replayed_after_the_missing_sequence_arrives" />
+    </UnitTest>
+    <UnitTest name="InsightsService.IntegrationTests.VerticalSliceTests.Missing_object_id_algorithm_is_rejected_before_source_materialization" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/insightsservice.integrationtests/bin/release/net10.0/insightsservice.integrationtests.dll" id="0e5ca85f-89b0-0f94-0a85-7ea91457f81c">
+      <Execution id="31768096-6cb9-41b0-881e-e63b66bd2a20" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/InsightsService.IntegrationTests/bin/Release/net10.0/InsightsService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="InsightsService.IntegrationTests.VerticalSliceTests" name="Missing_object_id_algorithm_is_rejected_before_source_materialization" />
+    </UnitTest>
+    <UnitTest name="InsightsService.IntegrationTests.SourceArtifactClientTests.Retrieves_an_artifact_through_the_lease_only_source_contract" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/insightsservice.integrationtests/bin/release/net10.0/insightsservice.integrationtests.dll" id="ab58f3cb-c66d-e17c-2f79-7eb48b424a69">
+      <Execution id="1af6d9e2-5f4b-4d2e-a21f-9694f2bd73f7" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/InsightsService.IntegrationTests/bin/Release/net10.0/InsightsService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="InsightsService.IntegrationTests.SourceArtifactClientTests" name="Retrieves_an_artifact_through_the_lease_only_source_contract" />
+    </UnitTest>
+    <UnitTest name="InsightsService.IntegrationTests.VerticalSliceTests.Two_commits_publish_full_then_incremental_and_fork_reuses_content_without_knowledge" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/insightsservice.integrationtests/bin/release/net10.0/insightsservice.integrationtests.dll" id="dd93a314-56ec-40dd-f312-211d349aff71">
+      <Execution id="c08c6dbe-da34-4176-b651-320f5d730327" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/InsightsService.IntegrationTests/bin/Release/net10.0/InsightsService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="InsightsService.IntegrationTests.VerticalSliceTests" name="Two_commits_publish_full_then_incremental_and_fork_reuses_content_without_knowledge" />
+    </UnitTest>
+    <UnitTest name="InsightsService.IntegrationTests.PythonContentAnalyzerTests.Fixed_python_runtime_is_used_by_the_domain_engine" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/insightsservice.integrationtests/bin/release/net10.0/insightsservice.integrationtests.dll" id="e43c9155-5558-fade-2034-fa907f48ebee">
+      <Execution id="2d87c5cf-0afc-4f09-b431-12a323351bb4" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/InsightsService.IntegrationTests/bin/Release/net10.0/InsightsService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="InsightsService.IntegrationTests.PythonContentAnalyzerTests" name="Fixed_python_runtime_is_used_by_the_domain_engine" />
+    </UnitTest>
+    <UnitTest name="InsightsService.IntegrationTests.PostgresInsightsStoreTests.Per_track_heads_never_move_backwards_and_workspace_deletion_denies_queries" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/insightsservice.integrationtests/bin/release/net10.0/insightsservice.integrationtests.dll" id="4c4efb26-0d5a-822e-fa7d-f3162a46f610">
+      <Execution id="91265e90-9a75-4c9a-a063-f65b9235e777" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/InsightsService.IntegrationTests/bin/Release/net10.0/InsightsService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="InsightsService.IntegrationTests.PostgresInsightsStoreTests" name="Per_track_heads_never_move_backwards_and_workspace_deletion_denies_queries" />
+    </UnitTest>
+    <UnitTest name="InsightsService.IntegrationTests.SourceArtifactClientTests.Reprocessing_the_same_artifact_creates_a_fresh_lease_after_the_first_is_redeemed" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/insightsservice.integrationtests/bin/release/net10.0/insightsservice.integrationtests.dll" id="6ab0780d-6090-b596-5ee6-04b38ad234f8">
+      <Execution id="cc8147b2-253d-4889-bd5b-4e5d096ed703" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/InsightsService.IntegrationTests/bin/Release/net10.0/InsightsService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="InsightsService.IntegrationTests.SourceArtifactClientTests" name="Reprocessing_the_same_artifact_creates_a_fresh_lease_after_the_first_is_redeemed" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="0e5ca85f-89b0-0f94-0a85-7ea91457f81c" executionId="31768096-6cb9-41b0-881e-e63b66bd2a20" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="4c4efb26-0d5a-822e-fa7d-f3162a46f610" executionId="91265e90-9a75-4c9a-a063-f65b9235e777" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e6eeb16a-2242-2210-9c37-07479e5d28e6" executionId="86e42632-e10a-463c-af05-cbe4937eda93" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="a2729585-1e9f-7562-6aa3-0edbd47aea1b" executionId="d52b3593-c46c-4718-9259-89b98dbe92c8" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="60d1f0ba-0121-d6b2-90b1-b037643e20cf" executionId="4044ea83-c372-445c-96d0-567ada68dcaf" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e43c9155-5558-fade-2034-fa907f48ebee" executionId="2d87c5cf-0afc-4f09-b431-12a323351bb4" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="60072519-2433-0f98-4a12-625c1ae9cd7e" executionId="159c2c31-887d-4443-89c0-9d5cb8ad739f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="5e0bacf2-e1d5-e303-2436-93f68ae52047" executionId="09aaf9ca-0cfa-4ecc-b34e-3907567cd4d8" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="dd93a314-56ec-40dd-f312-211d349aff71" executionId="c08c6dbe-da34-4176-b651-320f5d730327" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="ab58f3cb-c66d-e17c-2f79-7eb48b424a69" executionId="1af6d9e2-5f4b-4d2e-a21f-9694f2bd73f7" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="6ab0780d-6090-b596-5ee6-04b38ad234f8" executionId="cc8147b2-253d-4889-bd5b-4e5d096ed703" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="95bf26e9-cc4c-6352-1279-a816a16722d8" executionId="6472be1e-0a65-4449-8b18-65246ab2c471" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="136e5f21-165b-3729-53f2-e83f30196c4a" executionId="9afa982c-e67b-4357-b645-6dc803db562c" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Failed">
+    <Counters total="13" executed="13" passed="10" failed="3" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v3.1.5+1b188a7b0a (64-bit .NET 10.0.11)
+[xUnit.net 00:00:00.18]   Discovering: InsightsService.IntegrationTests
+[xUnit.net 00:00:00.20]   Discovered:  InsightsService.IntegrationTests
+[xUnit.net 00:00:00.21]   Starting:    InsightsService.IntegrationTests
+[testcontainers.org 00:00:00.08] Connected to Docker:
+  Host: unix:///var/run/docker.sock
+  Server Version: 29.7.2
+  Kernel Version: 6.18.44-1-lts
+  API Version: 1.55
+  Operating System: Arch Linux
+  Total Memory: 60.48 GB
+[testcontainers.org 00:00:00.39] Docker container a01e629cb66b created
+[testcontainers.org 00:00:00.41] Start Docker container a01e629cb66b
+[testcontainers.org 00:00:00.60] Wait for Docker container a01e629cb66b to complete readiness checks
+[testcontainers.org 00:00:01.61] Docker container a01e629cb66b ready
+[testcontainers.org 00:00:02.27] Docker container 076256cfdd81 created
+[testcontainers.org 00:00:02.27] Docker container 22d8e301b200 created
+[testcontainers.org 00:00:02.27] Start Docker container 076256cfdd81
+[testcontainers.org 00:00:02.27] Start Docker container 22d8e301b200
+[testcontainers.org 00:00:02.30] Docker container 21aa58cf5eae created
+[testcontainers.org 00:00:02.30] Start Docker container 21aa58cf5eae
+[testcontainers.org 00:00:02.32] Docker container 38912ce7981d created
+[testcontainers.org 00:00:02.32] Start Docker container 38912ce7981d
+[testcontainers.org 00:00:02.33] Docker container 4a32aefd5a07 created
+[testcontainers.org 00:00:02.33] Start Docker container 4a32aefd5a07
+[testcontainers.org 00:00:02.34] Docker container 4071f6a43ae1 created
+[testcontainers.org 00:00:02.34] Start Docker container 4071f6a43ae1
+[testcontainers.org 00:00:02.60] Wait for Docker container 076256cfdd81 to complete readiness checks
+[testcontainers.org 00:00:02.64] Wait for Docker container 22d8e301b200 to complete readiness checks
+[testcontainers.org 00:00:02.73] Wait for Docker container 21aa58cf5eae to complete readiness checks
+[testcontainers.org 00:00:02.76] Wait for Docker container 38912ce7981d to complete readiness checks
+[testcontainers.org 00:00:02.77] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container 38912ce7981d
+[testcontainers.org 00:00:02.80] Wait for Docker container 4071f6a43ae1 to complete readiness checks
+[testcontainers.org 00:00:02.80] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container 4071f6a43ae1
+[testcontainers.org 00:00:02.84] Wait for Docker container 4a32aefd5a07 to complete readiness checks
+[testcontainers.org 00:00:02.84] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container 4a32aefd5a07
+[testcontainers.org 00:00:03.62] Docker container 076256cfdd81 ready
+[testcontainers.org 00:00:03.64] Docker container 22d8e301b200 ready
+[testcontainers.org 00:00:03.73] Docker container 21aa58cf5eae ready
+[testcontainers.org 00:00:03.80] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container 38912ce7981d
+[testcontainers.org 00:00:03.82] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container 4071f6a43ae1
+[testcontainers.org 00:00:03.86] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container 4a32aefd5a07
+[testcontainers.org 00:00:04.48] Delete Docker container 22d8e301b200
+[testcontainers.org 00:00:04.82] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container 38912ce7981d
+[testcontainers.org 00:00:04.84] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container 4071f6a43ae1
+[testcontainers.org 00:00:04.87] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container 4a32aefd5a07
+[xUnit.net 00:00:05.66]       Amazon.S3.AmazonS3Exception : Storage backend has reached its minimum free drive threshold. Please delete a few objects to proceed.
+[xUnit.net 00:00:05.66]       ---- Amazon.Runtime.Internal.HttpErrorResponseException : Exception of type 'Amazon.Runtime.Internal.HttpErrorResponseException' was thrown.
+[xUnit.net 00:00:05.66]       Stack Trace:
+[xUnit.net 00:00:05.66]            at Amazon.Runtime.Internal.HttpErrorResponseExceptionHandler.HandleExceptionStream(IRequestContext requestContext, IWebResponseData httpErrorResponse, HttpErrorResponseException exception, Stream responseStream)
+[xUnit.net 00:00:05.66]            at Amazon.Runtime.Internal.HttpErrorResponseExceptionHandler.HandleExceptionAsync(IExecutionContext executionContext, HttpErrorResponseException exception)
+[xUnit.net 00:00:05.66]            at Amazon.Runtime.Internal.ExceptionHandler`1.HandleAsync(IExecutionContext executionContext, Exception exception)
+[xUnit.net 00:00:05.66]            at Amazon.Runtime.Internal.ErrorHandler.ProcessExceptionAsync(IExecutionContext executionContext, Exception exception)
+[xUnit.net 00:00:05.66]            at Amazon.Runtime.Internal.ErrorHandler.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:05.66]            at Amazon.Runtime.Internal.CallbackHandler.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:05.66]            at Amazon.Runtime.Internal.Signer.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:05.66]            at Amazon.S3.Internal.S3Express.S3ExpressPreSigner.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:05.66]            at Amazon.Runtime.Internal.EndpointDiscoveryHandler.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:05.66]            at Amazon.Runtime.Internal.EndpointDiscoveryHandler.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:05.66]            at Amazon.Runtime.Internal.RetryHandler.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:05.66]            at Amazon.Runtime.Internal.RetryHandler.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:05.66]            at Amazon.Runtime.Internal.CallbackHandler.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:05.66]            at Amazon.Runtime.Internal.BaseAuthResolverHandler.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:05.66]            at Amazon.Runtime.Internal.Marshaller.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:05.66]            at Amazon.Runtime.Internal.CallbackHandler.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:05.66]            at Amazon.S3.Internal.AmazonS3ExceptionHandler.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:05.66]            at Amazon.Runtime.Internal.ErrorCallbackHandler.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:05.66]            at Amazon.Runtime.Internal.MetricsHandler.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:05.66]         /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/services/insights-service/src/InsightsService.Infrastructure/S3ArtifactStore.cs(88,0): at InsightsService.Infrastructure.S3ArtifactStore.PutAsync(Guid workspaceId, ArtifactPayload artifact, CancellationToken cancellationToken)
+[xUnit.net 00:00:05.66]         /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/services/insights-service/src/InsightsService.Infrastructure/S3ArtifactStore.cs(89,0): at InsightsService.Infrastructure.S3ArtifactStore.PutAsync(Guid workspaceId, ArtifactPayload artifact, CancellationToken cancellationToken)
+[xUnit.net 00:00:05.66]         /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/InsightsService.IntegrationTests/S3ArtifactStoreTests.cs(26,0): at InsightsService.IntegrationTests.S3ArtifactStoreTests.Put_get_reuse_and_delete_are_checksum_verified()
+[xUnit.net 00:00:05.66]         /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/InsightsService.IntegrationTests/S3ArtifactStoreTests.cs(34,0): at InsightsService.IntegrationTests.S3ArtifactStoreTests.Put_get_reuse_and_delete_are_checksum_verified()
+[xUnit.net 00:00:05.66]         --- End of stack trace from previous location ---
+[xUnit.net 00:00:05.66]         ----- Inner Stack Trace -----
+[xUnit.net 00:00:05.66]            at Amazon.Runtime.HttpWebRequestMessage.ProcessHttpResponseMessage(HttpResponseMessage responseMessage)
+[xUnit.net 00:00:05.66]            at Amazon.Runtime.HttpWebRequestMessage.GetResponseAsync(CancellationToken cancellationToken)
+[xUnit.net 00:00:05.66]            at Amazon.Runtime.Internal.HttpHandler`1.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:05.66]            at Amazon.Runtime.Internal.RedirectHandler.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:05.66]            at Amazon.Runtime.Internal.Unmarshaller.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:05.66]            at Amazon.S3.Internal.AmazonS3ResponseHandler.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:05.66]            at Amazon.Runtime.Internal.ErrorHandler.InvokeAsync[T](IExecutionContext executionContext)
+[testcontainers.org 00:00:05.84] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container 38912ce7981d
+[testcontainers.org 00:00:05.86] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container 4071f6a43ae1
+[testcontainers.org 00:00:05.86] Docker container 38912ce7981d ready
+[testcontainers.org 00:00:05.86] Delete Docker container 38912ce7981d
+[testcontainers.org 00:00:05.88] Docker container 4071f6a43ae1 ready
+[testcontainers.org 00:00:05.89] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container 4a32aefd5a07
+[testcontainers.org 00:00:05.91] Docker container 4a32aefd5a07 ready
+[testcontainers.org 00:00:06.13] Delete Docker container 4a32aefd5a07
+info: Microsoft.Hosting.Lifetime[0]
+      Application started. Press Ctrl+C to shut down.
+info: Microsoft.Hosting.Lifetime[0]
+      Hosting environment: Development
+info: Microsoft.Hosting.Lifetime[0]
+      Content root path: /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/services/insights-service/src/InsightsService.Api
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://localhost/health/ready - - -
+info: InsightsService.Api.StartupInitializer[0]
+      Insights service dependencies and migration version 1 are ready
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /health/ready'
+info: Microsoft.AspNetCore.Http.Result.OkObjectResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.OkObjectResult[3]
+      Writing value of type '&lt;&gt;f__AnonymousType4`2' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /health/ready'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://localhost/health/ready - 200 - application/json;+charset=utf-8 43.4367ms
+info: Microsoft.Hosting.Lifetime[0]
+      Application is shutting down...
+[testcontainers.org 00:00:06.48] Delete Docker container 4071f6a43ae1
+[testcontainers.org 00:00:06.62] Delete Docker container 076256cfdd81
+[testcontainers.org 00:00:07.14] Docker container c35018629f12 created
+[testcontainers.org 00:00:07.14] Start Docker container c35018629f12
+[testcontainers.org 00:00:07.18] Delete Docker container 21aa58cf5eae
+[testcontainers.org 00:00:07.63] Wait for Docker container c35018629f12 to complete readiness checks
+[testcontainers.org 00:00:07.63] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container c35018629f12
+[testcontainers.org 00:00:07.85] Docker container 4e06ecaa766d created
+[testcontainers.org 00:00:07.85] Docker container d668a4116969 created
+[testcontainers.org 00:00:07.85] Start Docker container d668a4116969
+[testcontainers.org 00:00:07.85] Start Docker container 4e06ecaa766d
+[xUnit.net 00:00:08.32]       Amazon.S3.AmazonS3Exception : Storage backend has reached its minimum free drive threshold. Please delete a few objects to proceed.
+[xUnit.net 00:00:08.32]       ---- Amazon.Runtime.Internal.HttpErrorResponseException : Exception of type 'Amazon.Runtime.Internal.HttpErrorResponseException' was thrown.
+[xUnit.net 00:00:08.32]       Stack Trace:
+[xUnit.net 00:00:08.32]            at Amazon.Runtime.Internal.HttpErrorResponseExceptionHandler.HandleExceptionStream(IRequestContext requestContext, IWebResponseData httpErrorResponse, HttpErrorResponseException exception, Stream responseStream)
+[xUnit.net 00:00:08.32]            at Amazon.Runtime.Internal.HttpErrorResponseExceptionHandler.HandleExceptionAsync(IExecutionContext executionContext, HttpErrorResponseException exception)
+[xUnit.net 00:00:08.32]            at Amazon.Runtime.Internal.ExceptionHandler`1.HandleAsync(IExecutionContext executionContext, Exception exception)
+[xUnit.net 00:00:08.32]            at Amazon.Runtime.Internal.ErrorHandler.ProcessExceptionAsync(IExecutionContext executionContext, Exception exception)
+[xUnit.net 00:00:08.32]            at Amazon.Runtime.Internal.ErrorHandler.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:08.32]            at Amazon.Runtime.Internal.CallbackHandler.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:08.32]            at Amazon.Runtime.Internal.Signer.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:08.32]            at Amazon.S3.Internal.S3Express.S3ExpressPreSigner.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:08.32]            at Amazon.Runtime.Internal.EndpointDiscoveryHandler.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:08.32]            at Amazon.Runtime.Internal.EndpointDiscoveryHandler.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:08.32]            at Amazon.Runtime.Internal.RetryHandler.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:08.32]            at Amazon.Runtime.Internal.RetryHandler.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:08.32]            at Amazon.Runtime.Internal.CallbackHandler.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:08.32]            at Amazon.Runtime.Internal.BaseAuthResolverHandler.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:08.32]            at Amazon.Runtime.Internal.Marshaller.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:08.32]            at Amazon.Runtime.Internal.CallbackHandler.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:08.32]            at Amazon.S3.Internal.AmazonS3ExceptionHandler.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:08.32]            at Amazon.Runtime.Internal.ErrorCallbackHandler.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:08.32]            at Amazon.Runtime.Internal.MetricsHandler.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:08.32]         /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/services/insights-service/src/InsightsService.Infrastructure/S3ArtifactStore.cs(88,0): at InsightsService.Infrastructure.S3ArtifactStore.PutAsync(Guid workspaceId, ArtifactPayload artifact, CancellationToken cancellationToken)
+[xUnit.net 00:00:08.32]         /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/services/insights-service/src/InsightsService.Infrastructure/S3ArtifactStore.cs(89,0): at InsightsService.Infrastructure.S3ArtifactStore.PutAsync(Guid workspaceId, ArtifactPayload artifact, CancellationToken cancellationToken)
+[xUnit.net 00:00:08.32]         /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/InsightsService.IntegrationTests/ApiQueryTests.cs(76,0): at InsightsService.IntegrationTests.ApiQueryTests.Exact_summary_and_bounded_code_map_require_authorization_and_do_not_cross_workspaces()
+[xUnit.net 00:00:08.32]         /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/InsightsService.IntegrationTests/ApiQueryTests.cs(101,0): at InsightsService.IntegrationTests.ApiQueryTests.Exact_summary_and_bounded_code_map_require_authorization_and_do_not_cross_workspaces()
+[xUnit.net 00:00:08.32]         --- End of stack trace from previous location ---
+[xUnit.net 00:00:08.32]         ----- Inner Stack Trace -----
+[xUnit.net 00:00:08.32]            at Amazon.Runtime.HttpWebRequestMessage.ProcessHttpResponseMessage(HttpResponseMessage responseMessage)
+[xUnit.net 00:00:08.32]            at Amazon.Runtime.HttpWebRequestMessage.GetResponseAsync(CancellationToken cancellationToken)
+[xUnit.net 00:00:08.32]            at Amazon.Runtime.Internal.HttpHandler`1.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:08.32]            at Amazon.Runtime.Internal.RedirectHandler.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:08.32]            at Amazon.Runtime.Internal.Unmarshaller.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:08.32]            at Amazon.S3.Internal.AmazonS3ResponseHandler.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:08.32]            at Amazon.Runtime.Internal.ErrorHandler.InvokeAsync[T](IExecutionContext executionContext)
+[testcontainers.org 00:00:08.08] Wait for Docker container 4e06ecaa766d to complete readiness checks
+[testcontainers.org 00:00:08.08] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container 4e06ecaa766d
+[testcontainers.org 00:00:08.11] Wait for Docker container d668a4116969 to complete readiness checks
+[testcontainers.org 00:00:08.65] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container c35018629f12
+[testcontainers.org 00:00:09.09] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container 4e06ecaa766d
+[testcontainers.org 00:00:09.11] Docker container d668a4116969 ready
+[testcontainers.org 00:00:09.66] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container c35018629f12
+[testcontainers.org 00:00:10.11] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container 4e06ecaa766d
+[testcontainers.org 00:00:10.68] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container c35018629f12
+[testcontainers.org 00:00:11.13] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container 4e06ecaa766d
+[testcontainers.org 00:00:11.70] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container c35018629f12
+[testcontainers.org 00:00:12.14] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container 4e06ecaa766d
+[testcontainers.org 00:00:12.71] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container c35018629f12
+[testcontainers.org 00:00:13.16] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container 4e06ecaa766d
+[testcontainers.org 00:00:13.73] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container c35018629f12
+[testcontainers.org 00:00:13.75] Docker container c35018629f12 ready
+[testcontainers.org 00:00:13.79] Delete Docker container c35018629f12
+[testcontainers.org 00:00:14.18] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container 4e06ecaa766d
+[testcontainers.org 00:00:14.20] Docker container 4e06ecaa766d ready
+[testcontainers.org 00:00:14.27] Delete Docker container 4e06ecaa766d
+[testcontainers.org 00:00:14.93] Docker container ab7571ae60d5 created
+[testcontainers.org 00:00:14.93] Start Docker container ab7571ae60d5
+[testcontainers.org 00:00:15.11] Delete Docker container d668a4116969
+[testcontainers.org 00:00:15.26] Wait for Docker container ab7571ae60d5 to complete readiness checks
+[testcontainers.org 00:00:15.26] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container ab7571ae60d5
+[xUnit.net 00:00:16.36]       Amazon.S3.AmazonS3Exception : Storage backend has reached its minimum free drive threshold. Please delete a few objects to proceed.
+[xUnit.net 00:00:16.36]       ---- Amazon.Runtime.Internal.HttpErrorResponseException : Exception of type 'Amazon.Runtime.Internal.HttpErrorResponseException' was thrown.
+[xUnit.net 00:00:16.36]       Stack Trace:
+[xUnit.net 00:00:16.36]            at Amazon.Runtime.Internal.HttpErrorResponseExceptionHandler.HandleExceptionStream(IRequestContext requestContext, IWebResponseData httpErrorResponse, HttpErrorResponseException exception, Stream responseStream)
+[xUnit.net 00:00:16.36]            at Amazon.Runtime.Internal.HttpErrorResponseExceptionHandler.HandleExceptionAsync(IExecutionContext executionContext, HttpErrorResponseException exception)
+[xUnit.net 00:00:16.36]            at Amazon.Runtime.Internal.ExceptionHandler`1.HandleAsync(IExecutionContext executionContext, Exception exception)
+[xUnit.net 00:00:16.36]            at Amazon.Runtime.Internal.ErrorHandler.ProcessExceptionAsync(IExecutionContext executionContext, Exception exception)
+[xUnit.net 00:00:16.36]            at Amazon.Runtime.Internal.ErrorHandler.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:16.36]            at Amazon.Runtime.Internal.CallbackHandler.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:16.36]            at Amazon.Runtime.Internal.Signer.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:16.36]            at Amazon.S3.Internal.S3Express.S3ExpressPreSigner.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:16.36]            at Amazon.Runtime.Internal.EndpointDiscoveryHandler.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:16.36]            at Amazon.Runtime.Internal.EndpointDiscoveryHandler.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:16.36]            at Amazon.Runtime.Internal.RetryHandler.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:16.36]            at Amazon.Runtime.Internal.RetryHandler.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:16.36]            at Amazon.Runtime.Internal.CallbackHandler.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:16.36]            at Amazon.Runtime.Internal.BaseAuthResolverHandler.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:16.36]            at Amazon.Runtime.Internal.Marshaller.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:16.36]            at Amazon.Runtime.Internal.CallbackHandler.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:16.36]            at Amazon.S3.Internal.AmazonS3ExceptionHandler.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:16.36]            at Amazon.Runtime.Internal.ErrorCallbackHandler.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:16.36]            at Amazon.Runtime.Internal.MetricsHandler.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:16.36]         /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/services/insights-service/src/InsightsService.Infrastructure/S3ArtifactStore.cs(88,0): at InsightsService.Infrastructure.S3ArtifactStore.PutAsync(Guid workspaceId, ArtifactPayload artifact, CancellationToken cancellationToken)
+[xUnit.net 00:00:16.36]         /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/services/insights-service/src/InsightsService.Infrastructure/S3ArtifactStore.cs(89,0): at InsightsService.Infrastructure.S3ArtifactStore.PutAsync(Guid workspaceId, ArtifactPayload artifact, CancellationToken cancellationToken)
+[xUnit.net 00:00:16.36]         /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/services/insights-service/src/InsightsService.Infrastructure/SourceSnapshotProcessor.cs(307,0): at InsightsService.Infrastructure.SourceSnapshotProcessor.UploadAsync(InsightsPublication publication, CancellationToken cancellationToken)
+[xUnit.net 00:00:16.36]         /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/services/insights-service/src/InsightsService.Infrastructure/SourceSnapshotProcessor.cs(278,0): at InsightsService.Infrastructure.SourceSnapshotProcessor.ProcessAsync(CloudEvent`1 cloudEvent, CancellationToken cancellationToken)
+[xUnit.net 00:00:16.36]         /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/services/insights-service/src/InsightsService.Infrastructure/SourceSnapshotProcessor.cs(296,0): at InsightsService.Infrastructure.SourceSnapshotProcessor.ProcessAsync(CloudEvent`1 cloudEvent, CancellationToken cancellationToken)
+[xUnit.net 00:00:16.36]         /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/InsightsService.IntegrationTests/VerticalSliceTests.cs(65,0): at InsightsService.IntegrationTests.VerticalSliceTests.Two_commits_publish_full_then_incremental_and_fork_reuses_content_without_knowledge()
+[xUnit.net 00:00:16.36]         /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/InsightsService.IntegrationTests/VerticalSliceTests.cs(84,0): at InsightsService.IntegrationTests.VerticalSliceTests.Two_commits_publish_full_then_incremental_and_fork_reuses_content_without_knowledge()
+[xUnit.net 00:00:16.36]         --- End of stack trace from previous location ---
+[xUnit.net 00:00:16.36]         ----- Inner Stack Trace -----
+[xUnit.net 00:00:16.36]            at Amazon.Runtime.HttpWebRequestMessage.ProcessHttpResponseMessage(HttpResponseMessage responseMessage)
+[xUnit.net 00:00:16.36]            at Amazon.Runtime.HttpWebRequestMessage.GetResponseAsync(CancellationToken cancellationToken)
+[xUnit.net 00:00:16.36]            at Amazon.Runtime.Internal.HttpHandler`1.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:16.36]            at Amazon.Runtime.Internal.RedirectHandler.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:16.36]            at Amazon.Runtime.Internal.Unmarshaller.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:16.36]            at Amazon.S3.Internal.AmazonS3ResponseHandler.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:16.36]            at Amazon.Runtime.Internal.ErrorHandler.InvokeAsync[T](IExecutionContext executionContext)
+[testcontainers.org 00:00:16.27] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container ab7571ae60d5
+[testcontainers.org 00:00:17.30] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container ab7571ae60d5
+[testcontainers.org 00:00:18.32] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container ab7571ae60d5
+[testcontainers.org 00:00:19.33] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container ab7571ae60d5
+[testcontainers.org 00:00:20.35] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container ab7571ae60d5
+[testcontainers.org 00:00:20.38] Docker container ab7571ae60d5 ready
+[testcontainers.org 00:00:20.40] Delete Docker container ab7571ae60d5
+[xUnit.net 00:00:21.40]   Finished:    InsightsService.IntegrationTests
+</StdOut>
+    </Output>
+    <RunInfos>
+      <RunInfo computerName="RICKEBO" outcome="Error" timestamp="2026-08-25T23:10:58.4094360+02:00">
+        <Text>[xUnit.net 00:00:05.66]     InsightsService.IntegrationTests.S3ArtifactStoreTests.Put_get_reuse_and_delete_are_checksum_verified [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="RICKEBO" outcome="Error" timestamp="2026-08-25T23:11:01.0667256+02:00">
+        <Text>[xUnit.net 00:00:08.31]     InsightsService.IntegrationTests.ApiQueryTests.Exact_summary_and_bounded_code_map_require_authorization_and_do_not_cross_workspaces [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="RICKEBO" outcome="Error" timestamp="2026-08-25T23:11:09.1112005+02:00">
+        <Text>[xUnit.net 00:00:16.36]     InsightsService.IntegrationTests.VerticalSliceTests.Two_commits_publish_full_then_incremental_and_fork_reuses_content_without_knowledge [FAIL]</Text>
+      </RunInfo>
+    </RunInfos>
+  </ResultSummary>
+</TestRun>

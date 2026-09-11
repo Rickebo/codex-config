@@ -1,0 +1,79 @@
+{
+  "meta": {
+    "id": "SPEC-CODICARIUM-ARGO-PHASE0",
+    "title": "Lockout-safe Argo CD authenticated default deny",
+    "author": "Codex manager",
+    "created_at": "2026-08-23T08:45:00Z",
+    "version": "1.0"
+  },
+  "feature": {
+    "problem_statement": "The Codicarium Argo CD installation grants role:readonly to every authenticated principal through two active configuration sources, exposing unrelated applications and conflicting with least privilege.",
+    "goals": [
+      "Make an authenticated principal without an explicit Argo role permissionless.",
+      "Preserve explicit administrator mappings and an independent Kubernetes break-glass recovery path.",
+      "Keep the Terraform and local bootstrap renderers behaviorally identical and regression tested.",
+      "Deploy only after live admin and ordinary-user identities prove the lockout and isolation matrix."
+    ],
+    "non_goals": [
+      "Implement repository-scoped viewer/operator roles or the full Access Controller in Phase 0.",
+      "Change AppProject source, destination, or resource profiles.",
+      "Pin or upgrade the existing Argo CD Helm chart.",
+      "Treat GitHub organization ownership as platform administration."
+    ],
+    "scope_in": [
+      "codicarium/infra Terraform and local bootstrap Argo RBAC values",
+      "Focused renderer contract tests and existing validation",
+      "Pull request, exact-plan review, merge, rollout, rollback, and live authorization evidence"
+    ],
+    "scope_out": [
+      "Application authorization and Rancher/Kubernetes project roles",
+      "Agent capability issuance",
+      "Production operator entitlement design"
+    ]
+  },
+  "requirements": [
+    {"id":"REQ-001","priority":"MUST","statement":"Both authoritative Argo RBAC renderers must emit a valid permissionless policy.default and retain groups scope plus the three explicit administrator mappings.","rationale":"Changing one renderer permits the other to restore global read access or creates environment drift."},
+    {"id":"REQ-002","priority":"MUST","statement":"Repository tests must fail for role:readonly, missing group scope, missing admin mappings, or renderer disagreement.","rationale":"The least-privilege contract must be durable and mechanically reviewable."},
+    {"id":"REQ-003","priority":"MUST","statement":"The deployed Argo CD version must accept and evaluate the selected empty-default encoding as zero permissions for an unmatched authenticated subject.","rationale":"Syntactic rendering alone does not prove runtime authorization semantics."},
+    {"id":"REQ-004","priority":"MUST","statement":"Before merge, one real SSO administrator and an independent Kubernetes break-glass principal must be verified, and a real ordinary authenticated principal must be available for negative tests.","rationale":"The Terraform path can auto-apply after merge, so identity continuity and denial cannot be deferred safely."},
+    {"id":"REQ-005","priority":"MUST","statement":"Any Terraform production-root change must have an exact reviewed plan with no unrelated mutations and the live target release/source ownership must be unambiguous.","rationale":"Merge and deployment are coupled and the current live RBAC object is not tracked by the expected Argo application."},
+    {"id":"REQ-006","priority":"MUST","statement":"Post-deployment evidence must prove admin continuity, ordinary-user authentication with authorization denial, Argo control-plane health, reviewed/live policy equality, and a bounded rollback path.","rationale":"Phase 0 is complete only when behavior and recovery are verified live."},
+    {"id":"REQ-007","priority":"SHOULD","statement":"Evidence must record immutable Git SHA, cluster/context identity, resourceVersion or policy hash, workflow/run identifiers, and timestamps without credentials or personal data.","rationale":"Authorization grants and rollout decisions must be explainable and auditable."}
+  ],
+  "acceptance_criteria": [
+    {"id":"AC-001","requirement_ids":["REQ-001"],"scenario":"Given both authoritative renderers, when their Argo RBAC values are normalized, then both contain policy.default as the validated permissionless value, scopes [groups], and explicit role:admin mappings for argocd-admins, codicarium-admins, and codicarium-platform-admins."},
+    {"id":"AC-002","requirement_ids":["REQ-002"],"scenario":"Given the focused contract tests, when the candidate is tested and either renderer is separately regressed, then the candidate passes and role:readonly, a missing admin mapping, or a missing group scope fails."},
+    {"id":"AC-003","requirement_ids":["REQ-003"],"scenario":"Given a version-matched Argo RBAC evaluator, when unmatched and explicit administrator group claims are evaluated, then the unmatched subject has zero permissions and each explicit group has administrator permissions."},
+    {"id":"AC-004","requirement_ids":["REQ-004"],"scenario":"Given fresh pre-merge access, when a real SSO administrator, a distinct ordinary SSO user, and an out-of-band Kubernetes administrator are probed, then all identities behave as declared without reading secret values."},
+    {"id":"AC-005","requirement_ids":["REQ-005"],"scenario":"Given the exact candidate SHA, when the production Terraform plan and live ownership mapping are reviewed, then the plan targets the explicit codicarium-dev Argo release, contains only intended RBAC changes, and ownership drift has an explicit resolution."},
+    {"id":"AC-006","requirement_ids":["REQ-006"],"scenario":"Given the deployed candidate, when administrator and ordinary-user authorization plus workload health are probed, then the administrator retains full access, the ordinary user authenticates but has no Argo permissions, workloads remain healthy, and live policy matches the reviewed SHA."},
+    {"id":"AC-007","requirement_ids":["REQ-006","REQ-007"],"scenario":"Given the captured prior state and break-glass path, when rollback is rehearsed or invoked, then prior RBAC and health return within a documented bound and sanitized immutable evidence is attached to infra issue 1143."}
+  ],
+  "test_plan": [
+    {"id":"TST-001","type":"unit","requirement_ids":["REQ-001","REQ-002"],"approach":"Parse and normalize both generated values sources; assert empty default, groups scope, exact admin mappings, and parity."},
+    {"id":"TST-002","type":"integration","requirement_ids":["REQ-003"],"approach":"Run the target Argo CD RBAC validator/evaluator or a version-matched ephemeral Argo instance against unmatched and admin-group claims."},
+    {"id":"TST-003","type":"integration","requirement_ids":["REQ-005"],"approach":"Run existing bootstrap tests, shell syntax, Terraform format/validate, topology guard, legacy freeze guard, and exact production plan."},
+    {"id":"TST-004","type":"manual","requirement_ids":["REQ-004"],"approach":"Using explicit codicarium-dev context, verify sanitized SSO admin, ordinary SSO user, and Kubernetes break-glass identities immediately before merge."},
+    {"id":"TST-005","type":"e2e","requirement_ids":["REQ-006"],"approach":"After rollout exercise admin and ordinary-user Argo API/UI authorization matrix and verify Argo workload sync/health plus live policy hash."},
+    {"id":"TST-006","type":"non_functional","requirement_ids":["REQ-006","REQ-007"],"approach":"Exercise the documented rollback in a safe target or prove the exact recovery mechanism, record convergence time and immutable sanitized evidence."}
+  ],
+  "traceability": [
+    {"requirement_id":"REQ-001","acceptance_ids":["AC-001"],"test_ids":["TST-001"],"review_checks":["Review both authority paths and exact admin mappings"],"validation_checks":["Compare normalized rendered values"]},
+    {"requirement_id":"REQ-002","acceptance_ids":["AC-002"],"test_ids":["TST-001"],"review_checks":["Inspect negative regression fixtures"],"validation_checks":["Run focused contract tests"]},
+    {"requirement_id":"REQ-003","acceptance_ids":["AC-003"],"test_ids":["TST-002"],"review_checks":["Confirm validator version matches deployed Argo"],"validation_checks":["Evaluate unmatched and all admin group claims"]},
+    {"requirement_id":"REQ-004","acceptance_ids":["AC-004"],"test_ids":["TST-004"],"review_checks":["Require distinct real identities and no secret disclosure"],"validation_checks":["Fresh pre-merge live identity probes"]},
+    {"requirement_id":"REQ-005","acceptance_ids":["AC-005"],"test_ids":["TST-003"],"review_checks":["Review source ownership, frozen-root exception, and exact plan"],"validation_checks":["No unrelated Terraform plan changes"]},
+    {"requirement_id":"REQ-006","acceptance_ids":["AC-006","AC-007"],"test_ids":["TST-005","TST-006"],"review_checks":["Review deployment, health, authorization, and rollback evidence"],"validation_checks":["Post-rollout matrix and recovery evidence pass"]},
+    {"requirement_id":"REQ-007","acceptance_ids":["AC-007"],"test_ids":["TST-006"],"review_checks":["Check evidence is immutable, fresh, sanitized, and complete"],"validation_checks":["Issue 1143 contains evidence references"]}
+  ],
+  "quality_gates": {"spec_review_required":true,"testability_required":true,"traceability_required":true},
+  "council": {
+    "perspectives": [
+      {"role":"security","summary":"Paired renderer change is mandatory; empty default is valid but deployment is no-go until SSO admin and independent break-glass recovery are proven."},
+      {"role":"quality","summary":"Require normalized renderer parity, negative fixtures, version-matched policy evaluation, exact plan, live positive/negative identities, and fresh evidence."},
+      {"role":"operations","summary":"Reachable target is explicit codicarium-dev; live RBAC is unmanaged by the expected Argo app, prod endpoints are unreachable, and no ordinary-user session is presently available."}
+    ],
+    "consensus_summary":"Proceed with a minimal paired source change and tests on authoritative remote main; do not merge or auto-apply until live ownership, real SSO admin/ordinary-user probes, and rollback preconditions pass.",
+    "open_questions":["Which workflow/source currently owns the live unmanaged argocd-rbac-cm?","Which safe real SSO identities will execute admin and ordinary-user probes?","Can prod endpoint unreachability be conclusively classified as retired topology rather than missing access?"]
+  }
+}

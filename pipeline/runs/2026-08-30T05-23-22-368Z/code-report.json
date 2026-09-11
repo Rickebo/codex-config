@@ -1,0 +1,25 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Luna implementation opened infra PR #1293 at corrected head 1b7dca9a with a strict desired-state contract, offline verifier, eight adversarial tests, and rollback runbook. Root caught and Luna fixed one trailing-whitespace validation discrepancy before review.",
+  "changed_files": [
+    "contracts/authority-runner-ownership.json",
+    "scripts/verify-authority-runner-contract.py",
+    "tests/test-authority-runner-contract.py",
+    "docs/authority-runner-ownership-runbook.md"
+  ],
+  "validation": [
+    "Eight focused positive/adversarial contract tests passed.",
+    "Python compilation and JSON validation passed.",
+    "Range git diff check now passes after a Luna formatting correction.",
+    "Worktree is clean and PR is mergeable at exact head 1b7dca9a338b65e1a305988f91a01f1d680f1be1 and base efb9faac0606e02b7cac8e36e716f1ede9a50fb6.",
+    "Contract pins helper digests from immutable PR #1246 commit 232cb982e97fb12b6b4e09a71a74ae5a21d527c0.",
+    "Systemd desired unit is bound to upstream Actions Runner v2.337.0 commit 397b032cbf865e9c3ddfab89d533ec19325e1273.",
+    "No host access, sudo/systemctl execution, workflow mutation, apply, runner authorization, secret access, or live action occurred."
+  ],
+  "blockers": [],
+  "next_action": "Perform independent Luna security review of exact PR head, especially verifier trust boundaries, sudo tuple exactness, identity/ref binding, path/link/ancestor safety, deterministic evidence, and test completeness.",
+  "route_to": "review",
+  "risk_level": "high",
+  "independent_lanes": ["authority-runner desired-state contract and offline verifier"]
+}

@@ -1,0 +1,61 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Final full-branch backend and QA/system review at clean HEAD 6567e00 found four blockers: lifecycle aggregate versions lack atomic checkpoints, Source track sequences lack gap/stale reconciliation, Source workload authentication regresses the existing Insights caller, and authenticated 429 retries reuse consumed HMAC nonces. Duplicate event IDs also resolve upstream dependencies before the inbox short-circuit.",
+  "changed_files": [],
+  "validation": [
+    "Both reviewers inspected the complete origin/main...6567e00 candidate across all 19 commits and the REQ-001 through REQ-008 trace",
+    "Backend review traced lifecycle invalidation, Source snapshot ingestion, claim ordering, inbox dedupe, generation fencing, and Kafka semantics",
+    "QA review cross-checked Source runtime/OpenAPI against the normative Source service specification and existing Insights caller",
+    "QA review traced workload-proof nonce consumption across authenticated Source/Model 429 retry paths",
+    "Prior supplied evidence remains green: Kafka 9/9, compatibility 30/30, FastSystem 74/74, Release builds, generator checks, and cleanup audits",
+    "Candidate HEAD and worktree remained clean; git diff --check passed",
+    "No test-stage clean-main/candidate SIGSEGV matrix was run during review"
+  ],
+  "blockers": [
+    "Lifecycle invalidation accepts delayed/out-of-order aggregate versions because no persisted per-aggregate checkpoint is compared atomically with inbox insertion; stale events can advance fences and enqueue repeated builds.",
+    "Source snapshot ingestion has no atomic per-track sequence checkpoint, gap detection, or authoritative reconciliation; sequence gaps and late older snapshots can still cause build/model work.",
+    "Source workload authentication and OpenAPI now allow only knowledge-service, rejecting the existing insights-service caller required by the normative Source contract.",
+    "HTTP 429 retries clone and reuse the same single-use HMAC proof nonce; after an authenticated 429 consumes the nonce, retry attempts fail as replay instead of recovering."
+  ],
+  "next_action": "Return to code for one bounded final remediation: atomic lifecycle/track checkpoints with stale/gap coverage, restored Knowledge/Insights Source audience consistency, fresh proof generation per 429 attempt, and early duplicate short-circuiting; then rerun focused and full review gates.",
+  "route_to": "code",
+  "risk_level": "high",
+  "issues": [
+    {
+      "id": "REV6-BE-001",
+      "title": "Lifecycle aggregate versions have no applied checkpoint",
+      "severity": "high",
+      "details": "Persist and atomically compare the highest applied version per lifecycle aggregate with inbox insertion; acknowledge equal/lower versions without fence, supersession, model, or build work.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV6-BE-002",
+      "title": "Source track sequences have no gap or stale reconciliation",
+      "severity": "high",
+      "details": "Add an atomic per-track generation/sequence checkpoint, acknowledge stale/already-applied events, and hold/reconcile gaps through authoritative Source state before build work.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV6-QA-001",
+      "title": "Source workload audience regresses Insights",
+      "severity": "high",
+      "details": "Align Source authentication, OpenAPI, normative specification, and tests so both existing Knowledge and Insights callers are authorized without broadening unrelated audiences.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV6-QA-002",
+      "title": "Authenticated 429 retries reuse a consumed proof nonce",
+      "severity": "high",
+      "details": "Create a fresh workload proof for every retry attempt and cover a nonce-consuming authenticated 429 followed by success for Source and Model paths.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV6-BE-003",
+      "title": "Duplicate event IDs resolve upstream dependencies before dedupe",
+      "severity": "medium",
+      "details": "Short-circuit an already accepted inbox/event checkpoint before external resolution while retaining the transactional generation-fence check for genuinely new events.",
+      "owner_stage": "code"
+    }
+  ]
+}

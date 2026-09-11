@@ -1,0 +1,1598 @@
+[
+  {
+    "id": "cmd.X01",
+    "argv": [
+      "codex-v2.5",
+      "X01",
+      "cmd.X01"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "07df55f97bb9bf62b73633e3b0b0a0998fdf5224118c2821e4a29bd726477521",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "X01",
+        "cmd.X01"
+      ],
+      "digest": "07df55f97bb9bf62b73633e3b0b0a0998fdf5224118c2821e4a29bd726477521"
+    }
+  },
+  {
+    "id": "cmd.X02",
+    "argv": [
+      "codex-v2.5",
+      "X02",
+      "cmd.X02"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "db3a7bc8e9f3257e218f74f40d38c6c72e38b7b50731c5824638668257f0c1c5",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "X02",
+        "cmd.X02"
+      ],
+      "digest": "db3a7bc8e9f3257e218f74f40d38c6c72e38b7b50731c5824638668257f0c1c5"
+    }
+  },
+  {
+    "id": "cmd.X03",
+    "argv": [
+      "codex-v2.5",
+      "X03",
+      "cmd.X03"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "68a63ea3c5cbda4674d109925a2439af3fb6d19e54d7697163fadd28aa1100fc",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "X03",
+        "cmd.X03"
+      ],
+      "digest": "68a63ea3c5cbda4674d109925a2439af3fb6d19e54d7697163fadd28aa1100fc"
+    }
+  },
+  {
+    "id": "cmd.X04",
+    "argv": [
+      "codex-v2.5",
+      "X04",
+      "cmd.X04"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "5727919965c30a91fd97aef8a76aba3e97a76bfc00ac2408d567c80d50712425",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "X04",
+        "cmd.X04"
+      ],
+      "digest": "5727919965c30a91fd97aef8a76aba3e97a76bfc00ac2408d567c80d50712425"
+    }
+  },
+  {
+    "id": "cmd.X05",
+    "argv": [
+      "codex-v2.5",
+      "X05",
+      "cmd.X05"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "28b510106479a5ed7a52e0a111e88929287b79207c86cd463015fa90b8052417",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "X05",
+        "cmd.X05"
+      ],
+      "digest": "28b510106479a5ed7a52e0a111e88929287b79207c86cd463015fa90b8052417"
+    }
+  },
+  {
+    "id": "cmd.X06",
+    "argv": [
+      "codex-v2.5",
+      "X06",
+      "cmd.X06"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "4cfc96a936a5497c44dadbb756e392f98968046f60f333545036b0fe7cd3faa2",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "X06",
+        "cmd.X06"
+      ],
+      "digest": "4cfc96a936a5497c44dadbb756e392f98968046f60f333545036b0fe7cd3faa2"
+    }
+  },
+  {
+    "id": "cmd.X07",
+    "argv": [
+      "codex-v2.5",
+      "X07",
+      "cmd.X07"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "2ba33eab73f9546050f33338cd55e17ce42d6e4d05fa27b60d8597d8e4216560",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "X07",
+        "cmd.X07"
+      ],
+      "digest": "2ba33eab73f9546050f33338cd55e17ce42d6e4d05fa27b60d8597d8e4216560"
+    }
+  },
+  {
+    "id": "cmd.X08",
+    "argv": [
+      "codex-v2.5",
+      "X08",
+      "cmd.X08"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "364cd7513930627b6198bfd8d5d9f1f88d0082d05887d6d34855df0da05842aa",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "X08",
+        "cmd.X08"
+      ],
+      "digest": "364cd7513930627b6198bfd8d5d9f1f88d0082d05887d6d34855df0da05842aa"
+    }
+  },
+  {
+    "id": "cmd.X09",
+    "argv": [
+      "codex-v2.5",
+      "X09",
+      "cmd.X09"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "8a53ad68354cab1dbed68eca585086c3953874a8cb25d9035716cd809d10fc1a",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "X09",
+        "cmd.X09"
+      ],
+      "digest": "8a53ad68354cab1dbed68eca585086c3953874a8cb25d9035716cd809d10fc1a"
+    }
+  },
+  {
+    "id": "cmd.X10",
+    "argv": [
+      "codex-v2.5",
+      "X10",
+      "cmd.X10"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "e1a0ab67c08732dbdcfb1ea0edd90bac730c6d882eea7e100230d46df2820811",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "X10",
+        "cmd.X10"
+      ],
+      "digest": "e1a0ab67c08732dbdcfb1ea0edd90bac730c6d882eea7e100230d46df2820811"
+    }
+  },
+  {
+    "id": "cmd.X11",
+    "argv": [
+      "codex-v2.5",
+      "X11",
+      "cmd.X11"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "e5d01313e139ea0fcb3ac14f238487a3e56626fc57cc3d341cf4062c96f73bb9",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "X11",
+        "cmd.X11"
+      ],
+      "digest": "e5d01313e139ea0fcb3ac14f238487a3e56626fc57cc3d341cf4062c96f73bb9"
+    }
+  },
+  {
+    "id": "cmd.X12",
+    "argv": [
+      "codex-v2.5",
+      "X12",
+      "cmd.X12"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "6cb8acf8143ad64517f1123b569f5ae274a67b58b540b8c8c82628c701842292",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "X12",
+        "cmd.X12"
+      ],
+      "digest": "6cb8acf8143ad64517f1123b569f5ae274a67b58b540b8c8c82628c701842292"
+    }
+  },
+  {
+    "id": "cmd.X13",
+    "argv": [
+      "codex-v2.5",
+      "X13",
+      "cmd.X13"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "2428ac410a4eaa86954e1d0a818946ba3f3c0029aff53e4dc2f7996fa629e9c3",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "X13",
+        "cmd.X13"
+      ],
+      "digest": "2428ac410a4eaa86954e1d0a818946ba3f3c0029aff53e4dc2f7996fa629e9c3"
+    }
+  },
+  {
+    "id": "cmd.X14",
+    "argv": [
+      "codex-v2.5",
+      "X14",
+      "cmd.X14"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "8b8220cf49b96d25a18e0ddaf6f2622f79b6733fb9725601a17d094498e806fc",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "X14",
+        "cmd.X14"
+      ],
+      "digest": "8b8220cf49b96d25a18e0ddaf6f2622f79b6733fb9725601a17d094498e806fc"
+    }
+  },
+  {
+    "id": "cmd.X15",
+    "argv": [
+      "codex-v2.5",
+      "X15",
+      "cmd.X15"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "0412318616d22d9c80f6fb872b3659c4b316811cc082ad1d334f03f882417c3e",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "X15",
+        "cmd.X15"
+      ],
+      "digest": "0412318616d22d9c80f6fb872b3659c4b316811cc082ad1d334f03f882417c3e"
+    }
+  },
+  {
+    "id": "cmd.X16",
+    "argv": [
+      "codex-v2.5",
+      "X16",
+      "cmd.X16"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "78b700f5959405f161de8abb9ffa1615767e0285cd176f3db7ded02ef671954e",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "X16",
+        "cmd.X16"
+      ],
+      "digest": "78b700f5959405f161de8abb9ffa1615767e0285cd176f3db7ded02ef671954e"
+    }
+  },
+  {
+    "id": "cmd.X17",
+    "argv": [
+      "codex-v2.5",
+      "X17",
+      "cmd.X17"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "02d6fa93deba0b3f1431bd4f6d191f7228fe9791275da2cd561319bcb4578e97",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "X17",
+        "cmd.X17"
+      ],
+      "digest": "02d6fa93deba0b3f1431bd4f6d191f7228fe9791275da2cd561319bcb4578e97"
+    }
+  },
+  {
+    "id": "cmd.X18",
+    "argv": [
+      "codex-v2.5",
+      "X18",
+      "cmd.X18"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "e92f92a61c20fe996dd597c442da84701989b3cedefd212a58f0f17e6a4f325f",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "X18",
+        "cmd.X18"
+      ],
+      "digest": "e92f92a61c20fe996dd597c442da84701989b3cedefd212a58f0f17e6a4f325f"
+    }
+  },
+  {
+    "id": "cmd.X19",
+    "argv": [
+      "codex-v2.5",
+      "X19",
+      "cmd.X19"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "7088dc46f36d37f36283a5cf0d36ff913e43421c83385ea23a35a8bc2b43d47d",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "X19",
+        "cmd.X19"
+      ],
+      "digest": "7088dc46f36d37f36283a5cf0d36ff913e43421c83385ea23a35a8bc2b43d47d"
+    }
+  },
+  {
+    "id": "cmd.X20",
+    "argv": [
+      "codex-v2.5",
+      "X20",
+      "cmd.X20"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "cdca3e8a9badde5e5e75896cd169b21850bd26fc777a4042942f9af5497f69e8",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "X20",
+        "cmd.X20"
+      ],
+      "digest": "cdca3e8a9badde5e5e75896cd169b21850bd26fc777a4042942f9af5497f69e8"
+    }
+  },
+  {
+    "id": "cmd.X21",
+    "argv": [
+      "codex-v2.5",
+      "X21",
+      "cmd.X21"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "3d7ccfa3ff622ae1d1b31e0f3dc480e003a7c2106acaa1f10a7f0f147e9768d8",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "X21",
+        "cmd.X21"
+      ],
+      "digest": "3d7ccfa3ff622ae1d1b31e0f3dc480e003a7c2106acaa1f10a7f0f147e9768d8"
+    }
+  },
+  {
+    "id": "cmd.X22",
+    "argv": [
+      "codex-v2.5",
+      "X22",
+      "cmd.X22"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "b742a80100fc5227543ca82bbae55d73b75df9d457897bdaa17d2768a8159ad8",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "X22",
+        "cmd.X22"
+      ],
+      "digest": "b742a80100fc5227543ca82bbae55d73b75df9d457897bdaa17d2768a8159ad8"
+    }
+  },
+  {
+    "id": "cmd.X23",
+    "argv": [
+      "codex-v2.5",
+      "X23",
+      "cmd.X23"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "b027c318c24ad28b5e5bd73759689f6a91d3cd65f1089d513b0954d5e5cde3aa",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "X23",
+        "cmd.X23"
+      ],
+      "digest": "b027c318c24ad28b5e5bd73759689f6a91d3cd65f1089d513b0954d5e5cde3aa"
+    }
+  },
+  {
+    "id": "cmd.X24",
+    "argv": [
+      "codex-v2.5",
+      "X24",
+      "cmd.X24"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "bfefd2587e9f54ae64eb5f972b5b708f732d129795a99400c11778f56a91bf19",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "X24",
+        "cmd.X24"
+      ],
+      "digest": "bfefd2587e9f54ae64eb5f972b5b708f732d129795a99400c11778f56a91bf19"
+    }
+  },
+  {
+    "id": "cmd.X25",
+    "argv": [
+      "codex-v2.5",
+      "X25",
+      "cmd.X25"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "e48a39f18d134635e3f5c23c4bfd344f7eea94d57b5d45bb774c05d755881885",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "X25",
+        "cmd.X25"
+      ],
+      "digest": "e48a39f18d134635e3f5c23c4bfd344f7eea94d57b5d45bb774c05d755881885"
+    }
+  },
+  {
+    "id": "cmd.X26",
+    "argv": [
+      "codex-v2.5",
+      "X26",
+      "cmd.X26"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "1769cc8beaa968f3b9269088e485dd5567db7c5af50bb2dcd8b77d989d8a8404",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "X26",
+        "cmd.X26"
+      ],
+      "digest": "1769cc8beaa968f3b9269088e485dd5567db7c5af50bb2dcd8b77d989d8a8404"
+    }
+  },
+  {
+    "id": "cmd.X27",
+    "argv": [
+      "codex-v2.5",
+      "X27",
+      "cmd.X27"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "351003f3af680fdf20ae60e38ad7823d752728858c8cc1df5b9f1f0754f74d35",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "X27",
+        "cmd.X27"
+      ],
+      "digest": "351003f3af680fdf20ae60e38ad7823d752728858c8cc1df5b9f1f0754f74d35"
+    }
+  },
+  {
+    "id": "cmd.X28",
+    "argv": [
+      "codex-v2.5",
+      "X28",
+      "cmd.X28"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "bd9db1a6ffa07cc372297abf4927f14281202a0a3941895feeea612d0d0c0e93",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "X28",
+        "cmd.X28"
+      ],
+      "digest": "bd9db1a6ffa07cc372297abf4927f14281202a0a3941895feeea612d0d0c0e93"
+    }
+  },
+  {
+    "id": "cmd.X29",
+    "argv": [
+      "codex-v2.5",
+      "X29",
+      "cmd.X29"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "7e24290ac75cd176b86889ad4ff563a26851d800b2adcea6306b263c23dbbda3",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "X29",
+        "cmd.X29"
+      ],
+      "digest": "7e24290ac75cd176b86889ad4ff563a26851d800b2adcea6306b263c23dbbda3"
+    }
+  },
+  {
+    "id": "cmd.X30",
+    "argv": [
+      "codex-v2.5",
+      "X30",
+      "cmd.X30"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "1731225068fa20b14886314a5309bc0bb02ad23e85f708f8b62f4e49ddc25eaa",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "X30",
+        "cmd.X30"
+      ],
+      "digest": "1731225068fa20b14886314a5309bc0bb02ad23e85f708f8b62f4e49ddc25eaa"
+    }
+  },
+  {
+    "id": "cmd.X31",
+    "argv": [
+      "codex-v2.5",
+      "X31",
+      "cmd.X31"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "35d8bc1c26b42b4c3b073241b3a65d76937f617345ddad160a5715bd76a16c82",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "X31",
+        "cmd.X31"
+      ],
+      "digest": "35d8bc1c26b42b4c3b073241b3a65d76937f617345ddad160a5715bd76a16c82"
+    }
+  },
+  {
+    "id": "cmd.X32",
+    "argv": [
+      "codex-v2.5",
+      "X32",
+      "cmd.X32"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "85f49bb399c2856b1f0fb9ee5ef968166baf429bbc06bf903906da9240a03bb4",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "X32",
+        "cmd.X32"
+      ],
+      "digest": "85f49bb399c2856b1f0fb9ee5ef968166baf429bbc06bf903906da9240a03bb4"
+    }
+  },
+  {
+    "id": "cmd.X33",
+    "argv": [
+      "codex-v2.5",
+      "X33",
+      "cmd.X33"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "1207aa421f811c9852c260fa98a9372476685ebf326b7e876f0beeee550de7fc",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "X33",
+        "cmd.X33"
+      ],
+      "digest": "1207aa421f811c9852c260fa98a9372476685ebf326b7e876f0beeee550de7fc"
+    }
+  },
+  {
+    "id": "cmd.X34",
+    "argv": [
+      "codex-v2.5",
+      "X34",
+      "cmd.X34"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "0bacf217a46b14e35c3e1c7f388aa87d6627a7f40b4e733c2a2d4a9185e9196f",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "X34",
+        "cmd.X34"
+      ],
+      "digest": "0bacf217a46b14e35c3e1c7f388aa87d6627a7f40b4e733c2a2d4a9185e9196f"
+    }
+  },
+  {
+    "id": "cmd.X35",
+    "argv": [
+      "codex-v2.5",
+      "X35",
+      "cmd.X35"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "94ab8484453c9ca5dff41294f209e4a0920097c0fbd9639ea9b2a36f0d3e81ec",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "X35",
+        "cmd.X35"
+      ],
+      "digest": "94ab8484453c9ca5dff41294f209e4a0920097c0fbd9639ea9b2a36f0d3e81ec"
+    }
+  },
+  {
+    "id": "cmd.X36",
+    "argv": [
+      "codex-v2.5",
+      "X36",
+      "cmd.X36"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "1b4a9e6c21c03ecc057f8512aa5f6bcae5aff6b8886ea21024ecd953e9e5320e",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "X36",
+        "cmd.X36"
+      ],
+      "digest": "1b4a9e6c21c03ecc057f8512aa5f6bcae5aff6b8886ea21024ecd953e9e5320e"
+    }
+  },
+  {
+    "id": "cmd.X37",
+    "argv": [
+      "codex-v2.5",
+      "X37",
+      "cmd.X37"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "5a631611b553f67f865cf91ce7e5cf072f7366f69ded06279bf27a659bea1fa5",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "X37",
+        "cmd.X37"
+      ],
+      "digest": "5a631611b553f67f865cf91ce7e5cf072f7366f69ded06279bf27a659bea1fa5"
+    }
+  },
+  {
+    "id": "cmd.X38",
+    "argv": [
+      "codex-v2.5",
+      "X38",
+      "cmd.X38"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "8fe680ae2f436f59a5f117cffc61964b1c2d1eb410d289abd5fe850e42e1807b",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "X38",
+        "cmd.X38"
+      ],
+      "digest": "8fe680ae2f436f59a5f117cffc61964b1c2d1eb410d289abd5fe850e42e1807b"
+    }
+  },
+  {
+    "id": "cmd.X39",
+    "argv": [
+      "codex-v2.5",
+      "X39",
+      "cmd.X39"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "46574e2573d12e526cdcbe844de2b5abcbb672ecc0063853626f5dbe6d62f84a",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "X39",
+        "cmd.X39"
+      ],
+      "digest": "46574e2573d12e526cdcbe844de2b5abcbb672ecc0063853626f5dbe6d62f84a"
+    }
+  },
+  {
+    "id": "cmd.X40",
+    "argv": [
+      "codex-v2.5",
+      "X40",
+      "cmd.X40"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "728f78b69dfc892434ee15b1cc07f431ea719ba70b6aa86b1501457f21564484",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "X40",
+        "cmd.X40"
+      ],
+      "digest": "728f78b69dfc892434ee15b1cc07f431ea719ba70b6aa86b1501457f21564484"
+    }
+  },
+  {
+    "id": "cmd.S00",
+    "argv": [
+      "codex-v2.5",
+      "S00",
+      "cmd.S00"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "f2ccf1295d455aa35001a09a507e33cf319166a32d73661ef0fd11824e704bf7",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "S00",
+        "cmd.S00"
+      ],
+      "digest": "f2ccf1295d455aa35001a09a507e33cf319166a32d73661ef0fd11824e704bf7"
+    }
+  },
+  {
+    "id": "cmd.S99",
+    "argv": [
+      "codex-v2.5",
+      "S99",
+      "cmd.S99"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "8521597a77b1ca71af1cddede467afc73318d54b0aea3bba4004032c875147e6",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "S99",
+        "cmd.S99"
+      ],
+      "digest": "8521597a77b1ca71af1cddede467afc73318d54b0aea3bba4004032c875147e6"
+    }
+  },
+  {
+    "id": "cmd.X41",
+    "argv": [
+      "codex-v2.5",
+      "X41",
+      "cmd.X41"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "34e0150ce44d4b17655d8c16b7cf4b72e9c139a82fcf5bd762a58e9a5eb766f5",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "X41",
+        "cmd.X41"
+      ],
+      "digest": "34e0150ce44d4b17655d8c16b7cf4b72e9c139a82fcf5bd762a58e9a5eb766f5"
+    }
+  },
+  {
+    "id": "cmd.AP20",
+    "argv": [
+      "codex-v2.5",
+      "AP20",
+      "cmd.AP20"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "cc4fd58d29ac9a65e2912ba288482e77298f312f5696d8f51aa4d4e26dec34f7",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "AP20",
+        "cmd.AP20"
+      ],
+      "digest": "cc4fd58d29ac9a65e2912ba288482e77298f312f5696d8f51aa4d4e26dec34f7"
+    }
+  },
+  {
+    "id": "cmd.AP21",
+    "argv": [
+      "codex-v2.5",
+      "AP21",
+      "cmd.AP21"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "68f67f48ee25599bf59a6602f9a12d56133d06764029f230a1583ff2807d9eee",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "AP21",
+        "cmd.AP21"
+      ],
+      "digest": "68f67f48ee25599bf59a6602f9a12d56133d06764029f230a1583ff2807d9eee"
+    }
+  },
+  {
+    "id": "cmd.AP22",
+    "argv": [
+      "codex-v2.5",
+      "AP22",
+      "cmd.AP22"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "e2451cfa24c8b75eafb01ebb9193c31513d136c115826ad4081fd91f8c5b0b34",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "AP22",
+        "cmd.AP22"
+      ],
+      "digest": "e2451cfa24c8b75eafb01ebb9193c31513d136c115826ad4081fd91f8c5b0b34"
+    }
+  },
+  {
+    "id": "cmd.AP23",
+    "argv": [
+      "codex-v2.5",
+      "AP23",
+      "cmd.AP23"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "0c9c0e237f1ef1dfb946e71fd6858005d10bbbf7cf1e73b1800e671f4ec93547",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "AP23",
+        "cmd.AP23"
+      ],
+      "digest": "0c9c0e237f1ef1dfb946e71fd6858005d10bbbf7cf1e73b1800e671f4ec93547"
+    }
+  },
+  {
+    "id": "cmd.AP24",
+    "argv": [
+      "codex-v2.5",
+      "AP24",
+      "cmd.AP24"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "d323ecb87fbca2737ee6bbce0ed5f4b58af402a653e85de449c70504ba5f59ac",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "AP24",
+        "cmd.AP24"
+      ],
+      "digest": "d323ecb87fbca2737ee6bbce0ed5f4b58af402a653e85de449c70504ba5f59ac"
+    }
+  },
+  {
+    "id": "cmd.AP25",
+    "argv": [
+      "codex-v2.5",
+      "AP25",
+      "cmd.AP25"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "9928c5e7c787514d1b8f1ef60553f3b861e1144d414b2c0a1f24b996a33d07da",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "AP25",
+        "cmd.AP25"
+      ],
+      "digest": "9928c5e7c787514d1b8f1ef60553f3b861e1144d414b2c0a1f24b996a33d07da"
+    }
+  },
+  {
+    "id": "cmd.M01",
+    "argv": [
+      "codex-v2.5",
+      "M01",
+      "cmd.M01"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "28ca9864a21ec571400c5fecf89ed71bf2b0ede89780ee5fa71778ba7c69e619",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "M01",
+        "cmd.M01"
+      ],
+      "digest": "28ca9864a21ec571400c5fecf89ed71bf2b0ede89780ee5fa71778ba7c69e619"
+    }
+  },
+  {
+    "id": "cmd.M02",
+    "argv": [
+      "codex-v2.5",
+      "M02",
+      "cmd.M02"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "8c25d6cbe153252449f32043cab1db18847160242703534eed6e4fb9e5252eb6",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "M02",
+        "cmd.M02"
+      ],
+      "digest": "8c25d6cbe153252449f32043cab1db18847160242703534eed6e4fb9e5252eb6"
+    }
+  },
+  {
+    "id": "cmd.M03",
+    "argv": [
+      "codex-v2.5",
+      "M03",
+      "cmd.M03"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "7fb1c08ebca91e8dd3e68a8047c8e14ec19ec99adef58758194e2c4b529256f2",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "M03",
+        "cmd.M03"
+      ],
+      "digest": "7fb1c08ebca91e8dd3e68a8047c8e14ec19ec99adef58758194e2c4b529256f2"
+    }
+  },
+  {
+    "id": "cmd.M04",
+    "argv": [
+      "codex-v2.5",
+      "M04",
+      "cmd.M04"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "2cdf1ad0d7b41b90431f9ef9b50787c0962b377183b0ba8bed1a6a3dd728d63d",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "M04",
+        "cmd.M04"
+      ],
+      "digest": "2cdf1ad0d7b41b90431f9ef9b50787c0962b377183b0ba8bed1a6a3dd728d63d"
+    }
+  },
+  {
+    "id": "cmd.M05",
+    "argv": [
+      "codex-v2.5",
+      "M05",
+      "cmd.M05"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "236008efe1462d384457dd271da0462d1657a57488eb582ec34f15d1284d30eb",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "M05",
+        "cmd.M05"
+      ],
+      "digest": "236008efe1462d384457dd271da0462d1657a57488eb582ec34f15d1284d30eb"
+    }
+  },
+  {
+    "id": "cmd.M06",
+    "argv": [
+      "codex-v2.5",
+      "M06",
+      "cmd.M06"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "a4cba1e1532b32130909419bea6fbb62257d9ef62c29a9e9dd4a21ab280cc64e",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "M06",
+        "cmd.M06"
+      ],
+      "digest": "a4cba1e1532b32130909419bea6fbb62257d9ef62c29a9e9dd4a21ab280cc64e"
+    }
+  },
+  {
+    "id": "cmd.M07",
+    "argv": [
+      "codex-v2.5",
+      "M07",
+      "cmd.M07"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "c7d1a9c815df946325ae3837b2ab11e6486b83d43a3dd49508275724ff58bbde",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "M07",
+        "cmd.M07"
+      ],
+      "digest": "c7d1a9c815df946325ae3837b2ab11e6486b83d43a3dd49508275724ff58bbde"
+    }
+  },
+  {
+    "id": "cmd.M08",
+    "argv": [
+      "codex-v2.5",
+      "M08",
+      "cmd.M08"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "f0d83ffc1280242f0c86713db1539f5c50ea88114e765dac9529e0c86852111a",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "M08",
+        "cmd.M08"
+      ],
+      "digest": "f0d83ffc1280242f0c86713db1539f5c50ea88114e765dac9529e0c86852111a"
+    }
+  },
+  {
+    "id": "cmd.M09",
+    "argv": [
+      "codex-v2.5",
+      "M09",
+      "cmd.M09"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "97ccc700723cc34705650b075128d4a23f23b3a33a92a8a7c7b0ec01e725c7aa",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "M09",
+        "cmd.M09"
+      ],
+      "digest": "97ccc700723cc34705650b075128d4a23f23b3a33a92a8a7c7b0ec01e725c7aa"
+    }
+  },
+  {
+    "id": "cmd.M10",
+    "argv": [
+      "codex-v2.5",
+      "M10",
+      "cmd.M10"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "9a740760c8df837956b1132120edb5c322477621e472b3395bd8a28c84452093",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "M10",
+        "cmd.M10"
+      ],
+      "digest": "9a740760c8df837956b1132120edb5c322477621e472b3395bd8a28c84452093"
+    }
+  },
+  {
+    "id": "cmd.M11",
+    "argv": [
+      "codex-v2.5",
+      "M11",
+      "cmd.M11"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "470825d7752bcbcc502a54d4393e6be3f6337828b90dc4be2bd7c1ef2b395ae2",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "M11",
+        "cmd.M11"
+      ],
+      "digest": "470825d7752bcbcc502a54d4393e6be3f6337828b90dc4be2bd7c1ef2b395ae2"
+    }
+  },
+  {
+    "id": "cmd.M12",
+    "argv": [
+      "codex-v2.5",
+      "M12",
+      "cmd.M12"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "09e75cf638fdf8c6bc8a2192bf43671007ed4b29e978e63528d9277fe964a524",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "M12",
+        "cmd.M12"
+      ],
+      "digest": "09e75cf638fdf8c6bc8a2192bf43671007ed4b29e978e63528d9277fe964a524"
+    }
+  },
+  {
+    "id": "cmd.M13",
+    "argv": [
+      "codex-v2.5",
+      "M13",
+      "cmd.M13"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "3025e98e2cf821ddaa7c418f38a77606071dd1c7c517ac4e7e094e0e10fb10bc",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "M13",
+        "cmd.M13"
+      ],
+      "digest": "3025e98e2cf821ddaa7c418f38a77606071dd1c7c517ac4e7e094e0e10fb10bc"
+    }
+  },
+  {
+    "id": "cmd.M14",
+    "argv": [
+      "codex-v2.5",
+      "M14",
+      "cmd.M14"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "dfbc7ea8f58621ee765195118473b5f829bc9fa33fb783331d02a075864e2fbd",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "M14",
+        "cmd.M14"
+      ],
+      "digest": "dfbc7ea8f58621ee765195118473b5f829bc9fa33fb783331d02a075864e2fbd"
+    }
+  },
+  {
+    "id": "cmd.M15",
+    "argv": [
+      "codex-v2.5",
+      "M15",
+      "cmd.M15"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "21c5bd489c1a8a6f17f5bfeb136d6cf8fdd19583c407bf03fd17fe32c6863b21",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "M15",
+        "cmd.M15"
+      ],
+      "digest": "21c5bd489c1a8a6f17f5bfeb136d6cf8fdd19583c407bf03fd17fe32c6863b21"
+    }
+  },
+  {
+    "id": "cmd.M16",
+    "argv": [
+      "codex-v2.5",
+      "M16",
+      "cmd.M16"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "772d240d0d66c98a0d580a7892f60b2b25efc09fed11a2a61c01fa5f0a86d5c9",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "M16",
+        "cmd.M16"
+      ],
+      "digest": "772d240d0d66c98a0d580a7892f60b2b25efc09fed11a2a61c01fa5f0a86d5c9"
+    }
+  },
+  {
+    "id": "cmd.M17",
+    "argv": [
+      "codex-v2.5",
+      "M17",
+      "cmd.M17"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "5bf5806a8ef2a027a2fc7420472512a6c7b0601f05109ff69d067d2ea32e1678",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "M17",
+        "cmd.M17"
+      ],
+      "digest": "5bf5806a8ef2a027a2fc7420472512a6c7b0601f05109ff69d067d2ea32e1678"
+    }
+  },
+  {
+    "id": "cmd.M18",
+    "argv": [
+      "codex-v2.5",
+      "M18",
+      "cmd.M18"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "6dda23e38fd637cc921952d482d2f33844e86df8807b33c5afb4a8f13cd2a4ab",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "M18",
+        "cmd.M18"
+      ],
+      "digest": "6dda23e38fd637cc921952d482d2f33844e86df8807b33c5afb4a8f13cd2a4ab"
+    }
+  },
+  {
+    "id": "cmd.M19",
+    "argv": [
+      "codex-v2.5",
+      "M19",
+      "cmd.M19"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "f67f9c19d985e996688d3412a280375fe9d5a4a48aa08dea3d8294fed52f5644",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "M19",
+        "cmd.M19"
+      ],
+      "digest": "f67f9c19d985e996688d3412a280375fe9d5a4a48aa08dea3d8294fed52f5644"
+    }
+  },
+  {
+    "id": "cmd.fence",
+    "argv": [
+      "codex-v2.5",
+      "fence",
+      "cmd.fence"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "61a1a6b529f8b56c34acdd063bc149ba92c6a9fb0d46d6795b33de2493032ace",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "fence",
+        "cmd.fence"
+      ],
+      "digest": "61a1a6b529f8b56c34acdd063bc149ba92c6a9fb0d46d6795b33de2493032ace"
+    }
+  },
+  {
+    "id": "cmd.cancel",
+    "argv": [
+      "codex-v2.5",
+      "cancel",
+      "cmd.cancel"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "f41dba751a4894f6a28e9aaaa54be9fe080113868cee0b717c673623f70a128f",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "cancel",
+        "cmd.cancel"
+      ],
+      "digest": "f41dba751a4894f6a28e9aaaa54be9fe080113868cee0b717c673623f70a128f"
+    }
+  },
+  {
+    "id": "cmd.quarantine",
+    "argv": [
+      "codex-v2.5",
+      "quarantine",
+      "cmd.quarantine"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "d579ec94143d283a2e17697aa2d2d0741ee9caeaa73e8156f774f0ff6c313568",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "quarantine",
+        "cmd.quarantine"
+      ],
+      "digest": "d579ec94143d283a2e17697aa2d2d0741ee9caeaa73e8156f774f0ff6c313568"
+    }
+  },
+  {
+    "id": "cmd.classify",
+    "argv": [
+      "codex-v2.5",
+      "classify",
+      "cmd.classify"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "f99a0da92e3ae35d2b5498da54b5f5fddc161f52524fa0bedb7ad330b9ef5bad",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "classify",
+        "cmd.classify"
+      ],
+      "digest": "f99a0da92e3ae35d2b5498da54b5f5fddc161f52524fa0bedb7ad330b9ef5bad"
+    }
+  },
+  {
+    "id": "cmd.repair",
+    "argv": [
+      "codex-v2.5",
+      "repair",
+      "cmd.repair"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "60fe1e0e0c82aa568fa9b4e80b1b3969393d6f56627874cd94bd94c9ea58cca9",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "repair",
+        "cmd.repair"
+      ],
+      "digest": "60fe1e0e0c82aa568fa9b4e80b1b3969393d6f56627874cd94bd94c9ea58cca9"
+    }
+  },
+  {
+    "id": "cmd.successor",
+    "argv": [
+      "codex-v2.5",
+      "successor",
+      "cmd.successor"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "269c87a314a3bba785e051793eb68705b7fe8c795d0b9bd8a9bd96e5549ccdf4",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "successor",
+        "cmd.successor"
+      ],
+      "digest": "269c87a314a3bba785e051793eb68705b7fe8c795d0b9bd8a9bd96e5549ccdf4"
+    }
+  },
+  {
+    "id": "cmd.audit",
+    "argv": [
+      "codex-v2.5",
+      "audit",
+      "cmd.audit"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "d445a01bd561c75e90672b2623caa981c7afce4507da38089e29b3fcc5ae9653",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "audit",
+        "cmd.audit"
+      ],
+      "digest": "d445a01bd561c75e90672b2623caa981c7afce4507da38089e29b3fcc5ae9653"
+    }
+  },
+  {
+    "id": "cmd.reconcile",
+    "argv": [
+      "codex-v2.5",
+      "reconcile",
+      "cmd.reconcile"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "1ea35e1a86b47e760cfa827184ba0e04fd9f87d29dbe88b49de5956966d848d0",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "reconcile",
+        "cmd.reconcile"
+      ],
+      "digest": "1ea35e1a86b47e760cfa827184ba0e04fd9f87d29dbe88b49de5956966d848d0"
+    }
+  },
+  {
+    "id": "cmd.terminal",
+    "argv": [
+      "codex-v2.5",
+      "terminal",
+      "cmd.terminal"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "589ce0d91d788765c79b4ed9e163d79a92db116c490d747b5e4c52cceb439b05",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "terminal",
+        "cmd.terminal"
+      ],
+      "digest": "589ce0d91d788765c79b4ed9e163d79a92db116c490d747b5e4c52cceb439b05"
+    }
+  },
+  {
+    "id": "cmd.pipeline.spec",
+    "argv": [
+      "codex-v2.5",
+      "pipeline.spec",
+      "cmd.pipeline.spec"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "37f443077b57d7d15c08f3931075441e07cbe054216a115f49a3ed6522c6dfe3",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "pipeline.spec",
+        "cmd.pipeline.spec"
+      ],
+      "digest": "37f443077b57d7d15c08f3931075441e07cbe054216a115f49a3ed6522c6dfe3"
+    }
+  },
+  {
+    "id": "cmd.pipeline.code",
+    "argv": [
+      "codex-v2.5",
+      "pipeline.code",
+      "cmd.pipeline.code"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "c5336ebf77ed7fcf05d3bd9d6ee7cdb16cfff51c3148cdf536d53d6b2f11d824",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "pipeline.code",
+        "cmd.pipeline.code"
+      ],
+      "digest": "c5336ebf77ed7fcf05d3bd9d6ee7cdb16cfff51c3148cdf536d53d6b2f11d824"
+    }
+  },
+  {
+    "id": "cmd.pipeline.review",
+    "argv": [
+      "codex-v2.5",
+      "pipeline.review",
+      "cmd.pipeline.review"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "454f5232b9f2d6c5513d5ca22f23e21149d7dda60417bad82b7c561f2b2ec36f",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "pipeline.review",
+        "cmd.pipeline.review"
+      ],
+      "digest": "454f5232b9f2d6c5513d5ca22f23e21149d7dda60417bad82b7c561f2b2ec36f"
+    }
+  },
+  {
+    "id": "cmd.pipeline.test",
+    "argv": [
+      "codex-v2.5",
+      "pipeline.test",
+      "cmd.pipeline.test"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "b7d45f7da8a5272cdf4f6eacc552752d6ce06e94be0606023859058aa5855b00",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "pipeline.test",
+        "cmd.pipeline.test"
+      ],
+      "digest": "b7d45f7da8a5272cdf4f6eacc552752d6ce06e94be0606023859058aa5855b00"
+    }
+  },
+  {
+    "id": "cmd.pipeline.validation",
+    "argv": [
+      "codex-v2.5",
+      "pipeline.validation",
+      "cmd.pipeline.validation"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "a3685a15f1e42e2d32123b274c2f8b035a932ca933abe0bbdbf33d45c7cb6060",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "pipeline.validation",
+        "cmd.pipeline.validation"
+      ],
+      "digest": "a3685a15f1e42e2d32123b274c2f8b035a932ca933abe0bbdbf33d45c7cb6060"
+    }
+  },
+  {
+    "id": "cmd.admin.normal",
+    "argv": [
+      "codex-v2.5",
+      "admin.normal",
+      "cmd.admin.normal"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "79c56e11288f6604d995dbebd86a6688c46ac1065e74eb5dcc7c0663da9ef0c5",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "admin.normal",
+        "cmd.admin.normal"
+      ],
+      "digest": "79c56e11288f6604d995dbebd86a6688c46ac1065e74eb5dcc7c0663da9ef0c5"
+    }
+  },
+  {
+    "id": "cmd.admin.breakglass",
+    "argv": [
+      "codex-v2.5",
+      "admin.breakglass",
+      "cmd.admin.breakglass"
+    ],
+    "shell": false,
+    "network": "none",
+    "digest": "fc89a2857054c16bf4300e7a531604f617c1a577bf12e0616e91b88fa80e197e",
+    "const_binding": {
+      "argv": [
+        "codex-v2.5",
+        "admin.breakglass",
+        "cmd.admin.breakglass"
+      ],
+      "digest": "fc89a2857054c16bf4300e7a531604f617c1a577bf12e0616e91b88fa80e197e"
+    }
+  }
+]

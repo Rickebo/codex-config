@@ -1,0 +1,24 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Independent Luna review rejected exact REV5 head 07cd94aa18e37820a94e2bc21c166d18e5925a45 because a privileged source re-open could block indefinitely after FIFO replacement and cleanup protocol documentation was stale.",
+  "changed_files": [],
+  "validation": [
+    "Full independent security review inspected the privileged artifact capture lifecycle and cleanup protocol.",
+    "Historical runner 6252 evidence remains group 6 only and was not accepted as group-7 readiness."
+  ],
+  "blockers": [
+    "High: capture_source_files second open lacked O_NONBLOCK, allowing a stat-to-open FIFO swap to block root indefinitely.",
+    "Medium: artifact-seal-v1 README said exactly two protocol lines while cleanup requires three; stale wording lacked a mechanical rejection guard."
+  ],
+  "next_action": "Route both findings to Luna remediation with bounded FIFO-race regression coverage and synchronized protocol documentation guards; no push, install, dispatch, merge, or live mutation.",
+  "route_to": "code",
+  "risk_level": "critical",
+  "independent_lanes": [
+    "Luna reviewer /root/review_consolidation_07cd_full"
+  ],
+  "issues": [
+    {"id":"REV6-001","title":"Privileged re-open can block on FIFO replacement","severity":"high","owner_stage":"code"},
+    {"id":"REV6-002","title":"Cleanup protocol documentation and guards are stale","severity":"medium","owner_stage":"code"}
+  ]
+}

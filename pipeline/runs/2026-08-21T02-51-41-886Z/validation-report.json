@@ -1,0 +1,22 @@
+{
+  "stage": "validation",
+  "status": "blocked",
+  "summary": "Hosted validation passed at the exact issue-131 head, but protected main cannot merge without one independent approving review.",
+  "changed_files": [],
+  "validation": [
+    "PR #152 is ready for review at 69554eb281acf3b81fdbf21366650669e3ce0896",
+    "Hosted validate run 32443130140 / check 96657630878 succeeded",
+    "PR remains OPEN, MERGEABLE, mergeStateStatus BLOCKED, reviewDecision REVIEW_REQUIRED",
+    "No reviews are currently recorded"
+  ],
+  "blockers": [
+    "Protect main requires one independent approving review; no bypass is permitted."
+  ],
+  "next_action": "Grant pull_requests:write to the installed GitHub App and refresh it, or provide an independent reviewer; then re-check PR #152 and perform the protected merge.",
+  "route_to": "validation",
+  "risk_level": "low",
+  "commit": "69554eb281acf3b81fdbf21366650669e3ce0896",
+  "pr": 152,
+  "run": "32443130140",
+  "check": "96657630878"
+}

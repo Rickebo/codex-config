@@ -1,0 +1,33 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Independent Luna review of exact head ca9c8fdacfa0f55e23e7bead366dc6f7b8c4bf3e found the refreshed security delta correct locally but identified missing CI wiring for both adversarial revocation suites and an ambient unpinned kubectl dependency.",
+  "changed_files": [],
+  "validation": [
+    "Exact head and focused shell/Python/actionlint checks passed",
+    "RBAC contract, workflow contract, parser, and transaction tests passed when invoked directly",
+    "Canonical-main preservation and seven-commit scope were reviewed"
+  ],
+  "blockers": [
+    "P1: legacy-freeze-guard does not invoke or path-trigger both adversarial revocation test files",
+    "P2: parser test resolves ambient kubectl while the guard does not install or checksum an exact client",
+    "Merge/deploy remain NO-GO independently of these code fixes"
+  ],
+  "next_action": "Have Luna wire both test suites into the guard and supply an exact checksummed kubectl path for parser coverage, then rerun focused validation.",
+  "route_to": "code",
+  "risk_level": "critical",
+  "issues": [
+    {
+      "id": "PR1155-CI-REVOCATION-SUITES",
+      "title": "Adversarial revocation suites are not executed by CI",
+      "severity": "high",
+      "owner_stage": "code"
+    },
+    {
+      "id": "PR1155-PIN-KUBECTL",
+      "title": "Parser regression relies on ambient unpinned kubectl",
+      "severity": "medium",
+      "owner_stage": "code"
+    }
+  ]
+}

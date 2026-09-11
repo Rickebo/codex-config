@@ -1,0 +1,53 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "corrective_loop": 1,
+  "summary": "Corrective loop 1 now polls the exact Release Verify run and attempt to terminal success before artifact publication, requires exact historical Automatic Release proof for every resumed tag, and preserves serialized current-run replay as the fresh verifier/publisher coordinator.",
+  "changed_files": [
+    ".github/workflows/automatic-release.yaml",
+    ".github/workflows/publish-release.yaml",
+    ".github/workflows/recover-release-v068.yaml",
+    ".github/workflows/release.yaml",
+    "Makefile",
+    "docs/releasing.md",
+    "hack/publisher-subject-evidence.py",
+    "hack/release-handoff-policy.js",
+    "hack/release-plan.py",
+    "hack/release-provenance.py",
+    "hack/test-publisher-subject-evidence.py",
+    "hack/test-release-graph.py",
+    "hack/test-release-handoff-policy.js",
+    "hack/test-release-image-flow.py",
+    "hack/test-release-plan.py"
+  ],
+  "validation": [
+    "Compact-TDD red: coordinator run source mismatch was accepted before the exact source binding was added",
+    "Compact-TDD red: same-source resume reached the trigger-CI fast path before planner-action proof gating was added",
+    "make test-release-handoff-policy: passed exact CI, terminal verifier polling, stale attempt, historical coordinator proof, manual tag rejection, real v0.6.13 tuple, and valid replay fixtures",
+    "make test-release-flow: passed (26 image, 6 chart, 46 release graph/policy, handoff policy fixtures, 2 manifest, 14 publisher evidence, release asset plan, 11 planner, and 6 recovery tests)",
+    "./hack/validate-repository.sh: passed",
+    "actionlint v1.7.12 across all repository workflows: passed",
+    "Node syntax, Python compile, git diff --check, staged diff check, and post-commit clean-worktree checks: passed",
+    "Workspace Context published-baseline impact analysis completed for 15 paths at revision 0c70b1f6-8191-49f9-84fd-eb18947de4a4",
+    "Independent focused corrective review: no blocking findings"
+  ],
+  "resolved_review_issues": [
+    "REV-001",
+    "REV-002",
+    "REV-003",
+    "REV-004"
+  ],
+  "blockers": [],
+  "next_action": "Perform independent loop-1 review of commit 87de899f1d8f495045399d187f19e65e2da4e701 before PR testing and live automatic v0.6.13 recovery.",
+  "route_to": "review",
+  "risk_level": "high",
+  "commit": "87de899f1d8f495045399d187f19e65e2da4e701",
+  "worktree": "/mnt/rickebo-p/deployment-controller/.worktrees/deployment-controller-codex_issue-91-publisher-dispatch",
+  "independent_lanes": [
+    "terminal exact Release Verify polling before publication",
+    "historically authenticated resume proof and manual-tag rejection",
+    "exact CI resolution including rerun attempts",
+    "serialized idempotent replay with fresh current coordinator",
+    "preserved artifact binding and trusted publication stages"
+  ]
+}

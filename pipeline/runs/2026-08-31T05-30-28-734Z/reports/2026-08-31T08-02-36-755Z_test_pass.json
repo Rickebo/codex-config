@@ -1,0 +1,29 @@
+{
+  "stage": "test",
+  "status": "pass",
+  "summary": "Independent Luna test lane passed the dev-only admission boundary at exact clean head d8dce90775ea6f001e81b11bd60fa531d498b1b3. Admission remains disabled and no release, deployment, or live authorization mutation occurred.",
+  "changed_files": [],
+  "validation": [
+    "Focused admission/config tests passed: 16 top-level tests and 36 table subcases.",
+    "go test ./... passed across 29 packages and 476 listed tests.",
+    "go test -race ./..., go vet ./..., go build ./..., gofmt -l, and go mod tidy -diff passed.",
+    "Chart lint/render, disabled and dormant-enabled overlays, schema, failurePolicy, match, TLS, and list-only RBAC assertions passed.",
+    "Generated CRD parity passed across eight generated outputs.",
+    "Kubeconform validated 19 of 19 rendered resources.",
+    "Image, chart, graph, manifest, plan, policy, publisher-evidence, and recovery suites passed.",
+    "Image-flow digest-preservation controls passed.",
+    "Feature diff contains only the 11 expected admission files; release workflows, Dockerfile, and image controls are unchanged."
+  ],
+  "blockers": [
+    "Aggregate supply-chain wrapper could not bind-mount the NFS-backed .cache directory in Docker (host exit 126); component suites passed independently.",
+    "verify-image.sh could not run because this host Docker installation has no buildx plugin.",
+    "Unchanged test-recover-release-attestations.py has one baseline failure because base publish-release.yaml lacks workflow_run.",
+    "Head is behind current main and cannot receive the reviewed PR #172 correction until that exact-head PR obtains an eligible non-last-pusher code-owner approval and merges."
+  ],
+  "next_action": "Advance to validation, but do not open, merge, release, deploy, or enable admission until the branch is reconciled onto the safely corrected main and exact-head evidence is repeated.",
+  "route_to": "validation",
+  "risk_level": "critical",
+  "independent_lanes": [
+    "Luna QA /root/test_dc_150_d8d"
+  ]
+}

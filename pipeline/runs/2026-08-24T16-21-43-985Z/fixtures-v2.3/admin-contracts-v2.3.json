@@ -1,0 +1,22 @@
+{
+  "normal": {
+    "requester": "distinct",
+    "approver": "distinct",
+    "executor": "distinct",
+    "approval_ttl_seconds": 1800,
+    "credential_ttl_seconds": 600
+  },
+  "break_glass": {
+    "requester": "distinct",
+    "approvers": 2,
+    "executor": "distinct",
+    "approval_ttl_seconds": 900,
+    "credential_ttl_seconds": 300,
+    "forbidden": [
+      "publish",
+      "clear UNKNOWN",
+      "mint candidate",
+      "mutate admission"
+    ]
+  }
+}

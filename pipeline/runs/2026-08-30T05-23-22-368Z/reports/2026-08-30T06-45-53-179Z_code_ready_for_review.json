@@ -1,0 +1,30 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Luna remediated the second independent review on PR #1293 at exact head d11e3694: sudoers inventory is exact, the original root chain is checked before canonicalization, helper fixtures are self-contained, and fail-closed coverage expanded to 15 focused tests.",
+  "changed_files": [
+    "contracts/authority-runner-ownership.json",
+    "docs/authority-runner-ownership-runbook.md",
+    "scripts/verify-authority-runner-contract.py",
+    "tests/fixtures/authority-runner/check-codicarium-artifacts.py",
+    "tests/fixtures/authority-runner/codicarium-artifact-seal-v1",
+    "tests/fixtures/authority-runner/codicarium-artifact-seal-v1-preflight",
+    "tests/test-authority-runner-contract.py"
+  ],
+  "validation": [
+    "Fifteen focused positive and adversarial tests passed in the Luna implementation lane.",
+    "Python compilation and contract JSON validation passed.",
+    "git diff --check origin/main...HEAD passed and the worktree is clean.",
+    "Unprefixed sudoers artifacts, symlinked root ancestors, missing and permission-denied roots, malformed service state, and metadata races now have fail-closed coverage.",
+    "Positive fixture bytes are checked in and digest-bound; no diverged-commit git cat-file lookup remains.",
+    "PR is mergeable at head d11e3694a4f651eb62e2076fc4da30b2ebf075ba and base efb9faac0606e02b7cac8e36e716f1ede9a50fb6; exact-head CI is still running/queued.",
+    "No live host access, sudo/systemctl execution, workflow dispatch, merge, or secret access occurred."
+  ],
+  "blockers": [],
+  "next_action": "Perform a fresh independent Luna security review of exact head d11e3694, including fixture provenance and every prior trust-boundary finding, before test stage.",
+  "route_to": "review",
+  "risk_level": "high",
+  "independent_lanes": [
+    "authority-runner desired-state contract, verifier, and self-contained adversarial fixtures"
+  ]
+}

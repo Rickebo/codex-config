@@ -1,0 +1,10 @@
+{
+  "schema": "codicarium.replay-ledger/v2.4",
+  "storage": "durable-json-snapshot",
+  "key": "issuer|nonce|claim|epoch|sequence",
+  "consumed": [
+    "nonce-consumed-v2.4",
+    "nonce-M01-replayed-v2.4"
+  ],
+  "snapshot_id": "ledger-snapshot-v2.4-0001"
+}

@@ -1,0 +1,90 @@
+{
+  "schema": "codicarium.release-assets/v2.4",
+  "release_version": "NEXT_SEMVER",
+  "assets": [
+    {
+      "filename": "release-notes.md",
+      "media_type": "text/markdown",
+      "source_sha256": "5c52d600ed5473fc260ccfe2cc4abe10ea8d9502dee7f0fa82ed464d7dc39ab6",
+      "destination_binding": "github://codicarium/deployment-controller/releases/NEXT_SEMVER/assets/release-notes.md"
+    },
+    {
+      "filename": "sbom.cdx.json",
+      "media_type": "application/vnd.cyclonedx+json",
+      "source_sha256": "15012a8e565d34b3da2ffa9b10eb84965fcd900e8369f0c4faec502be52cc193",
+      "destination_binding": "github://codicarium/deployment-controller/releases/NEXT_SEMVER/assets/sbom.cdx.json"
+    },
+    {
+      "filename": "provenance.intoto.jsonl",
+      "media_type": "application/x-ndjson",
+      "source_sha256": "42e1298318a599b92809322b6ede04e647236b5e29a56cafe465e79dcf97b06f",
+      "destination_binding": "github://codicarium/deployment-controller/releases/NEXT_SEMVER/assets/provenance.intoto.jsonl"
+    },
+    {
+      "filename": "checksums.txt",
+      "media_type": "text/plain",
+      "source_sha256": "2d049b3b8ee3cee25cd5fc19002285960a5713e2e39b9d15b23288ed8d39803c",
+      "destination_binding": "github://codicarium/deployment-controller/releases/NEXT_SEMVER/assets/checksums.txt"
+    },
+    {
+      "filename": "deployment-manifest.json",
+      "media_type": "application/json",
+      "source_sha256": "261c10ed97288401124bf1096fdfa5932d4883e692decad92eb56f18aad65afd",
+      "destination_binding": "github://codicarium/deployment-controller/releases/NEXT_SEMVER/assets/deployment-manifest.json"
+    },
+    {
+      "filename": "helm-values.snapshot.yaml",
+      "media_type": "application/yaml",
+      "source_sha256": "6b5235e33ec852a02df75b319602b82a276c5794a138b2723509728717dbd2a6",
+      "destination_binding": "github://codicarium/deployment-controller/releases/NEXT_SEMVER/assets/helm-values.snapshot.yaml"
+    },
+    {
+      "filename": "api-schema.json",
+      "media_type": "application/json",
+      "source_sha256": "1bdafd784ab8eaaa280649d93ab1bfdc92eaf802445bf7b7866c9f0449fd814e",
+      "destination_binding": "github://codicarium/deployment-controller/releases/NEXT_SEMVER/assets/api-schema.json"
+    },
+    {
+      "filename": "migration-plan.md",
+      "media_type": "text/markdown",
+      "source_sha256": "6949f0c89de58d509e1e5fc4ddb063110c506698f026dbcb1253f4beaa3c593c",
+      "destination_binding": "github://codicarium/deployment-controller/releases/NEXT_SEMVER/assets/migration-plan.md"
+    },
+    {
+      "filename": "rollback-runbook.md",
+      "media_type": "text/markdown",
+      "source_sha256": "48307581e9dd7ec40ec73077cb124b77405ac04ab79cd1ea4419e18b971f4ec0",
+      "destination_binding": "github://codicarium/deployment-controller/releases/NEXT_SEMVER/assets/rollback-runbook.md"
+    },
+    {
+      "filename": "license-report.spdx.json",
+      "media_type": "application/spdx+json",
+      "source_sha256": "8b6e26e0f7b25bb3dbafcbe9cfab62eb94d3ad7586bea47f5d2843631216a6c4",
+      "destination_binding": "github://codicarium/deployment-controller/releases/NEXT_SEMVER/assets/license-report.spdx.json"
+    },
+    {
+      "filename": "test-report.junit.xml",
+      "media_type": "application/xml",
+      "source_sha256": "041e6f90bc0097c6808b2d1ff5bcebf2d6facb5cb6d1deb628e61b7f7329fd02",
+      "destination_binding": "github://codicarium/deployment-controller/releases/NEXT_SEMVER/assets/test-report.junit.xml"
+    },
+    {
+      "filename": "coverage-summary.json",
+      "media_type": "application/json",
+      "source_sha256": "c6939b24f0b73d4c048cc0f5e9d94f20fc81d56fa0d4a9190b5d5a6d504e5490",
+      "destination_binding": "github://codicarium/deployment-controller/releases/NEXT_SEMVER/assets/coverage-summary.json"
+    },
+    {
+      "filename": "slsa-verification.json",
+      "media_type": "application/json",
+      "source_sha256": "32a55b6748c8238e54658f79ef8ec7f4e6f1395e76bffb76e9d66c2467edb8bb",
+      "destination_binding": "github://codicarium/deployment-controller/releases/NEXT_SEMVER/assets/slsa-verification.json"
+    },
+    {
+      "filename": "release-index.json",
+      "media_type": "application/json",
+      "source_sha256": "ed6d07c6afb245ba5077f8898da3848b3d05d4cc34f72d80022fac81b265e14c",
+      "destination_binding": "github://codicarium/deployment-controller/releases/NEXT_SEMVER/assets/release-index.json"
+    }
+  ]
+}

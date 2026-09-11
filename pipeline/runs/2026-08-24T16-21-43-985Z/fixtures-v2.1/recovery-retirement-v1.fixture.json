@@ -1,0 +1,82 @@
+{
+  "schema": "codicarium.recovery-retirement/v1",
+  "must_complete_before": "v0.6.14-first-release-side-effect",
+  "workflows": [
+    {
+      "id": "341194538",
+      "name": "Automatic Release",
+      "path": ".github/workflows/automatic-release.yaml",
+      "workflow_state": "disabled_manually",
+      "path_state": "deleted-before-v0.6.14",
+      "old_outputs_accepted": false,
+      "reruns_accepted": false
+    },
+    {
+      "id": "318365668",
+      "name": "Release Verify",
+      "path": ".github/workflows/release.yaml",
+      "workflow_state": "disabled_manually",
+      "path_state": "deleted-before-v0.6.14",
+      "old_outputs_accepted": false,
+      "reruns_accepted": false
+    },
+    {
+      "id": "318365667",
+      "name": "Publish Release",
+      "path": ".github/workflows/publish-release.yaml",
+      "workflow_state": "disabled_manually",
+      "path_state": "deleted-before-v0.6.14",
+      "old_outputs_accepted": false,
+      "reruns_accepted": false
+    },
+    {
+      "id": "333279414",
+      "name": "Recover Release Attestations",
+      "path": ".github/workflows/recover-release-attestations.yaml",
+      "workflow_state": "disabled_manually",
+      "path_state": "deleted-before-v0.6.14",
+      "old_outputs_accepted": false,
+      "reruns_accepted": false
+    },
+    {
+      "id": "340335357",
+      "name": "Recover v0.6.8 Publisher Evidence",
+      "path": ".github/workflows/recover-release-v068.yaml",
+      "workflow_state": "disabled_manually",
+      "path_state": "deleted-before-v0.6.14",
+      "old_outputs_accepted": false,
+      "reruns_accepted": false
+    }
+  ],
+  "legacy_secret_authorities": [
+    "ACTIONS_STORAGE_OVH_ACCESS_KEY_ID",
+    "ACTIONS_STORAGE_OVH_ACCESS_KEY_SECRET",
+    "CODICARIUM_PACKAGE_REGISTRY_PASSWORD",
+    "CODICARIUM_PACKAGE_REGISTRY_USERNAME",
+    "NEXUS_PASSWORD",
+    "NEXUS_USERNAME"
+  ],
+  "recovery_authorities": {
+    "v068_s3_credentials": [
+      "V068_RECOVERY_S3_READ_ACCESS_KEY_ID",
+      "V068_RECOVERY_S3_READ_ACCESS_KEY_SECRET"
+    ],
+    "environments": [
+      "deployment-controller-attestation-recovery",
+      "deployment-controller-v068-recovery"
+    ],
+    "runner_routing": "[self-hosted,Linux,codicarium] and its general runner group",
+    "revoked": true
+  },
+  "replacement": {
+    "activation_time": "strictly-after-verified-v0.6.14",
+    "workflow_path": ".github/workflows/recover-release-v068-v2.yaml",
+    "workflow_id": "NEW_ID_NOT_ANY_RETIRED_ID",
+    "mutation_broker": "typed-one-target",
+    "target_count": 1,
+    "contents_write": false,
+    "broad_token": false,
+    "reusable_secret": false,
+    "signing_key": false
+  }
+}

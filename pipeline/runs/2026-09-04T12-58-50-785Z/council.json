@@ -1,0 +1,101 @@
+{
+  "run": "2026-09-04T12-58-50-785Z",
+  "decision": "GO_WITH_STAGED_HANDOFF",
+  "perspectives": [
+    {
+      "role": "product_semantics",
+      "agent": "planner",
+      "conclusion": "The new panel must report only raw observed percentage-point consumption inside each quota window. The 5h and 1w series are independent views of different provider windows, so they must not be interpreted or described as additive despite normal visual stacking. Missing telemetry remains absent rather than becoming an invented zero."
+    },
+    {
+      "role": "helm_portability",
+      "agent": "tech_lead_devops",
+      "conclusion": "Package the dashboard JSON under charts/codex-stats as an ordinary chart file and load it with .Files.Get without tpl. Keep Grafana {{...}} legends byte-safe, make the GrafanaDashboard optional and disabled by default, and expose explicit namespace, instance selector, datasource UID, Prometheus job, folder, resync period, and annotations through values."
+    },
+    {
+      "role": "gitops_safety",
+      "agent": "reviewer",
+      "conclusion": "Adopt the existing object under the same name and namespace. Merge and observe prune protection on the old standalone object first; retain Prune=false through chart adoption; publish an immutable chart before promotion; promote exact version and digest while removing the old source; then remove protection only in a separate verified follow-up PR. Never patch or directly sync the live cluster."
+    },
+    {
+      "role": "observability_correctness",
+      "agent": "observability_reviewer",
+      "conclusion": "Compute each hourly sample as sum_over_time of positive 5-minute remaining-percent decreases over [1h:5m], masking steps where codex_usage_resets_total increases. Apply job, user, machine, model, reasoning, and window filters symmetrically, use a fixed one-hour query interval, omit timeFrom, and avoid zero-fill or cross-window aggregation."
+    },
+    {
+      "role": "qa_release",
+      "agent": "tech_lead_qa",
+      "conclusion": "Gate release on disabled and enabled Helm lint/render, extracted dashboard JSON parsing, structural and PromQL contracts, absence of duplicate ownership, immutable artifact and digest verification, and explicit-context dry-run. Gate protection removal on Argo ownership/sync, live PromQL, and authenticated visual checks."
+    }
+  ],
+  "consensus": [
+    "There are no backend, metric-emission, storage, or API changes in this feature.",
+    "The chart becomes the sole canonical dashboard source and test owner after the promotion PR; pve-infra retains only deployment values and staged GitOps controls.",
+    "The GrafanaDashboard is disabled by default and may render only when an explicit target namespace and the required operator selection/configuration values are valid.",
+    "Raw dashboard JSON is loaded as a chart file without tpl; only narrowly scoped value substitution or operator datasource mapping may be used, and Grafana legend templates must survive rendering unchanged.",
+    "The adoption and cleanup sequence is enforced through separate GitHub issues and PRs with dependency comments and exact-head verification evidence.",
+    "All cluster and Argo commands name the intended kubeconfig, context, namespace, and application; validation is read-only except server-side dry-run, and no direct live patch or manual sync is allowed."
+  ],
+  "execution_plan": [
+    {
+      "order": 1,
+      "owner": "tech_lead_devops",
+      "repository": "pve-infra",
+      "github_task": "Create or reuse a priority:p1 adoption-safety issue and a dedicated PR that adds argocd.argoproj.io/sync-options: Prune=false to the existing standalone GrafanaDashboard.",
+      "artifact": "Merged protection PR with the live object still synchronized under its original identity and carrying Prune=false.",
+      "validation": "PR checks plus explicit-context read-only Argo and Kubernetes inspection of the exact application, namespace, object identity, annotation, health, and sync revision."
+    },
+    {
+      "order": 2,
+      "owner": "tech_lead_devops with tech_lead_qa",
+      "repository": "codicarium/codex-stats",
+      "github_task": "Create or reuse a priority:p1 chart-dashboard feature issue and implement in a dedicated worktree/PR; preparation may overlap step 1, but merge/release is blocked on verified protection.",
+      "artifact": "Optional chart-owned GrafanaDashboard, raw dashboard JSON, values contract, moved detailed tests, and dashboard layout/query update with no backend diff.",
+      "validation": "Disabled/enabled Helm lint/template, JSON parse, dashboard contract suite, duplicate-resource scan, and full required PR checks."
+    },
+    {
+      "order": 3,
+      "owner": "tech_lead_devops",
+      "repository": "codicarium/codex-stats",
+      "github_task": "Publish the merged chart through the repository release workflow only after step 1 is verified.",
+      "artifact": "Unique immutable chart version, OCI digest, final tag, and release/artifact receipt tied to the merged commit.",
+      "validation": "Pull by exact version, verify registry and receipt digests agree, render the pulled artifact, parse its dashboard JSON, and rerun core contracts."
+    },
+    {
+      "order": 4,
+      "owner": "tech_lead_devops",
+      "repository": "pve-infra",
+      "github_task": "Use the adoption issue or a linked priority:p1 sub-issue for a promotion PR blocked on steps 1 and 3.",
+      "artifact": "One atomic desired-state change that pins chart version plus digest, enables the chart dashboard with the existing name/namespace and Prune=false annotation, and removes the standalone dashboard source and obsolete tests.",
+      "validation": "Artifact/digest verification, Helm rendering, exactly one desired GrafanaDashboard identity, explicit-context server dry-run, and passing PR checks before merge."
+    },
+    {
+      "order": 5,
+      "owner": "tech_lead_qa with planner",
+      "repository": "pve-infra and live read-only surfaces",
+      "github_task": "Record post-promotion evidence on the adoption issue; do not make direct live changes.",
+      "artifact": "Evidence that Argo adopted the same resource, the object is synchronized/healthy, live PromQL matches raw semantics, and Grafana renders the intended layout and absent-data behavior.",
+      "validation": "Explicit-context Argo/Kubernetes readback, Prometheus instant/range queries including reset and missing-series cases, and authenticated Grafana visual inspection at representative viewport widths."
+    },
+    {
+      "order": 6,
+      "owner": "tech_lead_devops",
+      "repository": "pve-infra",
+      "github_task": "Create in advance or retain a blocked priority:p1 follow-up issue, then open a separate cleanup PR only after step 5 passes.",
+      "artifact": "Promotion values no longer carry temporary Prune=false; no standalone source is reintroduced.",
+      "validation": "Exactly one chart-owned resource before and after merge, explicit-context dry-run and read-only Argo/Grafana revalidation, then close linked issues and clean merged branches/worktrees."
+    }
+  ],
+  "dependency_gates": [
+    "The old-resource protection PR must be merged and observed live before the chart is published for adoption.",
+    "The promotion PR is blocked until the immutable chart version and digest are verified from the registry and receipt.",
+    "The cleanup PR is blocked until post-promotion ownership, sync, PromQL, absent-data, and visual evidence all pass."
+  ],
+  "residual_risks": [
+    "Removing and adding the same identity across Argo sources can prune or transiently duplicate the object if the promotion does not produce one atomic desired identity; exact rendered-resource counting and live ownership evidence are mandatory.",
+    "Broad text templating can consume Grafana legend braces; the no-tpl contract and byte-level legend assertions are mandatory.",
+    "Normal stacking can imply additivity; the panel description must explicitly warn that 5h and 1w windows are independent and non-additive.",
+    "Reset telemetry or sparse remaining-quota samples can make burn data absent; absence is correct and must not be replaced with zero or extrapolated values."
+  ],
+  "open_questions": []
+}

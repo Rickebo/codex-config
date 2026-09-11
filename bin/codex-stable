@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+set -euo pipefail
+codex_bin="${CODEX_STABILITY_CLI:-/home/rickebo/.local/bin/codex}"
+if [[ "${CODEX_STABILITY_UNWRAPPED:-0}" == "1" ]]; then
+  exec "$codex_bin" "$@"
+fi
+exec /home/rickebo/.codex/bin/codex-memory-run root -- "$codex_bin" "$@"

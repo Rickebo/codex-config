@@ -1,0 +1,1010 @@
+{
+  "meta": {
+    "id": "SPEC-deployment-controller-issue-93-release-proof-v1-9",
+    "title": "Credentialless protected-main release authorization and forward-only issue #93 recovery",
+    "author": "Codex release manager",
+    "created_at": "2026-08-25T05:30:00Z",
+    "version": "1.9.0-exact-candidate"
+  },
+  "feature": {
+    "problem_statement": "At protected main d3565f534b2f64585c3e15e35d8d645449f4f09d, Automatic Release run 32798160604 dispatched successful Release Verify 32798188729 for immutable unpublished v0.6.13/ad52dfcbc45d71eccad1d49fbd905161af7a44b1 but rejected canonical Check Run URL https://github.com/codicarium/deployment-controller/runs/97655710504. The historic workflows also combine candidate code with reusable storage/registry/OIDC authority and remain rerunnable, so a URL-only fix would preserve a release-boundary vulnerability.",
+    "goals": [
+      "Implement an exact one-object capability boundary and isolated candidate runner before release publication resumes.",
+      "Bind protected-main coordinator, attester and publisher to canonical identities, direct run IDs and append-only read-back receipts.",
+      "Retire all historical privileged workflow IDs and reusable credentials, then publish only forward v0.6.14 with complete evidence."
+    ],
+    "non_goals": [
+      "Move, delete, retag, resume, publish or fabricate success for v0.6.13.",
+      "Allow repository content to choose identities, permissions, namespaces, profiles, groups, keys or capability limits.",
+      "Use GitHub-hosted artifacts, shared runner directories, administrator evidence or mutable workflow/tag names as authorization."
+    ],
+    "scope_in": [
+      "codicarium-actions capability contract/client/codec, vault-config identities, runner-config broker and runners, infra DeploymentGrant/Profile, optional app-config bootstrap, organization runner/secret policy, and deployment-controller v2 release workflows.",
+      "Machine-exact schemas and fixtures in feature-spec.v1.9.annex.json at SHA-256 2ff5d493d9d9b424ad16cdb24f68f06c004a0f68ed96956ad8dd407f52308ec7",
+      "Forward v0.6.14 acceptance and strict issue #98, PR #99 and PR #94 follow-up ordering."
+    ],
+    "scope_out": [
+      "Repository, GitHub, release, registry, DNS, Vault or cluster mutation during the spec/council stage.",
+      "Argo authorization Phase 0 changes until issue #93 release safety and blockers #1146/#1192 are resolved."
+    ]
+  },
+  "requirements": [
+    {
+      "id": "REQ-001",
+      "priority": "MUST",
+      "statement": "Specification and branch baselines MUST begin at exactly codicarium/deployment-controller=d3565f534b2f64585c3e15e35d8d645449f4f09d, codicarium/codicarium-actions=9545b5a66498f67667e57d021507ac060fd016b6, codicarium/runner-config=9625e442a12c721e89250812f3d079b09833ccb0, codicarium/vault-config=2ddfb54f75cfdbf21529433e105880bec5fc1b1e, codicarium/app-config=e085a399bedc830b537431e3bcd5e41b677c2812, codicarium/infra=40073c068a9cf8ff4c1e625b97e09fda31b40637. Any upstream change before v1.9 exact-hash council freeze requires focused re-audit of that repository and an updated annex; merged prerequisite PRs then become the recorded successor baselines.",
+      "rationale": "Exact starting points prevent stale security conclusions while allowing the ordered prerequisite implementation itself to advance main."
+    },
+    {
+      "id": "REQ-002",
+      "priority": "MUST",
+      "statement": "The PR #100 provenance invariant MUST remain base ca55729de7a58bef5b49ebdce8c28773bb7e1b2e to d3565f534b2f64585c3e15e35d8d645449f4f09d with exactly six changed paths: .github/workflows/automatic-release.yaml, .github/workflows/release.yaml, docs/releasing.md, hack/release-handoff-policy.js, hack/test-release-graph.py, hack/test-release-handoff-policy.js. The issue #93 change MUST reconcile all six. Until PR #99 removal, the three PR #97 blobs MUST remain byte-identical: recover-release-v068.yaml=5dfee56b27ccf791c3ab024145b63539ad1d1a3a, publisher-subject-evidence.md=d6c9572818ce2a80ea1cecd7aacd3bc68f91b90e, test-recover-release-v068.py=b6daa1135ffa9a49921cc1d8c677e1e5da451592.",
+      "rationale": "Preserving known landed behavior avoids accidental recovery regressions during the release repair."
+    },
+    {
+      "id": "REQ-003",
+      "priority": "MUST",
+      "statement": "The corrective PR MUST add protected-main-only .github/workflows/automatic-release-v2.yaml, release-verify-v2.yaml, and publish-release-v2.yaml and delete the corresponding old paths. Dispatch MUST use refs/heads/main, returned runs MUST have exact v2 workflow path/ref and captured protected-main head SHA, and candidate tag/source remain validated data only; no workflow may execute policy selected from a tag or raw candidate SHA.",
+      "rationale": "New workflow paths create new workflow IDs and eliminate tag-selected privileged policy."
+    },
+    {
+      "id": "REQ-004",
+      "priority": "MUST",
+      "statement": "Candidate source MUST run only in a destroyed-after-use Runner Platform v2 sandbox with no GITHUB_TOKEN, static secret, OIDC, registry or storage credential, signing key, GitHub write or dispatch scope, Docker host socket, service-account token, hostPath, shared runner directory, or general egress. Centrally reviewed code MUST prefetch digest-pinned inputs read-only, pass only two independent exact-object create capabilities, terminate candidate processes, and destroy the pod/PVC before any trusted credentialed step.",
+      "rationale": "Repository identity does not make candidate code trusted."
+    },
+    {
+      "id": "REQ-005",
+      "priority": "MUST",
+      "statement": "The capability protocol, schemas, client, canonical archive codec, and conformance fixtures MUST be implemented under codicarium-actions paths frozen by annex SHA 2ff5d493d9d9b424ad16cdb24f68f06c004a0f68ed96956ad8dd407f52308ec7; runner-config MUST own the issuer/service and isolated runner. The exact API is POST /v1/capabilities, PUT /v1/object, GET /v1/object, and POST /v1/object/readback at the internal-only endpoint https://artifact-capability.artifact-capability.svc.cluster.local:8443 with the closed schemas and headers in the annex; neither callers nor repository content may choose another endpoint, profile, subject, key prefix, operation, limit, issuer, or group.",
+      "rationale": "A reviewed shared protocol is required before credentialless candidate transfer can be implemented safely."
+    },
+    {
+      "id": "REQ-006",
+      "priority": "MUST",
+      "statement": "Mint MUST authenticate a GitHub OIDC token no older than 300 seconds with issuer token.actions.githubusercontent.com, audience codicarium-artifact-capability, organization ID 255540067, repository ID 1303901324, exact allowed v2 workflow path, refs/heads/main, workflow SHA, run ID and attempt. Capabilities MUST be Ed25519 compact JWS with exactly the annex header/claims, 1800-second lifetime, 30-second skew, one operation/object, and the annex JWKS rotation rules; duplicate/unknown claims, another algorithm, padding, bad JCS, stale or ambiguous mint fail closed.",
+      "rationale": "Machine-exact claims and rotation prevent replay, algorithm confusion, and bearer expansion."
+    },
+    {
+      "id": "REQ-007",
+      "priority": "MUST",
+      "statement": "The service MUST derive keys matching the annex grammar and issue distinct JWS, nonce/jti, object key, ledger entry, and upload call for image and chart. Limits MUST be image 1073741824 compressed/4294967296 decompressed, chart and signed authorization 67108864 compressed/268435456 decompressed. Candidate receives exactly two create capabilities; attester receives two exact reads and one signed-authorization create; publisher receives exactly three exact reads. No token grants list, prefix, range, redirect, overwrite, delete, alternate key, broad presigned URL, backend credential, registry authority, or delegation.",
+      "rationale": "Separate one-object capabilities make effective authority mechanically bounded."
+    },
+    {
+      "id": "REQ-008",
+      "priority": "MUST",
+      "statement": "Upload MUST require the exact annex headers and durable linearizable jti reservation plus backend-native atomic create-if-absent. HTTP 201 is allowed only after full stored-byte readback, SHA-256/length verification, decompressed-limit verification, and terminal ledger persistence. Exact read MUST spool and verify the full object before returning bytes; readback returns metadata only. Wrong key, expiry, replay, race, oversize, timeout, process loss, backend conflict, mismatched readback, or inability to prove whether state changed is UNKNOWN_MANUAL with no automatic retry, second mint/upload, overwrite, delete, or replacement.",
+      "rationale": "Ambiguous object writes cannot safely be retried."
+    },
+    {
+      "id": "REQ-009",
+      "priority": "MUST",
+      "statement": "Authoritative candidate evidence MUST validate against fixtures-v1.9/candidate-evidence-v1.schema.json, be at most 32768 RFC 8785 bytes, contain exactly two archive records with independent nonces/expiries/receipts and the fixed path-sorted file sets, and be constructed by protected wrapper code after candidate termination from broker receipts and canonical archive observations. Candidate code cannot author the authoritative object. Schema-valid but cross-field-inconsistent keys, source, runs, nonces, lengths, files, or hashes MUST fail semantic validation.",
+      "rationale": "A closed, independently derived evidence object prevents forged candidate metadata from becoming authority."
+    },
+    {
+      "id": "REQ-010",
+      "priority": "MUST",
+      "statement": "Every candidate and signed-authorization archive MUST use the annex canonical single-ustar/single-zstd profile and reject all unsafe or noncanonical members/frames. The shared codec MUST reproduce canonical-archive-v1.tar exactly at 3072 bytes/SHA-256 fb7a260f46a361d9b90bf6371824f0b62dcabf99be09ab984a4fb6fcaeebda31 and canonical-archive-v1.tar.zst exactly at 102 bytes/SHA-256 5858457a000d6f7334053b51ba4f1106f1ee1e683ffc6bcf461af0fe9b3dc64b; expected fixtures are immutable and never regenerated in place.",
+      "rationale": "Byte-exact archive fixtures expose ordering, metadata, codec, and extraction drift."
+    },
+    {
+      "id": "REQ-011",
+      "priority": "MUST",
+      "statement": "A protected-main attester MUST use exact broker reads to verify both candidate archives, safely extract and recompute every size/hash, validate candidate evidence, and create Sigstore attestations plus a signed authorization bound to repository, v0.6.14/source, evidence and archive digests, CI/verifier/coordinator/attester identities, and protected publisher revision. It then uses one exact create capability for the signed bundle. It MUST never check out or execute candidate source, Dockerfile, scripts, binaries, hooks, or generated commands; signing and handoff/dispatch authority stay in disjoint jobs.",
+      "rationale": "Only reviewed protected code may cross from untrusted bytes into signing and publication authorization."
+    },
+    {
+      "id": "REQ-012",
+      "priority": "MUST",
+      "statement": "All identity, authorization, dispatch, and receipt objects MUST reject duplicate/unknown keys before RFC 8785 JCS over UTF-8 without BOM/whitespace/trailing LF; IDs/attempts are canonical positive decimal strings, SHA values lowercase, and base64url RFC 4648 section 5 unpadded. Handoff, claim, dispatch receipt, and mutation external IDs MUST use their annex prefixes and exact digests.",
+      "rationale": "All participants must compute the same bytes and identifiers."
+    },
+    {
+      "id": "REQ-013",
+      "priority": "MUST",
+      "statement": "The existing handoff JSON fixture MUST remain 697 bytes with SHA-256 8abe528bb32aaa47f8fc496c3571d4b91248f3ebfe4c8be29463a25277bd9e88 and digest base64url ir5Si7Mqqkf4_ElsNXHUuRJI8-v-TIvilGOiUne9nog; dispatch JSON remains 436 bytes with SHA-256 b150fa8dad70a207fb7a78f6a41ab1bc1430833ba70b86fdc2f08a13c7c11f3b and digest base64url sVD6ja1wogf7enj2pBqxvBQwgzunC4b9wvCKE8fBHzs. Tuple grammars and exact tuple-base64url values MUST equal canonical-identity-fixtures-v1.json.",
+      "rationale": "Explicit tuple vectors close v1.8's final encoding ambiguity."
+    },
+    {
+      "id": "REQ-014",
+      "priority": "MUST",
+      "statement": "Every handoff, claim, dispatch-receipt, and mutation-receipt Check Run creation MUST omit requested details_url; returned positive check.id and details_url MUST parse exactly as https://github.com/codicarium/deployment-controller/runs/<check.id>, with HTTPS/github.com, no user/password/port/query/fragment/percent-encoding/trailing slash, and exact case. Live check 97655710504 accepts only that canonical URL. A changed server form fails closed for renewed review.",
+      "rationale": "The observed GitHub canonical URL caused the production failure and is not documented as stable."
+    },
+    {
+      "id": "REQ-015",
+      "priority": "MUST",
+      "statement": "Check selection MUST filter exact external_id before any other field. More than one exact row is duplicate-ambiguous regardless of validity; exactly one is then validated for ID, exact name, GitHub Actions app ID 15368/slug, completed/success, source head, URL and closed output; same-name rows with other external IDs are ignored. Zero rows is absence only after REQ-016 proves EXHAUSTED.",
+      "rationale": "External-ID-first selection prevents same-name poisoning and unsafe duplicate preference."
+    },
+    {
+      "id": "REQ-016",
+      "priority": "MUST",
+      "statement": "Every check-run and check-suite history request MUST use filter=all, per_page=100, sequentially exhaust pagination, detect repeated/inconsistent IDs, and count distinct check_suite.id without timestamps or server order. Termination is exactly EXHAUSTED, CHECK_SUITE_HORIZON, or MALFORMED: zero exact rows with at least 1000 distinct suites is UNKNOWN_MANUAL/CHECK_SUITE_HORIZON and zero mutations; zero exact rows with fewer than 1000 suites plus exhausted pagination is proven absence. history-horizon-1000.json is the mandatory exact oracle.",
+      "rationale": "The API's 1000-suite bound makes a full horizon distinguishable from proof of absence."
+    },
+    {
+      "id": "REQ-017",
+      "priority": "MUST",
+      "statement": "Historical proof MUST bind exact repository, tag, source, CI run/attempt, coordinator run/attempt/workflow SHA/check and protected main. Every base...head comparison accepts only identical with zero counters or ahead with ahead_by>=1 and behind_by=0; behind, diverged, inconsistent counters, malformed ref/SHA, API error, or source-to-coordinator-to-main discontinuity fails. Time/recency never selects authority.",
+      "rationale": "A complete forward ancestry chain is required for replay-safe reuse."
+    },
+    {
+      "id": "REQ-018",
+      "priority": "MUST",
+      "statement": "Dispatch MUST require GitHub API 2026-03-10 HTTP 200 and its direct workflow_run_id; 204, missing details, timeout, connection loss, malformed/5xx, or list-based correlation is UNKNOWN_MANUAL with no redispatch. Immediate direct GET is observation one. Verifier polling uses injected monotonic integer milliseconds, start-inclusive GET, exclusive start+1800000 deadline, 5000 interval, <=360 observations and immediate terminal success. Dispatch-receipt polling uses start+300000, <=60 observations. Identity/attempt drift, clock error, API error, unsupported/non-success state or timeout fails without real sleeps in tests.",
+      "rationale": "Direct run identity and deterministic polling avoid list-time races."
+    },
+    {
+      "id": "REQ-019",
+      "priority": "MUST",
+      "statement": "Workflow paths, job names, top-level and job permission maps MUST equal workflow-permissions-v1.json exactly. Unspecified scopes are none; no job combines id-token:write with actions:write or checks:write; candidate receives no GITHUB_TOKEN; publisher mutation writers cannot write checks or dispatch; receipt writers cannot publish; recover-release-v068 retains only its byte-identical temporary exception until PR #99 removes it.",
+      "rationale": "A machine-parsed map prevents privilege accretion and publisher self-authorization."
+    },
+    {
+      "id": "REQ-020",
+      "priority": "MUST",
+      "statement": "After signed authorization settles, the coordinator MUST create/re-read one handoff and one pre-dispatch claim, issue exactly one publisher dispatch, accept only the direct HTTP 200 run ID, immediately validate its path/ref/SHA/run attempt, and only then create a coordinator-signed closed dispatch receipt matching publisher-dispatch-receipt-v1.schema.json. The receipt binds claim/handoff/authorization/dispatch digests and the exact publisher run ID/attempt. Publisher cannot create or update it; a manual, independent or rerun attempt lacking its own exact receipt fails before mutation.",
+      "rationale": "Binding the server-returned run ID after dispatch closes the manual-dispatch race in v1.8."
+    },
+    {
+      "id": "REQ-021",
+      "priority": "MUST",
+      "statement": "Dispatch receipt is sequence zero. Each publication mutation MUST be followed by exactly one independently read-back, coordinator-signed, append-only receipt matching publisher-mutation-receipt-v1.schema.json before the next mutation. Sequence starts 1, increments by one, previous_receipt_sha256 links exactly, and each receipt contains one closed mutation target. Exact duplicates are read-only idempotent; conflicting sequence/body, gap, reorder, orphan, duplicate identity, missing/mismatched readback, or ambiguous receipt write is UNKNOWN_MANUAL. Publisher writers have no receipt-write authority.",
+      "rationale": "A hash-linked receipt journal makes partial multi-system publication explainable without self-authorization."
+    },
+    {
+      "id": "REQ-022",
+      "priority": "MUST",
+      "statement": "The state machine is monotonic: UNCLAIMED permits one claim; the same uninterrupted attempt may dispatch once; exact receipt permits reuse; preexisting claim without receipt, receipt without claim, duplicate/conflict, timeout, 5xx, connection loss, process death, or any unprovable mutation becomes UNKNOWN_MANUAL. No automatic code may leave UNKNOWN_MANUAL, redispatch, overwrite/update/delete a claim or receipt, move/delete a tag, replace an object/asset/package, fabricate success, or claim exactly-once delivery.",
+      "rationale": "Unknown writes cannot be safely inferred or retried."
+    },
+    {
+      "id": "REQ-023",
+      "priority": "MUST",
+      "statement": "Publish Release v2 MUST execute protected-main helper code only and never candidate source. Admission validates exact receipt/run/attempt/ref/SHA and three exact artifact reads. Mutation writers and receipt writers execute the fixed serial chain: draft release, image, chart, fourteen exact assets, final release; before/after every step they revalidate authorization, prior receipts, tag/source/main, archives and actual target. Ambiguity revokes unused capabilities, freezes the digest, emits signed incident evidence, and requires read-only reconciliation plus a new forward release; no destructive rollback is allowed.",
+      "rationale": "Protected serial publication contains compromised candidate code and non-transactional failure."
+    },
+    {
+      "id": "REQ-024",
+      "priority": "MUST",
+      "statement": "Before the corrective merge, GitHub workflow IDs 341194538, 318365668 and 318365667 MUST be disabled; deployment-controller access to the six legacy Nexus/OVH secret names and underlying identities MUST be removed/revoked; repository routing through the general codicarium runner group MUST be removed; and all new roles must bind only v2 paths/main/repository ID. The PR deletes old paths. Acceptance requires disabled states, absent paths, absent legacy credentials/routing, and bounded negative dispatch/rerun proof that no executing run/publication authority returns. Old workflows or outputs are never re-enabled or accepted.",
+      "rationale": "Historical reruns otherwise retain old GITHUB_TOKEN, OIDC, registry and storage authority."
+    },
+    {
+      "id": "REQ-025",
+      "priority": "MUST",
+      "statement": "v0.6.13/ad52dfcbc45d71eccad1d49fbd905161af7a44b1 is permanently retired in every automated/manual mutation/recovery/helper entry point and rejected by tag OR source before mutation. After the issue #93 corrective merge at reviewed R descended from d3565f5, release-plan uses v0.6.13 only as version base, reviews v0.6.13..R, and allocates exactly v0.6.14 at R. Any mismatch or v0.6.13 resume fails without moving/deleting/overwriting a tag.",
+      "rationale": "Only a forward release can execute repaired policy."
+    },
+    {
+      "id": "REQ-026",
+      "priority": "MUST",
+      "statement": "Implementation MUST use linked P0 issues and protected PRs in this dependency order: codicarium-actions protocol/client/fixtures; vault-config exact broker and v2 publisher identities; runner-config broker/service and Runner Platform v2 profiles; infra centrally owned DeploymentGrant/Profile component; optional app-config bootstrap-only wiring; organization runner/OIDC/secret fences; then deployment-controller v2 workflow repair pinned to immutable prerequisite SHAs. Repository content never chooses identities, groups, namespaces, permissions, keys or profiles.",
+      "rationale": "Explicit ownership preserves .codicarium and DeploymentGrant as the control-plane authority."
+    },
+    {
+      "id": "REQ-027",
+      "priority": "MUST",
+      "statement": "The broker runtime MUST match the annex: runner-config component artifact-capability; Application artifact-capability-codicarium; release/service/ServiceAccount in namespace artifact-capability; AppProject repo-runner-config-dev; centrally owned Profile artifact-capability-path-helm and Grant runner-config-dev; internal-only ClusterIP endpoint https://artifact-capability.artifact-capability.svc.cluster.local:8443; exposure class no-ingress; cert-manager TLS for the exact service DNS SAN; and no Ingress, HTTPRoute, LoadBalancer, NodePort or external-DNS object. Before three replicas, PDB or N-1 testing, infra MUST provide at least three eligible schedulable nodes and prove sufficient remaining-two-node capacity; then required hostname separation, maxSkew=1 DoNotSchedule and PDB minAvailable=2 apply. The scoped Vault role codicarium-dev-artifact-capability reads only the two exact object-store paths. Candidate scale set codicarium-v2-artifact-capability in arc-runners-v2-untrusted uses group codicarium-ci-artifact-capability, exact five labels, kata-clh-runtime-rs, min 0/max 1, and standard NetworkPolicy default-deny with DNS TCP/UDP 53 only to 10.43.0.10/32 plus TCP 8443 only through one peer containing both the exact broker namespaceSelector and podSelector; separate selector peers are forbidden. Broker network, metrics, alerts and audit match the annex; N-1 tests prove continuity and no token reuse or pending-state promotion.",
+      "rationale": "The shared authorization boundary needs explicit deployability, isolation, availability and central namespace/profile authority grounded in the actual Flannel cluster."
+    },
+    {
+      "id": "REQ-028",
+      "priority": "MUST",
+      "statement": "Rollout MUST first prove at least three eligible schedulable nodes and sufficient N-1 capacity, then render and validate all cross-repo GitOps state, deploy broker/runner at zero release traffic, and prove internal service DNS/TLS, absence of ingress/external exposure, OIDC, conditional-create, readback, concurrency, size/TTL, exact standard-NetworkPolicy positive and negative egress, teardown, alerts and node-loss N-1. Only then may workflow/credential fences be applied and the deployment repair merged. Rollback is fail-closed: disable v2 release workflows and revert Git desired state to last reviewed versions; never restore old credentials/workflows/routing or resume v0.6.13.",
+      "rationale": "A staged, forward-only rollback avoids lock-in to the insecure historical path and refuses an unavailable topology."
+    },
+    {
+      "id": "REQ-029",
+      "priority": "MUST",
+      "statement": "Protected PR validation MUST retain exactly test, lint, chart, integration, supply-chain from GitHub Actions app ID 15368 at one up-to-date head SHA. New protocol/archive/canonical/selector/horizon/polling/receipt/retirement/permission suites are hermetic under supply-chain; actionlint/validate-repository under lint; existing suites remain. CI supply-chain candidate execution MUST lose all reusable Nexus/storage authority and use only centrally prefetched immutable inputs or the exact credentialless capability boundary before merge.",
+      "rationale": "The repair is accepted through protected checks, not live experimentation."
+    },
+    {
+      "id": "REQ-030",
+      "priority": "MUST",
+      "statement": "Post-merge acceptance MUST emit one closed object validating release-live-evidence-v1.schema.json and the semantic chain: exact five checks/app ID/head, v0.6.14 tag/source, all coordinator/verifier/attester/claim/receipt/publisher identities, candidate and authorization objects, handoff/dispatch values, eighteen ordered mutation receipts, registry image/chart digests, final non-draft release, exactly fourteen ordered assets, and the old-workflow retirement proof. Missing/mismatched state is FAIL, never GO.",
+      "rationale": "Verifier success alone did not prove a public release in the failed production run."
+    },
+    {
+      "id": "REQ-031",
+      "priority": "MUST",
+      "statement": "Follow-up MUST obey follow-up-order-v1.json exactly: issue #93 repair/retirement, verified public v0.6.14/full evidence, issue #98 v0.6.8 success/eight-asset readback, rebased five-check PR #99 merge/workflow absence/issue close, then rebased five-check PR #94 merge. Any stale base, mixed check SHA, absent evidence, or #99/#94 v0.6.13 trigger/resume is rejected.",
+      "rationale": "A single total order removes the v1.8 ambiguity and prevents another unpublished tag."
+    },
+    {
+      "id": "REQ-032",
+      "priority": "MUST",
+      "statement": "Administrator ruleset evidence remains external manual/council evidence only at administrator-ruleset-evidence-v2.json, exactly 4024 bytes/SHA-256 55dbee3772ce06d0af59df8cb21d6862d4d167470065e2580ff9adb3d28efb58 captured for d3565f5. The gate independently verifies active branch/tag rulesets, no bypass, immutable tags and exactly five required checks. Repository CI only proves runtime non-consumption and never opens, imports, fetches, references, or treats the fixture/sidecars as authorization.",
+      "rationale": "Administrator evidence cannot become a repository-controlled authorization input."
+    }
+  ],
+  "acceptance_criteria": [
+    {
+      "id": "AC-001",
+      "requirement_ids": [
+        "REQ-001",
+        "REQ-002"
+      ],
+      "scenario": "Given the frozen v1.9 contract and its exact inputs, When AC-001 is evaluated, Then Given all live default branches and landed provenance, baseline validation matches every exact SHA/path/blob before implementation; a mismatch returns to focused spec review."
+    },
+    {
+      "id": "AC-002",
+      "requirement_ids": [
+        "REQ-003",
+        "REQ-004"
+      ],
+      "scenario": "Given the frozen v1.9 contract and its exact inputs, When AC-002 is evaluated, Then Given a v0.6.14 candidate, only v2 protected-main workflows execute policy and candidate code runs in a destroyed credentialless broker-only sandbox."
+    },
+    {
+      "id": "AC-003",
+      "requirement_ids": [
+        "REQ-005",
+        "REQ-006",
+        "REQ-007",
+        "REQ-008"
+      ],
+      "scenario": "Given the frozen v1.9 contract and its exact inputs, When AC-003 is evaluated, Then Given mint/create/read/readback requests, every closed schema, claim, key, operation, limit, TTL and atomicity rule passes; all expansion/replay/race/ambiguity cases fail without a second write."
+    },
+    {
+      "id": "AC-004",
+      "requirement_ids": [
+        "REQ-009",
+        "REQ-010"
+      ],
+      "scenario": "Given the frozen v1.9 contract and its exact inputs, When AC-004 is evaluated, Then Given the two candidate archives, protected code produces schema-valid evidence with separate capabilities and exact safe archive bytes; every unsafe/noncanonical/cross-field mutation fails."
+    },
+    {
+      "id": "AC-005",
+      "requirement_ids": [
+        "REQ-011",
+        "REQ-012",
+        "REQ-013"
+      ],
+      "scenario": "Given the frozen v1.9 contract and its exact inputs, When AC-005 is evaluated, Then Given verified archive bytes, the attester signs only protected-derived evidence and independent canonicalizers reproduce every JSON, digest and tuple vector exactly."
+    },
+    {
+      "id": "AC-006",
+      "requirement_ids": [
+        "REQ-014",
+        "REQ-015",
+        "REQ-016"
+      ],
+      "scenario": "Given the frozen v1.9 contract and its exact inputs, When AC-006 is evaluated, Then Given live/adversarial Check Runs across paginated history, exact external-ID-first selection accepts the canonical URL once, rejects duplicates/malformed data, proves absence only below the 1000-suite horizon, and otherwise returns UNKNOWN_MANUAL."
+    },
+    {
+      "id": "AC-007",
+      "requirement_ids": [
+        "REQ-017",
+        "REQ-018"
+      ],
+      "scenario": "Given the frozen v1.9 contract and its exact inputs, When AC-007 is evaluated, Then Given historical ancestry and direct dispatch responses, only a complete forward chain and direct HTTP-200 run identity pass deterministic bounded polling."
+    },
+    {
+      "id": "AC-008",
+      "requirement_ids": [
+        "REQ-019"
+      ],
+      "scenario": "Given the frozen v1.9 contract and its exact inputs, When AC-008 is evaluated, Then A workflow parser finds exactly the annex path/job/permission map, no unlisted scope, no mixed signing/write job, no candidate token, and no publisher self-authorization."
+    },
+    {
+      "id": "AC-009",
+      "requirement_ids": [
+        "REQ-020",
+        "REQ-021",
+        "REQ-022"
+      ],
+      "scenario": "Given the frozen v1.9 contract and its exact inputs, When AC-009 is evaluated, Then The coordinator receipt is created only after exact returned publisher identity; manual/rerun publishers fail; crash/duplicate/conflict tests maintain a monotonic hash-linked receipt chain or UNKNOWN_MANUAL with zero redispatch."
+    },
+    {
+      "id": "AC-010",
+      "requirement_ids": [
+        "REQ-023"
+      ],
+      "scenario": "Given the frozen v1.9 contract and its exact inputs, When AC-010 is evaluated, Then The publisher validates admission and performs the fixed serial write/readback/receipt chain without executing candidate code; any uncertain step stops all later writes and requires forward remediation."
+    },
+    {
+      "id": "AC-011",
+      "requirement_ids": [
+        "REQ-024",
+        "REQ-025"
+      ],
+      "scenario": "Given the frozen v1.9 contract and its exact inputs, When AC-011 is evaluated, Then All three historical workflow IDs are disabled, paths/credentials/routing are absent, bounded negative tests cannot execute them, v0.6.13 is rejected everywhere, and only v0.6.14 at reviewed R is allocated."
+    },
+    {
+      "id": "AC-012",
+      "requirement_ids": [
+        "REQ-026",
+        "REQ-027",
+        "REQ-028"
+      ],
+      "scenario": "Given the frozen v1.9 contract and its exact inputs, When AC-012 is evaluated, Then Ordered protected cross-repo PRs first establish three-node N-1 capacity, then deploy the exact internal-only broker/runner/control-plane state; render, no-ingress, standard-NetworkPolicy isolation, live security, observability and node-loss tests pass; rollback remains fail-closed."
+    },
+    {
+      "id": "AC-013",
+      "requirement_ids": [
+        "REQ-029"
+      ],
+      "scenario": "Given the frozen v1.9 contract and its exact inputs, When AC-013 is evaluated, Then All five protected checks from app ID 15368 succeed on one current head and hermetic CI exposes no reusable release/storage credential to candidate execution."
+    },
+    {
+      "id": "AC-014",
+      "requirement_ids": [
+        "REQ-030"
+      ],
+      "scenario": "Given the frozen v1.9 contract and its exact inputs, When AC-014 is evaluated, Then The final live evidence validates structurally and semantically against all GitHub, registry and receipt readbacks; any missing or inconsistent field blocks GO."
+    },
+    {
+      "id": "AC-015",
+      "requirement_ids": [
+        "REQ-031"
+      ],
+      "scenario": "Given the frozen v1.9 contract and its exact inputs, When AC-015 is evaluated, Then Live issue/PR/release events match the exact total order and neither later PR can trigger or resume v0.6.13."
+    },
+    {
+      "id": "AC-016",
+      "requirement_ids": [
+        "REQ-032"
+      ],
+      "scenario": "Given the frozen v1.9 contract and its exact inputs, When AC-016 is evaluated, Then An external council recomputes administrator evidence and live rulesets while repository CI proves only runtime non-consumption."
+    }
+  ],
+  "test_plan": [
+    {
+      "id": "TST-001",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-001",
+        "REQ-002"
+      ],
+      "approach": "Re-read all six remote heads, PR #100 six-path diff, and PR #97 blobs; fail on any mismatch before branch work."
+    },
+    {
+      "id": "TST-002",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-003",
+        "REQ-004"
+      ],
+      "approach": "Parse v2 workflows and run sandbox negative probes for token/env/socket/service-account/host/shared-state/egress access plus success/cancel/node-loss teardown."
+    },
+    {
+      "id": "TST-003",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-005",
+        "REQ-006",
+        "REQ-007"
+      ],
+      "approach": "Validate OpenAPI/schema and fixed Ed25519 JWS fixture; mutate every OIDC claim/header/key/operation/limit/expiry/rotation edge and assert exact rejection."
+    },
+    {
+      "id": "TST-004",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-008"
+      ],
+      "approach": "Run 100 concurrent redemptions and fault injection at mint, ledger reserve, conditional create, backend response, readback and ledger commit; prove one create maximum and zero automatic retries."
+    },
+    {
+      "id": "TST-005",
+      "type": "unit",
+      "requirement_ids": [
+        "REQ-009",
+        "REQ-010"
+      ],
+      "approach": "Compare checked-in tar/zstd bytes/hashes with two independent readers; exercise every link/path/header/order/frame/limit/evidence/schema/cross-field negative fixture."
+    },
+    {
+      "id": "TST-006",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-011",
+        "REQ-012",
+        "REQ-013"
+      ],
+      "approach": "Prove attester checkout/execution closure and exact capability set; independent JavaScript and Python canonicalizers match raw/JCS bytes, SHA, digest-base64url, tuple-base64url and external IDs."
+    },
+    {
+      "id": "TST-007",
+      "type": "unit",
+      "requirement_ids": [
+        "REQ-014",
+        "REQ-015",
+        "REQ-016"
+      ],
+      "approach": "Exercise live URL 97655710504, URL mutation matrix, external-ID poison/duplicate cases, three-page 250-run order fixture and exact ten-page 1000-suite horizon fixture."
+    },
+    {
+      "id": "TST-008",
+      "type": "unit",
+      "requirement_ids": [
+        "REQ-017",
+        "REQ-018"
+      ],
+      "approach": "Test accepted/rejected compare vectors and fake-clock direct-dispatch polling for 200/204/timeout/5xx/lost/malformed/identity drift without run lists or real sleep."
+    },
+    {
+      "id": "TST-009",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-019"
+      ],
+      "approach": "Parse every named workflow/job into normalized permission sets and data-plane capabilities; reject any extra/missing path/job/scope or forbidden privilege combination."
+    },
+    {
+      "id": "TST-010",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-020",
+        "REQ-022"
+      ],
+      "approach": "Fault-inject claim/dispatch/direct-GET/receipt boundaries and manual/rerun identities; assert receipt only after exact 200 run, zero redispatch and UNKNOWN_MANUAL on ambiguity."
+    },
+    {
+      "id": "TST-011",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-021",
+        "REQ-023"
+      ],
+      "approach": "Execute the fixed 18-mutation journal with readback faults, duplicates, conflicts, gaps, reorder, process kills and partial publication; prove strict previous-hash chain and no subsequent write after uncertainty."
+    },
+    {
+      "id": "TST-012",
+      "type": "e2e",
+      "requirement_ids": [
+        "REQ-024",
+        "REQ-025"
+      ],
+      "approach": "Enumerate old workflow/helper/manual/recovery entry points, prove IDs disabled/paths and credentials/routing absent, perform bounded negative dispatch/rerun checks, and verify v0.6.13 rejection plus v0.6.14 forward allocation."
+    },
+    {
+      "id": "TST-013",
+      "type": "e2e",
+      "requirement_ids": [
+        "REQ-026",
+        "REQ-027",
+        "REQ-028"
+      ],
+      "approach": "Using the explicit cluster context, first prove at least three eligible nodes and remaining-two-node capacity; validate each cross-repo PR/render/pin; prove the service is ClusterIP/no-ingress; then test internal DNS/TLS/OIDC/Vault/conditional storage and the exact standard-NetworkPolicy positive path. Negative probes MUST deny other pods in the artifact-capability namespace and same-labeled pods in other namespaces, as well as every non-DNS/non-broker destination. Finally prove runner teardown, metrics/alerts and three-node N-1 behavior."
+    },
+    {
+      "id": "TST-014",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-029"
+      ],
+      "approach": "Run repository test-release-flow, actionlint, validate-repository, protocol conformance and static credential-flow scans; verify exactly five protected checks/app ID/same current head."
+    },
+    {
+      "id": "TST-015",
+      "type": "manual",
+      "requirement_ids": [
+        "REQ-030",
+        "REQ-031"
+      ],
+      "approach": "After merge, collect schema-validated live evidence and independently read back all 14 assets, registries, 18 receipts, workflow retirement and strict issue #98/PR #99/PR #94 order."
+    },
+    {
+      "id": "TST-016",
+      "type": "manual",
+      "requirement_ids": [
+        "REQ-032"
+      ],
+      "approach": "Outside repository CI, recompute the 4024-byte evidence/hash and live branch/tag rulesets; separately scan repository runtime for prohibited consumption without opening the external fixture."
+    }
+  ],
+  "traceability": [
+    {
+      "requirement_id": "REQ-001",
+      "acceptance_ids": [
+        "AC-001"
+      ],
+      "test_ids": [
+        "TST-001"
+      ],
+      "review_checks": [
+        "Review REQ-001 against exact annex 2ff5d493d9d9b424ad16cdb24f68f06c004a0f68ed96956ad8dd407f52308ec7 and its trust-boundary rationale."
+      ],
+      "validation_checks": [
+        "Execute mapped acceptance and test oracles for REQ-001; any UNKNOWN_MANUAL remains non-authorizing."
+      ]
+    },
+    {
+      "requirement_id": "REQ-002",
+      "acceptance_ids": [
+        "AC-001"
+      ],
+      "test_ids": [
+        "TST-001"
+      ],
+      "review_checks": [
+        "Review REQ-002 against exact annex 2ff5d493d9d9b424ad16cdb24f68f06c004a0f68ed96956ad8dd407f52308ec7 and its trust-boundary rationale."
+      ],
+      "validation_checks": [
+        "Execute mapped acceptance and test oracles for REQ-002; any UNKNOWN_MANUAL remains non-authorizing."
+      ]
+    },
+    {
+      "requirement_id": "REQ-003",
+      "acceptance_ids": [
+        "AC-002"
+      ],
+      "test_ids": [
+        "TST-002"
+      ],
+      "review_checks": [
+        "Review REQ-003 against exact annex 2ff5d493d9d9b424ad16cdb24f68f06c004a0f68ed96956ad8dd407f52308ec7 and its trust-boundary rationale."
+      ],
+      "validation_checks": [
+        "Execute mapped acceptance and test oracles for REQ-003; any UNKNOWN_MANUAL remains non-authorizing."
+      ]
+    },
+    {
+      "requirement_id": "REQ-004",
+      "acceptance_ids": [
+        "AC-002"
+      ],
+      "test_ids": [
+        "TST-002"
+      ],
+      "review_checks": [
+        "Review REQ-004 against exact annex 2ff5d493d9d9b424ad16cdb24f68f06c004a0f68ed96956ad8dd407f52308ec7 and its trust-boundary rationale."
+      ],
+      "validation_checks": [
+        "Execute mapped acceptance and test oracles for REQ-004; any UNKNOWN_MANUAL remains non-authorizing."
+      ]
+    },
+    {
+      "requirement_id": "REQ-005",
+      "acceptance_ids": [
+        "AC-003"
+      ],
+      "test_ids": [
+        "TST-003"
+      ],
+      "review_checks": [
+        "Review REQ-005 against exact annex 2ff5d493d9d9b424ad16cdb24f68f06c004a0f68ed96956ad8dd407f52308ec7 and its trust-boundary rationale."
+      ],
+      "validation_checks": [
+        "Execute mapped acceptance and test oracles for REQ-005; any UNKNOWN_MANUAL remains non-authorizing."
+      ]
+    },
+    {
+      "requirement_id": "REQ-006",
+      "acceptance_ids": [
+        "AC-003"
+      ],
+      "test_ids": [
+        "TST-003"
+      ],
+      "review_checks": [
+        "Review REQ-006 against exact annex 2ff5d493d9d9b424ad16cdb24f68f06c004a0f68ed96956ad8dd407f52308ec7 and its trust-boundary rationale."
+      ],
+      "validation_checks": [
+        "Execute mapped acceptance and test oracles for REQ-006; any UNKNOWN_MANUAL remains non-authorizing."
+      ]
+    },
+    {
+      "requirement_id": "REQ-007",
+      "acceptance_ids": [
+        "AC-003"
+      ],
+      "test_ids": [
+        "TST-003"
+      ],
+      "review_checks": [
+        "Review REQ-007 against exact annex 2ff5d493d9d9b424ad16cdb24f68f06c004a0f68ed96956ad8dd407f52308ec7 and its trust-boundary rationale."
+      ],
+      "validation_checks": [
+        "Execute mapped acceptance and test oracles for REQ-007; any UNKNOWN_MANUAL remains non-authorizing."
+      ]
+    },
+    {
+      "requirement_id": "REQ-008",
+      "acceptance_ids": [
+        "AC-003"
+      ],
+      "test_ids": [
+        "TST-004"
+      ],
+      "review_checks": [
+        "Review REQ-008 against exact annex 2ff5d493d9d9b424ad16cdb24f68f06c004a0f68ed96956ad8dd407f52308ec7 and its trust-boundary rationale."
+      ],
+      "validation_checks": [
+        "Execute mapped acceptance and test oracles for REQ-008; any UNKNOWN_MANUAL remains non-authorizing."
+      ]
+    },
+    {
+      "requirement_id": "REQ-009",
+      "acceptance_ids": [
+        "AC-004"
+      ],
+      "test_ids": [
+        "TST-005"
+      ],
+      "review_checks": [
+        "Review REQ-009 against exact annex 2ff5d493d9d9b424ad16cdb24f68f06c004a0f68ed96956ad8dd407f52308ec7 and its trust-boundary rationale."
+      ],
+      "validation_checks": [
+        "Execute mapped acceptance and test oracles for REQ-009; any UNKNOWN_MANUAL remains non-authorizing."
+      ]
+    },
+    {
+      "requirement_id": "REQ-010",
+      "acceptance_ids": [
+        "AC-004"
+      ],
+      "test_ids": [
+        "TST-005"
+      ],
+      "review_checks": [
+        "Review REQ-010 against exact annex 2ff5d493d9d9b424ad16cdb24f68f06c004a0f68ed96956ad8dd407f52308ec7 and its trust-boundary rationale."
+      ],
+      "validation_checks": [
+        "Execute mapped acceptance and test oracles for REQ-010; any UNKNOWN_MANUAL remains non-authorizing."
+      ]
+    },
+    {
+      "requirement_id": "REQ-011",
+      "acceptance_ids": [
+        "AC-005"
+      ],
+      "test_ids": [
+        "TST-006"
+      ],
+      "review_checks": [
+        "Review REQ-011 against exact annex 2ff5d493d9d9b424ad16cdb24f68f06c004a0f68ed96956ad8dd407f52308ec7 and its trust-boundary rationale."
+      ],
+      "validation_checks": [
+        "Execute mapped acceptance and test oracles for REQ-011; any UNKNOWN_MANUAL remains non-authorizing."
+      ]
+    },
+    {
+      "requirement_id": "REQ-012",
+      "acceptance_ids": [
+        "AC-005"
+      ],
+      "test_ids": [
+        "TST-006"
+      ],
+      "review_checks": [
+        "Review REQ-012 against exact annex 2ff5d493d9d9b424ad16cdb24f68f06c004a0f68ed96956ad8dd407f52308ec7 and its trust-boundary rationale."
+      ],
+      "validation_checks": [
+        "Execute mapped acceptance and test oracles for REQ-012; any UNKNOWN_MANUAL remains non-authorizing."
+      ]
+    },
+    {
+      "requirement_id": "REQ-013",
+      "acceptance_ids": [
+        "AC-005"
+      ],
+      "test_ids": [
+        "TST-006"
+      ],
+      "review_checks": [
+        "Review REQ-013 against exact annex 2ff5d493d9d9b424ad16cdb24f68f06c004a0f68ed96956ad8dd407f52308ec7 and its trust-boundary rationale."
+      ],
+      "validation_checks": [
+        "Execute mapped acceptance and test oracles for REQ-013; any UNKNOWN_MANUAL remains non-authorizing."
+      ]
+    },
+    {
+      "requirement_id": "REQ-014",
+      "acceptance_ids": [
+        "AC-006"
+      ],
+      "test_ids": [
+        "TST-007"
+      ],
+      "review_checks": [
+        "Review REQ-014 against exact annex 2ff5d493d9d9b424ad16cdb24f68f06c004a0f68ed96956ad8dd407f52308ec7 and its trust-boundary rationale."
+      ],
+      "validation_checks": [
+        "Execute mapped acceptance and test oracles for REQ-014; any UNKNOWN_MANUAL remains non-authorizing."
+      ]
+    },
+    {
+      "requirement_id": "REQ-015",
+      "acceptance_ids": [
+        "AC-006"
+      ],
+      "test_ids": [
+        "TST-007"
+      ],
+      "review_checks": [
+        "Review REQ-015 against exact annex 2ff5d493d9d9b424ad16cdb24f68f06c004a0f68ed96956ad8dd407f52308ec7 and its trust-boundary rationale."
+      ],
+      "validation_checks": [
+        "Execute mapped acceptance and test oracles for REQ-015; any UNKNOWN_MANUAL remains non-authorizing."
+      ]
+    },
+    {
+      "requirement_id": "REQ-016",
+      "acceptance_ids": [
+        "AC-006"
+      ],
+      "test_ids": [
+        "TST-007"
+      ],
+      "review_checks": [
+        "Review REQ-016 against exact annex 2ff5d493d9d9b424ad16cdb24f68f06c004a0f68ed96956ad8dd407f52308ec7 and its trust-boundary rationale."
+      ],
+      "validation_checks": [
+        "Execute mapped acceptance and test oracles for REQ-016; any UNKNOWN_MANUAL remains non-authorizing."
+      ]
+    },
+    {
+      "requirement_id": "REQ-017",
+      "acceptance_ids": [
+        "AC-007"
+      ],
+      "test_ids": [
+        "TST-008"
+      ],
+      "review_checks": [
+        "Review REQ-017 against exact annex 2ff5d493d9d9b424ad16cdb24f68f06c004a0f68ed96956ad8dd407f52308ec7 and its trust-boundary rationale."
+      ],
+      "validation_checks": [
+        "Execute mapped acceptance and test oracles for REQ-017; any UNKNOWN_MANUAL remains non-authorizing."
+      ]
+    },
+    {
+      "requirement_id": "REQ-018",
+      "acceptance_ids": [
+        "AC-007"
+      ],
+      "test_ids": [
+        "TST-008"
+      ],
+      "review_checks": [
+        "Review REQ-018 against exact annex 2ff5d493d9d9b424ad16cdb24f68f06c004a0f68ed96956ad8dd407f52308ec7 and its trust-boundary rationale."
+      ],
+      "validation_checks": [
+        "Execute mapped acceptance and test oracles for REQ-018; any UNKNOWN_MANUAL remains non-authorizing."
+      ]
+    },
+    {
+      "requirement_id": "REQ-019",
+      "acceptance_ids": [
+        "AC-008"
+      ],
+      "test_ids": [
+        "TST-009"
+      ],
+      "review_checks": [
+        "Review REQ-019 against exact annex 2ff5d493d9d9b424ad16cdb24f68f06c004a0f68ed96956ad8dd407f52308ec7 and its trust-boundary rationale."
+      ],
+      "validation_checks": [
+        "Execute mapped acceptance and test oracles for REQ-019; any UNKNOWN_MANUAL remains non-authorizing."
+      ]
+    },
+    {
+      "requirement_id": "REQ-020",
+      "acceptance_ids": [
+        "AC-009"
+      ],
+      "test_ids": [
+        "TST-010"
+      ],
+      "review_checks": [
+        "Review REQ-020 against exact annex 2ff5d493d9d9b424ad16cdb24f68f06c004a0f68ed96956ad8dd407f52308ec7 and its trust-boundary rationale."
+      ],
+      "validation_checks": [
+        "Execute mapped acceptance and test oracles for REQ-020; any UNKNOWN_MANUAL remains non-authorizing."
+      ]
+    },
+    {
+      "requirement_id": "REQ-021",
+      "acceptance_ids": [
+        "AC-009"
+      ],
+      "test_ids": [
+        "TST-011"
+      ],
+      "review_checks": [
+        "Review REQ-021 against exact annex 2ff5d493d9d9b424ad16cdb24f68f06c004a0f68ed96956ad8dd407f52308ec7 and its trust-boundary rationale."
+      ],
+      "validation_checks": [
+        "Execute mapped acceptance and test oracles for REQ-021; any UNKNOWN_MANUAL remains non-authorizing."
+      ]
+    },
+    {
+      "requirement_id": "REQ-022",
+      "acceptance_ids": [
+        "AC-009"
+      ],
+      "test_ids": [
+        "TST-010"
+      ],
+      "review_checks": [
+        "Review REQ-022 against exact annex 2ff5d493d9d9b424ad16cdb24f68f06c004a0f68ed96956ad8dd407f52308ec7 and its trust-boundary rationale."
+      ],
+      "validation_checks": [
+        "Execute mapped acceptance and test oracles for REQ-022; any UNKNOWN_MANUAL remains non-authorizing."
+      ]
+    },
+    {
+      "requirement_id": "REQ-023",
+      "acceptance_ids": [
+        "AC-010"
+      ],
+      "test_ids": [
+        "TST-011"
+      ],
+      "review_checks": [
+        "Review REQ-023 against exact annex 2ff5d493d9d9b424ad16cdb24f68f06c004a0f68ed96956ad8dd407f52308ec7 and its trust-boundary rationale."
+      ],
+      "validation_checks": [
+        "Execute mapped acceptance and test oracles for REQ-023; any UNKNOWN_MANUAL remains non-authorizing."
+      ]
+    },
+    {
+      "requirement_id": "REQ-024",
+      "acceptance_ids": [
+        "AC-011"
+      ],
+      "test_ids": [
+        "TST-012"
+      ],
+      "review_checks": [
+        "Review REQ-024 against exact annex 2ff5d493d9d9b424ad16cdb24f68f06c004a0f68ed96956ad8dd407f52308ec7 and its trust-boundary rationale."
+      ],
+      "validation_checks": [
+        "Execute mapped acceptance and test oracles for REQ-024; any UNKNOWN_MANUAL remains non-authorizing."
+      ]
+    },
+    {
+      "requirement_id": "REQ-025",
+      "acceptance_ids": [
+        "AC-011"
+      ],
+      "test_ids": [
+        "TST-012"
+      ],
+      "review_checks": [
+        "Review REQ-025 against exact annex 2ff5d493d9d9b424ad16cdb24f68f06c004a0f68ed96956ad8dd407f52308ec7 and its trust-boundary rationale."
+      ],
+      "validation_checks": [
+        "Execute mapped acceptance and test oracles for REQ-025; any UNKNOWN_MANUAL remains non-authorizing."
+      ]
+    },
+    {
+      "requirement_id": "REQ-026",
+      "acceptance_ids": [
+        "AC-012"
+      ],
+      "test_ids": [
+        "TST-013"
+      ],
+      "review_checks": [
+        "Review REQ-026 against exact annex 2ff5d493d9d9b424ad16cdb24f68f06c004a0f68ed96956ad8dd407f52308ec7 and its trust-boundary rationale."
+      ],
+      "validation_checks": [
+        "Execute mapped acceptance and test oracles for REQ-026; any UNKNOWN_MANUAL remains non-authorizing."
+      ]
+    },
+    {
+      "requirement_id": "REQ-027",
+      "acceptance_ids": [
+        "AC-012"
+      ],
+      "test_ids": [
+        "TST-013"
+      ],
+      "review_checks": [
+        "Review REQ-027 against exact annex 2ff5d493d9d9b424ad16cdb24f68f06c004a0f68ed96956ad8dd407f52308ec7 and its trust-boundary rationale."
+      ],
+      "validation_checks": [
+        "Execute mapped acceptance and test oracles for REQ-027; any UNKNOWN_MANUAL remains non-authorizing."
+      ]
+    },
+    {
+      "requirement_id": "REQ-028",
+      "acceptance_ids": [
+        "AC-012"
+      ],
+      "test_ids": [
+        "TST-013"
+      ],
+      "review_checks": [
+        "Review REQ-028 against exact annex 2ff5d493d9d9b424ad16cdb24f68f06c004a0f68ed96956ad8dd407f52308ec7 and its trust-boundary rationale."
+      ],
+      "validation_checks": [
+        "Execute mapped acceptance and test oracles for REQ-028; any UNKNOWN_MANUAL remains non-authorizing."
+      ]
+    },
+    {
+      "requirement_id": "REQ-029",
+      "acceptance_ids": [
+        "AC-013"
+      ],
+      "test_ids": [
+        "TST-014"
+      ],
+      "review_checks": [
+        "Review REQ-029 against exact annex 2ff5d493d9d9b424ad16cdb24f68f06c004a0f68ed96956ad8dd407f52308ec7 and its trust-boundary rationale."
+      ],
+      "validation_checks": [
+        "Execute mapped acceptance and test oracles for REQ-029; any UNKNOWN_MANUAL remains non-authorizing."
+      ]
+    },
+    {
+      "requirement_id": "REQ-030",
+      "acceptance_ids": [
+        "AC-014"
+      ],
+      "test_ids": [
+        "TST-015"
+      ],
+      "review_checks": [
+        "Review REQ-030 against exact annex 2ff5d493d9d9b424ad16cdb24f68f06c004a0f68ed96956ad8dd407f52308ec7 and its trust-boundary rationale."
+      ],
+      "validation_checks": [
+        "Execute mapped acceptance and test oracles for REQ-030; any UNKNOWN_MANUAL remains non-authorizing."
+      ]
+    },
+    {
+      "requirement_id": "REQ-031",
+      "acceptance_ids": [
+        "AC-015"
+      ],
+      "test_ids": [
+        "TST-015"
+      ],
+      "review_checks": [
+        "Review REQ-031 against exact annex 2ff5d493d9d9b424ad16cdb24f68f06c004a0f68ed96956ad8dd407f52308ec7 and its trust-boundary rationale."
+      ],
+      "validation_checks": [
+        "Execute mapped acceptance and test oracles for REQ-031; any UNKNOWN_MANUAL remains non-authorizing."
+      ]
+    },
+    {
+      "requirement_id": "REQ-032",
+      "acceptance_ids": [
+        "AC-016"
+      ],
+      "test_ids": [
+        "TST-016"
+      ],
+      "review_checks": [
+        "Review REQ-032 against exact annex 2ff5d493d9d9b424ad16cdb24f68f06c004a0f68ed96956ad8dd407f52308ec7 and its trust-boundary rationale."
+      ],
+      "validation_checks": [
+        "Execute mapped acceptance and test oracles for REQ-032; any UNKNOWN_MANUAL remains non-authorizing."
+      ]
+    }
+  ],
+  "quality_gates": {
+    "spec_review_required": true,
+    "testability_required": true,
+    "traceability_required": true
+  },
+  "council": {
+    "perspectives": [
+      {
+        "role": "planner",
+        "summary": "Review exact cross-repository dependency order, ownership, rollback and complete traceability."
+      },
+      {
+        "role": "security",
+        "summary": "Review capability tokens, candidate isolation, publisher non-self-authorization, old-workflow fencing and ambiguity behavior."
+      },
+      {
+        "role": "tech_lead_qa",
+        "summary": "Recompute every schema/fixture/hash/tuple and verify executable failure oracles and live evidence."
+      },
+      {
+        "role": "tech_lead_devops",
+        "summary": "Review deployability, GitOps ownership, Vault/DNS/TLS/network/runner/HA/observability and rollout gates."
+      }
+    ],
+    "consensus_summary": "Draft only. Exact-hash council must return unanimous GO before code. A GO authorizes ordered implementation of the listed prerequisites; it does not assert they already exist or bypass their protected PR, live conformance, release or deployment gates.",
+    "open_questions": []
+  }
+}

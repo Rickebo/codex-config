@@ -1,0 +1,40 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Independent Luna re-review of PR #156 exact head bd5dbccd701c7ace526305d1db2fbcd1c4588fa2 found two remaining blockers: GitHub check/run metadata does not prove actual publisher dispatch inputs/cap failure, and coordinator-only concurrency does not reserve release/ref state against other writers.",
+  "changed_files": [
+    ".github/workflows/automatic-release.yaml",
+    ".github/workflows/publish-release.yaml",
+    "hack/release-failure-policy.js",
+    "hack/test-release-failure-policy.js",
+    "hack/test-release-graph.py"
+  ],
+  "validation": [
+    "All referenced runs/checks are now dereferenced, but workflow-run API omits dispatch inputs",
+    "GitHub Actions app identity does not cryptographically bind check metadata to the exact publisher tuple",
+    "A signed/attested failure record must bind full tuple, run attempt, measured archive size, and cap",
+    "Second state read reduces but does not close the release-shell/tag TOCTOU window",
+    "Automatic-release concurrency does not cover publish-release or manual/API writers"
+  ],
+  "blockers": [
+    "Add and verify trusted OIDC/Sigstore publisher failure attestation before retirement",
+    "Add a repository-wide reservation/coordination protocol enforced by every automated release-shell/ref writer with atomic final checks"
+  ],
+  "next_action": "Use the final code loop to replace check-only proof with signed exact failure evidence and implement a shared fail-closed release-state reservation protocol with adversarial tests.",
+  "route_to": "code",
+  "risk_level": "critical",
+  "issues": [
+    {
+      "id": "DC156-P1A",
+      "title": "Publisher failure proof is not cryptographically bound to actual dispatch tuple",
+      "severity": "critical",
+      "owner_stage": "code"
+    },
+    {
+      "id": "DC156-P2A",
+      "title": "Release state lacks cross-writer reservation",
+      "severity": "critical",
+      "owner_stage": "code"
+    }
+  ]
+}

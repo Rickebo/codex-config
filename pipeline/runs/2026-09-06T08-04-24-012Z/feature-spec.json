@@ -1,0 +1,218 @@
+{
+  "meta": {
+    "id": "SPEC-codex-stats-213-pricing-watcher",
+    "title": "Automated official pricing catalog watcher",
+    "author": "root manager",
+    "created_at": "2026-09-06T08:12:00Z",
+    "version": "1.0.0"
+  },
+  "feature": {
+    "problem_statement": "Session-driven model discovery exposes new models such as gpt-6-astra, but cost dashboards omit them until the manually maintained exact-model pricing catalog is updated.",
+    "goals": [
+      "Generate an immutable chart pricing snapshot from the official OpenAI Standard Flagship models table.",
+      "Detect new models and rate changes automatically and propose validated effective-dated updates through a pull request.",
+      "Ship and deploy Astra pricing while preserving fail-closed handling for unknown or ambiguous prices."
+    ],
+    "non_goals": [
+      "Fetch mutable pricing HTML from the running server.",
+      "Infer, alias, or guess prices from model names or session data.",
+      "Rewrite historical price rows or backfill spend.",
+      "Automatically merge pricing changes without normal repository review and CI."
+    ],
+    "scope_in": [
+      "Canonical generated pricing JSON packaged in the Helm chart.",
+      "Strict standard-library parser and deterministic updater with fixtures.",
+      "Production-loader validation command.",
+      "Scheduled and manual GitHub workflow that opens or updates one automation PR.",
+      "Chart release and homelab GitOps promotion with live telemetry verification."
+    ],
+    "scope_out": [
+      "Batch, Flex, Fast, regional, or cache-write accounting.",
+      "Changes to arbitrary session model discovery.",
+      "Runtime service egress to OpenAI documentation.",
+      "Historical spend recomputation."
+    ]
+  },
+  "requirements": [
+    {
+      "id": "REQ-001",
+      "priority": "MUST",
+      "statement": "The chart MUST package one canonical JSON pricing snapshot and render it through the existing pricing ConfigMap, mount path, checksum rollout, and production JSON schema.",
+      "rationale": "Immutable released artifacts keep accounting reproducible and remove hand-maintained prices from values.yaml."
+    },
+    {
+      "id": "REQ-002",
+      "priority": "MUST",
+      "statement": "The updater MUST parse exactly one official OpenAI Standard Flagship models table, validate its section identity, context headers, currency, units, columns, unique model rows, numeric rates, and 272000/272001 bands, and reject any ambiguity before writing.",
+      "rationale": "The official page is mutable HTML rather than a supported pricing API, so parsing must fail closed."
+    },
+    {
+      "id": "REQ-003",
+      "priority": "MUST",
+      "statement": "The updater MUST preserve historical rows, append new effective-dated rows only when normalized rates change, use an explicit UTC observation timestamp, produce stable ordering and serialization, and leave the catalog byte-identical when unchanged.",
+      "rationale": "Observed-at accounting depends on append-only history and deterministic updates."
+    },
+    {
+      "id": "REQ-004",
+      "priority": "MUST",
+      "statement": "A scheduled and manually dispatchable workflow MUST fetch only the official HTTPS URL with bounded input, run parser and production-loader validation before minting a least-privilege automation token, and open or update one pricing PR only when the catalog changes.",
+      "rationale": "Automation should detect changes without granting mutable source content deployment authority."
+    },
+    {
+      "id": "REQ-005",
+      "priority": "MUST",
+      "statement": "Workflow-created pricing PRs MUST use normal CI and MUST NOT be automatically merged.",
+      "rationale": "A structurally valid upstream price change can materially alter spend accounting and requires review."
+    },
+    {
+      "id": "REQ-006",
+      "priority": "MUST",
+      "statement": "The generated snapshot MUST include official gpt-6-astra short- and long-context Standard rates and continue to leave unknown future models visible but unpriced until validated source rows are proposed and merged.",
+      "rationale": "This fixes the reported live omission without weakening exact-model safety."
+    },
+    {
+      "id": "REQ-007",
+      "priority": "MUST",
+      "statement": "The released chart MUST be promoted through the homelab GitOps repository and verified by exact cluster context for Argo health, dashboard sync, catalog provenance, Astra cataloged status, and new Astra spend telemetry.",
+      "rationale": "Repository completion alone does not satisfy the requested homelab outcome."
+    }
+  ],
+  "acceptance_criteria": [
+    {
+      "id": "AC-001",
+      "requirement_ids": ["REQ-001", "REQ-006"],
+      "scenario": "Given the released chart, when it is rendered with default pricing enabled, then pricing.json comes from the canonical packaged snapshot and contains both Astra context bands with official rates."
+    },
+    {
+      "id": "AC-002",
+      "requirement_ids": ["REQ-002", "REQ-003"],
+      "scenario": "Given a valid official pricing fixture, when the updater runs twice with a fixed UTC timestamp, then the first run appends only changed rows and the second run is byte-identical."
+    },
+    {
+      "id": "AC-003",
+      "requirement_ids": ["REQ-002", "REQ-003"],
+      "scenario": "Given malformed, ambiguous, partial, duplicated, or unsupported source tables, when the updater runs, then it exits nonzero and does not modify the existing catalog."
+    },
+    {
+      "id": "AC-004",
+      "requirement_ids": ["REQ-004", "REQ-005"],
+      "scenario": "Given the scheduled workflow, when the normalized source changes, then validation completes before write credentials are created and exactly one non-auto-merged PR is opened or updated; unchanged data creates no commit or PR mutation."
+    },
+    {
+      "id": "AC-005",
+      "requirement_ids": ["REQ-001", "REQ-002", "REQ-003", "REQ-006"],
+      "scenario": "Given the generated candidate catalog, when production loader, chart, workflow, and repository tests run, then all validation passes and arbitrary uncataloged models remain fail-closed."
+    },
+    {
+      "id": "AC-006",
+      "requirement_ids": ["REQ-007"],
+      "scenario": "Given the merged release and GitOps promotion, when the homelab reconciles, then Argo is Synced/Healthy, GrafanaDashboard is synchronized, gpt-6-astra is cataloged, and newly ingested Astra usage produces nonzero priced spend."
+    }
+  ],
+  "test_plan": [
+    {
+      "id": "TST-001",
+      "type": "unit",
+      "requirement_ids": ["REQ-002", "REQ-003", "REQ-006"],
+      "approach": "Fixture tests cover exact table selection, headers, rates, bands, Astra, deterministic no-op behavior, append-only changes, and fail-closed malformed inputs with atomic output preservation."
+    },
+    {
+      "id": "TST-002",
+      "type": "integration",
+      "requirement_ids": ["REQ-001", "REQ-006"],
+      "approach": "Render and lint the chart, compare rendered pricing.json semantics to the canonical snapshot, and validate it through store.LoadPricingCatalog."
+    },
+    {
+      "id": "TST-003",
+      "type": "integration",
+      "requirement_ids": ["REQ-004", "REQ-005"],
+      "approach": "Static workflow contract tests verify schedule/manual triggers, official URL, action pinning, validation-before-token ordering, least privilege, one automation branch, and absence of auto-merge."
+    },
+    {
+      "id": "TST-004",
+      "type": "regression",
+      "requirement_ids": ["REQ-001", "REQ-003", "REQ-006"],
+      "approach": "Run go test/vet/race, dashboard tests, chart scripts, Helm lint/template, actionlint, changed-artifact tests, JSON validation, and git diff checks."
+    },
+    {
+      "id": "TST-005",
+      "type": "validation",
+      "requirement_ids": ["REQ-007"],
+      "approach": "Verify the released immutable chart, GitOps merge, explicit homelab kubeconfig/context, Argo revisions and health, GrafanaDashboard status, readiness, Prometheus target, cataloged/coverage/spend metrics for Astra, and no rejection spike."
+    }
+  ],
+  "traceability": [
+    {
+      "requirement_id": "REQ-001",
+      "acceptance_ids": ["AC-001", "AC-005"],
+      "test_ids": ["TST-002", "TST-004"],
+      "review_checks": ["Canonical snapshot has one owner and ConfigMap/checksum use the same bytes."],
+      "validation_checks": ["Rendered pricing.json passes production loader validation."]
+    },
+    {
+      "requirement_id": "REQ-002",
+      "acceptance_ids": ["AC-002", "AC-003", "AC-005"],
+      "test_ids": ["TST-001", "TST-002"],
+      "review_checks": ["Parser rejects structural drift, duplicate tables, missing cells, unsupported values, and partial output."],
+      "validation_checks": ["All valid and invalid fixtures produce expected exit status without partial writes."]
+    },
+    {
+      "requirement_id": "REQ-003",
+      "acceptance_ids": ["AC-002", "AC-003", "AC-005"],
+      "test_ids": ["TST-001", "TST-004"],
+      "review_checks": ["Historical rows are immutable and updates are explicit UTC observations."],
+      "validation_checks": ["Repeated generation is byte-identical and historical fixtures remain selected at boundaries."]
+    },
+    {
+      "requirement_id": "REQ-004",
+      "acceptance_ids": ["AC-004"],
+      "test_ids": ["TST-003", "TST-004"],
+      "review_checks": ["Workflow has bounded fetch, validation-before-token, immutable actions, concurrency, and no pull_request_target."],
+      "validation_checks": ["Workflow contract test and actionlint pass."]
+    },
+    {
+      "requirement_id": "REQ-005",
+      "acceptance_ids": ["AC-004"],
+      "test_ids": ["TST-003"],
+      "review_checks": ["No auto-merge command or policy is present."],
+      "validation_checks": ["Created PR remains subject to normal repository merge flow."]
+    },
+    {
+      "requirement_id": "REQ-006",
+      "acceptance_ids": ["AC-001", "AC-005"],
+      "test_ids": ["TST-001", "TST-002", "TST-004"],
+      "review_checks": ["Astra prices match the fetched official Standard table and reasoning output follows documented output-rate policy."],
+      "validation_checks": ["Canonical and rendered catalogs contain exact Astra short/long bands."]
+    },
+    {
+      "requirement_id": "REQ-007",
+      "acceptance_ids": ["AC-006"],
+      "test_ids": ["TST-005"],
+      "review_checks": ["Deployment is GitOps-only and exact artifact digests and cluster context are used."],
+      "validation_checks": ["Live Argo, Grafana, readiness, catalog, coverage, and spend evidence is recorded."]
+    }
+  ],
+  "quality_gates": {
+    "spec_review_required": true,
+    "testability_required": true,
+    "traceability_required": true
+  },
+  "council": {
+    "perspectives": [
+      {
+        "role": "planner",
+        "summary": "Use a generated immutable chart asset plus scheduled PR workflow; avoid runtime fetching and preserve historical effective-dated rows."
+      },
+      {
+        "role": "reviewer",
+        "summary": "Enforce exact source/table contracts, validation before credentials, least privilege, atomic no-op behavior, and no automatic merge."
+      },
+      {
+        "role": "tech_lead_qa",
+        "summary": "Require fixture matrices for parser failures, deterministic generation, production-loader/chart integration, workflow contracts, and explicit-context live telemetry."
+      }
+    ],
+    "consensus_summary": "All perspectives prefer scheduled generation of a reviewed immutable catalog over runtime mutable fetching. The watcher may discover new exact model rows dynamically, but ambiguous prices remain unpriced until a validated PR merges.",
+    "open_questions": []
+  }
+}

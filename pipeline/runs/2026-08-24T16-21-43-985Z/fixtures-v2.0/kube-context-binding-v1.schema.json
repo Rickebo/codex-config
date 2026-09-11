@@ -1,0 +1,163 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.codicarium.com/platform/kube-context-binding-v1.schema.json",
+  "title": "Fail-before-mutation codicarium-dev kube binding",
+  "type": "object",
+  "required": [
+    "schema",
+    "kubeconfig",
+    "context",
+    "api_server",
+    "ca_pem_sha256",
+    "kube_system_uid",
+    "kubernetes_service",
+    "dns",
+    "monitoring",
+    "commands",
+    "mutation_guard"
+  ],
+  "properties": {
+    "schema": {
+      "const": "codicarium.kube-context-binding/v1"
+    },
+    "kubeconfig": {
+      "const": "/home/rickebo/.kube/codicarium-dev.yaml"
+    },
+    "context": {
+      "const": "codicarium-dev"
+    },
+    "api_server": {
+      "const": "https://10.99.0.21:6443"
+    },
+    "ca_pem_sha256": {
+      "const": "c73f41a70db74a9e1020ce84bf27227e0523055d3156d8d47ef31d41a3e3b935"
+    },
+    "kube_system_uid": {
+      "const": "03dea961-55e6-4141-bb23-6cb4b9f79681"
+    },
+    "kubernetes_service": {
+      "type": "object",
+      "required": [
+        "namespace",
+        "service",
+        "cluster_ip",
+        "port",
+        "accepted_audience",
+        "accepted_audience_status",
+        "ca_pem_sha256",
+        "certificate_dns_san",
+        "tls_san_status",
+        "discovery_command"
+      ],
+      "properties": {
+        "namespace": {
+          "const": "default"
+        },
+        "service": {
+          "const": "kubernetes"
+        },
+        "cluster_ip": {
+          "const": "10.43.0.1"
+        },
+        "port": {
+          "const": 443
+        },
+        "accepted_audience": {
+          "const": "https://kubernetes.default.svc"
+        },
+        "accepted_audience_status": {
+          "const": "REQUIRED_PREACTIVATION_TOKENREVIEW_PROBE"
+        },
+        "ca_pem_sha256": {
+          "const": "c73f41a70db74a9e1020ce84bf27227e0523055d3156d8d47ef31d41a3e3b935"
+        },
+        "certificate_dns_san": {
+          "const": "kubernetes.default.svc"
+        },
+        "tls_san_status": {
+          "const": "REQUIRED_PREACTIVATION_TLS_PROBE"
+        },
+        "discovery_command": {
+          "const": "kubectl --kubeconfig=/home/rickebo/.kube/codicarium-dev.yaml --context=codicarium-dev --namespace=default get service kubernetes"
+        }
+      },
+      "additionalProperties": false
+    },
+    "dns": {
+      "type": "object",
+      "required": [
+        "namespace",
+        "service",
+        "cluster_ip",
+        "port",
+        "protocols"
+      ],
+      "properties": {
+        "namespace": {
+          "const": "kube-system"
+        },
+        "service": {
+          "const": "kube-dns"
+        },
+        "cluster_ip": {
+          "const": "10.43.0.10"
+        },
+        "port": {
+          "const": 53
+        },
+        "protocols": {
+          "const": [
+            "UDP",
+            "TCP"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "monitoring": {
+      "type": "object",
+      "required": [
+        "namespace",
+        "namespace_uid",
+        "namespace_labels",
+        "prometheus_pod_labels"
+      ],
+      "properties": {
+        "namespace": {
+          "const": "monitoring"
+        },
+        "namespace_uid": {
+          "const": "f78cd9cb-d069-4bde-bc56-33686eef5968"
+        },
+        "namespace_labels": {
+          "const": [
+            "kubernetes.io/metadata.name=monitoring"
+          ]
+        },
+        "prometheus_pod_labels": {
+          "const": [
+            "app.kubernetes.io/instance=prometheus-stack-prometheus",
+            "app.kubernetes.io/name=prometheus",
+            "operator.prometheus.io/name=prometheus-stack-prometheus",
+            "operator.prometheus.io/shard=0",
+            "prometheus=prometheus-stack-prometheus"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "commands": {
+      "type": "array",
+      "minItems": 4,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "mutation_guard": {
+      "const": "Every cluster command includes the exact --kubeconfig and --context flags; server, CA PEM SHA-256, context, or kube-system UID mismatch exits before every mutation."
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,30 @@
+{
+  "stage": "validation",
+  "status": "pass",
+  "summary": "Final validation passes. REQ-001 through REQ-008 and AC-001 through AC-007 are satisfied for issue #28. The prior AC-005 evidence gap is closed directly: the real outage/recovery/replay flow proves no early provider calls, exactly one authenticated inference, successful configured-Model resolution before and after replay, one build, and one active publication. The digest-pinned Category=System profile remains parent issue #26 scope.",
+  "changed_files": [],
+  "validation": [
+    "AC-001 producer-owned inputs, Knowledge stable processing generation, and one persisted build are directly covered",
+    "AC-002 authentication, authorization, replay, nonce, expiry, route, audience, and workspace negative classes remain covered",
+    "AC-003 CloudEvent, bounded retry/cancellation, partition ordering, DLQ failure, and offset behavior remain covered",
+    "AC-004 generation-fence and active-head invalidation races remain deterministic and covered",
+    "AC-005 now directly proves zero pre-release provider calls and exactly one authenticated provider inference across outage, recovery, and replay",
+    "AC-005 also proves successful configured-Model generation resolution before and after replay, exactly one build, and one active publication",
+    "AC-006 real Workspace, Source, Model, and Knowledge process flow passes in Category=FastSystem 77/77",
+    "AC-007 relevant Release build, contract, generated-fixture, Python static, formatting, diff, evidence-integrity, and cleanup gates pass",
+    "Graphify 0.9.37 external nodes are accepted only when structurally valid and excluded from the canonical source-backed graph",
+    "Configured model_id propagates Model to Knowledge to Graphify; malformed processor artifact paths are permanent and redacted",
+    "Three independent final reviews found no blocking issue and the final worktree is clean at 55f096d",
+    "Category=System remains unexecuted because twelve digest-pinned WM_*_IMAGE values are absent; #26 stays open for that scope"
+  ],
+  "blockers": [],
+  "next_action": "Finish the pipeline, then push the feature branch, create and merge the issue-closing PR, verify issues #28, #26, and #23, and clean up task-owned branches, worktree, and temporary roots.",
+  "route_to": "done",
+  "risk_level": "high",
+  "independent_lanes": [
+    "requirement and acceptance-criteria trace",
+    "cross-service contract and architecture validation",
+    "release-evidence and scope-exclusion validation"
+  ],
+  "requires_council": false
+}

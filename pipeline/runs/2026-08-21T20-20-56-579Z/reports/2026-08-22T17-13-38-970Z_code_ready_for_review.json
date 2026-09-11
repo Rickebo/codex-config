@@ -1,0 +1,48 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Fixed all five review findings in commit 1d6d249: final-path backup checksums with executable round-trip tests, authoritative workload-gate mismatch failure, namespace-local LLM backup ownership with NAS/Kopia manifest coordination, composed database gates, and digest-only Always-pulled gated images.",
+  "changed_files": [
+    "apps/llm-proxy.yaml",
+    "llm-proxy/charts/llm-proxy-0.3.19-r.1.homelab.1.tgz",
+    "llm-proxy/templates/_helpers.tpl",
+    "llm-proxy/templates/database-backup.yaml",
+    "llm-proxy/templates/restore.yaml",
+    "llm-proxy/templates/target-gates.yaml",
+    "llm-proxy/values.yaml",
+    "llm-proxy/vendor/llm-proxy/templates/deployment-api.yaml",
+    "llm-proxy/vendor/llm-proxy/templates/deployment-controller.yaml",
+    "llm-proxy/vendor/llm-proxy/templates/deployment-web.yaml",
+    "llm-proxy/vendor/llm-proxy/templates/headroom.yaml",
+    "llm-proxy/vendor/llm-proxy/templates/job-migrator.yaml",
+    "llm-proxy/vendor/llm-proxy/values.schema.json",
+    "tests/test_workspace_context_llm_proxy_gitops.py",
+    "workspace-context/templates/_helpers.tpl",
+    "workspace-context/templates/backup.yaml",
+    "workspace-context/templates/gated.yaml",
+    "workspace-context/templates/workload.yaml",
+    "workspace-context/tests/static.sh"
+  ],
+  "validation": [
+    "pytest -q tests/test_workspace_context_llm_proxy_gitops.py: 8 passed.",
+    "Checksum shell contracts executed for both rendered charts; final dump checksum passed sha256sum -c after backup-to-restore verification.",
+    "workspace-context/tests/static.sh: passed.",
+    "helm lint workspace-context llm-proxy: passed.",
+    "Exact Argo Application inline-value renders: both disabled apps produced no workload or service kinds.",
+    "Enabled Workspace Context restore render and digest-pinned backup render: passed.",
+    "git diff --check: passed; protected worker, bridge, and historical paths unchanged.",
+    "HEAD is 1d6d249; graphify-out changes remain pre-existing, unstaged, and untouched by this commit."
+  ],
+  "blockers": [
+    "Live Argo CD, Kubernetes, Prometheus, Loki, and Tempo MCP verification was unavailable in this session; no deployment or cluster mutation was attempted.",
+    "Current-run pipeline CI result is reported separately; any malformed JSON issue is not being investigated further."
+  ],
+  "next_action": "Route to REVIEW for independent review of commit 1d6d249; do not approve, deploy, sync, restore, or mutate cluster state.",
+  "route_to": "review",
+  "risk_level": "high",
+  "requires_council": true,
+  "independent_lanes": [
+    "Review checksum path, gate composition, PVC ownership, and digest enforcement.",
+    "Recheck rendered resources and protected-path boundaries."
+  ]
+}

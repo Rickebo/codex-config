@@ -1,0 +1,38 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Two minimal child-server remediation PRs are ready: Grafana MCP now allowlists the exact in-cluster Host and Kubernetes serializes npx installation with an exclusive lock.",
+  "changed_files": [
+    "charts/grafana-mcp/values.yaml",
+    "scripts/metamcp/bootstrap.sql"
+  ],
+  "validation": [
+    "PR #446 is a one-line values change preserving --disable-write and rendering the exact grafana-mcp.grafana-mcp.svc.cluster.local:8000 allowlist.",
+    "PR #447 is a one-file SQL change using sh -c with the correct $0 placeholder and \"$@\" forwarding to npx.",
+    "PR #447 retains the Kubernetes read-only, disable-destructive, in-cluster, and disable-multi-cluster flags plus explicit service environment.",
+    "Both PRs passed YAML/Helm or SQL/static/diff validation and a focused read-only review found no blocking findings.",
+    "No secrets were added, printed, hashed, or inspected by the remediation lanes."
+  ],
+  "blockers": [],
+  "next_action": "Advance to review, approve the zero-cost gate, merge PRs #446 and #447, then reconcile and run clean restart validation.",
+  "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T20-33-06-876Z/spec.json",
+  "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T20-33-06-876Z/spec-check.json",
+  "council_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T20-33-06-876Z/council.json",
+  "requires_council": true,
+  "independent_lanes": [
+    "Grafana MCP Host allowlist",
+    "Kubernetes npx startup serialization",
+    "Focused security/correctness review"
+  ],
+  "route_to": "review",
+  "risk_level": "critical",
+  "issues": [
+    {
+      "id": "#441",
+      "title": "Restore homelab Loki and Kubernetes MetaMCP child discovery",
+      "severity": "high",
+      "details": "PRs #446 and #447 implement the two live child-server fixes.",
+      "owner_stage": "code"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "stage": "review",
+  "status": "pass",
+  "summary": "Final independent review is GO at 3d82e34c157b4b5f7aa5b06fce48b2846231b084; all migration, immutable-image, cleanup, route-parity, and manifest findings are closed.",
+  "changed_files": [],
+  "validation": [
+    "Read-only review completed against exact commit",
+    "Prior five review findings verified fixed"
+  ],
+  "blockers": [
+    "Hosted PR validation and published release-image evidence are still outstanding."
+  ],
+  "next_action": "Advance to test, open the PR at the exact head, and run hosted validation before release/merge decisions.",
+  "route_to": "test",
+  "risk_level": "high",
+  "independent_lanes": [
+    "Exact-head QA",
+    "Hosted validate and release workflow evidence"
+  ],
+  "requires_council": true
+}

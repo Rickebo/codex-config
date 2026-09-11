@@ -1,0 +1,23 @@
+{
+  "stage": "validation",
+  "status": "fail",
+  "summary": "Post-merge release run 32568119280 failed in make ci before publication on merge commit d2179c9bb55049a791ff080a8b004c8f35ad2a8d.",
+  "changed_files": [
+    ".github/workflows/release.yml",
+    "Makefile",
+    "tools/docker_smoke.sh",
+    "tools/test_docker_smoke.py",
+    "tools/check_migration_manifest.py"
+  ],
+  "validation": [
+    "PR #151 merged normally and main points to d2179c9",
+    "Hosted validate passed at reconciled PR head 261b69f5",
+    "Release workflow reached Run release validation gate on the merged main commit"
+  ],
+  "blockers": [
+    "Release contract suite reported 5 failures and 4 errors: expected invalid migration-digest and manifest-mismatch diagnostics were not emitted, and interrupted/failed smoke fixtures could not observe expected calls/lifecycle markers.",
+    "No app/migration immutable digests, chart, metadata artifact, or DEV deployment were produced."
+  ],
+  "next_action": "Inspect hosted failure logs, reproduce the contract-fixture mismatch on current main, implement a follow-up fix PR, and rerun review/QA/release validation before closing #128.",
+  "route_to": "code"
+}

@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="a5f85c99-e53e-45d0-9380-1dc764c41fec" name="@RICKEBO 2026-08-27 05:15:38" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2026-08-27T05:15:38.8741684+02:00" queuing="2026-08-27T05:15:38.8741684+02:00" start="2026-08-27T05:15:37.1915010+02:00" finish="2026-08-27T05:16:08.1951360+02:00" />
+  <TestSettings name="default" id="58743bc6-6191-4bec-b61a-14bbaecb4a9f">
+    <Deployment runDeploymentRoot="_RICKEBO_2026-08-27_05_15_38" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="72aa89ac-04bc-4ab0-b594-f9e79e8c2b6e" testId="e3e4a78e-7353-6546-29d7-93b35f485d98" testName="WorkspaceManager.SystemTests.KnowledgeGenerationFlowTests.Source_snapshot_replay_after_bounded_model_outage_creates_one_persisted_build" computerName="RICKEBO" duration="00:00:30.6129979" startTime="2026-08-27T05:15:37.4978220+02:00" endTime="2026-08-27T05:16:08.1135289+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="72aa89ac-04bc-4ab0-b594-f9e79e8c2b6e">
+      <Output>
+        <StdOut>FastSystem ready: Workspace=http://127.0.0.1:45403/, Source=http://127.0.0.1:34931/, Model=http://127.0.0.1:41473/, Knowledge=http://127.0.0.1:37975/
+Source snapshot 01a04137-8357-7333-a5c6-40b8afeb473f observed on source.events.v1 partition 2; Knowledge worker started.
+Knowledge build 01a04137-8faa-71b1-b1a4-8e2491a1f6d9 reached queued after 1 injected Model 503 response(s).</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="cda061af-f5a6-47ae-a58f-c79dbc117430" testId="dd9c75fd-e3dd-1788-29d5-b89e2835d85c" testName="WorkspaceManager.SystemTests.KnowledgeGenerationSystemFixtureTests.Unexpected_http_response_does_not_read_or_expose_its_body" computerName="RICKEBO" duration="00:00:00.0021160" startTime="2026-08-27T05:15:37.6210213+02:00" endTime="2026-08-27T05:15:37.6210468+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="cda061af-f5a6-47ae-a58f-c79dbc117430" />
+    <UnitTestResult executionId="67c0ed1a-e0e8-4fdd-a8e9-356a989475e0" testId="047c1775-1909-55ac-1dc4-a9be5958f999" testName="WorkspaceManager.SystemTests.KnowledgeGenerationSystemFixtureTests.Expected_http_response_rejects_body_above_byte_limit" computerName="RICKEBO" duration="00:00:00.0047732" startTime="2026-08-27T05:15:37.6206711+02:00" endTime="2026-08-27T05:15:37.6207135+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="67c0ed1a-e0e8-4fdd-a8e9-356a989475e0" />
+    <UnitTestResult executionId="2f52e5f8-800c-459e-82d0-7e52661fd12e" testId="3928830a-3149-bfd5-314e-bcf44c2ff143" testName="WorkspaceManager.SystemTests.KnowledgeGenerationSystemFixtureTests.Expected_http_response_body_honors_client_timeout" computerName="RICKEBO" duration="00:00:00.1104356" startTime="2026-08-27T05:15:37.4985753+02:00" endTime="2026-08-27T05:15:37.6131194+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="2f52e5f8-800c-459e-82d0-7e52661fd12e" />
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="WorkspaceManager.SystemTests.KnowledgeGenerationFlowTests.Source_snapshot_replay_after_bounded_model_outage_creates_one_persisted_build" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/system/workspacemanager.systemtests/bin/release/net10.0/workspacemanager.systemtests.dll" id="e3e4a78e-7353-6546-29d7-93b35f485d98">
+      <Execution id="72aa89ac-04bc-4ab0-b594-f9e79e8c2b6e" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/system/WorkspaceManager.SystemTests/bin/Release/net10.0/WorkspaceManager.SystemTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="WorkspaceManager.SystemTests.KnowledgeGenerationFlowTests" name="Source_snapshot_replay_after_bounded_model_outage_creates_one_persisted_build" />
+    </UnitTest>
+    <UnitTest name="WorkspaceManager.SystemTests.KnowledgeGenerationSystemFixtureTests.Expected_http_response_body_honors_client_timeout" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/system/workspacemanager.systemtests/bin/release/net10.0/workspacemanager.systemtests.dll" id="3928830a-3149-bfd5-314e-bcf44c2ff143">
+      <Execution id="2f52e5f8-800c-459e-82d0-7e52661fd12e" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/system/WorkspaceManager.SystemTests/bin/Release/net10.0/WorkspaceManager.SystemTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="WorkspaceManager.SystemTests.KnowledgeGenerationSystemFixtureTests" name="Expected_http_response_body_honors_client_timeout" />
+    </UnitTest>
+    <UnitTest name="WorkspaceManager.SystemTests.KnowledgeGenerationSystemFixtureTests.Unexpected_http_response_does_not_read_or_expose_its_body" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/system/workspacemanager.systemtests/bin/release/net10.0/workspacemanager.systemtests.dll" id="dd9c75fd-e3dd-1788-29d5-b89e2835d85c">
+      <Execution id="cda061af-f5a6-47ae-a58f-c79dbc117430" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/system/WorkspaceManager.SystemTests/bin/Release/net10.0/WorkspaceManager.SystemTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="WorkspaceManager.SystemTests.KnowledgeGenerationSystemFixtureTests" name="Unexpected_http_response_does_not_read_or_expose_its_body" />
+    </UnitTest>
+    <UnitTest name="WorkspaceManager.SystemTests.KnowledgeGenerationSystemFixtureTests.Expected_http_response_rejects_body_above_byte_limit" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/system/workspacemanager.systemtests/bin/release/net10.0/workspacemanager.systemtests.dll" id="047c1775-1909-55ac-1dc4-a9be5958f999">
+      <Execution id="67c0ed1a-e0e8-4fdd-a8e9-356a989475e0" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/system/WorkspaceManager.SystemTests/bin/Release/net10.0/WorkspaceManager.SystemTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="WorkspaceManager.SystemTests.KnowledgeGenerationSystemFixtureTests" name="Expected_http_response_rejects_body_above_byte_limit" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="e3e4a78e-7353-6546-29d7-93b35f485d98" executionId="72aa89ac-04bc-4ab0-b594-f9e79e8c2b6e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="dd9c75fd-e3dd-1788-29d5-b89e2835d85c" executionId="cda061af-f5a6-47ae-a58f-c79dbc117430" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="047c1775-1909-55ac-1dc4-a9be5958f999" executionId="67c0ed1a-e0e8-4fdd-a8e9-356a989475e0" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="3928830a-3149-bfd5-314e-bcf44c2ff143" executionId="2f52e5f8-800c-459e-82d0-7e52661fd12e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Completed">
+    <Counters total="4" executed="4" passed="4" failed="0" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v4.0.0+05679a7ab5 (64-bit .NET 10.0.11)
+[xUnit.net 00:00:00.06]   Discovering: WorkspaceManager.SystemTests
+[xUnit.net 00:00:00.10]   Discovered:  WorkspaceManager.SystemTests
+[xUnit.net 00:00:00.11]   Starting:    WorkspaceManager.SystemTests
+[testcontainers.org 00:00:00.07] Connected to Docker:
+  Host: unix:///var/run/docker.sock
+  Server Version: 29.7.2
+  Kernel Version: 6.18.44-1-lts
+  API Version: 1.55
+  Operating System: Arch Linux
+  Total Memory: 60.48 GB
+[testcontainers.org 00:00:00.10] Docker network 83a842e74bff created
+[testcontainers.org 00:00:00.36] Docker container 65f54c2b986c created
+[testcontainers.org 00:00:00.38] Start Docker container 65f54c2b986c
+[testcontainers.org 00:00:00.51] Wait for Docker container 65f54c2b986c to complete readiness checks
+[testcontainers.org 00:00:01.52] Docker container 65f54c2b986c ready
+[testcontainers.org 00:00:01.63] Docker container 6797739585e7 created
+[testcontainers.org 00:00:01.63] Start Docker container 6797739585e7
+[testcontainers.org 00:00:01.64] Docker container 9681ae86a4ff created
+[testcontainers.org 00:00:01.64] Start Docker container 9681ae86a4ff
+[testcontainers.org 00:00:01.66] Docker container 6595329547f9 created
+[testcontainers.org 00:00:01.66] Start Docker container 6595329547f9
+[testcontainers.org 00:00:01.77] Wait for Docker container 6797739585e7 to complete readiness checks
+[testcontainers.org 00:00:01.78] Wait for Docker container 9681ae86a4ff to complete readiness checks
+[testcontainers.org 00:00:01.79] Execute "pg_isready --host localhost --dbname postgres --username postgres" at Docker container 9681ae86a4ff
+[testcontainers.org 00:00:01.81] Add file to tar archive: Content length: 149 byte(s), Target file: "/testcontainers.sh", UID: 0, GID: 0, Mode: 0755
+[testcontainers.org 00:00:01.81] Copy tar archive to container: Content length: 149 byte(s), Docker container: 6595329547f9
+[testcontainers.org 00:00:01.82] Wait for Docker container 6595329547f9 to complete readiness checks
+[testcontainers.org 00:00:02.79] Docker container 6797739585e7 ready
+[testcontainers.org 00:00:02.82] Execute "pg_isready --host localhost --dbname postgres --username postgres" at Docker container 9681ae86a4ff
+[testcontainers.org 00:00:03.83] Execute "pg_isready --host localhost --dbname postgres --username postgres" at Docker container 9681ae86a4ff
+[testcontainers.org 00:00:03.85] Docker container 9681ae86a4ff ready
+[testcontainers.org 00:00:04.83] Docker container 6595329547f9 ready
+[testcontainers.org 00:00:28.57] Delete Docker container 6797739585e7
+[testcontainers.org 00:00:29.20] Delete Docker container 6595329547f9
+[testcontainers.org 00:00:29.68] Delete Docker container 9681ae86a4ff
+[testcontainers.org 00:00:30.20] Delete Docker network 83a842e74bff
+[xUnit.net 00:00:30.74]   Finished:    WorkspaceManager.SystemTests
+</StdOut>
+    </Output>
+  </ResultSummary>
+</TestRun>

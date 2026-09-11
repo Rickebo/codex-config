@@ -1,0 +1,23 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Luna added the exact missing DELETE regression coverage at clean head d8dce90775ea6f001e81b11bd60fa531d498b1b3. The tests prove unlisted and production namespaces deny before policy reads while canonical revoked-grant cleanup in an allowed dev namespace remains successful; production code and disabled defaults are unchanged.",
+  "changed_files": [
+    "internal/rolebindingadmission/validator_test.go"
+  ],
+  "validation": [
+    "Exact head d8dce90775ea6f001e81b11bd60fa531d498b1b3 is clean and descends from reviewed implementation head 14c3f7c2 and base 26e4b12e.",
+    "Focused DELETE tests passed for unlisted other-dev denial, app-prod denial, and allowed-dev revoked cleanup.",
+    "go test ./..., race tests, vet, build, chart, repository, generated CRD, release-flow, supply-chain, policy, and make verify-generated passed.",
+    "Root verified the test-only diff and git diff --check.",
+    "No production code, push, PR, release, deployment, enablement, or live-system mutation occurred."
+  ],
+  "blockers": [],
+  "next_action": "Re-review exact head d8dce907, focusing on REQ-002/REQ-005/AC-004 DELETE fencing and unchanged implementation boundary.",
+  "route_to": "review",
+  "risk_level": "high",
+  "independent_lanes": [
+    "DELETE namespace-fence regression",
+    "full implementation and disabled-default non-regression"
+  ]
+}

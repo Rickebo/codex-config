@@ -1,0 +1,362 @@
+{
+  "meta": {
+    "id": "SPEC-deployment-controller-issue-93-release-proof-v1-8",
+    "title": "Final-candidate protected-main release authorization and forward-only recovery for issue #93",
+    "author": "Codex release planner",
+    "created_at": "2026-08-25T03:52:05Z",
+    "version": "1.8.0-final-candidate"
+  },
+  "feature": {
+    "problem_statement": "At protected main d3565f534b2f64585c3e15e35d8d645449f4f09d, PR #100's Automatic Release run 32798160604 dispatched successful Release Verify 32798188729 for immutable unpublished v0.6.13/ad52dfcbc45d71eccad1d49fbd905161af7a44b1, but rejected live handoff check 97655710504 because GitHub persisted details_url as /runs/<check.id>. The current selector also omits filter=all, treats same-name rows as candidates, dispatches verifier workflow code from an immutable tag, lets candidate code coexist with OIDC and registry credentials, and has no durable publisher-dispatch claim/receipt for ambiguous writes.",
+    "goals": [
+      "Run candidate verification without publication authority while protected-main code alone authenticates, hashes, attests, signs, creates handoff records, and dispatches publication.",
+      "Make every identity, Check Run, historical query, poll, retry, and mutation machine-exact and fail closed.",
+      "Retire v0.6.13 at every mutable authority and release only forward v0.6.14 after protected review and five-check CI."
+    ],
+    "non_goals": [
+      "Move, delete, retag, resume, publish, or fabricate success for v0.6.13.",
+      "Use administrator ruleset evidence, workflow names, timestamps, run-list recency, or mutable tags as runtime authorization.",
+      "Implement an ad hoc artifact uploader or use GitHub-hosted artifact storage contrary to Codicarium policy."
+    ],
+    "scope_in": [
+      "Release planner, Automatic Release, Release Verify, Publish Release, handoff/coordinator policies, focused tests, protected CI wiring, release documentation, and live evidence.",
+      "Cross-repository prerequisites: codicarium-actions owns the reviewed broker protocol/client, runner-config owns its issuer/service/deployment and ephemeral isolated runner, and deployment-controller pins and consumes only their reviewed immutable revisions.",
+      "Removal of static Nexus credentials from candidate-controlled CI supply-chain execution through the same exact-resource capability boundary."
+    ],
+    "scope_out": [
+      "Repository, GitHub, workflow, release, registry, package, cluster, or deployment mutation during specification work.",
+      "Changes to the fixed v0.6.2 and v0.6.8 recovery purposes except explicit v0.6.13 rejection assertions."
+    ]
+  },
+  "requirements": [
+    {
+      "id": "REQ-001",
+      "priority": "MUST",
+      "statement": "The implementation baseline MUST be the remote default branch main at exact lowercase SHA d3565f534b2f64585c3e15e35d8d645449f4f09d; any remote-main change before specification freeze or implementation start makes this draft stale and requires re-audit.",
+      "rationale": "v1.7 omitted one SHA character and stale ancestry invalidates release authorization conclusions."
+    },
+    {
+      "id": "REQ-002",
+      "priority": "MUST",
+      "statement": "The PR #100 provenance invariant MUST be base ca55729de7a58bef5b49ebdce8c28773bb7e1b2e to d3565f534b2f64585c3e15e35d8d645449f4f09d with exactly six paths: .github/workflows/automatic-release.yaml, .github/workflows/release.yaml, docs/releasing.md, hack/release-handoff-policy.js, hack/test-release-graph.py, hack/test-release-handoff-policy.js. The issue #93 implementation MUST reconcile all six. The three PR #97 paths MUST remain byte-identical in the issue #93 PR with Git blob IDs .github/workflows/recover-release-v068.yaml=5dfee56b27ccf791c3ab024145b63539ad1d1a3a, docs/publisher-subject-evidence.md=d6c9572818ce2a80ea1cecd7aacd3bc68f91b90e, and hack/test-recover-release-v068.py=b6daa1135ffa9a49921cc1d8c677e1e5da451592.",
+      "rationale": "Executable path and blob invariants prevent accidental loss of landed release and recovery behavior."
+    },
+    {
+      "id": "REQ-003",
+      "priority": "MUST",
+      "statement": "Automatic Release MUST dispatch .github/workflows/release.yaml at documented ref main, never at the immutable candidate tag or raw SHA; Release Verify MUST require event workflow_dispatch, ref refs/heads/main, workflow_ref codicarium/deployment-controller/.github/workflows/release.yaml@refs/heads/main, and returned run head_sha equal the captured protected-main workflow SHA, while tag and source_revision remain validated data inputs.",
+      "rationale": "A tag-selected workflow executes candidate-era policy and cannot be granted privileged trust."
+    },
+    {
+      "id": "REQ-004",
+      "priority": "MUST",
+      "statement": "Release Verify MUST separate a protected-main read-only API preflight from isolated ephemeral candidate execution. Candidate source MUST run in a destroyed-after-use runner-config sandbox with no static secrets, OIDC, registry credential, GITHUB_TOKEN, GitHub write scope, signing key, dispatch authority, Docker host socket, or shared runner directory. Its only network egress is the exact broker endpoint in REQ-005; all build inputs are centrally prefetched, digest-pinned, and mounted read-only before execution. It may receive only the one-use exact-object upload capability described by REQ-005, and candidate processes MUST be terminated before any trusted credentialed wrapper runs.",
+      "rationale": "Identity validation does not make executable candidate code trusted."
+    },
+    {
+      "id": "REQ-005",
+      "priority": "MUST",
+      "statement": "No suitable broker exists today. Before repository implementation can merge, codicarium-actions MUST own and publish a reviewed broker protocol/client pinned here by full SHA, while runner-config MUST own and deploy https://artifact-capability.int.codicarium.com as the capability issuer/service plus an ephemeral isolated runner. Trusted mint authentication MUST use GitHub OIDC audience codicarium-artifact-capability and bind organization ID 255540067, repository ID 1303901324, protected-main workflow path/ref/SHA, and run ID/attempt. Every token lifetime MUST be exactly 1800 seconds and every token MUST authorize exactly one nonce-bound object key, operation=create, and maximum compressed byte length: 1073741824 for deployment-controller-verified-image; 67108864 for deployment-controller-verified-chart; 67108864 for the signed-authorization bundle. Mint returns constraints and the one-object upload token only. The broker, never candidate code, MUST proxy or enforce conditional exact-key immutable create, compute archive_sha256 and byte_length from received bytes, and return object_key, archive_sha256, byte_length, nonce, and expiry after exact readback. It MUST expose no broad presigned URL, static OVH credential, registry authority, list/read/overwrite/delete, or alternate-key authority. Candidate sandbox network egress MUST have the singleton destination https://artifact-capability.int.codicarium.com; all build inputs MUST be centrally prefetched, digest-pinned, and mounted read-only, with no registry or general-Internet egress. Wrong key, overwrite, expiry, oversize, replay, race, ambiguous create, or ambiguous readback becomes UNKNOWN_MANUAL with no second upload. The existing pinned upload action is insufficient; GitHub-hosted artifacts, shared runner directories, and ad hoc uploaders are forbidden.",
+      "rationale": "Credentialless candidate transfer requires explicitly owned shared protocol, issuer, service, deployment, and isolated runner prerequisites."
+    },
+    {
+      "id": "REQ-006",
+      "priority": "MUST",
+      "statement": "Candidate output MUST be a closed codicarium.release-candidate-evidence/v1 object containing repository, tag, source_revision, decimal-string CI/verifier run IDs and attempts, capability nonce/expiry, and exactly two create-only archives named deployment-controller-verified-image and deployment-controller-verified-chart. Each archive record MUST contain exact object_key, lowercase archive_sha256, decimal-string byte_length, and a path-sorted closed files array of regular non-symlink entries with path, decimal-string size, and lowercase sha256. The image set is exactly deployment-controller.oci.tar, deployment-controller.env, deployment-controller-linux-amd64.spdx.json, deployment-controller-linux-arm64.spdx.json; the chart set is exactly deployment-controller-0.6.14.tgz and deployment-controller-chart.sha256. Missing, extra, duplicate, unsafe, mismatched, zero, or noncanonical values fail.",
+      "rationale": "Protected code needs immutable digest-bound data, not trust in candidate filesystem state."
+    },
+    {
+      "id": "REQ-007",
+      "priority": "MUST",
+      "statement": "A separate protected-main attester job MUST download exact candidate objects with read-only OVH authority, safely extract and recompute archive/file sizes and SHA-256, parse the closed evidence, and create Sigstore attestations plus a signed authorization bound to evidence digest, repository, v0.6.14, source, CI/verifier/coordinator identities, attester run/attempt, and protected-main publisher_revision. A second mint MUST grant this attester only a nonce/exact-key/maximum-size/expiry broker capability for create-only durable upload of the signed authorization and bundles; read-only OVH authority alone is not storage authority. The attester MUST never check out or execute candidate source, Dockerfile, scripts, binaries, hooks, or generated commands, and handoff/check/dispatch authority MUST reside in later jobs without id-token.",
+      "rationale": "Only reviewed protected-main code may cross into OIDC signing and dispatch authority."
+    },
+    {
+      "id": "REQ-008",
+      "priority": "MUST",
+      "statement": "All release identity objects MUST reject duplicate or unknown keys before canonicalization, use closed schemas and decimal strings matching [1-9][0-9]* for GitHub IDs/attempts, then apply RFC 8785 JCS to UTF-8 bytes with no BOM, whitespace, or trailing LF. SHA-256 is over exactly those bytes and encoded as 64 lowercase hex; base64url uses RFC 4648 section 5 without padding only where transported. Check external_id MUST be codicarium.release-handoff/v1:<lowercase-digest> for the handoff identity, codicarium.publisher-claim/v1:<dispatch-digest> for the claim, and codicarium.publisher-receipt/v1:<dispatch-digest> for the receipt.",
+      "rationale": "Signer, selector, dispatcher, and publisher must compute identical bytes and identifiers."
+    },
+    {
+      "id": "REQ-009",
+      "priority": "MUST",
+      "statement": "Golden handoff fixture bytes MUST be exactly {\"authorization_sha256\":\"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\",\"authorizer_run_attempt\":\"1\",\"authorizer_run_id\":\"9004001\",\"candidate_evidence_sha256\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"ci_run_attempt\":\"1\",\"ci_run_id\":\"9001001\",\"coordinator_check_run_id\":\"9002003\",\"coordinator_run_attempt\":\"1\",\"coordinator_run_id\":\"9002001\",\"kind\":\"publish-handoff\",\"publisher_revision\":\"2222222222222222222222222222222222222222\",\"repository\":\"codicarium/deployment-controller\",\"schema\":\"codicarium.release-identity/v1\",\"source_revision\":\"1111111111111111111111111111111111111111\",\"tag\":\"v0.6.14\",\"verifier_run_attempt\":\"1\",\"verifier_run_id\":\"9003001\"}; length MUST be 697, SHA-256 8abe528bb32aaa47f8fc496c3571d4b91248f3ebfe4c8be29463a25277bd9e88, and unpadded digest base64url ir5Si7Mqqkf4_ElsNXHUuRJI8-v-TIvilGOiUne9nog. Golden dispatch fixture bytes MUST be exactly {\"authorizer_run_attempt\":\"1\",\"authorizer_run_id\":\"9004001\",\"handoff_check_run_id\":\"9004003\",\"handoff_sha256\":\"8abe528bb32aaa47f8fc496c3571d4b91248f3ebfe4c8be29463a25277bd9e88\",\"kind\":\"publisher-dispatch\",\"publisher_revision\":\"2222222222222222222222222222222222222222\",\"repository\":\"codicarium/deployment-controller\",\"schema\":\"codicarium.release-identity/v1\",\"source_revision\":\"1111111111111111111111111111111111111111\",\"tag\":\"v0.6.14\"}; length MUST be 436, SHA-256 b150fa8dad70a207fb7a78f6a41ab1bc1430833ba70b86fdc2f08a13c7c11f3b, and unpadded digest base64url sVD6ja1wogf7enj2pBqxvBQwgzunC4b9wvCKE8fBHzs. Fixture files MUST contain exactly these bytes and companion lowercase digest, exact digest-base64url, and unpadded tuple-base64url values.",
+      "rationale": "Golden vectors expose byte, ordering, numeric, newline, and encoding drift."
+    },
+    {
+      "id": "REQ-010",
+      "priority": "MUST",
+      "statement": "For every handoff, claim, and receipt Check Run, creation MUST omit requested details_url and post-create validation MUST require the server-returned check.id to be a positive decimal integer and details_url to parse as exactly https://github.com/codicarium/deployment-controller/runs/<check.id>, with scheme https, host github.com, empty user/password/port/query/fragment, exact case-sensitive path, no percent-encoding, and no trailing slash. Live fixture check 97655710504 MUST accept only https://github.com/codicarium/deployment-controller/runs/97655710504. Because GitHub does not document this canonicalization guarantee, any changed server form fails closed for renewed review rather than widening acceptance.",
+      "rationale": "The observed canonical Check Run URL caused the #100 production failure."
+    },
+    {
+      "id": "REQ-011",
+      "priority": "MUST",
+      "statement": "Selection MUST filter rows by exact external_id before inspecting name, app, status, conclusion, URL, or head SHA. Zero exact rows means absent only when the complete observable horizon is proven; more than one exact row MUST fail duplicate-ambiguous even if rows are malformed, failed, or incomplete; exactly one row is then validated for positive id, exact name, github-actions app slug, completed/success, exact source head SHA, external_id, canonical URL, and closed output. Same-name rows with other external_id values are ignored.",
+      "rationale": "Name-first logic permits poisoning, while duplicate exact authority is inherently ambiguous."
+    },
+    {
+      "id": "REQ-012",
+      "priority": "MUST",
+      "statement": "Every checks.listForRef historical query MUST send filter=all and per_page=100 on every page, exhaust pagination, detect repeated/inconsistent IDs, and locally order decoded valid proof candidates by numeric check.id descending without timestamps. Tests MUST include at least 250 checks over three pages with failed newest, unrelated same-name, malformed, duplicate-external-id, and older valid rows. Because GitHub exposes only checks from the 1000 most recent suites and does not guarantee server order, reaching that horizon without the required exact proof is UNKNOWN_MANUAL, never proof of absence and never authority to create a replacement.",
+      "rationale": "Default latest filtering, unstable order, and a bounded API horizon can hide valid or duplicate authority."
+    },
+    {
+      "id": "REQ-013",
+      "priority": "MUST",
+      "statement": "Historical proof MUST bind exact repository, tag, source, CI run/attempt, coordinator run/attempt/workflow SHA/check, and protected main. For each base...head comparison accept only (status identical, ahead_by 0, behind_by 0) or (status ahead, ahead_by >=1, behind_by 0); reject behind, diverged, counter inconsistency, malformed SHA/ref, API error, and source->coordinator or coordinator->captured-main discontinuity. No selection may use run-list time or recency.",
+      "rationale": "Replay is safe only for a complete exact forward ancestry chain."
+    },
+    {
+      "id": "REQ-014",
+      "priority": "MUST",
+      "statement": "Dispatch polling MUST require the current GitHub API 2026-03-10 HTTP 200 response and only its direct workflow_run_id; legacy 204, missing run details, or incompatible response is UNKNOWN_MANUAL with no run-list lookup. The immediate exact GET of run ID/attempt/path/ref/head SHA is observation 1. Verifier polling follows only that returned verifier run. After publisher dispatch, the coordinator follows only the receipt Check Run selected by exact receipt external_id and validates its closed output against the direct returned publisher run ID/attempt. Verifier polling MUST use injected monotonic integer milliseconds, start-inclusive GET, exclusive deadline start+1800000, interval 5000, at most 360 observations, immediate terminal success, and failure on timeout, backward/noninteger/overflow clock, identity or attempt change, unsupported status, API error, or non-success terminal conclusion. Receipt polling uses the same rules with deadline 300000 and at most 60 observations; fake-clock tests perform no real sleep.",
+      "rationale": "Bounded direct identity polling is reproducible and avoids list-time races."
+    },
+    {
+      "id": "REQ-015",
+      "priority": "MUST",
+      "statement": "GitHub permission sets MUST be literal and exact; every workflow top-level permissions value is {} except CI, whose top-level value is {contents:read}; unspecified scopes are none; and no job combines id-token:write with actions:write or checks:write. Exact job sets are: tag-reserve={contents:write}; verifier-dispatch={actions:write}; capability-mint={contents:read,id-token:write}; attester={contents:read,actions:read,checks:read,id-token:write}; handoff-and-claim={contents:read,actions:read,checks:write}; publisher-dispatch={contents:read,actions:write,checks:read}; Release Verify preflight={contents:read,actions:read,checks:read}; candidate outer job={contents:read}, with GITHUB_TOKEN absent inside its sandbox; Publish Release bind-receipt={contents:read,actions:read,checks:write}; protected publisher writer={contents:write,actions:read,checks:read,packages:write,id-token:write}, retaining OIDC only for post-write attestations and never executing candidate code. Artifact broker capabilities and static storage credentials are non-GitHub data-plane authorities: capability-mint receives issuer access only through its bound OIDC token; candidate receives only its one-object unsigned-upload capability; attester receives exact candidate-object read capabilities and one exact signed-authorization-bundle write capability; publisher writer receives exact signed-artifact read capabilities; no other normal release job receives broker/storage authority. REQ-002 preserves PR #97 byte-for-byte: recover-release-v068 retains its existing exception {actions:read,contents:write,id-token:write} until issue #98/PR #99 removes the workflow. Recover Release Attestations inspect={contents:read,actions:read}; sign={contents:read,actions:read,id-token:write} plus exact artifact-object read and exact recovery-bundle write capabilities only. No candidate-executing context receives static secrets, OIDC, packages, GitHub writes, registry credentials, or dispatch authority.",
+      "rationale": "v1.7 contradicted its Check Run authority and did not state a complete least-privilege matrix."
+    },
+    {
+      "id": "REQ-016",
+      "priority": "MUST",
+      "statement": "Protected handoff-and-claim MUST create exactly one completed-success handoff Check Run after signed authorization settles, re-read it by external_id-first semantics, then derive the dispatch digest. Publisher dispatch MUST use a create-only completed-success claim Check Run persisted before the single dispatch call. A resumed attempt that sees a preexisting claim but no exact receipt enters UNKNOWN_MANUAL and MUST NOT dispatch again. Publish Release bind-receipt MUST create exactly one completed-success receipt Check Run before any public write; its closed output binds authorization predicate digest/archive digest/object key/nonce, dispatch request digest, claim/handoff check IDs, publisher workflow path .github/workflows/publish-release.yaml, ref refs/heads/main, workflow SHA, and direct publisher run ID/attempt. Receipt duplicates or conflicts stop all writes. Every tag/check/dispatch/publication mutation MUST use cancel-in-progress:false concurrency keyed by exact repository plus tag plus authorization digest as soon as those values exist; earlier tag reservation uses repository plus tag. Concurrency narrows races but is not CAS, so duplicate exact checks still fail.",
+      "rationale": "GitHub workflow_dispatch has no idempotency key, so durable create-only authority must precede and acknowledge the write."
+    },
+    {
+      "id": "REQ-017",
+      "priority": "MUST",
+      "statement": "The dispatch state machine MUST be monotonic: UNCLAIMED permits one claim create; a claim created and post-read by the same uninterrupted attempt permits exactly one dispatch; EXACT_RECEIPT permits idempotent reuse; any preexisting claim without receipt, receipt without claim, duplicate, timeout, 5xx, connection loss, killed process, ambiguous create/dispatch response, or non-exact readback becomes UNKNOWN_MANUAL. No automatic path may leave UNKNOWN_MANUAL, overwrite/update/delete a claim or receipt, issue another dispatch, move/delete a tag, replace an object/asset, fabricate a receipt, or claim exactly-once delivery.",
+      "rationale": "Ambiguous writes cannot safely distinguish a lost response from a lost request."
+    },
+    {
+      "id": "REQ-018",
+      "priority": "MUST",
+      "statement": "Publish Release MUST execute protected-main workflow and helper code only and MUST never check out or execute candidate source. Before each mutation class and after each response it MUST revalidate exact current main/publisher SHA, tag->source, signed authorization, candidate evidence/archive/file digests, handoff, claim, receipt, CI/coordinator/verifier/publisher identities, and prior settled mutations. Durable receipts MUST record: release ID/tag/target/draft state; every GitHub asset ID/name/size/SHA-256; image and chart registry coordinate/version/digest; and final public release ID/tag/target/assets. Unknown or mismatched readback is UNKNOWN_MANUAL and prevents subsequent writes.",
+      "rationale": "Publication spans several non-transactional systems and requires per-write reconciliation."
+    },
+    {
+      "id": "REQ-019",
+      "priority": "MUST",
+      "statement": "v0.6.13 at ad52dfcbc45d71eccad1d49fbd905161af7a44b1 MUST be a permanent retired identity in every mutation-capable or manual entry point: release-plan pending/resume/no-op; Automatic Release tag/check/verifier/authorizer/publisher dispatch; Release Verify capability/upload; authorizer signing/handoff/claim; Publish Release receipt/release/assets/registry/package; workflow_dispatch and rerun validation; recover-release-attestations fixed v0.6.2; recover-release-v068 fixed v0.6.8; and all helper CLIs. Each MUST reject tag OR source before its first mutation. The immutable old workflow may remain runnable, but no current mutable authority may accept its outputs for publication.",
+      "rationale": "The repair cannot be installed into the immutable old tag, so mutable authority must retire it."
+    },
+    {
+      "id": "REQ-020",
+      "priority": "MUST",
+      "statement": "After the corrective issue #93 PR merges through protected main at exact revision R descended from d3565f534b2f64585c3e15e35d8d645449f4f09d, release-plan MUST treat retired v0.6.13 as the immutable version base but not a resumable candidate, scan the reviewed range v0.6.13..R, and allocate only v0.6.14 at exact source R. Existing v0.6.14 mismatch, any attempt to publish v0.6.13, or any source/tag/publisher drift fails without tag move/delete/overwrite.",
+      "rationale": "Forward-only allocation is the only way repaired policy can govern the release."
+    },
+    {
+      "id": "REQ-021",
+      "priority": "MUST",
+      "statement": "Protected PR validation MUST retain exact required check names test, lint, chart, integration, supply-chain from GitHub Actions app ID 15368, all successful at the same corrective head SHA with strict up-to-date main. The new canonical, selector, polling, receipt, retirement, permission, and capability-contract suites MUST be hermetic and included by test-release-flow under supply-chain; actionlint and validate-repository MUST run under lint; existing commands for test, chart, and integration MUST remain. The current CI supply-chain candidate execution MUST cease receiving static Nexus credentials: use a pinned reviewed exact-resource capability/prefetch boundary or a credentialless vendored/preloaded input, with wrong-resource/expiry/replay tests, before the issue #93 PR may merge.",
+      "rationale": "The release repair and existing PR credential boundary must be enforced by protected checks, not live release experimentation."
+    },
+    {
+      "id": "REQ-022",
+      "priority": "MUST",
+      "statement": "Post-merge acceptance MUST emit a schema-validated codicarium.release-live-evidence/v1 JSON object with captured_at; repository; corrective PR number/head/merge SHA; protected_main_sha; exactly five protected_checks rows (name, app_id=15368, run_id, attempt, check_id, head_sha, completed/success); v0.6.14 tag/source; coordinator, verifier, attester, claim, receipt, and publisher run/attempt/workflow SHA/check IDs; candidate evidence and authorization object keys/archive/predicate digests/nonces; handoff/dispatch digests; release ID/tag/target/draft=false/prerelease=false; image and chart registry coordinates/version/digests; and all mutation receipts. GitHub assets MUST be exactly these 14 rows with ID/name/size/SHA-256: deployment-controller-0.6.14.tgz, deployment-controller-0.6.14.tgz.sigstore.json, deployment-controller-chart-oci-provenance.sigstore.json, deployment-controller-chart.sha256, deployment-controller-chart.sha256.sigstore.json, deployment-controller-image-provenance.sigstore.json, deployment-controller-linux-amd64-sbom.sigstore.json, deployment-controller-linux-arm64-sbom.sigstore.json, deployment-controller-release-graph.json, deployment-controller-release-graph.json.sigstore.json, deployment-controller-release-manifest.json, deployment-controller-release-manifest.json.sigstore.json, deployment-controller-publisher-subject-manifest.json, deployment-controller-publisher-subject-manifest.json.sigstore.json. Every ID is a decimal string and every SHA/digest lowercase. Missing publication, package, receipt, asset, or protected check is failure, never GO.",
+      "rationale": "The failed #100 run proves verifier success alone is not release acceptance."
+    },
+    {
+      "id": "REQ-023",
+      "priority": "MUST",
+      "statement": "Follow-up order MUST be: first satisfy issue #98 with exact successful v0.6.8 recovery and complete eight-asset readback evidence; after verified public v0.6.14, rebase PR #99 on current main, rerun all five protected checks, merge it, verify .github/workflows/recover-release-v068.yaml absent, and close #98; only then rebase PR #94 onto that main, rerun all five checks, and merge. PR #99 or #94 MUST NOT trigger, resume, or authorize v0.6.13.",
+      "rationale": "The recovery cleanup and legacy-preapproval work have explicit external and release-order dependencies."
+    },
+    {
+      "id": "REQ-024",
+      "priority": "MUST",
+      "statement": "Administrator ruleset evidence MUST remain external review evidence only at /home/rickebo/.codex/pipeline/runs/2026-08-24T16-21-43-985Z/administrator-ruleset-evidence-v2.json, exactly 4024 bytes with SHA-256 55dbee3772ce06d0af59df8cb21d6862d4d167470065e2580ff9adb3d28efb58 and captured for main d3565f534b2f64585c3e15e35d8d645449f4f09d. Review MUST independently verify active branch and tag rulesets, no bypass authority, immutable version tags, and strict required checks exactly test, lint, chart, integration, supply-chain. No workflow, helper, test runtime, or application source may open, import, parse, fetch, or reference this fixture or its sidecars; a static scan MUST prove the prohibition.",
+      "rationale": "Administrator visibility proves review prerequisites but cannot become mutable runtime authorization."
+    }
+  ],
+  "acceptance_criteria": [
+    {
+      "id": "AC-001",
+      "requirement_ids": ["REQ-001", "REQ-002"],
+      "scenario": "Given remote main and the two landed PR commits, When baseline validation runs, Then the 40-hex main, exact six-path PR #100 set, and exact three PR #97 blob IDs match before implementation."
+    },
+    {
+      "id": "AC-002",
+      "requirement_ids": ["REQ-003", "REQ-004"],
+      "scenario": "Given a candidate tag and source, When Release Verify is dispatched and candidate code runs, Then workflow code is protected main and candidate execution is isolated without reusable credential or mutation authority."
+    },
+    {
+      "id": "AC-003",
+      "requirement_ids": ["REQ-005", "REQ-006", "REQ-007"],
+      "scenario": "Given an exact one-use artifact capability and candidate outputs, When upload and authorization run, Then objects are atomic and immutable, the closed manifest rehashes exactly, protected code alone signs it, and every wrong-key, overwrite, unsafe archive, or ambiguity fails manual."
+    },
+    {
+      "id": "AC-004",
+      "requirement_ids": ["REQ-008", "REQ-009"],
+      "scenario": "Given the two golden identity objects, When independent JavaScript and Python implementations canonicalize them, Then exact bytes, lengths, SHA-256, external IDs, and unpadded base64url values agree and all noncanonical variants fail."
+    },
+    {
+      "id": "AC-005",
+      "requirement_ids": ["REQ-010", "REQ-011"],
+      "scenario": "Given unrelated same-name checks, one exact live-style row, malformed exact rows, and an exact duplicate, When selection runs, Then external_id is filtered first, only the exact canonical /runs/<check.id> row can pass, and duplicate exact identity dominates with failure."
+    },
+    {
+      "id": "AC-006",
+      "requirement_ids": ["REQ-012", "REQ-013"],
+      "scenario": "Given at least 250 checks across three filter=all pages and exact compare fixtures, When historical selection runs, Then local numeric ordering and the two accepted ancestry vectors select deterministically without time correlation, while duplicates, invalid ancestry, and the 1000-suite horizon fail manual."
+    },
+    {
+      "id": "AC-007",
+      "requirement_ids": ["REQ-014"],
+      "scenario": "Given direct 2026-03-10 dispatch responses and an injected fake clock, When verifier and receipt polling run, Then only the returned run identity is observed within exact bounds and 204, timeout, clock, status, attempt, and API faults fail without list correlation or real sleep."
+    },
+    {
+      "id": "AC-008",
+      "requirement_ids": ["REQ-015", "REQ-016", "REQ-017"],
+      "scenario": "Given the exact job matrix and crash points before and after claim creation and dispatch, When retries run, Then candidate authority stays absent, one create-only claim and receipt bind the direct publisher run, exact receipt is reusable, and every ambiguous state becomes UNKNOWN_MANUAL without redispatch."
+    },
+    {
+      "id": "AC-009",
+      "requirement_ids": ["REQ-018", "REQ-019", "REQ-020"],
+      "scenario": "Given retired v0.6.13 and repaired protected main R, When every mutation entry point and planner is exercised, Then v0.6.13/ad52df is rejected before mutation, only v0.6.14 at R is allocated, and publisher receipts prove each exact write."
+    },
+    {
+      "id": "AC-010",
+      "requirement_ids": ["REQ-021", "REQ-024"],
+      "scenario": "Given the corrective PR head and external administrator evidence, When protected CI and review run, Then test, lint, chart, integration, and supply-chain all succeed at that SHA, broker/runner/action prerequisites are pinned, candidate CI has no static Nexus credential, active rulesets are independently verified, and runtime source never consumes the evidence fixture."
+    },
+    {
+      "id": "AC-011",
+      "requirement_ids": ["REQ-022"],
+      "scenario": "Given the corrective PR has merged and automatic v0.6.14 completes, When live evidence is captured and schema-validated, Then the complete five-check, identity, receipt, release, 14-asset, image, and chart chain is exact and any missing write fails acceptance."
+    },
+    {
+      "id": "AC-012",
+      "requirement_ids": ["REQ-023"],
+      "scenario": "Given verified v0.6.14 and the v0.6.8 recovery evidence, When follow-up work proceeds, Then issue #98 evidence precedes rebased five-check PR #99 and verified workflow removal, which precedes rebased five-check PR #94."
+    }
+  ],
+  "test_plan": [
+    {
+      "id": "TST-001",
+      "type": "integration",
+      "requirement_ids": ["REQ-001", "REQ-002"],
+      "approach": "Assert remote main format/equality, PR #100 base and exact six paths, and PR #97 exact three blob IDs; fail stale or extra/missing paths."
+    },
+    {
+      "id": "TST-002",
+      "type": "integration",
+      "requirement_ids": ["REQ-003", "REQ-004", "REQ-015"],
+      "approach": "Parse workflows and run sandbox probes proving verifier dispatch ref/main identity, job-level permissions, no candidate token/secrets/OIDC/registry/socket/shared directory, teardown before trusted steps, and no candidate checkout in privileged jobs."
+    },
+    {
+      "id": "TST-003",
+      "type": "integration",
+      "requirement_ids": ["REQ-005", "REQ-006", "REQ-007"],
+      "approach": "Run cross-repository contract fixtures for exact-key capability mint/upload/readback: wrong key/source/name, overwrite, replay, expiry, oversize, concurrent create, ambiguous response, unsafe archive, symlink, extra/missing/duplicate file, digest/size tamper, and signer execution-closure."
+    },
+    {
+      "id": "TST-004",
+      "type": "unit",
+      "requirement_ids": ["REQ-008", "REQ-009"],
+      "approach": "Use independent JS/Python canonicalizers against exact 697/436-byte golden files and companions; reject duplicate/unknown keys, numeric IDs, leading zero, key/value/case/escape/Unicode/whitespace/BOM/LF changes, padded base64url, and digest mismatch."
+    },
+    {
+      "id": "TST-005",
+      "type": "unit",
+      "requirement_ids": ["REQ-010", "REQ-011"],
+      "approach": "Exercise /runs/97655710504 and wrong scheme/host/user/port/repo/path/id/query/fragment/encoding/trailing slash plus external-id-first zero/one/multiple matrices, same-name poison, and malformed exact duplicate dominance."
+    },
+    {
+      "id": "TST-006",
+      "type": "unit",
+      "requirement_ids": ["REQ-012", "REQ-013"],
+      "approach": "Use 250+ three-page filter=all fixtures with unstable server order and exact local ordering; cover repeated IDs, failed newest, older valid, 1000-suite horizon, and identical/ahead accepted versus behind/diverged/inconsistent/malformed/API-error ancestry vectors."
+    },
+    {
+      "id": "TST-007",
+      "type": "unit",
+      "requirement_ids": ["REQ-014"],
+      "approach": "Inject monotonic fake clock and direct dispatch/GET responses; assert exact 30-minute/360 and 5-minute/60 bounds, early success, 204/missing ID, clock rollback/noninteger/overflow, sleep overshoot, API error, attempt/identity change, and each terminal result without real sleep."
+    },
+    {
+      "id": "TST-008",
+      "type": "integration",
+      "requirement_ids": ["REQ-016", "REQ-017"],
+      "approach": "Drive fake Checks/Actions APIs through every state and crash edge: claim create before/after response, dispatch 200/lost/4xx/5xx, killed process, receipt before/after timeout, duplicate/conflicting/orphan records, and retry; assert create-only calls, direct run binding, exact reuse, or UNKNOWN_MANUAL with zero redispatch."
+    },
+    {
+      "id": "TST-009",
+      "type": "integration",
+      "requirement_ids": ["REQ-018", "REQ-019", "REQ-020"],
+      "approach": "Enumerate planner, coordinator, verifier, capability, signer, handoff, claim, receipt, publisher, registry/package, rerun/manual, v0.6.2 recovery, and v0.6.8 recovery entry points; inject v0.6.13 or ad52df independently and assert rejection before mutation, then assert only v0.6.14 at repaired R and exact mutation readbacks."
+    },
+    {
+      "id": "TST-010",
+      "type": "integration",
+      "requirement_ids": ["REQ-021", "REQ-024"],
+      "approach": "Run test-release-flow, actionlint, validate-repository, workflow/pin/permission checks, cross-repo capability/ephemeral-runner prerequisite checks, and static secret-flow scans; prove exact five stable job names/app ID/head SHA, no Nexus/static storage credential reaches candidate execution, independently verify active branch/tag rulesets, recompute the external evidence byte/hash binding, and prove no workflow/helper/runtime source references or opens the fixture."
+    },
+    {
+      "id": "TST-011",
+      "type": "manual",
+      "requirement_ids": ["REQ-022"],
+      "approach": "After merge only, collect non-secret live GitHub/registry evidence into the closed schema and independently verify decimal IDs, lowercase hashes, five checks, v0.6.14 tag/source, all runs/checks/receipts, exact 14 assets, image/chart digests, and public release."
+    },
+    {
+      "id": "TST-012",
+      "type": "manual",
+      "requirement_ids": ["REQ-023"],
+      "approach": "Inspect issue #98 evidence and PR #99/#94 bases, heads, five checks, merge order, v0.6.14 prerequisite, workflow absence after #99, and absence of any v0.6.13 trigger/resume path."
+    }
+  ],
+  "traceability": [
+    {"requirement_id":"REQ-001","acceptance_ids":["AC-001"],"test_ids":["TST-001"],"review_checks":["Exact remote main is full 40-hex and current."],"validation_checks":["Baseline equality passes before freeze and implementation."]},
+    {"requirement_id":"REQ-002","acceptance_ids":["AC-001"],"test_ids":["TST-001"],"review_checks":["Six PR #100 paths and three PR #97 blobs are explicit."],"validation_checks":["Diff/path/blob invariant test passes."]},
+    {"requirement_id":"REQ-003","acceptance_ids":["AC-002"],"test_ids":["TST-002"],"review_checks":["Verifier workflow source is protected main, candidate is data."],"validation_checks":["Main-ref dispatch and returned-run identity fixtures pass."]},
+    {"requirement_id":"REQ-004","acceptance_ids":["AC-002"],"test_ids":["TST-002"],"review_checks":["Candidate sandbox authority and teardown boundary reviewed."],"validation_checks":["Credential/socket/egress/process isolation probes pass."]},
+    {"requirement_id":"REQ-005","acceptance_ids":["AC-003"],"test_ids":["TST-003"],"review_checks":["codicarium-actions protocol/client and runner-config issuer/service/deployment/ephemeral-runner ownership are explicit prerequisites."],"validation_checks":["Cross-repo capability, identity-binding, storage-atomicity, and ambiguity conformance tests pass."]},
+    {"requirement_id":"REQ-006","acceptance_ids":["AC-003"],"test_ids":["TST-003"],"review_checks":["Candidate evidence schema and exact file sets reviewed."],"validation_checks":["Closed manifest/archive tamper matrix passes."]},
+    {"requirement_id":"REQ-007","acceptance_ids":["AC-003"],"test_ids":["TST-003"],"review_checks":["Authorizer executes only protected code over data."],"validation_checks":["Signer execution closure and digest-bound attestations pass."]},
+    {"requirement_id":"REQ-008","acceptance_ids":["AC-004"],"test_ids":["TST-004"],"review_checks":["RFC 8785, UTF-8, hash, ID, and external prefixes are exact."],"validation_checks":["Independent canonicalizers agree."]},
+    {"requirement_id":"REQ-009","acceptance_ids":["AC-004"],"test_ids":["TST-004"],"review_checks":["Golden bytes, lengths, and hashes independently recomputed."],"validation_checks":["Golden and negative canonical fixtures pass."]},
+    {"requirement_id":"REQ-010","acceptance_ids":["AC-005"],"test_ids":["TST-005"],"review_checks":["Observed URL is narrow and fail-closed, not assumed guaranteed."],"validation_checks":["Live and adversarial URL fixtures pass."]},
+    {"requirement_id":"REQ-011","acceptance_ids":["AC-005"],"test_ids":["TST-005"],"review_checks":["External-id-first duplicate precedence reviewed."],"validation_checks":["Zero/one/multiple and same-name poison tests pass."]},
+    {"requirement_id":"REQ-012","acceptance_ids":["AC-006"],"test_ids":["TST-006"],"review_checks":["Every page uses filter=all and API horizon is explicit."],"validation_checks":["Three-page/order/horizon fixtures pass."]},
+    {"requirement_id":"REQ-013","acceptance_ids":["AC-006"],"test_ids":["TST-006"],"review_checks":["Exact two ancestry vectors and chain reviewed."],"validation_checks":["Accepted and rejected compare vectors pass."]},
+    {"requirement_id":"REQ-014","acceptance_ids":["AC-007"],"test_ids":["TST-007"],"review_checks":["Direct API identity and exact fake-clock bounds reviewed."],"validation_checks":["Polling oracle and all error fixtures pass without real sleep."]},
+    {"requirement_id":"REQ-015","acceptance_ids":["AC-008"],"test_ids":["TST-002"],"review_checks":["Complete job-level permission matrix reviewed."],"validation_checks":["Workflow parser finds exact grants and no extra scope."]},
+    {"requirement_id":"REQ-016","acceptance_ids":["AC-008"],"test_ids":["TST-008"],"review_checks":["Signed authorization and create-only claim/receipt bindings reviewed."],"validation_checks":["Receipt identity and duplicate/conflict tests pass."]},
+    {"requirement_id":"REQ-017","acceptance_ids":["AC-008"],"test_ids":["TST-008"],"review_checks":["Monotonic states and no automatic recovery from ambiguity reviewed."],"validation_checks":["Crash matrix proves zero redispatch/destructive rewrite."]},
+    {"requirement_id":"REQ-018","acceptance_ids":["AC-009"],"test_ids":["TST-009"],"review_checks":["Publisher protected-code-only and per-mutation receipts reviewed."],"validation_checks":["Mutation readback/fault injection tests pass."]},
+    {"requirement_id":"REQ-019","acceptance_ids":["AC-009"],"test_ids":["TST-009"],"review_checks":["Every mutation/manual/recovery entry point enumerated."],"validation_checks":["Tag-or-source retirement matrix rejects before mutation."]},
+    {"requirement_id":"REQ-020","acceptance_ids":["AC-009"],"test_ids":["TST-009"],"review_checks":["Retired-base forward semver behavior reviewed."],"validation_checks":["Planner allocates exact v0.6.14 at repaired R only."]},
+    {"requirement_id":"REQ-021","acceptance_ids":["AC-010"],"test_ids":["TST-010"],"review_checks":["Five protected checks, suite wiring, cross-repo capability lanes, ephemeral runner, and CI credential boundary reviewed."],"validation_checks":["All five checks, prerequisite pins, and static credential scans pass at one SHA."]},
+    {"requirement_id":"REQ-022","acceptance_ids":["AC-011"],"test_ids":["TST-011"],"review_checks":["Closed live evidence schema covers every required write."],"validation_checks":["Schema and independent live chain verification pass."]},
+    {"requirement_id":"REQ-023","acceptance_ids":["AC-012"],"test_ids":["TST-012"],"review_checks":["Issue #98 then PR #99 then PR #94 dependencies reviewed."],"validation_checks":["Live issue/PR/check/merge ordering matches the contract."]},
+    {"requirement_id":"REQ-024","acceptance_ids":["AC-010"],"test_ids":["TST-010"],"review_checks":["External evidence byte/hash/main binding and independent branch/tag ruleset interpretation reviewed."],"validation_checks":["Evidence recomputation, active five-check ruleset verification, and runtime-reference prohibition scan pass."]}
+  ],
+  "quality_gates": {
+    "spec_review_required": true,
+    "testability_required": true,
+    "traceability_required": true
+  },
+  "council": {
+    "perspectives": [
+      {
+        "role": "planner",
+        "summary": "The plan is forward-only and executable after the explicit codicarium-actions capability prerequisite; path, dependency, permissions, rollout, and sequencing gates are checkable."
+      },
+      {
+        "role": "security",
+        "summary": "Candidate execution is separated from static credentials, OIDC, signing, dispatch, and publication; protected-main code authenticates immutable digests and ambiguous writes stop for manual reconciliation."
+      },
+      {
+        "role": "tech_lead_qa",
+        "summary": "Golden bytes, live URL, external-id duplicate precedence, three-page history, ancestry, fake clocks, crash states, retirement entry points, five checks, and live evidence all have exact oracles."
+      }
+    ],
+    "consensus_summary": "Draft only; no GO or implementation authorization. Exact-hash council must review this draft, and code remains blocked until the shared exact-key capability and credentialless CI boundary are demonstrably available.",
+    "open_questions": []
+  }
+}

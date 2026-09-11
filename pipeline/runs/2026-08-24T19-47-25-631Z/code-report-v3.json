@@ -1,0 +1,23 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Issue #93 release recovery now evaluates exact coordinator proofs newest-to-oldest, skips only recognized completed failures, validates GitHub's canonical check URL, ignores stale handoff tuples, rejects duplicate exact tuples, and keeps publisher dispatch bound to an explicit check ID.",
+  "changed_files": [
+    ".github/workflows/automatic-release.yaml",
+    "hack/release-handoff-policy.js",
+    "hack/test-release-handoff-policy.js",
+    "hack/test-release-graph.py"
+  ],
+  "validation": [
+    "RED: node hack/test-release-handoff-policy.js failed because resolveCoordinatorProof was absent.",
+    "RED: workflow policy suite failed because all three check listings lacked filter all.",
+    "GREEN: node hack/test-release-handoff-policy.js passed.",
+    "GREEN: python3 hack/test-release-graph.py passed 46 tests.",
+    "Node syntax, Python compile, YAML parse, actionlint, and git diff --check passed.",
+    "publish-release.yaml is byte-identical to base d3565f534b2f64585c3e15e35d8d645449f4f09d."
+  ],
+  "blockers": [],
+  "next_action": "Review exact proof ordering, fail-closed lifecycle handling, canonical check URL validation, stale tuple isolation, and unchanged publisher binding at commit 0484456be92a7725b41bf3c862825cd7b9c5691a.",
+  "route_to": "review",
+  "risk_level": "high"
+}

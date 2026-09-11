@@ -1,0 +1,46 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Two fresh independent Luna reviews rejected exact head a5530f9d. GitHub evidence still has an impossible same-run completion dependency, permits extra runner-group members, and allows omitted runtime bindings. Lifecycle code can leave sudo active on early failures, under-validates unrelated privileged inventory, lacks protocol read timeout, documents the wrong cleanup record, and does not SIGTERM-test every publication boundary.",
+  "changed_files": [
+    ".github/workflows/verify-codicarium-artifact-seal-boundary.yml",
+    "scripts/produce-github-authority-evidence.py",
+    "scripts/verify-github-authority-evidence.py",
+    "tests/test-github-authority-evidence.py",
+    "platform/authority-runner/artifact-seal-v1/install.sh",
+    "platform/authority-runner/artifact-seal-v1/uninstall.sh",
+    "platform/authority-runner/artifact-seal-v1/README.md",
+    "scripts/verify-authority-runner-contract.py",
+    "scripts/harden-codicarium-artifact-ownership.py",
+    "tests/test-codicarium-artifact-seal-install.sh"
+  ],
+  "validation": [
+    "GitHub-evidence reviewer inspected complete e3ff9662..a5530f9d diff against REQ-002/010/012 and REV4-001..003.",
+    "Lifecycle reviewer independently inspected the same exact diff against REQ-001/003..009/011 and REV4-004..008.",
+    "Reviews were read-only: no edit, commit, push, PR mutation, dispatch, install, merge, deployment, or live authorization change occurred.",
+    "Both reviewers preserved the external protected-group-7 gate and did not treat historical group-6 evidence as a substitute."
+  ],
+  "blockers": [
+    "REV5-001 HIGH: Redesign evidence sequencing; the current run requires evidence before its job while the producer requires that same job completed/success, so no valid current-run evidence can exist.",
+    "REV5-002 HIGH: Authoritative verifier must require memberRunnerIds exactly [6252], rejecting any extra runner-group member with negative coverage.",
+    "REV5-003 HIGH: Make run ID/attempt/workflow path/ref/SHA binding mandatory for every gate invocation and test every omitted argument.",
+    "REV5-004 HIGH: Acquire the root lock and revoke/fsync sudo authorization before identity, visudo, admission-root, directory, or other fallible lifecycle validation.",
+    "REV5-005 HIGH: Validate unrelated privileged inventory entries as root-owned, non-writable, single-link, descriptor/race-stable regular files; type-only checks are insufficient.",
+    "REV5-006 MEDIUM: Add a bounded deadline to the privileged stdin protocol read so a partial record cannot hold a sudo-root process indefinitely.",
+    "REV5-007 MEDIUM: Correct cleanup documentation to the exact three-line operation/capability/path protocol and mechanically test documentation parity.",
+    "REV5-008 MEDIUM: Abruptly terminate and recover every pending/stage/publication/sudo/cleanup boundary, not only stage and ordinal 4."
+  ],
+  "next_action": "Return all REV5 findings to one Luna remediation owner, update derived manifests/contracts/tests, then perform a final complete independent review at the new exact head.",
+  "route_to": "code",
+  "risk_level": "critical",
+  "issues": [
+    {"id": "REV5-001", "title": "Impossible same-run evidence sequencing", "severity": "high", "owner_stage": "code"},
+    {"id": "REV5-002", "title": "Extra runner group members accepted", "severity": "high", "owner_stage": "code"},
+    {"id": "REV5-003", "title": "Runtime evidence bindings optional", "severity": "high", "owner_stage": "code"},
+    {"id": "REV5-004", "title": "Early lifecycle failure leaves sudo active", "severity": "high", "owner_stage": "code"},
+    {"id": "REV5-005", "title": "Unrelated privileged inventory under-validated", "severity": "high", "owner_stage": "code"},
+    {"id": "REV5-006", "title": "Privileged protocol read has no deadline", "severity": "medium", "owner_stage": "code"},
+    {"id": "REV5-007", "title": "Cleanup protocol documentation conflicts", "severity": "medium", "owner_stage": "code"},
+    {"id": "REV5-008", "title": "Abrupt termination matrix incomplete", "severity": "medium", "owner_stage": "code"}
+  ]
+}

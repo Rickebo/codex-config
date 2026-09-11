@@ -1,0 +1,22 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "PR #175 remediates the release smoke contract environment mismatch on current main.",
+  "changed_files": [
+    "Makefile",
+    "tools/test_docker_smoke.py"
+  ],
+  "validation": [
+    "Exact branch head is 73d248b65a38cecd89f3cce6c0e3bb89256be793.",
+    "The local smoke target now clears release-only architecture state before fixture tests.",
+    "Fixture subprocess environments isolate release variables while preserving production guards.",
+    "Hosted validate run 32569271248 passed at the exact head.",
+    "The remediation preserves the reconciled main and PR #124 supply-chain pins."
+  ],
+  "blockers": [
+    "Independent review and exact-head QA must be recorded before merge."
+  ],
+  "next_action": "Advance to independent review and QA, then merge normally after all required checks pass.",
+  "route_to": "review",
+  "risk_level": "low"
+}

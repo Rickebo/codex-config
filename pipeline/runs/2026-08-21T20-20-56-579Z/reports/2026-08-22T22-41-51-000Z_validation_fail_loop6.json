@@ -1,0 +1,79 @@
+{
+  "stage": "validation",
+  "status": "fail",
+  "summary": "PR #522 merged and target-only read-only preflight completed, but full validation acceptance is not met. NAS write/ACL access and fresh capacity proof are unavailable, Argo authenticated sync is unavailable, and no live synthetic backup/restore rehearsal was run. Codicarium, D-001 source collection, identity activation, historical PVCs, and production workloads remained untouched.",
+  "changed_files": [
+    "apps/llm-proxy.yaml",
+    "apps/workspace-context.yaml",
+    "docs/workspace-context-llm-proxy.md",
+    "llm-proxy/templates/database-backup.yaml",
+    "llm-proxy/templates/restore.yaml",
+    "llm-proxy/values.yaml",
+    "tests/fixtures/kopia_restore/run.sh",
+    "tests/fixtures/workspace_context_restore/run.sh",
+    "tests/test_workspace_context_llm_proxy_gitops.py",
+    "workspace-context/templates/backup.yaml",
+    "workspace-context/templates/gated.yaml",
+    "workspace-context/templates/storage.yaml",
+    "workspace-context/tests/cleanup-restore-drill.sh",
+    "workspace-context/tests/static.sh",
+    "workspace-context/values.yaml"
+  ],
+  "validation": [
+    "PR #522 merged under repository state at 2026-08-22T22:26:43Z; exact head f7e637629375aa42faabe6a286b898d4bb833e90 is the second parent of merge 2d15287b27d0706d541e838a7b04fb5e6171eac2; main points to that merge.",
+    "GitHub reported mergeable=clean, no rulesets/branch protection, zero check runs/status contexts; issues #482, #483, and #489 received merge comments and remain open.",
+    "Current-run CI passed: checked_runs=1, failed_runs=0, warning_count=0; controller remains validation loop 6/6, done=false.",
+    "Target guard passed with explicit kubeconfig/context: API https://192.168.1.89:6443, context default, server v1.36.3+k3s1; Kubernetes auth was limited to discovery/self-subject access.",
+    "Argo Applications were read from namespace argocd; workspace-context project=default and syncOptions include Prune=false; llm-proxy was OutOfSync. No sync/apply/prune occurred.",
+    "Local validated fixtures only: 13 GitOps tests passed, static checks passed, workspace restore marker=workspace-context-synthetic-v1 count=2, fake Kopia restore snapshot_id=snapshot-001.",
+    "TrueNAS read-only identity was verified as restic-replica-guard with DATASET_READ/filesystem/share read roles; requested child paths were absent and the parent export exposed no dedicated paths.",
+    "No disposable target Jobs/PVCs were created, so no cleanup was performed; historical PVCs, unrelated Longhorn, production apps, Codicarium, and source data were untouched."
+  ],
+  "blockers": [
+    "NAS: no authorized write/ACL path; valid existing identity is read-only, requested paths are absent, parent NFS export is the only exposed export, and synthetic write/read/delete could not run.",
+    "NAS capacity: the prior 274GiB observed-free baseline was not freshly revalidated; the available read-only client lacks the required statfs/write path and the alternate import helper rejects the read-only key.",
+    "Argo: direct Kubernetes app reads work, but argocd core cannot find argocd-cm and bounded port-forward/API access failed; no authenticated GitOps sync is certifiable.",
+    "Rehearsal: no live 5Gi/20Gi/5Gi PVC proof, Kopia snapshot IDs, repository restore, pg_restore marker/count, graph path/size/SHA equality, alerts/events, or cleanup evidence exists.",
+    "D-001 and identity remain intentionally unresolved; no source collection, migration, source restore, cutover, provider effect, credential activation, or local Codex switch is authorized."
+  ],
+  "next_action": "Stop at validation loop 6/6; do not start loop 7. Obtain a separately authorized NAS write/ACL path with fresh capacity evidence and authenticated Argo API access before any future target-only rehearsal.",
+  "route_to": "review",
+  "risk_level": "critical",
+  "independent_lanes": [
+    "GitHub merge and issue updates",
+    "NAS authorized-path and capacity audit",
+    "Target Kubernetes and Argo preflight",
+    "Local synthetic fixture verification"
+  ],
+  "requires_council": true,
+  "issues": [
+    {
+      "id": "D-002",
+      "title": "Target NAS write/ACL and capacity evidence missing",
+      "severity": "high",
+      "owner_stage": "validation",
+      "details": "Only a read-only replica-guard identity was valid; requested paths were absent and no write/delete probe or fresh 274GiB capacity proof was possible."
+    },
+    {
+      "id": "ARGO-001",
+      "title": "Authenticated Argo reconciliation unavailable",
+      "severity": "high",
+      "owner_stage": "validation",
+      "details": "Kubernetes app reads succeeded with explicit target context, but Argo core configuration and bounded port-forward API access failed; no sync was attempted."
+    },
+    {
+      "id": "D-001",
+      "title": "Provider cutoff/WAL/artifact closure remains intentionally absent",
+      "severity": "critical",
+      "owner_stage": "validation",
+      "details": "Codicarium remains read-only and no D-001 source collection or restore evidence was performed in this lane."
+    },
+    {
+      "id": "D-003",
+      "title": "Target identity and fresh credential activation unproven",
+      "severity": "high",
+      "owner_stage": "validation",
+      "details": "No fresh credential activation, callback/DNS mapping, or reauthentication was attempted."
+    }
+  ]
+}

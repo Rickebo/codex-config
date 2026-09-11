@@ -1,0 +1,20 @@
+{
+  "schema": "codicarium.github-proxy/v2.4",
+  "listener": "release-proxy.internal:8443",
+  "host": "api.github.com",
+  "audience": "release-proxy",
+  "sni": "api.github.com",
+  "operations": [
+    "create-tag",
+    "draft-release",
+    "upload-release-asset",
+    "readback-release"
+  ],
+  "denials": [
+    "unlisted-post",
+    "redirect",
+    "path-traversal",
+    "host-change",
+    "direct-egress"
+  ]
+}

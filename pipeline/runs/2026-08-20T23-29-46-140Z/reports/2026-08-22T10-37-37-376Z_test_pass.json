@@ -1,0 +1,22 @@
+{
+  "stage": "test",
+  "status": "pass",
+  "summary": "Exact-head QA PASS for reconciled issue #128 head 261b69f5dedf720880b448695cbb264183860dd5.",
+  "changed_files": [],
+  "validation": [
+    "Full make ci passed with Go 1.26.7 and zero govulncheck findings",
+    "go test -race ./..., go vet ./..., and build passed",
+    "PostgreSQL migration integration and 21 focused contract/supply-chain tests passed",
+    "Real app/migration immutable smoke passed on linux/amd64; app ran as UID 65532",
+    "Migration manifest contains 11 ordered migrations through 0011_dispatch_launch_specification.sql",
+    "OpenAPI, actionlint, workflow parser, Helm lint/contracts/kubeconform, release digest, and diff checks passed",
+    "Owned smoke containers/networks and temporary registry artifacts were cleaned up"
+  ],
+  "blockers": [
+    "Host default Go 1.26.6 is intentionally insufficient; validation used installed Go 1.26.7 with GOTOOLCHAIN=local.",
+    "No arm64 publication is claimed; release workflow explicitly verifies linux/amd64.",
+    "Hosted validation and post-merge release artifact evidence remain required."
+  ],
+  "next_action": "Complete hosted validation on the exact head, then merge normally if all repository rules remain satisfied.",
+  "route_to": "validation"
+}

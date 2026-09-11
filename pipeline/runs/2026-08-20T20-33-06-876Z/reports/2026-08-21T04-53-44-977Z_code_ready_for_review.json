@@ -1,0 +1,28 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "PR #450 narrows the Kubernetes child startup lock to one-shot package prefetch, with PR #451 retaining executable regression coverage for concurrency and prefetch failure.",
+  "changed_files": [
+    "scripts/metamcp/bootstrap.sql",
+    "scripts/metamcp/tests/test-kubernetes-child-startup.sh"
+  ],
+  "validation": [
+    "PR #451 is open, non-draft, clean, and based on PR #450; no hosted checks are reported.",
+    "Focused test passes against the exact bootstrap SQL; bash -n and git diff --check pass.",
+    "The test verifies the exact flock/prefetch/exec wrapper, two overlapping persistent starts, read-only in-cluster argv and explicit Kubernetes env, and prefetch failure gating.",
+    "The pushed test bytes match the locally validated file by SHA-256 and remain executable.",
+    "Unrelated graphify-out worktree changes were preserved and not included."
+  ],
+  "blockers": [
+    "Independent review of the combined PRs is required before merge."
+  ],
+  "next_action": "Run independent review of PR #450 and PR #451, then advance through the pipeline approval gate.",
+  "route_to": "review",
+  "risk_level": "critical",
+  "independent_lanes": [
+    "Bootstrap SQL command contract",
+    "Kubernetes child startup regression coverage"
+  ],
+  "requires_council": true,
+  "issues": []
+}

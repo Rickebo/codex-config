@@ -1,0 +1,70 @@
+{
+  "meta": {
+    "id": "SPEC-125-installation-projection-auth",
+    "title": "Use GitHub App installation tokens for projection writes",
+    "author": "Codex manager",
+    "created_at": "2026-08-20T21:20:00+02:00",
+    "version": "1.0"
+  },
+  "feature": {
+    "problem_statement": "ProjectV2 projection writes still use a long-lived ORCHESTRATOR_GITHUB_TOKEN even though the repository already persists board/source installations and has a cached GitHub App installation-token provider.",
+    "goals": [
+      "Resolve each target project to its persisted board-owner installation and use a short-lived App installation token for ProjectV2 writes.",
+      "Remove static projection-token configuration and Secret/Helm/documentation plumbing without leaving a fallback path.",
+      "Refresh expired tokens and retry authentication/rate-limit failures in a bounded, context-aware, secret-safe way.",
+      "Preserve durable receipt semantics so failed projections remain replayable and idempotent."
+    ],
+    "non_goals": [
+      "Redesigning observer source-installation data or adding OAuth/user-token flows",
+      "Replacing the existing durable receipt/outbox model with a new queue",
+      "Changing GitHub project field semantics or host event APIs",
+      "Publishing credentials or relying on static-token compatibility"
+    ],
+    "scope_in": [
+      "Installation-token provider/client and GraphQL write retry behavior",
+      "Server projector wiring and persisted board-owner installation resolution",
+      "Static token removal from config, dev values, rendered Secret references, docs, and tests",
+      "Unit/integration tests and minimum App permission documentation"
+    ],
+    "scope_out": [
+      "External Vault/ESO provisioning and live App permission changes",
+      "Production rollout and authenticated DEV write readback",
+      "New durable projection scheduler beyond existing receipt replay"
+    ]
+  },
+  "requirements": [
+    {"id":"REQ-001","priority":"MUST","statement":"ProjectV2 projection writes must resolve the target project’s persisted board-owner installation and fail closed on missing or ambiguous ownership; source-owner installations remain observer/enrichment credentials.","rationale":"A write must use the installation that owns the board, not a global token or an arbitrary source-owner fallback."},
+    {"id":"REQ-002","priority":"MUST","statement":"The projection client must obtain short-lived installation tokens through the existing provider, request/validate a minimum permission map, and have no static token or fallback constructor path.","rationale":"Long-lived projection credentials increase blast radius and violate the App-auth contract."},
+    {"id":"REQ-003","priority":"MUST","statement":"Provider/client auth failures must invalidate and force one token refresh on expiry/401, retry rate-limit responses with bounded context-aware backoff honoring retry hints, and never retry ordinary permission denials indefinitely.","rationale":"Short-lived tokens and GitHub rate limits are normal; retries must be safe, bounded, and observable without leaking secrets."},
+    {"id":"REQ-004","priority":"MUST","statement":"Projection receipts remain unprojected until the complete convergent write succeeds, and a failed or lost response can be replayed idempotently without duplicate work-item/timeline effects.","rationale":"Replacing credentials must not lose host projection intent."},
+    {"id":"REQ-005","priority":"MUST","statement":"ORCHESTRATOR_GITHUB_TOKEN, github-token Secret references, GitHubToken fields, and separate static projection-token documentation must be removed from runtime config, Helm/dev values, tests, and operator docs.","rationale":"Leaving the old contract mounted would preserve the credential risk and make rollout ambiguous."},
+    {"id":"REQ-006","priority":"MUST","statement":"Documentation must state the minimum App permissions for board ProjectV2 writes and observer/source enrichment, and identify the required live DEV/App verification without recording token values.","rationale":"Operators need an auditable permission and rollout contract."},
+    {"id":"REQ-007","priority":"MUST","statement":"Focused tests must cover provider refresh/cache isolation, permission request validation, 401 rotation, 429/GraphQL rate limits, mixed-owner selection, replay durability, and static-token absence.","rationale":"The security-sensitive behavior must be regression-tested locally before live validation."}
+  ],
+  "acceptance_criteria": [
+    {"id":"AC-001","requirement_ids":["REQ-001","REQ-002"],"scenario":"Given a project with a persisted board-owner installation and mixed source owners, when a field projection is written, then the client requests a token for the board-owner installation and no static token path is reachable."},
+    {"id":"AC-002","requirement_ids":["REQ-002","REQ-003"],"scenario":"Given an expired or unauthorized cached token, when GraphQL returns an authentication failure, then the provider invalidates that installation cache, obtains one fresh token, retries once, and returns a sanitized bounded error if it still fails."},
+    {"id":"AC-003","requirement_ids":["REQ-003"],"scenario":"Given a 429 or explicit GraphQL rate-limit response with a retry hint, when projection executes, then it waits only within the configured/context deadline and retries a bounded number of times; ordinary permission denial is not looped."},
+    {"id":"AC-004","requirement_ids":["REQ-004"],"scenario":"Given a projection mutation succeeds but receipt marking is interrupted, when the same durable host/dispatch event is replayed, then the write converges idempotently and the receipt becomes projected without duplicate timeline/work-item rows."},
+    {"id":"AC-005","requirement_ids":["REQ-005","REQ-006"],"scenario":"Given the rendered DEV deployment and repository search, when static credential removal is checked, then no ORCHESTRATOR_GITHUB_TOKEN, github-token key, GitHubToken field, or static projection-token documentation remains and the App permission matrix is documented."},
+    {"id":"AC-006","requirement_ids":["REQ-007"],"scenario":"Given the candidate commit, when focused tests, race/full Go validation, Helm/docs/static scans, and hosted checks run, then they pass; issue closure additionally requires sanitized live App write/readback evidence."}
+  ],
+  "test_plan": [
+    {"id":"TST-001","type":"unit","requirement_ids":["REQ-001","REQ-002","REQ-003"],"approach":"Use httptest/fakes and a controllable clock to verify per-installation token cache, minimum permission request/validation, forced refresh after 401, bounded 429/GraphQL rate-limit retry, and sanitized errors."},
+    {"id":"TST-002","type":"integration","requirement_ids":["REQ-001","REQ-004"],"approach":"Exercise server projector with persisted board/source installations and durable host/dispatch receipts; assert board-owner selection and replay/idempotency after projection/marking failure."},
+    {"id":"TST-003","type":"non_functional","requirement_ids":["REQ-005","REQ-006"],"approach":"Run repository grep, rendered Helm/dev deployment checks, docs checker, and configuration contract tests proving static token absence and documented permissions."},
+    {"id":"TST-004","type":"integration","requirement_ids":["REQ-007"],"approach":"Run focused packages, race tests, go vet, full make ci, OpenAPI/Helm/workflow checks, and exact-head hosted validate."},
+    {"id":"TST-005","type":"manual","requirement_ids":["REQ-001","REQ-006"],"approach":"Use an approved DEV App installation to perform one sanitized protected board projection/readback with App-only credentials and verify pod/runtime Secret keys; do not record tokens."}
+  ],
+  "traceability": [
+    {"requirement_id":"REQ-001","acceptance_ids":["AC-001"],"test_ids":["TST-002","TST-005"],"review_checks":["Board-owner resolver is explicit and unknown/ambiguous ownership fails closed"],"validation_checks":["Sanitized DEV write/readback uses expected installation"]},
+    {"requirement_id":"REQ-002","acceptance_ids":["AC-001","AC-002"],"test_ids":["TST-001","TST-003"],"review_checks":["No static token field/env/constructor fallback; permission map is bounded"],"validation_checks":["Rendered deployment has App credentials only"]},
+    {"requirement_id":"REQ-003","acceptance_ids":["AC-002","AC-003"],"test_ids":["TST-001"],"review_checks":["Retries are bounded, context-aware, and distinguish permission denial"],"validation_checks":["Focused retry suite and sanitized live status evidence"]},
+    {"requirement_id":"REQ-004","acceptance_ids":["AC-004"],"test_ids":["TST-002"],"review_checks":["Receipt remains unprojected until confirmed; replay is idempotent"],"validation_checks":["Postgres/replay integration evidence"]},
+    {"requirement_id":"REQ-005","acceptance_ids":["AC-005"],"test_ids":["TST-003"],"review_checks":["Repository-wide static-token absence"],"validation_checks":["Helm/dev rendered deployment and runtime key names"]},
+    {"requirement_id":"REQ-006","acceptance_ids":["AC-005"],"test_ids":["TST-003","TST-005"],"review_checks":["Permission matrix names board write and source read responsibilities"],"validation_checks":["Live App permission/readback evidence"]},
+    {"requirement_id":"REQ-007","acceptance_ids":["AC-006"],"test_ids":["TST-001","TST-002","TST-003","TST-004"],"review_checks":["Focused and full validation coverage is present"],"validation_checks":["Hosted validate and clean worktree/resource evidence"]}
+  ],
+  "quality_gates":{"spec_review_required":true,"testability_required":true,"traceability_required":true},
+  "council":{"perspectives":[{"role":"tech_lead_backend","summary":"Provider injection, board-owner resolution, forced refresh, and bounded retries are the core runtime change."},{"role":"reviewer","summary":"Fail closed on ownership ambiguity, permission escalation, and static-token remnants; do not leak secrets."},{"role":"tech_lead_qa","summary":"Cover provider/HTTP/replay fixtures and require sanitized live App write evidence before closure."},{"role":"planner_lite","summary":"Keep observer/data model stable and separate external rollout from repository implementation."}],"consensus_summary":"Implement board-owner installation-token projection with no static fallback, explicit permissions, bounded retry, durable replay tests, and honest live validation gates.","open_questions":["What exact minimum permission map is currently granted to the installed App for organization/repository Projects writes?","Does the live target project always have one persisted board-owner installation, and how should a missing/ambiguous association be repaired?","Can DEV protected write/readback be run after rollout without exposing credentials?"]}
+}

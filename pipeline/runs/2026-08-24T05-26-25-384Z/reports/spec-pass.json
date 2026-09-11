@@ -1,0 +1,25 @@
+{
+  "stage": "spec",
+  "status": "pass",
+  "summary": "Three-perspective council approved a bounded test-first compatibility specification covering modern routing preservation, terminal legacy no-ops, exact v0.6.4 classification, consumed-proof marker semantics, and old-CRD-to-current-CRD envtest migration.",
+  "changed_files": [],
+  "validation": [
+    "pipeline-spec-check: ok=true",
+    "Planner council: exact routing, old-CRD fixture, conditional narrow CEL handling",
+    "Reviewer council: consumed proof may legitimately lack issuance Lease; exclude failedEpochRecovery",
+    "QA council: current and isolated v0.6.4 envtest matrices defined",
+    "Workspace Context revision 6c3def5c is current; deployment-controller remains outside the index"
+  ],
+  "blockers": [],
+  "next_action": "Implement the approved specification test-first in the existing issue #90 worktree, without push, release, or live mutation.",
+  "route_to": "code",
+  "risk_level": "critical",
+  "independent_lanes": [
+    "activation reconciler and unit regressions",
+    "isolated v0.6.4 CRD envtest migration"
+  ],
+  "requires_council": true,
+  "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T05-26-25-384Z/feature-spec.json",
+  "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T05-26-25-384Z/spec-check.json",
+  "council_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T05-26-25-384Z/council.json"
+}

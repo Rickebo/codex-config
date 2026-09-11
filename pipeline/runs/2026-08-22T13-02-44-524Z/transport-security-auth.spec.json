@@ -1,0 +1,71 @@
+{
+  "meta": {
+    "id": "SPEC-agent-mcp-transport-security-auth",
+    "title": "Configurable transport security and bearer authentication",
+    "author": "manager",
+    "created_at": "2026-08-22T13:02:44Z",
+    "version": "1.0.0"
+  },
+  "feature": {
+    "problem_statement": "The service currently derives Host and Origin acceptance from its socket bind address and has no direct authentication, which prevents a private remote MetaMCP route from using its stable DNS name without a Host-header workaround.",
+    "goals": [
+      "Separate HTTP socket binding from explicit Host and Origin allowlists.",
+      "Optionally protect MCP HTTP transports with a static bearer token.",
+      "Keep the default local development behavior and liveness health endpoint operational.",
+      "Document and validate the private dev-VM deployment contract."
+    ],
+    "non_goals": [
+      "OAuth, token introspection, TLS termination, or public exposure.",
+      "Kubernetes resource creation or direct MetaMCP database edits.",
+      "Arbitrary wildcard matching beyond the MCP SDK's supported patterns.",
+      "Backwards compatibility beyond the explicitly retained existing host option and unauthenticated default."
+    ],
+    "scope_in": [
+      "Configuration dataclass, environment variables, CLI options, and precedence.",
+      "Host/Origin transport security and bearer middleware for /mcp, /sse, and /messages/.",
+      "Focused unit and integration tests, documentation, and env example.",
+      "Private release, systemd service update, and MetaMCP end-to-end validation."
+    ],
+    "scope_out": [
+      "Changes to unrelated filesystem tools or the MCP SDK dependency.",
+      "Public package visibility or public network listener."
+    ]
+  },
+  "requirements": [
+    {"id":"REQ-001","priority":"MUST","statement":"The service MUST configure its bind host independently from allowed Host and Origin patterns.","rationale":"A listener address is a network concern and must not implicitly expand request trust."},
+    {"id":"REQ-002","priority":"MUST","statement":"The service MUST accept explicit exact and SDK-supported trailing-port Host/Origin patterns from CLI and environment configuration.","rationale":"The private DNS name and MetaMCP request headers must be explicitly allowlisted."},
+    {"id":"REQ-003","priority":"MUST","statement":"When a bearer token is configured, MCP HTTP routes MUST reject missing, malformed, and incorrect Authorization credentials with a non-secret 401 response and WWW-Authenticate header.","rationale":"The dev-VM listener is reachable over a private network and needs an application authentication boundary."},
+    {"id":"REQ-004","priority":"MUST","statement":"A configured bearer token MUST be compared without logging or exposing token values, and /healthz MUST remain usable without credentials.","rationale":"Authentication must not leak secrets or prevent service liveness checks."},
+    {"id":"REQ-005","priority":"MUST","statement":"Existing unauthenticated defaults and documented CLI/environment precedence MUST remain valid when authentication is disabled.","rationale":"The change is optional and must not break local MCP usage or stdio."},
+    {"id":"REQ-006","priority":"MUST","statement":"The released private service MUST be deployed on the dev VM with the configured token kept outside source control and MetaMCP MUST complete a real MCP tool discovery/request flow.","rationale":"The requested outcome includes operational proof, not only unit tests."}
+  ],
+  "acceptance_criteria": [
+    {"id":"AC-001","requirement_ids":["REQ-001","REQ-002"],"scenario":"Given a non-loopback bind host and explicit DNS Host/Origin patterns, When requests use allowed values, Then they pass, and When requests use unrelated Host/Origin values, Then they are rejected."},
+    {"id":"AC-002","requirement_ids":["REQ-003","REQ-004"],"scenario":"Given a configured token, When credentials are missing or wrong, Then the request fails with 401 and WWW-Authenticate; When the correct token is supplied, Then the request succeeds; When /healthz is called without credentials, Then it returns 200 without exposing token data."},
+    {"id":"AC-003","requirement_ids":["REQ-005"],"scenario":"Given no token configuration, When the existing HTTP and stdio suites run, Then they pass and default local Host/Origin behavior remains constrained."},
+    {"id":"AC-004","requirement_ids":["REQ-006"],"scenario":"Given the private released image and protected dev-VM service, When MetaMCP uses the stable route, Then list_tools and a safe read complete, and When unauthenticated or public-path probes run, Then they fail."}
+  ],
+  "test_plan": [
+    {"id":"TST-001","type":"unit","requirement_ids":["REQ-001","REQ-002","REQ-005"],"approach":"Test frozen settings, CLI/environment precedence, legacy host alias, repeated allowlist options, and safe defaults."},
+    {"id":"TST-002","type":"integration","requirement_ids":["REQ-001","REQ-002","REQ-003","REQ-004","REQ-005"],"approach":"Exercise /mcp and legacy SSE routes with allowed/disallowed Host and Origin headers, disabled/enabled authentication, health exemption, and secret non-disclosure."},
+    {"id":"TST-003","type":"manual","requirement_ids":["REQ-006"],"approach":"Build/pull the private release, update the dev VM systemd environment, verify binding and restart recovery, then use explicit kubeconfig/context to validate MetaMCP list_tools and a safe read."}
+  ],
+  "traceability": [
+    {"requirement_id":"REQ-001","acceptance_ids":["AC-001"],"test_ids":["TST-001","TST-002"],"review_checks":["Bind host is passed only to Uvicorn and never used as an implicit allowlist."],"validation_checks":["Custom bind and explicit allowlist integration tests pass."]},
+    {"requirement_id":"REQ-002","acceptance_ids":["AC-001"],"test_ids":["TST-001","TST-002"],"review_checks":["Allowlist syntax matches the pinned MCP SDK and rejects arbitrary origins."],"validation_checks":["Allowed DNS Host/Origin and rejected values are observed."]},
+    {"requirement_id":"REQ-003","acceptance_ids":["AC-002"],"test_ids":["TST-002"],"review_checks":["All protected HTTP routes use one outer auth policy and constant-time comparison."],"validation_checks":["401/WWW-Authenticate and authenticated MCP flows pass."]},
+    {"requirement_id":"REQ-004","acceptance_ids":["AC-002"],"test_ids":["TST-002"],"review_checks":["Token values are absent from logs and response bodies; health bypass is deliberate."],"validation_checks":["Health and non-disclosure checks pass."]},
+    {"requirement_id":"REQ-005","acceptance_ids":["AC-003"],"test_ids":["TST-001","TST-002"],"review_checks":["Stdio has no HTTP-only auth configuration and defaults remain constrained."],"validation_checks":["Focused and full local suites pass."]},
+    {"requirement_id":"REQ-006","acceptance_ids":["AC-004"],"test_ids":["TST-003"],"review_checks":["Deployment stores the token only in a protected VM environment file and exposes no public listener."],"validation_checks":["Private image, systemd, explicit cluster context, and MetaMCP end-to-end evidence are recorded."]}
+  ],
+  "quality_gates": {"spec_review_required": true, "testability_required": true, "traceability_required": true},
+  "council": {
+    "perspectives": [
+      {"role":"backend","summary":"Use explicit settings and a small outer ASGI bearer middleware around the existing SDK transports."},
+      {"role":"security","summary":"Do not infer trust from bind address; use constant-time token comparison and non-secret 401 responses."},
+      {"role":"operations","summary":"Keep health liveness unauthenticated, store deployment secret outside source control, and prove no public exposure."}
+    ],
+    "consensus_summary":"The minimal safe change is explicit transport policy plus optional static bearer auth, with focused tests and private deployment validation.",
+    "open_questions":[]
+  }
+}

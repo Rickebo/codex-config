@@ -1,0 +1,1 @@
+Create rickebo-com/kafka-config as a private self-contained Redpanda v25.1.2 Helm chart configuration repository with chart 5.10.2, explicit Argo ownership, values/schema/render validation, migration notes, CI, and a feature PR.

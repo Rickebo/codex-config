@@ -1,0 +1,29 @@
+{
+  "run_dir": "/home/rickebo/.codex/pipeline/runs/2026-08-21T20-20-56-579Z",
+  "stage": "spec",
+  "risk_level": "high",
+  "perspectives": [
+    {
+      "role": "planner_lite",
+      "status": "complete_with_blockers",
+      "summary": "Feature spec 1.2.0, acceptance criteria, tests, and traceability now record the approved no-new-Longhorn storage layout, measured database usage, alert thresholds, logical migration, and untouched PVC boundary."
+    },
+    {
+      "role": "homelab_devops",
+      "status": "blocked",
+      "summary": "The 5Gi/1Gi/20Gi/temporary-volume plan is defined, but NAS ACL/capacity, off-node backup, target-only restore, and logical migration evidence are not proven."
+    },
+    {
+      "role": "reviewer_lite",
+      "status": "blocked",
+      "summary": "Hold until source provider cutoff/WAL/artifact closure, exact target identity/RBAC, fresh credential readiness, and retained-PVC protections are evidenced; Codicarium remains unchanged."
+    }
+  ],
+  "consensus_summary": "Keep the pipeline at spec. The requested decisions are reconciled, but unresolved source provider, NAS, restore, identity, and fresh-credential evidence remains a hard gate.",
+  "open_questions": [
+    "Can sanitized provider metadata prove shared cutoff/WAL continuity and graph-artifact SHA closure?",
+    "Can the approved static NFS path pass ACL/capacity, retention, off-node backup, restore, and logical migration checks?",
+    "What exact target OIDC mapping, callback/scopes, ServiceAccount/RBAC, and fresh credential rotation evidence close D-003?",
+    "How are unrelated Longhorn resources and historical/retained PVCs proven untouched?"
+  ]
+}

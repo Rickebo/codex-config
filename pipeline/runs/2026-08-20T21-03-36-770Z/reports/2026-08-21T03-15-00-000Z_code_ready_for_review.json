@@ -1,0 +1,33 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Review blockers were remediated at da4f1278f89de0e8d36385d1183f8ac99006a81d: refreshes are serialized, permissions are exact and non-escalating, rate-limit 403s retry safely, and server hints are honored within context.",
+  "changed_files": [
+    "internal/githubproject/app_token.go",
+    "internal/githubproject/client.go",
+    "internal/githubproject/installation_projection_test.go",
+    "internal/githubproject/client_test.go",
+    "docs/deployment.md"
+  ],
+  "validation": [
+    "go test ./... passed",
+    "go test -race ./... passed",
+    "go vet ./... passed",
+    "make ci passed",
+    "Docs, OpenAPI, Helm lint/contract/validate, static-token grep, and git diff check passed"
+  ],
+  "blockers": [
+    "Independent review must confirm the remediation on the exact remote PR head.",
+    "Hosted validate must rerun at the remediation head.",
+    "Live App permission and DEV projection read/write evidence remains required before closure."
+  ],
+  "next_action": "Push da4f1278f89de0e8d36385d1183f8ac99006a81d to PR #150 and repeat independent review and hosted checks.",
+  "route_to": "review",
+  "risk_level": "high",
+  "independent_lanes": [
+    "Re-review provider concurrency, permissions, and retry behavior",
+    "Re-run exact-head QA and hosted validate",
+    "Confirm PR/project bookkeeping and remaining live gates"
+  ],
+  "requires_council": true
+}

@@ -1,0 +1,39 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Luna completed all REV5 remediation at exact clean head 07cd94aa18e37820a94e2bc21c166d18e5925a45. Evidence sequencing now uses an immutable completed producer tuple with mandatory runtime binding and exact single-runner membership. Lifecycle deauthorizes under lock before fallible checks, hardens privileged inventory and protocol deadlines, corrects cleanup documentation, and expands abrupt-termination recovery coverage.",
+  "changed_files": [
+    ".github/workflows/verify-codicarium-artifact-seal-boundary.yml",
+    "contracts/authority-runner-ownership.json",
+    "docs/authority-runner-github-evidence.md",
+    "docs/codicarium-artifact-seal-host-prerequisite.md",
+    "platform/authority-runner/artifact-seal-v1/README.md",
+    "platform/authority-runner/artifact-seal-v1/install.sh",
+    "platform/authority-runner/artifact-seal-v1/manifest.sha256",
+    "platform/authority-runner/artifact-seal-v1/preflight.sh",
+    "scripts/harden-codicarium-artifact-ownership.py",
+    "scripts/produce-github-authority-evidence.py",
+    "scripts/verify-authority-runner-contract.py",
+    "scripts/verify-github-authority-evidence.py",
+    "tests/test-codicarium-artifact-ownership.sh",
+    "tests/test-codicarium-artifact-seal-install.sh",
+    "tests/test-codicarium-artifact-seal-package.sh",
+    "tests/test-github-authority-evidence.py"
+  ],
+  "validation": [
+    "Exact clean head 07cd94aa18e37820a94e2bc21c166d18e5925a45 has merge-base e3ff966271dc76af47387e906a68dcd6cdc90360.",
+    "Luna passed package/install integration, authority evidence/contract, artifact ownership/safety, and adjacent Terraform/apply-context tests.",
+    "Luna passed actionlint, manifest hash verification, and Python compile checks.",
+    "Root verified git diff --check and the exact 16-file REV5 delta.",
+    "No push, PR, host install, workflow dispatch, merge, deployment, or external/live mutation occurred."
+  ],
+  "blockers": [],
+  "next_action": "Perform final independent full-diff security reviews of exact head 07cd94aa against every feature requirement and REV5 finding before test-stage admission.",
+  "route_to": "review",
+  "risk_level": "critical",
+  "independent_lanes": [
+    "GitHub immutable producer and runtime evidence binding",
+    "root lifecycle deauthorization, locking, and recovery",
+    "privileged inventory, protocol timeout, and documentation/test parity"
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "task": "Issue #123: isolate pull-request validation from trusted release infrastructure",
+  "risk_level": "critical",
+  "perspectives": [
+    {
+      "role": "planner_lite",
+      "summary": "Use GitHub-hosted ubuntu-24.04 for PR validation, a distinct codicarium-release pool for publication, read-only PR permissions, persist-credentials=false, and document the external runner/firewall/attestation prerequisites. Do not retain a shared self-hosted fallback."
+    },
+    {
+      "role": "tech_lead_devops",
+      "summary": "Current CI and release resolve to the same self-hosted Linux/codicarium runner group. Repository changes can separate labels and permissions, but runner ephemerality, Docker isolation, egress policy, and teardown attestations require platform provisioning and live evidence."
+    },
+    {
+      "role": "reviewer",
+      "summary": "Untrusted PR code currently has repository-controlled shell, Docker, sudo, cache, and network execution on a mutable runner. The PR must fail closed against shared self-hosted labels, pull_request_target, secrets/write permissions, checkout credential persistence, and arbitrary release refs; do not overclaim isolation without external attestation."
+    },
+    {
+      "role": "tech_lead_qa",
+      "summary": "Static workflow contracts, actionlint, workflow parsing, and hosted run metadata can verify repository policy. Fork canaries, runner destruction, network isolation, and cleanup attestation require platform-admin evidence; current runner inventory is empty and publication paths were not exercised."
+    }
+  ],
+  "consensus": "Implement repository-enforceable trust-boundary hardening and fail-closed workflow contract tests now; track dedicated runner pools, egress/Docker isolation, and cleanup attestation as explicit external validation prerequisites rather than claiming them from static tests."
+}

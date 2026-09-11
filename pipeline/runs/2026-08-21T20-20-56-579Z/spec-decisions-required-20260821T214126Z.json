@@ -1,0 +1,30 @@
+{
+  "status": "awaiting_external_state_or_explicit_decisions",
+  "decisions": [
+    {
+      "id": "D-001",
+      "subject": "source evidence access",
+      "request": "Provide an ephemeral read-only identity restricted to the two Barman server prefixes and the Workspace Context artifact bucket for ListObjects/HEAD metadata only, or sanitized Barman archive/WAL-gap output.",
+      "cost": "no source mutation; no payload export"
+    },
+    {
+      "id": "D-002",
+      "subject": "target artifact storage",
+      "request": "Choose a distinct target-owned S3 bucket at an approved existing provider, or provision a dedicated >=100Gi NFS/export; prove retention, off-node backup, and restoreability before GitOps resources are created.",
+      "cost": "external bucket/export provisioning may incur cost; approval required before paid provisioning"
+    },
+    {
+      "id": "D-003",
+      "subject": "target identity and encryption",
+      "request": "Approve narrow target Authentik mapping for Rickebo, repair the target-only secret/RBAC path, and use fresh target Data Protection/backend/runtime/MCP/gateway credentials by default; preserving source-wrapped state requires separate explicit approval.",
+      "cost": "target-only secret provisioning; no source invalidation"
+    },
+    {
+      "id": "D-004",
+      "subject": "retained historical PVCs",
+      "request": "Keep the two ownerless retained llm-proxy PVCs untouched and outside the clone until provenance/backup evidence exists; any cleanup is a separate authorized task.",
+      "cost": "no mutation"
+    }
+  ],
+  "safe_boundary": "Until D-001 through D-003 are resolved, remain at spec; do not create clone resources or revive historical LLM Proxy branches."
+}

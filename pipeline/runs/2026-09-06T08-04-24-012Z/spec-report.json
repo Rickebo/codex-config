@@ -1,0 +1,29 @@
+{
+  "stage": "spec",
+  "status": "pass",
+  "summary": "Three-perspective council approved a test-first design for a strict scheduled official-pricing watcher that updates an immutable chart snapshot through a non-auto-merged PR and preserves fail-closed runtime accounting.",
+  "changed_files": [
+    "/home/rickebo/.codex/pipeline/runs/2026-09-06T08-04-24-012Z/feature-spec.json",
+    "/home/rickebo/.codex/pipeline/runs/2026-09-06T08-04-24-012Z/council.json",
+    "/home/rickebo/.codex/pipeline/runs/2026-09-06T08-04-24-012Z/spec-check.json"
+  ],
+  "validation": [
+    "pipeline-spec-check completed successfully",
+    "Architecture council selected generated immutable chart asset and no runtime fetch",
+    "Safety council required exact semantic parsing, append-only history, least privilege, and no auto-merge",
+    "QA council defined parser, atomicity, chart, workflow, regression, release, and live validation gates"
+  ],
+  "blockers": [],
+  "next_action": "Implement the approved parser, generated catalog asset, workflow, and tests in the issue #213 worktree.",
+  "route_to": "code",
+  "risk_level": "high",
+  "independent_lanes": [
+    "pricing parser and canonical catalog",
+    "chart wiring and production-loader validation",
+    "scheduled workflow and workflow contract tests"
+  ],
+  "requires_council": true,
+  "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-09-06T08-04-24-012Z/feature-spec.json",
+  "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-09-06T08-04-24-012Z/spec-check.json",
+  "council_file": "/home/rickebo/.codex/pipeline/runs/2026-09-06T08-04-24-012Z/council.json"
+}

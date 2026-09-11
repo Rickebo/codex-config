@@ -1,0 +1,28 @@
+{
+  "stage": "test",
+  "status": "pass",
+  "summary": "Exact-head QA passes at b1b85c624c28b7a1616350cdcfeba14673bfcc7c, including local, race, static, deployment, and hosted validation checks.",
+  "changed_files": [],
+  "validation": [
+    "Focused and full Go tests passed",
+    "go test -race ./... passed",
+    "go vet ./... passed",
+    "make ci passed end-to-end",
+    "Helm, docs, OpenAPI, workflow, actionlint, diff, and static-token checks passed",
+    "Hosted validate run 32424891740/check 96604683734 passed at exact SHA",
+    "No owned CI containers or networks remain"
+  ],
+  "blockers": [
+    "DEV is still running the prior chart/image; no #125 App-only projection/readback has been exercised.",
+    "Effective App permissions cannot be queried through the available user OAuth token; no live permission claim is made."
+  ],
+  "next_action": "Perform validation-stage DEV rollout/evidence checks without recording credentials, then update PR/project status and merge only if branch protection permits.",
+  "route_to": "validation",
+  "risk_level": "high",
+  "independent_lanes": [
+    "DEV rollout and rendered Secret/deployment inspection",
+    "Sanitized protected projection and readback",
+    "GitHub approval/branch-protection state"
+  ],
+  "requires_council": true
+}

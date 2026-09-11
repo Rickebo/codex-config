@@ -1,0 +1,201 @@
+{
+  "meta": {
+    "id": "SPEC-access-controller-metrics-prerequisite",
+    "title": "Add inert label-free reconciliation and leadership metrics",
+    "author": "manager",
+    "created_at": "2026-08-30T02:26:00Z",
+    "version": "1.0.0"
+  },
+  "feature": {
+    "problem_statement": "Access Controller alerting cannot safely distinguish stale reconciliation from standby replicas because the existing endpoint has no last-success timestamp or leadership metric. The centrally owned ServiceMonitor already exists, and enabling alert rules before a plan-only target is observed would violate the rollout gate.",
+    "goals": [
+      "Expose a fixed label-free Unix timestamp for the last successful full reconciliation in the current process.",
+      "Expose a fixed label-free leadership gauge sampled from the existing elector state.",
+      "Document reset, failure, standby, lease-loss, and PromQL semantics needed by future central alerts.",
+      "Keep the change inert: code, tests, and documentation only, with no deployment or provider writes."
+    ],
+    "non_goals": [
+      "Add or duplicate a ServiceMonitor.",
+      "Create or enable PrometheusRule resources before plan-only target evidence exists.",
+      "Change reconciliation, leader-election, liveness, readiness, authorization, or provider-write behavior.",
+      "Deploy Access Controller or activate runtime apply mode."
+    ],
+    "scope_in": [
+      "codicarium/access-controller issue #92",
+      "The fixed metrics snapshot and exposition path",
+      "Read-only sampling of runner Health LastSuccessAt and Elector Leader state",
+      "Unit, endpoint, concurrency/race tests, and metric semantics documentation"
+    ],
+    "scope_out": [
+      "codicarium/observability-config PrometheusRule issue #45",
+      "GitHub, Authentik, Kubernetes, or Rancher provider reconciliation changes",
+      "Helm deployment values, .codicarium descriptors, secrets, and live clusters"
+    ]
+  },
+  "requirements": [
+    {
+      "id": "REQ-001",
+      "priority": "MUST",
+      "statement": "The metrics endpoint MUST expose access_controller_reconciliation_last_success_timestamp_seconds as a label-free gauge containing Unix seconds for the latest successful full reconciliation in the current process, or 0 before one succeeds.",
+      "rationale": "A timestamp supports explicit staleness calculations without unbounded labels or misusing a duration metric."
+    },
+    {
+      "id": "REQ-002",
+      "priority": "MUST",
+      "statement": "Failed reconciliations MUST leave the last-success timestamp unchanged and a fresh process MUST begin at 0.",
+      "rationale": "Failure and restart semantics must be deterministic and fail closed for future alerts."
+    },
+    {
+      "id": "REQ-003",
+      "priority": "MUST",
+      "statement": "The metrics endpoint MUST expose access_controller_leader as a label-free gauge equal to 1 only while the existing elector reports leadership and 0 during startup, standby, lease loss, and shutdown.",
+      "rationale": "Future alerts need to distinguish the active reconciler from standby replicas without changing election behavior."
+    },
+    {
+      "id": "REQ-004",
+      "priority": "MUST",
+      "statement": "Both metrics MUST be sampled from existing health and elector state without changing reconciliation, leader-election, liveness, readiness, or provider semantics.",
+      "rationale": "The observability prerequisite must remain inert and must not widen authorization authority."
+    },
+    {
+      "id": "REQ-005",
+      "priority": "MUST",
+      "statement": "The exposition MUST remain fixed-cardinality and label-free and MUST NOT include repository, user, group, namespace-derived, provider, error, credential, URL, hash, or authorization data.",
+      "rationale": "Metrics must not leak security context or create cardinality controlled by external inputs."
+    },
+    {
+      "id": "REQ-006",
+      "priority": "MUST",
+      "statement": "The work MUST include tests for success, failure preservation, startup/reset, leader, standby, lease loss, concurrent scrape/lifecycle behavior, and exact HELP TYPE value output, and MUST pass race testing.",
+      "rationale": "These semantics are security-relevant inputs to future central alerting."
+    },
+    {
+      "id": "REQ-007",
+      "priority": "MUST",
+      "statement": "Documentation MUST define future PromQL semantics while explicitly deferring ServiceMonitor changes, PrometheusRule enablement, deployment, and live activation.",
+      "rationale": "The platform must preserve the existing plan-only rollout gate and central monitoring ownership."
+    }
+  ],
+  "acceptance_criteria": [
+    {
+      "id": "AC-001",
+      "requirement_ids": ["REQ-001", "REQ-002"],
+      "scenario": "Given a new runtime with no successful reconciliation, When success, failure, and restart transitions occur, Then the timestamp is 0 initially, advances only on success, survives a later failure unchanged, and resets to 0 in the new process."
+    },
+    {
+      "id": "AC-002",
+      "requirement_ids": ["REQ-003", "REQ-004"],
+      "scenario": "Given startup, standby, leadership acquisition, and lease-loss states, When the endpoint samples the existing elector, Then the leader metric renders 0, 0, 1, and 0 respectively without changing election or health behavior."
+    },
+    {
+      "id": "AC-003",
+      "requirement_ids": ["REQ-005", "REQ-006"],
+      "scenario": "Given concurrent lifecycle updates and endpoint scrapes, When the metrics suite runs with race detection, Then both series have exact HELP and TYPE lines, numeric values, no labels or forbidden security terms, and no race is reported."
+    },
+    {
+      "id": "AC-004",
+      "requirement_ids": ["REQ-007"],
+      "scenario": "Given the completed inert change, When changed paths and documentation are reviewed, Then time-minus-last-success and summed-leader semantics are defined and no ServiceMonitor, PrometheusRule, deployment descriptor, runtime mode, or live resource change exists."
+    }
+  ],
+  "test_plan": [
+    {
+      "id": "TST-001",
+      "type": "unit",
+      "requirement_ids": ["REQ-001", "REQ-002", "REQ-005"],
+      "approach": "Extend fixed metrics snapshot/writer tests for exact startup, success, failure-preservation, restart, HELP, TYPE, values, and absence of labels or forbidden terms."
+    },
+    {
+      "id": "TST-002",
+      "type": "integration",
+      "requirement_ids": ["REQ-003", "REQ-004"],
+      "approach": "Exercise the metrics endpoint with controllable elector states for startup, standby, acquisition, and loss while asserting liveness and readiness contracts remain unchanged."
+    },
+    {
+      "id": "TST-003",
+      "type": "concurrency",
+      "requirement_ids": ["REQ-006"],
+      "approach": "Run focused and full Go tests with race detection across concurrent health/election updates and metrics scrapes."
+    },
+    {
+      "id": "TST-004",
+      "type": "static",
+      "requirement_ids": ["REQ-007"],
+      "approach": "Review changed paths and documentation to prove no chart monitor/rule, deployment descriptor, provider, authorization, or runtime activation changes are included."
+    }
+  ],
+  "traceability": [
+    {
+      "requirement_id": "REQ-001",
+      "acceptance_ids": ["AC-001"],
+      "test_ids": ["TST-001"],
+      "review_checks": ["Verify metric name, gauge type, Unix-second units, and zero startup semantics."],
+      "validation_checks": ["Exact exposition tests pass."]
+    },
+    {
+      "requirement_id": "REQ-002",
+      "acceptance_ids": ["AC-001"],
+      "test_ids": ["TST-001"],
+      "review_checks": ["Verify failures do not advance last success and new process state resets to zero."],
+      "validation_checks": ["Success-failure-restart sequence tests pass."]
+    },
+    {
+      "requirement_id": "REQ-003",
+      "acceptance_ids": ["AC-002"],
+      "test_ids": ["TST-002"],
+      "review_checks": ["Verify metric samples the existing elector and does not create another leadership state."],
+      "validation_checks": ["Startup, standby, acquisition, and loss endpoint tests pass."]
+    },
+    {
+      "requirement_id": "REQ-004",
+      "acceptance_ids": ["AC-002"],
+      "test_ids": ["TST-002", "TST-004"],
+      "review_checks": ["Confirm no mutation of runner, elector, health, or provider behavior."],
+      "validation_checks": ["Existing runtime and health tests remain green."]
+    },
+    {
+      "requirement_id": "REQ-005",
+      "acceptance_ids": ["AC-003"],
+      "test_ids": ["TST-001"],
+      "review_checks": ["Reject labels and externally derived or sensitive values."],
+      "validation_checks": ["Fixed-cardinality and forbidden-term tests pass."]
+    },
+    {
+      "requirement_id": "REQ-006",
+      "acceptance_ids": ["AC-003"],
+      "test_ids": ["TST-001", "TST-002", "TST-003"],
+      "review_checks": ["Review concurrent reads and lifecycle updates for data races."],
+      "validation_checks": ["Focused and full go test -race pass."]
+    },
+    {
+      "requirement_id": "REQ-007",
+      "acceptance_ids": ["AC-004"],
+      "test_ids": ["TST-004"],
+      "review_checks": ["Confirm central ServiceMonitor ownership and alert/deployment deferral are explicit."],
+      "validation_checks": ["Changed-file audit contains only source, tests, and documentation. No live changes occur."]
+    }
+  ],
+  "quality_gates": {
+    "spec_review_required": true,
+    "testability_required": true,
+    "traceability_required": true
+  },
+  "council": {
+    "perspectives": [
+      {
+        "role": "architecture",
+        "summary": "The existing ServiceMonitor is already centrally owned by observability-config; avoid duplicate chart ownership and expose only the missing fixed runtime evidence."
+      },
+      {
+        "role": "security",
+        "summary": "No alert or deployment is safe before plan-only target evidence; metrics must be label-free, fixed-cardinality, and sampled without changing authorization or health semantics."
+      },
+      {
+        "role": "quality",
+        "summary": "A last-success timestamp and current elector leadership gauge are testable with deterministic reset, failure, lease-loss, exact exposition, and race semantics."
+      }
+    ],
+    "consensus_summary": "Implement access-controller#92 as the minimal inert prerequisite for access-controller#82 and observability-config#45. Do not change ServiceMonitor ownership, enable rules, deploy, or activate provider writes.",
+    "open_questions": []
+  }
+}

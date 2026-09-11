@@ -1,0 +1,311 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.codicarium.com/release/release-claim-cas-v1.schema.json",
+  "title": "First-side-effect release claim CAS fixture",
+  "type": "object",
+  "required": [
+    "schema",
+    "evidence_class",
+    "publication_authority",
+    "fixture_set",
+    "fixture_identity_jcs_sha256",
+    "identity",
+    "identity_jcs_sha256",
+    "claim_key",
+    "authority",
+    "api",
+    "vectors"
+  ],
+  "properties": {
+    "schema": {
+      "const": "codicarium.release-claim-cas-fixture/v1"
+    },
+    "evidence_class": {
+      "const": "synthetic-conformance-fixture"
+    },
+    "publication_authority": {
+      "const": false
+    },
+    "fixture_set": {
+      "const": "issue93-v2.0"
+    },
+    "fixture_identity_jcs_sha256": {
+      "const": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9"
+    },
+    "identity": {
+      "type": "object",
+      "required": [
+        "evidence_class",
+        "publication_authority",
+        "fixture_set",
+        "repository_id",
+        "repository",
+        "tag",
+        "source_revision",
+        "protected_main_revision",
+        "coordinator_workflow",
+        "publisher_workflow"
+      ],
+      "properties": {
+        "evidence_class": {
+          "const": "synthetic-conformance-fixture"
+        },
+        "publication_authority": {
+          "const": false
+        },
+        "fixture_set": {
+          "const": "issue93-v2.0"
+        },
+        "repository_id": {
+          "const": "1303901324"
+        },
+        "repository": {
+          "const": "codicarium/deployment-controller"
+        },
+        "tag": {
+          "const": "v0.6.14"
+        },
+        "source_revision": {
+          "const": "2aee9b5ba6ed8be8dc848df482a43f6a3f33b712"
+        },
+        "protected_main_revision": {
+          "const": "6b82f94bf0c41381bd43f96a04baf909dac7ec52"
+        },
+        "coordinator_workflow": {
+          "type": "object",
+          "required": [
+            "repository_id",
+            "workflow_path",
+            "ref",
+            "workflow_sha"
+          ],
+          "properties": {
+            "repository_id": {
+              "const": "1303901324"
+            },
+            "workflow_path": {
+              "const": ".github/workflows/automatic-release-v2.yaml"
+            },
+            "ref": {
+              "const": "refs/heads/main"
+            },
+            "workflow_sha": {
+              "const": "6b82f94bf0c41381bd43f96a04baf909dac7ec52"
+            }
+          },
+          "additionalProperties": false
+        },
+        "publisher_workflow": {
+          "type": "object",
+          "required": [
+            "repository_id",
+            "workflow_path",
+            "ref",
+            "workflow_sha"
+          ],
+          "properties": {
+            "repository_id": {
+              "const": "1303901324"
+            },
+            "workflow_path": {
+              "const": ".github/workflows/publish-release-v2.yaml"
+            },
+            "ref": {
+              "const": "refs/heads/main"
+            },
+            "workflow_sha": {
+              "const": "6b82f94bf0c41381bd43f96a04baf909dac7ec52"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "identity_jcs_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "claim_key": {
+      "type": "string",
+      "pattern": "^rel-v2-sha256:[0-9a-f]{64}$"
+    },
+    "authority": {
+      "type": "object",
+      "required": [
+        "storage",
+        "transaction_isolation",
+        "synchronous_commit",
+        "first_durable_release_side_effect"
+      ],
+      "properties": {
+        "storage": {
+          "const": "dedicated-dev-postgresql"
+        },
+        "transaction_isolation": {
+          "const": "SERIALIZABLE"
+        },
+        "synchronous_commit": {
+          "const": "on"
+        },
+        "first_durable_release_side_effect": {
+          "const": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "api": {
+      "type": "object",
+      "required": [
+        "procedure",
+        "create_status",
+        "exact_replay_status",
+        "conflict_status",
+        "ambiguity_outcome",
+        "automatic_retry"
+      ],
+      "properties": {
+        "procedure": {
+          "const": "release_journal.claim_cas_v1"
+        },
+        "create_status": {
+          "const": 201
+        },
+        "exact_replay_status": {
+          "const": 200
+        },
+        "conflict_status": {
+          "const": 409
+        },
+        "ambiguity_outcome": {
+          "const": "UNKNOWN_MANUAL"
+        },
+        "automatic_retry": {
+          "const": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "vectors": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "prefixItems": [
+        {
+          "type": "object",
+          "required": [
+            "name",
+            "http_status",
+            "outcome",
+            "journal_writes",
+            "automatic_retry"
+          ],
+          "properties": {
+            "name": {
+              "const": "first-create"
+            },
+            "http_status": {
+              "const": 201
+            },
+            "outcome": {
+              "const": "CLAIMED"
+            },
+            "journal_writes": {
+              "const": 1
+            },
+            "automatic_retry": {
+              "const": false
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "name",
+            "http_status",
+            "outcome",
+            "journal_writes",
+            "automatic_retry"
+          ],
+          "properties": {
+            "name": {
+              "const": "exact-read-only-replay"
+            },
+            "http_status": {
+              "const": 200
+            },
+            "outcome": {
+              "const": "EXACT_REPLAY"
+            },
+            "journal_writes": {
+              "const": 0
+            },
+            "automatic_retry": {
+              "const": false
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "name",
+            "http_status",
+            "outcome",
+            "journal_writes",
+            "automatic_retry"
+          ],
+          "properties": {
+            "name": {
+              "const": "same-key-conflict"
+            },
+            "http_status": {
+              "const": 409
+            },
+            "outcome": {
+              "const": "CONFLICT"
+            },
+            "journal_writes": {
+              "const": 0
+            },
+            "automatic_retry": {
+              "const": false
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "name",
+            "http_status",
+            "outcome",
+            "journal_writes",
+            "automatic_retry"
+          ],
+          "properties": {
+            "name": {
+              "const": "ambiguous-response"
+            },
+            "http_status": {
+              "type": "null"
+            },
+            "outcome": {
+              "const": "UNKNOWN_MANUAL"
+            },
+            "journal_writes": {
+              "const": 0
+            },
+            "automatic_retry": {
+              "const": false
+            }
+          },
+          "additionalProperties": false
+        }
+      ],
+      "items": false
+    }
+  },
+  "additionalProperties": false
+}

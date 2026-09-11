@@ -1,0 +1,125 @@
+{
+  "generated_at": "2026-08-21T21:04:47Z",
+  "run_dir": "/home/rickebo/.codex/pipeline/runs/2026-08-21T20-20-56-579Z",
+  "stage": "spec/preflight-reaudit",
+  "status": "blocked",
+  "corrections": [
+    "The Longhorn default BackupTarget is currently available=true with Unavailable=False and lastSyncedAt 2026-08-21T20:45:41Z; recent completed backups exist. The prior 'backup target unavailable' statement is superseded.",
+    "The source Workspace Context artifact authority is S3 at the configured OVH endpoint/bucket. The 100Gi CephFS PVC is Helm-retained but is not mounted by current API, MCP, worker, or builder pods; it must not be treated as the source artifact dataset.",
+    "The retained target llm-proxy PVCs are ownerless and have no matching Longhorn BackupVolume history among the current backup metadata; provenance and safe disposition remain unresolved."
+  ],
+  "source": {
+    "kubeconfig": "/home/rickebo/.kube/codicarium-dev.yaml",
+    "context": "codicarium-dev",
+    "api_server": "https://10.99.0.21:6443",
+    "version": "v1.31.14+k3s1",
+    "apps": [
+      {
+        "name": "dev-workspace-context",
+        "sync": "Synced",
+        "health": "Healthy",
+        "chart": "workspace-context-0.1.172-r.1",
+        "image": "sha-399fb2a8039436ca5097933583c94c374b5f9984"
+      },
+      {
+        "name": "dev-llm-proxy",
+        "sync": "Synced",
+        "health": "Healthy",
+        "chart": "llm-proxy-0.5.108-r.1",
+        "image": "sha-96f1f461d3275c1df0f796e29cfa70f4551e53e1"
+      }
+    ],
+    "artifact_store": {
+      "backend": "s3",
+      "endpoint": "https://s3.sbg.io.cloud.ovh.net",
+      "bucket": "codicarium-dev-workspace-context-artifacts",
+      "region": "sbg",
+      "canonical_key_pattern": "workspaces/<workspace-id>/revisions/<revision-id>.tar.gz",
+      "artifact_schema_version": 3,
+      "source_pvc": {
+        "name": "workspace-context-artifacts",
+        "class": "cephfs",
+        "size": "100Gi",
+        "access": "RWX",
+        "mounted_by_current_workloads": false,
+        "helm_resource_policy": "keep"
+      }
+    },
+    "database_backups": [
+      {
+        "service": "workspace-context",
+        "backup_id": "20260821T021700",
+        "started": "2026-08-21T02:17:00Z",
+        "stopped": "2026-08-21T02:17:14Z",
+        "end_lsn": "26/2000158",
+        "major": 18
+      },
+      {
+        "service": "llm-proxy",
+        "backup_id": "20260821T024700",
+        "started": "2026-08-21T02:47:00Z",
+        "stopped": "2026-08-21T02:47:22Z",
+        "end_lsn": "2D/35098100",
+        "major": 18
+      }
+    ],
+    "migration_heads": {
+      "workspace_context": "20260812215700_AddAuthenticatedUserDirectory",
+      "llm_proxy": "20260808222612_AddHeadroomWorkerFleet"
+    },
+    "active_change_evidence": "Workspace Context builder jobs completed at 2026-08-21T20:42:03Z and 2026-08-21T21:00:27Z; source state continues to change."
+  },
+  "target": {
+    "kubeconfig": "/home/rickebo/.kube/homelab.yaml",
+    "context": "default",
+    "api_server": "https://192.168.1.89:6443",
+    "version": "v1.36.3+k3s1",
+    "longhorn": {
+      "disk": "node1/default-disk-620156f395425481",
+      "available_bytes": 72853942272,
+      "scheduled_bytes": 193273528320,
+      "maximum_bytes": 211187859456,
+      "data_disk": "node1/data-disk-1",
+      "data_disk_ready": false,
+      "data_disk_reason": "DiskFilesystemChanged / disk UUID mismatch",
+      "backup_target_available": true,
+      "backup_target_unavailable_condition": false,
+      "backup_target_last_synced": "2026-08-21T20:45:41Z",
+      "recent_completed_backups": true
+    },
+    "retained_pvcs": [
+      {
+        "name": "llm-proxy-database-backups",
+        "pv": "pvc-b65d8663-f9e3-443e-b5cb-696ae88f4331",
+        "size": "5Gi",
+        "class": "longhorn",
+        "owner_references": false
+      },
+      {
+        "name": "llm-proxy-postgres-1",
+        "pv": "pvc-933fc15d-30ec-4f05-b41b-b4850353c5d3",
+        "size": "10Gi",
+        "class": "longhorn",
+        "owner_references": false
+      }
+    ],
+    "secret_store": {
+      "cluster_bitwarden": "Ready/Valid",
+      "namespace_llm_proxy_authentik_oidc": "InvalidProviderConfig; missing service account"
+    },
+    "worker": {
+      "daemonset": "llm-proxy-worker",
+      "desired": 2,
+      "ready": 2
+    }
+  },
+  "remaining_gates": [
+    "Choose a common UTC cutoff T and prove Barman/WAL coverage for both database restores to T; current daily base backups have different times and no WAL-range evidence is attached.",
+    "Obtain read-only S3 list/object metadata and SHA verification for every artifact key referenced by the restored Workspace Context database; do not export payloads until the gate is approved.",
+    "Provide a target-owned artifact backend: Longhorn cannot safely add a 100Gi RWX claim at current free/scheduled capacity, while an NFS/object-store capacity and retention decision is not yet evidenced.",
+    "Resolve Data Protection current/previous wrapping material and target-only identity/backend preservation or explicit target credential/session recreation.",
+    "Document retained PVC provenance and choose preserve/ignore/dispose only after backup evidence.",
+    "Canonicalize the malformed Stage 1–3 plan text before implementation; stale LLM Proxy branch/PR #40 material is reference only and must not be revived."
+  ],
+  "no_mutation": "No Codicarium or homelab mutation, source export, restore, apply, restart, or Argo sync was performed."
+}

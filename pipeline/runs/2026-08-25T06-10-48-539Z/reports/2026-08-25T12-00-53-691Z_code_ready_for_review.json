@@ -1,0 +1,50 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Review loop 2 remediation is complete on clean canonical HEAD 58e90ae. The lifecycle resolver now rechecks the exact generation fence and active-head projection with bounded retries, all lifecycle paths use a consistent build-before-head lock order, AWS retry semantics are encoded against the pinned SDK contract, producer-required Source fields are fail-closed, and documented Docker-backed system commands pin the required context and endpoint.",
+  "changed_files": [
+    "services/knowledge-service/src/KnowledgeService.Infrastructure/KnowledgeEventRetryPolicy.cs",
+    "services/knowledge-service/src/KnowledgeService.Infrastructure/NpgsqlKnowledgeRepository.cs",
+    "specs/testing/testcontainers-system-tests.md",
+    "tests/knowledge-service/KnowledgeService.IntegrationTests/KafkaIntegrationTests.cs",
+    "tests/knowledge-service/KnowledgeService.IntegrationTests/KnowledgeGenerationResolverTests.cs",
+    "tests/knowledge-service/KnowledgeService.IntegrationTests/PostgresLifecycleTests.cs",
+    "tests/knowledge-service/KnowledgeService.IntegrationTests/ReconciliationTests.cs"
+  ],
+  "validation": [
+    "Commit 3b3e322: Knowledge integration Release build passed with 0 warnings/errors",
+    "Commit 3b3e322: resolver/required-field focused tests passed 16/16; lifecycle race passed 1/1; existing lifecycle fence tests passed 2/2",
+    "Pinned AWSSDK.Core 4.0.102 documentation confirms Retryable is nullable RetryableDetails: null means non-retryable and a details value means retryable; true/false behavior is covered directly",
+    "Commit e726b36: lock-order and multi-active-generation focused selection passed 21/21; Release build passed with 0 warnings/errors",
+    "Commit 58e90ae: deletion/invalidation regression failed before the lock-order fix and passed after it",
+    "Commit 58e90ae: complete Postgres lifecycle suite passed 23/23 and Reconciliation passed 4/4",
+    "Commit 58e90ae: Knowledge integration Release build passed with 0 warnings/errors",
+    "Independent closure review confirmed the publish/invalidation, head-projection, and deletion/invalidation findings closed with no new high or medium regression",
+    "Documentation commit 00e5048 changes only specs/testing/testcontainers-system-tests.md and pins WM_DOCKER_CONTEXT=default plus DOCKER_HOST=unix:///var/run/docker.sock",
+    "Canonical worktree and index are clean; git diff --check passes through HEAD 58e90ae"
+  ],
+  "blockers": [],
+  "next_action": "Perform a formal independent full-branch review at clean HEAD 58e90ae, explicitly rechecking all review-loop findings, lock-order coverage, contract completeness, system proof boundaries, security/redaction, and test adequacy.",
+  "route_to": "review",
+  "risk_level": "high",
+  "independent_lanes": [
+    "Knowledge lifecycle, retry classification, Source contract validation, and concurrency regression remediation",
+    "System-test command documentation alignment"
+  ],
+  "issues": [
+    {
+      "id": "TESTHOST-SIGSEGV",
+      "title": "Aggregate Model integration test-host crash remains to be classified",
+      "severity": "high",
+      "details": "Focused Model tests pass, but identical isolated class runs on clean main and corrected candidate remain mandatory in formal test stage.",
+      "owner_stage": "test"
+    },
+    {
+      "id": "REV2-SYS-001",
+      "title": "Port-collision and foreign-version ownership branches lack direct focused coverage",
+      "severity": "low",
+      "details": "The nonce-backed bounded implementation has passed repeated real-flow runs; direct branch coverage may remain parent issue #26 test debt unless formal review finds it merge-blocking.",
+      "owner_stage": "review"
+    }
+  ]
+}

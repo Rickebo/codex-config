@@ -1,0 +1,33 @@
+{
+  "perspectives": [
+    {
+      "role": "planner",
+      "summary": "Make Quick Connect the default setup path: the controller starts a server-side Jellyfin Initiate request, returns only the six-character code plus a validated configured browser link, and polls Connect without redirecting the Youtarr page. Keep password login as an explicit fallback that uses only the internal configured Jellyfin endpoint. Add chart/config fields for distinct internal and browser URLs, stable client/device identity, public listener exposure, and a staged GitOps release path."
+    },
+    {
+      "role": "security reviewer",
+      "summary": "Never send or persist the Quick Connect secret, password, Jellyfin token, or provider response in the browser, logs, errors, metrics, URLs, or session projections. Store only a hash or encrypted-at-rest server-side flow record, bind it to the opaque HttpOnly flow/session cookie and immutable Jellyfin user ID, enforce ten-minute expiry, single consumption, rate limits, CSRF on mutations, same-origin cookies, strict URL validation, and cross-user predicates. Do not accept browser URL input or follow unvalidated redirects."
+    },
+    {
+      "role": "QA lead",
+      "summary": "Cover API state machines and restart/expiry/cancel/error behavior with focused tests, then validate every browser-facing behavior only through Playwright over the VPN-only ingress: code display, fixed Jellyfin link, user approval, polling completion, password fallback, CSRF/session isolation, no secret/password/URL leakage, and two-user separation. Add chart rendering, config, release, rollout, rollback, and live health gates."
+    },
+    {
+      "role": "Jellyfin API researcher",
+      "summary": "Official Jellyfin docs describe a six-character code generated on the new client and approved in Settings > Quick Connect from an authenticated client. The official API contract uses QuickConnect/Initiate, QuickConnect/Connect?secret=, QuickConnect/Authorize, and Users/AuthenticateWithQuickConnect with QuickConnectDto.Secret; QuickConnectResult includes Authenticated, Secret, Code, DeviceId, DeviceName, AppName, AppVersion, and DateAdded. The implementation must use the documented contract and tolerate pending/expired/not-found states without exposing Secret."
+    }
+  ],
+  "consensus": "Implement a server-orchestrated, per-user Quick Connect state machine with the secret confined to the controller, an opaque short-lived flow cookie, fixed validated browser URL, stable Jellyfin client/device headers, and explicit Jellyfin approval. Retain password authentication only as a fallback against the configured internal endpoint, remove editable server URL input, and require VPN-only Playwright acceptance plus immutable image/chart GitOps rollout gates.",
+  "resolved_questions": [
+    "The browser receives the six-character code and fixed browser link, never the Quick Connect Secret; polling is same-origin and flow-cookie based.",
+    "The configured internal URL is used only for controller-to-Jellyfin traffic; the configured browser URL is separately validated and may be rendered as a link, but is never accepted from request input.",
+    "Quick Connect approval must be performed explicitly by the user in Jellyfin; Youtarr never attempts to authorize a code on the user's behalf.",
+    "The v0.3.29 editable server_url contract is intentionally removed because backwards compatibility was not requested and accepting it creates an unsafe target-selection surface.",
+    "Browser-facing acceptance uses Playwright only; direct HTTP tools may support non-browser unit/integration tests but cannot substitute for UI validation."
+  ],
+  "sources": [
+    "Youtarr v0.3.29 source worktree: internal/publicapi, internal/setupui, internal/store/web_auth.go, internal/jellyfin/client.go, chart values in pve-infra/youtarr.",
+    "Official Jellyfin Quick Connect documentation: https://jellyfin.org/docs/general/server/quick-connect/.",
+    "Official Jellyfin OpenAPI stable contract: https://api.jellyfin.org/openapi/jellyfin-openapi-stable.json."
+  ]
+}

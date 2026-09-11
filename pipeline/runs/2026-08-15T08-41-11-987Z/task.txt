@@ -1,0 +1,1 @@
+Redesign infra PR 1070 and runner-config PR 27 validation into protected-main trusted preparation and secretless PR consumption, preserve fail-closed activation and bootstrap locks

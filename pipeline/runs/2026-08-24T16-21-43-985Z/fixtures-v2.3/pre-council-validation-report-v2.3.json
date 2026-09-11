@@ -1,0 +1,9 @@
+{
+  "schema": "codicarium.pre-council-validation/v2.3",
+  "status": "PASS_PRE_COUNCIL_ONLY",
+  "spec_sha256": "86d5b3b8c794fead4dab12ffa9114aea9d79d01cd51183ff369a306d9dc09264",
+  "spec_check_sha256": "8d52764ce58a4768d78474b0f1bafe5d122c5615bf42faaa5bacb6353b6be4d3",
+  "council_v2_1_sha256": "ed0e9615847927c41f08c2e08ac37423de4f1d2d669b4c7c69c94c3a02958996",
+  "council_v2_2_sha256": "b8d5fd6157c112f841e5d03d2f2df2cc0418f118f83361c85ec7c9ae12fa0f29",
+  "pass_stage": false
+}

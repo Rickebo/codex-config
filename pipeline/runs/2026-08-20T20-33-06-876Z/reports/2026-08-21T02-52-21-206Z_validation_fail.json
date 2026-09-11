@@ -1,0 +1,51 @@
+{
+  "stage": "validation",
+  "status": "fail",
+  "summary": "Public ingress and OAuth metadata are now reachable, and the protected bootstrap completed, but clean MetaMCP startup still loses Loki to Grafana Host validation and Kubernetes to an npx optional-binary install race.",
+  "changed_files": [],
+  "validation": [
+    "PR #442 merged as 21a910ee; the root Argo application synced the AppProject and child definitions.",
+    "MetaMCP 2.4.22 is Synced/Healthy with APP_URL=https://mcp.rickebo.com and a healthy public Ingress.",
+    "The protected bootstrap completed from merged origin/main and registered the seven requested servers with ACTIVE Observability mappings.",
+    "A clean startup tools/list attempt returned after its 60-second child timeout; logs show Loki HTTP 403 host not allowed and Kubernetes npm TAR_ENTRY_ERROR/no executable.",
+    "After a manual one-time npx cache warm, tools/list exposed 86 tools including 14 Kubernetes tools; this does not prove restart-safe behavior.",
+    "Prometheus, Tempo, GitHub-p, GitHub-p_Actions, and ArgoCD tool discovery remained successful.",
+    "Public DNS, RFC 9728 protected-resource metadata, RFC 8414 authorization metadata, and Authentik discovery return successfully.",
+    "PR #443 merged as fbec435 and Authentik synced Healthy; the exact public callback redirects to Authentik login instead of Redirect URI Error.",
+    "No credentials were printed or persisted by validation; the disposable OAuth registration probe was deleted by exact client ID and name."
+  ],
+  "blockers": [
+    "Grafana MCP must allow the exact in-cluster Host header while retaining --disable-write.",
+    "Kubernetes child startup must serialize or prewarm npx so a fresh MetaMCP pod discovers tools without manual cache warming.",
+    "After both fixes, rerun clean-pod bootstrap, tools/list, safe calls for all seven servers, and the public OAuth/PKCE smoke checks."
+  ],
+  "next_action": "Route to code for the two minimal child-server fixes, merge and reconcile them, then rerun clean live validation.",
+  "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T20-33-06-876Z/spec.json",
+  "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T20-33-06-876Z/spec-check.json",
+  "council_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T20-33-06-876Z/council.json",
+  "requires_council": true,
+  "independent_lanes": [
+    "Grafana MCP Host allowlist",
+    "Kubernetes npx startup serialization",
+    "Clean MetaMCP discovery and safe calls",
+    "Public OAuth metadata and callback verification"
+  ],
+  "route_to": "code",
+  "risk_level": "critical",
+  "issues": [
+    {
+      "id": "#441",
+      "title": "Restore homelab Loki and Kubernetes MetaMCP child discovery",
+      "severity": "high",
+      "details": "Loki still fails Host validation and Kubernetes only works after manual npm cache warming.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "#444",
+      "title": "Make homelab MetaMCP public OAuth ChatGPT-ready",
+      "severity": "high",
+      "details": "Public DNS, metadata, Authentik discovery, and callback redirect now pass; final OAuth and ChatGPT readiness depends on complete MCP validation.",
+      "owner_stage": "validation"
+    }
+  ]
+}

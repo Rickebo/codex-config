@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://codicarium.local/v2.6/closure.v2.6",
+  "title": "closure.v2.6",
+  "type": "object",
+  "required": [
+    "bundle_manifest_sha256",
+    "pre_council_report_sha256",
+    "decision",
+    "activation_ready",
+    "live_gate_aggregate",
+    "lanes"
+  ],
+  "properties": {
+    "bundle_manifest_sha256": {
+      "type": "string",
+      "minLength": 1
+    },
+    "pre_council_report_sha256": {
+      "type": "string",
+      "minLength": 1
+    },
+    "decision": {
+      "enum": [
+        "GO",
+        "NO-GO",
+        "UNSIGNED_TEMPLATE"
+      ]
+    },
+    "activation_ready": {
+      "type": "boolean"
+    },
+    "live_gate_aggregate": {
+      "type": "object",
+      "required": [
+        "complete",
+        "signed",
+        "gate_count",
+        "passed_count"
+      ],
+      "properties": {
+        "complete": {
+          "type": "boolean"
+        },
+        "signed": {
+          "type": "boolean"
+        },
+        "gate_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "passed_count": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "lanes": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": {
+        "type": "object"
+      }
+    }
+  },
+  "additionalProperties": false
+}

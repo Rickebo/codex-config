@@ -1,0 +1,27 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Independent Luna review found one blocking test-contract regression: historical v0.6.12 state harnesses invoke the updated preflight function without EXPECTED_CLUSTER_SERVER, causing 11 exact-head CI failures before intended revision assertions.",
+  "changed_files": [],
+  "validation": [
+    "Reviewer verified exact head d83784f5a3f1dc5fb106d7fb2c61db0799cec0d0 and base 2a36d39b510a4e36a57f382147b921ba5db7b0e7.",
+    "Focused bootstrap 32/32, upgrade 50/50, rollback 12/12, and server-finder 36/36 tests passed.",
+    "Historical v0.6.12 state suite failed 11 cases with EXPECTED_CLUSTER_SERVER unbound.",
+    "GitHub Validate run 33292729849 independently reproduces the same failure on the exact PR head."
+  ],
+  "blockers": [
+    "tests/test-deployment-controller-v0612-upgrade-state.py must provide the retained historical .21 endpoint to its isolated shell harness, or the function must receive it explicitly, without weakening production lock loading."
+  ],
+  "next_action": "Return to the Luna code owner for a focused historical fixture fix and targeted/full validation; do not retry the unchanged failed run.",
+  "route_to": "code",
+  "risk_level": "high",
+  "issues": [
+    {
+      "id": "REV-001",
+      "title": "Historical v0.6.12 harness omits required endpoint variable",
+      "severity": "high",
+      "details": "preflight.sh verify_helm_release_state dereferences EXPECTED_CLUSTER_SERVER, but the isolated historical harness does not define it, so set -u aborts before revision assertions.",
+      "owner_stage": "code"
+    }
+  ]
+}

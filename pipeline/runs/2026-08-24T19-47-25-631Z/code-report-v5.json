@@ -1,0 +1,24 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Commit 897c78dec850617315fbbe55a0704219145c787b fixes issue #104 by capability-gating only the poll-only-specific chart render. A reviewed source schema with no root runtime property is treated as legacy; any runtime presence must satisfy the complete closed current contract and event-driven source default before the unchanged poll-only verifier executes.",
+  "changed_files": [
+    "hack/verify-chart-artifact.sh",
+    "hack/test-chart-verifier-compat.py",
+    "hack/test-release-chart-flow.py"
+  ],
+  "validation": [
+    "TDD RED: python3 -m unittest hack/test-chart-verifier-compat.py -k immutable_v0613 failed against actual git archive ad52dfcbc45d71eccad1d49fbd905161af7a44b1 because the old root schema rejected additional property runtime.",
+    "Focused GREEN: python3 -m unittest hack/test-chart-verifier-compat.py passed 5 tests covering immutable legacy source, current verifier invocation/success, broken current poll-only output, incomplete or unsafe runtime schemas, and a non-event-driven default.",
+    "Nearest release suite GREEN: make test-release-chart-flow passed 11 tests, including the focused compatibility suite and existing checksum, CRD substitution, OCI, and promotion mutation negatives.",
+    "Nearest chart suite GREEN: make verify-chart passed source-revision, CRD, bootstrap ordering, lint, reproducibility, normal render, poll-only render, and security invariant checks.",
+    "bash -n hack/verify-chart-artifact.sh, Python compilation, and git diff --check passed.",
+    ".github/workflows/publish-release.yaml and .github/workflows/release.yaml are byte-identical to exact base f1ee15f8916cbb939e88e5a1491588d3b7a95f7d.",
+    "Workspace Context impact analysis accepted all 3 changed paths against published revision 3fe412c8-8906-427b-a79b-414c301dd5b6 and exact base f1ee15f; traversal was untruncated.",
+    "Compact self-review found no blocking findings."
+  ],
+  "blockers": [],
+  "next_action": "Review commit 897c78dec850617315fbbe55a0704219145c787b, focusing on the fail-closed runtime schema/default predicate and confirmation that only the legacy poll-only-specific second render is skipped.",
+  "route_to": "review",
+  "risk_level": "high"
+}

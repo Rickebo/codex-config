@@ -1,0 +1,27 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Commit 05fae66 moves exact verifier completion and publish-handoff authority into trusted current-main Automatic Release. Release Verify retains read/OIDC evidence production without dispatch/check writes, while publish-release.yaml remains byte-identical and pending v0.6.13 recovery stays fail closed.",
+  "changed_files": [
+    ".github/workflows/automatic-release.yaml",
+    ".github/workflows/release.yaml",
+    "docs/releasing.md",
+    "hack/release-handoff-policy.js",
+    "hack/test-release-graph.py",
+    "hack/test-release-handoff-policy.js"
+  ],
+  "validation": [
+    "Compact TDD red: focused Node fixture failed as expected because parseVerifierDispatch was absent; deadline-overrun fixture also failed before the clock-order fix.",
+    "node hack/test-release-handoff-policy.js passed direct-ID, initial-attempt, poll identity/state/deadline/API, handoff create/reuse/forgery/race, tuple, ordering, and publisher-compatibility fixtures.",
+    "python3 hack/test-release-graph.py passed 46 workflow/static policy tests, including coordinator ownership and verifier no-write/no-dispatch assertions.",
+    "make test-release-flow passed all image, chart, graph, handoff, manifest, subject-evidence, asset-plan, release-plan, and v0.6.8 recovery suites.",
+    "actionlint passed automatic-release.yaml, release.yaml, and unchanged publish-release.yaml; Ruby parsed all three workflow YAML files; Node syntax checks passed.",
+    "git diff --check passed; git diff --exit-code and cmp both proved publish-release.yaml byte-identical to origin/main.",
+    "Workspace Context impact analysis passed against published revision e9d2391e-bd51-407f-b158-5924080af92b and deployment-controller base 6053f973.",
+    "Extra make verify-supply-chain passed release-flow and chart checks, then stopped at local Docker kubeconform cache-mount permission denied; no tracked changes resulted."
+  ],
+  "blockers": [],
+  "next_action": "Perform the independent review-stage trust-boundary and runtime API review of commit 05fae66, then route through test and validation without changing publish-release.yaml.",
+  "route_to": "review",
+  "risk_level": "high"
+}

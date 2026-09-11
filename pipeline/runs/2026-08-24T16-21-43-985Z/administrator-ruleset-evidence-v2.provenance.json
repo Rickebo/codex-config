@@ -1,0 +1,28 @@
+{
+  "schema": "codicarium.release-admin-ruleset-evidence-provenance/v2",
+  "evidence_file": "administrator-ruleset-evidence-v2.json",
+  "evidence_sha256": "55dbee3772ce06d0af59df8cb21d6862d4d167470065e2580ff9adb3d28efb58",
+  "evidence_byte_length": 4024,
+  "captured_at": "2026-08-25T02:42:23Z",
+  "capture_mode": "external_only_administrator_review",
+  "runtime_input_prohibited": true,
+  "api_version": "2022-11-28",
+  "repository": "codicarium/deployment-controller",
+  "main_sha": "d3565f534b2f64585c3e15e35d8d645449f4f09d",
+  "endpoints": [
+    "GET /repos/codicarium/deployment-controller",
+    "GET /repos/codicarium/deployment-controller/branches/main",
+    "GET /repos/codicarium/deployment-controller/rulesets/21317510",
+    "GET /repos/codicarium/deployment-controller/rulesets/19595482",
+    "GET /repos/codicarium/deployment-controller/branches/main/protection"
+  ],
+  "ruleset_ids": {
+    "branch": 21317510,
+    "tag": 19595482
+  },
+  "limitations": [
+    "No runtime credentials, tokens, headers, or user secrets are included.",
+    "The ruleset and legacy branch-protection required-check discrepancy is preserved as observed; effective enforcement interpretation requires administrator review.",
+    "This bundle is prohibited as a runtime authorization or release input."
+  ]
+}

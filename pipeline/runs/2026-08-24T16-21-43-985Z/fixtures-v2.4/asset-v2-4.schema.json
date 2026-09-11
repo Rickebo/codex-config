@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://codicarium.local/v2.4/asset.v2.4",
+  "title": "asset.v2.4",
+  "type": "object",
+  "required": [
+    "filename",
+    "media_type",
+    "source_sha256",
+    "destination_binding"
+  ],
+  "properties": {
+    "filename": {
+      "type": "string",
+      "minLength": 1
+    },
+    "media_type": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "destination_binding": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "additionalProperties": false
+}

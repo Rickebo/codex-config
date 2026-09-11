@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+CODEX_HOME="${CODEX_HOME:-/home/rickebo/.codex}"
+QDRANT_URL="${QDRANT_URL:-http://127.0.0.1:6333}"
+PID_FILE="$CODEX_HOME/qdrant-memory/run/qdrant.pid"
+SYSTEMD_UNIT="${QDRANT_MEMORY_SYSTEMD_UNIT:-codex-qdrant-memory.service}"
+
+if command -v systemctl >/dev/null 2>&1 && systemctl --user list-unit-files "$SYSTEMD_UNIT" >/dev/null 2>&1; then
+  printf 'systemd unit: %s (%s)\n' "$SYSTEMD_UNIT" "$(systemctl --user is-active "$SYSTEMD_UNIT" 2>/dev/null || true)"
+fi
+
+if [[ -f "$PID_FILE" ]]; then
+  printf 'native pid: %s\n' "$(cat "$PID_FILE")"
+fi
+curl -fsS "$QDRANT_URL/healthz"
+printf '\n'

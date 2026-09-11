@@ -1,0 +1,121 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+seed_prompt=$'Operating mode: fast.\nKeep output compact and decision-focused.\nRun only targeted validation needed to de-risk the requested change.\nDo not invoke process/framework skills unless explicitly requested or risk is high.\nPrefer direct implementation over orchestration unless parallel lanes are clearly required.'
+forced_config=(
+  -c features.multi_agent=false
+  -c tool_output_token_limit=900
+)
+
+render_prompt() {
+  local user_prompt="${1-}"
+  if [[ -n "$user_prompt" ]]; then
+    printf '%s\n\n%s' "$seed_prompt" "$user_prompt"
+  else
+    printf '%s' "$seed_prompt"
+  fi
+}
+
+parse_top_level() {
+  local -a forward=()
+  local prompt=""
+
+  while (($#)); do
+    case "$1" in
+      -h|--help|-V|--version)
+        exec codex "$@"
+        ;;
+      -c|--config|--enable|--disable|-i|--image|-m|--model|--local-provider|-p|--profile|-s|--sandbox|-a|--ask-for-approval|-C|--cd|--add-dir)
+        forward+=("$1")
+        shift
+        if (($# == 0)); then
+          printf 'codex-fast: missing value for option\n' >&2
+          exit 2
+        fi
+        forward+=("$1")
+        shift
+        ;;
+      --*=*)
+        forward+=("$1")
+        shift
+        ;;
+      --oss|--full-auto|--dangerously-bypass-approvals-and-sandbox|--search|--no-alt-screen)
+        forward+=("$1")
+        shift
+        ;;
+      exec)
+        parse_exec "${@:2}"
+        return
+        ;;
+      review|login|logout|mcp|mcp-server|app-server|completion|sandbox|debug|apply|resume|fork|cloud|features|help)
+        exec codex "$@"
+        ;;
+      --)
+        shift
+        prompt="$*"
+        break
+        ;;
+      -*)
+        forward+=("$1")
+        shift
+        ;;
+      *)
+        prompt="$*"
+        break
+        ;;
+    esac
+  done
+
+  exec /home/rickebo/.codex/bin/codex-stable "${forward[@]}" -p fast "${forced_config[@]}" "$(render_prompt "$prompt")"
+}
+
+parse_exec() {
+  local -a forward=(exec)
+  local prompt=""
+
+  while (($#)); do
+    case "$1" in
+      -h|--help|-V|--version)
+        exec codex exec "$@"
+        ;;
+      review|resume|help)
+        exec codex exec "$@"
+        ;;
+      -c|--config|--enable|--disable|-i|--image|-m|--model|--local-provider|-p|--profile|-s|--sandbox|-C|--cd|--add-dir|-o|--output-last-message|--output-schema|--color)
+        forward+=("$1")
+        shift
+        if (($# == 0)); then
+          printf 'codex-fast exec: missing value for option\n' >&2
+          exit 2
+        fi
+        forward+=("$1")
+        shift
+        ;;
+      --*=*)
+        forward+=("$1")
+        shift
+        ;;
+      --oss|--full-auto|--dangerously-bypass-approvals-and-sandbox|--skip-git-repo-check|--ephemeral|--progress-cursor|--json)
+        forward+=("$1")
+        shift
+        ;;
+      --)
+        shift
+        prompt="$*"
+        break
+        ;;
+      -*)
+        forward+=("$1")
+        shift
+        ;;
+      *)
+        prompt="$*"
+        break
+        ;;
+    esac
+  done
+
+  exec /home/rickebo/.codex/bin/codex-stable "${forward[@]}" -p fast "${forced_config[@]}" "$(render_prompt "$prompt")"
+}
+
+parse_top_level "$@"

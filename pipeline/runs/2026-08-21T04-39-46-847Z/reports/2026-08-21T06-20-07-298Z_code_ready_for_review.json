@@ -1,0 +1,25 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Hosted vulnerability remediation commit 3cb2262094b1165438bc625ba7921f88df8fded9 raises the Go baseline to fixed 1.26.7 and prevents implicit toolchain downloads.",
+  "changed_files": [
+    "go.mod",
+    "Makefile"
+  ],
+  "validation": [
+    "Full make ci passed with explicit cached Go 1.26.7",
+    "go test ./... and go vet ./... passed",
+    "make govulncheck passed with zero code vulnerabilities",
+    "go mod tidy -diff passed",
+    "Metadata and supply-chain tests passed",
+    "actionlint and workflow parser passed",
+    "Helm lint, contracts, and release-digest validation passed",
+    "git diff --check passed"
+  ],
+  "blockers": [
+    "Hosted PR branch must be updated to this exact head before rerunning validation.",
+    "Nexus OCI referrer/signing support and admission enforcement remain external unverified prerequisites."
+  ],
+  "next_action": "Repeat exact-head independent review/QA, then rerun hosted validation on PR #154 at 3cb2262094b1165438bc625ba7921f88df8fded9.",
+  "route_to": "review"
+}

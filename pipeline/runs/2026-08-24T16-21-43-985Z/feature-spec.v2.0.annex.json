@@ -1,0 +1,3171 @@
+{
+  "schema": "codicarium.issue93-spec-annex/v2",
+  "generated_at": "2026-08-25T09:30:00Z",
+  "baselines": {
+    "codicarium/deployment-controller": "74defd205658b8db4b90a80cc7f8aa05dfe8a193",
+    "codicarium/codicarium-actions": "9545b5a66498f67667e57d021507ac060fd016b6",
+    "codicarium/runner-config": "9625e442a12c721e89250812f3d079b09833ccb0",
+    "codicarium/vault-config": "59b06ef256b5f3a5956f630240e95f00b22a9d07",
+    "codicarium/app-config": "e085a399bedc830b537431e3bcd5e41b677c2812",
+    "codicarium/infra": "40073c068a9cf8ff4c1e625b97e09fda31b40637",
+    "codicarium/postgres-config": "d5ccccfcfc5bae4d099f1848b68e07dcaa679d62"
+  },
+  "repository_ids": {
+    "codicarium/deployment-controller": "1303901324",
+    "codicarium/codicarium-actions": "1205279565",
+    "codicarium/runner-config": "1303372884",
+    "codicarium/app-config": "1136354283",
+    "codicarium/infra": "1136354160",
+    "codicarium/postgres-config": "1285126920",
+    "codicarium/vault-config": "1287061314"
+  },
+  "current_main_focused_impact": {
+    "deployment_controller_103": {
+      "baseline": "74defd205658b8db4b90a80cc7f8aa05dfe8a193",
+      "choice": "runner-config-dev remains dev/event-driven",
+      "reason": "PollOnly admission is prod-only. The migration preserves source-absent plus required RequestRef and Kafka authority, and rejects PollOnly/dev; no poll controller, poll ServiceAccount, or poll-only NetworkPolicy is added.",
+      "required_tests": [
+        "dev plus PollOnly rejected",
+        "dev event-driven source absent RequestRef+Kafka accepted",
+        "grant/profile UID generation and digest bindings remain exact"
+      ]
+    },
+    "vault_config_258": {
+      "baseline": "59b06ef256b5f3a5956f630240e95f00b22a9d07",
+      "evidence_schema": "2",
+      "kv_metadata_inventory_access": "reconciled",
+      "requirement": "Every new reserved path has paired exact kv/data and kv/metadata denies plus descendants; partial and ancestor-only evidence is rejected."
+    }
+  },
+  "live_authority_contract": {
+    "status": "PENDING_PROTECTED_MERGE_DISCOVERY",
+    "schema_file": "fixtures-v2.0/release-live-implementation-identity-v1.schema.json",
+    "positive_live_identity_fixture_present": false,
+    "synthetic_fixture": {
+      "evidence_class": "synthetic-conformance-fixture",
+      "publication_authority": false,
+      "fixture_set": "issue93-v2.0",
+      "fixture_identity_jcs_sha256": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9"
+    },
+    "required_live_evidence_class": "live-protected-authority",
+    "required_publication_authority": true,
+    "required_bindings": [
+      "live identity JCS digest",
+      "claim key",
+      "corrective merge SHA",
+      "candidate source SHA",
+      "coordinator workflow SHA",
+      "publisher workflow SHA",
+      "trusted Vault signing kid"
+    ],
+    "prohibited_live_inputs": [
+      "synthetic candidate source SHA",
+      "synthetic reviewed workflow SHA",
+      "fixture identity digest",
+      "fixture Ed25519 signing kid"
+    ],
+    "negative_cases": [
+      "relabeled fixture identity",
+      "standalone fixture receipt",
+      "authority-flipped fixture signature",
+      "wrong repository ID",
+      "synthetic SHA reuse",
+      "invalid ancestry",
+      "workflow path/ref/SHA drift",
+      "tag-target mismatch",
+      "mixed identity digest",
+      "missing or stale discovery proof"
+    ],
+    "negative_outcome": {
+      "claim_creates": 0,
+      "dispatches": 0,
+      "journal_commits": 0,
+      "publication_mutations": 0
+    }
+  },
+  "claim_contract": {
+    "identity": {
+      "evidence_class": "synthetic-conformance-fixture",
+      "publication_authority": false,
+      "fixture_set": "issue93-v2.0",
+      "repository_id": "1303901324",
+      "repository": "codicarium/deployment-controller",
+      "tag": "v0.6.14",
+      "source_revision": "2aee9b5ba6ed8be8dc848df482a43f6a3f33b712",
+      "protected_main_revision": "6b82f94bf0c41381bd43f96a04baf909dac7ec52",
+      "coordinator_workflow": {
+        "repository_id": "1303901324",
+        "workflow_path": ".github/workflows/automatic-release-v2.yaml",
+        "ref": "refs/heads/main",
+        "workflow_sha": "6b82f94bf0c41381bd43f96a04baf909dac7ec52"
+      },
+      "publisher_workflow": {
+        "repository_id": "1303901324",
+        "workflow_path": ".github/workflows/publish-release-v2.yaml",
+        "ref": "refs/heads/main",
+        "workflow_sha": "6b82f94bf0c41381bd43f96a04baf909dac7ec52"
+      }
+    },
+    "identity_jcs_sha256": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+    "claim_key": "rel-v2-sha256:d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+    "first_durable_release_side_effect": true,
+    "create_status": 201,
+    "exact_read_only_replay_status": 200,
+    "conflict_status": 409,
+    "ambiguity": "UNKNOWN_MANUAL; no automatic retry"
+  },
+  "journal_contract": {
+    "authority": "A new dedicated dev PostgreSQL journal, never S3 or another object store.",
+    "ownership": {
+      "codicarium/postgres-config": "new dev CNPG cluster/database, NOLOGIN owner, coarse roles, synchronous replica/N-1 desired state",
+      "codicarium/runner-config": "broker source, versioned SQL, migration Job, Vault injection, fixed SECURITY DEFINER procedures"
+    },
+    "desired_endpoint": "runner-platform-journal-rw.runner-platform-journal-dev.svc.cluster.local:5432",
+    "live_status": "PREACTIVATION_NOT_MATERIALIZED",
+    "database_roles": {
+      "owner": "NOLOGIN and owns database/schema",
+      "migrator": "separate identity allowed to SET ROLE for reviewed DDL only",
+      "runtime": "LOGIN, not owner and not owner member; CONNECT, schema USAGE, SELECT read view, EXECUTE exact append/claim procedures only"
+    },
+    "revoked": [
+      "PUBLIC CONNECT",
+      "PUBLIC/runtime database TEMP",
+      "PUBLIC/runtime schema CREATE",
+      "direct INSERT",
+      "UPDATE",
+      "DELETE",
+      "TRUNCATE",
+      "DDL"
+    ],
+    "durability": [
+      "SERIALIZABLE",
+      "synchronous_commit=on",
+      "primary keys",
+      "unique idempotency/sequence constraints",
+      "NOT NULL/CHECK constraints",
+      "append-only rows",
+      "synchronous replicas and N-1 evidence"
+    ],
+    "procedures": [
+      "release_journal.claim_cas_v1",
+      "release_journal.reserve_v1",
+      "release_journal.commit_v1",
+      "release_journal.authorize_v1",
+      "release_journal.complete_v1"
+    ],
+    "procedure_migration": {
+      "schema": "codicarium.release-journal-procedure-migration/v1",
+      "sql_path": "runner-config/release-journal/migrations/001_release_journal_v1.sql",
+      "implementation_status": "BLOCKED_PREACTIVATION_FAIL_CLOSED",
+      "migration_transactional": true,
+      "owner_role": "release_journal_owner",
+      "owner_role_login": false,
+      "runtime_role": "release_journal_runtime",
+      "runtime_is_owner": false,
+      "runtime_inherits_owner": false,
+      "runtime_schema_create_privilege": false,
+      "public_schema_create_privilege": false,
+      "runtime_database_temp_privilege": false,
+      "public_database_temp_privilege": false,
+      "public_database_connect_privilege": false,
+      "runtime_procedure_privileges": [
+        "EXECUTE"
+      ],
+      "runtime_direct_table_privileges": [],
+      "public_procedure_privileges": [],
+      "owner_default_public_execute_revoked": true,
+      "persistent_relation_references_fully_qualified": true,
+      "non_builtin_function_references_fully_qualified": true,
+      "builtin_function_references_pg_catalog_qualified": true,
+      "database_connect_public_revoke_sql": "REVOKE CONNECT ON DATABASE runner_platform_journal FROM PUBLIC;",
+      "database_temp_public_revoke_sql": "REVOKE TEMPORARY ON DATABASE runner_platform_journal FROM PUBLIC;",
+      "database_temp_runtime_revoke_sql": "REVOKE TEMPORARY ON DATABASE runner_platform_journal FROM release_journal_runtime;",
+      "schema_create_public_revoke_sql": "REVOKE CREATE ON SCHEMA release_journal FROM PUBLIC;",
+      "schema_create_runtime_revoke_sql": "REVOKE CREATE ON SCHEMA release_journal FROM release_journal_runtime;",
+      "default_privileges_sql": "ALTER DEFAULT PRIVILEGES FOR ROLE release_journal_owner IN SCHEMA release_journal REVOKE EXECUTE ON FUNCTIONS FROM PUBLIC;",
+      "temp_shadow_attack_vector": {
+        "name": "pg-temp-relation-and-function-shadow",
+        "attacker_role": "release_journal_runtime",
+        "attempted_objects": [
+          "pg_temp.release_claims relation",
+          "pg_temp.digest(jsonb) function"
+        ],
+        "runtime_create_result": "DENY_SQLSTATE_42501",
+        "privileged_test_harness_precreates_shadows": true,
+        "procedure_search_path": [
+          "pg_catalog",
+          "release_journal",
+          "pg_temp"
+        ],
+        "expected_resolution": {
+          "persistent_relations": "explicit release_journal qualification",
+          "non_builtin_functions": "explicit release_journal qualification",
+          "builtin_functions": "explicit pg_catalog qualification",
+          "pg_temp_objects": "never selected"
+        },
+        "unauthorized_writes": 0,
+        "activation_result": "REQUIRED_POSTGRES_INTEGRATION_EVIDENCE"
+      },
+      "migration_sql": "BEGIN;\n\nREVOKE CONNECT ON DATABASE runner_platform_journal FROM PUBLIC;\n\nREVOKE TEMPORARY ON DATABASE runner_platform_journal FROM PUBLIC;\n\nREVOKE TEMPORARY ON DATABASE runner_platform_journal FROM release_journal_runtime;\n\nREVOKE CREATE ON SCHEMA release_journal FROM PUBLIC;\n\nREVOKE CREATE ON SCHEMA release_journal FROM release_journal_runtime;\n\nALTER DEFAULT PRIVILEGES FOR ROLE release_journal_owner IN SCHEMA release_journal REVOKE EXECUTE ON FUNCTIONS FROM PUBLIC;\n\nCREATE OR REPLACE FUNCTION release_journal.claim_cas_v1(request jsonb)\nRETURNS jsonb\nLANGUAGE plpgsql\nSECURITY DEFINER\nSET search_path = pg_catalog, release_journal, pg_temp\nAS $procedure$\nBEGIN\n  RAISE EXCEPTION USING ERRCODE = '0A000', MESSAGE = 'release journal implementation not installed';\nEND;\n$procedure$;\nALTER FUNCTION release_journal.claim_cas_v1(jsonb) OWNER TO release_journal_owner;\nREVOKE ALL ON FUNCTION release_journal.claim_cas_v1(jsonb) FROM PUBLIC;\nGRANT EXECUTE ON FUNCTION release_journal.claim_cas_v1(jsonb) TO release_journal_runtime;\n\nCREATE OR REPLACE FUNCTION release_journal.reserve_v1(request jsonb)\nRETURNS jsonb\nLANGUAGE plpgsql\nSECURITY DEFINER\nSET search_path = pg_catalog, release_journal, pg_temp\nAS $procedure$\nBEGIN\n  RAISE EXCEPTION USING ERRCODE = '0A000', MESSAGE = 'release journal implementation not installed';\nEND;\n$procedure$;\nALTER FUNCTION release_journal.reserve_v1(jsonb) OWNER TO release_journal_owner;\nREVOKE ALL ON FUNCTION release_journal.reserve_v1(jsonb) FROM PUBLIC;\nGRANT EXECUTE ON FUNCTION release_journal.reserve_v1(jsonb) TO release_journal_runtime;\n\nCREATE OR REPLACE FUNCTION release_journal.commit_v1(request jsonb)\nRETURNS jsonb\nLANGUAGE plpgsql\nSECURITY DEFINER\nSET search_path = pg_catalog, release_journal, pg_temp\nAS $procedure$\nBEGIN\n  RAISE EXCEPTION USING ERRCODE = '0A000', MESSAGE = 'release journal implementation not installed';\nEND;\n$procedure$;\nALTER FUNCTION release_journal.commit_v1(jsonb) OWNER TO release_journal_owner;\nREVOKE ALL ON FUNCTION release_journal.commit_v1(jsonb) FROM PUBLIC;\nGRANT EXECUTE ON FUNCTION release_journal.commit_v1(jsonb) TO release_journal_runtime;\n\nCREATE OR REPLACE FUNCTION release_journal.authorize_v1(request jsonb)\nRETURNS jsonb\nLANGUAGE plpgsql\nSECURITY DEFINER\nSET search_path = pg_catalog, release_journal, pg_temp\nAS $procedure$\nBEGIN\n  RAISE EXCEPTION USING ERRCODE = '0A000', MESSAGE = 'release journal implementation not installed';\nEND;\n$procedure$;\nALTER FUNCTION release_journal.authorize_v1(jsonb) OWNER TO release_journal_owner;\nREVOKE ALL ON FUNCTION release_journal.authorize_v1(jsonb) FROM PUBLIC;\nGRANT EXECUTE ON FUNCTION release_journal.authorize_v1(jsonb) TO release_journal_runtime;\n\nCREATE OR REPLACE FUNCTION release_journal.complete_v1(request jsonb)\nRETURNS jsonb\nLANGUAGE plpgsql\nSECURITY DEFINER\nSET search_path = pg_catalog, release_journal, pg_temp\nAS $procedure$\nBEGIN\n  RAISE EXCEPTION USING ERRCODE = '0A000', MESSAGE = 'release journal implementation not installed';\nEND;\n$procedure$;\nALTER FUNCTION release_journal.complete_v1(jsonb) OWNER TO release_journal_owner;\nREVOKE ALL ON FUNCTION release_journal.complete_v1(jsonb) FROM PUBLIC;\nGRANT EXECUTE ON FUNCTION release_journal.complete_v1(jsonb) TO release_journal_runtime;\n\nCOMMIT;",
+      "migration_sha256": "d45f4676dd251ba842cf9cc3ff1a6c9de05b56482eabb6afd1afa0d455d268f0",
+      "procedures": [
+        {
+          "name": "release_journal.claim_cas_v1",
+          "signature": "release_journal.claim_cas_v1(jsonb)",
+          "create_signature": "release_journal.claim_cas_v1(request jsonb)",
+          "implemented": false,
+          "failure_sqlstate": "0A000",
+          "writes_on_call": 0,
+          "security_definer": true,
+          "search_path": [
+            "pg_catalog",
+            "release_journal",
+            "pg_temp"
+          ],
+          "persistent_relation_references": "fully-qualified-release_journal-only",
+          "non_builtin_function_references": "fully-qualified-release_journal-only",
+          "builtin_function_references": "fully-qualified-pg_catalog-only",
+          "owner_role": "release_journal_owner",
+          "runtime_privileges": [
+            "EXECUTE"
+          ],
+          "public_execute_revoked": true,
+          "definition_sql": "CREATE OR REPLACE FUNCTION release_journal.claim_cas_v1(request jsonb)\nRETURNS jsonb\nLANGUAGE plpgsql\nSECURITY DEFINER\nSET search_path = pg_catalog, release_journal, pg_temp\nAS $procedure$\nBEGIN\n  RAISE EXCEPTION USING ERRCODE = '0A000', MESSAGE = 'release journal implementation not installed';\nEND;\n$procedure$;\nALTER FUNCTION release_journal.claim_cas_v1(jsonb) OWNER TO release_journal_owner;\nREVOKE ALL ON FUNCTION release_journal.claim_cas_v1(jsonb) FROM PUBLIC;\nGRANT EXECUTE ON FUNCTION release_journal.claim_cas_v1(jsonb) TO release_journal_runtime;",
+          "definition_sha256": "3b512d7f89ca5b5402cdc2797731f372122024d64446211bc4e67b73caa9b8af"
+        },
+        {
+          "name": "release_journal.reserve_v1",
+          "signature": "release_journal.reserve_v1(jsonb)",
+          "create_signature": "release_journal.reserve_v1(request jsonb)",
+          "implemented": false,
+          "failure_sqlstate": "0A000",
+          "writes_on_call": 0,
+          "security_definer": true,
+          "search_path": [
+            "pg_catalog",
+            "release_journal",
+            "pg_temp"
+          ],
+          "persistent_relation_references": "fully-qualified-release_journal-only",
+          "non_builtin_function_references": "fully-qualified-release_journal-only",
+          "builtin_function_references": "fully-qualified-pg_catalog-only",
+          "owner_role": "release_journal_owner",
+          "runtime_privileges": [
+            "EXECUTE"
+          ],
+          "public_execute_revoked": true,
+          "definition_sql": "CREATE OR REPLACE FUNCTION release_journal.reserve_v1(request jsonb)\nRETURNS jsonb\nLANGUAGE plpgsql\nSECURITY DEFINER\nSET search_path = pg_catalog, release_journal, pg_temp\nAS $procedure$\nBEGIN\n  RAISE EXCEPTION USING ERRCODE = '0A000', MESSAGE = 'release journal implementation not installed';\nEND;\n$procedure$;\nALTER FUNCTION release_journal.reserve_v1(jsonb) OWNER TO release_journal_owner;\nREVOKE ALL ON FUNCTION release_journal.reserve_v1(jsonb) FROM PUBLIC;\nGRANT EXECUTE ON FUNCTION release_journal.reserve_v1(jsonb) TO release_journal_runtime;",
+          "definition_sha256": "570d738a7fa5c70eabcf74e60deedca4164022a67343560d969f5f11aa907ba9"
+        },
+        {
+          "name": "release_journal.commit_v1",
+          "signature": "release_journal.commit_v1(jsonb)",
+          "create_signature": "release_journal.commit_v1(request jsonb)",
+          "implemented": false,
+          "failure_sqlstate": "0A000",
+          "writes_on_call": 0,
+          "security_definer": true,
+          "search_path": [
+            "pg_catalog",
+            "release_journal",
+            "pg_temp"
+          ],
+          "persistent_relation_references": "fully-qualified-release_journal-only",
+          "non_builtin_function_references": "fully-qualified-release_journal-only",
+          "builtin_function_references": "fully-qualified-pg_catalog-only",
+          "owner_role": "release_journal_owner",
+          "runtime_privileges": [
+            "EXECUTE"
+          ],
+          "public_execute_revoked": true,
+          "definition_sql": "CREATE OR REPLACE FUNCTION release_journal.commit_v1(request jsonb)\nRETURNS jsonb\nLANGUAGE plpgsql\nSECURITY DEFINER\nSET search_path = pg_catalog, release_journal, pg_temp\nAS $procedure$\nBEGIN\n  RAISE EXCEPTION USING ERRCODE = '0A000', MESSAGE = 'release journal implementation not installed';\nEND;\n$procedure$;\nALTER FUNCTION release_journal.commit_v1(jsonb) OWNER TO release_journal_owner;\nREVOKE ALL ON FUNCTION release_journal.commit_v1(jsonb) FROM PUBLIC;\nGRANT EXECUTE ON FUNCTION release_journal.commit_v1(jsonb) TO release_journal_runtime;",
+          "definition_sha256": "73a2c4234339a11d138b491e6800dae771fd5aa2c640283939238548ac13fc1f"
+        },
+        {
+          "name": "release_journal.authorize_v1",
+          "signature": "release_journal.authorize_v1(jsonb)",
+          "create_signature": "release_journal.authorize_v1(request jsonb)",
+          "implemented": false,
+          "failure_sqlstate": "0A000",
+          "writes_on_call": 0,
+          "security_definer": true,
+          "search_path": [
+            "pg_catalog",
+            "release_journal",
+            "pg_temp"
+          ],
+          "persistent_relation_references": "fully-qualified-release_journal-only",
+          "non_builtin_function_references": "fully-qualified-release_journal-only",
+          "builtin_function_references": "fully-qualified-pg_catalog-only",
+          "owner_role": "release_journal_owner",
+          "runtime_privileges": [
+            "EXECUTE"
+          ],
+          "public_execute_revoked": true,
+          "definition_sql": "CREATE OR REPLACE FUNCTION release_journal.authorize_v1(request jsonb)\nRETURNS jsonb\nLANGUAGE plpgsql\nSECURITY DEFINER\nSET search_path = pg_catalog, release_journal, pg_temp\nAS $procedure$\nBEGIN\n  RAISE EXCEPTION USING ERRCODE = '0A000', MESSAGE = 'release journal implementation not installed';\nEND;\n$procedure$;\nALTER FUNCTION release_journal.authorize_v1(jsonb) OWNER TO release_journal_owner;\nREVOKE ALL ON FUNCTION release_journal.authorize_v1(jsonb) FROM PUBLIC;\nGRANT EXECUTE ON FUNCTION release_journal.authorize_v1(jsonb) TO release_journal_runtime;",
+          "definition_sha256": "ef54b8490691ffa7169be14655c072c1bf27f29a5a77ceb1322a6115a3772dc7"
+        },
+        {
+          "name": "release_journal.complete_v1",
+          "signature": "release_journal.complete_v1(jsonb)",
+          "create_signature": "release_journal.complete_v1(request jsonb)",
+          "implemented": false,
+          "failure_sqlstate": "0A000",
+          "writes_on_call": 0,
+          "security_definer": true,
+          "search_path": [
+            "pg_catalog",
+            "release_journal",
+            "pg_temp"
+          ],
+          "persistent_relation_references": "fully-qualified-release_journal-only",
+          "non_builtin_function_references": "fully-qualified-release_journal-only",
+          "builtin_function_references": "fully-qualified-pg_catalog-only",
+          "owner_role": "release_journal_owner",
+          "runtime_privileges": [
+            "EXECUTE"
+          ],
+          "public_execute_revoked": true,
+          "definition_sql": "CREATE OR REPLACE FUNCTION release_journal.complete_v1(request jsonb)\nRETURNS jsonb\nLANGUAGE plpgsql\nSECURITY DEFINER\nSET search_path = pg_catalog, release_journal, pg_temp\nAS $procedure$\nBEGIN\n  RAISE EXCEPTION USING ERRCODE = '0A000', MESSAGE = 'release journal implementation not installed';\nEND;\n$procedure$;\nALTER FUNCTION release_journal.complete_v1(jsonb) OWNER TO release_journal_owner;\nREVOKE ALL ON FUNCTION release_journal.complete_v1(jsonb) FROM PUBLIC;\nGRANT EXECUTE ON FUNCTION release_journal.complete_v1(jsonb) TO release_journal_runtime;",
+          "definition_sha256": "6e5c27eb1e13728ccdec166d03e71c86aa17e5e6f08bdfe86d6c3e94368b2f9d"
+        }
+      ]
+    },
+    "function_resolution": "SET search_path = pg_catalog, release_journal, pg_temp; persistent relations and non-builtins are explicitly release_journal-qualified and builtins explicitly pg_catalog-qualified",
+    "temp_shadow_attack_vector": {
+      "name": "pg-temp-relation-and-function-shadow",
+      "attacker_role": "release_journal_runtime",
+      "attempted_objects": [
+        "pg_temp.release_claims relation",
+        "pg_temp.digest(jsonb) function"
+      ],
+      "runtime_create_result": "DENY_SQLSTATE_42501",
+      "privileged_test_harness_precreates_shadows": true,
+      "procedure_search_path": [
+        "pg_catalog",
+        "release_journal",
+        "pg_temp"
+      ],
+      "expected_resolution": {
+        "persistent_relations": "explicit release_journal qualification",
+        "non_builtin_functions": "explicit release_journal qualification",
+        "builtin_functions": "explicit pg_catalog qualification",
+        "pg_temp_objects": "never selected"
+      },
+      "unauthorized_writes": 0,
+      "activation_result": "REQUIRED_POSTGRES_INTEGRATION_EVIDENCE"
+    },
+    "github_dispatch_contract": {
+      "schema": "codicarium.github-workflow-dispatch-contract/v1",
+      "request": {
+        "api_version_header": "X-GitHub-Api-Version",
+        "api_version": "2026-03-10",
+        "accept": "application/vnd.github+json",
+        "return_run_details": true
+      },
+      "publisher_request": {
+        "schema": "codicarium.publisher-dispatch-request/v2",
+        "evidence_class": "synthetic-conformance-fixture",
+        "publication_authority": false,
+        "fixture_set": "issue93-v2.0",
+        "fixture_identity_jcs_sha256": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+        "claim_key": "rel-v2-sha256:d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+        "claim_identity_jcs_sha256": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+        "active_source_revision": "2aee9b5ba6ed8be8dc848df482a43f6a3f33b712",
+        "protected_main_revision": "6b82f94bf0c41381bd43f96a04baf909dac7ec52",
+        "publisher_workflow_path": ".github/workflows/publish-release-v2.yaml",
+        "publisher_workflow_sha": "6b82f94bf0c41381bd43f96a04baf909dac7ec52",
+        "legacy_raw_identity": {
+          "authority": false,
+          "handoff_sha256": "8abe528bb32aaa47f8fc496c3571d4b91248f3ebfe4c8be29463a25277bd9e88",
+          "dispatch_sha256": "b150fa8dad70a207fb7a78f6a41ab1bc1430833ba70b86fdc2f08a13c7c11f3b"
+        }
+      },
+      "positive": {
+        "http_status": 200,
+        "response": {
+          "workflow_run_id": "9005001",
+          "workflow_run_url": "https://api.github.com/repos/codicarium/deployment-controller/actions/runs/9005001",
+          "workflow_run_html_url": "https://github.com/codicarium/deployment-controller/actions/runs/9005001"
+        },
+        "identity_source": "direct-response.workflow_run_id",
+        "outcome": "DIRECT_RUN_ID_ACCEPTED",
+        "journal_commit": true,
+        "automatic_retry": false
+      },
+      "no_body": {
+        "http_status": 204,
+        "response": null,
+        "outcome": "UNKNOWN_MANUAL",
+        "journal_commit": false,
+        "automatic_retry": false
+      }
+    },
+    "endpoints": [
+      "claim CAS",
+      "exact read",
+      "reserve",
+      "commit",
+      "authorize",
+      "complete"
+    ],
+    "forbidden_endpoints": [
+      "update",
+      "delete"
+    ],
+    "closed_states": [
+      "claim",
+      "verifier-dispatch-reserve",
+      "verifier-dispatch-commit",
+      "verification-authorization",
+      "publisher-dispatch-reserve",
+      "publisher-dispatch-commit",
+      "mutation-reserve 1..19",
+      "mutation-commit 1..19",
+      "complete",
+      "UNKNOWN_MANUAL"
+    ],
+    "procedure_execution_authority": false,
+    "procedure_activation_status": "BLOCKED_PREACTIVATION_FAIL_CLOSED",
+    "protocol_model_fixture_entries": 45,
+    "signing": "Every reservation and commit is immutable, previous-hash linked, and independently signed by Vault transit; the fixture signs all entries.",
+    "tls": "verify-full exact CA contract is a preactivation blocker and is not asserted live."
+  },
+  "publication_plan": {
+    "dispatch_sequence": 0,
+    "mutations": [
+      {
+        "sequence": 1,
+        "mutation": "tag-create",
+        "target_sha256": "55bd89867de6ca96f3877d7994e2773fffa8a6375f53d7ffb6773d182ea9eb44"
+      },
+      {
+        "sequence": 2,
+        "mutation": "draft-release-create",
+        "target_sha256": "f74b9d6c3e113461e1796c0deac82a0ae628feb28c61fcffd5f0cbcecad08792"
+      },
+      {
+        "sequence": 3,
+        "mutation": "image-publish",
+        "target_sha256": "a94d2ce735b10007a0a337a8616bba90461c388d763cd42ecf7ce66dda2cfbc3"
+      },
+      {
+        "sequence": 4,
+        "mutation": "chart-publish",
+        "target_sha256": "1a5ffa3c92dabf544906ab466ee17b8f948ace766ab01e75b3d48d5fbc520473"
+      },
+      {
+        "sequence": 5,
+        "mutation": "release-asset-create",
+        "target_sha256": "755e73376e0f1073c23eb76de66192b64c459e0d19d8cdb9663ef20b3c179283"
+      },
+      {
+        "sequence": 6,
+        "mutation": "release-asset-create",
+        "target_sha256": "137699bd907a9c85575d764ceaa6f9b1a3a5a856386271e84609043c49901021"
+      },
+      {
+        "sequence": 7,
+        "mutation": "release-asset-create",
+        "target_sha256": "08e34858afc88cd381d341e34994760c7f248fa851c0a75a0a1076ca69fc2a29"
+      },
+      {
+        "sequence": 8,
+        "mutation": "release-asset-create",
+        "target_sha256": "8ddc50a3645f83bafa1e7dfcfe812cd103d911e8ea9b4f22af22a82febf1d0b3"
+      },
+      {
+        "sequence": 9,
+        "mutation": "release-asset-create",
+        "target_sha256": "d07a95da8f82b6f2094090a7e2714d3915eb325f976bdcd3713a413e2b234b97"
+      },
+      {
+        "sequence": 10,
+        "mutation": "release-asset-create",
+        "target_sha256": "13a504a1d2c58d697d24a5e62cbed9e97e8ab9b489b961efab8f008bfa263dad"
+      },
+      {
+        "sequence": 11,
+        "mutation": "release-asset-create",
+        "target_sha256": "6c63b0eebaf3c09aaa07b0442aa642d7d75d7783dd12fb525a5e43a33f9e83a9"
+      },
+      {
+        "sequence": 12,
+        "mutation": "release-asset-create",
+        "target_sha256": "430105c47bc615c20a2da24f1bd15d5da4ee1355cbe5668fa385bc9bfc354b60"
+      },
+      {
+        "sequence": 13,
+        "mutation": "release-asset-create",
+        "target_sha256": "861d7afd7d060898ce62a585f814057b305b5545f52f2683cdbc69f07372448d"
+      },
+      {
+        "sequence": 14,
+        "mutation": "release-asset-create",
+        "target_sha256": "731244dc549aede73d4f9552838e70ab7c4f5a522f95821a1e737b2b2f229ee2"
+      },
+      {
+        "sequence": 15,
+        "mutation": "release-asset-create",
+        "target_sha256": "1e5ff341abcc41a70f11158e40fae56e276105ea3355c792513f0750e479e187"
+      },
+      {
+        "sequence": 16,
+        "mutation": "release-asset-create",
+        "target_sha256": "44d1a4cb3266073e29e4dbf27bd71ac8932c408e523bff1a99c8054903b58bd4"
+      },
+      {
+        "sequence": 17,
+        "mutation": "release-asset-create",
+        "target_sha256": "e9c0600fe91535c0f41b60f98fc53ee11ebc9c3b9fdccd72933b1a4862742b1c"
+      },
+      {
+        "sequence": 18,
+        "mutation": "release-asset-create",
+        "target_sha256": "6ee2e01bfdbc4acf5ef405b75025ce7d2994e88de68930e175f71268ef452ca3"
+      },
+      {
+        "sequence": 19,
+        "mutation": "release-finalize",
+        "target_sha256": "f317cefc4cbc8c732d77b2a6436affe4139f7376083f182fefe34884284d79f4"
+      }
+    ],
+    "signed_publication_receipts": 20,
+    "chain": "one sequence-zero dispatch receipt plus nineteen mutation receipts; each body and envelope digest is computed from actual canonical request/readback/target evidence",
+    "tag_owner": "publisher mutation 1; Automatic Release has no tag-create authority"
+  },
+  "check_runs": {
+    "authority": false,
+    "use": "observation-only",
+    "write_scope_allowed": false
+  },
+  "raw_identity_contract": {
+    "authority": false,
+    "purpose": "byte-regression-only",
+    "fixture": {
+      "schema": "codicarium.release-identity-fixtures/v2",
+      "authority": false,
+      "purpose": "byte-regression-only",
+      "handoff": {
+        "raw_path": "fixtures-v2.0/release-handoff-v1.json",
+        "json_byte_length": 697,
+        "json_sha256": "8abe528bb32aaa47f8fc496c3571d4b91248f3ebfe4c8be29463a25277bd9e88",
+        "digest_base64url": "ir5Si7Mqqkf4_ElsNXHUuRJI8-v-TIvilGOiUne9nog",
+        "coordinator_check_run_id": "9002003",
+        "tuple_grammar": "release-verify:<verifier_id>/<attempt>:<tag>:<source>:<ci_id>/<attempt>:<coordinator_id>/<attempt>:<coordinator_check_id>:<publisher_revision>",
+        "tuple": "release-verify:9003001/1:v0.6.14:1111111111111111111111111111111111111111:9001001/1:9002001/1:9002003:2222222222222222222222222222222222222222",
+        "tuple_base64url": "cmVsZWFzZS12ZXJpZnk6OTAwMzAwMS8xOnYwLjYuMTQ6MTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTo5MDAxMDAxLzE6OTAwMjAwMS8xOjkwMDIwMDM6MjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMg"
+      },
+      "dispatch": {
+        "raw_path": "fixtures-v2.0/publisher-dispatch-v1.json",
+        "json_byte_length": 436,
+        "json_sha256": "b150fa8dad70a207fb7a78f6a41ab1bc1430833ba70b86fdc2f08a13c7c11f3b",
+        "digest_base64url": "sVD6ja1wogf7enj2pBqxvBQwgzunC4b9wvCKE8fBHzs",
+        "handoff_check_run_id": "9004003",
+        "tuple_grammar": "publisher-dispatch:<authorizer_id>/<attempt>:<handoff_check_id>:<handoff_sha256>:<publisher_revision>:<repository>:<tag>:<source>",
+        "tuple": "publisher-dispatch:9004001/1:9004003:8abe528bb32aaa47f8fc496c3571d4b91248f3ebfe4c8be29463a25277bd9e88:2222222222222222222222222222222222222222:codicarium/deployment-controller:v0.6.14:1111111111111111111111111111111111111111",
+        "tuple_base64url": "cHVibGlzaGVyLWRpc3BhdGNoOjkwMDQwMDEvMTo5MDA0MDAzOjhhYmU1MjhiYjMyYWFhNDdmOGZjNDk2YzM1NzFkNGI5MTI0OGYzZWJmZTRjOGJlMjk0NjNhMjUyNzdiZDllODg6MjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjpjb2RpY2FyaXVtL2RlcGxveW1lbnQtY29udHJvbGxlcjp2MC42LjE0OjExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTE"
+      },
+      "check_id_semantics": "coordinator_check_run_id 9002003 belongs only to the handoff body/tuple; handoff_check_run_id 9004003 belongs only to the dispatch body/tuple. They are distinct observation identifiers and neither authorizes journal mutation."
+    }
+  },
+  "candidate_input_delivery": {
+    "schema": "codicarium.candidate-input-delivery/v1",
+    "evidence_class": "synthetic-conformance-fixture",
+    "publication_authority": false,
+    "fixture_set": "issue93-v2.0",
+    "fixture_identity_jcs_sha256": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+    "repository_id": "1303901324",
+    "repository": "codicarium/deployment-controller",
+    "commit_sha": "2aee9b5ba6ed8be8dc848df482a43f6a3f33b712",
+    "source_url": "https://codeload.github.com/codicarium/deployment-controller/tar.gz/2aee9b5ba6ed8be8dc848df482a43f6a3f33b712",
+    "archive_sha256": "66007f3486d173c4a69f52d54ac71b4a7be1efbcea12fbf659b52180ce9f22d5",
+    "byte_length": "110",
+    "archive_bytes_base64": "H4sIAAAAAAACA0vMKchI1CupKGGgHTAAAjMTEzANBOg0SBaJDRI3NzUzZ1AwYKADKC0uSSwCWskwMkEiKP65GEbBCAVJqSW0zv5E5H9T9PxvYmgymv/pFf+j2X8UjIJRMApGHgAAqHFUhgAMAAA=",
+    "archive_bytes_evidence_class": "synthetic-conformance-byte-oracle-not-live-codeload-response",
+    "archive_bytes_live_codeload_response": false,
+    "archive_format": "gzip-compressed-posix-ustar",
+    "uncompressed_tar_sha256": "fb7a260f46a361d9b90bf6371824f0b62dcabf99be09ab984a4fb6fcaeebda31",
+    "uncompressed_tar_byte_length": "3072",
+    "content_type": "application/gzip",
+    "object_key": "candidate-inputs/v1/repos/1303901324/commits/2aee9b5ba6ed8be8dc848df482a43f6a3f33b712/sha256/66007f3486d173c4a69f52d54ac71b4a7be1efbcea12fbf659b52180ce9f22d5.tar.gz",
+    "live_delivery_requirements": {
+      "status": "PENDING_LIVE_CANDIDATE_SOURCE_DISCOVERY",
+      "source_url_template": "https://codeload.github.com/codicarium/deployment-controller/tar.gz/{live_candidate_source_sha}",
+      "fetch_exact_raw_response_bytes": true,
+      "compute_archive_sha256_and_byte_length_from_raw_response": true,
+      "fixture_archive_bytes_forbidden": true,
+      "verify_repository_commit_and_response_before_broker_create": true,
+      "persist_create_receipt_and_one_read_binding": true
+    },
+    "image_digest_evidence": {
+      "evidence_class": "synthetic-conformance-image-digest-fixture",
+      "live_registry_manifest_digest_and_all_kata_node_preload_readback_required": true,
+      "status": "REQUIRED_PREACTIVATION"
+    },
+    "control": {
+      "namespace": "arc-runners-v2-control",
+      "service_account": "release-control",
+      "fetcher_image": "docker-pull.nexus.int.codicarium.com/codicarium/release-source-fetcher@sha256:53caba1c0e2f81bcc942d79cf5681d52dc72145d98dae8048268f16202ba7e91",
+      "image_pull_policy": "Never",
+      "image_preloaded": true,
+      "single_pid": true,
+      "shell_present": false,
+      "proxy_listener": "codicarium-private-egress-proxy.platform-egress.svc:8443",
+      "allowed_hosts": [
+        "api.github.com",
+        "codeload.github.com"
+      ],
+      "repository_identity_request": "GET https://api.github.com/repositories/1303901324",
+      "commit_identity_request": "GET https://api.github.com/repos/codicarium/deployment-controller/commits/2aee9b5ba6ed8be8dc848df482a43f6a3f33b712",
+      "fetch_mode": "opaque-stream-no-archive-parser",
+      "extracts_archive": false,
+      "executes_archive": false,
+      "child_execve_allowed": false,
+      "tls_verified": true,
+      "verifies": [
+        "repository_id",
+        "commit_sha",
+        "source_url",
+        "purpose",
+        "object_key",
+        "archive_sha256",
+        "byte_length",
+        "content_type"
+      ]
+    },
+    "broker": {
+      "endpoint": "https://artifact-capability.artifact-capability.svc.cluster.local:8443",
+      "capability_endpoint": "POST /v1/capabilities",
+      "create_endpoint": "PUT /v1/object",
+      "read_endpoint": "GET /v1/object",
+      "purpose": "deployment-controller-candidate-source",
+      "operations": [
+        "create",
+        "read"
+      ],
+      "one_time": true,
+      "create_only": true,
+      "conflict_status": 409,
+      "mismatch_status": 422,
+      "read_replay_status": 410,
+      "cross_digest_status": 403,
+      "create_request_binds": [
+        "repository_id",
+        "commit_sha",
+        "source_url",
+        "purpose",
+        "object_key",
+        "archive_sha256",
+        "byte_length",
+        "content_type"
+      ],
+      "create_receipt_echoes": [
+        "repository_id",
+        "commit_sha",
+        "source_url",
+        "purpose",
+        "object_key",
+        "archive_sha256",
+        "byte_length",
+        "content_type"
+      ],
+      "read_capability_binds": [
+        "token_jti",
+        "pod_uid",
+        "service_account_uid",
+        "namespace",
+        "repository_id",
+        "commit_sha",
+        "source_url",
+        "purpose",
+        "object_key",
+        "archive_sha256",
+        "byte_length",
+        "content_type",
+        "candidate_run_id",
+        "candidate_run_attempt",
+        "expires_at"
+      ],
+      "candidate_token_review": "authentication.k8s.io/v1 exact audience artifact-capability-candidate-read plus live source Pod UID/name/namespace/SA match",
+      "candidate_identity_verifier": {
+        "schema": "codicarium.kubernetes-tokenreview-pod-verifier/v1",
+        "name": "artifact-capability-candidate-identity-verifier",
+        "service_account": {
+          "namespace": "artifact-capability",
+          "name": "artifact-capability"
+        },
+        "api_client_identity": {
+          "automount_service_account_token": false,
+          "mechanism": "projected-bound-service-account-token",
+          "audience": "https://kubernetes.default.svc",
+          "expiration_seconds": 600,
+          "bound_object": "Pod",
+          "path": "/var/run/secrets/codicarium/kubernetes-api/token",
+          "mode": "0400",
+          "tokenrequest_api_permission": false
+        },
+        "tokenreview_cluster_role": {
+          "name": "artifact-capability-candidate-identity-verifier-tokenreview",
+          "rules": [
+            {
+              "api_groups": [
+                "authentication.k8s.io"
+              ],
+              "resources": [
+                "tokenreviews"
+              ],
+              "verbs": [
+                "create"
+              ]
+            }
+          ]
+        },
+        "tokenreview_cluster_role_binding": {
+          "name": "artifact-capability-candidate-identity-verifier-tokenreview",
+          "service_account": "artifact-capability/artifact-capability"
+        },
+        "pod_namespace_roles": [
+          {
+            "namespace": "arc-runners-v2-untrusted",
+            "role": "artifact-capability-candidate-identity-verifier-pod-identity",
+            "rules": [
+              {
+                "api_groups": [
+                  ""
+                ],
+                "resources": [
+                  "pods"
+                ],
+                "verbs": [
+                  "get",
+                  "list",
+                  "watch"
+                ]
+              }
+            ],
+            "role_binding": "artifact-capability-candidate-identity-verifier-pod-identity",
+            "bound_service_account": "artifact-capability/artifact-capability"
+          }
+        ],
+        "forbidden_rbac": {
+          "rbac_rules_exact_set": true,
+          "secret_access": false,
+          "tokenrequest_create": false,
+          "pod_exec_attach_or_log_access": false,
+          "pod_mutation": false,
+          "wildcard_api_groups_resources_or_verbs": false
+        },
+        "authorization_inventory": {
+          "exact_subject": "system:serviceaccount:artifact-capability:artifact-capability",
+          "no_other_role_or_cluster_role_binding_subject_references": true,
+          "self_subject_rules_review_exact_match": true,
+          "status": "REQUIRED_PREACTIVATION_LIVE_EVIDENCE"
+        },
+        "kubernetes_api_egress": {
+          "kube_context_binding_sha256": "fdd8da64cdd85fc733b310ba2dc30c7fd1bedc9ecd1161b0e07e66b8ef306666",
+          "service_discovery_command": "kubectl --kubeconfig=/home/rickebo/.kube/codicarium-dev.yaml --context=codicarium-dev --namespace=default get service kubernetes",
+          "service_namespace": "default",
+          "service_name": "kubernetes",
+          "destination_cidr": "10.43.0.1/32",
+          "endpoint": "https://10.43.0.1:443",
+          "protocol": "TCP",
+          "port": 443,
+          "accepted_audience": "https://kubernetes.default.svc",
+          "accepted_audience_status": "REQUIRED_PREACTIVATION_TOKENREVIEW_PROBE",
+          "ca_path": "/var/run/secrets/codicarium/kubernetes-api/ca.crt",
+          "ca_pem_sha256": "c73f41a70db74a9e1020ce84bf27227e0523055d3156d8d47ef31d41a3e3b935",
+          "certificate_dns_san": "kubernetes.default.svc",
+          "tls_san_status": "REQUIRED_PREACTIVATION_TLS_PROBE",
+          "tls_verify": true,
+          "network_policy_default_deny": true,
+          "other_api_destination_or_port_allowed": false
+        }
+      },
+      "one_successful_read": true,
+      "capability_ttl_seconds": 300
+    },
+    "kata": {
+      "namespace": "arc-runners-v2-untrusted",
+      "service_account": "release-candidate-kata",
+      "runtime_class_name": "kata-clh-runtime-rs",
+      "automount_service_account_token": false,
+      "backoff_limit": 0,
+      "active_deadline_seconds": 1800,
+      "ttl_seconds_after_finished": 0,
+      "fetcher_image": "docker-pull.nexus.int.codicarium.com/codicarium/release-source-fetcher@sha256:53caba1c0e2f81bcc942d79cf5681d52dc72145d98dae8048268f16202ba7e91",
+      "bootstrap_image": "docker-pull.nexus.int.codicarium.com/codicarium/candidate-bootstrap@sha256:aca2905f3ac180d1db3a7bd3e394b3d1198b61e043ae4f0a5d79a513d15068ec",
+      "image_pull_policy": "Never",
+      "images_preloaded_on_all_kata_nodes": true,
+      "image_pull_secrets": false,
+      "candidate_selected_image": false,
+      "capability_identity": {
+        "mechanism": "projected-bound-service-account-token",
+        "audience": "artifact-capability-candidate-read",
+        "expiration_seconds": 300,
+        "token_request_bound_object": "Pod",
+        "projected_token_path": "/var/run/secrets/codicarium/candidate-read/token",
+        "projected_token_mode": "0400",
+        "broker_ca_path": "/var/run/secrets/codicarium/candidate-read/ca.crt",
+        "broker_ca_mode": "0400",
+        "automount_default_token": false,
+        "kubernetes_api_audience": false,
+        "egress_proxy_audience": false,
+        "token_review_required": true,
+        "bound_claims": [
+          "token_jti",
+          "namespace",
+          "serviceaccount.name",
+          "serviceaccount.uid",
+          "pod.name",
+          "pod.uid"
+        ],
+        "live_source_pod_match_required": true,
+        "one_object_digest_grant_registered_by_control": true,
+        "deleted_pod_expired_or_replayed": "DENY"
+      },
+      "capability_reusable": false,
+      "capability_volume_init_only": true,
+      "capability_volume_removed_with_pod": true,
+      "input_volume": "memory emptyDir /input sizeLimit=1Gi init-write main-read-only",
+      "work_volume": "memory emptyDir /work sizeLimit=4Gi",
+      "host_path": false,
+      "persistent_volume": false,
+      "init_fetch_verifies": [
+        "repository_id",
+        "commit_sha",
+        "source_url",
+        "purpose",
+        "object_key",
+        "archive_sha256",
+        "byte_length",
+        "content_type"
+      ],
+      "archive_scan_before_extract": true,
+      "extraction_location": "inside-Kata-/work-only",
+      "rejects_archive_entries": [
+        "absolute",
+        "dot-dot",
+        "backslash",
+        "control-character",
+        "duplicate",
+        "hardlink",
+        "symlink",
+        "device",
+        "fifo",
+        "sparse",
+        "extension-header"
+      ],
+      "exec_started_only_after_verified_extract": true,
+      "github_egress": false,
+      "registry_egress": false,
+      "proxy_egress": false
+    },
+    "teardown": {
+      "applies_after_success_or_failure": true,
+      "job_absent": true,
+      "pod_absent": true,
+      "projected_token_volume_absent": true,
+      "broker_object_absent": true,
+      "broker_get_after_teardown_status": 410,
+      "input_and_work_volumes_absent": true,
+      "exec_marker_absent_on_verification_failure": true
+    },
+    "negative_cases": [
+      "repository-id-substitution",
+      "commit-or-source-url-substitution",
+      "object-key-digest-length-or-byte-substitution",
+      "immutable-object-conflict",
+      "cross-digest-token-use",
+      "token-audience-pod-or-service-account-mismatch",
+      "read-token-replay",
+      "archive-path-link-device-sparse-or-extension-traversal",
+      "control-child-execve-or-archive-parse",
+      "success-or-failure-teardown-residue"
+    ],
+    "negative_outcome": {
+      "exec_started": false,
+      "publication_mutations": 0,
+      "broker_read_committed": false,
+      "job_pod_token_object_and_memory_volumes_absent": true
+    }
+  },
+  "proxy_identity_contract": {
+    "schema": "codicarium.egress-proxy-identity/v1",
+    "mode": "projected-bound-service-account-token",
+    "audience": "codicarium-egress-proxy",
+    "expiration_seconds": 600,
+    "tls_only": true,
+    "server_certificate": {
+      "dns_san": "codicarium-private-egress-proxy.platform-egress.svc",
+      "duration_hours": 24,
+      "renew_before_hours": 8,
+      "plaintext_listener": false
+    },
+    "token_review": {
+      "api_version": "authentication.k8s.io/v1",
+      "required_audience": "codicarium-egress-proxy",
+      "require_authenticated": true,
+      "error_timeout_or_unauthenticated": "DENY_NO_UPSTREAM"
+    },
+    "identity_verifier": {
+      "schema": "codicarium.kubernetes-tokenreview-pod-verifier/v1",
+      "name": "codicarium-egress-proxy-identity-verifier",
+      "service_account": {
+        "namespace": "platform-egress",
+        "name": "codicarium-private-egress-proxy"
+      },
+      "api_client_identity": {
+        "automount_service_account_token": false,
+        "mechanism": "projected-bound-service-account-token",
+        "audience": "https://kubernetes.default.svc",
+        "expiration_seconds": 600,
+        "bound_object": "Pod",
+        "path": "/var/run/secrets/codicarium/kubernetes-api/token",
+        "mode": "0400",
+        "tokenrequest_api_permission": false
+      },
+      "tokenreview_cluster_role": {
+        "name": "codicarium-egress-proxy-identity-verifier-tokenreview",
+        "rules": [
+          {
+            "api_groups": [
+              "authentication.k8s.io"
+            ],
+            "resources": [
+              "tokenreviews"
+            ],
+            "verbs": [
+              "create"
+            ]
+          }
+        ]
+      },
+      "tokenreview_cluster_role_binding": {
+        "name": "codicarium-egress-proxy-identity-verifier-tokenreview",
+        "service_account": "platform-egress/codicarium-private-egress-proxy"
+      },
+      "pod_namespace_roles": [
+        {
+          "namespace": "arc-runners-v2-control",
+          "role": "codicarium-egress-proxy-identity-verifier-pod-identity",
+          "rules": [
+            {
+              "api_groups": [
+                ""
+              ],
+              "resources": [
+                "pods"
+              ],
+              "verbs": [
+                "get",
+                "list",
+                "watch"
+              ]
+            }
+          ],
+          "role_binding": "codicarium-egress-proxy-identity-verifier-pod-identity",
+          "bound_service_account": "platform-egress/codicarium-private-egress-proxy"
+        },
+        {
+          "namespace": "artifact-capability",
+          "role": "codicarium-egress-proxy-identity-verifier-pod-identity",
+          "rules": [
+            {
+              "api_groups": [
+                ""
+              ],
+              "resources": [
+                "pods"
+              ],
+              "verbs": [
+                "get",
+                "list",
+                "watch"
+              ]
+            }
+          ],
+          "role_binding": "codicarium-egress-proxy-identity-verifier-pod-identity",
+          "bound_service_account": "platform-egress/codicarium-private-egress-proxy"
+        }
+      ],
+      "forbidden_rbac": {
+        "rbac_rules_exact_set": true,
+        "secret_access": false,
+        "tokenrequest_create": false,
+        "pod_exec_attach_or_log_access": false,
+        "pod_mutation": false,
+        "wildcard_api_groups_resources_or_verbs": false
+      },
+      "authorization_inventory": {
+        "exact_subject": "system:serviceaccount:platform-egress:codicarium-private-egress-proxy",
+        "no_other_role_or_cluster_role_binding_subject_references": true,
+        "self_subject_rules_review_exact_match": true,
+        "status": "REQUIRED_PREACTIVATION_LIVE_EVIDENCE"
+      },
+      "kubernetes_api_egress": {
+        "kube_context_binding_sha256": "fdd8da64cdd85fc733b310ba2dc30c7fd1bedc9ecd1161b0e07e66b8ef306666",
+        "service_discovery_command": "kubectl --kubeconfig=/home/rickebo/.kube/codicarium-dev.yaml --context=codicarium-dev --namespace=default get service kubernetes",
+        "service_namespace": "default",
+        "service_name": "kubernetes",
+        "destination_cidr": "10.43.0.1/32",
+        "endpoint": "https://10.43.0.1:443",
+        "protocol": "TCP",
+        "port": 443,
+        "accepted_audience": "https://kubernetes.default.svc",
+        "accepted_audience_status": "REQUIRED_PREACTIVATION_TOKENREVIEW_PROBE",
+        "ca_path": "/var/run/secrets/codicarium/kubernetes-api/ca.crt",
+        "ca_pem_sha256": "c73f41a70db74a9e1020ce84bf27227e0523055d3156d8d47ef31d41a3e3b935",
+        "certificate_dns_san": "kubernetes.default.svc",
+        "tls_san_status": "REQUIRED_PREACTIVATION_TLS_PROBE",
+        "tls_verify": true,
+        "network_policy_default_deny": true,
+        "other_api_destination_or_port_allowed": false
+      }
+    },
+    "bound_claims": [
+      "sub",
+      "kubernetes.io.namespace",
+      "kubernetes.io.serviceaccount.name",
+      "kubernetes.io.serviceaccount.uid",
+      "kubernetes.io.pod.name",
+      "kubernetes.io.pod.uid"
+    ],
+    "source_pod_check": "peer Pod IP maps to one live Pod whose UID/name/namespace/serviceAccountName exactly equal TokenReview claims",
+    "rotation": {
+      "refresh_before_expiry_seconds": 120,
+      "reject_expired": true,
+      "delete_with_pod": true
+    },
+    "replay": {
+      "request_nonce_header": "X-Codicarium-Proxy-Request-Nonce",
+      "duplicate_nonce": "DENY_NO_UPSTREAM",
+      "different_or_recreated_pod": "DENY_NO_UPSTREAM",
+      "token_jti_pod_uid_cache_seconds_max": 60,
+      "same_live_pod_unique_nonce_reuse_until_expiry": true
+    },
+    "candidate_projection": false,
+    "bindings": {
+      "8443": {
+        "namespace": "arc-runners-v2-control",
+        "service_account": "release-control",
+        "username": "system:serviceaccount:arc-runners-v2-control:release-control",
+        "automount_service_account_token": false,
+        "projected_token": {
+          "audience": "codicarium-egress-proxy",
+          "expiration_seconds": 600,
+          "path": "/var/run/secrets/codicarium/proxy/token",
+          "mode": "0400",
+          "bound_object": "Pod"
+        }
+      },
+      "8444": {
+        "namespace": "artifact-capability",
+        "service_account": "artifact-capability",
+        "username": "system:serviceaccount:artifact-capability:artifact-capability",
+        "automount_service_account_token": false,
+        "projected_token": {
+          "audience": "codicarium-egress-proxy",
+          "expiration_seconds": 600,
+          "path": "/var/run/secrets/codicarium/proxy/token",
+          "mode": "0400",
+          "bound_object": "Pod"
+        }
+      }
+    },
+    "listeners": {
+      "8443": {
+        "principal": "system:serviceaccount:arc-runners-v2-control:release-control",
+        "host_methods": {
+          "api.github.com": [
+            "GET",
+            "POST"
+          ],
+          "codeload.github.com": [
+            "GET"
+          ],
+          "github.com": [
+            "GET"
+          ],
+          "objects.githubusercontent.com": [
+            "GET"
+          ],
+          "raw.githubusercontent.com": [
+            "GET"
+          ],
+          "release-assets.githubusercontent.com": [
+            "GET"
+          ]
+        }
+      },
+      "8444": {
+        "principal": "system:serviceaccount:artifact-capability:artifact-capability",
+        "host_methods": {
+          "s3.sbg.io.cloud.ovh.net": [
+            "GET",
+            "HEAD",
+            "PUT"
+          ],
+          "token.actions.githubusercontent.com": [
+            "GET"
+          ]
+        }
+      }
+    },
+    "listener_host_method_confusion": "DENY_BEFORE_UPSTREAM",
+    "direct_upstream_or_proxy_bypass": false,
+    "network_policy_role": "transport-confinement-only-not-identity-proof",
+    "negative_cases": [
+      "wrong-namespace-service-account-or-username",
+      "pod-uid-name-namespace-or-source-ip-mismatch",
+      "wrong-audience-expired-rotated-or-replayed-token",
+      "tokenreview-error-timeout-or-unauthenticated",
+      "plaintext-listener",
+      "listener-host-or-method-confusion",
+      "direct-upstream-or-proxy-bypass"
+    ],
+    "negative_outcome": {
+      "upstream_requests": 0,
+      "dns_connection_and_http_forwarding": false
+    }
+  },
+  "postgres_access_contract": {
+    "schema": "codicarium.release-journal-postgres-access/v1",
+    "activation": "BLOCKED_PREACTIVATION",
+    "database_name": "runner_platform_journal",
+    "service": "runner-platform-journal-rw.runner-platform-journal-dev.svc.cluster.local",
+    "port": 5432,
+    "tls_mode": "verify-full",
+    "network_policy": {
+      "client_ingress_flows": [
+        {
+          "source": {
+            "namespace": "artifact-capability",
+            "service_account": "artifact-capability",
+            "pod_labels": [
+              "app.kubernetes.io/name=artifact-capability",
+              "codicarium.com/service-account=artifact-capability"
+            ],
+            "selector_combination": "same-peer-namespaceSelector-AND-podSelector-plus-exact-ServiceAccount"
+          },
+          "destination": {
+            "namespace": "runner-platform-journal-dev",
+            "service_account": "runner-platform-journal",
+            "pod_labels": [
+              "cnpg.io/cluster=runner-platform-journal",
+              "codicarium.com/service-account=runner-platform-journal"
+            ],
+            "selector_combination": "same-peer-namespaceSelector-AND-podSelector-plus-exact-ServiceAccount"
+          },
+          "protocol": "TCP",
+          "port": 5432,
+          "purpose": "broker-journal-database"
+        },
+        {
+          "source": {
+            "namespace": "artifact-capability",
+            "service_account": "release-journal-migrator",
+            "pod_labels": [
+              "app.kubernetes.io/name=release-journal-migration",
+              "codicarium.com/service-account=release-journal-migrator"
+            ],
+            "selector_combination": "same-peer-namespaceSelector-AND-podSelector-plus-exact-ServiceAccount"
+          },
+          "destination": {
+            "namespace": "runner-platform-journal-dev",
+            "service_account": "runner-platform-journal",
+            "pod_labels": [
+              "cnpg.io/cluster=runner-platform-journal",
+              "codicarium.com/service-account=runner-platform-journal"
+            ],
+            "selector_combination": "same-peer-namespaceSelector-AND-podSelector-plus-exact-ServiceAccount"
+          },
+          "protocol": "TCP",
+          "port": 5432,
+          "purpose": "migration-journal-database"
+        }
+      ],
+      "default_deny_all_other_clients": true,
+      "selectors": "combined exact namespace+pod label+workload spec.serviceAccountName",
+      "database_pod_ingress_default_deny": true,
+      "database_pod_egress_default_deny": true,
+      "client_pod_egress_default_deny": true,
+      "preserved_platform_flows": [
+        {
+          "purpose": "streaming-replication",
+          "source": {
+            "namespace": "runner-platform-journal-dev",
+            "service_account": "runner-platform-journal",
+            "pod_labels": [
+              "cnpg.io/cluster=runner-platform-journal",
+              "codicarium.com/service-account=runner-platform-journal"
+            ],
+            "selector_combination": "same-peer-namespaceSelector-AND-podSelector-plus-exact-ServiceAccount"
+          },
+          "destination": {
+            "namespace": "runner-platform-journal-dev",
+            "service_account": "runner-platform-journal",
+            "pod_labels": [
+              "cnpg.io/cluster=runner-platform-journal",
+              "codicarium.com/service-account=runner-platform-journal"
+            ],
+            "selector_combination": "same-peer-namespaceSelector-AND-podSelector-plus-exact-ServiceAccount"
+          },
+          "protocol": "TCP",
+          "port": 5432
+        },
+        {
+          "purpose": "cnpg-operator-management",
+          "source": {
+            "namespace": "cnpg-system",
+            "service_account": "cloudnative-pg",
+            "pod_labels": [
+              "app.kubernetes.io/name=cloudnative-pg",
+              "codicarium.com/service-account=cloudnative-pg"
+            ],
+            "selector_combination": "same-peer-namespaceSelector-AND-podSelector-plus-exact-ServiceAccount"
+          },
+          "destination": {
+            "namespace": "runner-platform-journal-dev",
+            "service_account": "runner-platform-journal",
+            "pod_labels": [
+              "cnpg.io/cluster=runner-platform-journal",
+              "codicarium.com/service-account=runner-platform-journal"
+            ],
+            "selector_combination": "same-peer-namespaceSelector-AND-podSelector-plus-exact-ServiceAccount"
+          },
+          "protocol": "TCP",
+          "port": 8000
+        },
+        {
+          "purpose": "cluster-dns",
+          "destination": "10.43.0.10/32",
+          "protocols": [
+            "TCP",
+            "UDP"
+          ],
+          "port": 53
+        },
+        {
+          "purpose": "kubernetes-api",
+          "destination": "10.43.0.1/32",
+          "protocol": "TCP",
+          "port": 443
+        }
+      ],
+      "activation_evidence": "rendered ingress and egress policies plus live denied unauthorized-client probe"
+    },
+    "cnpg_bootstrap_credential": {
+      "secret_name": "runner-platform-journal-bootstrap-owner",
+      "created_by": "cloudnative-pg-operator",
+      "generated_at_runtime": true,
+      "rendered_by_helm": false,
+      "committed_to_git": false,
+      "external_secret_or_push_secret": false,
+      "exact_reader_service_account": "release-journal-bootstrap-transfer",
+      "exact_namespace": "runner-platform-journal-dev",
+      "uid_and_resource_version_preconditions_required": true,
+      "projected_volume_mode": "0400",
+      "read_count": 1,
+      "reusable": false
+    },
+    "vault_transfer": {
+      "job": "release-journal-bootstrap-vault-transfer",
+      "source_secret": "runner-platform-journal-dev/runner-platform-journal-bootstrap-owner",
+      "destination_path": "codicarium/dev/release-journal/bootstrap-owner",
+      "write_semantics": "KV-v2 create-only version 1",
+      "readback": "metadata version and value SHA-256 only",
+      "vault_kubernetes_auth_role": "release-journal-bootstrap-transfer",
+      "source_secret_uid_and_resource_version_match_required": true,
+      "memory_only_transfer": true,
+      "log_or_artifact_value": false,
+      "delete_kubernetes_secret_after_verified_readback": true,
+      "prevent_operator_regeneration": true
+    },
+    "roles": {
+      "bootstrap": {
+        "name": "release_journal_bootstrap",
+        "initial_login": true,
+        "final_login": false,
+        "connect_after_bootstrap": false,
+        "credential_destroyed_after_migration": true
+      },
+      "owner": {
+        "name": "release_journal_owner",
+        "login": false,
+        "owns_database_and_schema": true
+      },
+      "migrator": {
+        "name": "release_journal_migrator",
+        "login_during_migration_only": true,
+        "inherit": false,
+        "set_role_owner_during_reviewed_transaction_only": true,
+        "owner_membership_after_migration": false,
+        "login_after_migration": false,
+        "connect_after_migration": false,
+        "vault_credential_destroyed": true
+      },
+      "runtime": {
+        "name": "release_journal_runtime",
+        "login": true,
+        "inherit_owner": false,
+        "owner_membership": false,
+        "database_temp": false,
+        "schema_create": false,
+        "direct_table_privileges": [],
+        "procedure_privileges": [
+          "EXECUTE"
+        ]
+      }
+    },
+    "database_privileges": {
+      "public_connect": false,
+      "public_temp": false,
+      "runtime_connect": true,
+      "runtime_temp": false,
+      "runtime_schema_usage": true,
+      "runtime_schema_create": false,
+      "runtime_direct_dml": false,
+      "migrator_connect_after_migration": false
+    },
+    "migration_job": {
+      "service_account": "release-journal-migrator",
+      "vault_agent_file_injection_only": true,
+      "external_secret": false,
+      "reviewed_migration_sha256_required": true,
+      "transactional": true,
+      "disables_own_identity_before_success": true,
+      "success_requires_no_login_no_connect_no_owner_membership": true
+    },
+    "retirement": {
+      "bootstrap_secret_absent": true,
+      "bootstrap_vault_versions_destroyed": true,
+      "bootstrap_role_no_login": true,
+      "migration_pod_and_job_absent": true,
+      "migration_identity_disabled": true,
+      "migration_service_account_token_invalid": true,
+      "migration_vault_auth_role_deleted": true,
+      "migration_vault_versions_destroyed": true,
+      "runtime_never_received_bootstrap_or_migrator_credential": true
+    },
+    "negative_cases": [
+      "unauthorized-client-denied",
+      "bootstrap-secret-second-read-denied",
+      "bootstrap-secret-regeneration-denied",
+      "runtime-owner-membership-denied",
+      "runtime-direct-dml-denied",
+      "runtime-or-public-database-temp-denied",
+      "runtime-or-public-schema-create-denied",
+      "temp-relation-and-function-shadow-denied",
+      "migration-identity-persistence-denied",
+      "retired-bootstrap-or-migrator-credential-reuse-denied"
+    ]
+  },
+  "old_workflow_retirement": {
+    "schema": "codicarium.recovery-retirement/v1",
+    "must_complete_before": "v0.6.14-first-release-side-effect",
+    "workflows": [
+      {
+        "id": "341194538",
+        "name": "Automatic Release",
+        "path": ".github/workflows/automatic-release.yaml",
+        "workflow_state": "disabled_manually",
+        "path_state": "deleted-before-v0.6.14",
+        "old_outputs_accepted": false,
+        "reruns_accepted": false
+      },
+      {
+        "id": "318365668",
+        "name": "Release Verify",
+        "path": ".github/workflows/release.yaml",
+        "workflow_state": "disabled_manually",
+        "path_state": "deleted-before-v0.6.14",
+        "old_outputs_accepted": false,
+        "reruns_accepted": false
+      },
+      {
+        "id": "318365667",
+        "name": "Publish Release",
+        "path": ".github/workflows/publish-release.yaml",
+        "workflow_state": "disabled_manually",
+        "path_state": "deleted-before-v0.6.14",
+        "old_outputs_accepted": false,
+        "reruns_accepted": false
+      },
+      {
+        "id": "333279414",
+        "name": "Recover Release Attestations",
+        "path": ".github/workflows/recover-release-attestations.yaml",
+        "workflow_state": "disabled_manually",
+        "path_state": "deleted-before-v0.6.14",
+        "old_outputs_accepted": false,
+        "reruns_accepted": false
+      },
+      {
+        "id": "340335357",
+        "name": "Recover v0.6.8 Publisher Evidence",
+        "path": ".github/workflows/recover-release-v068.yaml",
+        "workflow_state": "disabled_manually",
+        "path_state": "deleted-before-v0.6.14",
+        "old_outputs_accepted": false,
+        "reruns_accepted": false
+      }
+    ],
+    "legacy_secret_authorities": [
+      "ACTIONS_STORAGE_OVH_ACCESS_KEY_ID",
+      "ACTIONS_STORAGE_OVH_ACCESS_KEY_SECRET",
+      "CODICARIUM_PACKAGE_REGISTRY_PASSWORD",
+      "CODICARIUM_PACKAGE_REGISTRY_USERNAME",
+      "NEXUS_PASSWORD",
+      "NEXUS_USERNAME"
+    ],
+    "recovery_authorities": {
+      "v068_s3_credentials": [
+        "V068_RECOVERY_S3_READ_ACCESS_KEY_ID",
+        "V068_RECOVERY_S3_READ_ACCESS_KEY_SECRET"
+      ],
+      "environments": [
+        "deployment-controller-attestation-recovery",
+        "deployment-controller-v068-recovery"
+      ],
+      "runner_routing": "[self-hosted,Linux,codicarium] and its general runner group",
+      "revoked": true
+    },
+    "replacement": {
+      "activation_time": "strictly-after-verified-v0.6.14",
+      "workflow_path": ".github/workflows/recover-release-v068-v2.yaml",
+      "workflow_id": "NEW_ID_NOT_ANY_RETIRED_ID",
+      "mutation_broker": "typed-one-target",
+      "target_count": 1,
+      "contents_write": false,
+      "broad_token": false,
+      "reusable_secret": false,
+      "signing_key": false
+    }
+  },
+  "platform_ownership": {
+    "codicarium/codicarium-actions": [
+      "closed schemas",
+      "JCS/Ed25519 conformance",
+      "canonical archive and broker client"
+    ],
+    "codicarium/postgres-config": [
+      "postgres-config-dev-path-helm and postgres-config-dev desired state",
+      "runner-platform-journal CNPG cluster/database",
+      "NOLOGIN owner and coarse roles",
+      "synchronous replica/N-1 desired state"
+    ],
+    "codicarium/vault-config": [
+      "transit signing role",
+      "runtime/migrator secret paths",
+      "schema-2 paired data/metadata reserved-path denies",
+      "guarded Kubernetes-secret-to-Vault seed"
+    ],
+    "codicarium/runner-config": [
+      "broker",
+      "trusted release-control runner",
+      "candidate Kata Job",
+      "journal SQL and migration Job",
+      "Service/ServiceAccount/Deployment/Job/NetworkPolicy/PDB/ServiceMonitor/PrometheusRule/Issuer/Certificate"
+    ],
+    "codicarium/infra": [
+      "two additional eligible workers",
+      "remaining-two-node capacity",
+      "kata-clh-runtime-rs",
+      "centrally owned identity-bound egress proxy and separate listeners",
+      "UID-aware runner-config-dev grant/profile migration",
+      "separate postgres-config-dev-path-helm and postgres-config-dev authority"
+    ],
+    "codicarium/app-config": [
+      "bootstrap wiring only if required; no workload or journal ownership"
+    ],
+    "codicarium/deployment-controller": [
+      "v2 workflows/helpers",
+      "five-workflow retirement",
+      "event-driven dev activation compatibility",
+      "live evidence validation"
+    ]
+  },
+  "postgres_gitops": {
+    "repository_id": "1285126920",
+    "profile": "postgres-config-dev-path-helm",
+    "grant": "postgres-config-dev",
+    "app_project": "repo-postgres-config-dev",
+    "activation_label": "post-retirement",
+    "component_id": "runner-platform-journal",
+    "application_name": "runner-platform-journal-dev",
+    "chart_path": "charts/postgres-platform",
+    "release_name": "runner-platform-journal",
+    "destination_namespace": "runner-platform-journal-dev",
+    "values_file": ".codicarium/dev/values.yaml",
+    "cnpg_cluster": "runner-platform-journal",
+    "desired_endpoint": "runner-platform-journal-rw.runner-platform-journal-dev.svc.cluster.local:5432",
+    "namespace_owner": "central platform; namespace.create=false",
+    "exact_profile_resources": [
+      "networking.k8s.io/NetworkPolicy",
+      "postgresql.cnpg.io/Cluster"
+    ],
+    "forbidden_rendered_resources": [
+      "Namespace",
+      "ExternalSecret",
+      "PushSecret",
+      "plaintext Secret"
+    ],
+    "required_values": [
+      "externalSecrets.enabled=false",
+      "no Bitwarden",
+      "immutable PostgreSQL image",
+      "ceph-rbd-replicated storage",
+      "dedicated runtime/migrator roles",
+      "verify-full TLS",
+      "synchronous replicas/N-1"
+    ],
+    "access_bootstrap_contract": {
+      "schema": "codicarium.release-journal-postgres-access/v1",
+      "activation": "BLOCKED_PREACTIVATION",
+      "database_name": "runner_platform_journal",
+      "service": "runner-platform-journal-rw.runner-platform-journal-dev.svc.cluster.local",
+      "port": 5432,
+      "tls_mode": "verify-full",
+      "network_policy": {
+        "client_ingress_flows": [
+          {
+            "source": {
+              "namespace": "artifact-capability",
+              "service_account": "artifact-capability",
+              "pod_labels": [
+                "app.kubernetes.io/name=artifact-capability",
+                "codicarium.com/service-account=artifact-capability"
+              ],
+              "selector_combination": "same-peer-namespaceSelector-AND-podSelector-plus-exact-ServiceAccount"
+            },
+            "destination": {
+              "namespace": "runner-platform-journal-dev",
+              "service_account": "runner-platform-journal",
+              "pod_labels": [
+                "cnpg.io/cluster=runner-platform-journal",
+                "codicarium.com/service-account=runner-platform-journal"
+              ],
+              "selector_combination": "same-peer-namespaceSelector-AND-podSelector-plus-exact-ServiceAccount"
+            },
+            "protocol": "TCP",
+            "port": 5432,
+            "purpose": "broker-journal-database"
+          },
+          {
+            "source": {
+              "namespace": "artifact-capability",
+              "service_account": "release-journal-migrator",
+              "pod_labels": [
+                "app.kubernetes.io/name=release-journal-migration",
+                "codicarium.com/service-account=release-journal-migrator"
+              ],
+              "selector_combination": "same-peer-namespaceSelector-AND-podSelector-plus-exact-ServiceAccount"
+            },
+            "destination": {
+              "namespace": "runner-platform-journal-dev",
+              "service_account": "runner-platform-journal",
+              "pod_labels": [
+                "cnpg.io/cluster=runner-platform-journal",
+                "codicarium.com/service-account=runner-platform-journal"
+              ],
+              "selector_combination": "same-peer-namespaceSelector-AND-podSelector-plus-exact-ServiceAccount"
+            },
+            "protocol": "TCP",
+            "port": 5432,
+            "purpose": "migration-journal-database"
+          }
+        ],
+        "default_deny_all_other_clients": true,
+        "selectors": "combined exact namespace+pod label+workload spec.serviceAccountName",
+        "database_pod_ingress_default_deny": true,
+        "database_pod_egress_default_deny": true,
+        "client_pod_egress_default_deny": true,
+        "preserved_platform_flows": [
+          {
+            "purpose": "streaming-replication",
+            "source": {
+              "namespace": "runner-platform-journal-dev",
+              "service_account": "runner-platform-journal",
+              "pod_labels": [
+                "cnpg.io/cluster=runner-platform-journal",
+                "codicarium.com/service-account=runner-platform-journal"
+              ],
+              "selector_combination": "same-peer-namespaceSelector-AND-podSelector-plus-exact-ServiceAccount"
+            },
+            "destination": {
+              "namespace": "runner-platform-journal-dev",
+              "service_account": "runner-platform-journal",
+              "pod_labels": [
+                "cnpg.io/cluster=runner-platform-journal",
+                "codicarium.com/service-account=runner-platform-journal"
+              ],
+              "selector_combination": "same-peer-namespaceSelector-AND-podSelector-plus-exact-ServiceAccount"
+            },
+            "protocol": "TCP",
+            "port": 5432
+          },
+          {
+            "purpose": "cnpg-operator-management",
+            "source": {
+              "namespace": "cnpg-system",
+              "service_account": "cloudnative-pg",
+              "pod_labels": [
+                "app.kubernetes.io/name=cloudnative-pg",
+                "codicarium.com/service-account=cloudnative-pg"
+              ],
+              "selector_combination": "same-peer-namespaceSelector-AND-podSelector-plus-exact-ServiceAccount"
+            },
+            "destination": {
+              "namespace": "runner-platform-journal-dev",
+              "service_account": "runner-platform-journal",
+              "pod_labels": [
+                "cnpg.io/cluster=runner-platform-journal",
+                "codicarium.com/service-account=runner-platform-journal"
+              ],
+              "selector_combination": "same-peer-namespaceSelector-AND-podSelector-plus-exact-ServiceAccount"
+            },
+            "protocol": "TCP",
+            "port": 8000
+          },
+          {
+            "purpose": "cluster-dns",
+            "destination": "10.43.0.10/32",
+            "protocols": [
+              "TCP",
+              "UDP"
+            ],
+            "port": 53
+          },
+          {
+            "purpose": "kubernetes-api",
+            "destination": "10.43.0.1/32",
+            "protocol": "TCP",
+            "port": 443
+          }
+        ],
+        "activation_evidence": "rendered ingress and egress policies plus live denied unauthorized-client probe"
+      },
+      "cnpg_bootstrap_credential": {
+        "secret_name": "runner-platform-journal-bootstrap-owner",
+        "created_by": "cloudnative-pg-operator",
+        "generated_at_runtime": true,
+        "rendered_by_helm": false,
+        "committed_to_git": false,
+        "external_secret_or_push_secret": false,
+        "exact_reader_service_account": "release-journal-bootstrap-transfer",
+        "exact_namespace": "runner-platform-journal-dev",
+        "uid_and_resource_version_preconditions_required": true,
+        "projected_volume_mode": "0400",
+        "read_count": 1,
+        "reusable": false
+      },
+      "vault_transfer": {
+        "job": "release-journal-bootstrap-vault-transfer",
+        "source_secret": "runner-platform-journal-dev/runner-platform-journal-bootstrap-owner",
+        "destination_path": "codicarium/dev/release-journal/bootstrap-owner",
+        "write_semantics": "KV-v2 create-only version 1",
+        "readback": "metadata version and value SHA-256 only",
+        "vault_kubernetes_auth_role": "release-journal-bootstrap-transfer",
+        "source_secret_uid_and_resource_version_match_required": true,
+        "memory_only_transfer": true,
+        "log_or_artifact_value": false,
+        "delete_kubernetes_secret_after_verified_readback": true,
+        "prevent_operator_regeneration": true
+      },
+      "roles": {
+        "bootstrap": {
+          "name": "release_journal_bootstrap",
+          "initial_login": true,
+          "final_login": false,
+          "connect_after_bootstrap": false,
+          "credential_destroyed_after_migration": true
+        },
+        "owner": {
+          "name": "release_journal_owner",
+          "login": false,
+          "owns_database_and_schema": true
+        },
+        "migrator": {
+          "name": "release_journal_migrator",
+          "login_during_migration_only": true,
+          "inherit": false,
+          "set_role_owner_during_reviewed_transaction_only": true,
+          "owner_membership_after_migration": false,
+          "login_after_migration": false,
+          "connect_after_migration": false,
+          "vault_credential_destroyed": true
+        },
+        "runtime": {
+          "name": "release_journal_runtime",
+          "login": true,
+          "inherit_owner": false,
+          "owner_membership": false,
+          "database_temp": false,
+          "schema_create": false,
+          "direct_table_privileges": [],
+          "procedure_privileges": [
+            "EXECUTE"
+          ]
+        }
+      },
+      "database_privileges": {
+        "public_connect": false,
+        "public_temp": false,
+        "runtime_connect": true,
+        "runtime_temp": false,
+        "runtime_schema_usage": true,
+        "runtime_schema_create": false,
+        "runtime_direct_dml": false,
+        "migrator_connect_after_migration": false
+      },
+      "migration_job": {
+        "service_account": "release-journal-migrator",
+        "vault_agent_file_injection_only": true,
+        "external_secret": false,
+        "reviewed_migration_sha256_required": true,
+        "transactional": true,
+        "disables_own_identity_before_success": true,
+        "success_requires_no_login_no_connect_no_owner_membership": true
+      },
+      "retirement": {
+        "bootstrap_secret_absent": true,
+        "bootstrap_vault_versions_destroyed": true,
+        "bootstrap_role_no_login": true,
+        "migration_pod_and_job_absent": true,
+        "migration_identity_disabled": true,
+        "migration_service_account_token_invalid": true,
+        "migration_vault_auth_role_deleted": true,
+        "migration_vault_versions_destroyed": true,
+        "runtime_never_received_bootstrap_or_migrator_credential": true
+      },
+      "negative_cases": [
+        "unauthorized-client-denied",
+        "bootstrap-secret-second-read-denied",
+        "bootstrap-secret-regeneration-denied",
+        "runtime-owner-membership-denied",
+        "runtime-direct-dml-denied",
+        "runtime-or-public-database-temp-denied",
+        "runtime-or-public-schema-create-denied",
+        "temp-relation-and-function-shadow-denied",
+        "migration-identity-persistence-denied",
+        "retired-bootstrap-or-migrator-credential-reuse-denied"
+      ]
+    }
+  },
+  "service_runtime": {
+    "broker": {
+      "service": "artifact-capability",
+      "namespace": "artifact-capability",
+      "endpoint": "https://artifact-capability.artifact-capability.svc.cluster.local:8443",
+      "type": "ClusterIP",
+      "tls": true,
+      "certificate_dns_san": "artifact-capability.artifact-capability.svc.cluster.local",
+      "tls_port": 8443,
+      "metrics_port": 9090,
+      "ingress_or_public_route": false,
+      "direct_public_egress": false,
+      "public_egress_via": "codicarium-private-egress-proxy.platform-egress.svc:8444-only",
+      "proxy_token_projection": true,
+      "proxy_identity": {
+        "namespace": "artifact-capability",
+        "service_account": "artifact-capability",
+        "username": "system:serviceaccount:artifact-capability:artifact-capability",
+        "automount_service_account_token": false,
+        "projected_token": {
+          "audience": "codicarium-egress-proxy",
+          "expiration_seconds": 600,
+          "path": "/var/run/secrets/codicarium/proxy/token",
+          "mode": "0400",
+          "bound_object": "Pod"
+        }
+      },
+      "s3_hosts": [
+        "s3.sbg.io.cloud.ovh.net"
+      ],
+      "oidc_jwks_hosts": [
+        "token.actions.githubusercontent.com"
+      ],
+      "journal_database": {
+        "desired_service": "runner-platform-journal-rw.runner-platform-journal-dev.svc.cluster.local",
+        "port": 5432,
+        "direct_internal": true,
+        "live_status": "PREACTIVATION_NOT_MATERIALIZED",
+        "tls_status": "BLOCKED_UNTIL_VERIFY_FULL_CA_CONTRACT_EXISTS"
+      }
+    },
+    "candidate": {
+      "execution": "separate-destroyed-after-use-Kata-Job",
+      "runtime_class": "kata-clh-runtime-rs",
+      "runtime_class_live": false,
+      "default_or_kubernetes_api_service_account_token": false,
+      "typed_broker_read_token": true,
+      "proxy_token_projection": false,
+      "github_egress": false,
+      "proxy_egress": false,
+      "public_egress": false,
+      "allowed_egress": [
+        "DNS 10.43.0.10 TCP/UDP 53",
+        "artifact-capability.artifact-capability.svc.cluster.local TCP 8443"
+      ],
+      "input_delivery": {
+        "schema": "codicarium.candidate-input-delivery/v1",
+        "evidence_class": "synthetic-conformance-fixture",
+        "publication_authority": false,
+        "fixture_set": "issue93-v2.0",
+        "fixture_identity_jcs_sha256": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+        "repository_id": "1303901324",
+        "repository": "codicarium/deployment-controller",
+        "commit_sha": "2aee9b5ba6ed8be8dc848df482a43f6a3f33b712",
+        "source_url": "https://codeload.github.com/codicarium/deployment-controller/tar.gz/2aee9b5ba6ed8be8dc848df482a43f6a3f33b712",
+        "archive_sha256": "66007f3486d173c4a69f52d54ac71b4a7be1efbcea12fbf659b52180ce9f22d5",
+        "byte_length": "110",
+        "archive_bytes_base64": "H4sIAAAAAAACA0vMKchI1CupKGGgHTAAAjMTEzANBOg0SBaJDRI3NzUzZ1AwYKADKC0uSSwCWskwMkEiKP65GEbBCAVJqSW0zv5E5H9T9PxvYmgymv/pFf+j2X8UjIJRMApGHgAAqHFUhgAMAAA=",
+        "archive_bytes_evidence_class": "synthetic-conformance-byte-oracle-not-live-codeload-response",
+        "archive_bytes_live_codeload_response": false,
+        "archive_format": "gzip-compressed-posix-ustar",
+        "uncompressed_tar_sha256": "fb7a260f46a361d9b90bf6371824f0b62dcabf99be09ab984a4fb6fcaeebda31",
+        "uncompressed_tar_byte_length": "3072",
+        "content_type": "application/gzip",
+        "object_key": "candidate-inputs/v1/repos/1303901324/commits/2aee9b5ba6ed8be8dc848df482a43f6a3f33b712/sha256/66007f3486d173c4a69f52d54ac71b4a7be1efbcea12fbf659b52180ce9f22d5.tar.gz",
+        "live_delivery_requirements": {
+          "status": "PENDING_LIVE_CANDIDATE_SOURCE_DISCOVERY",
+          "source_url_template": "https://codeload.github.com/codicarium/deployment-controller/tar.gz/{live_candidate_source_sha}",
+          "fetch_exact_raw_response_bytes": true,
+          "compute_archive_sha256_and_byte_length_from_raw_response": true,
+          "fixture_archive_bytes_forbidden": true,
+          "verify_repository_commit_and_response_before_broker_create": true,
+          "persist_create_receipt_and_one_read_binding": true
+        },
+        "image_digest_evidence": {
+          "evidence_class": "synthetic-conformance-image-digest-fixture",
+          "live_registry_manifest_digest_and_all_kata_node_preload_readback_required": true,
+          "status": "REQUIRED_PREACTIVATION"
+        },
+        "control": {
+          "namespace": "arc-runners-v2-control",
+          "service_account": "release-control",
+          "fetcher_image": "docker-pull.nexus.int.codicarium.com/codicarium/release-source-fetcher@sha256:53caba1c0e2f81bcc942d79cf5681d52dc72145d98dae8048268f16202ba7e91",
+          "image_pull_policy": "Never",
+          "image_preloaded": true,
+          "single_pid": true,
+          "shell_present": false,
+          "proxy_listener": "codicarium-private-egress-proxy.platform-egress.svc:8443",
+          "allowed_hosts": [
+            "api.github.com",
+            "codeload.github.com"
+          ],
+          "repository_identity_request": "GET https://api.github.com/repositories/1303901324",
+          "commit_identity_request": "GET https://api.github.com/repos/codicarium/deployment-controller/commits/2aee9b5ba6ed8be8dc848df482a43f6a3f33b712",
+          "fetch_mode": "opaque-stream-no-archive-parser",
+          "extracts_archive": false,
+          "executes_archive": false,
+          "child_execve_allowed": false,
+          "tls_verified": true,
+          "verifies": [
+            "repository_id",
+            "commit_sha",
+            "source_url",
+            "purpose",
+            "object_key",
+            "archive_sha256",
+            "byte_length",
+            "content_type"
+          ]
+        },
+        "broker": {
+          "endpoint": "https://artifact-capability.artifact-capability.svc.cluster.local:8443",
+          "capability_endpoint": "POST /v1/capabilities",
+          "create_endpoint": "PUT /v1/object",
+          "read_endpoint": "GET /v1/object",
+          "purpose": "deployment-controller-candidate-source",
+          "operations": [
+            "create",
+            "read"
+          ],
+          "one_time": true,
+          "create_only": true,
+          "conflict_status": 409,
+          "mismatch_status": 422,
+          "read_replay_status": 410,
+          "cross_digest_status": 403,
+          "create_request_binds": [
+            "repository_id",
+            "commit_sha",
+            "source_url",
+            "purpose",
+            "object_key",
+            "archive_sha256",
+            "byte_length",
+            "content_type"
+          ],
+          "create_receipt_echoes": [
+            "repository_id",
+            "commit_sha",
+            "source_url",
+            "purpose",
+            "object_key",
+            "archive_sha256",
+            "byte_length",
+            "content_type"
+          ],
+          "read_capability_binds": [
+            "token_jti",
+            "pod_uid",
+            "service_account_uid",
+            "namespace",
+            "repository_id",
+            "commit_sha",
+            "source_url",
+            "purpose",
+            "object_key",
+            "archive_sha256",
+            "byte_length",
+            "content_type",
+            "candidate_run_id",
+            "candidate_run_attempt",
+            "expires_at"
+          ],
+          "candidate_token_review": "authentication.k8s.io/v1 exact audience artifact-capability-candidate-read plus live source Pod UID/name/namespace/SA match",
+          "candidate_identity_verifier": {
+            "schema": "codicarium.kubernetes-tokenreview-pod-verifier/v1",
+            "name": "artifact-capability-candidate-identity-verifier",
+            "service_account": {
+              "namespace": "artifact-capability",
+              "name": "artifact-capability"
+            },
+            "api_client_identity": {
+              "automount_service_account_token": false,
+              "mechanism": "projected-bound-service-account-token",
+              "audience": "https://kubernetes.default.svc",
+              "expiration_seconds": 600,
+              "bound_object": "Pod",
+              "path": "/var/run/secrets/codicarium/kubernetes-api/token",
+              "mode": "0400",
+              "tokenrequest_api_permission": false
+            },
+            "tokenreview_cluster_role": {
+              "name": "artifact-capability-candidate-identity-verifier-tokenreview",
+              "rules": [
+                {
+                  "api_groups": [
+                    "authentication.k8s.io"
+                  ],
+                  "resources": [
+                    "tokenreviews"
+                  ],
+                  "verbs": [
+                    "create"
+                  ]
+                }
+              ]
+            },
+            "tokenreview_cluster_role_binding": {
+              "name": "artifact-capability-candidate-identity-verifier-tokenreview",
+              "service_account": "artifact-capability/artifact-capability"
+            },
+            "pod_namespace_roles": [
+              {
+                "namespace": "arc-runners-v2-untrusted",
+                "role": "artifact-capability-candidate-identity-verifier-pod-identity",
+                "rules": [
+                  {
+                    "api_groups": [
+                      ""
+                    ],
+                    "resources": [
+                      "pods"
+                    ],
+                    "verbs": [
+                      "get",
+                      "list",
+                      "watch"
+                    ]
+                  }
+                ],
+                "role_binding": "artifact-capability-candidate-identity-verifier-pod-identity",
+                "bound_service_account": "artifact-capability/artifact-capability"
+              }
+            ],
+            "forbidden_rbac": {
+              "rbac_rules_exact_set": true,
+              "secret_access": false,
+              "tokenrequest_create": false,
+              "pod_exec_attach_or_log_access": false,
+              "pod_mutation": false,
+              "wildcard_api_groups_resources_or_verbs": false
+            },
+            "authorization_inventory": {
+              "exact_subject": "system:serviceaccount:artifact-capability:artifact-capability",
+              "no_other_role_or_cluster_role_binding_subject_references": true,
+              "self_subject_rules_review_exact_match": true,
+              "status": "REQUIRED_PREACTIVATION_LIVE_EVIDENCE"
+            },
+            "kubernetes_api_egress": {
+              "kube_context_binding_sha256": "fdd8da64cdd85fc733b310ba2dc30c7fd1bedc9ecd1161b0e07e66b8ef306666",
+              "service_discovery_command": "kubectl --kubeconfig=/home/rickebo/.kube/codicarium-dev.yaml --context=codicarium-dev --namespace=default get service kubernetes",
+              "service_namespace": "default",
+              "service_name": "kubernetes",
+              "destination_cidr": "10.43.0.1/32",
+              "endpoint": "https://10.43.0.1:443",
+              "protocol": "TCP",
+              "port": 443,
+              "accepted_audience": "https://kubernetes.default.svc",
+              "accepted_audience_status": "REQUIRED_PREACTIVATION_TOKENREVIEW_PROBE",
+              "ca_path": "/var/run/secrets/codicarium/kubernetes-api/ca.crt",
+              "ca_pem_sha256": "c73f41a70db74a9e1020ce84bf27227e0523055d3156d8d47ef31d41a3e3b935",
+              "certificate_dns_san": "kubernetes.default.svc",
+              "tls_san_status": "REQUIRED_PREACTIVATION_TLS_PROBE",
+              "tls_verify": true,
+              "network_policy_default_deny": true,
+              "other_api_destination_or_port_allowed": false
+            }
+          },
+          "one_successful_read": true,
+          "capability_ttl_seconds": 300
+        },
+        "kata": {
+          "namespace": "arc-runners-v2-untrusted",
+          "service_account": "release-candidate-kata",
+          "runtime_class_name": "kata-clh-runtime-rs",
+          "automount_service_account_token": false,
+          "backoff_limit": 0,
+          "active_deadline_seconds": 1800,
+          "ttl_seconds_after_finished": 0,
+          "fetcher_image": "docker-pull.nexus.int.codicarium.com/codicarium/release-source-fetcher@sha256:53caba1c0e2f81bcc942d79cf5681d52dc72145d98dae8048268f16202ba7e91",
+          "bootstrap_image": "docker-pull.nexus.int.codicarium.com/codicarium/candidate-bootstrap@sha256:aca2905f3ac180d1db3a7bd3e394b3d1198b61e043ae4f0a5d79a513d15068ec",
+          "image_pull_policy": "Never",
+          "images_preloaded_on_all_kata_nodes": true,
+          "image_pull_secrets": false,
+          "candidate_selected_image": false,
+          "capability_identity": {
+            "mechanism": "projected-bound-service-account-token",
+            "audience": "artifact-capability-candidate-read",
+            "expiration_seconds": 300,
+            "token_request_bound_object": "Pod",
+            "projected_token_path": "/var/run/secrets/codicarium/candidate-read/token",
+            "projected_token_mode": "0400",
+            "broker_ca_path": "/var/run/secrets/codicarium/candidate-read/ca.crt",
+            "broker_ca_mode": "0400",
+            "automount_default_token": false,
+            "kubernetes_api_audience": false,
+            "egress_proxy_audience": false,
+            "token_review_required": true,
+            "bound_claims": [
+              "token_jti",
+              "namespace",
+              "serviceaccount.name",
+              "serviceaccount.uid",
+              "pod.name",
+              "pod.uid"
+            ],
+            "live_source_pod_match_required": true,
+            "one_object_digest_grant_registered_by_control": true,
+            "deleted_pod_expired_or_replayed": "DENY"
+          },
+          "capability_reusable": false,
+          "capability_volume_init_only": true,
+          "capability_volume_removed_with_pod": true,
+          "input_volume": "memory emptyDir /input sizeLimit=1Gi init-write main-read-only",
+          "work_volume": "memory emptyDir /work sizeLimit=4Gi",
+          "host_path": false,
+          "persistent_volume": false,
+          "init_fetch_verifies": [
+            "repository_id",
+            "commit_sha",
+            "source_url",
+            "purpose",
+            "object_key",
+            "archive_sha256",
+            "byte_length",
+            "content_type"
+          ],
+          "archive_scan_before_extract": true,
+          "extraction_location": "inside-Kata-/work-only",
+          "rejects_archive_entries": [
+            "absolute",
+            "dot-dot",
+            "backslash",
+            "control-character",
+            "duplicate",
+            "hardlink",
+            "symlink",
+            "device",
+            "fifo",
+            "sparse",
+            "extension-header"
+          ],
+          "exec_started_only_after_verified_extract": true,
+          "github_egress": false,
+          "registry_egress": false,
+          "proxy_egress": false
+        },
+        "teardown": {
+          "applies_after_success_or_failure": true,
+          "job_absent": true,
+          "pod_absent": true,
+          "projected_token_volume_absent": true,
+          "broker_object_absent": true,
+          "broker_get_after_teardown_status": 410,
+          "input_and_work_volumes_absent": true,
+          "exec_marker_absent_on_verification_failure": true
+        },
+        "negative_cases": [
+          "repository-id-substitution",
+          "commit-or-source-url-substitution",
+          "object-key-digest-length-or-byte-substitution",
+          "immutable-object-conflict",
+          "cross-digest-token-use",
+          "token-audience-pod-or-service-account-mismatch",
+          "read-token-replay",
+          "archive-path-link-device-sparse-or-extension-traversal",
+          "control-child-execve-or-archive-parse",
+          "success-or-failure-teardown-residue"
+        ],
+        "negative_outcome": {
+          "exec_started": false,
+          "publication_mutations": 0,
+          "broker_read_committed": false,
+          "job_pod_token_object_and_memory_volumes_absent": true
+        }
+      }
+    },
+    "trusted_control": {
+      "executes_candidate_source": false,
+      "github_hosts": [
+        "api.github.com",
+        "codeload.github.com",
+        "github.com",
+        "objects.githubusercontent.com",
+        "raw.githubusercontent.com",
+        "release-assets.githubusercontent.com"
+      ],
+      "direct_public_egress": false,
+      "proxy_required": true,
+      "proxy_listener": "codicarium-private-egress-proxy.platform-egress.svc:8443-only",
+      "proxy_token_projection": true,
+      "proxy_identity": {
+        "namespace": "arc-runners-v2-control",
+        "service_account": "release-control",
+        "username": "system:serviceaccount:arc-runners-v2-control:release-control",
+        "automount_service_account_token": false,
+        "projected_token": {
+          "audience": "codicarium-egress-proxy",
+          "expiration_seconds": 600,
+          "path": "/var/run/secrets/codicarium/proxy/token",
+          "mode": "0400",
+          "bound_object": "Pod"
+        }
+      }
+    },
+    "proxies": {
+      "owner": "central-platform",
+      "live_status": "ABSENT_BLOCKER",
+      "service": "codicarium-private-egress-proxy.platform-egress.svc",
+      "github_listener": 8443,
+      "broker_artifact_listener": 8444,
+      "separate_listeners": true,
+      "direct_bypass": false,
+      "identity_authentication": {
+        "schema": "codicarium.egress-proxy-identity/v1",
+        "mode": "projected-bound-service-account-token",
+        "audience": "codicarium-egress-proxy",
+        "expiration_seconds": 600,
+        "tls_only": true,
+        "server_certificate": {
+          "dns_san": "codicarium-private-egress-proxy.platform-egress.svc",
+          "duration_hours": 24,
+          "renew_before_hours": 8,
+          "plaintext_listener": false
+        },
+        "token_review": {
+          "api_version": "authentication.k8s.io/v1",
+          "required_audience": "codicarium-egress-proxy",
+          "require_authenticated": true,
+          "error_timeout_or_unauthenticated": "DENY_NO_UPSTREAM"
+        },
+        "identity_verifier": {
+          "schema": "codicarium.kubernetes-tokenreview-pod-verifier/v1",
+          "name": "codicarium-egress-proxy-identity-verifier",
+          "service_account": {
+            "namespace": "platform-egress",
+            "name": "codicarium-private-egress-proxy"
+          },
+          "api_client_identity": {
+            "automount_service_account_token": false,
+            "mechanism": "projected-bound-service-account-token",
+            "audience": "https://kubernetes.default.svc",
+            "expiration_seconds": 600,
+            "bound_object": "Pod",
+            "path": "/var/run/secrets/codicarium/kubernetes-api/token",
+            "mode": "0400",
+            "tokenrequest_api_permission": false
+          },
+          "tokenreview_cluster_role": {
+            "name": "codicarium-egress-proxy-identity-verifier-tokenreview",
+            "rules": [
+              {
+                "api_groups": [
+                  "authentication.k8s.io"
+                ],
+                "resources": [
+                  "tokenreviews"
+                ],
+                "verbs": [
+                  "create"
+                ]
+              }
+            ]
+          },
+          "tokenreview_cluster_role_binding": {
+            "name": "codicarium-egress-proxy-identity-verifier-tokenreview",
+            "service_account": "platform-egress/codicarium-private-egress-proxy"
+          },
+          "pod_namespace_roles": [
+            {
+              "namespace": "arc-runners-v2-control",
+              "role": "codicarium-egress-proxy-identity-verifier-pod-identity",
+              "rules": [
+                {
+                  "api_groups": [
+                    ""
+                  ],
+                  "resources": [
+                    "pods"
+                  ],
+                  "verbs": [
+                    "get",
+                    "list",
+                    "watch"
+                  ]
+                }
+              ],
+              "role_binding": "codicarium-egress-proxy-identity-verifier-pod-identity",
+              "bound_service_account": "platform-egress/codicarium-private-egress-proxy"
+            },
+            {
+              "namespace": "artifact-capability",
+              "role": "codicarium-egress-proxy-identity-verifier-pod-identity",
+              "rules": [
+                {
+                  "api_groups": [
+                    ""
+                  ],
+                  "resources": [
+                    "pods"
+                  ],
+                  "verbs": [
+                    "get",
+                    "list",
+                    "watch"
+                  ]
+                }
+              ],
+              "role_binding": "codicarium-egress-proxy-identity-verifier-pod-identity",
+              "bound_service_account": "platform-egress/codicarium-private-egress-proxy"
+            }
+          ],
+          "forbidden_rbac": {
+            "rbac_rules_exact_set": true,
+            "secret_access": false,
+            "tokenrequest_create": false,
+            "pod_exec_attach_or_log_access": false,
+            "pod_mutation": false,
+            "wildcard_api_groups_resources_or_verbs": false
+          },
+          "authorization_inventory": {
+            "exact_subject": "system:serviceaccount:platform-egress:codicarium-private-egress-proxy",
+            "no_other_role_or_cluster_role_binding_subject_references": true,
+            "self_subject_rules_review_exact_match": true,
+            "status": "REQUIRED_PREACTIVATION_LIVE_EVIDENCE"
+          },
+          "kubernetes_api_egress": {
+            "kube_context_binding_sha256": "fdd8da64cdd85fc733b310ba2dc30c7fd1bedc9ecd1161b0e07e66b8ef306666",
+            "service_discovery_command": "kubectl --kubeconfig=/home/rickebo/.kube/codicarium-dev.yaml --context=codicarium-dev --namespace=default get service kubernetes",
+            "service_namespace": "default",
+            "service_name": "kubernetes",
+            "destination_cidr": "10.43.0.1/32",
+            "endpoint": "https://10.43.0.1:443",
+            "protocol": "TCP",
+            "port": 443,
+            "accepted_audience": "https://kubernetes.default.svc",
+            "accepted_audience_status": "REQUIRED_PREACTIVATION_TOKENREVIEW_PROBE",
+            "ca_path": "/var/run/secrets/codicarium/kubernetes-api/ca.crt",
+            "ca_pem_sha256": "c73f41a70db74a9e1020ce84bf27227e0523055d3156d8d47ef31d41a3e3b935",
+            "certificate_dns_san": "kubernetes.default.svc",
+            "tls_san_status": "REQUIRED_PREACTIVATION_TLS_PROBE",
+            "tls_verify": true,
+            "network_policy_default_deny": true,
+            "other_api_destination_or_port_allowed": false
+          }
+        },
+        "bound_claims": [
+          "sub",
+          "kubernetes.io.namespace",
+          "kubernetes.io.serviceaccount.name",
+          "kubernetes.io.serviceaccount.uid",
+          "kubernetes.io.pod.name",
+          "kubernetes.io.pod.uid"
+        ],
+        "source_pod_check": "peer Pod IP maps to one live Pod whose UID/name/namespace/serviceAccountName exactly equal TokenReview claims",
+        "rotation": {
+          "refresh_before_expiry_seconds": 120,
+          "reject_expired": true,
+          "delete_with_pod": true
+        },
+        "replay": {
+          "request_nonce_header": "X-Codicarium-Proxy-Request-Nonce",
+          "duplicate_nonce": "DENY_NO_UPSTREAM",
+          "different_or_recreated_pod": "DENY_NO_UPSTREAM",
+          "token_jti_pod_uid_cache_seconds_max": 60,
+          "same_live_pod_unique_nonce_reuse_until_expiry": true
+        },
+        "candidate_projection": false,
+        "bindings": {
+          "8443": {
+            "namespace": "arc-runners-v2-control",
+            "service_account": "release-control",
+            "username": "system:serviceaccount:arc-runners-v2-control:release-control",
+            "automount_service_account_token": false,
+            "projected_token": {
+              "audience": "codicarium-egress-proxy",
+              "expiration_seconds": 600,
+              "path": "/var/run/secrets/codicarium/proxy/token",
+              "mode": "0400",
+              "bound_object": "Pod"
+            }
+          },
+          "8444": {
+            "namespace": "artifact-capability",
+            "service_account": "artifact-capability",
+            "username": "system:serviceaccount:artifact-capability:artifact-capability",
+            "automount_service_account_token": false,
+            "projected_token": {
+              "audience": "codicarium-egress-proxy",
+              "expiration_seconds": 600,
+              "path": "/var/run/secrets/codicarium/proxy/token",
+              "mode": "0400",
+              "bound_object": "Pod"
+            }
+          }
+        },
+        "listeners": {
+          "8443": {
+            "principal": "system:serviceaccount:arc-runners-v2-control:release-control",
+            "host_methods": {
+              "api.github.com": [
+                "GET",
+                "POST"
+              ],
+              "codeload.github.com": [
+                "GET"
+              ],
+              "github.com": [
+                "GET"
+              ],
+              "objects.githubusercontent.com": [
+                "GET"
+              ],
+              "raw.githubusercontent.com": [
+                "GET"
+              ],
+              "release-assets.githubusercontent.com": [
+                "GET"
+              ]
+            }
+          },
+          "8444": {
+            "principal": "system:serviceaccount:artifact-capability:artifact-capability",
+            "host_methods": {
+              "s3.sbg.io.cloud.ovh.net": [
+                "GET",
+                "HEAD",
+                "PUT"
+              ],
+              "token.actions.githubusercontent.com": [
+                "GET"
+              ]
+            }
+          }
+        },
+        "listener_host_method_confusion": "DENY_BEFORE_UPSTREAM",
+        "direct_upstream_or_proxy_bypass": false,
+        "network_policy_role": "transport-confinement-only-not-identity-proof",
+        "negative_cases": [
+          "wrong-namespace-service-account-or-username",
+          "pod-uid-name-namespace-or-source-ip-mismatch",
+          "wrong-audience-expired-rotated-or-replayed-token",
+          "tokenreview-error-timeout-or-unauthenticated",
+          "plaintext-listener",
+          "listener-host-or-method-confusion",
+          "direct-upstream-or-proxy-bypass"
+        ],
+        "negative_outcome": {
+          "upstream_requests": 0,
+          "dns_connection_and_http_forwarding": false
+        }
+      }
+    },
+    "postgres_access": {
+      "schema": "codicarium.release-journal-postgres-access/v1",
+      "activation": "BLOCKED_PREACTIVATION",
+      "database_name": "runner_platform_journal",
+      "service": "runner-platform-journal-rw.runner-platform-journal-dev.svc.cluster.local",
+      "port": 5432,
+      "tls_mode": "verify-full",
+      "network_policy": {
+        "client_ingress_flows": [
+          {
+            "source": {
+              "namespace": "artifact-capability",
+              "service_account": "artifact-capability",
+              "pod_labels": [
+                "app.kubernetes.io/name=artifact-capability",
+                "codicarium.com/service-account=artifact-capability"
+              ],
+              "selector_combination": "same-peer-namespaceSelector-AND-podSelector-plus-exact-ServiceAccount"
+            },
+            "destination": {
+              "namespace": "runner-platform-journal-dev",
+              "service_account": "runner-platform-journal",
+              "pod_labels": [
+                "cnpg.io/cluster=runner-platform-journal",
+                "codicarium.com/service-account=runner-platform-journal"
+              ],
+              "selector_combination": "same-peer-namespaceSelector-AND-podSelector-plus-exact-ServiceAccount"
+            },
+            "protocol": "TCP",
+            "port": 5432,
+            "purpose": "broker-journal-database"
+          },
+          {
+            "source": {
+              "namespace": "artifact-capability",
+              "service_account": "release-journal-migrator",
+              "pod_labels": [
+                "app.kubernetes.io/name=release-journal-migration",
+                "codicarium.com/service-account=release-journal-migrator"
+              ],
+              "selector_combination": "same-peer-namespaceSelector-AND-podSelector-plus-exact-ServiceAccount"
+            },
+            "destination": {
+              "namespace": "runner-platform-journal-dev",
+              "service_account": "runner-platform-journal",
+              "pod_labels": [
+                "cnpg.io/cluster=runner-platform-journal",
+                "codicarium.com/service-account=runner-platform-journal"
+              ],
+              "selector_combination": "same-peer-namespaceSelector-AND-podSelector-plus-exact-ServiceAccount"
+            },
+            "protocol": "TCP",
+            "port": 5432,
+            "purpose": "migration-journal-database"
+          }
+        ],
+        "default_deny_all_other_clients": true,
+        "selectors": "combined exact namespace+pod label+workload spec.serviceAccountName",
+        "database_pod_ingress_default_deny": true,
+        "database_pod_egress_default_deny": true,
+        "client_pod_egress_default_deny": true,
+        "preserved_platform_flows": [
+          {
+            "purpose": "streaming-replication",
+            "source": {
+              "namespace": "runner-platform-journal-dev",
+              "service_account": "runner-platform-journal",
+              "pod_labels": [
+                "cnpg.io/cluster=runner-platform-journal",
+                "codicarium.com/service-account=runner-platform-journal"
+              ],
+              "selector_combination": "same-peer-namespaceSelector-AND-podSelector-plus-exact-ServiceAccount"
+            },
+            "destination": {
+              "namespace": "runner-platform-journal-dev",
+              "service_account": "runner-platform-journal",
+              "pod_labels": [
+                "cnpg.io/cluster=runner-platform-journal",
+                "codicarium.com/service-account=runner-platform-journal"
+              ],
+              "selector_combination": "same-peer-namespaceSelector-AND-podSelector-plus-exact-ServiceAccount"
+            },
+            "protocol": "TCP",
+            "port": 5432
+          },
+          {
+            "purpose": "cnpg-operator-management",
+            "source": {
+              "namespace": "cnpg-system",
+              "service_account": "cloudnative-pg",
+              "pod_labels": [
+                "app.kubernetes.io/name=cloudnative-pg",
+                "codicarium.com/service-account=cloudnative-pg"
+              ],
+              "selector_combination": "same-peer-namespaceSelector-AND-podSelector-plus-exact-ServiceAccount"
+            },
+            "destination": {
+              "namespace": "runner-platform-journal-dev",
+              "service_account": "runner-platform-journal",
+              "pod_labels": [
+                "cnpg.io/cluster=runner-platform-journal",
+                "codicarium.com/service-account=runner-platform-journal"
+              ],
+              "selector_combination": "same-peer-namespaceSelector-AND-podSelector-plus-exact-ServiceAccount"
+            },
+            "protocol": "TCP",
+            "port": 8000
+          },
+          {
+            "purpose": "cluster-dns",
+            "destination": "10.43.0.10/32",
+            "protocols": [
+              "TCP",
+              "UDP"
+            ],
+            "port": 53
+          },
+          {
+            "purpose": "kubernetes-api",
+            "destination": "10.43.0.1/32",
+            "protocol": "TCP",
+            "port": 443
+          }
+        ],
+        "activation_evidence": "rendered ingress and egress policies plus live denied unauthorized-client probe"
+      },
+      "cnpg_bootstrap_credential": {
+        "secret_name": "runner-platform-journal-bootstrap-owner",
+        "created_by": "cloudnative-pg-operator",
+        "generated_at_runtime": true,
+        "rendered_by_helm": false,
+        "committed_to_git": false,
+        "external_secret_or_push_secret": false,
+        "exact_reader_service_account": "release-journal-bootstrap-transfer",
+        "exact_namespace": "runner-platform-journal-dev",
+        "uid_and_resource_version_preconditions_required": true,
+        "projected_volume_mode": "0400",
+        "read_count": 1,
+        "reusable": false
+      },
+      "vault_transfer": {
+        "job": "release-journal-bootstrap-vault-transfer",
+        "source_secret": "runner-platform-journal-dev/runner-platform-journal-bootstrap-owner",
+        "destination_path": "codicarium/dev/release-journal/bootstrap-owner",
+        "write_semantics": "KV-v2 create-only version 1",
+        "readback": "metadata version and value SHA-256 only",
+        "vault_kubernetes_auth_role": "release-journal-bootstrap-transfer",
+        "source_secret_uid_and_resource_version_match_required": true,
+        "memory_only_transfer": true,
+        "log_or_artifact_value": false,
+        "delete_kubernetes_secret_after_verified_readback": true,
+        "prevent_operator_regeneration": true
+      },
+      "roles": {
+        "bootstrap": {
+          "name": "release_journal_bootstrap",
+          "initial_login": true,
+          "final_login": false,
+          "connect_after_bootstrap": false,
+          "credential_destroyed_after_migration": true
+        },
+        "owner": {
+          "name": "release_journal_owner",
+          "login": false,
+          "owns_database_and_schema": true
+        },
+        "migrator": {
+          "name": "release_journal_migrator",
+          "login_during_migration_only": true,
+          "inherit": false,
+          "set_role_owner_during_reviewed_transaction_only": true,
+          "owner_membership_after_migration": false,
+          "login_after_migration": false,
+          "connect_after_migration": false,
+          "vault_credential_destroyed": true
+        },
+        "runtime": {
+          "name": "release_journal_runtime",
+          "login": true,
+          "inherit_owner": false,
+          "owner_membership": false,
+          "database_temp": false,
+          "schema_create": false,
+          "direct_table_privileges": [],
+          "procedure_privileges": [
+            "EXECUTE"
+          ]
+        }
+      },
+      "database_privileges": {
+        "public_connect": false,
+        "public_temp": false,
+        "runtime_connect": true,
+        "runtime_temp": false,
+        "runtime_schema_usage": true,
+        "runtime_schema_create": false,
+        "runtime_direct_dml": false,
+        "migrator_connect_after_migration": false
+      },
+      "migration_job": {
+        "service_account": "release-journal-migrator",
+        "vault_agent_file_injection_only": true,
+        "external_secret": false,
+        "reviewed_migration_sha256_required": true,
+        "transactional": true,
+        "disables_own_identity_before_success": true,
+        "success_requires_no_login_no_connect_no_owner_membership": true
+      },
+      "retirement": {
+        "bootstrap_secret_absent": true,
+        "bootstrap_vault_versions_destroyed": true,
+        "bootstrap_role_no_login": true,
+        "migration_pod_and_job_absent": true,
+        "migration_identity_disabled": true,
+        "migration_service_account_token_invalid": true,
+        "migration_vault_auth_role_deleted": true,
+        "migration_vault_versions_destroyed": true,
+        "runtime_never_received_bootstrap_or_migrator_credential": true
+      },
+      "negative_cases": [
+        "unauthorized-client-denied",
+        "bootstrap-secret-second-read-denied",
+        "bootstrap-secret-regeneration-denied",
+        "runtime-owner-membership-denied",
+        "runtime-direct-dml-denied",
+        "runtime-or-public-database-temp-denied",
+        "runtime-or-public-schema-create-denied",
+        "temp-relation-and-function-shadow-denied",
+        "migration-identity-persistence-denied",
+        "retired-bootstrap-or-migrator-credential-reuse-denied"
+      ]
+    },
+    "vault_direct": {
+      "owner": "vault-config/infra",
+      "status": "MISSING_VERIFIED_INTERNAL_IP_PORT_SNI_CA_BLOCKER",
+      "ip": null,
+      "port": null,
+      "sni": null,
+      "ca_sha256": null,
+      "proxy": false
+    },
+    "ingress_flows": [
+      {
+        "source": {
+          "namespace": "arc-runners-v2-untrusted",
+          "service_account": "release-candidate-kata",
+          "pod_labels": [
+            "app.kubernetes.io/name=release-candidate-kata",
+            "codicarium.com/service-account=release-candidate-kata"
+          ],
+          "selector_combination": "same-peer-namespaceSelector-AND-podSelector-plus-exact-ServiceAccount"
+        },
+        "destination": {
+          "namespace": "artifact-capability",
+          "service_account": "artifact-capability",
+          "pod_labels": [
+            "app.kubernetes.io/name=artifact-capability",
+            "codicarium.com/service-account=artifact-capability"
+          ],
+          "selector_combination": "same-peer-namespaceSelector-AND-podSelector-plus-exact-ServiceAccount"
+        },
+        "protocol": "TCP",
+        "port": 8443,
+        "purpose": "candidate-broker"
+      },
+      {
+        "source": {
+          "namespace": "arc-runners-v2-control",
+          "service_account": "release-control",
+          "pod_labels": [
+            "app.kubernetes.io/name=release-control",
+            "codicarium.com/service-account=release-control"
+          ],
+          "selector_combination": "same-peer-namespaceSelector-AND-podSelector-plus-exact-ServiceAccount"
+        },
+        "destination": {
+          "namespace": "artifact-capability",
+          "service_account": "artifact-capability",
+          "pod_labels": [
+            "app.kubernetes.io/name=artifact-capability",
+            "codicarium.com/service-account=artifact-capability"
+          ],
+          "selector_combination": "same-peer-namespaceSelector-AND-podSelector-plus-exact-ServiceAccount"
+        },
+        "protocol": "TCP",
+        "port": 8443,
+        "purpose": "trusted-control-broker"
+      },
+      {
+        "source": {
+          "namespace": "monitoring",
+          "service_account": "prometheus-stack-prometheus",
+          "pod_labels": [
+            "app.kubernetes.io/instance=prometheus-stack-prometheus",
+            "app.kubernetes.io/name=prometheus",
+            "codicarium.com/service-account=prometheus-stack-prometheus"
+          ],
+          "selector_combination": "same-peer-namespaceSelector-AND-podSelector-plus-exact-ServiceAccount"
+        },
+        "destination": {
+          "namespace": "artifact-capability",
+          "service_account": "artifact-capability",
+          "pod_labels": [
+            "app.kubernetes.io/name=artifact-capability",
+            "codicarium.com/service-account=artifact-capability"
+          ],
+          "selector_combination": "same-peer-namespaceSelector-AND-podSelector-plus-exact-ServiceAccount"
+        },
+        "protocol": "TCP",
+        "port": 9090,
+        "purpose": "prometheus-metrics"
+      },
+      {
+        "source": {
+          "namespace": "artifact-capability",
+          "service_account": "artifact-capability",
+          "pod_labels": [
+            "app.kubernetes.io/name=artifact-capability",
+            "codicarium.com/service-account=artifact-capability"
+          ],
+          "selector_combination": "same-peer-namespaceSelector-AND-podSelector-plus-exact-ServiceAccount"
+        },
+        "destination": {
+          "namespace": "runner-platform-journal-dev",
+          "service_account": "runner-platform-journal",
+          "pod_labels": [
+            "cnpg.io/cluster=runner-platform-journal",
+            "codicarium.com/service-account=runner-platform-journal"
+          ],
+          "selector_combination": "same-peer-namespaceSelector-AND-podSelector-plus-exact-ServiceAccount"
+        },
+        "protocol": "TCP",
+        "port": 5432,
+        "purpose": "broker-journal-database"
+      },
+      {
+        "source": {
+          "namespace": "artifact-capability",
+          "service_account": "release-journal-migrator",
+          "pod_labels": [
+            "app.kubernetes.io/name=release-journal-migration",
+            "codicarium.com/service-account=release-journal-migrator"
+          ],
+          "selector_combination": "same-peer-namespaceSelector-AND-podSelector-plus-exact-ServiceAccount"
+        },
+        "destination": {
+          "namespace": "runner-platform-journal-dev",
+          "service_account": "runner-platform-journal",
+          "pod_labels": [
+            "cnpg.io/cluster=runner-platform-journal",
+            "codicarium.com/service-account=runner-platform-journal"
+          ],
+          "selector_combination": "same-peer-namespaceSelector-AND-podSelector-plus-exact-ServiceAccount"
+        },
+        "protocol": "TCP",
+        "port": 5432,
+        "purpose": "migration-journal-database"
+      }
+    ],
+    "no_ingress": true,
+    "activation_blockers": [
+      "provide two additional generic eligible workers and prove three total plus remaining-two-node capacity",
+      "label/provision three Kata-v2-eligible workers; live count is zero; replace synthetic archive/image byte oracles with exact raw live codeload and registry-manifest/preload readback; prove protected-control opaque fetch -> immutable broker object -> one-read projected Pod token -> safe in-Kata scan/extract and complete teardown, with the separate broker verifier limited to tokenreviews.create, untrusted-namespace Pod get/list/watch, exact binding inventory and 10.43.0.1/32:443 CA/SAN/audience-verified API egress",
+      "install kata-clh-runtime-rs",
+      "materialize the centrally owned TLS-only proxy with projected bound Pod tokens, TokenReview/source-Pod binding, replay denial and separate exact GitHub/artifact listener host+method ACLs; limit its separate verifier to tokenreviews.create, Pod get/list/watch only in control+broker namespaces, no other binding inventory, and 10.43.0.1/32:443 CA/SAN/audience-verified API egress",
+      "establish and verify exact direct internal Vault IP, port, SNI and CA",
+      "materialize postgres-config-dev-path-helm/postgres-config-dev and runner-platform-journal-dev namespace with default-deny database/client NetworkPolicies, one-time CNPG bootstrap-secret transfer to Vault, least-privilege roles and bootstrap/migrator retirement",
+      "replace fail-closed journal procedure stubs with reviewed CAS/FSM implementations and PostgreSQL integration evidence including pg_catalog-first/pg_temp-last search path, fully qualified persistent relation/function references, PUBLIC/runtime TEMP and CREATE revocation, and temp-shadow attacks; materialize dedicated dev PostgreSQL with verify-full TLS, synchronous replicas and N-1 evidence; after the protected corrective merge discover and bind a non-fixture live identity before any claim"
+    ]
+  },
+  "grant_migration": {
+    "schema": "codicarium.grant-migration/v1",
+    "repository_id": "1303372884",
+    "environment": "dev",
+    "uniqueness_key": "repository_id=1303372884/environment=dev/max_grants=1",
+    "current_grant": {
+      "name": "runner-config-dev",
+      "uid": "60cf8514-cbc3-4659-ba5c-22c4d4658bae",
+      "resource_version": "27561715",
+      "profile_ref": "arc-path-helm",
+      "profile_ref_immutable": true,
+      "profile_uid": "868dbd03-3a59-43bd-9c70-e393eb69d8eb",
+      "duplicate_repo_environment_grant_allowed": false
+    },
+    "new_profile": {
+      "name": "artifact-capability-path-helm",
+      "create_before_grant_retirement": true,
+      "preserve_existing_arc_scopes": true,
+      "resources": [
+        "Certificate",
+        "Deployment",
+        "Issuer",
+        "Job",
+        "NetworkPolicy",
+        "PodDisruptionBudget",
+        "PrometheusRule",
+        "Service",
+        "ServiceAccount",
+        "ServiceMonitor"
+      ],
+      "destinations": [
+        "arc-runners",
+        "arc-systems",
+        "artifact-capability"
+      ]
+    },
+    "activation_compatibility": {
+      "chosen_runtime_mode": "event-driven",
+      "environment": "dev",
+      "deployment_activation_source": null,
+      "request_ref_required": true,
+      "kafka_required": true,
+      "poll_only_admissible": false,
+      "current_main_impact": "#103 PollOnly remains prod-only; dev runner-config-dev preserves event-driven RequestRef+Kafka authority and tests reject PollOnly/dev."
+    },
+    "preserved_objects": [
+      {
+        "kind": "AppProject",
+        "namespace": "argocd",
+        "name": "repo-runner-config-dev",
+        "uid": "59f950a3-11f2-49c7-bd38-90948df75872",
+        "resource_version": "26616740",
+        "spec_sha256": "78f44d4efdc2ea55c1ea7b527d863fb8c8c15170909750bb17d3e84b8670e468"
+      },
+      {
+        "kind": "Application",
+        "namespace": "argocd",
+        "name": "actions-runner-controller-codicarium",
+        "uid": "ff536ac7-51db-4256-8c81-6b8ef3ffda26",
+        "resource_version": "43334823",
+        "spec_sha256": "8f0e23deb6dd6c99879342af99c967ac2289834af9f989088c335cc33b7612fd"
+      },
+      {
+        "kind": "Application",
+        "namespace": "argocd",
+        "name": "actions-runner-scale-set-codicarium",
+        "uid": "586b3e1e-c5bb-4bf0-b7a9-fcaa9446ded7",
+        "resource_version": "43335012",
+        "spec_sha256": "b33e3502fd7b12cbb4f72b8524a2db97b8b2232e0b7d2363b8bd22cd6c0d9553"
+      },
+      {
+        "kind": "AutoscalingRunnerSet",
+        "namespace": "arc-runners",
+        "name": "codicarium-linux",
+        "uid": "4ef54624-27dc-464a-9215-54cc0b4b1eb9",
+        "resource_version": "43332160",
+        "spec_sha256": "1bd8af51c30bd7204cf1aec21684566fa3c5f4a28d3fa1c66477d7bf35d0809e"
+      },
+      {
+        "kind": "AutoscalingListener",
+        "namespace": "arc-systems",
+        "name": "codicarium-linux-5b84bf57-listener",
+        "uid": "c79f2712-6e1b-49d4-988c-ca1e73873ce1",
+        "resource_version": "26616851",
+        "spec_sha256": "9c1ed0b3dbf84e2a4b51adf583b76aa9d04a44251aba11cc5305703ee06a9d69"
+      }
+    ],
+    "steps": [
+      "verify exact kube binding before any mutation",
+      "create artifact-capability-path-helm before touching runner-config-dev",
+      "freeze delivery activation reconciliation and generated-write actors",
+      "snapshot exact UIDs resourceVersions managed fields and canonical spec hashes",
+      "delete old runner-config-dev with exact UID and resourceVersion preconditions",
+      "prove runner-config-dev absent and no duplicate repository/environment grant exists",
+      "prove old RepositoryDeployment activation proof and work are orphaned fail-closed",
+      "prove preserved AppProject Applications and ARC workloads retain exact UIDs and specs",
+      "recreate runner-config-dev with the same name and new profile as a new authorization epoch",
+      "reject every old activation proof work item UID and epoch",
+      "activate only after journal network Kata proxy Vault TLS and three-node gates pass"
+    ],
+    "rollback": "preactivation-only; after new authorization epoch activation use forward remediation, never restore old UID, proof, activation, work, or dual ownership"
+  },
+  "kube_context_binding": {
+    "schema": "codicarium.kube-context-binding/v1",
+    "kubeconfig": "/home/rickebo/.kube/codicarium-dev.yaml",
+    "context": "codicarium-dev",
+    "api_server": "https://10.99.0.21:6443",
+    "ca_pem_sha256": "c73f41a70db74a9e1020ce84bf27227e0523055d3156d8d47ef31d41a3e3b935",
+    "kube_system_uid": "03dea961-55e6-4141-bb23-6cb4b9f79681",
+    "kubernetes_service": {
+      "namespace": "default",
+      "service": "kubernetes",
+      "cluster_ip": "10.43.0.1",
+      "port": 443,
+      "accepted_audience": "https://kubernetes.default.svc",
+      "accepted_audience_status": "REQUIRED_PREACTIVATION_TOKENREVIEW_PROBE",
+      "ca_pem_sha256": "c73f41a70db74a9e1020ce84bf27227e0523055d3156d8d47ef31d41a3e3b935",
+      "certificate_dns_san": "kubernetes.default.svc",
+      "tls_san_status": "REQUIRED_PREACTIVATION_TLS_PROBE",
+      "discovery_command": "kubectl --kubeconfig=/home/rickebo/.kube/codicarium-dev.yaml --context=codicarium-dev --namespace=default get service kubernetes"
+    },
+    "dns": {
+      "namespace": "kube-system",
+      "service": "kube-dns",
+      "cluster_ip": "10.43.0.10",
+      "port": 53,
+      "protocols": [
+        "UDP",
+        "TCP"
+      ]
+    },
+    "monitoring": {
+      "namespace": "monitoring",
+      "namespace_uid": "f78cd9cb-d069-4bde-bc56-33686eef5968",
+      "namespace_labels": [
+        "kubernetes.io/metadata.name=monitoring"
+      ],
+      "prometheus_pod_labels": [
+        "app.kubernetes.io/instance=prometheus-stack-prometheus",
+        "app.kubernetes.io/name=prometheus",
+        "operator.prometheus.io/name=prometheus-stack-prometheus",
+        "operator.prometheus.io/shard=0",
+        "prometheus=prometheus-stack-prometheus"
+      ]
+    },
+    "commands": [
+      "kubectl --kubeconfig=/home/rickebo/.kube/codicarium-dev.yaml --context=codicarium-dev config view --minify -o json",
+      "kubectl --kubeconfig=/home/rickebo/.kube/codicarium-dev.yaml --context=codicarium-dev get --raw=/version",
+      "kubectl --kubeconfig=/home/rickebo/.kube/codicarium-dev.yaml --context=codicarium-dev get namespace kube-system -o json",
+      "kubectl --kubeconfig=/home/rickebo/.kube/codicarium-dev.yaml --context=codicarium-dev get namespace monitoring -o json"
+    ],
+    "mutation_guard": "Every cluster command includes the exact --kubeconfig and --context flags; server, CA PEM SHA-256, context, or kube-system UID mismatch exits before every mutation."
+  },
+  "protected_gate": {
+    "check_names": [
+      "chart",
+      "integration",
+      "lint",
+      "supply-chain",
+      "test"
+    ],
+    "app_id": "15368",
+    "same_current_head": true,
+    "repository_self_authorization": false
+  },
+  "rollback": "Preactivation only: revert reviewed Git desired state. After activation use forward remediation. Always disable v2 release workflows on uncertainty; never restore five old workflows, credentials, routing, old grant epoch, v0.6.13, or mutable output.",
+  "forward_only": {
+    "retired": "v0.6.13/ad52dfcbc45d71eccad1d49fbd905161af7a44b1",
+    "next": "v0.6.14",
+    "retag_or_resume_allowed": false
+  },
+  "follow_up_order": [
+    "issue-93-corrective-pr-merged-and-five-old-workflows-retired",
+    "v0.6.14-public-release-and-twenty-receipt-live-evidence-verified",
+    "issue-98-new-workflow-id-v0.6.8-one-target-broker-recovery-success",
+    "issue-98-eight-assets-read-back",
+    "pr-99-rebased-on-current-main",
+    "pr-99-five-checks-at-one-head",
+    "pr-99-merged",
+    "new-recover-release-v068-v2-workflow-removed-at-pr-99-merge-sha",
+    "issue-98-closed",
+    "pr-94-rebased-on-resulting-main",
+    "pr-94-five-checks-at-one-head",
+    "pr-94-merged"
+  ],
+  "fixture_counts": {
+    "manifest_files": 36,
+    "draft_2020_12_schemas": 13,
+    "raw_identity_positive_vectors": 2,
+    "raw_identity_negative_vectors": 6,
+    "claim_cas_vectors": 4,
+    "journal_entries": 45,
+    "journal_operation_evidence": 22,
+    "signed_publication_receipts": 20,
+    "publisher_mutations": 19,
+    "protected_checks": 5,
+    "retired_workflows": 5,
+    "release_assets": 14
+  },
+  "archive_profile": {
+    "fixture_tar": {
+      "byte_length": 3072,
+      "sha256": "fb7a260f46a361d9b90bf6371824f0b62dcabf99be09ab984a4fb6fcaeebda31"
+    },
+    "fixture_tar_zst": {
+      "byte_length": 102,
+      "sha256": "5858457a000d6f7334053b51ba4f1106f1ee1e683ffc6bcf461af0fe9b3dc64b"
+    },
+    "rule": "single canonical ustar plus single canonical zstd frame; payload object storage may be exact S3, but S3 is never the release journal"
+  },
+  "files": [
+    {
+      "path": "fixtures-v2.0/artifact-capability-api-v1.schemas.json",
+      "byte_length": 10626,
+      "sha256": "4bd321fb68e8f0c6bc3f965b202554bd73c6c2cecc0649acbe33be2c23a855a1"
+    },
+    {
+      "path": "fixtures-v2.0/candidate-evidence-v1.schema.json",
+      "byte_length": 8921,
+      "sha256": "390a309d45636080a71ddd137476a1165c1aac7636ee621aedea4b7bfa05d684"
+    },
+    {
+      "path": "fixtures-v2.0/publisher-dispatch-receipt-v1.schema.json",
+      "byte_length": 5466,
+      "sha256": "f8a645f6e4e6664cfa022dd4f38e49f2c07dc62bd2ffa4b8f3934fb510353489"
+    },
+    {
+      "path": "fixtures-v2.0/publisher-mutation-receipt-v1.schema.json",
+      "byte_length": 23694,
+      "sha256": "23ea3ed84ddc72de58773a32a550d1b7e874160bfaf8c948226aefb327d462b7"
+    },
+    {
+      "path": "fixtures-v2.0/release-live-evidence-v1.schema.json",
+      "byte_length": 57018,
+      "sha256": "2875ac4433e2a32d1090b3bb45195a3b18be26a77cb2e5e3e1b044f17f185daf"
+    },
+    {
+      "path": "fixtures-v2.0/release-identity-v1.schema.json",
+      "byte_length": 3847,
+      "sha256": "d4a29af892acb266066fc7935409ac2ae4e59c6bd9aa34d0a4a78ca13715240e"
+    },
+    {
+      "path": "fixtures-v2.0/release-live-implementation-identity-v1.schema.json",
+      "byte_length": 50066,
+      "sha256": "8f7e01411a15435a7b1e79d2c5b05ba115b27a7c03fde185e8167a5198ace6a7"
+    },
+    {
+      "path": "fixtures-v2.0/release-claim-cas-v1.schema.json",
+      "byte_length": 7655,
+      "sha256": "1339bacf4ab03d61db74bed3f1f4a420fec799005434361d3b513acd76e24242"
+    },
+    {
+      "path": "fixtures-v2.0/release-journal-v1.schema.json",
+      "byte_length": 33663,
+      "sha256": "4f8e506d277ff7e8a3682309ae2e818f258cc6ded201bbd35fbcd9a55afa5fd4"
+    },
+    {
+      "path": "fixtures-v2.0/recovery-retirement-v1.schema.json",
+      "byte_length": 7612,
+      "sha256": "ea99cb4e49847c314e9e6f0a1ba85f2f48d9c2f30ecfb1ba0e37435ee65d0cca"
+    },
+    {
+      "path": "fixtures-v2.0/grant-migration-v1.schema.json",
+      "byte_length": 5187,
+      "sha256": "49e6c4849a05cd16d68ecde5bacb3f2f865a6c3f0f907dd114a15f1561f1ed2b"
+    },
+    {
+      "path": "fixtures-v2.0/network-conformance-v1.schema.json",
+      "byte_length": 49100,
+      "sha256": "170994e2d388769652f72b396292a6bdc0c4eb039259af14af132dde7c254e56"
+    },
+    {
+      "path": "fixtures-v2.0/kube-context-binding-v1.schema.json",
+      "byte_length": 4227,
+      "sha256": "40c6bcdab02024673edc1d1becca4d98f0461654cf77e2c33f3442bf0b5a2eda"
+    },
+    {
+      "path": "fixtures-v2.0/workflow-permissions-v1.json",
+      "byte_length": 10161,
+      "sha256": "f74a60b6c746dd87c62b0b9d83ae9b2ed9293a80b152884978c5719d2b124cc6"
+    },
+    {
+      "path": "fixtures-v2.0/history-horizon-1000.json",
+      "byte_length": 36043,
+      "sha256": "20a4899fa5a001b9a45dca99122a31843a64b6c8542ca287d9299a1297a80a15"
+    },
+    {
+      "path": "fixtures-v2.0/canonical-identity-fixtures-v1.json",
+      "byte_length": 2246,
+      "sha256": "76c7e26c79d6df5511f0992eccf4c0ed6f6e71460fa57a0aa80129a265b473ff"
+    },
+    {
+      "path": "fixtures-v2.0/jcs-rfc8785-conformance-v1.fixture.json",
+      "byte_length": 3881,
+      "sha256": "4cbba7f67a2def1d85ee199fbf472e1de05d1dfa1c6c2bf88aeae0885a581e0e"
+    },
+    {
+      "path": "fixtures-v2.0/release-identity-negative-vectors-v1.fixture.json",
+      "byte_length": 4730,
+      "sha256": "d773faf33a4229718831aec627e8c4feb2acaf44735fe7132fdaa8a14c0b6a52"
+    },
+    {
+      "path": "fixtures-v2.0/artifact-capability-jws-v1.fixture.json",
+      "byte_length": 5125,
+      "sha256": "b2c51383dfc6e7d61cbec754460024d496323a70a00d54859ff7a366b18e02f7"
+    },
+    {
+      "path": "fixtures-v2.0/candidate-evidence-v1.fixture.json",
+      "byte_length": 2583,
+      "sha256": "b33000fa22ec9e510d37303ee8c2042fb9fbea6f8a35f865da4ad0b84d32777b"
+    },
+    {
+      "path": "fixtures-v2.0/release-claim-cas-v1.fixture.json",
+      "byte_length": 2431,
+      "sha256": "d978d5fafdd9c8312ae651f120081b736f1f9bde70b1090a306b982baab8b4e8"
+    },
+    {
+      "path": "fixtures-v2.0/release-journal-v1.fixture.json",
+      "byte_length": 145058,
+      "sha256": "e628866953f81e1b8c388a55696928e084a352540a6e75f7cd5b122f15f59e47"
+    },
+    {
+      "path": "fixtures-v2.0/publisher-dispatch-receipt-v1.fixture.json",
+      "byte_length": 2356,
+      "sha256": "528854ca21bc0b315cb63863672a8d6cec8177c391949a4888c4dba0fb9f52d5"
+    },
+    {
+      "path": "fixtures-v2.0/publisher-mutation-receipt-v1.fixture.json",
+      "byte_length": 40921,
+      "sha256": "fe8b0fcf1d1ed242eac2de563131d07a6582706b936b44d79e9c812f903be6e0"
+    },
+    {
+      "path": "fixtures-v2.0/release-live-evidence-v1.fixture.json",
+      "byte_length": 55361,
+      "sha256": "c2dea5bc35712518efe22e59da618ad19a4f026142b21b15440adac29ad76fb2"
+    },
+    {
+      "path": "fixtures-v2.0/recovery-retirement-v1.fixture.json",
+      "byte_length": 2634,
+      "sha256": "fcbc6546f090e858d02b28c46a2234cc298498306e8384f9f568c49a0e81cbcd"
+    },
+    {
+      "path": "fixtures-v2.0/grant-migration-v1.fixture.json",
+      "byte_length": 4038,
+      "sha256": "4608e54faaf8862c7eb7605c49b21c9449f4e77a1026f9094bb042e1b96047e6"
+    },
+    {
+      "path": "fixtures-v2.0/network-conformance-v1.fixture.json",
+      "byte_length": 40383,
+      "sha256": "9b88ce3bdbf4e1fbe6d3ea1b81ebb18cda8594d9a0ad2977937d659d2ad4258f"
+    },
+    {
+      "path": "fixtures-v2.0/kube-context-binding-v1.fixture.json",
+      "byte_length": 2320,
+      "sha256": "b19411f21d6cd45729de561f9e72c3a07ec3a7d8bf997b6778beecd417062fc7"
+    },
+    {
+      "path": "fixtures-v2.0/follow-up-order-v1.json",
+      "byte_length": 799,
+      "sha256": "a2a95f74e1a68e11d7b021c8c93a69e12926b5be29842172ab5c6509f3dfcf84"
+    },
+    {
+      "path": "fixtures-v2.0/release-handoff-v1.json",
+      "byte_length": 697,
+      "sha256": "8abe528bb32aaa47f8fc496c3571d4b91248f3ebfe4c8be29463a25277bd9e88"
+    },
+    {
+      "path": "fixtures-v2.0/publisher-dispatch-v1.json",
+      "byte_length": 436,
+      "sha256": "b150fa8dad70a207fb7a78f6a41ab1bc1430833ba70b86fdc2f08a13c7c11f3b"
+    },
+    {
+      "path": "fixtures-v2.0/canonical-archive-v1.tar",
+      "byte_length": 3072,
+      "sha256": "fb7a260f46a361d9b90bf6371824f0b62dcabf99be09ab984a4fb6fcaeebda31"
+    },
+    {
+      "path": "fixtures-v2.0/canonical-archive-v1.tar.zst",
+      "byte_length": 102,
+      "sha256": "5858457a000d6f7334053b51ba4f1106f1ee1e683ffc6bcf461af0fe9b3dc64b"
+    },
+    {
+      "path": "fixtures-v2.0/archive-input/alpha.txt",
+      "byte_length": 6,
+      "sha256": "b6a98d9ce9a2d9149288fa3df42d377c3e42737afdcdaf714e33c0a100b51060"
+    },
+    {
+      "path": "fixtures-v2.0/archive-input/beta.txt",
+      "byte_length": 5,
+      "sha256": "f2c82decdd7181cf98945929a62598db7e6b477e11f6e0eb0ae97020eff151ad"
+    }
+  ]
+}

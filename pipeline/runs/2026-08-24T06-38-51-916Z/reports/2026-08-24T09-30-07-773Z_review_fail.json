@@ -1,0 +1,35 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Prior CSRF and forged-cookie findings are fixed. One cleanup gap remains: expiry pruning removes flows but leaves per-flow limiter entries, allowing gradual unbounded growth. One PR race check is also red.",
+  "changed_files": [],
+  "validation": [
+    "Login now requires strict bootstrap CSRF, same-origin Origin, and JSON content type before credentials are accepted.",
+    "Quick Connect status is POST-only with strict CSRF/origin; GET cannot reach authentication or create a session.",
+    "Invalid cookies are looked up before per-flow limiter allocation and terminal paths delete limiter entries.",
+    "PR checks: one Go race job failed in unrelated discovery test; other Go, build, vulnerability, secret, and artifact jobs passed."
+  ],
+  "blockers": [
+    "quickConnectState.prune deletes expired flows but never deletes their quick_connect_poll limiter keys. Abandoned flows can accumulate stale entries across repeated TTL cycles.",
+    "Go race CI is not green: TestCanceledAuthoritativeHintDuringInflightReconcileRunsOneFollowup timed out in internal/discovery."
+  ],
+  "next_action": "Route to code: couple expiry pruning with limiter-key cleanup and add an abandoned-flow cleanup test; investigate the failed discovery race check before test stage.",
+  "route_to": "code",
+  "risk_level": "high",
+  "issues": [
+    {
+      "id": "REV-004",
+      "title": "Expiry pruning leaks poll limiter entries",
+      "severity": "high",
+      "details": "internal/publicapi/quickconnect.go:quickConnectState.prune removes expired flows from the map but does not remove quick_connect_poll:<idHash> entries. Poll once, abandon 256 flows, wait for TTL, and repeat; limiter memory grows without bound. Couple pruning to limiter cleanup under race-safe ownership and test it.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV-005",
+      "title": "PR race check failed",
+      "severity": "medium",
+      "details": "GitHub run 32710591919 failed go test -race in internal/discovery at TestCanceledAuthoritativeHintDuringInflightReconcileRunsOneFollowup with context deadline exceeded. The second Go lane passed, but the PR cannot be considered fully green until this is understood or rerun by the pipeline.",
+      "owner_stage": "test"
+    }
+  ]
+}

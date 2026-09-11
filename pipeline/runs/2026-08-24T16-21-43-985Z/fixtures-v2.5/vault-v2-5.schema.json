@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://codicarium.local/v2.5/vault.v2.5",
+  "title": "vault.v2.5",
+  "type": "object",
+  "required": [
+    "role",
+    "principal",
+    "transit_key_fingerprint",
+    "revoked"
+  ],
+  "properties": {
+    "role": {
+      "type": "string",
+      "minLength": 1
+    },
+    "principal": {
+      "type": "string",
+      "minLength": 1
+    },
+    "transit_key_fingerprint": {
+      "type": "string",
+      "minLength": 1
+    },
+    "revoked": {
+      "type": "boolean"
+    }
+  },
+  "additionalProperties": false
+}

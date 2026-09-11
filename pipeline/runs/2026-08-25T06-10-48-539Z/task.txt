@@ -1,0 +1,1 @@
+Workspace Manager issue #28 production Knowledge generation resolver integration and acceptance proof

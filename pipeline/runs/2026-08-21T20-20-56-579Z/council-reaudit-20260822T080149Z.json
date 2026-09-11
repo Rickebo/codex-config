@@ -1,0 +1,30 @@
+{
+  "run_dir": "/home/rickebo/.codex/pipeline/runs/2026-08-21T20-20-56-579Z",
+  "stage": "spec",
+  "risk_level": "high",
+  "generated_at": "2026-08-22T08:01:49Z",
+  "perspectives": [
+    {
+      "role": "codicarium_devops",
+      "status": "blocked",
+      "summary": "Fresh backups completed at 02:17:15Z and 02:47:13Z, but ObjectStore health does not prove shared WAL cutoff or artifact object/SHA closure."
+    },
+    {
+      "role": "homelab_devops",
+      "status": "blocked",
+      "summary": "Large RWX PVs are bound Retain NFS volumes used by existing Kopia/shared-media workloads; no available >=100Gi PV exists, and Longhorn remains overscheduled with a NotReady data disk."
+    },
+    {
+      "role": "github_operator",
+      "status": "blocked",
+      "summary": "No new user/operator decision, linked PR, or approved storage/identity prerequisite exists in issues #482, #483, or #489."
+    }
+  ],
+  "consensus_summary": "Proceeding safely means continuing only read-only preflight. Keep the pipeline at spec until provider-side source evidence, dedicated target storage/restore proof, and target-only identity/secret decisions exist. Do not reuse bound volumes or mutate Codicarium.",
+  "open_questions": [
+    "Can an authorized provider supply sanitized Barman/S3 object-existence and SHA evidence?",
+    "Which distinct target-owned artifact backend is approved and proven recoverable?",
+    "Is the narrow Authentik mapping plus fresh target-only credentials approved?",
+    "What separate operator review is required for incidental secret-adjacent output?"
+  ]
+}

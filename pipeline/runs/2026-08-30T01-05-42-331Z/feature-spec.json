@@ -1,0 +1,167 @@
+{
+  "meta": {
+    "id": "SPEC-infra-pr1155-refresh",
+    "title": "Refresh Argo Phase 0 PR with parser-level revocation coverage",
+    "author": "manager",
+    "created_at": "2026-08-30T01:12:00Z",
+    "version": "1.0.1"
+  },
+  "feature": {
+    "problem_statement": "Infra PR #1155 contains the intended Argo deny-by-default and legacy MetaMCP revocation controls, but it is 14 commits behind canonical main and its fake-kubectl tests do not prove the exact Go templates parse in real kubectl.",
+    "goals": [
+      "Refresh the existing PR branch onto exact canonical main without reverting unrelated platform work.",
+      "Add real-kubectl parser coverage for the exact account and token state templates.",
+      "Produce a fresh exact-head reviewed and CI-validated PR while preserving all lockout safety controls."
+    ],
+    "non_goals": [
+      "Merge PR #1155.",
+      "Dispatch the revocation or break-glass workflows.",
+      "Create GitHub environments, secrets, runners, Authentik identities, or live authorization state.",
+      "Deploy Argo default deny or activate Access Controller writes."
+    ],
+    "scope_in": [
+      "Rebase security/argo-default-deny from b6bed30712e85bf9885211ceb35e739ac72e273f onto 4096b5da32b4e734e05552a8ede7dc58dd01deaf, the canonical main observed after the first guarded rebase stopped on concurrent movement.",
+      "Resolve overlapping files narrowly, preserving current-main behavior and the reviewed Phase 0 delta.",
+      "Add offline parser-level regression tests using real kubectl for present and absent account/token keys.",
+      "Run focused repository validation, independent Luna review, and fresh exact-head PR checks."
+    ],
+    "scope_out": [
+      "Live cluster reads beyond already captured evidence.",
+      "Any workflow dispatch, merge, deployment, credential access, or authorization mutation.",
+      "Weakening or bypassing missing environment, reviewer, runner, Authentik, or break-glass gates."
+    ]
+  },
+  "requirements": [
+    {
+      "id": "REQ-001",
+      "priority": "MUST",
+      "statement": "The refreshed branch MUST descend from exact canonical main 4096b5da32b4e734e05552a8ede7dc58dd01deaf and MUST preserve unrelated current-main changes.",
+      "rationale": "The existing security branch is stale and overlaps platform topology checks."
+    },
+    {
+      "id": "REQ-002",
+      "priority": "MUST",
+      "statement": "Tests MUST execute the exact account_state and token_state Go templates through a real kubectl client-side template parser for present and absent keys.",
+      "rationale": "The fake kubectl transaction harness cannot detect invalid Go-template syntax."
+    },
+    {
+      "id": "REQ-003",
+      "priority": "MUST",
+      "statement": "The refresh MUST preserve token-first revocation, resourceVersion and old-value guards, role:readonly precondition, three explicit human admin mappings, explicit kubeconfig/context/API authority, pinned kubectl verification, and idempotent partial-failure behavior.",
+      "rationale": "These controls form the reviewed lockout-safe and fail-closed transaction boundary."
+    },
+    {
+      "id": "REQ-004",
+      "priority": "MUST",
+      "statement": "The branch update MUST use an exact expected lease for b6bed30712e85bf9885211ceb35e739ac72e273f and MUST stop if the remote branch or canonical main changes unexpectedly.",
+      "rationale": "Concurrent platform work is active and stale force-pushes are forbidden."
+    },
+    {
+      "id": "REQ-005",
+      "priority": "MUST",
+      "statement": "The work MUST stop before merge, workflow dispatch, deployment, credential access, environment creation, or live authorization mutation and MUST report all external safety gates as unresolved.",
+      "rationale": "Required environment protection, trusted runner, Authentik session proof, and local-admin break-glass proof are not established."
+    }
+  ],
+  "acceptance_criteria": [
+    {
+      "id": "AC-001",
+      "requirement_ids": ["REQ-001", "REQ-003"],
+      "scenario": "Given canonical main 4096b5da and old PR head b6bed307, when the branch is refreshed, then main is an ancestor, range-diff is reviewed, the Phase 0 delta remains scoped, and current-main topology/publication controls are retained."
+    },
+    {
+      "id": "AC-002",
+      "requirement_ids": ["REQ-002"],
+      "scenario": "Given fixtures with account/token keys present or absent, when the exact templates are evaluated by real kubectl offline, then parsing succeeds and returns the expected apiKey/present/absent states."
+    },
+    {
+      "id": "AC-003",
+      "requirement_ids": ["REQ-003"],
+      "scenario": "Given existing transaction and RBAC tests, when focused validation runs after refresh, then token-first guarded revocation, idempotency, partial failure, admin continuity, and permissionless default policy contracts all pass unchanged."
+    },
+    {
+      "id": "AC-004",
+      "requirement_ids": ["REQ-004"],
+      "scenario": "Given expected remote head b6bed307, when the refreshed branch is pushed, then force-with-lease succeeds only if that exact remote head is unchanged and the resulting PR head is recorded."
+    },
+    {
+      "id": "AC-005",
+      "requirement_ids": ["REQ-005"],
+      "scenario": "Given the refreshed PR, when code review and CI complete, then no merge, dispatch, deployment, environment/secret/runner change, or live authorization mutation has occurred and all external gates remain explicit NO-GO conditions."
+    }
+  ],
+  "test_plan": [
+    {
+      "id": "TST-001",
+      "type": "integration",
+      "requirement_ids": ["REQ-001", "REQ-003"],
+      "approach": "Use ancestry, name-status, range-diff, focused topology checks, transaction tests, RBAC contract tests, break-glass guards, shell/Python syntax, actionlint, and diff checks."
+    },
+    {
+      "id": "TST-002",
+      "type": "integration",
+      "requirement_ids": ["REQ-002"],
+      "approach": "Run exact extracted templates through real kubectl using offline client dry-run or a loopback fake API server and assert account/token present and absent outputs."
+    },
+    {
+      "id": "TST-003",
+      "type": "e2e",
+      "requirement_ids": ["REQ-004", "REQ-005"],
+      "approach": "Push with exact force-with-lease, independently review the exact new SHA, and inspect all PR checks without merging or dispatching workflows."
+    }
+  ],
+  "traceability": [
+    {
+      "requirement_id": "REQ-001",
+      "acceptance_ids": ["AC-001"],
+      "test_ids": ["TST-001"],
+      "review_checks": ["Review range-diff and every overlapping conflict resolution."],
+      "validation_checks": ["Verify canonical main is an ancestor and unrelated main changes remain. "]
+    },
+    {
+      "requirement_id": "REQ-002",
+      "acceptance_ids": ["AC-002"],
+      "test_ids": ["TST-002"],
+      "review_checks": ["Confirm tests execute exact production templates, not copied approximations."],
+      "validation_checks": ["Present and absent account/token fixtures pass real kubectl parsing."]
+    },
+    {
+      "requirement_id": "REQ-003",
+      "acceptance_ids": ["AC-001", "AC-003"],
+      "test_ids": ["TST-001"],
+      "review_checks": ["Review revocation sequencing, guards, admin mappings, and default policy."],
+      "validation_checks": ["Existing adversarial transaction and RBAC suites remain green."]
+    },
+    {
+      "requirement_id": "REQ-004",
+      "acceptance_ids": ["AC-004"],
+      "test_ids": ["TST-003"],
+      "review_checks": ["Re-read canonical main and remote PR head immediately before push."],
+      "validation_checks": ["Remote update uses exact expected lease and recorded resulting head."]
+    },
+    {
+      "requirement_id": "REQ-005",
+      "acceptance_ids": ["AC-005"],
+      "test_ids": ["TST-003"],
+      "review_checks": ["Confirm environment, runner, Authentik, and break-glass blockers remain explicit."],
+      "validation_checks": ["Audit GitHub/live state for absence of merge, dispatch, deployment, or authorization mutation."]
+    }
+  ],
+  "quality_gates": {
+    "spec_review_required": true,
+    "testability_required": true,
+    "traceability_required": true
+  },
+  "council": {
+    "perspectives": [
+      {"role": "planner", "summary": "Refresh narrowly onto exact main, preserve overlapping topology/publication changes, add exact parser coverage, and push only with an exact lease."},
+      {"role": "reviewer", "summary": "Treat environment protection, secret scope, runner isolation, Authentik continuity, and break-glass proof as hard merge/deploy gates outside this code refresh."},
+      {"role": "tech_lead_qa", "summary": "Use real kubectl parsing plus existing fake-cluster transaction suites, focused static checks, independent exact-head review, and fresh PR CI."}
+    ],
+    "consensus_summary": "Proceed only with rebase and parser-test hardening. The current indexed templates are valid; do not claim or re-fix a stale defect. Stop after exact-head PR evidence and keep merge/deploy NO-GO.",
+    "open_questions": [
+      "Which independently trusted reviewer and dedicated runner will later protect codicarium-management-break-glass?",
+      "When will a browser or Authentik connector be attached for admin and ordinary-user proof?"
+    ]
+  }
+}

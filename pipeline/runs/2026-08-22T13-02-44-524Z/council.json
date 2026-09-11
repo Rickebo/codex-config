@@ -1,0 +1,9 @@
+{
+  "perspectives": [
+    {"role":"backend","summary":"Separate settings and retain the SDK transport architecture."},
+    {"role":"security","summary":"Authenticate only MCP routes with constant-time token comparison and no secret disclosure."},
+    {"role":"operations","summary":"Use private VM configuration and validate explicit MetaMCP routing."}
+  ],
+  "consensus_summary":"Proceed with the documented minimal transport-security/auth contract.",
+  "open_questions":[]
+}

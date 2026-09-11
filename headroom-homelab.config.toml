@@ -1,0 +1,12 @@
+model = "gpt-5.6-luna"
+model_reasoning_effort = "medium"
+model_provider = "headroom"
+openai_base_url = "http://127.0.0.1:1058/openai/rickebo/headroom/v1"
+service_tier = "default"
+
+[model_providers.headroom]
+name = "Headroom through homelab LLM Proxy bridge"
+base_url = "http://127.0.0.1:1058/openai/rickebo/headroom/v1"
+wire_api = "responses"
+supports_websockets = false
+requires_openai_auth = true

@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "array",
+  "minItems": 18,
+  "maxItems": 18,
+  "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "id",
+      "repository",
+      "action",
+      "depends_on",
+      "gate_ids"
+    ],
+    "properties": {
+      "id": {
+        "type": "string",
+        "pattern": "^[A-Z][0-9]{2}$"
+      },
+      "repository": {
+        "type": "string",
+        "minLength": 1
+      },
+      "action": {
+        "type": "string",
+        "minLength": 12
+      },
+      "depends_on": {
+        "type": "array",
+        "uniqueItems": true,
+        "items": {
+          "type": "string",
+          "pattern": "^[A-Z][0-9]{2}$"
+        }
+      },
+      "gate_ids": {
+        "type": "array",
+        "uniqueItems": true,
+        "items": {
+          "type": "string",
+          "pattern": "^GATE-[0-9]{3}$"
+        }
+      }
+    }
+  }
+}

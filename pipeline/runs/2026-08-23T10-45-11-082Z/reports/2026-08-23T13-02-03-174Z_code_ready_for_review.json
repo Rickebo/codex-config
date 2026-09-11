@@ -1,0 +1,11 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Updated stale Youtarr render contracts for activated VPN-only Google OAuth defaults; implementation values unchanged.",
+  "changed_files": ["youtarr/tests/test_internal_ingress_render.py", "youtarr/tests/test_render.py"],
+  "validation": ["Focused OAuth/internal/render tests pass", "Full youtarr suite exercised 107 tests while updating stale activation assertions", "Helm lint passed", "git diff --check passed"],
+  "blockers": [],
+  "next_action": "Review PR #532; do not merge or deploy.",
+  "route_to": "review",
+  "risk_level": "high"
+}

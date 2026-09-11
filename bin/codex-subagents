@@ -1,0 +1,117 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+seed_prompt=$'Operating mode: fire-and-forget subagent delegation.\nSpawn sub-agents for independent, non-blocking work using dedicated git worktrees under .worktrees/<repo>-<branch>.\nEliminate babysitting: managers issue a single blocking wait; subagents execute autonomously to completion without progress pings.\nEvery delegation must specify: bounded scope, clear testable acceptance criteria, and self-verification commands (test suites, linters, git diff inspection).\nWorkers must autonomously verify their work before reporting completion.\nModel and reasoning routing (Tiered):\n- Tier 0 (Astra): Strategic architecture, decomposition, impasse escalation (episodic 1-2 turns, no babysitting).\n- Tier 1 (Tech Leads): gpt-5.6-terra or gpt-5.6-luna with medium or high reasoning (avoid Sol unless exceptional ambiguity).\n- Tier 2 (Workers/Coders/Reviewers/DevOps): gpt-5.6-luna with medium reasoning (low reasoning for simple search/mapping).\n- Pure code or devops implementation: gpt-5.6-luna with medium reasoning.\n- Complex non-code analysis/planning: gpt-5.6-luna or gpt-5.6-terra with high reasoning.\n- Simple exploration/search/mapping: gpt-5.6-luna with low reasoning.\nSubagents report once upon completion or external blocker: lane, status, changed_files, validation, blockers, next_action.\nCaps: summary<=600 chars, changed_files<=20, validation<=12, blockers<=8, next_action<=300 chars, issues<=15.'
+
+render_prompt() {
+  local user_prompt="${1-}"
+  if [[ -n "$user_prompt" ]]; then
+    printf '%s\n\n%s' "$seed_prompt" "$user_prompt"
+  else
+    printf '%s' "$seed_prompt"
+  fi
+}
+
+parse_top_level() {
+  local -a forward=()
+  local prompt=""
+
+  while (($#)); do
+    case "$1" in
+      -h|--help|-V|--version)
+        exec codex "$@"
+        ;;
+      -c|--config|--enable|--disable|-i|--image|-m|--model|--local-provider|-p|--profile|-s|--sandbox|-a|--ask-for-approval|-C|--cd|--add-dir)
+        forward+=("$1")
+        shift
+        if (($# == 0)); then
+          printf 'codex-subagents: missing value for option\n' >&2
+          exit 2
+        fi
+        forward+=("$1")
+        shift
+        ;;
+      --*=*)
+        forward+=("$1")
+        shift
+        ;;
+      --oss|--full-auto|--dangerously-bypass-approvals-and-sandbox|--search|--no-alt-screen)
+        forward+=("$1")
+        shift
+        ;;
+      exec)
+        parse_exec "${@:2}"
+        return
+        ;;
+      review|login|logout|mcp|mcp-server|app-server|completion|sandbox|debug|apply|resume|fork|cloud|features|help)
+        exec codex "$@"
+        ;;
+      --)
+        shift
+        prompt="$*"
+        break
+        ;;
+      -*)
+        forward+=("$1")
+        shift
+        ;;
+      *)
+        prompt="$*"
+        break
+        ;;
+    esac
+  done
+
+  exec /home/rickebo/.codex/bin/codex-stable "${forward[@]}" "$(render_prompt "$prompt")"
+}
+
+parse_exec() {
+  local -a forward=(exec)
+  local prompt=""
+
+  while (($#)); do
+    case "$1" in
+      -h|--help|-V|--version)
+        exec codex exec "$@"
+        ;;
+      review|resume|help)
+        exec codex exec "$@"
+        ;;
+      -c|--config|--enable|--disable|-i|--image|-m|--model|--local-provider|-p|--profile|-s|--sandbox|-C|--cd|--add-dir|-o|--output-last-message|--output-schema|--color)
+        forward+=("$1")
+        shift
+        if (($# == 0)); then
+          printf 'codex-subagents exec: missing value for option\n' >&2
+          exit 2
+        fi
+        forward+=("$1")
+        shift
+        ;;
+      --*=*)
+        forward+=("$1")
+        shift
+        ;;
+      --oss|--full-auto|--dangerously-bypass-approvals-and-sandbox|--skip-git-repo-check|--ephemeral|--progress-cursor|--json)
+        forward+=("$1")
+        shift
+        ;;
+      --)
+        shift
+        prompt="$*"
+        break
+        ;;
+      -*)
+        forward+=("$1")
+        shift
+        ;;
+      *)
+        prompt="$*"
+        break
+        ;;
+    esac
+  done
+
+  exec /home/rickebo/.codex/bin/codex-stable "${forward[@]}" "$(render_prompt "$prompt")"
+}
+
+parse_top_level "$@"

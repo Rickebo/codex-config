@@ -1,0 +1,136 @@
+{
+  "schema": "codicarium.pre-council-bundle/v2.4",
+  "generated_at": "2026-08-26T12:00:00Z",
+  "files": [
+    {
+      "path": "build-v2.4-spec.mjs",
+      "byte_length": 35760,
+      "sha256": "ac2ae99f0ed6d354cf48dfd0bebe918dd43cf805ee57080fda01fa8bdd7d6edd"
+    },
+    {
+      "path": "feature-spec.v2.4.annex.json",
+      "byte_length": 21345,
+      "sha256": "7e66d94dfa275e95819d87bd1ba835364e12456ec2275a30342b3b4983480432"
+    },
+    {
+      "path": "feature-spec.v2.4.draft.json",
+      "byte_length": 37603,
+      "sha256": "70b969952dff7cfa7e32c1770dd05029dd04145e2342b17c1a848460e858f593"
+    },
+    {
+      "path": "fixtures-v2.4/activation-blocked-v2.4.json",
+      "byte_length": 220,
+      "sha256": "1bdd499265678e89ffcf9044a3aabb2755073fb5ee1c1d6ec5f0d20e3cb7fe8b"
+    },
+    {
+      "path": "fixtures-v2.4/admin-contracts-v2.4.json",
+      "byte_length": 784,
+      "sha256": "2e7b5378d007c2f9a2256a1c8d093b84dda48c5b3578eabb8b35660f70f0878f"
+    },
+    {
+      "path": "fixtures-v2.4/admin-v2-4.schema.json",
+      "byte_length": 1114,
+      "sha256": "942989fe5bf0346c1493a88e744f3f680cd6668c2205727b40db2698f0d578a0"
+    },
+    {
+      "path": "fixtures-v2.4/asset-v2-4.schema.json",
+      "byte_length": 630,
+      "sha256": "790fb353a2af28f93a108fcb9909c384590d67a19f3634c12bbfe184fa5599a4"
+    },
+    {
+      "path": "fixtures-v2.4/assets-v2.4.json",
+      "byte_length": 4404,
+      "sha256": "b8439176ca20ab5f5671f0bdac05f7ddf533ae4ca6bab475f0b068e91e39a070"
+    },
+    {
+      "path": "fixtures-v2.4/base-command-v2.4.json",
+      "byte_length": 1533,
+      "sha256": "8dd972beb0642da6f271d41eadbdeb98475aab1d69ee12ac6b960109439db1df"
+    },
+    {
+      "path": "fixtures-v2.4/candidate-evidence-v2.4.json",
+      "byte_length": 251,
+      "sha256": "7f78275180c69734dd819b956b06042d854953fbd10d92999eaed1d74bdb528b"
+    },
+    {
+      "path": "fixtures-v2.4/command-catalog-v2.4.json",
+      "byte_length": 13170,
+      "sha256": "46c9d384e80d0404c45b6a242957284206cd0caff8bd98c4a337ecdf8b04438b"
+    },
+    {
+      "path": "fixtures-v2.4/command-v2-4.schema.json",
+      "byte_length": 577,
+      "sha256": "992aa7f204e0ea628b4d3078c5e1ebcd7bff6ba6b603c11d0a88510314de4094"
+    },
+    {
+      "path": "fixtures-v2.4/executable-negative-vectors-v2.4.json",
+      "byte_length": 13356,
+      "sha256": "8966f3f5fc82804fd66fb051fcd7b3438386af91194f4023eaab33fbc36f83f0"
+    },
+    {
+      "path": "fixtures-v2.4/fsm-v2-4.schema.json",
+      "byte_length": 544,
+      "sha256": "461e0cfb8b173083bf425d010e1578c760a044d10f3285ef0b51be3267258bbf"
+    },
+    {
+      "path": "fixtures-v2.4/github-proxy-catalog-v2.4.json",
+      "byte_length": 409,
+      "sha256": "4b595d603f7e8bc5b4726227da345d332ccb9b68a6746451f7f8773afde933d1"
+    },
+    {
+      "path": "fixtures-v2.4/mutation-v2-4.schema.json",
+      "byte_length": 499,
+      "sha256": "027f23090706732ffc3f0ee1ed0ee36dcae73144b7a370235e5970d216270927"
+    },
+    {
+      "path": "fixtures-v2.4/payload-v2-4.schema.json",
+      "byte_length": 2166,
+      "sha256": "badceb7c51bc1950ca7751f1081b308923ae48271eefd6c8b7240a76972c5f9e"
+    },
+    {
+      "path": "fixtures-v2.4/pipeline-spec-check-v2.4.json",
+      "byte_length": 558,
+      "sha256": "b64362836e68daae286a70b70da07fdeb31a5b4e6905e4f0f2d4d55fc79b9ee3"
+    },
+    {
+      "path": "fixtures-v2.4/replay-ledger-v2.4.json",
+      "byte_length": 256,
+      "sha256": "48142b7b00da9263920f218432368b61ad8d90c5384d85e1f48348d1aa45b261"
+    },
+    {
+      "path": "fixtures-v2.4/rollout-dag-v2.4.json",
+      "byte_length": 46414,
+      "sha256": "25ab72e50b405cd9ce49e85df981689654ac2f2ac93bf438b842745461885c7f"
+    },
+    {
+      "path": "fixtures-v2.4/rollout-dag-v2.4.schema.json",
+      "byte_length": 864,
+      "sha256": "fb1c38011bda4b370d036fb1eb30d160497204bfcc16ea538b6095de54e93588"
+    },
+    {
+      "path": "fixtures-v2.4/signature-v2-4.schema.json",
+      "byte_length": 644,
+      "sha256": "2a2e6d17376d548c1a430771061db42f6e5b3cbb8bf37db68e5de8060f6be65a"
+    },
+    {
+      "path": "fixtures-v2.4/signed-command-evidence-positive-v2.4.json",
+      "byte_length": 88627,
+      "sha256": "bda37484353c1cf06fd5209aa7539c1861111e00983f6c2dffa3104288764952"
+    },
+    {
+      "path": "fixtures-v2.4/typed-payload-schemas-v2.4.json",
+      "byte_length": 8559,
+      "sha256": "b52fca08b4ba29a888c2158b08ab79e7fa96c7a19797a9a052941a4946b9ade7"
+    },
+    {
+      "path": "fixtures-v2.4/vault-postgres-contracts-v2.4.json",
+      "byte_length": 356,
+      "sha256": "02ee6ce0372e05e27e49352b99cf21dbf12e9172433aa29e1e2799717d16cfbf"
+    },
+    {
+      "path": "validate-v2.4.py",
+      "byte_length": 17726,
+      "sha256": "c98085d3928dabe7193cea8537c9a1e95c9bf94bf5830f6512a3a2a643dc9f73"
+    }
+  ]
+}

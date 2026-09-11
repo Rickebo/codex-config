@@ -1,0 +1,25 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Independent exact-head review of PR #150 is NO-GO: token refresh concurrency, permission escalation handling, HTTP 403 rate-limit classification, and retry-hint timing need fixes.",
+  "changed_files": [],
+  "validation": [
+    "Read-only review completed against d70f58088c4d3673880cab1ae37795918137a1ff",
+    "Findings are localized to internal/githubproject/app_token.go and client.go"
+  ],
+  "blockers": [
+    "Concurrent cache misses/forced refreshes can stampede and stale responses can overwrite newer tokens.",
+    "Permission validation can allow a replacement map and does not reject unexpected or elevated grants.",
+    "HTTP 403 rate-limit responses are not retried while ordinary permission denials must remain permanent.",
+    "Retry-After/X-RateLimit-Reset hints are capped at two seconds instead of being honored to the context deadline."
+  ],
+  "next_action": "Return to code, implement the four bounded fixes with regression tests, then rerun independent review and exact-head checks.",
+  "route_to": "code",
+  "risk_level": "high",
+  "issues": [
+    {"id":"REV-125-1","title":"Serialize or generation-guard installation token refreshes","severity":"high","details":"Concurrent misses and forced refreshes can stampede and stale responses can overwrite a newer token.","owner_stage":"code"},
+    {"id":"REV-125-2","title":"Enforce mandatory permission minima and reject escalation","severity":"high","details":"Configured override can replace mandatory map; returned unexpected/elevated permissions are not rejected.","owner_stage":"code"},
+    {"id":"REV-125-3","title":"Retry rate-limit HTTP 403 only","severity":"high","details":"403 with rate-limit evidence must be retryable; ordinary permission denial must remain permanent.","owner_stage":"code"},
+    {"id":"REV-125-4","title":"Honor server retry hints within context","severity":"medium","details":"Do not force Retry-After or reset hints down to a two-second cap; remain bounded by context and retry budget.","owner_stage":"code"}
+  ]
+}

@@ -1,0 +1,190 @@
+{
+  "meta": {
+    "id": "SPEC-infra-1290-authority-runner-contract",
+    "title": "Define the Codicarium infrastructure authority-runner ownership and verification contract",
+    "author": "manager",
+    "created_at": "2026-08-30T05:32:00Z",
+    "version": "1.0.0"
+  },
+  "feature": {
+    "problem_statement": "The external authority runner used by protected Codicarium infrastructure workflows has no tracked declarative owner for its OS user, runner service, root-installed seal tools, workspace, or sudo policy. PR #1246 must not execute checkout-controlled code under sudo or receive protected apply authority until a strict desired-state contract and offline fail-closed verifier exist.",
+    "goals": [
+      "Declare codicarium/infra as the authority for runner-b-1 runner service, fixed root tools, workspace, and narrow sudo policy.",
+      "Add a strict non-secret machine-readable desired-state contract bound to immutable numeric GitHub identities and an immutable reviewed source revision.",
+      "Add a non-mutating verifier and deterministic sanitized evidence for fixture or later host-state inspection.",
+      "Add adversarial tests proving no checkout-controlled path, shell escape, wildcard sudo, mutable identity, symlink, writable ancestor, or metadata-only false verification can pass."
+    ],
+    "non_goals": [
+      "Install, remove, or modify any host file, service, runner, sudo rule, GitHub setting, workflow authorization, or live infrastructure.",
+      "SSH to runner-b-1, execute sudo, dispatch protected apply, merge PR #1246, or activate the ARC producer.",
+      "Claim host convergence or live compliance from repository tests.",
+      "Create a second infrastructure ownership repository."
+    ],
+    "scope_in": [
+      "A versioned JSON ownership contract in codicarium/infra.",
+      "A Python standard-library read-only verifier with stable sanitized JSON evidence and explicit DESIRED_ONLY mode.",
+      "Unit and isolated filesystem fixtures for identity, path, ownership, mode, digest, service/workspace, sudo syntax, and adversarial inputs.",
+      "A short ownership and rollback runbook linked to infra #1290, #1105, and PR #1246."
+    ],
+    "scope_out": [
+      "Live host installation, verification, convergence, authorization, workflow dispatch, or secret access.",
+      "Changes to runner-config ARC manifests or generic runner selectors.",
+      "Changes to PR #1246 protected apply behavior beyond documenting this prerequisite."
+    ]
+  },
+  "requirements": [
+    {
+      "id": "REQ-001",
+      "priority": "MUST",
+      "statement": "The contract MUST bind organization ID 255540067, repository ID 1136354160, runner group ID 6, runner ID 6252, exact host, runner user, label, service unit, workspace, protected workflow path/event/ref, and immutable workflow or source revision; names are metadata only.",
+      "rationale": "Numeric and immutable identities prevent rename, label-only, and mutable-ref authorization drift."
+    },
+    {
+      "id": "REQ-002",
+      "priority": "MUST",
+      "statement": "The contract MUST enumerate exact absolute /usr/local/libexec tool paths and /etc/sudoers.d policy path with root ownership, exact modes, lowercase SHA-256 digests, immutable source revision, and atomic bundle semantics.",
+      "rationale": "Privileged tools must be fixed, reviewable, non-writable, and cryptographically bound."
+    },
+    {
+      "id": "REQ-003",
+      "priority": "MUST",
+      "statement": "The sudo contract MUST permit only exact fixed helper command tuples and validated fixed domains, with environment reset and NOPASSWD for the agent user; it MUST reject ALL, SETENV, wildcards, shells, interpreters, arbitrary subcommands, environment influence, checkout paths, and arbitrary source or cleanup paths.",
+      "rationale": "A narrow root transition is the central security boundary."
+    },
+    {
+      "id": "REQ-004",
+      "priority": "MUST",
+      "statement": "The verifier MUST be read-only, inspect filesystem and service state independently of manifest-provided observations, canonicalize realpaths, reject symlinks and unsafe ancestors, validate ownership/modes/digests/sudo syntax/service/workspace, reject missing or extra declared privileged artifacts, and never execute or import checkout-controlled code.",
+      "rationale": "Verification must resist false claims and confused-deputy execution."
+    },
+    {
+      "id": "REQ-005",
+      "priority": "MUST",
+      "statement": "Verifier evidence MUST use a stable non-secret schema with check IDs, status, and bounded reason codes, clearly state DESIRED_ONLY for offline fixtures, avoid raw command output or environment dumps, and fail closed on unavailable tools, permission errors, malformed contracts, or ambiguous state.",
+      "rationale": "Evidence must be auditable without leaking credentials or implying unproven convergence."
+    },
+    {
+      "id": "REQ-006",
+      "priority": "SHOULD",
+      "statement": "The runbook SHOULD define rollback ordering: deauthorize or disable the runner, remove the narrow sudo rule, restore or remove the pinned bundle, verify the state, and only then separately reauthorize.",
+      "rationale": "Privilege removal must precede artifact recovery to avoid a stale authority window."
+    }
+  ],
+  "acceptance_criteria": [
+    {
+      "id": "AC-001",
+      "requirement_ids": ["REQ-001", "REQ-002"],
+      "scenario": "Given the checked-in contract, when schema and semantic validation runs, then all numeric identities, immutable revisions, canonical paths, owners, modes, digests, service/workspace values, and bundle membership are exact and unknown or duplicate fields are rejected."
+    },
+    {
+      "id": "AC-002",
+      "requirement_ids": ["REQ-003", "REQ-004"],
+      "scenario": "Given an exact safe fixture, when the verifier runs, then it validates the fixed helper bundle and sudo command tuples without changing the fixture; when any shell, wildcard, SETENV, checkout path, traversal, symlink, writable ancestor, tamper, owner, mode, digest, service, workspace, or identity value drifts, then verification fails closed."
+    },
+    {
+      "id": "AC-003",
+      "requirement_ids": ["REQ-004", "REQ-005"],
+      "scenario": "Given missing tools, unreadable state, malformed input, duplicate artifacts, or unavailable service evidence, when verification runs, then it exits nonzero with deterministic sanitized reason codes and never falls back, executes privileged commands, or emits file contents, secrets, tokens, or environment values."
+    },
+    {
+      "id": "AC-004",
+      "requirement_ids": ["REQ-005", "REQ-006"],
+      "scenario": "Given repository-only tests and documentation, when results are reviewed, then evidence is labeled DESIRED_ONLY, no live conformance is claimed, and rollback deauthorizes before privileged artifact changes or later reauthorization."
+    }
+  ],
+  "test_plan": [
+    {
+      "id": "TST-001",
+      "type": "unit",
+      "requirement_ids": ["REQ-001", "REQ-002"],
+      "approach": "Validate strict schema, unknown/duplicate/null rejection, exact numeric IDs, immutable 40-hex revisions, canonical absolute paths, lowercase 64-hex digests, exact modes, and deterministic canonical output."
+    },
+    {
+      "id": "TST-002",
+      "type": "integration",
+      "requirement_ids": ["REQ-003", "REQ-004"],
+      "approach": "Run the verifier against isolated positive and adversarial filesystem/service/sudo fixtures covering tamper, symlink, hardlink where detectable, writable ancestors, ownership/mode/digest drift, path traversal, checkout paths, wildcard, shell metacharacters, arbitrary subcommands, and unsafe cleanup domains."
+    },
+    {
+      "id": "TST-003",
+      "type": "non_functional",
+      "requirement_ids": ["REQ-004", "REQ-005"],
+      "approach": "Prove repeated fixture runs produce identical sanitized JSON and unchanged snapshots; inject missing commands, permission errors, malformed state, and service/workspace mismatch to prove nonzero fail-closed behavior without raw output."
+    },
+    {
+      "id": "TST-004",
+      "type": "manual",
+      "requirement_ids": ["REQ-005", "REQ-006"],
+      "approach": "Review evidence and runbook language for DESIRED_ONLY scope, secret-free diagnostics, deauthorize-first rollback, and explicit prohibition on installation, dispatch, apply, or live claims in slice 1."
+    }
+  ],
+  "traceability": [
+    {
+      "requirement_id": "REQ-001",
+      "acceptance_ids": ["AC-001"],
+      "test_ids": ["TST-001"],
+      "review_checks": ["Verify immutable numeric and revision bindings; names remain metadata only."],
+      "validation_checks": ["Strict identity drift tests pass."]
+    },
+    {
+      "requirement_id": "REQ-002",
+      "acceptance_ids": ["AC-001"],
+      "test_ids": ["TST-001", "TST-002"],
+      "review_checks": ["Verify fixed paths, root ownership, exact modes, digests, immutable source, and atomic bundle semantics."],
+      "validation_checks": ["Artifact tamper and metadata drift tests fail closed."]
+    },
+    {
+      "requirement_id": "REQ-003",
+      "acceptance_ids": ["AC-002"],
+      "test_ids": ["TST-002"],
+      "review_checks": ["Reject ALL, SETENV, wildcard, shell, interpreter, environment, checkout, arbitrary command, and cleanup paths."],
+      "validation_checks": ["Positive exact tuples pass and every broadened sudo fixture fails."]
+    },
+    {
+      "requirement_id": "REQ-004",
+      "acceptance_ids": ["AC-002", "AC-003"],
+      "test_ids": ["TST-002", "TST-003"],
+      "review_checks": ["Ensure verifier reads independent state, rejects unsafe links/ancestors, and never imports or executes checkout code."],
+      "validation_checks": ["Adversarial and unavailable-state fixtures fail without mutation or fallback."]
+    },
+    {
+      "requirement_id": "REQ-005",
+      "acceptance_ids": ["AC-003", "AC-004"],
+      "test_ids": ["TST-003", "TST-004"],
+      "review_checks": ["Inspect stable evidence schema, bounded reasons, redaction, and DESIRED_ONLY semantics."],
+      "validation_checks": ["Evidence is deterministic, secret-free, and nonzero on ambiguous state."]
+    },
+    {
+      "requirement_id": "REQ-006",
+      "acceptance_ids": ["AC-004"],
+      "test_ids": ["TST-004"],
+      "review_checks": ["Confirm rollback deauthorizes before changing privileged artifacts and separates reauthorization."],
+      "validation_checks": ["Runbook review passes and contains no live action in slice 1."]
+    }
+  ],
+  "quality_gates": {
+    "spec_review_required": true,
+    "testability_required": true,
+    "traceability_required": true
+  },
+  "council": {
+    "perspectives": [
+      {
+        "role": "planner",
+        "summary": "GO for a contract and offline verifier only; bind numeric identities and immutable helper source, and never claim host convergence."
+      },
+      {
+        "role": "reviewer",
+        "summary": "Security requirements are blocking for review: fixed root-owned paths, exact sudo tuples, no checkout execution, realpath and ancestor checks, live-state-independent verification, and exhaustive adversarial tests."
+      },
+      {
+        "role": "tech_lead_qa",
+        "summary": "Test design is ready; merge and rollout remain NO-GO until an exact implementation passes positive, adversarial, determinism, and non-mutation checks."
+      }
+    ],
+    "consensus_summary": "Proceed to a Luna PR-only code stage for desired-state contract, offline verifier, tests, and runbook. Installation, live verification, PR #1246 apply, runner authorization, and producer activation remain prohibited.",
+    "open_questions": [
+      "The implementation must verify and record the exact intended systemd unit and full helper digests from the immutable PR #1246 source rather than infer or truncate them."
+    ]
+  }
+}

@@ -1,0 +1,168 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+seed_prompt=$'Operating mode: manager-manager with fire-and-forget orchestration.\nThe root session acts as project manager and orchestration lead; it must not write code directly unless explicitly requested.\nDelegate domain lanes to tech leads (e.g., tech_lead_frontend, tech_lead_backend, tech_lead_devops, tech_lead_qa).\nFire-and-forget orchestration policy:\n- Eliminate continuous intermediate updates and babysitting.\n- Managers must NOT busy-poll, loop on list_agents, or send check-in messages; issue a single blocking wait.\n- Subagents execute autonomously to completion without progress pings, reporting only upon full completion or unresolvable external blockers.\nDelegation & verification (Option 3):\n- Every delegation prompt must specify bounded scope, clear testable acceptance criteria, and explicit self-verification commands (e.g., test suite, linters, git diff inspection).\n- Workers must verify their own work autonomously before submitting completion.\nWorktree isolation (Option 4):\n- Every implementation subagent must operate in a dedicated git worktree under .worktrees/<repo>-<branch>.\n- Disjoint write scopes are physically enforced by worktrees, eliminating directory collisions and mid-flight file monitoring.\nModel and reasoning routing (Tiered):\n- Tier 0 (Astra): Strategic architecture, high-level ticket decomposition, impasse escalation (episodic 1-2 turns only, never babysit/poll).\n- Tier 1 (Tech Leads): gpt-5.6-terra or gpt-5.6-luna with medium or high reasoning. Preferably NOT Sol unless exceptional cross-system ambiguity.\n- Tier 2 (Workers/Coders/Reviewers/DevOps): gpt-5.6-luna with medium reasoning (low reasoning for simple search/mapping).\n- Do not use high reasoning on trivial work.\nFinal report format on completion: lane, status, changed_files, validation, blockers, next_action.\nCaps: summary<=600 chars, changed_files<=20, validation<=12, blockers<=8, next_action<=300 chars, issues<=15.'
+forced_config=(-c agents.max_depth=2 -c agents.max_threads=4)
+
+render_prompt() {
+  local user_prompt="${1-}"
+  if [[ -n "$user_prompt" ]]; then
+    printf '%s\n\n%s' "$seed_prompt" "$user_prompt"
+  else
+    printf '%s' "$seed_prompt"
+  fi
+}
+
+parse_top_level() {
+  local -a forward=()
+  local prompt=""
+  local sandbox_set=false
+  local profile_set=false
+
+  while (($#)); do
+    case "$1" in
+      -h|--help|-V|--version)
+        exec codex "$@"
+        ;;
+      -c|--config|--enable|--disable|-i|--image|-m|--model|--local-provider|-p|--profile|-s|--sandbox|-a|--ask-for-approval|-C|--cd|--add-dir)
+        if [[ "$1" == "-s" || "$1" == "--sandbox" ]]; then
+          sandbox_set=true
+        fi
+        if [[ "$1" == "-p" || "$1" == "--profile" ]]; then
+          profile_set=true
+        fi
+        forward+=("$1")
+        shift
+        if (($# == 0)); then
+          printf 'codex-manager: missing value for option\n' >&2
+          exit 2
+        fi
+        forward+=("$1")
+        shift
+        ;;
+      --sandbox=*)
+        sandbox_set=true
+        forward+=("$1")
+        shift
+        ;;
+      --profile=*)
+        profile_set=true
+        forward+=("$1")
+        shift
+        ;;
+      --*=*)
+        forward+=("$1")
+        shift
+        ;;
+      --oss|--full-auto|--dangerously-bypass-approvals-and-sandbox|--search|--no-alt-screen)
+        forward+=("$1")
+        shift
+        ;;
+      exec)
+        parse_exec "${@:2}"
+        return
+        ;;
+      review|login|logout|mcp|mcp-server|app-server|completion|sandbox|debug|apply|resume|fork|cloud|features|help)
+        exec codex "$@"
+        ;;
+      --)
+        shift
+        prompt="$*"
+        break
+        ;;
+      -*)
+        forward+=("$1")
+        shift
+        ;;
+      *)
+        prompt="$*"
+        break
+        ;;
+    esac
+  done
+
+  if ! $profile_set; then
+    forward+=("-p" "manager")
+  fi
+  if ! $sandbox_set; then
+    forward+=("-s" "read-only")
+  fi
+
+  exec /home/rickebo/.codex/bin/codex-stable "${forced_config[@]}" "${forward[@]}" "$(render_prompt "$prompt")"
+}
+
+parse_exec() {
+  local -a forward=(exec)
+  local prompt=""
+  local sandbox_set=false
+  local profile_set=false
+
+  while (($#)); do
+    case "$1" in
+      -h|--help|-V|--version)
+        exec codex exec "$@"
+        ;;
+      review|resume|help)
+        exec codex exec "$@"
+        ;;
+      -c|--config|--enable|--disable|-i|--image|-m|--model|--local-provider|-p|--profile|-s|--sandbox|-C|--cd|--add-dir|-o|--output-last-message|--output-schema|--color)
+        if [[ "$1" == "-s" || "$1" == "--sandbox" ]]; then
+          sandbox_set=true
+        fi
+        if [[ "$1" == "-p" || "$1" == "--profile" ]]; then
+          profile_set=true
+        fi
+        forward+=("$1")
+        shift
+        if (($# == 0)); then
+          printf 'codex-manager exec: missing value for option\n' >&2
+          exit 2
+        fi
+        forward+=("$1")
+        shift
+        ;;
+      --sandbox=*)
+        sandbox_set=true
+        forward+=("$1")
+        shift
+        ;;
+      --profile=*)
+        profile_set=true
+        forward+=("$1")
+        shift
+        ;;
+      --*=*)
+        forward+=("$1")
+        shift
+        ;;
+      --oss|--full-auto|--dangerously-bypass-approvals-and-sandbox|--skip-git-repo-check|--ephemeral|--progress-cursor|--json)
+        forward+=("$1")
+        shift
+        ;;
+      --)
+        shift
+        prompt="$*"
+        break
+        ;;
+      -*)
+        forward+=("$1")
+        shift
+        ;;
+      *)
+        prompt="$*"
+        break
+        ;;
+    esac
+  done
+
+  if ! $profile_set; then
+    forward+=("-p" "manager")
+  fi
+  if ! $sandbox_set; then
+    forward+=("-s" "read-only")
+  fi
+
+  exec /home/rickebo/.codex/bin/codex-stable "${forced_config[@]}" "${forward[@]}" "$(render_prompt "$prompt")"
+}
+
+parse_top_level "$@"

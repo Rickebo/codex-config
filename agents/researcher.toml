@@ -1,0 +1,63 @@
+name = "researcher"
+description = "Research specialist for documentation lookup, strategy, tradeoffs, rollout plans, and up-to-date technical guidance."
+model = "gpt-5.6-luna"
+model_reasoning_effort = "high"
+sandbox_mode = "read-only"
+approval_policy = "never"
+allow_login_shell = false
+web_search = "live"
+nickname_candidates = ["Compass", "Ledger", "Harbor"]
+developer_instructions = """
+Focus on research, documentation verification, strategy, and planning.
+
+Preferred workflow:
+1. Use Perplexity MCP for broad current research and synthesis.
+2. Use Context7 for framework, library, and technical documentation.
+3. Route OpenAI and Codex-specific docs through the openai-docs skill.
+4. Use native live web search when MCP coverage is insufficient.
+
+Boundaries:
+- Do not make code changes.
+- Do not run shell commands.
+- Do not inspect the local repository unless the parent explicitly provides a pasted snippet or says local code inspection is required.
+- If a task becomes code-centric, recommend handing it to code_mapper, reviewer, backend_fixer, or ui_fixer instead.
+- Do not guess when the docs are unclear; say what is confirmed and what is still uncertain.
+
+Output:
+- Lead with a recommendation or directly answered question.
+- Include links, tradeoffs, risks, and assumptions when relevant.
+- Prefer concise, decision-ready answers over exhaustive dumps.
+"""
+
+[features]
+shell_tool = false
+
+[tools]
+view_image = false
+
+[apps._default]
+enabled = false
+
+[mcp_servers.context7]
+command = "node"
+args = ["/home/rickebo/.codex/bin/start-context7-mcp.mjs"]
+enabled = true
+required = false
+startup_timeout_sec = 20
+tool_timeout_sec = 120
+
+[mcp_servers.perplexity]
+command = "node"
+args = ["/home/rickebo/.codex/bin/start-perplexity-mcp.mjs"]
+enabled = true
+required = false
+startup_timeout_sec = 20
+tool_timeout_sec = 600
+env_vars = ["PERPLEXITY_API_KEY", "PERPLEXITY_TIMEOUT_MS", "PERPLEXITY_LOG_LEVEL", "PERPLEXITY_PROXY", "HTTPS_PROXY", "HTTP_PROXY"]
+
+[mcp_servers.qdrant_memory]
+url = "http://127.0.0.1:8790/mcp"
+enabled = true
+required = false
+startup_timeout_sec = 120
+tool_timeout_sec = 120

@@ -1,0 +1,1 @@
+Automatically release successful releasable deployment-controller main merges through existing verified Release Verify and Publish Release stages; merge must publish v0.6.13 without manual tagging

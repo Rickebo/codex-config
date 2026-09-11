@@ -1,0 +1,717 @@
+{
+  "schema": "codicarium.typed-payload-schemas/v2.6",
+  "count": 15,
+  "schemas": [
+    {
+      "id": "command.v2.6",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://codicarium.local/v2.6/command.v2.6",
+        "title": "command.v2.6",
+        "type": "object",
+        "required": [
+          "id",
+          "argv",
+          "digest"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "argv": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "digest": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "payload.v2.6",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://codicarium.local/v2.6/payload.v2.6",
+        "title": "payload.v2.6",
+        "type": "object",
+        "required": [
+          "command_id",
+          "schema_id",
+          "signer_kind",
+          "authority",
+          "nonce",
+          "outer_nonce",
+          "inner_nonce",
+          "issued_at",
+          "not_before",
+          "expires_at",
+          "target_digest",
+          "identity",
+          "mutation_id",
+          "sequence",
+          "previous_hash",
+          "role",
+          "key_fingerprint",
+          "target_bytes_sha256",
+          "request_hash",
+          "readback_hash",
+          "commit_hash"
+        ],
+        "properties": {
+          "command_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "schema_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "signer_kind": {
+            "type": "string",
+            "minLength": 1
+          },
+          "authority": {
+            "type": "boolean"
+          },
+          "nonce": {
+            "type": "string",
+            "minLength": 1
+          },
+          "outer_nonce": {
+            "type": "string",
+            "minLength": 1
+          },
+          "inner_nonce": {
+            "type": "string",
+            "minLength": 1
+          },
+          "issued_at": {
+            "type": "string",
+            "minLength": 1
+          },
+          "not_before": {
+            "type": "string",
+            "minLength": 1
+          },
+          "expires_at": {
+            "type": "string",
+            "minLength": 1
+          },
+          "target_digest": {
+            "type": "string",
+            "minLength": 1
+          },
+          "identity": {
+            "type": "string",
+            "minLength": 1
+          },
+          "mutation_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sequence": {
+            "type": "integer"
+          },
+          "previous_hash": {
+            "type": "string",
+            "minLength": 1
+          },
+          "role": {
+            "type": "string",
+            "minLength": 1
+          },
+          "key_fingerprint": {
+            "type": "string",
+            "minLength": 1
+          },
+          "target_bytes_sha256": {
+            "type": "string",
+            "minLength": 1
+          },
+          "request_hash": {
+            "type": "string",
+            "minLength": 1
+          },
+          "readback_hash": {
+            "type": "string",
+            "minLength": 1
+          },
+          "commit_hash": {
+            "type": "string",
+            "minLength": 1
+          },
+          "signature": {
+            "type": "string",
+            "minLength": 1
+          },
+          "live_evidence": {
+            "type": "boolean"
+          },
+          "app_config_path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "release_version": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "signature.v2.6",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://codicarium.local/v2.6/signature.v2.6",
+        "title": "signature.v2.6",
+        "type": "object",
+        "required": [
+          "payload",
+          "signature",
+          "public_key",
+          "signer_kind",
+          "authority"
+        ],
+        "properties": {
+          "payload": {
+            "type": "object"
+          },
+          "signature": {
+            "type": "string",
+            "minLength": 1
+          },
+          "public_key": {
+            "type": "string",
+            "minLength": 1
+          },
+          "signer_kind": {
+            "type": "string",
+            "minLength": 1
+          },
+          "authority": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "mutation.v2.6",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://codicarium.local/v2.6/mutation.v2.6",
+        "title": "mutation.v2.6",
+        "type": "object",
+        "required": [
+          "mutation_id",
+          "nonce",
+          "records"
+        ],
+        "properties": {
+          "mutation_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "nonce": {
+            "type": "string",
+            "minLength": 1
+          },
+          "records": {
+            "type": "array",
+            "minItems": 4,
+            "maxItems": 4,
+            "items": {
+              "type": "object"
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "fsm.v2.6",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://codicarium.local/v2.6/fsm.v2.6",
+        "title": "fsm.v2.6",
+        "type": "object",
+        "required": [
+          "from",
+          "to",
+          "outcomes",
+          "atomic_actions"
+        ],
+        "properties": {
+          "from": {
+            "type": "string",
+            "minLength": 1
+          },
+          "to": {
+            "type": "string",
+            "minLength": 1
+          },
+          "outcomes": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "atomic_actions": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "recovery.v2.6",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://codicarium.local/v2.6/recovery.v2.6",
+        "title": "recovery.v2.6",
+        "type": "object",
+        "required": [
+          "from",
+          "to",
+          "command_id",
+          "atomic"
+        ],
+        "properties": {
+          "from": {
+            "type": "string",
+            "minLength": 1
+          },
+          "to": {
+            "type": "string",
+            "minLength": 1
+          },
+          "command_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "atomic": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "admin.v2.6",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://codicarium.local/v2.6/admin.v2.6",
+        "title": "admin.v2.6",
+        "type": "object",
+        "required": [
+          "requester",
+          "executor",
+          "one_use",
+          "audit_required",
+          "revocation_required"
+        ],
+        "properties": {
+          "requester": {
+            "type": "string",
+            "minLength": 1
+          },
+          "approver": {
+            "type": "string",
+            "minLength": 1
+          },
+          "approver_one": {
+            "type": "string",
+            "minLength": 1
+          },
+          "approver_two": {
+            "type": "string",
+            "minLength": 1
+          },
+          "executor": {
+            "type": "string",
+            "minLength": 1
+          },
+          "approval_ttl_seconds": {
+            "type": "integer"
+          },
+          "credential_ttl_seconds": {
+            "type": "integer"
+          },
+          "one_use": {
+            "type": "boolean"
+          },
+          "audit_required": {
+            "type": "boolean"
+          },
+          "revocation_required": {
+            "type": "boolean"
+          },
+          "forbidden_operations": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "app-bootstrap.v2.6",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://codicarium.local/v2.6/app-bootstrap.v2.6",
+        "title": "app-bootstrap.v2.6",
+        "type": "object",
+        "required": [
+          "id",
+          "repository",
+          "path",
+          "argo_kind",
+          "application_name",
+          "artifact_sha256",
+          "artifact_byte_length",
+          "artifact_bytes_base64",
+          "bootstrap_only"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "repository": {
+            "type": "string",
+            "minLength": 1
+          },
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "argo_kind": {
+            "type": "string",
+            "minLength": 1
+          },
+          "application_name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "artifact_sha256": {
+            "type": "string",
+            "minLength": 1
+          },
+          "artifact_byte_length": {
+            "type": "integer"
+          },
+          "artifact_bytes_base64": {
+            "type": "string",
+            "minLength": 1
+          },
+          "bootstrap_only": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "candidate.v2.6",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://codicarium.local/v2.6/candidate.v2.6",
+        "title": "candidate.v2.6",
+        "type": "object",
+        "required": [
+          "media_type",
+          "byte_length",
+          "sha256",
+          "sandbox"
+        ],
+        "properties": {
+          "media_type": {
+            "type": "string",
+            "minLength": 1
+          },
+          "byte_length": {
+            "type": "integer"
+          },
+          "sha256": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sandbox": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "proxy.v2.6",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://codicarium.local/v2.6/proxy.v2.6",
+        "title": "proxy.v2.6",
+        "type": "object",
+        "required": [
+          "listener",
+          "host",
+          "audience",
+          "sni",
+          "operations"
+        ],
+        "properties": {
+          "listener": {
+            "type": "string",
+            "minLength": 1
+          },
+          "host": {
+            "type": "string",
+            "minLength": 1
+          },
+          "audience": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sni": {
+            "type": "string",
+            "minLength": 1
+          },
+          "operations": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "vault.v2.6",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://codicarium.local/v2.6/vault.v2.6",
+        "title": "vault.v2.6",
+        "type": "object",
+        "required": [
+          "role",
+          "principal",
+          "transit_key_fingerprint",
+          "revoked"
+        ],
+        "properties": {
+          "role": {
+            "type": "string",
+            "minLength": 1
+          },
+          "principal": {
+            "type": "string",
+            "minLength": 1
+          },
+          "transit_key_fingerprint": {
+            "type": "string",
+            "minLength": 1
+          },
+          "revoked": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "cnpg.v2.6",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://codicarium.local/v2.6/cnpg.v2.6",
+        "title": "cnpg.v2.6",
+        "type": "object",
+        "required": [
+          "instances",
+          "synchronous",
+          "tls_sni",
+          "rpo_seconds",
+          "rto_seconds"
+        ],
+        "properties": {
+          "instances": {
+            "type": "integer"
+          },
+          "synchronous": {
+            "type": "boolean"
+          },
+          "tls_sni": {
+            "type": "string",
+            "minLength": 1
+          },
+          "rpo_seconds": {
+            "type": "integer"
+          },
+          "rto_seconds": {
+            "type": "integer"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "closure.v2.6",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://codicarium.local/v2.6/closure.v2.6",
+        "title": "closure.v2.6",
+        "type": "object",
+        "required": [
+          "bundle_manifest_sha256",
+          "pre_council_report_sha256",
+          "decision",
+          "activation_ready",
+          "live_gate_aggregate",
+          "lanes"
+        ],
+        "properties": {
+          "bundle_manifest_sha256": {
+            "type": "string",
+            "minLength": 1
+          },
+          "pre_council_report_sha256": {
+            "type": "string",
+            "minLength": 1
+          },
+          "decision": {
+            "enum": [
+              "GO",
+              "NO-GO",
+              "UNSIGNED_TEMPLATE"
+            ]
+          },
+          "activation_ready": {
+            "type": "boolean"
+          },
+          "live_gate_aggregate": {
+            "type": "object",
+            "required": [
+              "complete",
+              "signed",
+              "gate_count",
+              "passed_count"
+            ],
+            "properties": {
+              "complete": {
+                "type": "boolean"
+              },
+              "signed": {
+                "type": "boolean"
+              },
+              "gate_count": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "passed_count": {
+                "type": "integer",
+                "minimum": 0
+              }
+            },
+            "additionalProperties": false
+          },
+          "lanes": {
+            "type": "array",
+            "minItems": 4,
+            "maxItems": 4,
+            "items": {
+              "type": "object"
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "activation.v2.6",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://codicarium.local/v2.6/activation.v2.6",
+        "title": "activation.v2.6",
+        "type": "object",
+        "required": [
+          "state",
+          "live_gate_count",
+          "refresh_required_before_mutation",
+          "synthetic_evidence_authorizes"
+        ],
+        "properties": {
+          "state": {
+            "type": "string",
+            "minLength": 1
+          },
+          "live_gate_count": {
+            "type": "integer"
+          },
+          "refresh_required_before_mutation": {
+            "type": "boolean"
+          },
+          "synthetic_evidence_authorizes": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "semver.v2.6",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://codicarium.local/v2.6/semver.v2.6",
+        "title": "semver.v2.6",
+        "type": "object",
+        "required": [
+          "verified_tags",
+          "frozen_next_semver",
+          "freeze_node",
+          "refresh_required_before_mutation"
+        ],
+        "properties": {
+          "verified_tags": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object"
+            }
+          },
+          "frozen_next_semver": {
+            "type": "string",
+            "minLength": 1
+          },
+          "freeze_node": {
+            "type": "string",
+            "minLength": 1
+          },
+          "refresh_required_before_mutation": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+codicarium/infra#1288: use authoritative typed HA Kubernetes API VIP for guarded deployment-controller upgrade without weakening identity validation

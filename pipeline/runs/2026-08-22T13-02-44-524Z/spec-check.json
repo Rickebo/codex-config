@@ -1,0 +1,21 @@
+{
+  "ok": true,
+  "checked_at": "2026-08-22T13:04:43.173Z",
+  "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-22T13-02-44-524Z/transport-security-auth.spec.json",
+  "quality_gates": {
+    "requirements_present": true,
+    "acceptance_gherkin_present": true,
+    "traceability_complete": true,
+    "must_requirements_testable": true,
+    "council_coverage_min_3": true
+  },
+  "summary": {
+    "requirements_total": 6,
+    "must_total": 6,
+    "acceptance_total": 4,
+    "tests_total": 3,
+    "trace_rows_total": 6
+  },
+  "errors": [],
+  "warnings": []
+}

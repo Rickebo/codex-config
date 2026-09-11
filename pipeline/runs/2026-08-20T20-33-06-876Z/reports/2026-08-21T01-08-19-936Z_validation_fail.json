@@ -1,0 +1,44 @@
+{
+  "stage": "validation",
+  "status": "fail",
+  "summary": "Live validation found that the merged PostgreSQL digest is not a valid Docker Hub manifest, leaving the homelab MetaMCP PostgreSQL pod in ImagePullBackOff. The MetaMCP image and GitOps sync are otherwise healthy enough to expose the database pull failure.",
+  "changed_files": [
+    "charts/metamcp/values.yaml",
+    "argocd/apps/metamcp-app.yaml",
+    "argocd/apps/grafana-mcp-app.yaml",
+    "scripts/metamcp/bootstrap.sql"
+  ],
+  "validation": [
+    "PR #439 merged at 994ebd8a686adb003535f6a4beecb963b03284ae and Argo metamcp synced that revision.",
+    "MetaMCP deployment is running 2.4.22 at its immutable digest.",
+    "PostgreSQL pod metamcp-postgresql-0 is ImagePullBackOff on the declared digest.",
+    "Kubernetes events report Docker Hub HEAD 400 for the declared bitnami/postgresql digest.",
+    "Docker manifest inspection verified the current amd64 latest manifest digest cf11d5856d9dddff104ec7b2b287fcf8ed040527dacabc69caed05a9255c7cac.",
+    "The live registry bootstrap was not run because PostgreSQL was unavailable."
+  ],
+  "blockers": [
+    "Replace the invalid PostgreSQL digest through a new GitOps PR and wait for the homelab StatefulSet to become Ready.",
+    "After database recovery, rerun the protected registry bootstrap and all per-server/OAuth validation."
+  ],
+  "next_action": "Return to code, update the PostgreSQL digest to the verified amd64 manifest, validate and merge the corrective PR, then resume validation.",
+  "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T20-33-06-876Z/spec.json",
+  "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T20-33-06-876Z/spec-check.json",
+  "council_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T20-33-06-876Z/council.json",
+  "requires_council": true,
+  "independent_lanes": [
+    "Docker manifest and immutable image correction",
+    "Homelab StatefulSet recovery",
+    "Post-recovery MCP registry and OAuth validation"
+  ],
+  "route_to": "code",
+  "risk_level": "critical",
+  "issues": [
+    {
+      "id": "POSTGRES-DIGEST-001",
+      "title": "Declared PostgreSQL digest cannot be pulled",
+      "severity": "critical",
+      "details": "The declared sha256:be00bd... reference returns Docker Hub 400; use the verified amd64 manifest digest before retrying the rollout.",
+      "owner_stage": "code"
+    }
+  ]
+}

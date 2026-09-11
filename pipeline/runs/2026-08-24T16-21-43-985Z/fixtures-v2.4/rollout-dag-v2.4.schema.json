@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://codicarium.local/v2.4/rollout-dag",
+  "type": "object",
+  "required": [
+    "schema",
+    "root",
+    "nodes",
+    "success_edges",
+    "failure_edges",
+    "recovery_edges",
+    "terminals"
+  ],
+  "properties": {
+    "schema": {
+      "const": "codicarium.release-fsm/v2.4"
+    },
+    "root": {
+      "const": "S00"
+    },
+    "nodes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "command_id",
+          "schema_id"
+        ],
+        "additionalProperties": true
+      }
+    },
+    "success_edges": {
+      "type": "array"
+    },
+    "failure_edges": {
+      "type": "array"
+    },
+    "recovery_edges": {
+      "type": "array"
+    },
+    "terminals": {
+      "type": "array"
+    }
+  }
+}

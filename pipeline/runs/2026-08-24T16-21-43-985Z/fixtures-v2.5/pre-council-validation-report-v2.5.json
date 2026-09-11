@@ -1,0 +1,16 @@
+{
+  "schema": "codicarium.pre-council-validation/v2.5",
+  "status": "PASS_PRE_COUNCIL_ONLY",
+  "bundle_manifest_sha256": "144e1afe87ec815315eb34898f1df4b1e01d204be6bf6d61e6623de9d427f352",
+  "fixed_clock": "2026-08-26T12:00:00Z",
+  "results": {
+    "spec_check_ok": true,
+    "negative_vectors": 24,
+    "mutation_count": 19,
+    "records_per_mutation": 4,
+    "replay_race": true,
+    "live_gate_count": 0
+  },
+  "validator_read_only": true,
+  "builder_not_invoked_by_validator": true
+}

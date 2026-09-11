@@ -1,0 +1,1311 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.codicarium.com/release/live-evidence-v1.schema.json",
+  "title": "Codicarium release live evidence v1",
+  "type": "object",
+  "required": [
+    "schema",
+    "captured_at",
+    "repository",
+    "corrective_pr",
+    "protected_main_sha",
+    "protected_checks",
+    "release_identity",
+    "coordinator",
+    "verifier",
+    "attester",
+    "claim",
+    "receipt",
+    "publisher",
+    "candidate_evidence",
+    "authorization",
+    "handoff",
+    "dispatch",
+    "release",
+    "registries",
+    "assets",
+    "mutation_receipts",
+    "retirement"
+  ],
+  "properties": {
+    "schema": {
+      "const": "codicarium.release-live-evidence/v1"
+    },
+    "captured_at": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])-([0-2][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]Z$"
+    },
+    "repository": {
+      "type": "object",
+      "required": [
+        "full_name",
+        "id"
+      ],
+      "properties": {
+        "full_name": {
+          "const": "codicarium/deployment-controller"
+        },
+        "id": {
+          "const": "1303901324"
+        }
+      },
+      "additionalProperties": false
+    },
+    "corrective_pr": {
+      "type": "object",
+      "required": [
+        "number",
+        "head_sha",
+        "merge_sha"
+      ],
+      "properties": {
+        "number": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        },
+        "head_sha": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "merge_sha": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        }
+      },
+      "additionalProperties": false
+    },
+    "protected_main_sha": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "protected_checks": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "type": "object",
+          "required": [
+            "name",
+            "app_id",
+            "run_id",
+            "attempt",
+            "check_id",
+            "head_sha",
+            "status",
+            "conclusion"
+          ],
+          "properties": {
+            "name": {
+              "const": "chart"
+            },
+            "app_id": {
+              "const": "15368"
+            },
+            "run_id": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "attempt": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "check_id": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "head_sha": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{40}$"
+            },
+            "status": {
+              "const": "completed"
+            },
+            "conclusion": {
+              "const": "success"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "name",
+            "app_id",
+            "run_id",
+            "attempt",
+            "check_id",
+            "head_sha",
+            "status",
+            "conclusion"
+          ],
+          "properties": {
+            "name": {
+              "const": "integration"
+            },
+            "app_id": {
+              "const": "15368"
+            },
+            "run_id": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "attempt": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "check_id": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "head_sha": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{40}$"
+            },
+            "status": {
+              "const": "completed"
+            },
+            "conclusion": {
+              "const": "success"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "name",
+            "app_id",
+            "run_id",
+            "attempt",
+            "check_id",
+            "head_sha",
+            "status",
+            "conclusion"
+          ],
+          "properties": {
+            "name": {
+              "const": "lint"
+            },
+            "app_id": {
+              "const": "15368"
+            },
+            "run_id": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "attempt": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "check_id": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "head_sha": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{40}$"
+            },
+            "status": {
+              "const": "completed"
+            },
+            "conclusion": {
+              "const": "success"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "name",
+            "app_id",
+            "run_id",
+            "attempt",
+            "check_id",
+            "head_sha",
+            "status",
+            "conclusion"
+          ],
+          "properties": {
+            "name": {
+              "const": "supply-chain"
+            },
+            "app_id": {
+              "const": "15368"
+            },
+            "run_id": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "attempt": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "check_id": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "head_sha": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{40}$"
+            },
+            "status": {
+              "const": "completed"
+            },
+            "conclusion": {
+              "const": "success"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "name",
+            "app_id",
+            "run_id",
+            "attempt",
+            "check_id",
+            "head_sha",
+            "status",
+            "conclusion"
+          ],
+          "properties": {
+            "name": {
+              "const": "test"
+            },
+            "app_id": {
+              "const": "15368"
+            },
+            "run_id": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "attempt": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "check_id": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "head_sha": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{40}$"
+            },
+            "status": {
+              "const": "completed"
+            },
+            "conclusion": {
+              "const": "success"
+            }
+          },
+          "additionalProperties": false
+        }
+      ],
+      "items": false,
+      "minItems": 5,
+      "maxItems": 5
+    },
+    "release_identity": {
+      "type": "object",
+      "required": [
+        "tag",
+        "source_sha"
+      ],
+      "properties": {
+        "tag": {
+          "const": "v0.6.14"
+        },
+        "source_sha": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        }
+      },
+      "additionalProperties": false
+    },
+    "coordinator": {
+      "type": "object",
+      "required": [
+        "run_id",
+        "attempt",
+        "workflow_path",
+        "workflow_sha",
+        "check_id"
+      ],
+      "properties": {
+        "run_id": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        },
+        "attempt": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        },
+        "workflow_path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "workflow_sha": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "check_id": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        }
+      },
+      "additionalProperties": false
+    },
+    "verifier": {
+      "type": "object",
+      "required": [
+        "run_id",
+        "attempt",
+        "workflow_path",
+        "workflow_sha",
+        "check_id"
+      ],
+      "properties": {
+        "run_id": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        },
+        "attempt": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        },
+        "workflow_path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "workflow_sha": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "check_id": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        }
+      },
+      "additionalProperties": false
+    },
+    "attester": {
+      "type": "object",
+      "required": [
+        "run_id",
+        "attempt",
+        "workflow_path",
+        "workflow_sha",
+        "check_id"
+      ],
+      "properties": {
+        "run_id": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        },
+        "attempt": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        },
+        "workflow_path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "workflow_sha": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "check_id": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        }
+      },
+      "additionalProperties": false
+    },
+    "claim": {
+      "type": "object",
+      "required": [
+        "run_id",
+        "attempt",
+        "workflow_path",
+        "workflow_sha",
+        "check_id"
+      ],
+      "properties": {
+        "run_id": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        },
+        "attempt": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        },
+        "workflow_path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "workflow_sha": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "check_id": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        }
+      },
+      "additionalProperties": false
+    },
+    "receipt": {
+      "type": "object",
+      "required": [
+        "run_id",
+        "attempt",
+        "workflow_path",
+        "workflow_sha",
+        "check_id"
+      ],
+      "properties": {
+        "run_id": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        },
+        "attempt": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        },
+        "workflow_path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "workflow_sha": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "check_id": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        }
+      },
+      "additionalProperties": false
+    },
+    "publisher": {
+      "type": "object",
+      "required": [
+        "run_id",
+        "attempt",
+        "workflow_path",
+        "workflow_sha",
+        "check_id"
+      ],
+      "properties": {
+        "run_id": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        },
+        "attempt": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        },
+        "workflow_path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "workflow_sha": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "check_id": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        }
+      },
+      "additionalProperties": false
+    },
+    "candidate_evidence": {
+      "type": "object",
+      "required": [
+        "evidence_sha256",
+        "image",
+        "chart"
+      ],
+      "properties": {
+        "evidence_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "image": {
+          "type": "object",
+          "required": [
+            "object_key",
+            "archive_sha256",
+            "byte_length",
+            "nonce"
+          ],
+          "properties": {
+            "object_key": {
+              "type": "string",
+              "minLength": 1
+            },
+            "archive_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "byte_length": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "nonce": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          "additionalProperties": false
+        },
+        "chart": {
+          "type": "object",
+          "required": [
+            "object_key",
+            "archive_sha256",
+            "byte_length",
+            "nonce"
+          ],
+          "properties": {
+            "object_key": {
+              "type": "string",
+              "minLength": 1
+            },
+            "archive_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "byte_length": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "nonce": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "authorization": {
+      "type": "object",
+      "required": [
+        "object_key",
+        "archive_sha256",
+        "predicate_sha256",
+        "byte_length",
+        "nonce"
+      ],
+      "properties": {
+        "object_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "archive_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "predicate_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "byte_length": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        },
+        "nonce": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{32}$"
+        }
+      },
+      "additionalProperties": false
+    },
+    "handoff": {
+      "type": "object",
+      "required": [
+        "check_id",
+        "external_id",
+        "sha256",
+        "digest_base64url",
+        "tuple_base64url"
+      ],
+      "properties": {
+        "check_id": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        },
+        "external_id": {
+          "type": "string",
+          "pattern": "^codicarium\\.release-handoff/v1:[0-9a-f]{64}$"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "digest_base64url": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "tuple_base64url": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]+$"
+        }
+      },
+      "additionalProperties": false
+    },
+    "dispatch": {
+      "type": "object",
+      "required": [
+        "claim_check_id",
+        "receipt_check_id",
+        "external_id",
+        "sha256",
+        "digest_base64url",
+        "tuple_base64url"
+      ],
+      "properties": {
+        "claim_check_id": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        },
+        "receipt_check_id": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        },
+        "external_id": {
+          "type": "string",
+          "pattern": "^codicarium\\.publisher-receipt/v1:[0-9a-f]{64}$"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "digest_base64url": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "tuple_base64url": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]+$"
+        }
+      },
+      "additionalProperties": false
+    },
+    "release": {
+      "type": "object",
+      "required": [
+        "id",
+        "tag",
+        "target",
+        "draft",
+        "prerelease"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        },
+        "tag": {
+          "const": "v0.6.14"
+        },
+        "target": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "draft": {
+          "const": false
+        },
+        "prerelease": {
+          "const": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "registries": {
+      "type": "object",
+      "required": [
+        "image",
+        "chart"
+      ],
+      "properties": {
+        "image": {
+          "type": "object",
+          "required": [
+            "registry",
+            "repository",
+            "reference",
+            "digest"
+          ],
+          "properties": {
+            "registry": {
+              "const": "docker-pull.nexus.int.codicarium.com"
+            },
+            "repository": {
+              "const": "codicarium/deployment-controller"
+            },
+            "reference": {
+              "const": "v0.6.14"
+            },
+            "digest": {
+              "type": "string",
+              "pattern": "^sha256:[0-9a-f]{64}$"
+            }
+          },
+          "additionalProperties": false
+        },
+        "chart": {
+          "type": "object",
+          "required": [
+            "registry",
+            "repository",
+            "version",
+            "digest"
+          ],
+          "properties": {
+            "registry": {
+              "const": "charts.nexus.int.codicarium.com"
+            },
+            "repository": {
+              "const": "codicarium/deployment-controller"
+            },
+            "version": {
+              "const": "0.6.14"
+            },
+            "digest": {
+              "type": "string",
+              "pattern": "^sha256:[0-9a-f]{64}$"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "assets": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "type": "object",
+          "required": [
+            "id",
+            "name",
+            "size",
+            "sha256"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "name": {
+              "const": "deployment-controller-0.6.14.tgz"
+            },
+            "size": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "id",
+            "name",
+            "size",
+            "sha256"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "name": {
+              "const": "deployment-controller-0.6.14.tgz.sigstore.json"
+            },
+            "size": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "id",
+            "name",
+            "size",
+            "sha256"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "name": {
+              "const": "deployment-controller-chart-oci-provenance.sigstore.json"
+            },
+            "size": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "id",
+            "name",
+            "size",
+            "sha256"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "name": {
+              "const": "deployment-controller-chart.sha256"
+            },
+            "size": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "id",
+            "name",
+            "size",
+            "sha256"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "name": {
+              "const": "deployment-controller-chart.sha256.sigstore.json"
+            },
+            "size": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "id",
+            "name",
+            "size",
+            "sha256"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "name": {
+              "const": "deployment-controller-image-provenance.sigstore.json"
+            },
+            "size": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "id",
+            "name",
+            "size",
+            "sha256"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "name": {
+              "const": "deployment-controller-linux-amd64-sbom.sigstore.json"
+            },
+            "size": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "id",
+            "name",
+            "size",
+            "sha256"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "name": {
+              "const": "deployment-controller-linux-arm64-sbom.sigstore.json"
+            },
+            "size": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "id",
+            "name",
+            "size",
+            "sha256"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "name": {
+              "const": "deployment-controller-release-graph.json"
+            },
+            "size": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "id",
+            "name",
+            "size",
+            "sha256"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "name": {
+              "const": "deployment-controller-release-graph.json.sigstore.json"
+            },
+            "size": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "id",
+            "name",
+            "size",
+            "sha256"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "name": {
+              "const": "deployment-controller-release-manifest.json"
+            },
+            "size": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "id",
+            "name",
+            "size",
+            "sha256"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "name": {
+              "const": "deployment-controller-release-manifest.json.sigstore.json"
+            },
+            "size": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "id",
+            "name",
+            "size",
+            "sha256"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "name": {
+              "const": "deployment-controller-publisher-subject-manifest.json"
+            },
+            "size": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "id",
+            "name",
+            "size",
+            "sha256"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "name": {
+              "const": "deployment-controller-publisher-subject-manifest.json.sigstore.json"
+            },
+            "size": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "additionalProperties": false
+        }
+      ],
+      "items": false,
+      "minItems": 14,
+      "maxItems": 14
+    },
+    "mutation_receipts": {
+      "type": "array",
+      "minItems": 18,
+      "maxItems": 18,
+      "items": {
+        "type": "object",
+        "required": [
+          "sequence",
+          "mutation",
+          "check_id",
+          "external_id",
+          "sha256",
+          "previous_receipt_sha256"
+        ],
+        "properties": {
+          "sequence": {
+            "type": "string",
+            "pattern": "^[1-9][0-9]*$"
+          },
+          "mutation": {
+            "enum": [
+              "release-create",
+              "release-asset-create",
+              "image-publish",
+              "chart-publish",
+              "release-finalize"
+            ]
+          },
+          "check_id": {
+            "type": "string",
+            "pattern": "^[1-9][0-9]*$"
+          },
+          "external_id": {
+            "type": "string",
+            "pattern": "^codicarium\\.publisher-mutation/v1:[0-9a-f]{64}:[1-9][0-9]*:[0-9a-f]{64}$"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "previous_receipt_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "retirement": {
+      "type": "object",
+      "required": [
+        "old_workflows",
+        "legacy_credentials_removed",
+        "general_runner_access_removed"
+      ],
+      "properties": {
+        "old_workflows": {
+          "type": "array",
+          "prefixItems": [
+            {
+              "type": "object",
+              "required": [
+                "id",
+                "path",
+                "state"
+              ],
+              "properties": {
+                "id": {
+                  "const": "341194538"
+                },
+                "path": {
+                  "const": ".github/workflows/automatic-release.yaml"
+                },
+                "state": {
+                  "const": "disabled_manually"
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "required": [
+                "id",
+                "path",
+                "state"
+              ],
+              "properties": {
+                "id": {
+                  "const": "318365668"
+                },
+                "path": {
+                  "const": ".github/workflows/release.yaml"
+                },
+                "state": {
+                  "const": "disabled_manually"
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "required": [
+                "id",
+                "path",
+                "state"
+              ],
+              "properties": {
+                "id": {
+                  "const": "318365667"
+                },
+                "path": {
+                  "const": ".github/workflows/publish-release.yaml"
+                },
+                "state": {
+                  "const": "disabled_manually"
+                }
+              },
+              "additionalProperties": false
+            }
+          ],
+          "items": false,
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "legacy_credentials_removed": {
+          "const": true
+        },
+        "general_runner_access_removed": {
+          "const": true
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "unevaluatedProperties": false
+}

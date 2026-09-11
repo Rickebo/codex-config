@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+CODEX_HOME="${CODEX_HOME:-/home/rickebo/.codex}"
+UVX="${QDRANT_MEMORY_UVX:-$CODEX_HOME/.venvs/uv/bin/uvx}"
+
+export QDRANT_URL="${QDRANT_URL:-http://127.0.0.1:6333}"
+export EMBEDDING_PROVIDER="${EMBEDDING_PROVIDER:-fastembed}"
+export EMBEDDING_MODEL="${EMBEDDING_MODEL:-sentence-transformers/all-MiniLM-L6-v2}"
+export QDRANT_SEARCH_LIMIT="${QDRANT_SEARCH_LIMIT:-8}"
+export TOOL_STORE_DESCRIPTION="${TOOL_STORE_DESCRIPTION:-Store durable Codex memory in Qdrant. Always choose collection_name explicitly: codex-global for cross-project user/agent preferences, codex-workspace-<slug> for a multi-repo workspace, or codex-repo-<slug> for one repository. Store only reusable verified facts, decisions, preferences, validation commands, and concise handoff notes. Do not store secrets, raw sensitive logs, speculative conclusions, chain-of-thought, or large code dumps. Include metadata with scope, workspace_root or repo_root when known, source, confidence, and date.}"
+export TOOL_FIND_DESCRIPTION="${TOOL_FIND_DESCRIPTION:-Search durable Codex memory in Qdrant. Always choose collection_name explicitly. Search codex-global first for user/agent conventions, then the active codex-workspace-<slug> when working inside a multi-repo project directory, then codex-repo-<slug> for repo-specific facts. Use results as hints and verify against files or tools before making risky changes.}"
+
+if [[ "${QDRANT_MEMORY_USE_DOCKER:-0}" == "1" ]] && command -v docker >/dev/null 2>&1; then
+  COMPOSE_FILE="${QDRANT_MEMORY_COMPOSE_FILE:-$CODEX_HOME/qdrant-memory/compose.yaml}"
+  docker compose -f "$COMPOSE_FILE" up -d qdrant-memory >/dev/null
+else
+  "$CODEX_HOME/bin/start-qdrant-memory-server"
+fi
+
+export UV_PYTHON_INSTALL_DIR="${UV_PYTHON_INSTALL_DIR:-$CODEX_HOME/.uv/python}"
+export UV_TOOL_DIR="${UV_TOOL_DIR:-$CODEX_HOME/.uv/tools}"
+export UV_CACHE_DIR="${UV_CACHE_DIR:-$CODEX_HOME/.uv/cache}"
+
+exec python3 "$CODEX_HOME/bin/supervise-qdrant-memory-mcp.py" "$UVX" --python 3.13 mcp-server-qdrant

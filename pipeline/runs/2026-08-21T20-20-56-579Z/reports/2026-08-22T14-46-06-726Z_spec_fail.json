@@ -1,0 +1,39 @@
+{
+  "stage": "spec",
+  "status": "fail",
+  "summary": "Spec 1.2.0 decisions and traceability are reconciled, but source provider, NAS, restore, identity, and fresh-credential readiness gates remain unresolved; remain at spec.",
+  "changed_files": [
+    "feature-spec.json",
+    "decision-packet-d002-d003-20260822T094135Z.json",
+    "council.json",
+    "council-reaudit-20260822T144357Z.json",
+    "spec-stage-report-20260822T144357Z.json"
+  ],
+  "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-21T20-20-56-579Z/feature-spec.json",
+  "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-08-21T20-20-56-579Z/spec-check-20260822T144357Z.json",
+  "council_file": "/home/rickebo/.codex/pipeline/runs/2026-08-21T20-20-56-579Z/council-reaudit-20260822T144357Z.json",
+  "risk_level": "high",
+  "requires_council": true,
+  "independent_lanes": [
+    "source provider cutoff/WAL/artifact evidence",
+    "NAS ACL/capacity/off-node backup/restore readiness",
+    "target identity/RBAC/fresh credentials and untouched PVC boundary"
+  ],
+  "validation": [
+    "Strict feature-spec schema and quality gates must pass.",
+    "Acceptance, test, and traceability counts must remain complete.",
+    "D-001 provider evidence remains open; no source payload or mutation is authorized.",
+    "D-002 NAS ACL/capacity, backup, restore, and logical migration evidence remains open.",
+    "D-003 exact identity/RBAC and fresh target credential evidence remains open.",
+    "D-004 unrelated Longhorn and historical/retained PVCs remain untouched."
+  ],
+  "blockers": [
+    "Missing sanitized provider-side shared cutoff/WAL continuity and graph-artifact SHA closure.",
+    "Missing NAS ACL/capacity, retention, off-node backup health, target-only restore, and logical migration proof.",
+    "Missing exact target identity mapping, callback/scopes, ServiceAccount/RBAC, and fresh credential rotation proof.",
+    "Historical/retained PVC provenance is unresolved and must remain untouched.",
+    "Independent authorized review is required for prior secret-adjacent evidence incidents; no values are included here."
+  ],
+  "route_to": "spec",
+  "next_action": "Obtain sanitized D-001 evidence and D-002/D-003 readiness proof, then rerun only strict spec gates; do not approve or advance this report."
+}

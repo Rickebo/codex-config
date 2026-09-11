@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://codicarium.local/v2.5/activation.v2.5",
+  "title": "activation.v2.5",
+  "type": "object",
+  "required": [
+    "state",
+    "live_gate_count",
+    "refresh_required_before_mutation"
+  ],
+  "properties": {
+    "state": {
+      "type": "string",
+      "minLength": 1
+    },
+    "live_gate_count": {
+      "type": "integer"
+    },
+    "refresh_required_before_mutation": {
+      "type": "boolean"
+    }
+  },
+  "additionalProperties": false
+}

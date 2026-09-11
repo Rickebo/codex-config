@@ -1,0 +1,7 @@
+{
+  "state": "BLOCKED_PREACTIVATION",
+  "live_gate_count": 0,
+  "required_live_gate_count": 32,
+  "synthetic_evidence_authorizes": false,
+  "live_evidence_policy": "reject-without-full-certificate-key-identity-inputs"
+}

@@ -1,0 +1,24 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Luna completed the final PR #156 remediation in commit 68ca2583cb2a4050a6440e3b88b8d11e6b7f32c6: signed two-file terminal-failure evidence, strict exact-run verification, repository-wide release-mutation serialization, static writer detection, and an explicit trusted-administrator boundary.",
+  "changed_files": [
+    ".github/workflows/automatic-release.yaml",
+    ".github/workflows/publish-release.yaml",
+    "docs/releasing.md",
+    "hack/release-failure-policy.js",
+    "hack/test-release-failure-policy.js",
+    "hack/test-release-graph.py"
+  ],
+  "validation": [
+    "Full make test-release-flow passed at exact commit 68ca2583cb2a4050a6440e3b88b8d11e6b7f32c6",
+    "28 image, 4 chart, 6 manifest, 48 release-graph, 2 handoff, 23 asset-plan, 13 failure-policy, and 4 recovery tests passed",
+    "Luna reports actionlint, repository validation, action pin validation, JavaScript syntax, Python compilation, and diff checks passed",
+    "Worktree is clean and one commit ahead of the pushed PR head"
+  ],
+  "blockers": [
+    "Independent Luna security review and fresh exact-head protected CI remain required before merge"
+  ],
+  "next_action": "Push the exact commit to PR #156, obtain independent Luna review of signed evidence and TOCTOU controls, and require fresh protected CI before merge.",
+  "risk_level": "critical"
+}

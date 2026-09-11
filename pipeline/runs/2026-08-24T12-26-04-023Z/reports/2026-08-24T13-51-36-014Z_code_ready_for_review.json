@@ -1,0 +1,40 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Implemented secure explicit Release Verify to Publish Release dispatch, exact run/check/source authentication, unpublished-candidate resumption with exact historical CI recovery, workflow_dispatch publisher provenance, and explicit legacy evidence opt-ins while preserving the existing verified artifact and publication stages.",
+  "changed_files": [
+    ".github/workflows/automatic-release.yaml",
+    ".github/workflows/publish-release.yaml",
+    ".github/workflows/recover-release-v068.yaml",
+    ".github/workflows/release.yaml",
+    "docs/releasing.md",
+    "hack/publisher-subject-evidence.py",
+    "hack/release-plan.py",
+    "hack/release-provenance.py",
+    "hack/test-publisher-subject-evidence.py",
+    "hack/test-release-graph.py",
+    "hack/test-release-image-flow.py",
+    "hack/test-release-plan.py"
+  ],
+  "validation": [
+    "Compact-TDD red: planner returned no-release for unpublished v0.6.13 ancestor followed by chore commit",
+    "make test-release-flow: passed (26 image, 6 chart, 46 release graph/policy, 2 manifest, 14 publisher evidence, 11 planner, 6 coordinator tests plus asset fixtures)",
+    "./hack/validate-repository.sh: passed",
+    "actionlint v1.7.7 across all repository workflows: passed",
+    "git diff --check: passed",
+    "Workspace Context published-baseline impact analysis completed at revision 0c70b1f6-8191-49f9-84fd-eb18947de4a4"
+  ],
+  "blockers": [],
+  "next_action": "Perform independent security/correctness review of commit 3aba8c788d7284bc906a9b02515c2351c1cb471e before PR testing and live automatic v0.6.13 recovery.",
+  "route_to": "review",
+  "risk_level": "high",
+  "commit": "3aba8c788d7284bc906a9b02515c2351c1cb471e",
+  "worktree": "/mnt/rickebo-p/deployment-controller/.worktrees/deployment-controller-codex_issue-91-publisher-dispatch",
+  "independent_lanes": [
+    "Release Verify source-free handoff and least privilege",
+    "Publish Release identity-chain validation and idempotence",
+    "pending-candidate SemVer and exact-CI recovery",
+    "provenance migration and historical opt-in",
+    "artifact binding and release publication preservation"
+  ]
+}

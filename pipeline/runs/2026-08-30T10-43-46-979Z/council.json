@@ -1,0 +1,38 @@
+{
+  "run": "2026-08-30T10-43-46-979Z",
+  "decision": "NO_GO_CURRENT_PRS",
+  "perspectives": [
+    {
+      "role": "architecture",
+      "agent": "consolidation_architecture_council",
+      "conclusion": "Use one canonical authority manifest for immutable GitHub, host, service, workspace, package, sudo, and protocol facts. The installer and verifier must consume or be mechanically checked against that same authority; UID or runner labels alone do not prove host identity."
+    },
+    {
+      "role": "security_review",
+      "agent": "consolidation_security_council",
+      "conclusion": "PRs 1293 and 1294 are split-brain. The consolidated implementation must fix mixed-generation publication, unbounded privileged input, SUDO_UID fallback, incomplete live ownership verification, cross-job cleanup deletion, and digest drift."
+    },
+    {
+      "role": "quality_validation",
+      "agent": "consolidation_qa_council",
+      "conclusion": "Create one clean consolidation PR from current main, use PR 1294's package/protocol as the implementation base and PR 1293's descriptor-bound verifier/race tests as the security basis, and require offline plus dedicated-runner gates before live authorization."
+    }
+  ],
+  "consensus": [
+    "Do not merge PR 1293 or PR 1294 as-is.",
+    "Deliver one new consolidation PR from current protected main and supersede both old PRs only after the new exact head is independently reviewed and tested.",
+    "Keep host installation, runner-group workflow policy mutation, workflow dispatch, merge, and other live mutation outside this consolidation pipeline.",
+    "Keep runner group 6 reconciliation-only until a separate guarded rollout proves the installed contract and authorizes exact workflows.",
+    "Treat the absent group-7 protected runner as a real validation blocker, never as permission to bypass or substitute group 6."
+  ],
+  "source_heads": {
+    "main": "efb9faac0606e02b7cac8e36e716f1ede9a50fb6",
+    "pr_1293": "74d211b8c77ec2aefaed3d4ddc7d1b4ef4f7f2df",
+    "pr_1294": "8af645bf543d3a9edde45eda485fa91cddd42776"
+  },
+  "live_constraints": {
+    "runner_group_6": "runner 6252 online; selected workflow remains reconcile-pve1-tls-fingerprint.yml on its reviewed branch only",
+    "runner_group_7": "zero runners; protected PR producer jobs remain queued",
+    "browser": "Playwright reaches Argo CD and Authentik; Authentik interactive login is still required for user-continuity evidence"
+  }
+}

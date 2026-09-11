@@ -1,0 +1,25 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Parser and PR-wiring findings are fixed, but review found the bootstrap-render subprocess inherits the runner environment and leaves bootstrap artifacts outside test ownership. Chart rendering remains a test-stage gate.",
+  "changed_files": [],
+  "validation": [
+    "Independent QA passed all 10 mutation tests and reproduced rejection of prior decoy bypasses.",
+    "Root review confirmed structural Terraform parsing and Legacy Freeze Guard wiring.",
+    "Independent security review identified subprocess environment and temporary-artifact hardening gaps."
+  ],
+  "blockers": [
+    "Bootstrap renderer subprocess must use a minimal sanitized environment.",
+    "ARTIFACT_DIR, HOME, and temporary files must be confined to the checker-owned TemporaryDirectory.",
+    "Exact Helm chart/Argo v3.4.4 ConfigMap rendering and semantics remain required in test stage."
+  ],
+  "next_action": "Return to code for the narrow subprocess environment/artifact fix and regression coverage; preserve the external-runner PR boundary and leave chart semantics to test stage.",
+  "requires_council": false,
+  "independent_lanes": ["security subprocess review", "QA mutation re-review", "root remediation review"],
+  "route_to": "code",
+  "risk_level": "critical",
+  "issues": [
+    {"id":"review-subprocess-env","title":"Bootstrap contract subprocess inherits runner environment","severity":"high","details":"Sanitize environment and confine artifacts before review can pass.","owner_stage":"code"},
+    {"id":"review-chart-render","title":"Actual chart ConfigMap rendering not yet validated","severity":"high","details":"Owned by exact-version test stage without expanding Phase 0 into a chart pin/change.","owner_stage":"test"}
+  ]
+}

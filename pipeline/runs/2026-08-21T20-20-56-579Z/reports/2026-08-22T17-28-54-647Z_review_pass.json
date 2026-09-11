@@ -1,0 +1,48 @@
+{
+  "stage": "review",
+  "status": "pass",
+  "summary": "No blocking findings. Independent re-review of commit 1d6d249 closes the five prior high findings in the full f039009..HEAD scope.",
+  "changed_files": [
+    "apps/llm-proxy.yaml",
+    "apps/workspace-context.yaml",
+    "llm-proxy/templates/database-backup.yaml",
+    "llm-proxy/templates/restore.yaml",
+    "llm-proxy/templates/target-gates.yaml",
+    "llm-proxy/templates/_helpers.tpl",
+    "llm-proxy/vendor/llm-proxy/templates/deployment-api.yaml",
+    "llm-proxy/vendor/llm-proxy/templates/deployment-controller.yaml",
+    "llm-proxy/vendor/llm-proxy/templates/deployment-web.yaml",
+    "llm-proxy/vendor/llm-proxy/templates/headroom.yaml",
+    "llm-proxy/vendor/llm-proxy/templates/job-migrator.yaml",
+    "llm-proxy/vendor/llm-proxy/templates/services.yaml",
+    "llm-proxy/values.yaml",
+    "workspace-context/templates/backup.yaml",
+    "workspace-context/templates/gated.yaml",
+    "workspace-context/templates/workload.yaml",
+    "workspace-context/templates/storage.yaml",
+    "workspace-context/templates/database.yaml",
+    "tests/test_workspace_context_llm_proxy_gitops.py",
+    "workspace-context/tests/static.sh"
+  ],
+  "validation": [
+    "pytest -q tests/test_workspace_context_llm_proxy_gitops.py: 8 passed.",
+    "helm lint workspace-context and llm-proxy: passed.",
+    "workspace-context/tests/static.sh: passed.",
+    "Rendered checksum shell contracts for both charts execute final-path hashing and sha256sum verification.",
+    "Rendered mismatch probes fail in both workload-gate directions; database-gated backup/restore paths reject missing database gates.",
+    "Enabled LLM backup render has namespace-local backup PVC ownership and no cross-namespace graph-artifact PVC reference.",
+    "Enabled gated images require @sha256 references and render with Always pull policy.",
+    "Exact Argo inline-value renders produce no target workload, service, PVC, job, ingress, external-secret, or database kinds.",
+    "git diff --check f039009..HEAD passed; worker, bridge, and historical protected paths are unchanged.",
+    "Current-run CI passed: 1 run checked, 0 failed, 0 warnings."
+  ],
+  "blockers": [],
+  "next_action": "Route to test; do not deploy, sync Argo, restore, mutate cluster state, or approve a transition.",
+  "route_to": "test",
+  "risk_level": "high",
+  "requires_council": true,
+  "independent_lanes": [
+    "Review full f039009..HEAD diff for the five prior findings and regressions.",
+    "Recheck rendered gate-off safety, backup execution, image immutability, and protected paths."
+  ]
+}

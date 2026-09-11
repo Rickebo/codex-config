@@ -1,0 +1,41 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Independent review of exact 7e8a207 found two bounded correctness gaps: proof/Lease transient read failures are misclassified as permanent drift, and the legacy hook can change protected-main deleting/Active short-circuit behavior by reading the request first.",
+  "changed_files": [
+    "internal/controller/activation/legacy_preapproval.go",
+    "internal/controller/activation/reconciler.go",
+    "internal/controller/activation/legacy_preapproval_test.go"
+  ],
+  "validation": [
+    "Exact reviewed base/head confirmed: ad52dfc -> 7e8a207",
+    "Focused activation unit tests pass",
+    "v0.6.4 fixtures remain byte-identical to commit 17688f7",
+    "Request-first Consumed/absent-Lease and activation-first Issued/present-Lease envtests are present",
+    "Anomaly zero-write, CEL modern-create rejection, snapshots, and list-cardinality coverage are present",
+    "Static error-classification and protected-main routing review exposed the remaining gaps"
+  ],
+  "blockers": [
+    "Non-NotFound proof and issuance-Lease GET errors become ErrPermanentDrift instead of retryable ErrStateRead; Consumed must accept only an actual Lease NotFound.",
+    "Legacy hook reads the request before protected-main deletion/Active short-circuits, changing modern behavior on transient request-read failure."
+  ],
+  "next_action": "Preserve deletion/Active short-circuits before the legacy hook, classify only NotFound as terminal proof/Lease drift, add focused no-write/error tests, and re-review the next exact SHA.",
+  "route_to": "code",
+  "risk_level": "critical",
+  "issues": [
+    {
+      "id": "LEGACY-REVIEW4-001",
+      "title": "Transient proof and Lease reads are treated as permanent drift",
+      "severity": "medium",
+      "details": "Return ErrStateRead for non-NotFound API errors; accept absent consumed-proof Lease only when the API returns IsNotFound.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "LEGACY-REVIEW4-002",
+      "title": "Legacy hook precedes existing deletion and Active short-circuits",
+      "severity": "low",
+      "details": "Move or gate legacy handling so modern deleting and Active activations preserve protected-main zero-read success behavior.",
+      "owner_stage": "code"
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "stage": "spec",
+  "status": "pass",
+  "summary": "Five-perspective council approved a protection-first chart ownership transfer. The schema-valid spec defines a disabled-by-default portable GrafanaDashboard, raw JSON loading without tpl, reset-masked raw hourly 5h/1w burn, non-overlapping layout, no backend changes, immutable artifact promotion, explicit-context validation, and separate prune-protection cleanup.",
+  "changed_files": [
+    "/home/rickebo/.codex/pipeline/runs/2026-09-04T12-58-50-785Z/feature-spec.json",
+    "/home/rickebo/.codex/pipeline/runs/2026-09-04T12-58-50-785Z/council.json",
+    "/home/rickebo/.codex/pipeline/runs/2026-09-04T12-58-50-785Z/spec-check.json",
+    "/home/rickebo/.codex/pipeline/runs/2026-09-04T12-58-50-785Z/spec-report.json"
+  ],
+  "validation": [
+    "Feature spec validated against feature-spec.schema.json Draft 2020-12: PASS.",
+    "pipeline-spec-check.mjs --strict: PASS; 15 requirements, 15 MUST, 13 acceptance criteria, 13 tests, and 15 trace rows.",
+    "All five checker quality gates are true; errors=0 and warnings=0.",
+    "Council includes the required product semantics, Helm portability, GitOps safety, observability correctness, and QA/release perspectives.",
+    "Council records issue/PR ownership, dependencies, artifacts, validation checkpoints, priority:p1 suggestions, and follow-up cleanup.",
+    "Only pipeline artifacts in the assigned run directory were created; no repository files were edited."
+  ],
+  "blockers": [],
+  "next_action": "After the configured spec-to-code approval, create/reuse linked priority:p1 issues and begin with the standalone-resource prune-protection PR; chart preparation may overlap, but publication waits for verified live protection.",
+  "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-09-04T12-58-50-785Z/feature-spec.json",
+  "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-09-04T12-58-50-785Z/spec-check.json",
+  "council_file": "/home/rickebo/.codex/pipeline/runs/2026-09-04T12-58-50-785Z/council.json",
+  "requires_council": true,
+  "independent_lanes": [
+    "product semantics and dashboard information architecture",
+    "Helm packaging, values portability, and raw JSON safety",
+    "GitOps protection, immutable release, adoption, and cleanup",
+    "PromQL correctness and live observability evidence",
+    "QA contracts, artifact provenance, dry-run, and visual release validation"
+  ],
+  "route_to": "code",
+  "risk_level": "high"
+}

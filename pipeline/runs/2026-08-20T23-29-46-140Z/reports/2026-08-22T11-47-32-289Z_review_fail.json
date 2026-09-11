@@ -1,0 +1,22 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Independent review of PR #177 found workflow_dispatch can publish a non-main ref.",
+  "changed_files": [
+    ".github/workflows/release.yml",
+    "tools/test_check_main_protection.py"
+  ],
+  "validation": [
+    "Exact head cd365d751864e68fa45b64f4e0cf088f9d217228 reviewed.",
+    "Hosted validate run 32570841508 passed.",
+    "Validation-only gate split and artifact-only publication conditions are otherwise correct.",
+    "Existing #124 supply-chain pins remain intact."
+  ],
+  "blockers": [
+    "workflow_dispatch unconditionally sets image_changed=true and chart_changed=true without restricting the selected ref to refs/heads/main.",
+    "A non-main manual dispatch could publish branch artifacts and bump deployment metadata."
+  ],
+  "next_action": "Add a fail-closed main-ref guard and regression test, rerun exact-head review and QA, then merge normally.",
+  "route_to": "code",
+  "risk_level": "high"
+}

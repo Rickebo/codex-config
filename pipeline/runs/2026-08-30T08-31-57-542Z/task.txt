@@ -1,0 +1,1 @@
+Deploy the Lightning Craft stack to Codicarium production through deployment-controller GitOps; lc-config owns control-plane hosting; proxy and all game servers use a dedicated Kata RuntimeClass

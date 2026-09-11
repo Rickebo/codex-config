@@ -1,0 +1,64 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Canonical #28 branch bb2625a contains production cross-service generation resolution, nonce-backed workload authentication, retry/DLQ and fence hardening, worker composition fix, contract-faithful nullable causation handling, and a real FastSystem Source-to-Knowledge proof with bounded diagnostics.",
+  "changed_files": [
+    "contracts/model-service/v1/openapi.yaml",
+    "contracts/workspace-service/v1/openapi.yaml",
+    "services/knowledge-service/src/KnowledgeService.Infrastructure/KnowledgeGenerationResolver.cs",
+    "services/knowledge-service/src/KnowledgeService.Infrastructure/KnowledgeEventRetryPolicy.cs",
+    "services/knowledge-service/src/KnowledgeService.Infrastructure/NpgsqlKnowledgeRepository.cs",
+    "services/knowledge-service/src/KnowledgeService.Infrastructure/WorkloadProof.cs",
+    "services/knowledge-service/src/KnowledgeService.Worker/Workers.cs",
+    "services/knowledge-service/src/KnowledgeService.Worker/Program.cs",
+    "services/knowledge-service/src/KnowledgeService.Worker/KnowledgeWorkerHost.cs",
+    "services/model-service/src/ModelService.Api/WorkloadAuthentication.cs",
+    "services/model-service/src/ModelService.Infrastructure/Migrations/003_workload_proof_nonces.sql",
+    "services/model-service/src/ModelService.Infrastructure/Persistence/PostgresModelStore.Resources.cs",
+    "services/workspace-service/src/WorkspaceService.Infrastructure/WorkspaceOperationsRepository.cs",
+    "tests/knowledge-service/KnowledgeService.IntegrationTests/KafkaIntegrationTests.cs",
+    "tests/knowledge-service/KnowledgeService.IntegrationTests/PostgresLifecycleTests.cs",
+    "tests/model-service/ModelService.IntegrationTests/ModelServiceApiFlowTests.cs",
+    "tests/system/WorkspaceManager.SystemTests/KnowledgeGenerationFlowTests.cs",
+    "tests/system/WorkspaceManager.SystemTests/Infrastructure/KnowledgeGenerationSystemFixture.cs",
+    "tests/system/WorkspaceManager.SystemTests/Infrastructure/LocalDotNetProcess.cs",
+    "tests/system/WorkspaceManager.SystemTests/Infrastructure/LoopbackHttpFixtures.cs"
+  ],
+  "validation": [
+    "Knowledge focused resolver/retry/cancellation tests: 12 passed",
+    "Kafka DLQ rewind/poison ordering: 1 passed; generation-fence recovery: 1 passed",
+    "Source CloudEvent envelope focused test: 1 passed",
+    "Model generation/replay: 2 passed; concurrent workspace-bound nonce: 1 passed",
+    "Knowledge worker composition: 1 passed; Release build 0 warnings/errors",
+    "Nullable causation boundary tests: 4 passed; full PostgresLifecycleTests: 18 passed",
+    "Real FastSystem Source-to-Knowledge proof: 3 consecutive passes around 20 seconds",
+    "Canonical integrated branch system Release build 0 warnings/errors and focused proof 1/1 in 21.35 seconds",
+    "validate-specs, YAML parse, formatting/diff checks passed in focused code lane",
+    "All scoped Testcontainers/process/temp resources cleaned after success and failure runs"
+  ],
+  "blockers": [],
+  "next_action": "Independent reviewer audits all 39 changed paths against the eight requirements, with security/concurrency/migration and system-harness maintainability as explicit gates.",
+  "route_to": "review",
+  "risk_level": "high",
+  "independent_lanes": [
+    "Backend contracts/runtime/security/migration",
+    "Kafka retry/DLQ/fencing and lifecycle tests",
+    "Real FastSystem process/provider/Kafka orchestration"
+  ],
+  "issues": [
+    {
+      "id": "TESTHOST-SIGSEGV",
+      "title": "Aggregate Model integration test host crashes",
+      "severity": "high",
+      "details": "Focused Model tests pass; formal clean-main versus candidate classification remains mandatory in the test stage.",
+      "owner_stage": "test"
+    },
+    {
+      "id": "SYSTEM-HARNESS-SIZE",
+      "title": "New real-flow fixture materially expands system harness",
+      "severity": "medium",
+      "details": "Review must check bounded lifecycle, redaction, process cleanup, duplication, and maintainability across the tests/system-only implementation.",
+      "owner_stage": "review"
+    }
+  ]
+}

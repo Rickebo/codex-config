@@ -1,0 +1,31 @@
+{
+  "stage": "test",
+  "status": "pass",
+  "summary": "Exact PR #95 head c637b45 passes backend, frontend, focused Quick Connect lifecycle, and contract validation.",
+  "changed_files": [],
+  "validation": [
+    "go test -race ./... passed across all packages.",
+    "go vet ./..., go build ./..., gofmt, OpenAPI JSON, and git diff --check passed.",
+    "npm frontend check and 7 frontend tests passed.",
+    "Focused Quick Connect tests passed: approval, pending, expiry, cancel race, single-use, CSRF, origin, JSON, cap, and cleanup.",
+    "Jellyfin client fixture passed official paths, stable X-Emby-Authorization headers, Secret query, and auth body.",
+    "Docker ytdlp runtime and Make input security contract tests passed.",
+    "Browser projections omit Quick Connect Secret, access token, Google subject, password material, and editable server_url.",
+    "Playwright is unavailable; no browser packages were installed and no non-Playwright browser substitute was used."
+  ],
+  "blockers": [
+    "Live VPN-only Playwright acceptance is not available in this test environment; deployment validation must cover browser flow and two-user isolation."
+  ],
+  "next_action": "Proceed to validation-stage VPN canary and Playwright acceptance when the deployed browser environment is available.",
+  "route_to": "validation",
+  "risk_level": "high",
+  "issues": [
+    {
+      "id": "TEST-PLAYWRIGHT-UNAVAILABLE",
+      "title": "Live browser acceptance not run",
+      "severity": "medium",
+      "details": "Playwright is not installed in this environment; static frontend and server-side flow tests passed.",
+      "owner_stage": "validation"
+    }
+  ]
+}

@@ -1,0 +1,3223 @@
+{
+  "schema": "codicarium.deployment-controller-release-spec/v2.3",
+  "generated_at": "2026-08-26T12:00:00Z",
+  "predecessor": "v2.1 rejected_return_to_spec",
+  "baselines": {
+    "codicarium/deployment-controller": "1de94f3267dea52b5e9194d32d15a69cb597d17e",
+    "codicarium/vault-config": "8412372a2fb328070ec43d6a596b921b4fe05c8e",
+    "codicarium/app-config": "6f1a2af06e5b970d6036b9a834320fea74a4dfc8",
+    "codicarium/infra": "40073c068a9cf8ff4c1e625b97e09fda31b40637",
+    "codicarium/runner-config": "9625e442a12c721e89250812f3d079b09833ccb0",
+    "codicarium/postgres-config": "d5ccccfcfc5bae4d099f1848b68e07dcaa679d62",
+    "codicarium/codicarium-actions": "9545b5a66498f67667e57d021507ac060fd016b6"
+  },
+  "current_facts": {
+    "issue_93": "closed",
+    "release_v0_6_13": "exists and immutable",
+    "release_v0_6_14": "absent",
+    "pr_108": "recover-release-v068 changes only canonical ACTIONS_STORAGE_OVH secrets plus documentation and tests"
+  },
+  "activation": {
+    "state": "BLOCKED_PREACTIVATION",
+    "synthetic_evidence_authorizes": false,
+    "live_gate_count": 0,
+    "required_live_gate_count": 37
+  },
+  "owners": {
+    "schemas_and_evaluators": "codicarium/codicarium-actions",
+    "configuration_and_policy": "codicarium/release-platform-config",
+    "central_infrastructure": "codicarium/infra",
+    "postgres": "codicarium/postgres-config",
+    "vault": "codicarium/vault-config",
+    "orchestration": "codicarium/deployment-controller",
+    "bootstrap": "codicarium/app-config",
+    "forbidden_owner": "codicarium/release-security"
+  },
+  "dag": {
+    "schema": "codicarium.rollout-dag/v2.2",
+    "node_count": 101,
+    "nodes": [
+      {
+        "id": "S00",
+        "owner": "release-manager",
+        "action": "Collect fresh non-authorizing inventory at the seven immutable heads",
+        "depends_on": [],
+        "mode": "normal"
+      },
+      {
+        "id": "S01",
+        "owner": "release-manager",
+        "action": "Obtain exact-hash council decision bound to spec, annex, spec-check and validator hashes",
+        "depends_on": [
+          "S00"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "B10",
+        "owner": "release-manager",
+        "action": "GET repository and require exact 404, then one-use dual-control private repository create",
+        "depends_on": [
+          "S01"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "B11",
+        "owner": "independent-readback",
+        "action": "Read repository numeric ID, node ID and settings independently",
+        "depends_on": [
+          "B10"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "B12",
+        "owner": "release-manager",
+        "action": "Commit exact approved seed and RepositoryBindingEnvelope",
+        "depends_on": [
+          "B11"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "B13",
+        "owner": "independent-readback",
+        "action": "Read exact seed Git tree and canonical blob bytes",
+        "depends_on": [
+          "B12"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "B14",
+        "owner": "independent-readback",
+        "action": "Read Apps, rulesets, environments and required checks",
+        "depends_on": [
+          "B13"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "B15",
+        "owner": "administrator-readback",
+        "action": "Read unredacted administrator-visible bypass actors",
+        "depends_on": [
+          "B14"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "CA20",
+        "owner": "codicarium/codicarium-actions",
+        "action": "Implement the bounded lane at the frozen base head",
+        "depends_on": [
+          "B15"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "CA21",
+        "owner": "independent-reviewer",
+        "action": "Sign exact-head and exact-diff review evidence",
+        "depends_on": [
+          "CA20"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "CA22",
+        "owner": "independent-qa",
+        "action": "Run positive tests and zero-effect negative oracles",
+        "depends_on": [
+          "CA21"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "CA23",
+        "owner": "github-actions",
+        "action": "Pass protected checks at the same candidate head",
+        "depends_on": [
+          "CA22"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "CA24",
+        "owner": "guarded-merge",
+        "action": "Merge the exact approved head without bypass",
+        "depends_on": [
+          "CA23"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "CA25",
+        "owner": "independent-readback",
+        "action": "Read post-merge main and successful protected CI",
+        "depends_on": [
+          "CA24"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "IF20",
+        "owner": "codicarium/infra",
+        "action": "Implement the bounded lane at the frozen base head",
+        "depends_on": [
+          "CA25"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "IF21",
+        "owner": "independent-reviewer",
+        "action": "Sign exact-head and exact-diff review evidence",
+        "depends_on": [
+          "IF20"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "IF22",
+        "owner": "independent-qa",
+        "action": "Run positive tests and zero-effect negative oracles",
+        "depends_on": [
+          "IF21"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "IF23",
+        "owner": "github-actions",
+        "action": "Pass protected checks at the same candidate head",
+        "depends_on": [
+          "IF22"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "IF24",
+        "owner": "guarded-merge",
+        "action": "Merge the exact approved head without bypass",
+        "depends_on": [
+          "IF23"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "IF25",
+        "owner": "independent-readback",
+        "action": "Read post-merge main and successful protected CI",
+        "depends_on": [
+          "IF24"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "PG20",
+        "owner": "codicarium/postgres-config",
+        "action": "Implement the bounded lane at the frozen base head",
+        "depends_on": [
+          "CA25"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "PG21",
+        "owner": "independent-reviewer",
+        "action": "Sign exact-head and exact-diff review evidence",
+        "depends_on": [
+          "PG20"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "PG22",
+        "owner": "independent-qa",
+        "action": "Run positive tests and zero-effect negative oracles",
+        "depends_on": [
+          "PG21"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "PG23",
+        "owner": "github-actions",
+        "action": "Pass protected checks at the same candidate head",
+        "depends_on": [
+          "PG22"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "PG24",
+        "owner": "guarded-merge",
+        "action": "Merge the exact approved head without bypass",
+        "depends_on": [
+          "PG23"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "PG25",
+        "owner": "independent-readback",
+        "action": "Read post-merge main and successful protected CI",
+        "depends_on": [
+          "PG24"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "VA20",
+        "owner": "codicarium/vault-config",
+        "action": "Implement the bounded lane at the frozen base head",
+        "depends_on": [
+          "CA25"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "VA21",
+        "owner": "independent-reviewer",
+        "action": "Sign exact-head and exact-diff review evidence",
+        "depends_on": [
+          "VA20"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "VA22",
+        "owner": "independent-qa",
+        "action": "Run positive tests and zero-effect negative oracles",
+        "depends_on": [
+          "VA21"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "VA23",
+        "owner": "github-actions",
+        "action": "Pass protected checks at the same candidate head",
+        "depends_on": [
+          "VA22"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "VA24",
+        "owner": "guarded-merge",
+        "action": "Merge the exact approved head without bypass",
+        "depends_on": [
+          "VA23"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "VA25",
+        "owner": "independent-readback",
+        "action": "Read post-merge main and successful protected CI",
+        "depends_on": [
+          "VA24"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "RP20",
+        "owner": "codicarium/release-platform-config",
+        "action": "Implement the bounded lane at the frozen base head",
+        "depends_on": [
+          "CA25"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "RP21",
+        "owner": "independent-reviewer",
+        "action": "Sign exact-head and exact-diff review evidence",
+        "depends_on": [
+          "RP20"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "RP22",
+        "owner": "independent-qa",
+        "action": "Run positive tests and zero-effect negative oracles",
+        "depends_on": [
+          "RP21"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "RP23",
+        "owner": "github-actions",
+        "action": "Pass protected checks at the same candidate head",
+        "depends_on": [
+          "RP22"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "RP24",
+        "owner": "guarded-merge",
+        "action": "Merge the exact approved head without bypass",
+        "depends_on": [
+          "RP23"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "RP25",
+        "owner": "independent-readback",
+        "action": "Read post-merge main and successful protected CI",
+        "depends_on": [
+          "RP24"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "DC20",
+        "owner": "codicarium/deployment-controller",
+        "action": "Implement the bounded lane at the frozen base head",
+        "depends_on": [
+          "CA25"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "DC21",
+        "owner": "independent-reviewer",
+        "action": "Sign exact-head and exact-diff review evidence",
+        "depends_on": [
+          "DC20"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "DC22",
+        "owner": "independent-qa",
+        "action": "Run positive tests and zero-effect negative oracles",
+        "depends_on": [
+          "DC21"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "DC23",
+        "owner": "github-actions",
+        "action": "Pass protected checks at the same candidate head",
+        "depends_on": [
+          "DC22"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "DC24",
+        "owner": "guarded-merge",
+        "action": "Merge the exact approved head without bypass",
+        "depends_on": [
+          "DC23"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "DC25",
+        "owner": "independent-readback",
+        "action": "Read post-merge main and successful protected CI",
+        "depends_on": [
+          "DC24"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "G30",
+        "owner": "codicarium/infra",
+        "action": "Materialize central capacity, Kata, namespaces, admission, proxy and RBAC",
+        "depends_on": [
+          "IF25"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "G31",
+        "owner": "independent-qa",
+        "action": "Run live infrastructure positive and zero-effect negative probes",
+        "depends_on": [
+          "G30"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "G32",
+        "owner": "postgres-config+vault-config",
+        "action": "Materialize CNPG, verify-full TLS and Vault bootstrap contracts",
+        "depends_on": [
+          "PG25",
+          "VA25"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "G33",
+        "owner": "independent-qa",
+        "action": "Prove HA, RBAC, backup, isolated restore and any-node-loss RPO/RTO",
+        "depends_on": [
+          "G32"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "G34",
+        "owner": "release-platform-config",
+        "action": "Materialize release platform after infra, data, Vault and controller merge",
+        "depends_on": [
+          "RP25",
+          "G31",
+          "G33",
+          "DC25"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "G35",
+        "owner": "independent-qa",
+        "action": "Prove successor is inert and has zero publication or activation effects",
+        "depends_on": [
+          "G34"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "X40",
+        "owner": "independent-readback",
+        "action": "Prove complete grant and Application set is absent",
+        "depends_on": [
+          "G35"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "X41",
+        "owner": "release-platform-config",
+        "action": "Create the complete set atomically from the bound repository identity",
+        "depends_on": [
+          "X40"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "X42",
+        "owner": "independent-readback",
+        "action": "Prove health and exact runner-config descriptor/value/handoff blobs unchanged",
+        "depends_on": [
+          "X41"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "L40",
+        "owner": "deployment-controller",
+        "action": "Disable and remove all five legacy workflows",
+        "depends_on": [
+          "X42"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "L41",
+        "owner": "deployment-controller",
+        "action": "Cancel every queued or in-progress legacy run",
+        "depends_on": [
+          "L40"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "L42",
+        "owner": "security-operator",
+        "action": "Prove terminal runs and revoke credentials, routes and sessions",
+        "depends_on": [
+          "L41"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "L43",
+        "owner": "security-operator",
+        "action": "Wait the observed maximum TTL plus clock skew",
+        "depends_on": [
+          "L42"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "L44",
+        "owner": "independent-readback",
+        "action": "Sign zero-authority inventory after quiescence",
+        "depends_on": [
+          "L43"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "Q40",
+        "owner": "gate-controller",
+        "action": "Collect fresh live gates only after materialization and quiescence",
+        "depends_on": [
+          "L44"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "Q41",
+        "owner": "independent-evaluator",
+        "action": "Recompute every signed predicate from raw command payloads",
+        "depends_on": [
+          "Q40"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "Q42",
+        "owner": "authorization-controller",
+        "action": "Authorize exactly one narrow work item without publication",
+        "depends_on": [
+          "Q41"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "A50",
+        "owner": "activation-controller",
+        "action": "Activate the exact work item and epoch once",
+        "depends_on": [
+          "Q42"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "A51",
+        "owner": "independent-readback",
+        "action": "Prove activated authority isolation and unchanged forbidden targets",
+        "depends_on": [
+          "A50"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "F00",
+        "owner": "candidate-broker",
+        "action": "Deliver one candidate through candidate-source-capability/v2 and read it once",
+        "depends_on": [
+          "A51"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "F01",
+        "owner": "claim-controller",
+        "action": "Reserve a new release claim CAS or enter U00",
+        "depends_on": [
+          "F00"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "F02",
+        "owner": "github-proxy",
+        "action": "Dispatch verifier with exact 200 run details",
+        "depends_on": [
+          "F01"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "F03",
+        "owner": "authorization-controller",
+        "action": "Issue signed publication authorization for the exact claim",
+        "depends_on": [
+          "F02"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "F04",
+        "owner": "github-proxy",
+        "action": "Dispatch publisher and commit sequence zero",
+        "depends_on": [
+          "F03"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "M01",
+        "owner": "four-party-mutation",
+        "action": "Reserve sequence, write intent, collect independently, sign with transit, and append by a distinct committer",
+        "depends_on": [
+          "F04"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "M02",
+        "owner": "four-party-mutation",
+        "action": "Reserve sequence, write intent, collect independently, sign with transit, and append by a distinct committer",
+        "depends_on": [
+          "M01"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "M03",
+        "owner": "four-party-mutation",
+        "action": "Reserve sequence, write intent, collect independently, sign with transit, and append by a distinct committer",
+        "depends_on": [
+          "M02"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "M04",
+        "owner": "four-party-mutation",
+        "action": "Reserve sequence, write intent, collect independently, sign with transit, and append by a distinct committer",
+        "depends_on": [
+          "M03"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "M05",
+        "owner": "four-party-mutation",
+        "action": "Reserve sequence, write intent, collect independently, sign with transit, and append by a distinct committer",
+        "depends_on": [
+          "M04"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "M06",
+        "owner": "four-party-mutation",
+        "action": "Reserve sequence, write intent, collect independently, sign with transit, and append by a distinct committer",
+        "depends_on": [
+          "M05"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "M07",
+        "owner": "four-party-mutation",
+        "action": "Reserve sequence, write intent, collect independently, sign with transit, and append by a distinct committer",
+        "depends_on": [
+          "M06"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "M08",
+        "owner": "four-party-mutation",
+        "action": "Reserve sequence, write intent, collect independently, sign with transit, and append by a distinct committer",
+        "depends_on": [
+          "M07"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "M09",
+        "owner": "four-party-mutation",
+        "action": "Reserve sequence, write intent, collect independently, sign with transit, and append by a distinct committer",
+        "depends_on": [
+          "M08"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "M10",
+        "owner": "four-party-mutation",
+        "action": "Reserve sequence, write intent, collect independently, sign with transit, and append by a distinct committer",
+        "depends_on": [
+          "M09"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "M11",
+        "owner": "four-party-mutation",
+        "action": "Reserve sequence, write intent, collect independently, sign with transit, and append by a distinct committer",
+        "depends_on": [
+          "M10"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "M12",
+        "owner": "four-party-mutation",
+        "action": "Reserve sequence, write intent, collect independently, sign with transit, and append by a distinct committer",
+        "depends_on": [
+          "M11"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "M13",
+        "owner": "four-party-mutation",
+        "action": "Reserve sequence, write intent, collect independently, sign with transit, and append by a distinct committer",
+        "depends_on": [
+          "M12"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "M14",
+        "owner": "four-party-mutation",
+        "action": "Reserve sequence, write intent, collect independently, sign with transit, and append by a distinct committer",
+        "depends_on": [
+          "M13"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "M15",
+        "owner": "four-party-mutation",
+        "action": "Reserve sequence, write intent, collect independently, sign with transit, and append by a distinct committer",
+        "depends_on": [
+          "M14"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "M16",
+        "owner": "four-party-mutation",
+        "action": "Reserve sequence, write intent, collect independently, sign with transit, and append by a distinct committer",
+        "depends_on": [
+          "M15"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "M17",
+        "owner": "four-party-mutation",
+        "action": "Reserve sequence, write intent, collect independently, sign with transit, and append by a distinct committer",
+        "depends_on": [
+          "M16"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "M18",
+        "owner": "four-party-mutation",
+        "action": "Reserve sequence, write intent, collect independently, sign with transit, and append by a distinct committer",
+        "depends_on": [
+          "M17"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "M19",
+        "owner": "four-party-mutation",
+        "action": "Reserve sequence, write intent, collect independently, sign with transit, and append by a distinct committer",
+        "depends_on": [
+          "M18"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "F20",
+        "owner": "independent-readback",
+        "action": "Read canonical final tag, release, image, chart and fourteen assets",
+        "depends_on": [
+          "M19"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "F21",
+        "owner": "independent-evaluator",
+        "action": "Verify complete mutation and evidence hash-chain closure",
+        "depends_on": [
+          "F20"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "F22",
+        "owner": "security-operator",
+        "action": "Retire temporary candidate and publication capabilities",
+        "depends_on": [
+          "F21"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "F23",
+        "owner": "security-operator",
+        "action": "Revoke sessions and sign final zero-authority audit",
+        "depends_on": [
+          "F22"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "F24",
+        "owner": "release-manager",
+        "action": "Close the successor issue using exact final evidence hashes",
+        "depends_on": [
+          "F23"
+        ],
+        "mode": "normal"
+      },
+      {
+        "id": "U00",
+        "owner": "freeze-controller",
+        "action": "Freeze the current epoch immediately on any ambiguity",
+        "depends_on": [],
+        "mode": "terminal-recovery"
+      },
+      {
+        "id": "U01",
+        "owner": "incident-commander",
+        "action": "Classify the ambiguity without retry",
+        "depends_on": [
+          "U00"
+        ],
+        "mode": "terminal-recovery"
+      },
+      {
+        "id": "U02",
+        "owner": "independent-readback",
+        "action": "Sign quarantine state and zero further effects",
+        "depends_on": [
+          "U01"
+        ],
+        "mode": "terminal-recovery"
+      },
+      {
+        "id": "U03",
+        "owner": "repair-owner",
+        "action": "Implement forward-only repair under a new work item",
+        "depends_on": [
+          "U02"
+        ],
+        "mode": "terminal-recovery"
+      },
+      {
+        "id": "U04",
+        "owner": "independent-reviewer",
+        "action": "Review exact repair head and diff",
+        "depends_on": [
+          "U03"
+        ],
+        "mode": "terminal-recovery"
+      },
+      {
+        "id": "U05",
+        "owner": "independent-qa",
+        "action": "Run repair tests and zero-effect negatives",
+        "depends_on": [
+          "U04"
+        ],
+        "mode": "terminal-recovery"
+      },
+      {
+        "id": "U06",
+        "owner": "guarded-merge",
+        "action": "Pass protected validation and merge exact repair head",
+        "depends_on": [
+          "U05"
+        ],
+        "mode": "terminal-recovery"
+      },
+      {
+        "id": "U07",
+        "owner": "claim-controller",
+        "action": "Allocate a later unused release ID, new claim, epoch, nonce and work item",
+        "depends_on": [
+          "U06"
+        ],
+        "mode": "terminal-recovery"
+      },
+      {
+        "id": "U08",
+        "owner": "release-manager",
+        "action": "Sign successor handoff and end the current DAG without a retry edge",
+        "depends_on": [
+          "U07"
+        ],
+        "mode": "terminal-recovery"
+      }
+    ],
+    "ambiguity_trigger": "Any UNKNOWN, mismatch, partial effect or timeout enters U00 and cannot retry."
+  },
+  "payload_contract": {
+    "count": 37,
+    "names": [
+      "baseline-inventory",
+      "council-decision",
+      "repository-create",
+      "repository-readback",
+      "repository-binding",
+      "git-tree-readback",
+      "github-policy-inventory",
+      "admin-bypass-inventory",
+      "lane-review",
+      "protected-checks",
+      "guarded-merge",
+      "postmerge-main",
+      "namespace-admission",
+      "network-conformance",
+      "vault-bootstrap",
+      "cnpg-contract",
+      "cnpg-failure",
+      "successor-inertness",
+      "application-set",
+      "legacy-retirement",
+      "quiescence",
+      "gate-inventory",
+      "predicate-recomputation",
+      "work-item-authorization",
+      "activation-epoch",
+      "isolation-readback",
+      "candidate-source-capability",
+      "claim-cas",
+      "verifier-dispatch",
+      "publication-authorization",
+      "publisher-dispatch",
+      "mutation-intent",
+      "mutation-readback",
+      "mutation-signature",
+      "mutation-commit",
+      "admin-authorization",
+      "forward-recovery"
+    ],
+    "envelope": "DSSE PAE over exact RFC8785 JCS",
+    "live_signers": [
+      "Sigstore keyless exact GitHub workflow",
+      "Vault transit exact Kubernetes ServiceAccount"
+    ],
+    "publication_authority_predicate": "live AND after Q42 AND after A51 AND unused nonce AND exact identity AND exact target AND fresh AND recomputed PASS AND matching work_item_id/epoch/sequence",
+    "synthetic_authority": false
+  },
+  "command_catalog": [
+    {
+      "id": "CMD-01-BASELINE-INVENTORY",
+      "payload_schema": "codicarium.baseline-inventory/v2",
+      "executor_digest": "9d7cd34bcc1c60049ef9dbd832826c9d214dc7cb7d1f4172b32259e70dc00760",
+      "argv": [
+        "/opt/codicarium/bin/evidence-command",
+        "--operation=baseline-inventory",
+        "--no-activation"
+      ],
+      "allowed_targets": [
+        "github",
+        "artifact",
+        "kubernetes"
+      ],
+      "max_age_seconds": 300,
+      "identity": "exact-workflow-or-kubernetes-principal",
+      "predicate": "PRED-01-BASELINE-INVENTORY"
+    },
+    {
+      "id": "CMD-02-COUNCIL-DECISION",
+      "payload_schema": "codicarium.council-decision/v2",
+      "executor_digest": "62e605354232050ddfdc61430a9cfc0617c97a1ad68efca83956591bbca46f39",
+      "argv": [
+        "/opt/codicarium/bin/evidence-command",
+        "--operation=council-decision",
+        "--no-activation"
+      ],
+      "allowed_targets": [
+        "github",
+        "artifact",
+        "kubernetes"
+      ],
+      "max_age_seconds": 300,
+      "identity": "exact-workflow-or-kubernetes-principal",
+      "predicate": "PRED-02-COUNCIL-DECISION"
+    },
+    {
+      "id": "CMD-03-REPOSITORY-CREATE",
+      "payload_schema": "codicarium.repository-create/v2",
+      "executor_digest": "12e78c6d36db146f0c3be92da16a4d2924fee84751af558b5dfe247415b25491",
+      "argv": [
+        "/opt/codicarium/bin/evidence-command",
+        "--operation=repository-create",
+        "--no-activation"
+      ],
+      "allowed_targets": [
+        "github",
+        "artifact",
+        "kubernetes"
+      ],
+      "max_age_seconds": 300,
+      "identity": "exact-workflow-or-kubernetes-principal",
+      "predicate": "PRED-03-REPOSITORY-CREATE"
+    },
+    {
+      "id": "CMD-04-REPOSITORY-READBACK",
+      "payload_schema": "codicarium.repository-readback/v2",
+      "executor_digest": "e3d2e892d98c1f503143fb18511ff0123740338b22dcc8b3d29b05653f4cedf1",
+      "argv": [
+        "/opt/codicarium/bin/evidence-command",
+        "--operation=repository-readback",
+        "--no-activation"
+      ],
+      "allowed_targets": [
+        "github",
+        "artifact",
+        "kubernetes"
+      ],
+      "max_age_seconds": 300,
+      "identity": "exact-workflow-or-kubernetes-principal",
+      "predicate": "PRED-04-REPOSITORY-READBACK"
+    },
+    {
+      "id": "CMD-05-REPOSITORY-BINDING",
+      "payload_schema": "codicarium.repository-binding/v2",
+      "executor_digest": "5c44dae89ad0c6f602c190a44f994e4d3f53ac1bd21b16dcd77f4d7e2a4f1818",
+      "argv": [
+        "/opt/codicarium/bin/evidence-command",
+        "--operation=repository-binding",
+        "--no-activation"
+      ],
+      "allowed_targets": [
+        "github",
+        "artifact",
+        "kubernetes"
+      ],
+      "max_age_seconds": 300,
+      "identity": "exact-workflow-or-kubernetes-principal",
+      "predicate": "PRED-05-REPOSITORY-BINDING"
+    },
+    {
+      "id": "CMD-06-GIT-TREE-READBACK",
+      "payload_schema": "codicarium.git-tree-readback/v2",
+      "executor_digest": "18a32d701aee5ed4c75e2a1d2c913cc00ccc3604a5e19570e3a2136002640ef3",
+      "argv": [
+        "/opt/codicarium/bin/evidence-command",
+        "--operation=git-tree-readback",
+        "--no-activation"
+      ],
+      "allowed_targets": [
+        "github",
+        "artifact",
+        "kubernetes"
+      ],
+      "max_age_seconds": 300,
+      "identity": "exact-workflow-or-kubernetes-principal",
+      "predicate": "PRED-06-GIT-TREE-READBACK"
+    },
+    {
+      "id": "CMD-07-GITHUB-POLICY-INVENTORY",
+      "payload_schema": "codicarium.github-policy-inventory/v2",
+      "executor_digest": "9a810a0b6f4b5ece23a4e60abed0866b663378a68f3c6deb562e789771b70e79",
+      "argv": [
+        "/opt/codicarium/bin/evidence-command",
+        "--operation=github-policy-inventory",
+        "--no-activation"
+      ],
+      "allowed_targets": [
+        "github",
+        "artifact",
+        "kubernetes"
+      ],
+      "max_age_seconds": 300,
+      "identity": "exact-workflow-or-kubernetes-principal",
+      "predicate": "PRED-07-GITHUB-POLICY-INVENTORY"
+    },
+    {
+      "id": "CMD-08-ADMIN-BYPASS-INVENTORY",
+      "payload_schema": "codicarium.admin-bypass-inventory/v2",
+      "executor_digest": "fa8e37860fb35644c9dea7e9201549ce62a92ebc7221f8414628ea8f52563b72",
+      "argv": [
+        "/opt/codicarium/bin/evidence-command",
+        "--operation=admin-bypass-inventory",
+        "--no-activation"
+      ],
+      "allowed_targets": [
+        "github",
+        "artifact",
+        "kubernetes"
+      ],
+      "max_age_seconds": 300,
+      "identity": "exact-workflow-or-kubernetes-principal",
+      "predicate": "PRED-08-ADMIN-BYPASS-INVENTORY"
+    },
+    {
+      "id": "CMD-09-LANE-REVIEW",
+      "payload_schema": "codicarium.lane-review/v2",
+      "executor_digest": "5ad95d1457dcb20d3fa8bbce4c8eb7e6d58655309c299c207299876ad31d2cb7",
+      "argv": [
+        "/opt/codicarium/bin/evidence-command",
+        "--operation=lane-review",
+        "--no-activation"
+      ],
+      "allowed_targets": [
+        "github",
+        "artifact",
+        "kubernetes"
+      ],
+      "max_age_seconds": 300,
+      "identity": "exact-workflow-or-kubernetes-principal",
+      "predicate": "PRED-09-LANE-REVIEW"
+    },
+    {
+      "id": "CMD-10-PROTECTED-CHECKS",
+      "payload_schema": "codicarium.protected-checks/v2",
+      "executor_digest": "26369509b90d09f60a4e0667ed2988d813e6dab262d2a109ad7e886d895bb4a1",
+      "argv": [
+        "/opt/codicarium/bin/evidence-command",
+        "--operation=protected-checks",
+        "--no-activation"
+      ],
+      "allowed_targets": [
+        "github",
+        "artifact",
+        "kubernetes"
+      ],
+      "max_age_seconds": 300,
+      "identity": "exact-workflow-or-kubernetes-principal",
+      "predicate": "PRED-10-PROTECTED-CHECKS"
+    },
+    {
+      "id": "CMD-11-GUARDED-MERGE",
+      "payload_schema": "codicarium.guarded-merge/v2",
+      "executor_digest": "23c6dd9f8ce9ceabe1ca14a4044557013b312a22759e97def7675cf5a4fbe022",
+      "argv": [
+        "/opt/codicarium/bin/evidence-command",
+        "--operation=guarded-merge",
+        "--no-activation"
+      ],
+      "allowed_targets": [
+        "github",
+        "artifact",
+        "kubernetes"
+      ],
+      "max_age_seconds": 300,
+      "identity": "exact-workflow-or-kubernetes-principal",
+      "predicate": "PRED-11-GUARDED-MERGE"
+    },
+    {
+      "id": "CMD-12-POSTMERGE-MAIN",
+      "payload_schema": "codicarium.postmerge-main/v2",
+      "executor_digest": "4e5ed8c8c31dd4ed17bbcbfa82b5318cf8b5828a4a1fdf36e18ac3b45cce8399",
+      "argv": [
+        "/opt/codicarium/bin/evidence-command",
+        "--operation=postmerge-main",
+        "--no-activation"
+      ],
+      "allowed_targets": [
+        "github",
+        "artifact",
+        "kubernetes"
+      ],
+      "max_age_seconds": 300,
+      "identity": "exact-workflow-or-kubernetes-principal",
+      "predicate": "PRED-12-POSTMERGE-MAIN"
+    },
+    {
+      "id": "CMD-13-NAMESPACE-ADMISSION",
+      "payload_schema": "codicarium.namespace-admission/v2",
+      "executor_digest": "f092b85918e1152d7b558ba2fe24b8513ca65cee4a90fa8628edff169f0d6a08",
+      "argv": [
+        "/opt/codicarium/bin/evidence-command",
+        "--operation=namespace-admission",
+        "--no-activation"
+      ],
+      "allowed_targets": [
+        "github",
+        "artifact",
+        "kubernetes"
+      ],
+      "max_age_seconds": 300,
+      "identity": "exact-workflow-or-kubernetes-principal",
+      "predicate": "PRED-13-NAMESPACE-ADMISSION"
+    },
+    {
+      "id": "CMD-14-NETWORK-CONFORMANCE",
+      "payload_schema": "codicarium.network-conformance/v2",
+      "executor_digest": "e8ea6e913a11803514f97ec34289a2b681ba8776e7fe1a1e2e966bc7aa798d39",
+      "argv": [
+        "/opt/codicarium/bin/evidence-command",
+        "--operation=network-conformance",
+        "--no-activation"
+      ],
+      "allowed_targets": [
+        "github",
+        "artifact",
+        "kubernetes"
+      ],
+      "max_age_seconds": 300,
+      "identity": "exact-workflow-or-kubernetes-principal",
+      "predicate": "PRED-14-NETWORK-CONFORMANCE"
+    },
+    {
+      "id": "CMD-15-VAULT-BOOTSTRAP",
+      "payload_schema": "codicarium.vault-bootstrap/v2",
+      "executor_digest": "b2c45d28283af21078748c418ceed1f1e2b496e03e3d583eb04e74e539e084e1",
+      "argv": [
+        "/opt/codicarium/bin/evidence-command",
+        "--operation=vault-bootstrap",
+        "--no-activation"
+      ],
+      "allowed_targets": [
+        "vault",
+        "kubernetes"
+      ],
+      "max_age_seconds": 300,
+      "identity": "exact-workflow-or-kubernetes-principal",
+      "predicate": "PRED-15-VAULT-BOOTSTRAP"
+    },
+    {
+      "id": "CMD-16-CNPG-CONTRACT",
+      "payload_schema": "codicarium.cnpg-contract/v2",
+      "executor_digest": "a4bd04b888ee91fa119f7ae9610a2a22fb00beaae16fc7c80a17b434601398fb",
+      "argv": [
+        "/opt/codicarium/bin/evidence-command",
+        "--operation=cnpg-contract",
+        "--no-activation"
+      ],
+      "allowed_targets": [
+        "kubernetes",
+        "postgres"
+      ],
+      "max_age_seconds": 300,
+      "identity": "exact-workflow-or-kubernetes-principal",
+      "predicate": "PRED-16-CNPG-CONTRACT"
+    },
+    {
+      "id": "CMD-17-CNPG-FAILURE",
+      "payload_schema": "codicarium.cnpg-failure/v2",
+      "executor_digest": "e6de6a862252f0aee0547f689b2770b9046cfd4c70c98384322b2ec4754d032a",
+      "argv": [
+        "/opt/codicarium/bin/evidence-command",
+        "--operation=cnpg-failure",
+        "--no-activation"
+      ],
+      "allowed_targets": [
+        "kubernetes",
+        "postgres"
+      ],
+      "max_age_seconds": 300,
+      "identity": "exact-workflow-or-kubernetes-principal",
+      "predicate": "PRED-17-CNPG-FAILURE"
+    },
+    {
+      "id": "CMD-18-SUCCESSOR-INERTNESS",
+      "payload_schema": "codicarium.successor-inertness/v2",
+      "executor_digest": "ba33a7efb4505ba336e0d0afe11cf50ded5c63716e8c05a593c64d32747f3f67",
+      "argv": [
+        "/opt/codicarium/bin/evidence-command",
+        "--operation=successor-inertness",
+        "--no-activation"
+      ],
+      "allowed_targets": [
+        "github",
+        "artifact",
+        "kubernetes"
+      ],
+      "max_age_seconds": 300,
+      "identity": "exact-workflow-or-kubernetes-principal",
+      "predicate": "PRED-18-SUCCESSOR-INERTNESS"
+    },
+    {
+      "id": "CMD-19-APPLICATION-SET",
+      "payload_schema": "codicarium.application-set/v2",
+      "executor_digest": "b5135e4ba21f67653fd5c8ed81d08337c1f34bc41e1633e82c88e898a20653cc",
+      "argv": [
+        "/opt/codicarium/bin/evidence-command",
+        "--operation=application-set",
+        "--no-activation"
+      ],
+      "allowed_targets": [
+        "github",
+        "artifact",
+        "kubernetes"
+      ],
+      "max_age_seconds": 300,
+      "identity": "exact-workflow-or-kubernetes-principal",
+      "predicate": "PRED-19-APPLICATION-SET"
+    },
+    {
+      "id": "CMD-20-LEGACY-RETIREMENT",
+      "payload_schema": "codicarium.legacy-retirement/v2",
+      "executor_digest": "1fb41e6b39edb6fa046e13e21ef829826d90e1bf6ca4fbd0ce6c8210ef0fa8de",
+      "argv": [
+        "/opt/codicarium/bin/evidence-command",
+        "--operation=legacy-retirement",
+        "--no-activation"
+      ],
+      "allowed_targets": [
+        "github",
+        "artifact",
+        "kubernetes"
+      ],
+      "max_age_seconds": 300,
+      "identity": "exact-workflow-or-kubernetes-principal",
+      "predicate": "PRED-20-LEGACY-RETIREMENT"
+    },
+    {
+      "id": "CMD-21-QUIESCENCE",
+      "payload_schema": "codicarium.quiescence/v2",
+      "executor_digest": "9cd0cd7771def009003c674d8d3d5375862cd22483b10f693d06b8a18ccd9e07",
+      "argv": [
+        "/opt/codicarium/bin/evidence-command",
+        "--operation=quiescence",
+        "--no-activation"
+      ],
+      "allowed_targets": [
+        "github",
+        "artifact",
+        "kubernetes"
+      ],
+      "max_age_seconds": 300,
+      "identity": "exact-workflow-or-kubernetes-principal",
+      "predicate": "PRED-21-QUIESCENCE"
+    },
+    {
+      "id": "CMD-22-GATE-INVENTORY",
+      "payload_schema": "codicarium.gate-inventory/v2",
+      "executor_digest": "646c27018868d9dc62b61a95304c8ed42675bcf1f15cc6fe9accbe0b7087e555",
+      "argv": [
+        "/opt/codicarium/bin/evidence-command",
+        "--operation=gate-inventory",
+        "--no-activation"
+      ],
+      "allowed_targets": [
+        "github",
+        "artifact",
+        "kubernetes"
+      ],
+      "max_age_seconds": 300,
+      "identity": "exact-workflow-or-kubernetes-principal",
+      "predicate": "PRED-22-GATE-INVENTORY"
+    },
+    {
+      "id": "CMD-23-PREDICATE-RECOMPUTATION",
+      "payload_schema": "codicarium.predicate-recomputation/v2",
+      "executor_digest": "fe4467672581def522c4246917494578c888941dd326aace17d320db7cd058bb",
+      "argv": [
+        "/opt/codicarium/bin/evidence-command",
+        "--operation=predicate-recomputation",
+        "--no-activation"
+      ],
+      "allowed_targets": [
+        "github",
+        "artifact",
+        "kubernetes"
+      ],
+      "max_age_seconds": 300,
+      "identity": "exact-workflow-or-kubernetes-principal",
+      "predicate": "PRED-23-PREDICATE-RECOMPUTATION"
+    },
+    {
+      "id": "CMD-24-WORK-ITEM-AUTHORIZATION",
+      "payload_schema": "codicarium.work-item-authorization/v2",
+      "executor_digest": "676dc6eb46187c84a5987d04417005a2090ef764f8c955793fb565e5e6e6436b",
+      "argv": [
+        "/opt/codicarium/bin/evidence-command",
+        "--operation=work-item-authorization",
+        "--no-activation"
+      ],
+      "allowed_targets": [
+        "github",
+        "artifact",
+        "kubernetes"
+      ],
+      "max_age_seconds": 300,
+      "identity": "exact-workflow-or-kubernetes-principal",
+      "predicate": "PRED-24-WORK-ITEM-AUTHORIZATION"
+    },
+    {
+      "id": "CMD-25-ACTIVATION-EPOCH",
+      "payload_schema": "codicarium.activation-epoch/v2",
+      "executor_digest": "43d6c5759557071a5ac83d146ca4ee66cb0a7b87d6713a08975e86dfc3bcaba0",
+      "argv": [
+        "/opt/codicarium/bin/evidence-command",
+        "--operation=activation-epoch",
+        "--no-activation"
+      ],
+      "allowed_targets": [
+        "github",
+        "artifact",
+        "kubernetes"
+      ],
+      "max_age_seconds": 300,
+      "identity": "exact-workflow-or-kubernetes-principal",
+      "predicate": "PRED-25-ACTIVATION-EPOCH"
+    },
+    {
+      "id": "CMD-26-ISOLATION-READBACK",
+      "payload_schema": "codicarium.isolation-readback/v2",
+      "executor_digest": "4f8d689324638128a9e1f0cdb6ffe192e400956ff59ef65c2255f9f403c51d61",
+      "argv": [
+        "/opt/codicarium/bin/evidence-command",
+        "--operation=isolation-readback",
+        "--no-activation"
+      ],
+      "allowed_targets": [
+        "github",
+        "artifact",
+        "kubernetes"
+      ],
+      "max_age_seconds": 300,
+      "identity": "exact-workflow-or-kubernetes-principal",
+      "predicate": "PRED-26-ISOLATION-READBACK"
+    },
+    {
+      "id": "CMD-27-CANDIDATE-SOURCE-CAPABILITY",
+      "payload_schema": "codicarium.candidate-source-capability/v2",
+      "executor_digest": "566757e11cc2653682dca256df5ecdd8a109ca11984aaf6b30636e545b965a14",
+      "argv": [
+        "/opt/codicarium/bin/evidence-command",
+        "--operation=candidate-source-capability",
+        "--no-activation"
+      ],
+      "allowed_targets": [
+        "github",
+        "artifact",
+        "kubernetes"
+      ],
+      "max_age_seconds": 300,
+      "identity": "exact-workflow-or-kubernetes-principal",
+      "predicate": "PRED-27-CANDIDATE-SOURCE-CAPABILITY"
+    },
+    {
+      "id": "CMD-28-CLAIM-CAS",
+      "payload_schema": "codicarium.claim-cas/v2",
+      "executor_digest": "1e78de6d6b4195ad6ee8ce485e772037809083ff7002529200ce303362a30fd6",
+      "argv": [
+        "/opt/codicarium/bin/evidence-command",
+        "--operation=claim-cas",
+        "--no-activation"
+      ],
+      "allowed_targets": [
+        "github",
+        "artifact",
+        "kubernetes"
+      ],
+      "max_age_seconds": 300,
+      "identity": "exact-workflow-or-kubernetes-principal",
+      "predicate": "PRED-28-CLAIM-CAS"
+    },
+    {
+      "id": "CMD-29-VERIFIER-DISPATCH",
+      "payload_schema": "codicarium.verifier-dispatch/v2",
+      "executor_digest": "c9fad2771da60e9afa127e779f4143cefb8b569f25de9196f127f593944e9324",
+      "argv": [
+        "/opt/codicarium/bin/evidence-command",
+        "--operation=verifier-dispatch",
+        "--no-activation"
+      ],
+      "allowed_targets": [
+        "github",
+        "artifact",
+        "kubernetes"
+      ],
+      "max_age_seconds": 300,
+      "identity": "exact-workflow-or-kubernetes-principal",
+      "predicate": "PRED-29-VERIFIER-DISPATCH"
+    },
+    {
+      "id": "CMD-30-PUBLICATION-AUTHORIZATION",
+      "payload_schema": "codicarium.publication-authorization/v2",
+      "executor_digest": "e3e3b14302797fea1d917c64b2b866977a165971ee83d2045e81f9af9df63f6d",
+      "argv": [
+        "/opt/codicarium/bin/evidence-command",
+        "--operation=publication-authorization",
+        "--no-activation"
+      ],
+      "allowed_targets": [
+        "github",
+        "artifact",
+        "kubernetes"
+      ],
+      "max_age_seconds": 300,
+      "identity": "exact-workflow-or-kubernetes-principal",
+      "predicate": "PRED-30-PUBLICATION-AUTHORIZATION"
+    },
+    {
+      "id": "CMD-31-PUBLISHER-DISPATCH",
+      "payload_schema": "codicarium.publisher-dispatch/v2",
+      "executor_digest": "9f10a9c3a4ce8c48c51c683737224564127fa75223950451d58b5ed1abe7f635",
+      "argv": [
+        "/opt/codicarium/bin/evidence-command",
+        "--operation=publisher-dispatch",
+        "--no-activation"
+      ],
+      "allowed_targets": [
+        "github",
+        "artifact",
+        "kubernetes"
+      ],
+      "max_age_seconds": 300,
+      "identity": "exact-workflow-or-kubernetes-principal",
+      "predicate": "PRED-31-PUBLISHER-DISPATCH"
+    },
+    {
+      "id": "CMD-32-MUTATION-INTENT",
+      "payload_schema": "codicarium.mutation-intent/v2",
+      "executor_digest": "ee8845f472b710d41c9523a1318a046c91c6fc2fde1b10934954c6c33a757a6c",
+      "argv": [
+        "/opt/codicarium/bin/evidence-command",
+        "--operation=mutation-intent",
+        "--no-activation"
+      ],
+      "allowed_targets": [
+        "github",
+        "artifact",
+        "kubernetes"
+      ],
+      "max_age_seconds": 300,
+      "identity": "dedicated-four-party-principal",
+      "predicate": "PRED-32-MUTATION-INTENT"
+    },
+    {
+      "id": "CMD-33-MUTATION-READBACK",
+      "payload_schema": "codicarium.mutation-readback/v2",
+      "executor_digest": "2b5df10511c3e7a6b0afc4db14e03358d4a616c5db5112fa07e58f6c63e04026",
+      "argv": [
+        "/opt/codicarium/bin/evidence-command",
+        "--operation=mutation-readback",
+        "--no-activation"
+      ],
+      "allowed_targets": [
+        "github",
+        "artifact",
+        "kubernetes"
+      ],
+      "max_age_seconds": 300,
+      "identity": "dedicated-four-party-principal",
+      "predicate": "PRED-33-MUTATION-READBACK"
+    },
+    {
+      "id": "CMD-34-MUTATION-SIGNATURE",
+      "payload_schema": "codicarium.mutation-signature/v2",
+      "executor_digest": "61e0165440d777fe7e78f194135800ac8e647e8b8b631e58169db6e9aab5dead",
+      "argv": [
+        "/opt/codicarium/bin/evidence-command",
+        "--operation=mutation-signature",
+        "--no-activation"
+      ],
+      "allowed_targets": [
+        "github",
+        "artifact",
+        "kubernetes"
+      ],
+      "max_age_seconds": 300,
+      "identity": "dedicated-four-party-principal",
+      "predicate": "PRED-34-MUTATION-SIGNATURE"
+    },
+    {
+      "id": "CMD-35-MUTATION-COMMIT",
+      "payload_schema": "codicarium.mutation-commit/v2",
+      "executor_digest": "9d55e6a31af9feabf5a80157760157438fdfd18d0d5b99c358acb04fccbb8440",
+      "argv": [
+        "/opt/codicarium/bin/evidence-command",
+        "--operation=mutation-commit",
+        "--no-activation"
+      ],
+      "allowed_targets": [
+        "github",
+        "artifact",
+        "kubernetes"
+      ],
+      "max_age_seconds": 300,
+      "identity": "dedicated-four-party-principal",
+      "predicate": "PRED-35-MUTATION-COMMIT"
+    },
+    {
+      "id": "CMD-36-ADMIN-AUTHORIZATION",
+      "payload_schema": "codicarium.admin-authorization/v2",
+      "executor_digest": "f6f34488575b65b7522856e1f30256b06ba2142464f9aecbf3fb1aeedf1f35d4",
+      "argv": [
+        "/opt/codicarium/bin/evidence-command",
+        "--operation=admin-authorization",
+        "--no-activation"
+      ],
+      "allowed_targets": [
+        "github",
+        "artifact",
+        "kubernetes"
+      ],
+      "max_age_seconds": 300,
+      "identity": "exact-workflow-or-kubernetes-principal",
+      "predicate": "PRED-36-ADMIN-AUTHORIZATION"
+    },
+    {
+      "id": "CMD-37-FORWARD-RECOVERY",
+      "payload_schema": "codicarium.forward-recovery/v2",
+      "executor_digest": "192a4fc0b15aebab946c157322957d04d8eb3ca1d6ae92f3f9f177287e896638",
+      "argv": [
+        "/opt/codicarium/bin/evidence-command",
+        "--operation=forward-recovery",
+        "--no-activation"
+      ],
+      "allowed_targets": [
+        "github",
+        "artifact",
+        "kubernetes"
+      ],
+      "max_age_seconds": 300,
+      "identity": "exact-workflow-or-kubernetes-principal",
+      "predicate": "PRED-37-FORWARD-RECOVERY"
+    }
+  ],
+  "security_contracts": {
+    "candidate_source": {
+      "schema": "codicarium.candidate-source-capability/v2",
+      "media_type": "application/gzip",
+      "purpose": "deployment-controller-candidate-source",
+      "object_key": "<repo-id>/<commit-sha>/<archive-sha256>/<byte-length>.tar.gz",
+      "create": {
+        "success": 201,
+        "conflict": 409,
+        "mismatch": 422
+      },
+      "read": {
+        "success_once": 200,
+        "consumed": 410
+      },
+      "raw_fetcher": "hash and count only; never extract",
+      "extractor": "destroyed no-network Kata sandbox only"
+    },
+    "vault": {
+      "owner": "codicarium/vault-config",
+      "evidence_schema": "codicarium.vault-bootstrap/v2",
+      "requirements": [
+        "exact context IP port SNI CA SAN role policy and KV path",
+        "create-only KV v2 version 1",
+        "wrong CA SNI expiry plaintext and wildcard negatives",
+        "retire bootstrap role and workload"
+      ]
+    },
+    "cnpg": {
+      "owner": "codicarium/postgres-config",
+      "evidence_schemas": [
+        "codicarium.cnpg-contract/v2",
+        "codicarium.cnpg-failure/v2"
+      ],
+      "instances": 3,
+      "distinct_nodes": 3,
+      "synchronous_replicas": 1,
+      "tls": "verify-full",
+      "app_secret": "runner-platform-journal-app",
+      "ca_secret": "runner-platform-journal-ca",
+      "rpo_seconds": 0,
+      "rto_seconds_max": 120,
+      "tests": [
+        "backup",
+        "isolated restore",
+        "loss of each node",
+        "runtime execute-only",
+        "migration role retired"
+      ]
+    },
+    "admin": {
+      "normal": {
+        "requester": "one",
+        "approvers": 1,
+        "executor": "third distinct",
+        "approval_ttl_seconds_max": 1800,
+        "credential_ttl_seconds_max": 600
+      },
+      "break_glass": {
+        "approvers": 2,
+        "executor": "third distinct",
+        "approval_ttl_seconds_max": 900,
+        "credential_ttl_seconds_max": 300,
+        "single_use": true,
+        "forbidden": [
+          "bypass gates",
+          "mint candidate",
+          "mutate admission",
+          "publish",
+          "clear UNKNOWN"
+        ],
+        "negative_effect_count": 0
+      }
+    },
+    "legacy": {
+      "schema": "codicarium.legacy-retirement/v2",
+      "workflows": 5,
+      "requirements": [
+        "disable and delete",
+        "cancel queued and in-progress",
+        "terminal readback",
+        "revoke credentials routes sessions",
+        "wait maximum TTL plus skew"
+      ]
+    },
+    "forward_recovery": {
+      "schema": "codicarium.forward-recovery/v2",
+      "requirements": [
+        "new work item claim epoch nonce and unused release ID",
+        "no retry edge",
+        "no retag resume overwrite or legacy authority",
+        "signed successor handoff ends current DAG"
+      ]
+    }
+  },
+  "mutation_contract": {
+    "schema": "codicarium.four-party-mutation-contract/v2",
+    "steps": [
+      {
+        "schema": "codicarium.mutation-intent/v2",
+        "principal": "dedicated writer",
+        "fields": "requested mutation only; no readback or signature"
+      },
+      {
+        "schema": "codicarium.mutation-readback/v2",
+        "principal": "independent authenticated collector",
+        "fields": "raw bytes, JCS bytes, ETag, immutable target and collector identity"
+      },
+      {
+        "schema": "codicarium.mutation-signature/v2",
+        "principal": "Vault transit signer",
+        "fields": "intent and readback hashes; no target write"
+      },
+      {
+        "schema": "codicarium.mutation-commit/v2",
+        "principal": "distinct append-only committer",
+        "fields": "verification result, epoch, sequence and previous commit hash"
+      }
+    ],
+    "invariants": [
+      "four distinct service accounts and Vault roles",
+      "no GitHub App or RBAC overlap",
+      "deny direct writer egress to collector signer and committer",
+      "UNKNOWN freezes epoch; never retry"
+    ]
+  },
+  "github_proxy": {
+    "schema": "codicarium.github-proxy-operation-catalog/v2",
+    "default": "DENY",
+    "listener_binding": [
+      "TokenReview audience",
+      "Pod UID/name/namespace",
+      "ServiceAccount UID/name",
+      "listener ID",
+      "nonce",
+      "expiry",
+      "SNI",
+      "API version"
+    ],
+    "operations": [
+      "GET exact repository",
+      "GET exact ref/tree/blob",
+      "GET exact workflow run/checks",
+      "POST exact workflow dispatch with return_run_details=true",
+      "POST exact tag ref create",
+      "POST exact draft release create",
+      "POST exact named asset upload",
+      "PATCH exact release finalize",
+      "POST exact listed run cancel"
+    ],
+    "denials": [
+      "generic POST",
+      "redirect",
+      "encoded path trick",
+      "host change",
+      "direct GitHub egress",
+      "unlisted asset name",
+      "unbound listener"
+    ]
+  },
+  "traceability": [
+    {
+      "requirement_id": "REQ-001",
+      "dag_nodes": [
+        "S00",
+        "S01"
+      ],
+      "commands": [
+        "CMD-01-BASELINE-INVENTORY"
+      ],
+      "payload_schemas": [
+        "codicarium.baseline-inventory/v2"
+      ],
+      "positive_oracle": "Verify the signed fixture and recompute PRED-01-BASELINE-INVENTORY.",
+      "negative_oracles": [
+        "synthetic-authority"
+      ],
+      "negative_effect_count": 0
+    },
+    {
+      "requirement_id": "REQ-002",
+      "dag_nodes": [
+        "S01",
+        "B10"
+      ],
+      "commands": [
+        "CMD-02-COUNCIL-DECISION"
+      ],
+      "payload_schemas": [
+        "codicarium.council-decision/v2"
+      ],
+      "positive_oracle": "Verify the signed fixture and recompute PRED-02-COUNCIL-DECISION.",
+      "negative_oracles": [
+        "bad-signature"
+      ],
+      "negative_effect_count": 0
+    },
+    {
+      "requirement_id": "REQ-003",
+      "dag_nodes": [
+        "B10",
+        "B11"
+      ],
+      "commands": [
+        "CMD-03-REPOSITORY-CREATE"
+      ],
+      "payload_schemas": [
+        "codicarium.repository-create/v2"
+      ],
+      "positive_oracle": "Verify the signed fixture and recompute PRED-03-REPOSITORY-CREATE.",
+      "negative_oracles": [
+        "non-jcs"
+      ],
+      "negative_effect_count": 0
+    },
+    {
+      "requirement_id": "REQ-004",
+      "dag_nodes": [
+        "B11",
+        "B12"
+      ],
+      "commands": [
+        "CMD-04-REPOSITORY-READBACK"
+      ],
+      "payload_schemas": [
+        "codicarium.repository-readback/v2"
+      ],
+      "positive_oracle": "Verify the signed fixture and recompute PRED-04-REPOSITORY-READBACK.",
+      "negative_oracles": [
+        "nonce-replay"
+      ],
+      "negative_effect_count": 0
+    },
+    {
+      "requirement_id": "REQ-005",
+      "dag_nodes": [
+        "B12",
+        "B13"
+      ],
+      "commands": [
+        "CMD-05-REPOSITORY-BINDING"
+      ],
+      "payload_schemas": [
+        "codicarium.repository-binding/v2"
+      ],
+      "positive_oracle": "Verify the signed fixture and recompute PRED-05-REPOSITORY-BINDING.",
+      "negative_oracles": [
+        "stale"
+      ],
+      "negative_effect_count": 0
+    },
+    {
+      "requirement_id": "REQ-006",
+      "dag_nodes": [
+        "B13",
+        "B14"
+      ],
+      "commands": [
+        "CMD-06-GIT-TREE-READBACK"
+      ],
+      "payload_schemas": [
+        "codicarium.git-tree-readback/v2"
+      ],
+      "positive_oracle": "Verify the signed fixture and recompute PRED-06-GIT-TREE-READBACK.",
+      "negative_oracles": [
+        "wrong-workflow"
+      ],
+      "negative_effect_count": 0
+    },
+    {
+      "requirement_id": "REQ-007",
+      "dag_nodes": [
+        "B14",
+        "B15"
+      ],
+      "commands": [
+        "CMD-07-GITHUB-POLICY-INVENTORY"
+      ],
+      "payload_schemas": [
+        "codicarium.github-policy-inventory/v2"
+      ],
+      "positive_oracle": "Verify the signed fixture and recompute PRED-07-GITHUB-POLICY-INVENTORY.",
+      "negative_oracles": [
+        "wrong-pod-uid"
+      ],
+      "negative_effect_count": 0
+    },
+    {
+      "requirement_id": "REQ-008",
+      "dag_nodes": [
+        "B15",
+        "CA20"
+      ],
+      "commands": [
+        "CMD-08-ADMIN-BYPASS-INVENTORY"
+      ],
+      "payload_schemas": [
+        "codicarium.admin-bypass-inventory/v2"
+      ],
+      "positive_oracle": "Verify the signed fixture and recompute PRED-08-ADMIN-BYPASS-INVENTORY.",
+      "negative_oracles": [
+        "wrong-target"
+      ],
+      "negative_effect_count": 0
+    },
+    {
+      "requirement_id": "REQ-009",
+      "dag_nodes": [
+        "CA20",
+        "CA21"
+      ],
+      "commands": [
+        "CMD-09-LANE-REVIEW"
+      ],
+      "payload_schemas": [
+        "codicarium.lane-review/v2"
+      ],
+      "positive_oracle": "Verify the signed fixture and recompute PRED-09-LANE-REVIEW.",
+      "negative_oracles": [
+        "predicate-forgery"
+      ],
+      "negative_effect_count": 0
+    },
+    {
+      "requirement_id": "REQ-010",
+      "dag_nodes": [
+        "CA21",
+        "CA22"
+      ],
+      "commands": [
+        "CMD-10-PROTECTED-CHECKS"
+      ],
+      "payload_schemas": [
+        "codicarium.protected-checks/v2"
+      ],
+      "positive_oracle": "Verify the signed fixture and recompute PRED-10-PROTECTED-CHECKS.",
+      "negative_oracles": [
+        "candidate-second-read"
+      ],
+      "negative_effect_count": 0
+    },
+    {
+      "requirement_id": "REQ-011",
+      "dag_nodes": [
+        "CA22",
+        "CA23"
+      ],
+      "commands": [
+        "CMD-11-GUARDED-MERGE"
+      ],
+      "payload_schemas": [
+        "codicarium.guarded-merge/v2"
+      ],
+      "positive_oracle": "Verify the signed fixture and recompute PRED-11-GUARDED-MERGE.",
+      "negative_oracles": [
+        "collector-writer-overlap"
+      ],
+      "negative_effect_count": 0
+    },
+    {
+      "requirement_id": "REQ-012",
+      "dag_nodes": [
+        "CA23",
+        "CA24"
+      ],
+      "commands": [
+        "CMD-12-POSTMERGE-MAIN"
+      ],
+      "payload_schemas": [
+        "codicarium.postmerge-main/v2"
+      ],
+      "positive_oracle": "Verify the signed fixture and recompute PRED-12-POSTMERGE-MAIN.",
+      "negative_oracles": [
+        "admin-single-approver"
+      ],
+      "negative_effect_count": 0
+    },
+    {
+      "requirement_id": "REQ-013",
+      "dag_nodes": [
+        "CA24",
+        "CA25"
+      ],
+      "commands": [
+        "CMD-13-NAMESPACE-ADMISSION"
+      ],
+      "payload_schemas": [
+        "codicarium.namespace-admission/v2"
+      ],
+      "positive_oracle": "Verify the signed fixture and recompute PRED-13-NAMESPACE-ADMISSION.",
+      "negative_oracles": [
+        "break-glass-publish"
+      ],
+      "negative_effect_count": 0
+    },
+    {
+      "requirement_id": "REQ-014",
+      "dag_nodes": [
+        "CA25",
+        "IF20"
+      ],
+      "commands": [
+        "CMD-14-NETWORK-CONFORMANCE"
+      ],
+      "payload_schemas": [
+        "codicarium.network-conformance/v2"
+      ],
+      "positive_oracle": "Verify the signed fixture and recompute PRED-14-NETWORK-CONFORMANCE.",
+      "negative_oracles": [
+        "vault-wildcard"
+      ],
+      "negative_effect_count": 0
+    },
+    {
+      "requirement_id": "REQ-015",
+      "dag_nodes": [
+        "IF20",
+        "IF21"
+      ],
+      "commands": [
+        "CMD-15-VAULT-BOOTSTRAP"
+      ],
+      "payload_schemas": [
+        "codicarium.vault-bootstrap/v2"
+      ],
+      "positive_oracle": "Verify the signed fixture and recompute PRED-15-VAULT-BOOTSTRAP.",
+      "negative_oracles": [
+        "cnpg-two-nodes"
+      ],
+      "negative_effect_count": 0
+    },
+    {
+      "requirement_id": "REQ-016",
+      "dag_nodes": [
+        "IF21",
+        "IF22"
+      ],
+      "commands": [
+        "CMD-16-CNPG-CONTRACT"
+      ],
+      "payload_schemas": [
+        "codicarium.cnpg-contract/v2"
+      ],
+      "positive_oracle": "Verify the signed fixture and recompute PRED-16-CNPG-CONTRACT.",
+      "negative_oracles": [
+        "proxy-generic-post"
+      ],
+      "negative_effect_count": 0
+    },
+    {
+      "requirement_id": "REQ-017",
+      "dag_nodes": [
+        "IF22",
+        "IF23"
+      ],
+      "commands": [
+        "CMD-17-CNPG-FAILURE"
+      ],
+      "payload_schemas": [
+        "codicarium.cnpg-failure/v2"
+      ],
+      "positive_oracle": "Verify the signed fixture and recompute PRED-17-CNPG-FAILURE.",
+      "negative_oracles": [
+        "unknown-retry"
+      ],
+      "negative_effect_count": 0
+    },
+    {
+      "requirement_id": "REQ-018",
+      "dag_nodes": [
+        "IF23",
+        "IF24"
+      ],
+      "commands": [
+        "CMD-18-SUCCESSOR-INERTNESS"
+      ],
+      "payload_schemas": [
+        "codicarium.successor-inertness/v2"
+      ],
+      "positive_oracle": "Verify the signed fixture and recompute PRED-18-SUCCESSOR-INERTNESS.",
+      "negative_oracles": [
+        "synthetic-authority"
+      ],
+      "negative_effect_count": 0
+    },
+    {
+      "requirement_id": "REQ-019",
+      "dag_nodes": [
+        "IF24",
+        "IF25"
+      ],
+      "commands": [
+        "CMD-19-APPLICATION-SET"
+      ],
+      "payload_schemas": [
+        "codicarium.application-set/v2"
+      ],
+      "positive_oracle": "Verify the signed fixture and recompute PRED-19-APPLICATION-SET.",
+      "negative_oracles": [
+        "bad-signature"
+      ],
+      "negative_effect_count": 0
+    },
+    {
+      "requirement_id": "REQ-020",
+      "dag_nodes": [
+        "IF25",
+        "PG20"
+      ],
+      "commands": [
+        "CMD-20-LEGACY-RETIREMENT"
+      ],
+      "payload_schemas": [
+        "codicarium.legacy-retirement/v2"
+      ],
+      "positive_oracle": "Verify the signed fixture and recompute PRED-20-LEGACY-RETIREMENT.",
+      "negative_oracles": [
+        "non-jcs"
+      ],
+      "negative_effect_count": 0
+    },
+    {
+      "requirement_id": "REQ-021",
+      "dag_nodes": [
+        "PG20",
+        "PG21"
+      ],
+      "commands": [
+        "CMD-21-QUIESCENCE"
+      ],
+      "payload_schemas": [
+        "codicarium.quiescence/v2"
+      ],
+      "positive_oracle": "Verify the signed fixture and recompute PRED-21-QUIESCENCE.",
+      "negative_oracles": [
+        "nonce-replay"
+      ],
+      "negative_effect_count": 0
+    },
+    {
+      "requirement_id": "REQ-022",
+      "dag_nodes": [
+        "PG21",
+        "PG22"
+      ],
+      "commands": [
+        "CMD-22-GATE-INVENTORY"
+      ],
+      "payload_schemas": [
+        "codicarium.gate-inventory/v2"
+      ],
+      "positive_oracle": "Verify the signed fixture and recompute PRED-22-GATE-INVENTORY.",
+      "negative_oracles": [
+        "stale"
+      ],
+      "negative_effect_count": 0
+    },
+    {
+      "requirement_id": "REQ-023",
+      "dag_nodes": [
+        "PG22",
+        "PG23"
+      ],
+      "commands": [
+        "CMD-23-PREDICATE-RECOMPUTATION"
+      ],
+      "payload_schemas": [
+        "codicarium.predicate-recomputation/v2"
+      ],
+      "positive_oracle": "Verify the signed fixture and recompute PRED-23-PREDICATE-RECOMPUTATION.",
+      "negative_oracles": [
+        "wrong-workflow"
+      ],
+      "negative_effect_count": 0
+    },
+    {
+      "requirement_id": "REQ-024",
+      "dag_nodes": [
+        "PG23",
+        "PG24"
+      ],
+      "commands": [
+        "CMD-24-WORK-ITEM-AUTHORIZATION"
+      ],
+      "payload_schemas": [
+        "codicarium.work-item-authorization/v2"
+      ],
+      "positive_oracle": "Verify the signed fixture and recompute PRED-24-WORK-ITEM-AUTHORIZATION.",
+      "negative_oracles": [
+        "wrong-pod-uid"
+      ],
+      "negative_effect_count": 0
+    },
+    {
+      "requirement_id": "REQ-025",
+      "dag_nodes": [
+        "PG24",
+        "PG25"
+      ],
+      "commands": [
+        "CMD-25-ACTIVATION-EPOCH"
+      ],
+      "payload_schemas": [
+        "codicarium.activation-epoch/v2"
+      ],
+      "positive_oracle": "Verify the signed fixture and recompute PRED-25-ACTIVATION-EPOCH.",
+      "negative_oracles": [
+        "wrong-target"
+      ],
+      "negative_effect_count": 0
+    },
+    {
+      "requirement_id": "REQ-026",
+      "dag_nodes": [
+        "PG25",
+        "VA20"
+      ],
+      "commands": [
+        "CMD-26-ISOLATION-READBACK"
+      ],
+      "payload_schemas": [
+        "codicarium.isolation-readback/v2"
+      ],
+      "positive_oracle": "Verify the signed fixture and recompute PRED-26-ISOLATION-READBACK.",
+      "negative_oracles": [
+        "predicate-forgery"
+      ],
+      "negative_effect_count": 0
+    },
+    {
+      "requirement_id": "REQ-027",
+      "dag_nodes": [
+        "VA20",
+        "VA21"
+      ],
+      "commands": [
+        "CMD-27-CANDIDATE-SOURCE-CAPABILITY"
+      ],
+      "payload_schemas": [
+        "codicarium.candidate-source-capability/v2"
+      ],
+      "positive_oracle": "Verify the signed fixture and recompute PRED-27-CANDIDATE-SOURCE-CAPABILITY.",
+      "negative_oracles": [
+        "candidate-second-read"
+      ],
+      "negative_effect_count": 0
+    },
+    {
+      "requirement_id": "REQ-028",
+      "dag_nodes": [
+        "VA21",
+        "VA22"
+      ],
+      "commands": [
+        "CMD-28-CLAIM-CAS"
+      ],
+      "payload_schemas": [
+        "codicarium.claim-cas/v2"
+      ],
+      "positive_oracle": "Verify the signed fixture and recompute PRED-28-CLAIM-CAS.",
+      "negative_oracles": [
+        "collector-writer-overlap"
+      ],
+      "negative_effect_count": 0
+    },
+    {
+      "requirement_id": "REQ-029",
+      "dag_nodes": [
+        "VA22",
+        "VA23"
+      ],
+      "commands": [
+        "CMD-29-VERIFIER-DISPATCH"
+      ],
+      "payload_schemas": [
+        "codicarium.verifier-dispatch/v2"
+      ],
+      "positive_oracle": "Verify the signed fixture and recompute PRED-29-VERIFIER-DISPATCH.",
+      "negative_oracles": [
+        "admin-single-approver"
+      ],
+      "negative_effect_count": 0
+    },
+    {
+      "requirement_id": "REQ-030",
+      "dag_nodes": [
+        "VA23",
+        "VA24"
+      ],
+      "commands": [
+        "CMD-30-PUBLICATION-AUTHORIZATION"
+      ],
+      "payload_schemas": [
+        "codicarium.publication-authorization/v2"
+      ],
+      "positive_oracle": "Verify the signed fixture and recompute PRED-30-PUBLICATION-AUTHORIZATION.",
+      "negative_oracles": [
+        "break-glass-publish"
+      ],
+      "negative_effect_count": 0
+    },
+    {
+      "requirement_id": "REQ-031",
+      "dag_nodes": [
+        "VA24",
+        "VA25"
+      ],
+      "commands": [
+        "CMD-31-PUBLISHER-DISPATCH"
+      ],
+      "payload_schemas": [
+        "codicarium.publisher-dispatch/v2"
+      ],
+      "positive_oracle": "Verify the signed fixture and recompute PRED-31-PUBLISHER-DISPATCH.",
+      "negative_oracles": [
+        "vault-wildcard"
+      ],
+      "negative_effect_count": 0
+    },
+    {
+      "requirement_id": "REQ-032",
+      "dag_nodes": [
+        "VA25",
+        "RP20"
+      ],
+      "commands": [
+        "CMD-32-MUTATION-INTENT"
+      ],
+      "payload_schemas": [
+        "codicarium.mutation-intent/v2"
+      ],
+      "positive_oracle": "Verify the signed fixture and recompute PRED-32-MUTATION-INTENT.",
+      "negative_oracles": [
+        "cnpg-two-nodes"
+      ],
+      "negative_effect_count": 0
+    },
+    {
+      "requirement_id": "REQ-033",
+      "dag_nodes": [
+        "RP20",
+        "RP21"
+      ],
+      "commands": [
+        "CMD-33-MUTATION-READBACK"
+      ],
+      "payload_schemas": [
+        "codicarium.mutation-readback/v2"
+      ],
+      "positive_oracle": "Verify the signed fixture and recompute PRED-33-MUTATION-READBACK.",
+      "negative_oracles": [
+        "proxy-generic-post"
+      ],
+      "negative_effect_count": 0
+    },
+    {
+      "requirement_id": "REQ-034",
+      "dag_nodes": [
+        "RP21",
+        "RP22"
+      ],
+      "commands": [
+        "CMD-34-MUTATION-SIGNATURE"
+      ],
+      "payload_schemas": [
+        "codicarium.mutation-signature/v2"
+      ],
+      "positive_oracle": "Verify the signed fixture and recompute PRED-34-MUTATION-SIGNATURE.",
+      "negative_oracles": [
+        "unknown-retry"
+      ],
+      "negative_effect_count": 0
+    },
+    {
+      "requirement_id": "REQ-035",
+      "dag_nodes": [
+        "RP22",
+        "RP23"
+      ],
+      "commands": [
+        "CMD-35-MUTATION-COMMIT"
+      ],
+      "payload_schemas": [
+        "codicarium.mutation-commit/v2"
+      ],
+      "positive_oracle": "Verify the signed fixture and recompute PRED-35-MUTATION-COMMIT.",
+      "negative_oracles": [
+        "synthetic-authority"
+      ],
+      "negative_effect_count": 0
+    },
+    {
+      "requirement_id": "REQ-036",
+      "dag_nodes": [
+        "RP23",
+        "RP24"
+      ],
+      "commands": [
+        "CMD-36-ADMIN-AUTHORIZATION"
+      ],
+      "payload_schemas": [
+        "codicarium.admin-authorization/v2"
+      ],
+      "positive_oracle": "Verify the signed fixture and recompute PRED-36-ADMIN-AUTHORIZATION.",
+      "negative_oracles": [
+        "bad-signature"
+      ],
+      "negative_effect_count": 0
+    },
+    {
+      "requirement_id": "REQ-037",
+      "dag_nodes": [
+        "RP24",
+        "RP25"
+      ],
+      "commands": [
+        "CMD-37-FORWARD-RECOVERY"
+      ],
+      "payload_schemas": [
+        "codicarium.forward-recovery/v2"
+      ],
+      "positive_oracle": "Verify the signed fixture and recompute PRED-37-FORWARD-RECOVERY.",
+      "negative_oracles": [
+        "non-jcs"
+      ],
+      "negative_effect_count": 0
+    },
+    {
+      "requirement_id": "REQ-038",
+      "dag_nodes": [
+        "RP25",
+        "DC20"
+      ],
+      "commands": [
+        "CMD-01-BASELINE-INVENTORY"
+      ],
+      "payload_schemas": [
+        "codicarium.baseline-inventory/v2"
+      ],
+      "positive_oracle": "Verify the signed fixture and recompute PRED-01-BASELINE-INVENTORY.",
+      "negative_oracles": [
+        "nonce-replay"
+      ],
+      "negative_effect_count": 0
+    },
+    {
+      "requirement_id": "REQ-039",
+      "dag_nodes": [
+        "DC20",
+        "DC21"
+      ],
+      "commands": [
+        "CMD-02-COUNCIL-DECISION"
+      ],
+      "payload_schemas": [
+        "codicarium.council-decision/v2"
+      ],
+      "positive_oracle": "Verify the signed fixture and recompute PRED-02-COUNCIL-DECISION.",
+      "negative_oracles": [
+        "stale"
+      ],
+      "negative_effect_count": 0
+    },
+    {
+      "requirement_id": "REQ-040",
+      "dag_nodes": [
+        "DC21",
+        "DC22"
+      ],
+      "commands": [
+        "CMD-03-REPOSITORY-CREATE"
+      ],
+      "payload_schemas": [
+        "codicarium.repository-create/v2"
+      ],
+      "positive_oracle": "Verify the signed fixture and recompute PRED-03-REPOSITORY-CREATE.",
+      "negative_oracles": [
+        "wrong-workflow"
+      ],
+      "negative_effect_count": 0
+    },
+    {
+      "requirement_id": "REQ-041",
+      "dag_nodes": [
+        "DC22",
+        "DC23"
+      ],
+      "commands": [
+        "CMD-04-REPOSITORY-READBACK"
+      ],
+      "payload_schemas": [
+        "codicarium.repository-readback/v2"
+      ],
+      "positive_oracle": "Verify the signed fixture and recompute PRED-04-REPOSITORY-READBACK.",
+      "negative_oracles": [
+        "wrong-pod-uid"
+      ],
+      "negative_effect_count": 0
+    },
+    {
+      "requirement_id": "REQ-042",
+      "dag_nodes": [
+        "DC23",
+        "DC24"
+      ],
+      "commands": [
+        "CMD-05-REPOSITORY-BINDING"
+      ],
+      "payload_schemas": [
+        "codicarium.repository-binding/v2"
+      ],
+      "positive_oracle": "Verify the signed fixture and recompute PRED-05-REPOSITORY-BINDING.",
+      "negative_oracles": [
+        "wrong-target"
+      ],
+      "negative_effect_count": 0
+    },
+    {
+      "requirement_id": "REQ-043",
+      "dag_nodes": [
+        "DC24",
+        "DC25"
+      ],
+      "commands": [
+        "CMD-06-GIT-TREE-READBACK"
+      ],
+      "payload_schemas": [
+        "codicarium.git-tree-readback/v2"
+      ],
+      "positive_oracle": "Verify the signed fixture and recompute PRED-06-GIT-TREE-READBACK.",
+      "negative_oracles": [
+        "predicate-forgery"
+      ],
+      "negative_effect_count": 0
+    },
+    {
+      "requirement_id": "REQ-044",
+      "dag_nodes": [
+        "DC25",
+        "G30"
+      ],
+      "commands": [
+        "CMD-07-GITHUB-POLICY-INVENTORY"
+      ],
+      "payload_schemas": [
+        "codicarium.github-policy-inventory/v2"
+      ],
+      "positive_oracle": "Verify the signed fixture and recompute PRED-07-GITHUB-POLICY-INVENTORY.",
+      "negative_oracles": [
+        "candidate-second-read"
+      ],
+      "negative_effect_count": 0
+    },
+    {
+      "requirement_id": "REQ-045",
+      "dag_nodes": [
+        "G30",
+        "G31"
+      ],
+      "commands": [
+        "CMD-08-ADMIN-BYPASS-INVENTORY"
+      ],
+      "payload_schemas": [
+        "codicarium.admin-bypass-inventory/v2"
+      ],
+      "positive_oracle": "Verify the signed fixture and recompute PRED-08-ADMIN-BYPASS-INVENTORY.",
+      "negative_oracles": [
+        "collector-writer-overlap"
+      ],
+      "negative_effect_count": 0
+    },
+    {
+      "requirement_id": "REQ-046",
+      "dag_nodes": [
+        "G31",
+        "G32"
+      ],
+      "commands": [
+        "CMD-09-LANE-REVIEW"
+      ],
+      "payload_schemas": [
+        "codicarium.lane-review/v2"
+      ],
+      "positive_oracle": "Verify the signed fixture and recompute PRED-09-LANE-REVIEW.",
+      "negative_oracles": [
+        "admin-single-approver"
+      ],
+      "negative_effect_count": 0
+    },
+    {
+      "requirement_id": "REQ-047",
+      "dag_nodes": [
+        "G32",
+        "G33"
+      ],
+      "commands": [
+        "CMD-10-PROTECTED-CHECKS"
+      ],
+      "payload_schemas": [
+        "codicarium.protected-checks/v2"
+      ],
+      "positive_oracle": "Verify the signed fixture and recompute PRED-10-PROTECTED-CHECKS.",
+      "negative_oracles": [
+        "break-glass-publish"
+      ],
+      "negative_effect_count": 0
+    },
+    {
+      "requirement_id": "REQ-048",
+      "dag_nodes": [
+        "G33",
+        "G34"
+      ],
+      "commands": [
+        "CMD-11-GUARDED-MERGE"
+      ],
+      "payload_schemas": [
+        "codicarium.guarded-merge/v2"
+      ],
+      "positive_oracle": "Verify the signed fixture and recompute PRED-11-GUARDED-MERGE.",
+      "negative_oracles": [
+        "vault-wildcard"
+      ],
+      "negative_effect_count": 0
+    },
+    {
+      "requirement_id": "REQ-049",
+      "dag_nodes": [
+        "G34",
+        "G35"
+      ],
+      "commands": [
+        "CMD-12-POSTMERGE-MAIN"
+      ],
+      "payload_schemas": [
+        "codicarium.postmerge-main/v2"
+      ],
+      "positive_oracle": "Verify the signed fixture and recompute PRED-12-POSTMERGE-MAIN.",
+      "negative_oracles": [
+        "cnpg-two-nodes"
+      ],
+      "negative_effect_count": 0
+    },
+    {
+      "requirement_id": "REQ-050",
+      "dag_nodes": [
+        "G35",
+        "X40"
+      ],
+      "commands": [
+        "CMD-13-NAMESPACE-ADMISSION"
+      ],
+      "payload_schemas": [
+        "codicarium.namespace-admission/v2"
+      ],
+      "positive_oracle": "Verify the signed fixture and recompute PRED-13-NAMESPACE-ADMISSION.",
+      "negative_oracles": [
+        "proxy-generic-post"
+      ],
+      "negative_effect_count": 0
+    }
+  ],
+  "hash_bindings": {
+    "spec_sha256": "6f40175774db541c642712c774def6f723c3f0ba361c9b04c547f75aa2f459b0",
+    "pipeline_spec_check_sha256": "25834b64b8155aba60e097d0302c85bd3ee7aff91c4dd8c2cd110a4243c89313",
+    "council_required_hashes": [
+      "spec_sha256",
+      "annex_sha256",
+      "pipeline_spec_check_sha256",
+      "validator_report_sha256"
+    ]
+  },
+  "files": [
+    {
+      "path": "fixtures-v2.2/command-catalog-v2.2.json",
+      "byte_length": 19953,
+      "sha256": "4668969224baddf683e63788b350b8a27b02b23eefedacad39578b1961d83903"
+    },
+    {
+      "path": "fixtures-v2.2/command-evidence-envelope-v2.2.schema.json",
+      "byte_length": 2450,
+      "sha256": "e0eec23b15bad9380ed8a6bb6d3132d54640b36edb7a73d6802886fc796d77a7"
+    },
+    {
+      "path": "fixtures-v2.2/github-proxy-catalog-v2.2.json",
+      "byte_length": 820,
+      "sha256": "90eed75f3365e96c3907f69af1f7f8b57eaddc62795bb163e33afbc1c9084e8c"
+    },
+    {
+      "path": "fixtures-v2.2/mutation-contract-v2.2.json",
+      "byte_length": 1042,
+      "sha256": "8ffc83a153bca9864c248e755c714901ff95382ff5645f01875b876077e76d3e"
+    },
+    {
+      "path": "fixtures-v2.2/negative-vectors-v2.2.json",
+      "byte_length": 3107,
+      "sha256": "b5bff8bf23b16b1fe167f58639acb6401489f572d619487f6fd008dd9e4856f0"
+    },
+    {
+      "path": "fixtures-v2.2/pipeline-spec-check-v2.2.json",
+      "byte_length": 558,
+      "sha256": "25834b64b8155aba60e097d0302c85bd3ee7aff91c4dd8c2cd110a4243c89313"
+    },
+    {
+      "path": "fixtures-v2.2/rollout-dag-v2.2.json",
+      "byte_length": 20690,
+      "sha256": "2a9377d129f06222b62f9fc2249bf6b3199b2534931bd0eb77d6b4d41a4b627f"
+    },
+    {
+      "path": "fixtures-v2.2/rollout-dag-v2.2.schema.json",
+      "byte_length": 863,
+      "sha256": "656b512df2f74c83c47e38a24322cf5820af79094a9a778fb532eb62c54b66cb"
+    },
+    {
+      "path": "fixtures-v2.2/security-contracts-v2.2.json",
+      "byte_length": 2622,
+      "sha256": "20d0073fc9e931db86901fabcfaa391c9843d1dfe64eb59e58889312552ae9c8"
+    },
+    {
+      "path": "fixtures-v2.2/signed-command-evidence-positive-v2.2.json",
+      "byte_length": 107563,
+      "sha256": "30ed9e43fd894082cf0cff12286a922e6a72cc32bd785b40fe1d69f5983a7c51"
+    },
+    {
+      "path": "fixtures-v2.2/typed-payload-schemas-v2.2.json",
+      "byte_length": 480369,
+      "sha256": "22556ec15d1de41bec997860d196d0dd7f4556bc546f5e965cd91c78b9198aac"
+    }
+  ],
+  "predecessor_council_hashes": {
+    "v2_1": "ed0e9615847927c41f08c2e08ac37423de4f1d2d669b4c7c69c94c3a02958996",
+    "v2_2": "b8d5fd6157c112f841e5d03d2f2df2cc0418f118f83361c85ec7c9ae12fa0f29"
+  },
+  "release_identity": {
+    "requested": "v0.6.14",
+    "inventory": {
+      "v0.6.13": "exists",
+      "v0.6.14": "absent",
+      "v0.7.x": "newer tags exist"
+    },
+    "decision": "v0.6.14 remains an unused immutable identity but must not be published until policy explicitly confirms a non-monotonic historical-line release; otherwise allocate a new version above current v0.7.x"
+  },
+  "app_config_lane": [
+    "AP20",
+    "AP21",
+    "AP22",
+    "AP23",
+    "AP24",
+    "AP25"
+  ],
+  "app_config_boundary": "bootstrap wiring only; workload desired state remains release-platform-config",
+  "conditional_fsm": {
+    "schema": "codicarium.release-fsm/v2.3",
+    "initial": "F01",
+    "failure_outcomes": [
+      "UNKNOWN",
+      "TIMEOUT",
+      "PARTIAL_EFFECT",
+      "MISMATCH"
+    ],
+    "edges": [
+      {
+        "from": "F01",
+        "on": [
+          "UNKNOWN",
+          "TIMEOUT",
+          "PARTIAL_EFFECT",
+          "MISMATCH"
+        ],
+        "to": "U00",
+        "actions": [
+          "freeze epoch",
+          "cancel outstanding dispatches",
+          "deny new claims"
+        ]
+      },
+      {
+        "from": "M01",
+        "on": [
+          "UNKNOWN",
+          "TIMEOUT",
+          "PARTIAL_EFFECT",
+          "MISMATCH"
+        ],
+        "to": "U00",
+        "actions": [
+          "freeze epoch",
+          "cancel outstanding dispatches",
+          "deny new claims"
+        ]
+      },
+      {
+        "from": "M02",
+        "on": [
+          "UNKNOWN",
+          "TIMEOUT",
+          "PARTIAL_EFFECT",
+          "MISMATCH"
+        ],
+        "to": "U00",
+        "actions": [
+          "freeze epoch",
+          "cancel outstanding dispatches",
+          "deny new claims"
+        ]
+      },
+      {
+        "from": "M03",
+        "on": [
+          "UNKNOWN",
+          "TIMEOUT",
+          "PARTIAL_EFFECT",
+          "MISMATCH"
+        ],
+        "to": "U00",
+        "actions": [
+          "freeze epoch",
+          "cancel outstanding dispatches",
+          "deny new claims"
+        ]
+      },
+      {
+        "from": "M04",
+        "on": [
+          "UNKNOWN",
+          "TIMEOUT",
+          "PARTIAL_EFFECT",
+          "MISMATCH"
+        ],
+        "to": "U00",
+        "actions": [
+          "freeze epoch",
+          "cancel outstanding dispatches",
+          "deny new claims"
+        ]
+      },
+      {
+        "from": "M05",
+        "on": [
+          "UNKNOWN",
+          "TIMEOUT",
+          "PARTIAL_EFFECT",
+          "MISMATCH"
+        ],
+        "to": "U00",
+        "actions": [
+          "freeze epoch",
+          "cancel outstanding dispatches",
+          "deny new claims"
+        ]
+      },
+      {
+        "from": "M06",
+        "on": [
+          "UNKNOWN",
+          "TIMEOUT",
+          "PARTIAL_EFFECT",
+          "MISMATCH"
+        ],
+        "to": "U00",
+        "actions": [
+          "freeze epoch",
+          "cancel outstanding dispatches",
+          "deny new claims"
+        ]
+      },
+      {
+        "from": "M07",
+        "on": [
+          "UNKNOWN",
+          "TIMEOUT",
+          "PARTIAL_EFFECT",
+          "MISMATCH"
+        ],
+        "to": "U00",
+        "actions": [
+          "freeze epoch",
+          "cancel outstanding dispatches",
+          "deny new claims"
+        ]
+      },
+      {
+        "from": "M08",
+        "on": [
+          "UNKNOWN",
+          "TIMEOUT",
+          "PARTIAL_EFFECT",
+          "MISMATCH"
+        ],
+        "to": "U00",
+        "actions": [
+          "freeze epoch",
+          "cancel outstanding dispatches",
+          "deny new claims"
+        ]
+      },
+      {
+        "from": "M09",
+        "on": [
+          "UNKNOWN",
+          "TIMEOUT",
+          "PARTIAL_EFFECT",
+          "MISMATCH"
+        ],
+        "to": "U00",
+        "actions": [
+          "freeze epoch",
+          "cancel outstanding dispatches",
+          "deny new claims"
+        ]
+      },
+      {
+        "from": "M10",
+        "on": [
+          "UNKNOWN",
+          "TIMEOUT",
+          "PARTIAL_EFFECT",
+          "MISMATCH"
+        ],
+        "to": "U00",
+        "actions": [
+          "freeze epoch",
+          "cancel outstanding dispatches",
+          "deny new claims"
+        ]
+      },
+      {
+        "from": "M11",
+        "on": [
+          "UNKNOWN",
+          "TIMEOUT",
+          "PARTIAL_EFFECT",
+          "MISMATCH"
+        ],
+        "to": "U00",
+        "actions": [
+          "freeze epoch",
+          "cancel outstanding dispatches",
+          "deny new claims"
+        ]
+      },
+      {
+        "from": "M12",
+        "on": [
+          "UNKNOWN",
+          "TIMEOUT",
+          "PARTIAL_EFFECT",
+          "MISMATCH"
+        ],
+        "to": "U00",
+        "actions": [
+          "freeze epoch",
+          "cancel outstanding dispatches",
+          "deny new claims"
+        ]
+      },
+      {
+        "from": "M13",
+        "on": [
+          "UNKNOWN",
+          "TIMEOUT",
+          "PARTIAL_EFFECT",
+          "MISMATCH"
+        ],
+        "to": "U00",
+        "actions": [
+          "freeze epoch",
+          "cancel outstanding dispatches",
+          "deny new claims"
+        ]
+      },
+      {
+        "from": "M14",
+        "on": [
+          "UNKNOWN",
+          "TIMEOUT",
+          "PARTIAL_EFFECT",
+          "MISMATCH"
+        ],
+        "to": "U00",
+        "actions": [
+          "freeze epoch",
+          "cancel outstanding dispatches",
+          "deny new claims"
+        ]
+      },
+      {
+        "from": "M15",
+        "on": [
+          "UNKNOWN",
+          "TIMEOUT",
+          "PARTIAL_EFFECT",
+          "MISMATCH"
+        ],
+        "to": "U00",
+        "actions": [
+          "freeze epoch",
+          "cancel outstanding dispatches",
+          "deny new claims"
+        ]
+      },
+      {
+        "from": "M16",
+        "on": [
+          "UNKNOWN",
+          "TIMEOUT",
+          "PARTIAL_EFFECT",
+          "MISMATCH"
+        ],
+        "to": "U00",
+        "actions": [
+          "freeze epoch",
+          "cancel outstanding dispatches",
+          "deny new claims"
+        ]
+      },
+      {
+        "from": "M17",
+        "on": [
+          "UNKNOWN",
+          "TIMEOUT",
+          "PARTIAL_EFFECT",
+          "MISMATCH"
+        ],
+        "to": "U00",
+        "actions": [
+          "freeze epoch",
+          "cancel outstanding dispatches",
+          "deny new claims"
+        ]
+      },
+      {
+        "from": "M18",
+        "on": [
+          "UNKNOWN",
+          "TIMEOUT",
+          "PARTIAL_EFFECT",
+          "MISMATCH"
+        ],
+        "to": "U00",
+        "actions": [
+          "freeze epoch",
+          "cancel outstanding dispatches",
+          "deny new claims"
+        ]
+      },
+      {
+        "from": "M19",
+        "on": [
+          "UNKNOWN",
+          "TIMEOUT",
+          "PARTIAL_EFFECT",
+          "MISMATCH"
+        ],
+        "to": "U00",
+        "actions": [
+          "freeze epoch",
+          "cancel outstanding dispatches",
+          "deny new claims"
+        ]
+      }
+    ],
+    "recovery": [
+      "U00",
+      "U01",
+      "U02",
+      "U03",
+      "U04",
+      "U05",
+      "U06",
+      "U07",
+      "U08"
+    ],
+    "retry_edges": []
+  },
+  "publication_operations": [
+    "tag refs/tags/v0.6.14",
+    "draft release v0.6.14",
+    "image manifest",
+    "chart 0.6.14",
+    "asset-01",
+    "asset-02",
+    "asset-03",
+    "asset-04",
+    "asset-05",
+    "asset-06",
+    "asset-07",
+    "asset-08",
+    "asset-09",
+    "asset-10",
+    "asset-11",
+    "asset-12",
+    "asset-13",
+    "asset-14",
+    "finalize release"
+  ],
+  "admin_contracts": {
+    "normal": {
+      "requester": "distinct",
+      "approver": "distinct",
+      "executor": "distinct",
+      "approval_ttl_seconds": 1800,
+      "credential_ttl_seconds": 600
+    },
+    "break_glass": {
+      "requester": "distinct",
+      "approvers": 2,
+      "executor": "distinct",
+      "approval_ttl_seconds": 900,
+      "credential_ttl_seconds": 300,
+      "forbidden": [
+        "publish",
+        "clear UNKNOWN",
+        "mint candidate",
+        "mutate admission"
+      ]
+    }
+  },
+  "signer_policy": {
+    "live_default": "REJECT",
+    "sigstore": {
+      "required": [
+        "Fulcio chain to pinned root",
+        "certificate SAN exact workflow identity",
+        "OIDC issuer",
+        "repository",
+        "workflow ref and SHA",
+        "Rekor inclusion proof and signed tree head",
+        "integrated time inside evidence window"
+      ]
+    },
+    "vault": {
+      "required": [
+        "Ed25519 public key pinned by transit key version",
+        "offline signature verification",
+        "exact Kubernetes principal",
+        "key not revoked"
+      ]
+    },
+    "fixture": {
+      "algorithm": "Ed25519",
+      "authority": false
+    },
+    "time": {
+      "current_time_required": true,
+      "max_clock_skew_seconds": 30
+    },
+    "replay": {
+      "store": "durable SQLite unique(issuer,nonce,claim,epoch,sequence)",
+      "cross_process_test": true
+    }
+  },
+  "validation_reports": {
+    "pre_council": "fixtures-v2.3/pre-council-validation-report-v2.3.json",
+    "council_closure": "external council-v2.3 binds pre-council report hash; never included in its own input"
+  },
+  "pre_council_report_sha256": "8ad2ea3cefabe87edd388b0540f9969f81be991a10b5ce0b3274b6cbe4b9db35"
+}

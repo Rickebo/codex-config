@@ -1,0 +1,24 @@
+{
+  "nodes": [
+    "U00",
+    "U01",
+    "U02",
+    "U03",
+    "U04",
+    "U05",
+    "U06",
+    "U07",
+    "U08"
+  ],
+  "commands": [
+    "fence",
+    "cancel",
+    "quarantine",
+    "classify",
+    "repair",
+    "successor",
+    "audit",
+    "reconcile",
+    "terminal"
+  ]
+}

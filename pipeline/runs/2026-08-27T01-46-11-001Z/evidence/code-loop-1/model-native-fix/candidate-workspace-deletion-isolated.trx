@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="32ee2819-67e9-42c2-bdf5-9627ed06f38d" name="@RICKEBO 2026-08-27 04:48:44" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2026-08-27T04:48:44.0713382+02:00" queuing="2026-08-27T04:48:44.0713383+02:00" start="2026-08-27T04:48:36.9872041+02:00" finish="2026-08-27T04:48:44.0744672+02:00" />
+  <TestSettings name="default" id="5b0b900a-e0a5-479c-9d0b-54bb111cb920">
+    <Deployment runDeploymentRoot="_RICKEBO_2026-08-27_04_48_44" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="14d2f56f-8751-45dd-8340-05d421790cfb" testId="3890131b-6e27-8688-42a0-a150e81477a4" testName="ModelService.IntegrationTests.WorkspaceDeletionConsumerTests.StaleRequestIsCommittedBeforeFollowingSamePartitionRequestIsProcessed" computerName="RICKEBO" duration="00:00:01.5175415" startTime="2026-08-27T04:48:37.2712723+02:00" endTime="2026-08-27T04:48:43.9873447+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="14d2f56f-8751-45dd-8340-05d421790cfb" />
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="ModelService.IntegrationTests.WorkspaceDeletionConsumerTests.StaleRequestIsCommittedBeforeFollowingSamePartitionRequestIsProcessed" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/model-service/modelservice.integrationtests/bin/release/net10.0/modelservice.integrationtests.dll" id="3890131b-6e27-8688-42a0-a150e81477a4">
+      <Execution id="14d2f56f-8751-45dd-8340-05d421790cfb" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/model-service/ModelService.IntegrationTests/bin/Release/net10.0/ModelService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="ModelService.IntegrationTests.WorkspaceDeletionConsumerTests" name="StaleRequestIsCommittedBeforeFollowingSamePartitionRequestIsProcessed" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="3890131b-6e27-8688-42a0-a150e81477a4" executionId="14d2f56f-8751-45dd-8340-05d421790cfb" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Completed">
+    <Counters total="1" executed="1" passed="1" failed="0" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v3.1.5+1b188a7b0a (64-bit .NET 10.0.11)
+[xUnit.net 00:00:00.05]   Discovering: ModelService.IntegrationTests
+[xUnit.net 00:00:00.07]   Discovered:  ModelService.IntegrationTests
+[xUnit.net 00:00:00.09]   Starting:    ModelService.IntegrationTests
+[testcontainers.org 00:00:00.07] Connected to Docker:
+  Host: unix:///var/run/docker.sock
+  Server Version: 29.7.2
+  Kernel Version: 6.18.44-1-lts
+  API Version: 1.55
+  Operating System: Arch Linux
+  Total Memory: 60.48 GB
+[testcontainers.org 00:00:00.31] Docker container 1a1d0fbea150 created
+[testcontainers.org 00:00:00.33] Start Docker container 1a1d0fbea150
+[testcontainers.org 00:00:00.44] Wait for Docker container 1a1d0fbea150 to complete readiness checks
+[testcontainers.org 00:00:01.45] Docker container 1a1d0fbea150 ready
+[testcontainers.org 00:00:01.55] Docker container 882579c17db1 created
+[testcontainers.org 00:00:01.55] Docker container 45baf9abfc0c created
+[testcontainers.org 00:00:01.55] Start Docker container 882579c17db1
+[testcontainers.org 00:00:01.55] Start Docker container 45baf9abfc0c
+[testcontainers.org 00:00:01.67] Wait for Docker container 882579c17db1 to complete readiness checks
+[testcontainers.org 00:00:01.68] Execute "pg_isready --host localhost --dbname model_service --username model_service" at Docker container 882579c17db1
+[testcontainers.org 00:00:01.69] Add file to tar archive: Content length: 131 byte(s), Target file: "/testcontainers.sh", UID: 0, GID: 0, Mode: 0755
+[testcontainers.org 00:00:01.70] Copy tar archive to container: Content length: 131 byte(s), Docker container: 45baf9abfc0c
+[testcontainers.org 00:00:01.70] Wait for Docker container 45baf9abfc0c to complete readiness checks
+[testcontainers.org 00:00:02.70] Execute "pg_isready --host localhost --dbname model_service --username model_service" at Docker container 882579c17db1
+[testcontainers.org 00:00:02.73] Docker container 882579c17db1 ready
+[testcontainers.org 00:00:04.71] Docker container 45baf9abfc0c ready
+[testcontainers.org 00:00:06.17] Delete Docker container 882579c17db1
+[testcontainers.org 00:00:06.17] Delete Docker container 45baf9abfc0c
+[xUnit.net 00:00:06.82]   Finished:    ModelService.IntegrationTests
+</StdOut>
+    </Output>
+  </ResultSummary>
+</TestRun>

@@ -1,0 +1,94 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Two independent Luna reviews rejected exact head 45335a10. The GitHub producer does not yet prove immutable organization/repository/run identity and accepts redirects; evidence time validation is incomplete. The installer retains caller-selected identity and non-atomic multi-file publication, the verifier post-read metadata check is incomplete, and protected CI omits root lifecycle/generated-root gates.",
+  "changed_files": [
+    "scripts/produce-github-authority-evidence.py",
+    "scripts/verify-github-authority-evidence.py",
+    "tests/test-github-authority-evidence.py",
+    "platform/authority-runner/artifact-seal-v1/install.sh",
+    "scripts/harden-codicarium-artifact-ownership.py",
+    "scripts/verify-authority-runner-contract.py",
+    "tests/test-authority-runner-installed-root.py",
+    ".github/workflows/verify-codicarium-artifact-seal-boundary.yml"
+  ],
+  "validation": [
+    "Reviewed complete e3ff9662..45335a10 diff against REQ-001..REQ-012 and prior REV2 findings.",
+    "Reproduced the GitHub API-base regex rejecting the real https://api.github.com endpoint.",
+    "Reproduced acceptance of evidence timestamped one year in the future.",
+    "GitHub evidence/authority unit suite passed existing tests, demonstrating missing negative coverage.",
+    "Inspected installer identity inputs, publication sequence, verifier fstat checks, and protected workflow gates.",
+    "No code, host installation, workflow dispatch, external API call, merge, or live mutation occurred."
+  ],
+  "blockers": [
+    "Nine review findings must be remediated and independently re-reviewed before test stage."
+  ],
+  "next_action": "Route to Luna code remediation in disjoint GitHub-evidence and installer/filesystem lanes, then commit and re-review the exact clean head.",
+  "route_to": "code",
+  "risk_level": "critical",
+  "issues": [
+    {
+      "id": "REV3-001",
+      "title": "Pinned GitHub API base regex rejects the real endpoint",
+      "severity": "high",
+      "details": "produce-github-authority-evidence.py over-escapes api.github.com and fails before a real REST request; add exact-base positive and near-match negative tests.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV3-002",
+      "title": "Organization and repository numeric IDs are not proven by REST responses",
+      "severity": "high",
+      "details": "The producer copies immutable IDs from the contract while querying mutable names. Fetch and validate numeric organization and repository resources before emitting evidence.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV3-003",
+      "title": "GitHub REST redirects are accepted",
+      "severity": "high",
+      "details": "urllib follows redirects automatically. Disable redirects or reject any final response not exactly https://api.github.com and add redirect coverage.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV3-004",
+      "title": "Supplied run ID is not bound to the protected workflow run",
+      "severity": "high",
+      "details": "Bind the run to exact repository, workflow/path, workflow_dispatch, protected main ref, first attempt, expected job, runner, and terminal status.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV3-005",
+      "title": "Future-dated GitHub authority evidence is accepted",
+      "severity": "medium",
+      "details": "Reject observedAt timestamps after current time or beyond a tightly bounded documented clock skew and add boundary tests.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV3-006",
+      "title": "Installer and helper retain caller-selected runner identity",
+      "severity": "high",
+      "details": "Remove arbitrary --runner-user and --runner-uid authority paths; derive and validate the fixed immutable identity only from trusted install/contract metadata.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV3-007",
+      "title": "Eight-file package publication is not atomic or rollback-safe",
+      "severity": "high",
+      "details": "After deauthorization, publish a complete generation atomically or restore the prior generation, and fsync descriptor-relative parent directories.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV3-008",
+      "title": "Verifier post-read race check omits security metadata",
+      "severity": "medium",
+      "details": "Compare ctime, mode, UID, GID, link count, device, inode, size, and mtime before and after bounded reads.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV3-009",
+      "title": "Protected workflow omits root lifecycle and generated-root adversarial gates",
+      "severity": "high",
+      "details": "Run the real package install/reinstall/uninstall test and root-capable generated installed-root verifier in the protected validation job.",
+      "owner_stage": "code"
+    }
+  ]
+}

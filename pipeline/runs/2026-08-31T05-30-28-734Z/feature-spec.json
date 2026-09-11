@@ -1,0 +1,229 @@
+{
+  "meta": {
+    "id": "SPEC-deployment-controller-150-dev-admission",
+    "title": "Dev-only access-controller RoleBinding admission boundary",
+    "author": "root-manager",
+    "created_at": "2026-08-31T05:44:36Z",
+    "version": "1.0.0"
+  },
+  "feature": {
+    "problem_statement": "The merged RoleBinding admission validator authorizes canonical bindings from any otherwise-valid DeploymentGrant without independently requiring the dev environment or a platform-owned dev namespace fence. A production grant could therefore authorize the access-controller writer. The feature is disabled, and the separate image-size fix is already merged but unpublished; implementation must close the dev boundary without weakening release invariants or enabling live admission.",
+    "goals": [
+      "Permit the exact access-controller writer to create canonical viewer RoleBindings only in centrally configured dev namespaces backed by one fresh current dev DeploymentGrant and approved profile.",
+      "Keep namespace, repository identity, group subject, roleRef, ownership metadata, and break-glass authority outside repository control.",
+      "Preserve fail-closed CREATE/UPDATE/DELETE, stale-state, webhook-availability, and system:masters behavior.",
+      "Preserve the existing five-binary image, immutable supply-chain verification, and 134217728-byte publisher cap while separating merge, release, and deployment gates."
+    ],
+    "non_goals": [
+      "Enabling or deploying the admission webhook or access-controller.",
+      "Adding production admission, a second authorization database, a broker, or repository-selected subjects, groups, namespaces, or roleRefs.",
+      "Raising the publisher cap, removing binaries, weakening distroless/nonroot/SBOM/provenance checks, dispatching release workflows, or reusing v0.14.0.",
+      "Maintaining backward compatibility for an enabled configuration because the feature is currently disabled."
+    ],
+    "scope_in": [
+      "Admission runtime configuration, validator policy, chart values/schema/templates, documentation, dormant test overlay, and focused tests.",
+      "Regression validation that the merged image-size fix and immutable release contracts remain intact.",
+      "A clean worktree branch and PR linked to deployment-controller issues #150 and #152."
+    ],
+    "scope_out": [
+      "Live Kubernetes, Argo CD, admission, access-controller, Vault, Authentik, Rancher, or GitHub runner mutation.",
+      "Artifact publication, release dispatch, deployment, or admission enablement.",
+      "Repository-local authorization configuration or arbitrary namespace patterns."
+    ]
+  },
+  "requirements": [
+    {
+      "id": "REQ-001",
+      "priority": "MUST",
+      "statement": "Enabled admission configuration MUST fix the environment to exactly dev and require a non-empty, duplicate-free, exact DNS-compliant platform-owned namespace allowlist; wildcards, prefixes, empty values, prod, unknown environments, and repository-provided scope MUST be rejected.",
+      "rationale": "DeploymentGrant validity alone does not establish the platform environment boundary."
+    },
+    {
+      "id": "REQ-002",
+      "priority": "MUST",
+      "statement": "CREATE and DELETE by the exact access-controller writer MUST be denied before grant authorization when the request namespace is outside the configured dev set; UPDATE MUST remain unconditionally denied.",
+      "rationale": "The coarse platform fence must precede repository entitlement evaluation and cover cleanup operations."
+    },
+    {
+      "id": "REQ-003",
+      "priority": "MUST",
+      "statement": "An allowed CREATE MUST resolve one unique fresh coherent DeploymentGrant/Profile whose repository ID and destination namespace match, whose environment is exactly dev, whose observed generations are current, and whose Ready, Authorized, InvalidPolicy, and authorization-profile state is approved; ambiguous, prod, unknown, stale, malformed, partial, unavailable, or changing state MUST deny.",
+      "rationale": "The central grant/profile join is the authoritative repository-to-dev-namespace mapping."
+    },
+    {
+      "id": "REQ-004",
+      "priority": "MUST",
+      "statement": "The validator MUST recompute and enforce the canonical positive numeric repository-ID binding name, one centrally selected Group subject, fixed codicarium-project-viewer ClusterRole, exact ownership metadata, and absence of extra subjects, ownerReferences, finalizers, or arbitrary metadata.",
+      "rationale": "Repository content and the writer process must not broaden subjects or RBAC authority."
+    },
+    {
+      "id": "REQ-005",
+      "priority": "MUST",
+      "statement": "DELETE cleanup after grant removal MUST require a canonical oldObject in an allowed dev namespace; active binding deletion, unlisted/prod namespace deletion, malformed oldObject, and unrelated object deletion MUST deny. system:masters break glass and fail-closed webhook behavior MUST remain unchanged.",
+      "rationale": "Revocation cleanup is necessary but cannot become a cross-environment deletion capability."
+    },
+    {
+      "id": "REQ-006",
+      "priority": "MUST",
+      "statement": "Defaults, examples, and ordinary CI values MUST keep roleBindingAdmission.enabled false; only a dedicated dormant test overlay may enable it, and no code-stage action may release, deploy, or enable the feature.",
+      "rationale": "Code review is distinct from authorization activation."
+    },
+    {
+      "id": "REQ-007",
+      "priority": "MUST",
+      "statement": "The change MUST preserve all five linux/amd64 and linux/arm64 binaries, deterministic stripped builds, distroless nonroot UID/GID 65532 runtime, exact SBOM application inventory, provenance/scanning/OCI verification, and archive rejection above 134217728 bytes; no cap increase or verification weakening is allowed.",
+      "rationale": "Issue #152 is code-fixed by merged PR #153 but immutable publication remains a separate gate."
+    },
+    {
+      "id": "REQ-008",
+      "priority": "MUST",
+      "statement": "Delivery MUST use a current-main worktree branch and PR, pass exact-head test/integration/lint/chart/supply-chain checks and independent review, and keep merge, new immutable release, deployment, and admission enablement as separate gated decisions.",
+      "rationale": "Concurrent main and release-coordinator changes invalidate stale evidence and must not implicitly authorize live rollout."
+    }
+  ],
+  "acceptance_criteria": [
+    {
+      "id": "AC-001",
+      "requirement_ids": ["REQ-001", "REQ-006"],
+      "scenario": "Given disabled defaults or enabled test configuration, when values are rendered and validated, then disabled state emits no admission resources and enabled state accepts only exact dev plus at least one unique exact namespace."
+    },
+    {
+      "id": "AC-002",
+      "requirement_ids": ["REQ-002", "REQ-003"],
+      "scenario": "Given the exact writer and grant/profile inventory, When CREATE targets a namespace, Then one allowed dev namespace with one current approved dev grant is admitted and every unlisted, prod, unknown, ambiguous, stale, malformed, partial, unavailable, or changing state is denied."
+    },
+    {
+      "id": "AC-003",
+      "requirement_ids": ["REQ-004"],
+      "scenario": "Given a requested RoleBinding, when any repository ID, name, subject, group, roleRef, metadata, owner reference, finalizer, or subject count differs from the canonical centrally derived shape, then admission denies."
+    },
+    {
+      "id": "AC-004",
+      "requirement_ids": ["REQ-002", "REQ-005"],
+      "scenario": "Given an UPDATE or DELETE request, When the writer mutates an active binding, supplies a malformed oldObject, or targets an unlisted or prod namespace, Then it is denied while canonical revoked-grant cleanup in an allowed dev namespace succeeds and system:masters behavior remains unchanged."
+    },
+    {
+      "id": "AC-005",
+      "requirement_ids": ["REQ-007"],
+      "scenario": "Given the exact candidate source, when release-contract tests and OCI verification run, then both architectures contain all five binaries, immutable SBOM/provenance invariants pass, and the archive remains below the unchanged cap."
+    },
+    {
+      "id": "AC-006",
+      "requirement_ids": ["REQ-006", "REQ-008"],
+      "scenario": "Given the implementation PR, when exact-head CI and independent review pass, then merge may be considered without dispatching a release or enabling/deploying admission; later release and deployment each require separate fresh evidence."
+    }
+  ],
+  "test_plan": [
+    {
+      "id": "TST-001",
+      "type": "unit",
+      "requirement_ids": ["REQ-001", "REQ-006"],
+      "approach": "Test runtime and chart schema validation for missing, empty, duplicate, malformed, prod, unknown, wildcard, and valid exact dev namespace scope; verify disabled defaults."
+    },
+    {
+      "id": "TST-002",
+      "type": "unit",
+      "requirement_ids": ["REQ-002", "REQ-003", "REQ-004", "REQ-005"],
+      "approach": "Exercise dev CREATE, prod/unlisted denial, environment mismatch, duplicate ownership, stale/partial inventories, canonical-shape mutations, UPDATE denial, revoked cleanup, active delete denial, and break-glass behavior."
+    },
+    {
+      "id": "TST-003",
+      "type": "integration",
+      "requirement_ids": ["REQ-001", "REQ-002", "REQ-005", "REQ-006"],
+      "approach": "Render disabled and enabled charts and verify failurePolicy Fail, exact writer matching across namespaces, list-only grant/profile RBAC, TLS/readiness wiring, system:masters exclusion, and the validator-owned prod denial."
+    },
+    {
+      "id": "TST-004",
+      "type": "non_functional",
+      "requirement_ids": ["REQ-007"],
+      "approach": "Run repository release-flow and supply-chain tests and, before release, build the exact multiarch OCI subject twice to verify deterministic digest, size below cap, five-binary inventory, nonroot metadata, SBOMs, provenance, and source revision."
+    },
+    {
+      "id": "TST-005",
+      "type": "e2e",
+      "requirement_ids": ["REQ-008"],
+      "approach": "Verify worktree provenance, PR base/head, exact-head five-check CI, independent review, no release/deployment/enablement, and separate immutable release and rollout gates."
+    }
+  ],
+  "traceability": [
+    {
+      "requirement_id": "REQ-001",
+      "acceptance_ids": ["AC-001"],
+      "test_ids": ["TST-001", "TST-003"],
+      "review_checks": ["Review exact dev enum and namespace-list ownership; reject patterns and repository inputs."],
+      "validation_checks": ["Schema/runtime/render tests cover valid and invalid scope."]
+    },
+    {
+      "requirement_id": "REQ-002",
+      "acceptance_ids": ["AC-002", "AC-004"],
+      "test_ids": ["TST-002", "TST-003"],
+      "review_checks": ["Confirm namespace fence executes before grant lookup for CREATE and DELETE and UPDATE always denies."],
+      "validation_checks": ["Prod/unlisted CREATE and DELETE tests fail closed."]
+    },
+    {
+      "requirement_id": "REQ-003",
+      "acceptance_ids": ["AC-002"],
+      "test_ids": ["TST-002"],
+      "review_checks": ["Trace unique current dev grant/profile selection and every fail-closed state."],
+      "validation_checks": ["Environment, generation, condition, ambiguity, partial, and availability matrix passes."]
+    },
+    {
+      "requirement_id": "REQ-004",
+      "acceptance_ids": ["AC-003"],
+      "test_ids": ["TST-002"],
+      "review_checks": ["Confirm subjects, roleRef, name, metadata, and repository ID are compiled/derived, not repository-selectable."],
+      "validation_checks": ["Every canonical-shape mutation is denied."]
+    },
+    {
+      "requirement_id": "REQ-005",
+      "acceptance_ids": ["AC-004"],
+      "test_ids": ["TST-002", "TST-003"],
+      "review_checks": ["Review oldObject cleanup boundary, fail-closed webhook behavior, and fixed system:masters exclusion."],
+      "validation_checks": ["Only canonical revoked cleanup inside configured dev namespace succeeds."]
+    },
+    {
+      "requirement_id": "REQ-006",
+      "acceptance_ids": ["AC-001", "AC-006"],
+      "test_ids": ["TST-001", "TST-003", "TST-005"],
+      "review_checks": ["Confirm feature remains disabled and no release or rollout mutation is included."],
+      "validation_checks": ["Default render omits admission resources and delivery record contains no activation."]
+    },
+    {
+      "requirement_id": "REQ-007",
+      "acceptance_ids": ["AC-005"],
+      "test_ids": ["TST-004"],
+      "review_checks": ["Ensure PR #153 size controls and all supply-chain/runtime invariants remain unchanged or stronger."],
+      "validation_checks": ["Exact candidate OCI/SBOM/provenance verification passes below unchanged cap."]
+    },
+    {
+      "requirement_id": "REQ-008",
+      "acceptance_ids": ["AC-006"],
+      "test_ids": ["TST-005"],
+      "review_checks": ["Review current-main provenance and distinct merge, release, deployment, and enablement gates."],
+      "validation_checks": ["Exact-head five-check CI and independent review pass without live mutation."]
+    }
+  ],
+  "quality_gates": {
+    "spec_review_required": true,
+    "testability_required": true,
+    "traceability_required": true
+  },
+  "council": {
+    "perspectives": [
+      {
+        "role": "architecture_planning",
+        "summary": "Use a coarse centrally configured dev namespace fence plus the existing unique fresh dev DeploymentGrant/Profile join; do not create another authorization map or allow repository-selected subjects/scopes."
+      },
+      {
+        "role": "security_review",
+        "summary": "Merged PR #151 is inert but unsafe to enable because production grants can authorize the writer; explicitly deny non-dev CREATE/DELETE before entitlement evaluation and preserve fail-closed canonical binding checks."
+      },
+      {
+        "role": "quality_operations",
+        "summary": "PR #153 already fixes image size in code; preserve the unchanged cap and five-binary supply-chain contract, then treat exact-head merge, new immutable release, and live enablement as separate evidence gates."
+      }
+    ],
+    "consensus_summary": "Implement only the dev-only admission fence and its chart/tests on current main. Keep admission disabled, preserve the merged image-size controls, and perform no release or deployment in this code pipeline.",
+    "open_questions": []
+  }
+}

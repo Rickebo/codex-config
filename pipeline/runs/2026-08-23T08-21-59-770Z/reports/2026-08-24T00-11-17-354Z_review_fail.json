@@ -1,0 +1,51 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Final exact-SHA review of 96945d2e closed the five prior findings but found two behavioral regressions in legacy activation-event gating/no-op ordering and confirmed a repository envtest harness should cover stored v0.6.4 status migration.",
+  "changed_files": [
+    "internal/controller/activation/legacy_preapproval.go",
+    "internal/controller/activation/legacy_preapproval_test.go",
+    "internal/controller/activation/reconciler.go",
+    "docs/operations.md"
+  ],
+  "validation": [
+    "Independent diff review: 96945d2ecbc4cc8e53a42fce587e9db989b60aab vs 989799cc99a4e9577bfd100dde320a71f7e7fb9f",
+    "go test -count=1 ./internal/controller/activation: pass",
+    "go test -race -count=1 ./internal/controller/activation: pass",
+    "go vet ./internal/controller/activation: pass",
+    "go test -count=1 ./...: pass",
+    "Reviewer confirmed prior duplicate/mismatch, Work-state, generation, and deletion findings are closed"
+  ],
+  "blockers": [
+    "Legacy activation-event candidacy intercepts modern/unclassifiable activations before request classification, changing established missing/mismatch/Active behavior.",
+    "Already-terminal legacy requests are checked after linked-activation validation, so duplicates or mismatch can replace the required no-op.",
+    "No legacy stored-object migration test uses the repository's available envtest harness and real status-subresource/resourceVersion behavior.",
+    "Pipeline loop budget is exhausted at 6/6; further code transition requires human escalation."
+  ],
+  "next_action": "Obtain explicit human authorization to start a fresh bounded remediation pipeline, then fix modern-path gating/no-op ordering and add an envtest migration case before another exact-SHA review.",
+  "route_to": "code",
+  "risk_level": "critical",
+  "issues": [
+    {
+      "id": "LEGACY-FINAL-001",
+      "title": "Legacy hook can intercept modern activations",
+      "severity": "high",
+      "details": "Enter legacy activation-event handling only after fetching and classifying an exact legacy Activate request; preserve the normal path for modern and unclassifiable activations.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "LEGACY-FINAL-002",
+      "title": "Terminal legacy request is not an unconditional no-op",
+      "severity": "medium",
+      "details": "After exact request classification, check terminal request status before linked activation or audit traversal.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "LEGACY-FINAL-003",
+      "title": "Stored v0.6.4 migration lacks envtest coverage",
+      "severity": "medium",
+      "details": "Add at least one envtest case for CRD decode, real UID/resourceVersion, status-only migration, and spec/audit preservation.",
+      "owner_stage": "code"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Remediated all second-review findings at exact commit 0a3194686190053045dd0684a71805b3a2909f73: state-read errors now propagate and real envtest covers Prepare/Activate, both marker states, Work preservation, terminal/ambiguous zero writes, schema readiness, and full graph invariants.",
+  "changed_files": [
+    "go.mod",
+    "internal/controller/activation/legacy_preapproval.go",
+    "internal/controller/activation/legacy_preapproval_test.go",
+    "integration/legacy_preapproval_runtime_test.go",
+    "integration/suite_test.go"
+  ],
+  "validation": [
+    "Focused read-error and classifier unit tests: pass",
+    "Consumed proof with absent Lease migration envtest: pass",
+    "Issued proof with exact Lease and Orphaned Work migration envtest: pass",
+    "Canonical ./hack/run-checks.sh test-integration: exit 0",
+    "./hack/run-checks.sh verify: exit 0",
+    "Full unit, race, vet, tidy, and generated checks: pass",
+    "Repository, chart, docs, CRD parity, and git diff checks: pass",
+    "Post-commit make verify-generated: exit 0",
+    "Worktree clean at 0a3194686190053045dd0684a71805b3a2909f73"
+  ],
+  "blockers": [],
+  "next_action": "Independently re-review exact SHA 0a319468 against base 989799c, with special attention to envtest assertions, error classification, direct dependency promotion, and zero-write guarantees.",
+  "route_to": "review",
+  "risk_level": "critical"
+}

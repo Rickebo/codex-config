@@ -1,0 +1,44 @@
+{
+  "schema": "codicarium.council-closure/v2.4",
+  "manifest_sha256": "01e66d00f59f17e89c268fc69b9a0ce56478640600885d0c5dd82366a185e1c8",
+  "pre_council_report_sha256": "799dfd3d4575d69fc0a64d3ff2923e7c1bffeb0742078968d060b660c82e033b",
+  "decision": "rejected_return_to_spec",
+  "lanes": [
+    {
+      "role": "planner",
+      "verdict": "NO-GO",
+      "manifest_sha256": "01e66d00f59f17e89c268fc69b9a0ce56478640600885d0c5dd82366a185e1c8",
+      "pre_council_report_sha256": "799dfd3d4575d69fc0a64d3ff2923e7c1bffeb0742078968d060b660c82e033b",
+      "live_activation": "BLOCKED_PREACTIVATION",
+      "public_key": "MCowBQYDK2VwAyEAiOR2lURJQLw8airG/1LqCPq+vNh8WdWK1Lkw1genYNE=",
+      "signature": "bKggpuvzEjZc7BO3PyB7NgFaSUgNfNSzr6TR7ITORG+Cw9XY2jU8/VMpeB7EVSV/n5JK2RXPVkaU20OHDYqUCw=="
+    },
+    {
+      "role": "security",
+      "verdict": "NO-GO",
+      "manifest_sha256": "01e66d00f59f17e89c268fc69b9a0ce56478640600885d0c5dd82366a185e1c8",
+      "pre_council_report_sha256": "799dfd3d4575d69fc0a64d3ff2923e7c1bffeb0742078968d060b660c82e033b",
+      "live_activation": "BLOCKED_PREACTIVATION",
+      "public_key": "MCowBQYDK2VwAyEAx6pKbOT15oQrPeyb950xibaASCpCLZ2oNf6b/6Z/LvE=",
+      "signature": "nJMOJJLnu6BQmjnKTrJilWpC2b77Y/fIvSjFB4bdpDLbq/0w4fnpAMkRp0+wwkfnpvSiOKJ9HcK4cte39KzJBA=="
+    },
+    {
+      "role": "tech_lead_devops",
+      "verdict": "NO-GO",
+      "manifest_sha256": "01e66d00f59f17e89c268fc69b9a0ce56478640600885d0c5dd82366a185e1c8",
+      "pre_council_report_sha256": "799dfd3d4575d69fc0a64d3ff2923e7c1bffeb0742078968d060b660c82e033b",
+      "live_activation": "BLOCKED_PREACTIVATION",
+      "public_key": "MCowBQYDK2VwAyEAeJ1mZqeYaQKe779cgMrFD5sgUFYZzToKnNFEqVA43+8=",
+      "signature": "Mc2Iaj2ik92pOoxibnzv0+JTeE/MPQs41UO16rRKa9GzK09vnDa3GvqLW6KWecLN8RW7R5QMNCZ772EBGTdoAA=="
+    },
+    {
+      "role": "tech_lead_qa",
+      "verdict": "NO-GO",
+      "manifest_sha256": "01e66d00f59f17e89c268fc69b9a0ce56478640600885d0c5dd82366a185e1c8",
+      "pre_council_report_sha256": "799dfd3d4575d69fc0a64d3ff2923e7c1bffeb0742078968d060b660c82e033b",
+      "live_activation": "BLOCKED_PREACTIVATION",
+      "public_key": "MCowBQYDK2VwAyEAOoh2ZvFKpVYB1PHzGSYzeEEGK+jznmuYS8ZDURskvuk=",
+      "signature": "EGRkNcwSTPMsPtbu596q3bUpgQ2TAZ6Mqy3opIdf+41SHUBTe1rUt59oJTTpoW1Q9bdsuWbPAadHdMx6EEEJDg=="
+    }
+  ]
+}

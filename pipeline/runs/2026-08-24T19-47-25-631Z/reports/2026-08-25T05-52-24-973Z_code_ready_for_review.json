@@ -1,0 +1,20 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Review loop 3 rejects duplicate otherwise-valid Automatic Release coordinator proof checks sharing an exact external_id before any workflow-run lookup, while retaining newest-failed to older-success recovery for distinct historical proof identities.",
+  "changed_files": [
+    "hack/release-handoff-policy.js",
+    "hack/test-release-handoff-policy.js"
+  ],
+  "validation": [
+    "RED: node hack/test-release-handoff-policy.js failed because duplicate exact coordinator proof identities were accepted.",
+    "GREEN: node hack/test-release-handoff-policy.js passed and asserts duplicate rejection occurs before run lookup.",
+    "GREEN: python3 hack/test-release-graph.py passed 46 tests.",
+    "Node syntax and git diff --check passed.",
+    "publish-release.yaml and release.yaml remain byte-identical to base d3565f534b2f64585c3e15e35d8d645449f4f09d."
+  ],
+  "blockers": [],
+  "next_action": "Review duplicate external_id rejection ordering and confirm distinct proof identities still support failed-newest to older-success fallback at commit 51ddb1a4e2b7142bc356f39bc600ac4c9166dca0.",
+  "route_to": "review",
+  "risk_level": "high"
+}

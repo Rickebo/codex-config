@@ -1,0 +1,33 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Resolved review findings by authenticating coordinator dispatch through exact GitHub run and create-only check identities, aligning normal workflow_dispatch provenance, explicitly preserving legacy recovery push verification, and serializing per-tag publication.",
+  "changed_files": [
+    ".github/workflows/automatic-release.yaml",
+    ".github/workflows/release.yaml",
+    ".github/workflows/publish-release.yaml",
+    ".github/workflows/recover-release-attestations.yaml",
+    "hack/release-plan.py",
+    "hack/release-provenance.py",
+    "hack/publisher-subject-evidence.py",
+    "hack/test-release-plan.py",
+    "hack/test-release-graph.py",
+    "hack/test-release-image-flow.py",
+    "hack/test-publisher-subject-evidence.py",
+    "hack/test-recover-release-attestations.py",
+    "Makefile",
+    "docs/README.md",
+    "docs/releasing.md"
+  ],
+  "validation": [
+    "make test-release-flow: passed",
+    "hack/test-release-graph.py: 41 tests passed",
+    "hack/test-publisher-subject-evidence.py: 14 tests passed",
+    "hack/test-recover-release-attestations.py: 24 tests passed",
+    "actionlint on four affected workflows: passed",
+    "git diff --check: passed",
+    "diff SHA-256: 154f3de6b913a8898a6368ed46fdf58b5679b446ee8488982f34c392c693f28c"
+  ],
+  "blockers": [],
+  "next_action": "Repeat independent exact-snapshot review of the authenticated dispatch and legacy provenance changes."
+}

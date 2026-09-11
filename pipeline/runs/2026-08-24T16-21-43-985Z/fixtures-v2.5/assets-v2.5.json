@@ -1,0 +1,117 @@
+{
+  "release_version": "v0.8.1",
+  "assets": [
+    {
+      "filename": "release-notes.md",
+      "media_type": "text/markdown",
+      "source_fixture": "fixtures-v2.5/asset-source-01.bin",
+      "source_bytes_base64": "djIuNS1hc3NldC0xfHJlbGVhc2Utbm90ZXMubWQK",
+      "source_sha256": "65b148b68b98d91f2ccf49b7122bd57022eedf9617494e966eb9b2b52177d155",
+      "destination_binding": "github://codicarium/deployment-controller/releases/v0.8.1/assets/release-notes.md"
+    },
+    {
+      "filename": "sbom.cdx.json",
+      "media_type": "application/vnd.cyclonedx+json",
+      "source_fixture": "fixtures-v2.5/asset-source-02.bin",
+      "source_bytes_base64": "djIuNS1hc3NldC0yfHNib20uY2R4Lmpzb24K",
+      "source_sha256": "28a12084475963e7c6f98886f1b85f0e871af7ea595e66db7a661f9f4e42cd27",
+      "destination_binding": "github://codicarium/deployment-controller/releases/v0.8.1/assets/sbom.cdx.json"
+    },
+    {
+      "filename": "provenance.intoto.jsonl",
+      "media_type": "application/x-ndjson",
+      "source_fixture": "fixtures-v2.5/asset-source-03.bin",
+      "source_bytes_base64": "djIuNS1hc3NldC0zfHByb3ZlbmFuY2UuaW50b3RvLmpzb25sCg==",
+      "source_sha256": "ce44cc7b75d604771a80034bd39f5dc1efb3fe3d808e398c15efb91abc3e1135",
+      "destination_binding": "github://codicarium/deployment-controller/releases/v0.8.1/assets/provenance.intoto.jsonl"
+    },
+    {
+      "filename": "checksums.txt",
+      "media_type": "text/plain",
+      "source_fixture": "fixtures-v2.5/asset-source-04.bin",
+      "source_bytes_base64": "djIuNS1hc3NldC00fGNoZWNrc3Vtcy50eHQK",
+      "source_sha256": "902c265539e4f413095f832432f2213c5574dcaf5278d83bf84dba794ccebe49",
+      "destination_binding": "github://codicarium/deployment-controller/releases/v0.8.1/assets/checksums.txt"
+    },
+    {
+      "filename": "deployment-manifest.json",
+      "media_type": "application/json",
+      "source_fixture": "fixtures-v2.5/asset-source-05.bin",
+      "source_bytes_base64": "djIuNS1hc3NldC01fGRlcGxveW1lbnQtbWFuaWZlc3QuanNvbgo=",
+      "source_sha256": "bd9d56e706a22ddab7334567dd736e7f436580c63e7036b72ee6a73af0336646",
+      "destination_binding": "github://codicarium/deployment-controller/releases/v0.8.1/assets/deployment-manifest.json"
+    },
+    {
+      "filename": "helm-values.snapshot.yaml",
+      "media_type": "application/yaml",
+      "source_fixture": "fixtures-v2.5/asset-source-06.bin",
+      "source_bytes_base64": "djIuNS1hc3NldC02fGhlbG0tdmFsdWVzLnNuYXBzaG90LnlhbWwK",
+      "source_sha256": "b0cf0c90106e6c06a68350e639fbb15930c26d3ccbc398026c7c0fdbca76a701",
+      "destination_binding": "github://codicarium/deployment-controller/releases/v0.8.1/assets/helm-values.snapshot.yaml"
+    },
+    {
+      "filename": "api-schema.json",
+      "media_type": "application/json",
+      "source_fixture": "fixtures-v2.5/asset-source-07.bin",
+      "source_bytes_base64": "djIuNS1hc3NldC03fGFwaS1zY2hlbWEuanNvbgo=",
+      "source_sha256": "bbbdf9e0ff9563ded433774fe3cf891c0b648c7d8889f9f5f03c7a3c2f9c988e",
+      "destination_binding": "github://codicarium/deployment-controller/releases/v0.8.1/assets/api-schema.json"
+    },
+    {
+      "filename": "migration-plan.md",
+      "media_type": "text/markdown",
+      "source_fixture": "fixtures-v2.5/asset-source-08.bin",
+      "source_bytes_base64": "djIuNS1hc3NldC04fG1pZ3JhdGlvbi1wbGFuLm1kCg==",
+      "source_sha256": "e4cd0f24bc2fa020d4638f2da9174e83f04ae4c20b112500019dd2ceb6683a9a",
+      "destination_binding": "github://codicarium/deployment-controller/releases/v0.8.1/assets/migration-plan.md"
+    },
+    {
+      "filename": "rollback-runbook.md",
+      "media_type": "text/markdown",
+      "source_fixture": "fixtures-v2.5/asset-source-09.bin",
+      "source_bytes_base64": "djIuNS1hc3NldC05fHJvbGxiYWNrLXJ1bmJvb2subWQK",
+      "source_sha256": "9d57197c29c52bc4187ada3ddf484d3796fef3d4129c89744bda3eb1702b81d2",
+      "destination_binding": "github://codicarium/deployment-controller/releases/v0.8.1/assets/rollback-runbook.md"
+    },
+    {
+      "filename": "license-report.spdx.json",
+      "media_type": "application/spdx+json",
+      "source_fixture": "fixtures-v2.5/asset-source-10.bin",
+      "source_bytes_base64": "djIuNS1hc3NldC0xMHxsaWNlbnNlLXJlcG9ydC5zcGR4Lmpzb24K",
+      "source_sha256": "a170a2a50d68901bf6ac37106d67d417b279da53dcc6f2fe8a385825679bff79",
+      "destination_binding": "github://codicarium/deployment-controller/releases/v0.8.1/assets/license-report.spdx.json"
+    },
+    {
+      "filename": "test-report.junit.xml",
+      "media_type": "application/xml",
+      "source_fixture": "fixtures-v2.5/asset-source-11.bin",
+      "source_bytes_base64": "djIuNS1hc3NldC0xMXx0ZXN0LXJlcG9ydC5qdW5pdC54bWwK",
+      "source_sha256": "232132032ab4744397567fff6ab43c31e3cde2171c4bd1f8aefe5b31ffa93ef1",
+      "destination_binding": "github://codicarium/deployment-controller/releases/v0.8.1/assets/test-report.junit.xml"
+    },
+    {
+      "filename": "coverage-summary.json",
+      "media_type": "application/json",
+      "source_fixture": "fixtures-v2.5/asset-source-12.bin",
+      "source_bytes_base64": "djIuNS1hc3NldC0xMnxjb3ZlcmFnZS1zdW1tYXJ5Lmpzb24K",
+      "source_sha256": "829477a27cac0bad7a75e40a16b0cfc6b60b410644e704bc2f0d48bc79ff0ec7",
+      "destination_binding": "github://codicarium/deployment-controller/releases/v0.8.1/assets/coverage-summary.json"
+    },
+    {
+      "filename": "slsa-verification.json",
+      "media_type": "application/json",
+      "source_fixture": "fixtures-v2.5/asset-source-13.bin",
+      "source_bytes_base64": "djIuNS1hc3NldC0xM3xzbHNhLXZlcmlmaWNhdGlvbi5qc29uCg==",
+      "source_sha256": "fcc00c29d9a2981baddd90d1eb113fcb04581ef7da1d78f87105cd22eaa134dc",
+      "destination_binding": "github://codicarium/deployment-controller/releases/v0.8.1/assets/slsa-verification.json"
+    },
+    {
+      "filename": "release-index.json",
+      "media_type": "application/json",
+      "source_fixture": "fixtures-v2.5/asset-source-14.bin",
+      "source_bytes_base64": "djIuNS1hc3NldC0xNHxyZWxlYXNlLWluZGV4Lmpzb24K",
+      "source_sha256": "af2d5082cf50fcff693a645c1ecffb2c37c991bc0975a046e3113744b427b8da",
+      "destination_binding": "github://codicarium/deployment-controller/releases/v0.8.1/assets/release-index.json"
+    }
+  ]
+}

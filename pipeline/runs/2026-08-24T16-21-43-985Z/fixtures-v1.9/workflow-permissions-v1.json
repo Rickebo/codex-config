@@ -1,0 +1,433 @@
+{
+  "schema": "codicarium.issue93-workflow-permissions/v1",
+  "top_level_default": {},
+  "workflows": {
+    ".github/workflows/automatic-release-v2.yaml": {
+      "name": "Automatic Release v2",
+      "jobs": {
+        "plan": {
+          "contents": "read",
+          "actions": "read",
+          "checks": "read"
+        },
+        "tag-reserve": {
+          "contents": "write"
+        },
+        "tag-receipt": {
+          "contents": "read",
+          "checks": "write"
+        },
+        "verifier-dispatch": {
+          "contents": "read",
+          "actions": "write"
+        },
+        "verifier-observe": {
+          "contents": "read",
+          "actions": "read",
+          "checks": "read"
+        },
+        "handoff-and-claim": {
+          "contents": "read",
+          "actions": "read",
+          "checks": "write"
+        },
+        "publisher-dispatch": {
+          "contents": "read",
+          "actions": "write",
+          "checks": "read"
+        },
+        "publisher-receipt-sign": {
+          "contents": "read",
+          "actions": "read",
+          "checks": "read",
+          "id-token": "write"
+        },
+        "publisher-receipt": {
+          "contents": "read",
+          "actions": "read",
+          "checks": "write"
+        }
+      }
+    },
+    ".github/workflows/release-verify-v2.yaml": {
+      "name": "Release Verify v2",
+      "jobs": {
+        "preflight": {
+          "contents": "read",
+          "actions": "read",
+          "checks": "read"
+        },
+        "prefetch": {
+          "contents": "read"
+        },
+        "candidate-capability-mint": {
+          "contents": "read",
+          "id-token": "write"
+        },
+        "candidate": {},
+        "attester-capability-mint": {
+          "contents": "read",
+          "id-token": "write"
+        },
+        "attester": {
+          "contents": "read",
+          "actions": "read",
+          "checks": "read",
+          "id-token": "write"
+        }
+      }
+    },
+    ".github/workflows/publish-release-v2.yaml": {
+      "name": "Publish Release v2",
+      "jobs": {
+        "admission": {
+          "contents": "read",
+          "actions": "read",
+          "checks": "read"
+        },
+        "artifact-capability-mint": {
+          "contents": "read",
+          "id-token": "write"
+        },
+        "registry-credential-mint": {
+          "contents": "read",
+          "id-token": "write"
+        },
+        "01-release-create-write": {
+          "contents": "write",
+          "actions": "read",
+          "checks": "read"
+        },
+        "01-release-create-receipt-sign": {
+          "contents": "read",
+          "actions": "read",
+          "checks": "read",
+          "id-token": "write"
+        },
+        "01-release-create-receipt-write": {
+          "contents": "read",
+          "actions": "read",
+          "checks": "write"
+        },
+        "02-image-publish-write": {
+          "contents": "read",
+          "actions": "read",
+          "checks": "read"
+        },
+        "02-image-publish-receipt-sign": {
+          "contents": "read",
+          "actions": "read",
+          "checks": "read",
+          "id-token": "write"
+        },
+        "02-image-publish-receipt-write": {
+          "contents": "read",
+          "actions": "read",
+          "checks": "write"
+        },
+        "03-chart-publish-write": {
+          "contents": "read",
+          "actions": "read",
+          "checks": "read"
+        },
+        "03-chart-publish-receipt-sign": {
+          "contents": "read",
+          "actions": "read",
+          "checks": "read",
+          "id-token": "write"
+        },
+        "03-chart-publish-receipt-write": {
+          "contents": "read",
+          "actions": "read",
+          "checks": "write"
+        },
+        "04-asset-01-create-write": {
+          "contents": "write",
+          "actions": "read",
+          "checks": "read"
+        },
+        "04-asset-01-create-receipt-sign": {
+          "contents": "read",
+          "actions": "read",
+          "checks": "read",
+          "id-token": "write"
+        },
+        "04-asset-01-create-receipt-write": {
+          "contents": "read",
+          "actions": "read",
+          "checks": "write"
+        },
+        "05-asset-02-create-write": {
+          "contents": "write",
+          "actions": "read",
+          "checks": "read"
+        },
+        "05-asset-02-create-receipt-sign": {
+          "contents": "read",
+          "actions": "read",
+          "checks": "read",
+          "id-token": "write"
+        },
+        "05-asset-02-create-receipt-write": {
+          "contents": "read",
+          "actions": "read",
+          "checks": "write"
+        },
+        "06-asset-03-create-write": {
+          "contents": "write",
+          "actions": "read",
+          "checks": "read"
+        },
+        "06-asset-03-create-receipt-sign": {
+          "contents": "read",
+          "actions": "read",
+          "checks": "read",
+          "id-token": "write"
+        },
+        "06-asset-03-create-receipt-write": {
+          "contents": "read",
+          "actions": "read",
+          "checks": "write"
+        },
+        "07-asset-04-create-write": {
+          "contents": "write",
+          "actions": "read",
+          "checks": "read"
+        },
+        "07-asset-04-create-receipt-sign": {
+          "contents": "read",
+          "actions": "read",
+          "checks": "read",
+          "id-token": "write"
+        },
+        "07-asset-04-create-receipt-write": {
+          "contents": "read",
+          "actions": "read",
+          "checks": "write"
+        },
+        "08-asset-05-create-write": {
+          "contents": "write",
+          "actions": "read",
+          "checks": "read"
+        },
+        "08-asset-05-create-receipt-sign": {
+          "contents": "read",
+          "actions": "read",
+          "checks": "read",
+          "id-token": "write"
+        },
+        "08-asset-05-create-receipt-write": {
+          "contents": "read",
+          "actions": "read",
+          "checks": "write"
+        },
+        "09-asset-06-create-write": {
+          "contents": "write",
+          "actions": "read",
+          "checks": "read"
+        },
+        "09-asset-06-create-receipt-sign": {
+          "contents": "read",
+          "actions": "read",
+          "checks": "read",
+          "id-token": "write"
+        },
+        "09-asset-06-create-receipt-write": {
+          "contents": "read",
+          "actions": "read",
+          "checks": "write"
+        },
+        "10-asset-07-create-write": {
+          "contents": "write",
+          "actions": "read",
+          "checks": "read"
+        },
+        "10-asset-07-create-receipt-sign": {
+          "contents": "read",
+          "actions": "read",
+          "checks": "read",
+          "id-token": "write"
+        },
+        "10-asset-07-create-receipt-write": {
+          "contents": "read",
+          "actions": "read",
+          "checks": "write"
+        },
+        "11-asset-08-create-write": {
+          "contents": "write",
+          "actions": "read",
+          "checks": "read"
+        },
+        "11-asset-08-create-receipt-sign": {
+          "contents": "read",
+          "actions": "read",
+          "checks": "read",
+          "id-token": "write"
+        },
+        "11-asset-08-create-receipt-write": {
+          "contents": "read",
+          "actions": "read",
+          "checks": "write"
+        },
+        "12-asset-09-create-write": {
+          "contents": "write",
+          "actions": "read",
+          "checks": "read"
+        },
+        "12-asset-09-create-receipt-sign": {
+          "contents": "read",
+          "actions": "read",
+          "checks": "read",
+          "id-token": "write"
+        },
+        "12-asset-09-create-receipt-write": {
+          "contents": "read",
+          "actions": "read",
+          "checks": "write"
+        },
+        "13-asset-10-create-write": {
+          "contents": "write",
+          "actions": "read",
+          "checks": "read"
+        },
+        "13-asset-10-create-receipt-sign": {
+          "contents": "read",
+          "actions": "read",
+          "checks": "read",
+          "id-token": "write"
+        },
+        "13-asset-10-create-receipt-write": {
+          "contents": "read",
+          "actions": "read",
+          "checks": "write"
+        },
+        "14-asset-11-create-write": {
+          "contents": "write",
+          "actions": "read",
+          "checks": "read"
+        },
+        "14-asset-11-create-receipt-sign": {
+          "contents": "read",
+          "actions": "read",
+          "checks": "read",
+          "id-token": "write"
+        },
+        "14-asset-11-create-receipt-write": {
+          "contents": "read",
+          "actions": "read",
+          "checks": "write"
+        },
+        "15-asset-12-create-write": {
+          "contents": "write",
+          "actions": "read",
+          "checks": "read"
+        },
+        "15-asset-12-create-receipt-sign": {
+          "contents": "read",
+          "actions": "read",
+          "checks": "read",
+          "id-token": "write"
+        },
+        "15-asset-12-create-receipt-write": {
+          "contents": "read",
+          "actions": "read",
+          "checks": "write"
+        },
+        "16-asset-13-create-write": {
+          "contents": "write",
+          "actions": "read",
+          "checks": "read"
+        },
+        "16-asset-13-create-receipt-sign": {
+          "contents": "read",
+          "actions": "read",
+          "checks": "read",
+          "id-token": "write"
+        },
+        "16-asset-13-create-receipt-write": {
+          "contents": "read",
+          "actions": "read",
+          "checks": "write"
+        },
+        "17-asset-14-create-write": {
+          "contents": "write",
+          "actions": "read",
+          "checks": "read"
+        },
+        "17-asset-14-create-receipt-sign": {
+          "contents": "read",
+          "actions": "read",
+          "checks": "read",
+          "id-token": "write"
+        },
+        "17-asset-14-create-receipt-write": {
+          "contents": "read",
+          "actions": "read",
+          "checks": "write"
+        },
+        "18-release-finalize-write": {
+          "contents": "write",
+          "actions": "read",
+          "checks": "read"
+        },
+        "18-release-finalize-receipt-sign": {
+          "contents": "read",
+          "actions": "read",
+          "checks": "read",
+          "id-token": "write"
+        },
+        "18-release-finalize-receipt-write": {
+          "contents": "read",
+          "actions": "read",
+          "checks": "write"
+        }
+      },
+      "static_expansion": "The generated exact job map contains eighteen serial writer -> receipt-sign -> receipt-write triplets: draft release, image, chart, fourteen assets, and final release. No matrix, parallel publication, or generic loop may replace this fixed chain."
+    },
+    ".github/workflows/ci.yaml": {
+      "name": "CI",
+      "top_level_permissions": {
+        "contents": "read"
+      },
+      "jobs": {
+        "test": {},
+        "lint": {},
+        "chart": {},
+        "integration": {},
+        "supply-chain": {}
+      }
+    },
+    ".github/workflows/recover-release-v068.yaml": {
+      "name": "Recover v0.6.8 Publisher Evidence",
+      "temporary_until_pr_99": true,
+      "jobs": {
+        "recover": {
+          "actions": "read",
+          "contents": "write",
+          "id-token": "write"
+        }
+      }
+    },
+    ".github/workflows/recover-release-attestations.yaml": {
+      "name": "Recover Release Attestations",
+      "jobs": {
+        "inspect": {
+          "contents": "read",
+          "actions": "read"
+        },
+        "sign": {
+          "contents": "read",
+          "actions": "read",
+          "id-token": "write"
+        }
+      }
+    }
+  },
+  "invariants": [
+    "Every workflow not carrying an explicit top_level_permissions object has top-level permissions {}.",
+    "Unspecified scopes are none.",
+    "No job combines id-token:write with actions:write or checks:write.",
+    "The candidate job receives no GITHUB_TOKEN and no data-plane credential.",
+    "Publisher mutation writers have neither actions:write nor checks:write; receipt writers have no contents:write, packages:write, registry write credential, or id-token:write."
+  ]
+}

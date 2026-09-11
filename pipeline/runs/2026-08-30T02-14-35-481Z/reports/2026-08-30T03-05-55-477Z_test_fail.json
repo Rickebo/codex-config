@@ -1,0 +1,21 @@
+{
+  "stage": "test",
+  "status": "fail",
+  "summary": "Protected CI run 33289396588 failed only in the timing-sensitive reconciliation test TestRunnerBacksOffFailuresAndPeriodicRunRemainsAuthoritative, which observed 3 attempts at runner_test.go:175. All changed metrics/runtime packages and earlier formatting, vet, and preflight steps passed.",
+  "changed_files": [],
+  "validation": [
+    "Exact PR head b61bb76d57bc3ecbab244108fb6fcc74af142e1d",
+    "Validate formatting passed",
+    "Validate vet passed",
+    "Fail-closed identity preflight passed",
+    "Metrics and runtime tests passed in CI",
+    "internal/reconciliation test failed with timing count 3 at runner_test.go:175"
+  ],
+  "blockers": [
+    "The failed timing invariant must be reproduced on exact head and base before deciding whether the PR exposed a regression or CI hit a pre-existing flake",
+    "Unchanged CI must not be retried"
+  ],
+  "next_action": "Route to Luna debugging: reproduce repeatedly on head and base, identify the scheduling invariant, and implement the smallest evidence-backed fix with race coverage.",
+  "route_to": "code",
+  "risk_level": "medium"
+}

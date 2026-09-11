@@ -1,0 +1,29 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Luna completed issue #152 at exact commit ce2272d0c10170369ef0fd27682061785c18c094: deterministic Go symbol stripping reduces the verified five-binary multiarch OCI subject below the unchanged 128 MiB publisher cap, with a pre-tag size guard.",
+  "changed_files": [
+    "Dockerfile",
+    "hack/verify-oci-archive.py",
+    "hack/test-release-image-flow.py"
+  ],
+  "validation": [
+    "Failed v0.14.0 OCI reproduced byte-identically at 154537984 bytes and sha256 1a01385dd19ede1ebc44247aa7a6e1cd00af9c7b3f4a6db0d97f52858635871e",
+    "Candidate OCI rebuilt twice byte-identically at 79396352 bytes and sha256 844280a43ed8868f973de8bb8de69f7db1141fb58486179523a18153cbbb3c8d",
+    "All five amd64 and arm64 ELF binaries retained; runtime/platform verifier passed",
+    "Oversized baseline rejected at exact 134217728-byte publisher boundary before scanning or attestation",
+    "Release-image tests 28/28 and full make test-release-flow passed",
+    "go test ./..., go test -race ./..., and go vet ./... passed",
+    "fmt, tidy, generated, repository validation, and diff checks passed"
+  ],
+  "blockers": [
+    "Independent Luna review and exact-head protected CI are still required before merge",
+    "Local broad supply-chain run reached pinned Trivy/kubeconform but Docker 29 volume invocation exited 126; CI must resolve this evidence"
+  ],
+  "next_action": "Push exact commit, open issue-linked PR, obtain independent Luna review of the exact head, then require protected CI before merge.",
+  "independent_lanes": [
+    "infra PR #1272 unchanged protected ARC job remains queued",
+    "browser runtime connected but no signed-in browser is available for Phase 0 SSO evidence"
+  ],
+  "risk_level": "critical"
+}

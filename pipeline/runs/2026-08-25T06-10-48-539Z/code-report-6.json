@@ -1,0 +1,32 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Clean HEAD 6567e00 closes both loop-5 formal-review blockers and the cleanup defect exposed by verification. Knowledge now safely dead-letters tombstones and non-object JSON with commit/rewind correctness; generated contract digests are current; fixture-gate tests dispose only their exact roots. Independent patch review, full Kafka, compatibility, builds, and post-fix FastSystem all pass without new run-scoped leaks.",
+  "changed_files": [
+    "contracts/workspace-web/v1/fixture-manifest.json",
+    "services/knowledge-service/src/KnowledgeService.Worker/Workers.cs",
+    "tests/knowledge-service/KnowledgeService.IntegrationTests/KafkaIntegrationTests.cs",
+    "tests/system/WorkspaceManager.SystemTests/CompatibilityReportTests.cs"
+  ],
+  "validation": [
+    "Compact TDD reproduced tombstone/non-object timeouts before the fix; final focused regressions passed 2/2 including tombstone, array, JSON null, redaction, next-offset continuation, and DLQ-failure rewind",
+    "Full Knowledge KafkaIntegrationTests passed 9/9 with explicit Docker context and endpoint",
+    "Official fixture generator --check passed and repeat generation was byte-identical; tracked compatibility report remained unchanged and byte-identical",
+    "CompatibilityReportTests passed 30/30 after digest regeneration and exact-path cleanup ownership",
+    "Fixture cleanup regression proves the owned root is removed while a pre-existing sibling remains",
+    "Post-fix full FastSystem passed 74/74 at clean HEAD 6567e00 with explicit Docker context and endpoint",
+    "Fixture-gate top-level child set remained 1102 before and after FastSystem; no new networks, volumes, dotnet/setsid processes, or PID files remained",
+    "Knowledge Worker and system-test Release builds passed with 0 warnings and 0 errors",
+    "Independent combined patch reviews found no blocking findings; git diff --check passed",
+    "Canonical branch HEAD is 6567e00c177b0f8ecd583814ab853dcee7c74dde and the worktree is clean"
+  ],
+  "blockers": [],
+  "next_action": "Advance to one final fresh full-branch backend and QA/system review at clean HEAD 6567e00; waive no finding and do not enter test on any unresolved issue.",
+  "route_to": "review",
+  "risk_level": "high",
+  "independent_lanes": [
+    "backend poison-event classification, redaction, and offset safety",
+    "QA generated-contract consistency and exact-path fixture cleanup"
+  ],
+  "requires_council": false
+}

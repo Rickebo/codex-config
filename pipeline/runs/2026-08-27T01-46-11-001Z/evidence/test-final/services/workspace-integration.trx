@@ -1,0 +1,170 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="8ff95b7d-323c-4708-be12-b85e4e93470a" name="@RICKEBO 2026-08-27 05:33:11" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2026-08-27T05:33:11.1284361+02:00" queuing="2026-08-27T05:33:11.1284362+02:00" start="2026-08-27T05:33:04.2215972+02:00" finish="2026-08-27T05:33:22.5191660+02:00" />
+  <TestSettings name="default" id="aa59c31d-97c7-4566-ba36-0b04bbb1ee31">
+    <Deployment runDeploymentRoot="_RICKEBO_2026-08-27_05_33_11" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="20e2defe-fed5-42d4-9f09-9cf5354234f4" testId="4de7384c-c9f3-253c-b653-d682e616b73f" testName="WorkspaceService.IntegrationTests.PostgresPersistenceTests.OutboxDispatcher_RetainsAndRecoversAfterPublisherOutage" computerName="RICKEBO" duration="00:00:00.3396975" startTime="2026-08-27T05:33:15.6781866+02:00" endTime="2026-08-27T05:33:19.7015696+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="20e2defe-fed5-42d4-9f09-9cf5354234f4" />
+    <UnitTestResult executionId="a47b5c4f-4caf-4306-8c8b-ddcea5a0db35" testId="07e67f09-e14c-9689-5c1f-4099de0a63be" testName="WorkspaceService.IntegrationTests.ApiVerticalSliceTests.OidcWorkspaceDiscovery_IsBoundedIsolatedAndReflectsMembershipRevocation" computerName="RICKEBO" duration="00:00:00.7444739" startTime="2026-08-27T05:33:05.3921965+02:00" endTime="2026-08-27T05:33:11.8694589+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a47b5c4f-4caf-4306-8c8b-ddcea5a0db35" />
+    <UnitTestResult executionId="8117fcbd-7b0a-48f2-baf5-0b913bcacbdc" testId="5ce5a1c1-ac40-81d2-0752-7d494e10a563" testName="WorkspaceService.IntegrationTests.PostgresPersistenceTests.EmptyDatabaseMigrationAndWorkspaceCreation_AreAtomicAndReplaySafe" computerName="RICKEBO" duration="00:00:00.0443897" startTime="2026-08-27T05:33:11.1191146+02:00" endTime="2026-08-27T05:33:12.9210970+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="8117fcbd-7b0a-48f2-baf5-0b913bcacbdc" />
+    <UnitTestResult executionId="08bad09d-e2d9-47a6-92b7-5b338e92934d" testId="8e122eda-33f9-16e0-0961-eb5244fba11a" testName="WorkspaceService.IntegrationTests.PostgresPersistenceTests.ConcurrentOwnerRemoval_PreservesExactlyOneActiveOwner" computerName="RICKEBO" duration="00:00:00.0548943" startTime="2026-08-27T05:33:19.7019775+02:00" endTime="2026-08-27T05:33:22.4360202+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="08bad09d-e2d9-47a6-92b7-5b338e92934d" />
+    <UnitTestResult executionId="a4828bae-38d3-41d1-aa59-4bf577c71b80" testId="cf7c0d57-43e3-66bf-db89-d21f6d32d161" testName="WorkspaceService.IntegrationTests.ApiVerticalSliceTests.SignedMultiUserApiFlow_EnforcesCurrentAuthorizationAndTokenRevocation" computerName="RICKEBO" duration="00:00:00.2406590" startTime="2026-08-27T05:33:11.8696452+02:00" endTime="2026-08-27T05:33:14.9578503+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a4828bae-38d3-41d1-aa59-4bf577c71b80" />
+    <UnitTestResult executionId="1922a5a5-fdd6-47a2-b757-6c553b10f433" testId="ed15ef5f-e7e3-d4b8-0b11-83353ccd4612" testName="WorkspaceService.IntegrationTests.PostgresPersistenceTests.RetryableCommands_ReplayAtomicallyAndRejectFingerprintConflicts" computerName="RICKEBO" duration="00:00:00.0679681" startTime="2026-08-27T05:33:12.9212995+02:00" endTime="2026-08-27T05:33:15.6780087+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="1922a5a5-fdd6-47a2-b757-6c553b10f433" />
+    <UnitTestResult executionId="8b6f6c99-c2c8-4cdc-866f-7b3e071469af" testId="df845ee7-e396-fabe-5a85-00276bcde236" testName="WorkspaceService.IntegrationTests.KafkaOutboxPublisherTests.ProductionPublisher_PreservesTopicKeyAndEnvelope" computerName="RICKEBO" duration="00:00:01.9583128" startTime="2026-08-27T05:33:05.3913748+02:00" endTime="2026-08-27T05:33:11.7699103+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="8b6f6c99-c2c8-4cdc-866f-7b3e071469af" />
+    <UnitTestResult executionId="e723be72-5d7b-4de1-91b5-7c4576f29bf2" testId="98ebe5d0-9255-d545-5972-c6a346523a9d" testName="WorkspaceService.IntegrationTests.PostgresPersistenceTests.MultiUserTokenRevocationAndDeletion_AreCurrentAndIdempotent" computerName="RICKEBO" duration="00:00:01.2637818" startTime="2026-08-27T05:33:05.3921628+02:00" endTime="2026-08-27T05:33:11.1094760+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="e723be72-5d7b-4de1-91b5-7c4576f29bf2" />
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="WorkspaceService.IntegrationTests.PostgresPersistenceTests.ConcurrentOwnerRemoval_PreservesExactlyOneActiveOwner" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/workspace-service/workspaceservice.integrationtests/bin/release/net10.0/workspaceservice.integrationtests.dll" id="8e122eda-33f9-16e0-0961-eb5244fba11a">
+      <Execution id="08bad09d-e2d9-47a6-92b7-5b338e92934d" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/workspace-service/WorkspaceService.IntegrationTests/bin/Release/net10.0/WorkspaceService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="WorkspaceService.IntegrationTests.PostgresPersistenceTests" name="ConcurrentOwnerRemoval_PreservesExactlyOneActiveOwner" />
+    </UnitTest>
+    <UnitTest name="WorkspaceService.IntegrationTests.ApiVerticalSliceTests.SignedMultiUserApiFlow_EnforcesCurrentAuthorizationAndTokenRevocation" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/workspace-service/workspaceservice.integrationtests/bin/release/net10.0/workspaceservice.integrationtests.dll" id="cf7c0d57-43e3-66bf-db89-d21f6d32d161">
+      <Execution id="a4828bae-38d3-41d1-aa59-4bf577c71b80" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/workspace-service/WorkspaceService.IntegrationTests/bin/Release/net10.0/WorkspaceService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="WorkspaceService.IntegrationTests.ApiVerticalSliceTests" name="SignedMultiUserApiFlow_EnforcesCurrentAuthorizationAndTokenRevocation" />
+    </UnitTest>
+    <UnitTest name="WorkspaceService.IntegrationTests.PostgresPersistenceTests.MultiUserTokenRevocationAndDeletion_AreCurrentAndIdempotent" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/workspace-service/workspaceservice.integrationtests/bin/release/net10.0/workspaceservice.integrationtests.dll" id="98ebe5d0-9255-d545-5972-c6a346523a9d">
+      <Execution id="e723be72-5d7b-4de1-91b5-7c4576f29bf2" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/workspace-service/WorkspaceService.IntegrationTests/bin/Release/net10.0/WorkspaceService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="WorkspaceService.IntegrationTests.PostgresPersistenceTests" name="MultiUserTokenRevocationAndDeletion_AreCurrentAndIdempotent" />
+    </UnitTest>
+    <UnitTest name="WorkspaceService.IntegrationTests.KafkaOutboxPublisherTests.ProductionPublisher_PreservesTopicKeyAndEnvelope" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/workspace-service/workspaceservice.integrationtests/bin/release/net10.0/workspaceservice.integrationtests.dll" id="df845ee7-e396-fabe-5a85-00276bcde236">
+      <Execution id="8b6f6c99-c2c8-4cdc-866f-7b3e071469af" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/workspace-service/WorkspaceService.IntegrationTests/bin/Release/net10.0/WorkspaceService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="WorkspaceService.IntegrationTests.KafkaOutboxPublisherTests" name="ProductionPublisher_PreservesTopicKeyAndEnvelope" />
+    </UnitTest>
+    <UnitTest name="WorkspaceService.IntegrationTests.PostgresPersistenceTests.OutboxDispatcher_RetainsAndRecoversAfterPublisherOutage" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/workspace-service/workspaceservice.integrationtests/bin/release/net10.0/workspaceservice.integrationtests.dll" id="4de7384c-c9f3-253c-b653-d682e616b73f">
+      <Execution id="20e2defe-fed5-42d4-9f09-9cf5354234f4" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/workspace-service/WorkspaceService.IntegrationTests/bin/Release/net10.0/WorkspaceService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="WorkspaceService.IntegrationTests.PostgresPersistenceTests" name="OutboxDispatcher_RetainsAndRecoversAfterPublisherOutage" />
+    </UnitTest>
+    <UnitTest name="WorkspaceService.IntegrationTests.ApiVerticalSliceTests.OidcWorkspaceDiscovery_IsBoundedIsolatedAndReflectsMembershipRevocation" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/workspace-service/workspaceservice.integrationtests/bin/release/net10.0/workspaceservice.integrationtests.dll" id="07e67f09-e14c-9689-5c1f-4099de0a63be">
+      <Execution id="a47b5c4f-4caf-4306-8c8b-ddcea5a0db35" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/workspace-service/WorkspaceService.IntegrationTests/bin/Release/net10.0/WorkspaceService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="WorkspaceService.IntegrationTests.ApiVerticalSliceTests" name="OidcWorkspaceDiscovery_IsBoundedIsolatedAndReflectsMembershipRevocation" />
+    </UnitTest>
+    <UnitTest name="WorkspaceService.IntegrationTests.PostgresPersistenceTests.EmptyDatabaseMigrationAndWorkspaceCreation_AreAtomicAndReplaySafe" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/workspace-service/workspaceservice.integrationtests/bin/release/net10.0/workspaceservice.integrationtests.dll" id="5ce5a1c1-ac40-81d2-0752-7d494e10a563">
+      <Execution id="8117fcbd-7b0a-48f2-baf5-0b913bcacbdc" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/workspace-service/WorkspaceService.IntegrationTests/bin/Release/net10.0/WorkspaceService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="WorkspaceService.IntegrationTests.PostgresPersistenceTests" name="EmptyDatabaseMigrationAndWorkspaceCreation_AreAtomicAndReplaySafe" />
+    </UnitTest>
+    <UnitTest name="WorkspaceService.IntegrationTests.PostgresPersistenceTests.RetryableCommands_ReplayAtomicallyAndRejectFingerprintConflicts" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/workspace-service/workspaceservice.integrationtests/bin/release/net10.0/workspaceservice.integrationtests.dll" id="ed15ef5f-e7e3-d4b8-0b11-83353ccd4612">
+      <Execution id="1922a5a5-fdd6-47a2-b757-6c553b10f433" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/workspace-service/WorkspaceService.IntegrationTests/bin/Release/net10.0/WorkspaceService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="WorkspaceService.IntegrationTests.PostgresPersistenceTests" name="RetryableCommands_ReplayAtomicallyAndRejectFingerprintConflicts" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="4de7384c-c9f3-253c-b653-d682e616b73f" executionId="20e2defe-fed5-42d4-9f09-9cf5354234f4" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="07e67f09-e14c-9689-5c1f-4099de0a63be" executionId="a47b5c4f-4caf-4306-8c8b-ddcea5a0db35" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="5ce5a1c1-ac40-81d2-0752-7d494e10a563" executionId="8117fcbd-7b0a-48f2-baf5-0b913bcacbdc" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="8e122eda-33f9-16e0-0961-eb5244fba11a" executionId="08bad09d-e2d9-47a6-92b7-5b338e92934d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="cf7c0d57-43e3-66bf-db89-d21f6d32d161" executionId="a4828bae-38d3-41d1-aa59-4bf577c71b80" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="ed15ef5f-e7e3-d4b8-0b11-83353ccd4612" executionId="1922a5a5-fdd6-47a2-b757-6c553b10f433" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="df845ee7-e396-fabe-5a85-00276bcde236" executionId="8b6f6c99-c2c8-4cdc-866f-7b3e071469af" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="98ebe5d0-9255-d545-5972-c6a346523a9d" executionId="e723be72-5d7b-4de1-91b5-7c4576f29bf2" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Completed">
+    <Counters total="8" executed="8" passed="8" failed="0" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v3.1.4+50e68bbb8b (64-bit .NET 10.0.11)
+[xUnit.net 00:00:00.24]   Discovering: WorkspaceService.IntegrationTests
+[xUnit.net 00:00:00.26]   Discovered:  WorkspaceService.IntegrationTests
+[xUnit.net 00:00:00.27]   Starting:    WorkspaceService.IntegrationTests
+[testcontainers.org 00:00:00.09] Connected to Docker:
+  Host: unix:///var/run/docker.sock
+  Server Version: 29.7.2
+  Kernel Version: 6.18.44-1-lts
+  API Version: 1.55
+  Operating System: Arch Linux
+  Total Memory: 60.48 GB
+[testcontainers.org 00:00:00.38] Docker container 1335e9d91351 created
+[testcontainers.org 00:00:00.40] Start Docker container 1335e9d91351
+[testcontainers.org 00:00:00.53] Wait for Docker container 1335e9d91351 to complete readiness checks
+[testcontainers.org 00:00:01.54] Docker container 1335e9d91351 ready
+[testcontainers.org 00:00:01.67] Docker container 38fbb439192c created
+[testcontainers.org 00:00:01.67] Docker container 0821c3c05268 created
+[testcontainers.org 00:00:01.67] Start Docker container 0821c3c05268
+[testcontainers.org 00:00:01.67] Docker container 5066deeff8cc created
+[testcontainers.org 00:00:01.67] Start Docker container 38fbb439192c
+[testcontainers.org 00:00:01.67] Start Docker container 5066deeff8cc
+[testcontainers.org 00:00:01.80] Wait for Docker container 0821c3c05268 to complete readiness checks
+[testcontainers.org 00:00:01.80] Execute "pg_isready --host localhost --dbname workspace_service --username workspace_service" at Docker container 0821c3c05268
+[testcontainers.org 00:00:01.83] Wait for Docker container 5066deeff8cc to complete readiness checks
+[testcontainers.org 00:00:01.84] Execute "pg_isready --host localhost --dbname workspace_service --username workspace_service" at Docker container 5066deeff8cc
+[testcontainers.org 00:00:01.85] Add file to tar archive: Content length: 390 byte(s), Target file: "/testcontainers.sh", UID: 0, GID: 0, Mode: 0755
+[testcontainers.org 00:00:01.85] Copy tar archive to container: Content length: 390 byte(s), Docker container: 38fbb439192c
+[testcontainers.org 00:00:01.86] Wait for Docker container 38fbb439192c to complete readiness checks
+[testcontainers.org 00:00:02.83] Execute "pg_isready --host localhost --dbname workspace_service --username workspace_service" at Docker container 0821c3c05268
+[testcontainers.org 00:00:02.85] Execute "pg_isready --host localhost --dbname workspace_service --username workspace_service" at Docker container 5066deeff8cc
+[testcontainers.org 00:00:03.85] Execute "pg_isready --host localhost --dbname workspace_service --username workspace_service" at Docker container 0821c3c05268
+[testcontainers.org 00:00:03.86] Docker container 38fbb439192c ready
+[testcontainers.org 00:00:03.87] Execute "pg_isready --host localhost --dbname workspace_service --username workspace_service" at Docker container 5066deeff8cc
+[testcontainers.org 00:00:03.87] Docker container 0821c3c05268 ready
+[testcontainers.org 00:00:03.89] Docker container 5066deeff8cc ready
+[testcontainers.org 00:00:04.88] Delete Docker container 5066deeff8cc
+warn: WorkspaceService.Api.OutboxWorker[0]
+      Outbox dispatch cycle failed with PostgresException
+info: Microsoft.Hosting.Lifetime[0]
+      Application started. Press Ctrl+C to shut down.
+info: Microsoft.Hosting.Lifetime[0]
+      Hosting environment: Development
+info: Microsoft.Hosting.Lifetime[0]
+      Content root path: /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/services/workspace-service/src/WorkspaceService.Api
+[testcontainers.org 00:00:05.45] Delete Docker container 38fbb439192c
+[testcontainers.org 00:00:05.51] Docker container f6161fd34b61 created
+[testcontainers.org 00:00:05.51] Start Docker container f6161fd34b61
+info: Microsoft.Hosting.Lifetime[0]
+      Application is shutting down...
+[testcontainers.org 00:00:05.63] Delete Docker container 0821c3c05268
+[testcontainers.org 00:00:05.74] Wait for Docker container f6161fd34b61 to complete readiness checks
+[testcontainers.org 00:00:05.74] Execute "pg_isready --host localhost --dbname workspace_service --username workspace_service" at Docker container f6161fd34b61
+[testcontainers.org 00:00:06.20] Docker container 1a7519378058 created
+[testcontainers.org 00:00:06.20] Start Docker container 1a7519378058
+[testcontainers.org 00:00:06.32] Wait for Docker container 1a7519378058 to complete readiness checks
+[testcontainers.org 00:00:06.32] Execute "pg_isready --host localhost --dbname workspace_service --username workspace_service" at Docker container 1a7519378058
+[testcontainers.org 00:00:06.75] Execute "pg_isready --host localhost --dbname workspace_service --username workspace_service" at Docker container f6161fd34b61
+[testcontainers.org 00:00:06.77] Docker container f6161fd34b61 ready
+[testcontainers.org 00:00:06.82] Delete Docker container f6161fd34b61
+[testcontainers.org 00:00:07.25] Docker container cbae06ac349a created
+[testcontainers.org 00:00:07.25] Start Docker container cbae06ac349a
+[testcontainers.org 00:00:07.34] Execute "pg_isready --host localhost --dbname workspace_service --username workspace_service" at Docker container 1a7519378058
+[testcontainers.org 00:00:07.35] Wait for Docker container cbae06ac349a to complete readiness checks
+[testcontainers.org 00:00:07.35] Execute "pg_isready --host localhost --dbname workspace_service --username workspace_service" at Docker container cbae06ac349a
+[testcontainers.org 00:00:08.36] Execute "pg_isready --host localhost --dbname workspace_service --username workspace_service" at Docker container 1a7519378058
+[testcontainers.org 00:00:08.37] Execute "pg_isready --host localhost --dbname workspace_service --username workspace_service" at Docker container cbae06ac349a
+[testcontainers.org 00:00:08.38] Docker container 1a7519378058 ready
+warn: WorkspaceService.Api.OutboxWorker[0]
+      Outbox dispatch cycle failed with PostgresException
+info: Microsoft.Hosting.Lifetime[0]
+      Application started. Press Ctrl+C to shut down.
+info: Microsoft.Hosting.Lifetime[0]
+      Hosting environment: Development
+info: Microsoft.Hosting.Lifetime[0]
+      Content root path: /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/services/workspace-service/src/WorkspaceService.Api
+info: Microsoft.Hosting.Lifetime[0]
+      Application is shutting down...
+[testcontainers.org 00:00:08.76] Delete Docker container 1a7519378058
+[testcontainers.org 00:00:09.39] Execute "pg_isready --host localhost --dbname workspace_service --username workspace_service" at Docker container cbae06ac349a
+[testcontainers.org 00:00:09.41] Docker container cbae06ac349a ready
+[testcontainers.org 00:00:09.48] Delete Docker container cbae06ac349a
+[testcontainers.org 00:00:10.01] Docker container 19b8d5a06102 created
+[testcontainers.org 00:00:10.01] Start Docker container 19b8d5a06102
+[testcontainers.org 00:00:10.11] Wait for Docker container 19b8d5a06102 to complete readiness checks
+[testcontainers.org 00:00:10.12] Execute "pg_isready --host localhost --dbname workspace_service --username workspace_service" at Docker container 19b8d5a06102
+[testcontainers.org 00:00:11.13] Execute "pg_isready --host localhost --dbname workspace_service --username workspace_service" at Docker container 19b8d5a06102
+[testcontainers.org 00:00:12.15] Execute "pg_isready --host localhost --dbname workspace_service --username workspace_service" at Docker container 19b8d5a06102
+[testcontainers.org 00:00:13.16] Execute "pg_isready --host localhost --dbname workspace_service --username workspace_service" at Docker container 19b8d5a06102
+[testcontainers.org 00:00:13.18] Docker container 19b8d5a06102 ready
+[testcontainers.org 00:00:13.52] Delete Docker container 19b8d5a06102
+[testcontainers.org 00:00:14.03] Docker container b9fc89b47d84 created
+[testcontainers.org 00:00:14.03] Start Docker container b9fc89b47d84
+[testcontainers.org 00:00:14.15] Wait for Docker container b9fc89b47d84 to complete readiness checks
+[testcontainers.org 00:00:14.15] Execute "pg_isready --host localhost --dbname workspace_service --username workspace_service" at Docker container b9fc89b47d84
+[testcontainers.org 00:00:15.17] Execute "pg_isready --host localhost --dbname workspace_service --username workspace_service" at Docker container b9fc89b47d84
+[testcontainers.org 00:00:16.19] Execute "pg_isready --host localhost --dbname workspace_service --username workspace_service" at Docker container b9fc89b47d84
+[testcontainers.org 00:00:16.21] Docker container b9fc89b47d84 ready
+[testcontainers.org 00:00:16.26] Delete Docker container b9fc89b47d84
+[xUnit.net 00:00:17.33]   Finished:    WorkspaceService.IntegrationTests
+</StdOut>
+    </Output>
+  </ResultSummary>
+</TestRun>

@@ -1,0 +1,29 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Fresh independent Luna review rejected exact REV6 head 0c18d6cc2cfa5eac916aa51e1ea484d74f89cf01: privileged inventory directory metadata is not enforced, fresh-host admission staging is undocumented, and installed-root digest/unrelated-entry coverage is incomplete.",
+  "changed_files": [],
+  "validation": [
+    "Exact head/base and clean worktree were verified independently.",
+    "Contract 8/8, ownership 9/9, GitHub evidence 8/8, package 9/9, actionlint, py_compile, and diff checks passed.",
+    "REV6 O_NONBLOCK FIFO remediation and cleanup-protocol corrections remain present."
+  ],
+  "blockers": [
+    "High: inventory directories are checked only as directories; exact declared uid/gid/mode/nlink is not enforced.",
+    "Medium: documented default install lacks a staged immutable admission root and fails on a fresh checkout.",
+    "Medium: installed-root fixture overwrites the declared service digest and masks contract drift.",
+    "Medium: allowUnrelated/managedPrefixes safe, unsafe, metadata, special-file, and identity-race behavior lacks executable coverage."
+  ],
+  "next_action": "Route all four findings to Luna REV7 remediation with executable privileged-boundary tests; no push, host install, workflow dispatch, merge, or live mutation.",
+  "route_to": "code",
+  "risk_level": "critical",
+  "independent_lanes": [
+    "Luna reviewer /root/review_consolidation_0c18"
+  ],
+  "issues": [
+    {"id":"REV7-001","title":"Inventory directory metadata is not enforced","severity":"high","owner_stage":"code"},
+    {"id":"REV7-002","title":"Fresh-host admission staging path is undocumented","severity":"medium","owner_stage":"code"},
+    {"id":"REV7-003","title":"Installed-root fixture masks service digest drift","severity":"medium","owner_stage":"code"},
+    {"id":"REV7-004","title":"Unrelated-entry acceptance and race paths lack executable tests","severity":"medium","owner_stage":"code"}
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://codicarium.local/v2.5/recovery.v2.5",
+  "title": "recovery.v2.5",
+  "type": "object",
+  "required": [
+    "from",
+    "to",
+    "command_id",
+    "atomic"
+  ],
+  "properties": {
+    "from": {
+      "type": "string",
+      "minLength": 1
+    },
+    "to": {
+      "type": "string",
+      "minLength": 1
+    },
+    "command_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "atomic": {
+      "type": "boolean"
+    }
+  },
+  "additionalProperties": false
+}

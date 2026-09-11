@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "enabled": true,
+  "risk_threshold": "high",
+  "require_on_spec_to_code": true,
+  "require_on_validation_to_done": true,
+  "path_globs": [
+    ".github/workflows/**",
+    "infra/**",
+    "terraform/**",
+    "k8s/**",
+    "helm/**",
+    "security/**",
+    ".codex/**"
+  ]
+}

@@ -1,0 +1,81 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Independent review found five high-severity correctness and safety blockers in recovery checks, gate composition, storage ownership, and image immutability; route back to CODE.",
+  "changed_files": [
+    "llm-proxy/templates/database-backup.yaml",
+    "workspace-context/templates/backup.yaml",
+    "llm-proxy/templates/restore.yaml",
+    "workspace-context/templates/gated.yaml",
+    "llm-proxy/vendor/llm-proxy/templates/deployment-api.yaml",
+    "llm-proxy/vendor/llm-proxy/templates/deployment-web.yaml",
+    "llm-proxy/vendor/llm-proxy/templates/services.yaml",
+    "llm-proxy/templates/target-gates.yaml",
+    "llm-proxy/values.yaml",
+    "workspace-context/values.yaml",
+    "apps/llm-proxy.yaml",
+    "apps/workspace-context.yaml"
+  ],
+  "validation": [
+    "pytest -q tests/test_workspace_context_llm_proxy_gitops.py: 5 passed.",
+    "workspace-context/tests/static.sh: passed.",
+    "helm lint and default Helm renders: passed for both charts.",
+    "Argo inline-value gate-off renders: no forbidden target kinds; mismatch render proved nested workload gate can bypass wrapper gate.",
+    "Enabled backup render: checksum files reference the pre-rename .partial pathname.",
+    "Enabled LLM backup render: graph claim is llm-proxy-graph-artifacts with no PVC in the llm-proxy chart.",
+    "git diff --check f039009..HEAD: passed; protected worker/bridge/historical paths unchanged.",
+    "Current pipeline CI before report submission: passed with no warnings or errors."
+  ],
+  "blockers": [
+    "Recovery verification cannot validate generated dumps because both backup templates checksum the temporary .partial pathname before renaming it.",
+    "The wrapper targetGates.workloads=false does not fence dependency API/web resources when llm-proxy.targetGates.workloads=true; network policy and wrapper safety resources can remain off.",
+    "LLM Proxy backup mounts a namespace-local graph PVC that is not created; Workspace Context creates a differently named PVC in another namespace.",
+    "Backup and restore resources can render without the corresponding database gate/resource, leaving invalid DB and secret references.",
+    "Workload and backup image checks accept non-empty mutable tags/refs and use IfNotPresent; immutable image identity is not enforced."
+  ],
+  "next_action": "Route to CODE to fix all blockers, add effective mismatch/gate and executable checksum/storage tests, then rerun review checks; do not sync, deploy, restore, or approve a transition.",
+  "route_to": "code",
+  "risk_level": "high",
+  "requires_council": true,
+  "independent_lanes": [
+    "Review full f039009..f8bef3f diff against the canonical feature spec.",
+    "Recheck effective Helm renders, recovery tooling, gates, RBAC, network policy, immutability, and protected paths."
+  ],
+  "issues": [
+    {
+      "id": "REVIEW-BACKUP-CHECKSUM-PATH",
+      "title": "Generated dump checksums retain the temporary pathname",
+      "severity": "high",
+      "details": "In llm-proxy/templates/database-backup.yaml:107-113 and workspace-context/templates/backup.yaml:64-71, sha256sum writes a line for the .dump.partial file and that file is then renamed to .dump. llm-proxy/templates/restore.yaml:46 and workspace-context/templates/gated.yaml:51-53 verify the renamed file, so every generated restore check fails. Hash the final path/basename or rewrite the checksum after the rename, and execute the rendered shell contract in tests.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REVIEW-WORKLOAD-GATE-BYPASS",
+      "title": "Nested dependency workload gate bypasses the wrapper safety gate",
+      "severity": "high",
+      "details": "The dependency templates llm-proxy/vendor/llm-proxy/templates/deployment-api.yaml:1, deployment-web.yaml:1, and services.yaml:1 use .Values.targetGates.workloads from the nested llm-proxy values. A render with outer targetGates.workloads=false and nested llm-proxy.targetGates.workloads=true emits API/web Services and Deployments, while wrapper policies/alerts guarded by llm-proxy/templates/alerts.yaml:2 and homelab-egress-compatibility.yaml:2 remain off. Use one authoritative gate or fail on mismatch, and test both mismatch directions.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REVIEW-LLM-GRAPH-PVC-OWNERSHIP",
+      "title": "LLM backup graph-artifact claim is not a valid target mount",
+      "severity": "high",
+      "details": "llm-proxy/templates/database-backup.yaml:176-185 mounts $backup.graphArtifacts.claimName, defaulting to llm-proxy-graph-artifacts, but no PVC with that name is created by llm-proxy; workspace-context creates workspace-context-graph-artifacts in its own namespace (workspace-context/templates/storage.yaml:17-49). PVCs are namespace-scoped, so the enabled backup cannot start. Create/own the claim in llm-proxy or run the coupled backup in the owning namespace with an explicit contract.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REVIEW-DATABASE-GATE-COMPOSITION",
+      "title": "Backup and restore jobs do not require the database gate",
+      "severity": "high",
+      "details": "workspace-context/templates/backup.yaml:1-6 gates only backup/storage and llm-proxy/templates/database-backup.yaml:1-9 gates only databaseBackup/consistency inputs; neither requires its database resource gate. The restore paths likewise validate restore flags but not database enablement (llm-proxy/templates/restore.yaml:1-5; workspace-context/templates/gated.yaml:16-20). Enabled renders can therefore emit jobs referencing a DB/Secret that is not deployed. Require the database gate and corresponding DB/storage readiness in every backup/restore condition.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REVIEW-IMAGE-IMMUTABILITY",
+      "title": "Image gates accept mutable references",
+      "severity": "high",
+      "details": "llm-proxy/templates/target-gates.yaml:3-8 only checks that workload repository/tag fields are non-empty, and backup images are only checked for non-empty values at llm-proxy/templates/database-backup.yaml:6 and workspace-context/templates/backup.yaml:5. The rendered workloads and backup containers use IfNotPresent and tag-based refs. Require digest-pinned refs (or a strictly validated immutable ref policy) for every enabled workload, restore, migration, pg_dump, and Kopia image, and test rejection of latest/mutable tags.",
+      "owner_stage": "code"
+    }
+  ]
+}

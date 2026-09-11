@@ -1,0 +1,24 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Review found a blocking environment-list delimiter defect plus two auth hardening issues.",
+  "changed_files": [],
+  "validation": [
+    "Independent review reproduced AGENT_MCP_ALLOWED_HOSTS=dev.example:* as ('dev.example', '*').",
+    "Independent review reproduced HTTPS Origin patterns being split by the Unix colon path separator.",
+    "91 tests, Ruff, and mypy remain green but do not cover URI/port environment values."
+  ],
+  "blockers": [
+    "Use a delimiter compatible with Host:* and http(s):// patterns and add regression tests/documentation.",
+    "Ensure non-ASCII configured tokens cannot cause compare_digest TypeError/500.",
+    "Avoid exposing the bearer token through CLI arguments; use the protected environment configuration path."
+  ],
+  "next_action": "Route the three findings to a bounded correction worker, then repeat review.",
+  "route_to": "code",
+  "risk_level": "high",
+  "findings": [
+    {"severity":"high","location":"src/agent_mcp/config.py:_list_setting; README.md; deploy/systemd/agent-mcp.env.example","issue":"os.pathsep is ':' on Unix and conflicts with Host:* and URL Origin patterns.","fix_direction":"Use comma-separated environment lists with explicit escaping/validation or another delimiter absent from supported patterns."},
+    {"severity":"medium","location":"src/agent_mcp/server.py:BearerAuthMiddleware.__call__; src/agent_mcp/config.py:_optional_string","issue":"Non-ASCII token values can make hmac.compare_digest(str, str) raise TypeError.","fix_direction":"Validate supported ASCII token input or compare encoded bytes and add a regression test."},
+    {"severity":"medium","location":"src/agent_mcp/cli.py:_add_options","issue":"--auth-token exposes the secret in process arguments and shell history.","fix_direction":"Remove the CLI token option and document AGENT_MCP_AUTH_TOKEN as the secret configuration path."}
+  ]
+}

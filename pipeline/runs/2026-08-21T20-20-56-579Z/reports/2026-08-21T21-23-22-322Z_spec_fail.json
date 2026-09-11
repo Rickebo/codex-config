@@ -1,0 +1,52 @@
+{
+  "stage": "spec",
+  "status": "fail",
+  "summary": "Spec re-audit remains safely blocked: source database-side closure and target backup availability are improved, but WAL continuity, S3 SHA closure, target storage/restore, identity/secrets, and retained-PVC disposition are not proven.",
+  "changed_files": [
+    ".codex/pipeline/runs/2026-08-21T20-20-56-579Z/spec-reaudit-20260821T212322Z.json",
+    ".codex/pipeline/runs/2026-08-21T20-20-56-579Z/council-reaudit-20260821T212322Z.json"
+  ],
+  "validation": [
+    "Current plan SHA-256 is a43ebb349eef11f7db2ac66984295f40ea0bdeba4d9bcc5840ed7491c49510a6; Stage 1–3 structure check passes.",
+    "Source guard remains codicarium-dev at https://10.99.0.21:6443; both source Argo applications are Synced/Healthy.",
+    "Target guard remains homelab/default at https://192.168.1.89:6443; existing llm-proxy-worker remains Synced/Healthy and 2/2.",
+    "Candidate cutoff is 2026-08-21T02:47:22Z; 1,353 graph revisions have internally consistent database joins and SHA formatting.",
+    "Target BackupTarget is available=true/Unavailable=False; recent backups exist but none cover retained llm-proxy PVCs.",
+    "GitHub issues #482 and #483 remain open with sanitized corrected progress comments.",
+    "No source or target mutation, export, restore, apply, restart, Argo sync, or local Codex switch occurred."
+  ],
+  "blockers": [
+    "Exact Barman WAL-object continuity to the candidate cutoff is unproven; one historical proxy archiving failure was observed.",
+    "S3 HEAD metadata requests returned 403 without narrowly scoped read-only credentials; all 1,353 artifact objects and hashes remain unclosed.",
+    "Longhorn has about 75GiB available versus about 180GiB scheduled; extra disk UUID mismatch, image pressure, and healthy target RWX are unresolved.",
+    "No approved target-owned 100GiB artifact path or target-only backup/restore drill is evidenced.",
+    "OIDC mapping, Data Protection/backend preservation or recreation, runtime/key provisioning, and transient-state sanitation are unresolved.",
+    "Retained 5GiB and 10GiB ownerless PVC/PV provenance and safe disposition remain unresolved."
+  ],
+  "next_action": "Remain at spec; obtain narrowly scoped read-only WAL/S3 metadata evidence and explicit target-only identity/secret decisions, then re-audit storage and retained PVC disposition before considering code.",
+  "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-21T20-20-56-579Z/feature-spec.json",
+  "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-08-21T20-20-56-579Z/spec-reaudit-check-20260821T212322Z.json",
+  "council_file": "/home/rickebo/.codex/pipeline/runs/2026-08-21T20-20-56-579Z/council-reaudit-20260821T212322Z.json",
+  "requires_council": true,
+  "independent_lanes": [
+    "source cutoff and artifact evidence",
+    "target storage, backup, and retained-resource feasibility",
+    "security/identity and spec-gate review"
+  ],
+  "route_to": "spec",
+  "risk_level": "high",
+  "issues": [
+    {
+      "id": "GH-482",
+      "title": "Homelab Workspace Context and LLM Proxy point-in-time clone",
+      "severity": "high",
+      "details": "Parent issue remains open while Stage 1 hard gates are unresolved."
+    },
+    {
+      "id": "GH-483",
+      "title": "Source/target inventory, cutoff, data manifest, capacity, retained-PVC disposition",
+      "severity": "high",
+      "details": "Inventory issue remains open; corrected backup-target status is documented."
+    }
+  ]
+}

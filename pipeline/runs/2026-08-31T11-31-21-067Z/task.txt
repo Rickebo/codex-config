@@ -1,0 +1,1 @@
+codicarium/infra #1290 REV7 continuation: enforce privileged inventory directory metadata, document immutable admission staging, preserve declared service digest coverage, and executable-test unrelated-entry safe/unsafe/race paths; preserve REV6 fixes and group-7 evidence requirement; no push, host install, workflow dispatch, merge, or live mutation

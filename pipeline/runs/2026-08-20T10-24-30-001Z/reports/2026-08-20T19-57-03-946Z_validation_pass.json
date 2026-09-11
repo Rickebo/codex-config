@@ -1,0 +1,19 @@
+{
+  "stage": "validation",
+  "status": "pass",
+  "summary": "PR validation passed after the systemd user-manager fallback remediation.",
+  "changed_files": [".github/workflows/ci.yml"],
+  "validation": [
+    "PR #2 run 32411247204 completed successfully",
+    "CI / validate job 96561927397 passed in 1m11s",
+    "Conventional commits and PR title validation passed",
+    "Locked Python validation, 84 tests, package build, and container build passed",
+    "Workflow syntax/Markdown/diff checks passed",
+    "Systemd unit validation passed using user mode or the known no-user-manager fallback"
+  ],
+  "blockers": [],
+  "next_action": "Configure the documented main ruleset and squash-only PR merge workflow, then merge PR #2.",
+  "route_to": "done",
+  "risk_level": "medium",
+  "independent_lanes": ["GitHub PR validation"]
+}

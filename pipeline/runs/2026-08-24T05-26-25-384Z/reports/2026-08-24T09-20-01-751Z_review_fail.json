@@ -1,0 +1,55 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Independent semantic and QA review of 9c4f7412 found one high-severity read-error fail-open regression and incomplete real-API migration coverage for Prepare, activation-triggered, terminal, ambiguous, Lease, Work, and preservation cases.",
+  "changed_files": [
+    "internal/controller/activation/legacy_preapproval.go",
+    "integration/legacy_preapproval_runtime_test.go",
+    "integration/testdata/v0.6.4/crds/*",
+    "api/v1alpha1/reconciliationrequest_types.go",
+    "config/crd/bases/deployments.codicarium.com_reconciliationrequests.yaml",
+    "charts/deployment-controller/crds/deployments.codicarium.com_reconciliationrequests.yaml"
+  ],
+  "validation": [
+    "Independent reviewer: go test ./... passed",
+    "Independent reviewer: activation race test and go vet passed",
+    "Independent QA: v0.6.4 fixtures byte-identical to commit 17688f7",
+    "Independent QA: integration binary compiled",
+    "Independent reviewers: config/chart CRD parity and diff checks passed",
+    "Independent full envtest rerun unavailable in reviewer lanes; implementation evidence is not sufficient to close static coverage gaps"
+  ],
+  "blockers": [
+    "Non-NotFound request read errors in reconcileLegacyActivation are swallowed instead of propagated before normal reconciliation.",
+    "Envtest directly writes Prepare status instead of proving RequestReconciler status-only quarantine.",
+    "Envtest does not execute the activation-triggered legacy path after CRD upgrade.",
+    "Envtest does not retain and snapshot issuance Lease plus RepositoryDeployment Work resources, identities, specs, audit metadata, counts, and resourceVersions.",
+    "No real-API terminal anomaly/no-op or ambiguous malformed zero-write case exists.",
+    "CEL exactness is partly controller-enforced; the boundary and malformed-controller rejection are not explicitly documented/tested."
+  ],
+  "next_action": "Propagate read errors, complete isolated envtest acceptance coverage and preservation snapshots, document controller-enforced metadata/digest exactness, then re-review a new exact SHA.",
+  "route_to": "code",
+  "risk_level": "critical",
+  "issues": [
+    {
+      "id": "LEGACY-REVIEW2-001",
+      "title": "Legacy probe swallows non-NotFound request read errors",
+      "severity": "high",
+      "details": "Return the original read error; only NotFound and verified modern UID mismatch may fall through without mutation.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "LEGACY-REVIEW2-002",
+      "title": "Real API migration matrix is incomplete",
+      "severity": "medium",
+      "details": "Add Prepare and activation-triggered migration, terminal anomaly no-op, ambiguous zero-write, retained Lease/Work, complete snapshots, counts, readiness, and timeouts.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "LEGACY-REVIEW2-003",
+      "title": "CEL and controller exactness boundary is implicit",
+      "severity": "medium",
+      "details": "Document metadata/generation/digest checks as controller-enforced and prove malformed old-shaped objects cannot receive migration status through reconciliation.",
+      "owner_stage": "code"
+    }
+  ]
+}

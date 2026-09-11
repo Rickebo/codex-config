@@ -1,0 +1,136 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+REGISTRY="${CODEX_TASK_REGISTRY:-$HOME/.codex/runtime/root-task-registry.json}"
+LOCK="${CODEX_TASK_REGISTRY_LOCK:-$REGISTRY.lock}"
+
+mkdir -p "$(dirname "$REGISTRY")"
+touch "$REGISTRY"
+
+exec 9>"$LOCK"
+flock -w 10 9
+
+node - "$REGISTRY" "$@" <<'NODE'
+const fs = require("fs");
+const registryPath = process.argv[2];
+const argv = process.argv.slice(3);
+
+function usage(code = 1) {
+  const text = [
+    "Usage:",
+    "  codex-task-registry claim --task <id> [--owner <name>] [--ttl-min <n>] [--note <text>]",
+    "  codex-task-registry release --task <id> [--owner <name>]",
+    "  codex-task-registry list",
+    "  codex-task-registry prune",
+  ].join("\n");
+  (code === 0 ? console.log : console.error)(text);
+  process.exit(code);
+}
+
+function parse(args) {
+  const out = { _: [] };
+  for (let i = 0; i < args.length; i += 1) {
+    const tok = args[i];
+    if (tok.startsWith("--")) {
+      const key = tok.slice(2);
+      const next = args[i + 1];
+      if (!next || next.startsWith("--")) {
+        out[key] = true;
+      } else {
+        out[key] = next;
+        i += 1;
+      }
+    } else {
+      out._.push(tok);
+    }
+  }
+  return out;
+}
+
+function now() {
+  return Date.now();
+}
+
+function iso(ms = now()) {
+  return new Date(ms).toISOString();
+}
+
+function readRegistry() {
+  try {
+    const raw = fs.readFileSync(registryPath, "utf8").trim();
+    if (!raw) return { version: 1, claims: [] };
+    const parsed = JSON.parse(raw);
+    if (!Array.isArray(parsed.claims)) parsed.claims = [];
+    return parsed;
+  } catch {
+    return { version: 1, claims: [] };
+  }
+}
+
+function writeRegistry(value) {
+  fs.writeFileSync(registryPath, `${JSON.stringify(value, null, 2)}\n`, "utf8");
+}
+
+function liveClaims(registry) {
+  const cutoff = now();
+  return registry.claims.filter((claim) => Date.parse(claim.expires_at) > cutoff);
+}
+
+function owner(args) {
+  return args.owner || process.env.CODEX_ROOT_ID || process.env.USER || "codex-root";
+}
+
+const args = parse(argv);
+const cmd = args._[0];
+if (!cmd || cmd === "help" || cmd === "--help" || cmd === "-h") usage(cmd ? 0 : 1);
+
+const registry = readRegistry();
+registry.claims = liveClaims(registry);
+
+if (cmd === "claim") {
+  const task = String(args.task || "").trim();
+  if (!task) throw new Error("claim requires --task");
+  const existing = registry.claims.find((claim) => claim.task === task);
+  if (existing) {
+    console.error(`task already claimed by ${existing.owner} until ${existing.expires_at}`);
+    process.exit(2);
+  }
+  const ttlMin = Number(args["ttl-min"] || 240);
+  const claim = {
+    task,
+    owner: owner(args),
+    note: args.note || null,
+    claimed_at: iso(),
+    expires_at: iso(now() + ttlMin * 60 * 1000),
+  };
+  registry.claims.push(claim);
+  writeRegistry(registry);
+  console.log(JSON.stringify({ ok: true, claim }, null, 2));
+  process.exit(0);
+}
+
+if (cmd === "release") {
+  const task = String(args.task || "").trim();
+  if (!task) throw new Error("release requires --task");
+  const who = owner(args);
+  const before = registry.claims.length;
+  registry.claims = registry.claims.filter((claim) => !(claim.task === task && claim.owner === who));
+  writeRegistry(registry);
+  console.log(JSON.stringify({ ok: true, released: before - registry.claims.length }, null, 2));
+  process.exit(0);
+}
+
+if (cmd === "list") {
+  writeRegistry(registry);
+  console.log(JSON.stringify({ ok: true, claims: registry.claims }, null, 2));
+  process.exit(0);
+}
+
+if (cmd === "prune") {
+  writeRegistry(registry);
+  console.log(JSON.stringify({ ok: true, claims: registry.claims.length }, null, 2));
+  process.exit(0);
+}
+
+usage();
+NODE

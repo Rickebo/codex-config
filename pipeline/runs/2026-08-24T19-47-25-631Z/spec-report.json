@@ -1,0 +1,40 @@
+{
+  "stage": "spec",
+  "status": "pass",
+  "summary": "High-risk corrective release-handoff spec passed with planner, security, and QA consensus. It binds the direct verifier run ID to an immediate identity-validating GET that captures the initial attempt, then moves exact polling and the deterministic publish handoff into trusted Automatic Release while keeping the publisher unchanged.",
+  "changed_files": [
+    "/home/rickebo/.codex/pipeline/runs/2026-08-24T19-47-25-631Z/feature-spec.json",
+    "/home/rickebo/.codex/pipeline/runs/2026-08-24T19-47-25-631Z/council.json",
+    "/home/rickebo/.codex/pipeline/runs/2026-08-24T19-47-25-631Z/spec-check.json",
+    "/home/rickebo/.codex/pipeline/runs/2026-08-24T19-47-25-631Z/spec-report.json"
+  ],
+  "validation": [
+    "pipeline-controller status confirmed current_stage=spec, pipeline_profile=full, council_policy.required=always, loop_count=0, and no pending approval.",
+    "pipeline-spec-check.mjs returned ok=true with 10/10 traced MUST requirements, 10 Given/When/Then acceptance criteria, 8 tests, all five quality gates true, zero errors, and zero warnings.",
+    "Council consensus includes planner, security, and tech_lead_qa perspectives and approves direct workflow_run_id capture, immediate exact-ID GET validation/attempt capture, then same-ID/attempt fail-closed polling.",
+    "Workspace Context publication 89fa45bd-471e-44b0-844a-bd96c3806363 was current; local deployment-controller main matched published SHA 6053f97326157807c4323c44e0d14f3ee65c09bf."
+  ],
+  "blockers": [],
+  "next_action": "Route to code: create an issue-#93-linked worktree/branch, implement only the coordinator/verifier/helper/test changes, keep publish-release.yaml unchanged, and run fake-GitHub plus release/supply-chain gates before PR merge.",
+  "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T19-47-25-631Z/feature-spec.json",
+  "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T19-47-25-631Z/spec-check.json",
+  "council_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T19-47-25-631Z/council.json",
+  "requires_council": true,
+  "independent_lanes": [
+    "Coordinator direct run-ID response, immediate exact-ID GET attempt capture, polling, handoff, and publisher dispatch",
+    "Verifier dispatch-job and write-permission removal with evidence-stage preservation",
+    "Fake-GitHub negative-path, ordering, idempotency, race, and recovery test matrix",
+    "Post-merge live v0.6.13 publication evidence, issue closure, and branch/worktree cleanup"
+  ],
+  "route_to": "code",
+  "risk_level": "high",
+  "issues": [
+    {
+      "id": "GH-93",
+      "title": "Pending v0.6.13 Release Verify to Publish Release handoff",
+      "severity": "high",
+      "details": "Existing tracking issue owns the implementation PR and final automatic publication evidence; no new issue is required.",
+      "owner_stage": "code"
+    }
+  ]
+}

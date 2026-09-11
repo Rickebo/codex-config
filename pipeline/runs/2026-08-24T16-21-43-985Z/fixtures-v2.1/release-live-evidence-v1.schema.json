@@ -1,0 +1,1826 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.codicarium.com/release/release-live-evidence-v2.schema.json",
+  "title": "Closed synthetic v0.6.14 conformance evidence; never live publication authority",
+  "type": "object",
+  "required": [
+    "schema",
+    "evidence_class",
+    "publication_authority",
+    "fixture_set",
+    "fixture_identity_jcs_sha256",
+    "captured_at",
+    "repository",
+    "protected_main_sha",
+    "protected_checks",
+    "release_identity",
+    "claim",
+    "check_run_observations",
+    "journal",
+    "publication_receipts",
+    "publication_commit_entries",
+    "release",
+    "registries",
+    "assets",
+    "retirement",
+    "kube_binding_sha256",
+    "grant_migration_sha256",
+    "network_conformance_sha256"
+  ],
+  "properties": {
+    "schema": {
+      "const": "codicarium.release-live-evidence/v2"
+    },
+    "evidence_class": {
+      "const": "synthetic-conformance-fixture"
+    },
+    "publication_authority": {
+      "const": false
+    },
+    "fixture_set": {
+      "const": "issue93-v2.0"
+    },
+    "fixture_identity_jcs_sha256": {
+      "const": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9"
+    },
+    "captured_at": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])-([0-2][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]Z$"
+    },
+    "repository": {
+      "type": "object",
+      "required": [
+        "full_name",
+        "id"
+      ],
+      "properties": {
+        "full_name": {
+          "const": "codicarium/deployment-controller"
+        },
+        "id": {
+          "const": "1303901324"
+        }
+      },
+      "additionalProperties": false
+    },
+    "protected_main_sha": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "protected_checks": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "prefixItems": [
+        {
+          "type": "object",
+          "required": [
+            "name",
+            "app_id",
+            "head_sha",
+            "status",
+            "conclusion"
+          ],
+          "properties": {
+            "name": {
+              "const": "chart"
+            },
+            "app_id": {
+              "const": "15368"
+            },
+            "head_sha": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{40}$"
+            },
+            "status": {
+              "const": "completed"
+            },
+            "conclusion": {
+              "const": "success"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "name",
+            "app_id",
+            "head_sha",
+            "status",
+            "conclusion"
+          ],
+          "properties": {
+            "name": {
+              "const": "integration"
+            },
+            "app_id": {
+              "const": "15368"
+            },
+            "head_sha": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{40}$"
+            },
+            "status": {
+              "const": "completed"
+            },
+            "conclusion": {
+              "const": "success"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "name",
+            "app_id",
+            "head_sha",
+            "status",
+            "conclusion"
+          ],
+          "properties": {
+            "name": {
+              "const": "lint"
+            },
+            "app_id": {
+              "const": "15368"
+            },
+            "head_sha": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{40}$"
+            },
+            "status": {
+              "const": "completed"
+            },
+            "conclusion": {
+              "const": "success"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "name",
+            "app_id",
+            "head_sha",
+            "status",
+            "conclusion"
+          ],
+          "properties": {
+            "name": {
+              "const": "supply-chain"
+            },
+            "app_id": {
+              "const": "15368"
+            },
+            "head_sha": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{40}$"
+            },
+            "status": {
+              "const": "completed"
+            },
+            "conclusion": {
+              "const": "success"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "name",
+            "app_id",
+            "head_sha",
+            "status",
+            "conclusion"
+          ],
+          "properties": {
+            "name": {
+              "const": "test"
+            },
+            "app_id": {
+              "const": "15368"
+            },
+            "head_sha": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{40}$"
+            },
+            "status": {
+              "const": "completed"
+            },
+            "conclusion": {
+              "const": "success"
+            }
+          },
+          "additionalProperties": false
+        }
+      ],
+      "items": false
+    },
+    "release_identity": {
+      "type": "object",
+      "required": [
+        "tag",
+        "source_sha"
+      ],
+      "properties": {
+        "tag": {
+          "const": "v0.6.14"
+        },
+        "source_sha": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        }
+      },
+      "additionalProperties": false
+    },
+    "claim": {
+      "type": "object",
+      "required": [
+        "evidence_class",
+        "publication_authority",
+        "fixture_set",
+        "fixture_identity_jcs_sha256",
+        "claim_key",
+        "identity_jcs_sha256",
+        "first_durable_release_side_effect",
+        "exact_replay_status",
+        "conflict_status",
+        "ambiguity"
+      ],
+      "properties": {
+        "evidence_class": {
+          "const": "synthetic-conformance-fixture"
+        },
+        "publication_authority": {
+          "const": false
+        },
+        "fixture_set": {
+          "const": "issue93-v2.0"
+        },
+        "fixture_identity_jcs_sha256": {
+          "const": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9"
+        },
+        "claim_key": {
+          "type": "string",
+          "pattern": "^rel-v2-sha256:[0-9a-f]{64}$"
+        },
+        "identity_jcs_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "first_durable_release_side_effect": {
+          "const": true
+        },
+        "exact_replay_status": {
+          "const": 200
+        },
+        "conflict_status": {
+          "const": 409
+        },
+        "ambiguity": {
+          "const": "UNKNOWN_MANUAL_NO_RETRY"
+        }
+      },
+      "additionalProperties": false
+    },
+    "check_run_observations": {
+      "type": "object",
+      "required": [
+        "authority",
+        "handoff_coordinator_check_run_id",
+        "dispatch_handoff_check_run_id",
+        "handoff_sha256",
+        "dispatch_sha256"
+      ],
+      "properties": {
+        "authority": {
+          "const": false
+        },
+        "handoff_coordinator_check_run_id": {
+          "const": "9002003"
+        },
+        "dispatch_handoff_check_run_id": {
+          "const": "9004003"
+        },
+        "handoff_sha256": {
+          "const": "8abe528bb32aaa47f8fc496c3571d4b91248f3ebfe4c8be29463a25277bd9e88"
+        },
+        "dispatch_sha256": {
+          "const": "b150fa8dad70a207fb7a78f6a41ab1bc1430833ba70b86fdc2f08a13c7c11f3b"
+        }
+      },
+      "additionalProperties": false
+    },
+    "journal": {
+      "type": "object",
+      "required": [
+        "authority",
+        "journal_id",
+        "entry_count",
+        "first_entry_sha256",
+        "last_entry_sha256",
+        "terminal_state"
+      ],
+      "properties": {
+        "authority": {
+          "const": "dedicated-dev-postgresql-not-s3"
+        },
+        "journal_id": {
+          "type": "string",
+          "pattern": "^jrnl-v1-[0-9a-f]{32}$"
+        },
+        "entry_count": {
+          "const": 45
+        },
+        "first_entry_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "last_entry_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "terminal_state": {
+          "const": "complete"
+        }
+      },
+      "additionalProperties": false
+    },
+    "publication_receipts": {
+      "type": "array",
+      "minItems": 20,
+      "maxItems": 20,
+      "items": {
+        "oneOf": [
+          {
+            "type": "object",
+            "required": [
+              "body",
+              "signature"
+            ],
+            "properties": {
+              "body": {
+                "type": "object",
+                "required": [
+                  "schema",
+                  "evidence_class",
+                  "publication_authority",
+                  "fixture_set",
+                  "fixture_identity_jcs_sha256",
+                  "kind",
+                  "claim_key",
+                  "active_source_revision",
+                  "claim_identity_jcs_sha256",
+                  "protected_main_revision",
+                  "sequence",
+                  "previous_receipt_sha256",
+                  "reservation_entry_sha256",
+                  "authorization_sha256",
+                  "handoff_sha256",
+                  "legacy_raw_identity_authority",
+                  "dispatch_request_sha256",
+                  "dispatch_readback_sha256",
+                  "publisher_workflow",
+                  "publisher_workflow_sha",
+                  "publisher_ref",
+                  "publisher_revision",
+                  "publisher_run_id",
+                  "publisher_run_attempt",
+                  "issued_at",
+                  "issuer"
+                ],
+                "properties": {
+                  "schema": {
+                    "const": "codicarium.publisher-dispatch-receipt/v2"
+                  },
+                  "evidence_class": {
+                    "const": "synthetic-conformance-fixture"
+                  },
+                  "publication_authority": {
+                    "const": false
+                  },
+                  "fixture_set": {
+                    "const": "issue93-v2.0"
+                  },
+                  "fixture_identity_jcs_sha256": {
+                    "const": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9"
+                  },
+                  "kind": {
+                    "const": "publisher-dispatch"
+                  },
+                  "claim_key": {
+                    "type": "string",
+                    "pattern": "^rel-v2-sha256:[0-9a-f]{64}$"
+                  },
+                  "active_source_revision": {
+                    "const": "2aee9b5ba6ed8be8dc848df482a43f6a3f33b712"
+                  },
+                  "claim_identity_jcs_sha256": {
+                    "const": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9"
+                  },
+                  "protected_main_revision": {
+                    "const": "6b82f94bf0c41381bd43f96a04baf909dac7ec52"
+                  },
+                  "sequence": {
+                    "const": "0"
+                  },
+                  "previous_receipt_sha256": {
+                    "const": "0000000000000000000000000000000000000000000000000000000000000000"
+                  },
+                  "reservation_entry_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "authorization_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "handoff_sha256": {
+                    "const": "8abe528bb32aaa47f8fc496c3571d4b91248f3ebfe4c8be29463a25277bd9e88"
+                  },
+                  "legacy_raw_identity_authority": {
+                    "const": false
+                  },
+                  "dispatch_request_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "dispatch_readback_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "publisher_workflow": {
+                    "const": "codicarium/deployment-controller/.github/workflows/publish-release-v2.yaml"
+                  },
+                  "publisher_workflow_sha": {
+                    "const": "6b82f94bf0c41381bd43f96a04baf909dac7ec52"
+                  },
+                  "publisher_ref": {
+                    "const": "refs/heads/main"
+                  },
+                  "publisher_revision": {
+                    "const": "6b82f94bf0c41381bd43f96a04baf909dac7ec52"
+                  },
+                  "publisher_run_id": {
+                    "type": "string",
+                    "pattern": "^[1-9][0-9]*$"
+                  },
+                  "publisher_run_attempt": {
+                    "type": "string",
+                    "pattern": "^[1-9][0-9]*$"
+                  },
+                  "issued_at": {
+                    "type": "string",
+                    "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])-([0-2][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]Z$"
+                  },
+                  "issuer": {
+                    "type": "object",
+                    "required": [
+                      "kind",
+                      "principal",
+                      "vault_role",
+                      "can_mutate_targets",
+                      "can_commit_journal"
+                    ],
+                    "properties": {
+                      "kind": {
+                        "const": "vault-transit"
+                      },
+                      "principal": {
+                        "const": "release-journal-signer"
+                      },
+                      "vault_role": {
+                        "const": "release-journal-sign-v1"
+                      },
+                      "can_mutate_targets": {
+                        "const": false
+                      },
+                      "can_commit_journal": {
+                        "const": false
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "additionalProperties": false
+              },
+              "signature": {
+                "type": "object",
+                "required": [
+                  "format",
+                  "transit_key",
+                  "transit_key_version",
+                  "kid",
+                  "payload_sha256",
+                  "signature_base64url"
+                ],
+                "properties": {
+                  "format": {
+                    "const": "vault-transit-ed25519-jcs/v1"
+                  },
+                  "transit_key": {
+                    "const": "release-journal-v1"
+                  },
+                  "transit_key_version": {
+                    "const": "1"
+                  },
+                  "kid": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9_-]+$"
+                  },
+                  "payload_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "signature_base64url": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9_-]+$"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "required": [
+              "body",
+              "signature"
+            ],
+            "properties": {
+              "body": {
+                "type": "object",
+                "required": [
+                  "schema",
+                  "evidence_class",
+                  "publication_authority",
+                  "fixture_set",
+                  "fixture_identity_jcs_sha256",
+                  "kind",
+                  "claim_key",
+                  "sequence",
+                  "previous_receipt_sha256",
+                  "reservation_entry_sha256",
+                  "mutation",
+                  "request_sha256",
+                  "readback_sha256",
+                  "publisher_ref",
+                  "publisher_revision",
+                  "publisher_run_id",
+                  "publisher_run_attempt",
+                  "issued_at",
+                  "issuer",
+                  "target"
+                ],
+                "properties": {
+                  "schema": {
+                    "const": "codicarium.publisher-mutation-receipt/v2"
+                  },
+                  "evidence_class": {
+                    "const": "synthetic-conformance-fixture"
+                  },
+                  "publication_authority": {
+                    "const": false
+                  },
+                  "fixture_set": {
+                    "const": "issue93-v2.0"
+                  },
+                  "fixture_identity_jcs_sha256": {
+                    "const": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9"
+                  },
+                  "kind": {
+                    "const": "publisher-mutation"
+                  },
+                  "claim_key": {
+                    "type": "string",
+                    "pattern": "^rel-v2-sha256:[0-9a-f]{64}$"
+                  },
+                  "sequence": {
+                    "enum": [
+                      "1",
+                      "2",
+                      "3",
+                      "4",
+                      "5",
+                      "6",
+                      "7",
+                      "8",
+                      "9",
+                      "10",
+                      "11",
+                      "12",
+                      "13",
+                      "14",
+                      "15",
+                      "16",
+                      "17",
+                      "18",
+                      "19"
+                    ]
+                  },
+                  "previous_receipt_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "reservation_entry_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "mutation": {
+                    "enum": [
+                      "tag-create",
+                      "draft-release-create",
+                      "image-publish",
+                      "chart-publish",
+                      "release-asset-create",
+                      "release-finalize"
+                    ]
+                  },
+                  "request_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "readback_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "publisher_ref": {
+                    "const": "refs/heads/main"
+                  },
+                  "publisher_revision": {
+                    "const": "6b82f94bf0c41381bd43f96a04baf909dac7ec52"
+                  },
+                  "publisher_run_id": {
+                    "type": "string",
+                    "pattern": "^[1-9][0-9]*$"
+                  },
+                  "publisher_run_attempt": {
+                    "type": "string",
+                    "pattern": "^[1-9][0-9]*$"
+                  },
+                  "issued_at": {
+                    "type": "string",
+                    "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])-([0-2][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]Z$"
+                  },
+                  "issuer": {
+                    "type": "object",
+                    "required": [
+                      "kind",
+                      "principal",
+                      "vault_role",
+                      "can_mutate_targets",
+                      "can_commit_journal"
+                    ],
+                    "properties": {
+                      "kind": {
+                        "const": "vault-transit"
+                      },
+                      "principal": {
+                        "const": "release-journal-signer"
+                      },
+                      "vault_role": {
+                        "const": "release-journal-sign-v1"
+                      },
+                      "can_mutate_targets": {
+                        "const": false
+                      },
+                      "can_commit_journal": {
+                        "const": false
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  "target": {
+                    "oneOf": [
+                      {
+                        "type": "object",
+                        "required": [
+                          "ref",
+                          "object",
+                          "object_type",
+                          "force"
+                        ],
+                        "properties": {
+                          "ref": {
+                            "const": "refs/tags/v0.6.14"
+                          },
+                          "object": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{40}$"
+                          },
+                          "object_type": {
+                            "const": "commit"
+                          },
+                          "force": {
+                            "const": false
+                          }
+                        },
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "required": [
+                          "release_id",
+                          "tag",
+                          "target_commitish",
+                          "draft",
+                          "prerelease"
+                        ],
+                        "properties": {
+                          "release_id": {
+                            "type": "string",
+                            "pattern": "^[1-9][0-9]*$"
+                          },
+                          "tag": {
+                            "const": "v0.6.14"
+                          },
+                          "target_commitish": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{40}$"
+                          },
+                          "draft": {
+                            "const": true
+                          },
+                          "prerelease": {
+                            "const": false
+                          }
+                        },
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "required": [
+                          "registry",
+                          "repository",
+                          "reference",
+                          "digest"
+                        ],
+                        "properties": {
+                          "registry": {
+                            "const": "docker-push.nexus.int.codicarium.com"
+                          },
+                          "repository": {
+                            "const": "codicarium/deployment-controller"
+                          },
+                          "reference": {
+                            "const": "v0.6.14"
+                          },
+                          "digest": {
+                            "type": "string",
+                            "pattern": "^sha256:[0-9a-f]{64}$"
+                          }
+                        },
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "required": [
+                          "registry",
+                          "repository",
+                          "version",
+                          "digest"
+                        ],
+                        "properties": {
+                          "registry": {
+                            "const": "charts.nexus.int.codicarium.com"
+                          },
+                          "repository": {
+                            "const": "codicarium/deployment-controller"
+                          },
+                          "version": {
+                            "const": "0.6.14"
+                          },
+                          "digest": {
+                            "type": "string",
+                            "pattern": "^sha256:[0-9a-f]{64}$"
+                          }
+                        },
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "required": [
+                          "release_id",
+                          "asset_id",
+                          "name",
+                          "size",
+                          "sha256"
+                        ],
+                        "properties": {
+                          "release_id": {
+                            "type": "string",
+                            "pattern": "^[1-9][0-9]*$"
+                          },
+                          "asset_id": {
+                            "type": "string",
+                            "pattern": "^[1-9][0-9]*$"
+                          },
+                          "name": {
+                            "enum": [
+                              "deployment-controller-0.6.14.tgz",
+                              "deployment-controller-0.6.14.tgz.sigstore.json",
+                              "deployment-controller-chart-oci-provenance.sigstore.json",
+                              "deployment-controller-chart.sha256",
+                              "deployment-controller-chart.sha256.sigstore.json",
+                              "deployment-controller-image-provenance.sigstore.json",
+                              "deployment-controller-linux-amd64-sbom.sigstore.json",
+                              "deployment-controller-linux-arm64-sbom.sigstore.json",
+                              "deployment-controller-release-graph.json",
+                              "deployment-controller-release-graph.json.sigstore.json",
+                              "deployment-controller-release-manifest.json",
+                              "deployment-controller-release-manifest.json.sigstore.json",
+                              "deployment-controller-publisher-subject-manifest.json",
+                              "deployment-controller-publisher-subject-manifest.json.sigstore.json"
+                            ]
+                          },
+                          "size": {
+                            "type": "string",
+                            "pattern": "^[1-9][0-9]*$"
+                          },
+                          "sha256": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{64}$"
+                          }
+                        },
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "required": [
+                          "release_id",
+                          "tag",
+                          "target_commitish",
+                          "draft",
+                          "prerelease"
+                        ],
+                        "properties": {
+                          "release_id": {
+                            "type": "string",
+                            "pattern": "^[1-9][0-9]*$"
+                          },
+                          "tag": {
+                            "const": "v0.6.14"
+                          },
+                          "target_commitish": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{40}$"
+                          },
+                          "draft": {
+                            "const": false
+                          },
+                          "prerelease": {
+                            "const": false
+                          }
+                        },
+                        "additionalProperties": false
+                      }
+                    ]
+                  }
+                },
+                "additionalProperties": false,
+                "allOf": [
+                  {
+                    "if": {
+                      "properties": {
+                        "mutation": {
+                          "const": "tag-create"
+                        }
+                      },
+                      "required": [
+                        "mutation"
+                      ]
+                    },
+                    "then": {
+                      "properties": {
+                        "target": {
+                          "type": "object",
+                          "required": [
+                            "ref",
+                            "object",
+                            "object_type",
+                            "force"
+                          ],
+                          "properties": {
+                            "ref": {
+                              "const": "refs/tags/v0.6.14"
+                            },
+                            "object": {
+                              "type": "string",
+                              "pattern": "^[0-9a-f]{40}$"
+                            },
+                            "object_type": {
+                              "const": "commit"
+                            },
+                            "force": {
+                              "const": false
+                            }
+                          },
+                          "additionalProperties": false
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "if": {
+                      "properties": {
+                        "mutation": {
+                          "const": "draft-release-create"
+                        }
+                      },
+                      "required": [
+                        "mutation"
+                      ]
+                    },
+                    "then": {
+                      "properties": {
+                        "target": {
+                          "type": "object",
+                          "required": [
+                            "release_id",
+                            "tag",
+                            "target_commitish",
+                            "draft",
+                            "prerelease"
+                          ],
+                          "properties": {
+                            "release_id": {
+                              "type": "string",
+                              "pattern": "^[1-9][0-9]*$"
+                            },
+                            "tag": {
+                              "const": "v0.6.14"
+                            },
+                            "target_commitish": {
+                              "type": "string",
+                              "pattern": "^[0-9a-f]{40}$"
+                            },
+                            "draft": {
+                              "const": true
+                            },
+                            "prerelease": {
+                              "const": false
+                            }
+                          },
+                          "additionalProperties": false
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "if": {
+                      "properties": {
+                        "mutation": {
+                          "const": "image-publish"
+                        }
+                      },
+                      "required": [
+                        "mutation"
+                      ]
+                    },
+                    "then": {
+                      "properties": {
+                        "target": {
+                          "type": "object",
+                          "required": [
+                            "registry",
+                            "repository",
+                            "reference",
+                            "digest"
+                          ],
+                          "properties": {
+                            "registry": {
+                              "const": "docker-push.nexus.int.codicarium.com"
+                            },
+                            "repository": {
+                              "const": "codicarium/deployment-controller"
+                            },
+                            "reference": {
+                              "const": "v0.6.14"
+                            },
+                            "digest": {
+                              "type": "string",
+                              "pattern": "^sha256:[0-9a-f]{64}$"
+                            }
+                          },
+                          "additionalProperties": false
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "if": {
+                      "properties": {
+                        "mutation": {
+                          "const": "chart-publish"
+                        }
+                      },
+                      "required": [
+                        "mutation"
+                      ]
+                    },
+                    "then": {
+                      "properties": {
+                        "target": {
+                          "type": "object",
+                          "required": [
+                            "registry",
+                            "repository",
+                            "version",
+                            "digest"
+                          ],
+                          "properties": {
+                            "registry": {
+                              "const": "charts.nexus.int.codicarium.com"
+                            },
+                            "repository": {
+                              "const": "codicarium/deployment-controller"
+                            },
+                            "version": {
+                              "const": "0.6.14"
+                            },
+                            "digest": {
+                              "type": "string",
+                              "pattern": "^sha256:[0-9a-f]{64}$"
+                            }
+                          },
+                          "additionalProperties": false
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "if": {
+                      "properties": {
+                        "mutation": {
+                          "const": "release-asset-create"
+                        }
+                      },
+                      "required": [
+                        "mutation"
+                      ]
+                    },
+                    "then": {
+                      "properties": {
+                        "target": {
+                          "type": "object",
+                          "required": [
+                            "release_id",
+                            "asset_id",
+                            "name",
+                            "size",
+                            "sha256"
+                          ],
+                          "properties": {
+                            "release_id": {
+                              "type": "string",
+                              "pattern": "^[1-9][0-9]*$"
+                            },
+                            "asset_id": {
+                              "type": "string",
+                              "pattern": "^[1-9][0-9]*$"
+                            },
+                            "name": {
+                              "enum": [
+                                "deployment-controller-0.6.14.tgz",
+                                "deployment-controller-0.6.14.tgz.sigstore.json",
+                                "deployment-controller-chart-oci-provenance.sigstore.json",
+                                "deployment-controller-chart.sha256",
+                                "deployment-controller-chart.sha256.sigstore.json",
+                                "deployment-controller-image-provenance.sigstore.json",
+                                "deployment-controller-linux-amd64-sbom.sigstore.json",
+                                "deployment-controller-linux-arm64-sbom.sigstore.json",
+                                "deployment-controller-release-graph.json",
+                                "deployment-controller-release-graph.json.sigstore.json",
+                                "deployment-controller-release-manifest.json",
+                                "deployment-controller-release-manifest.json.sigstore.json",
+                                "deployment-controller-publisher-subject-manifest.json",
+                                "deployment-controller-publisher-subject-manifest.json.sigstore.json"
+                              ]
+                            },
+                            "size": {
+                              "type": "string",
+                              "pattern": "^[1-9][0-9]*$"
+                            },
+                            "sha256": {
+                              "type": "string",
+                              "pattern": "^[0-9a-f]{64}$"
+                            }
+                          },
+                          "additionalProperties": false
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "if": {
+                      "properties": {
+                        "mutation": {
+                          "const": "release-finalize"
+                        }
+                      },
+                      "required": [
+                        "mutation"
+                      ]
+                    },
+                    "then": {
+                      "properties": {
+                        "target": {
+                          "type": "object",
+                          "required": [
+                            "release_id",
+                            "tag",
+                            "target_commitish",
+                            "draft",
+                            "prerelease"
+                          ],
+                          "properties": {
+                            "release_id": {
+                              "type": "string",
+                              "pattern": "^[1-9][0-9]*$"
+                            },
+                            "tag": {
+                              "const": "v0.6.14"
+                            },
+                            "target_commitish": {
+                              "type": "string",
+                              "pattern": "^[0-9a-f]{40}$"
+                            },
+                            "draft": {
+                              "const": false
+                            },
+                            "prerelease": {
+                              "const": false
+                            }
+                          },
+                          "additionalProperties": false
+                        }
+                      }
+                    }
+                  }
+                ]
+              },
+              "signature": {
+                "type": "object",
+                "required": [
+                  "format",
+                  "transit_key",
+                  "transit_key_version",
+                  "kid",
+                  "payload_sha256",
+                  "signature_base64url"
+                ],
+                "properties": {
+                  "format": {
+                    "const": "vault-transit-ed25519-jcs/v1"
+                  },
+                  "transit_key": {
+                    "const": "release-journal-v1"
+                  },
+                  "transit_key_version": {
+                    "const": "1"
+                  },
+                  "kid": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9_-]+$"
+                  },
+                  "payload_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "signature_base64url": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9_-]+$"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "additionalProperties": false
+          }
+        ]
+      }
+    },
+    "publication_commit_entries": {
+      "type": "array",
+      "minItems": 20,
+      "maxItems": 20,
+      "items": {
+        "type": "object",
+        "required": [
+          "sequence",
+          "journal_commit_entry_sha256",
+          "receipt_sha256"
+        ],
+        "properties": {
+          "sequence": {
+            "type": "string",
+            "pattern": "^(0|[1-9]|1[0-9])$"
+          },
+          "journal_commit_entry_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "receipt_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "release": {
+      "type": "object",
+      "required": [
+        "id",
+        "tag",
+        "target",
+        "draft",
+        "prerelease"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        },
+        "tag": {
+          "const": "v0.6.14"
+        },
+        "target": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "draft": {
+          "const": false
+        },
+        "prerelease": {
+          "const": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "registries": {
+      "type": "object",
+      "required": [
+        "image",
+        "chart"
+      ],
+      "properties": {
+        "image": {
+          "type": "object",
+          "required": [
+            "registry",
+            "repository",
+            "reference",
+            "digest"
+          ],
+          "properties": {
+            "registry": {
+              "const": "docker-push.nexus.int.codicarium.com"
+            },
+            "repository": {
+              "const": "codicarium/deployment-controller"
+            },
+            "reference": {
+              "const": "v0.6.14"
+            },
+            "digest": {
+              "type": "string",
+              "pattern": "^sha256:[0-9a-f]{64}$"
+            }
+          },
+          "additionalProperties": false
+        },
+        "chart": {
+          "type": "object",
+          "required": [
+            "registry",
+            "repository",
+            "version",
+            "digest"
+          ],
+          "properties": {
+            "registry": {
+              "const": "charts.nexus.int.codicarium.com"
+            },
+            "repository": {
+              "const": "codicarium/deployment-controller"
+            },
+            "version": {
+              "const": "0.6.14"
+            },
+            "digest": {
+              "type": "string",
+              "pattern": "^sha256:[0-9a-f]{64}$"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "assets": {
+      "type": "array",
+      "minItems": 14,
+      "maxItems": 14,
+      "prefixItems": [
+        {
+          "type": "object",
+          "required": [
+            "release_id",
+            "asset_id",
+            "name",
+            "size",
+            "sha256"
+          ],
+          "properties": {
+            "release_id": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "asset_id": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "name": {
+              "const": "deployment-controller-0.6.14.tgz"
+            },
+            "size": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "release_id",
+            "asset_id",
+            "name",
+            "size",
+            "sha256"
+          ],
+          "properties": {
+            "release_id": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "asset_id": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "name": {
+              "const": "deployment-controller-0.6.14.tgz.sigstore.json"
+            },
+            "size": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "release_id",
+            "asset_id",
+            "name",
+            "size",
+            "sha256"
+          ],
+          "properties": {
+            "release_id": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "asset_id": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "name": {
+              "const": "deployment-controller-chart-oci-provenance.sigstore.json"
+            },
+            "size": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "release_id",
+            "asset_id",
+            "name",
+            "size",
+            "sha256"
+          ],
+          "properties": {
+            "release_id": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "asset_id": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "name": {
+              "const": "deployment-controller-chart.sha256"
+            },
+            "size": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "release_id",
+            "asset_id",
+            "name",
+            "size",
+            "sha256"
+          ],
+          "properties": {
+            "release_id": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "asset_id": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "name": {
+              "const": "deployment-controller-chart.sha256.sigstore.json"
+            },
+            "size": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "release_id",
+            "asset_id",
+            "name",
+            "size",
+            "sha256"
+          ],
+          "properties": {
+            "release_id": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "asset_id": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "name": {
+              "const": "deployment-controller-image-provenance.sigstore.json"
+            },
+            "size": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "release_id",
+            "asset_id",
+            "name",
+            "size",
+            "sha256"
+          ],
+          "properties": {
+            "release_id": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "asset_id": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "name": {
+              "const": "deployment-controller-linux-amd64-sbom.sigstore.json"
+            },
+            "size": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "release_id",
+            "asset_id",
+            "name",
+            "size",
+            "sha256"
+          ],
+          "properties": {
+            "release_id": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "asset_id": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "name": {
+              "const": "deployment-controller-linux-arm64-sbom.sigstore.json"
+            },
+            "size": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "release_id",
+            "asset_id",
+            "name",
+            "size",
+            "sha256"
+          ],
+          "properties": {
+            "release_id": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "asset_id": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "name": {
+              "const": "deployment-controller-release-graph.json"
+            },
+            "size": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "release_id",
+            "asset_id",
+            "name",
+            "size",
+            "sha256"
+          ],
+          "properties": {
+            "release_id": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "asset_id": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "name": {
+              "const": "deployment-controller-release-graph.json.sigstore.json"
+            },
+            "size": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "release_id",
+            "asset_id",
+            "name",
+            "size",
+            "sha256"
+          ],
+          "properties": {
+            "release_id": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "asset_id": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "name": {
+              "const": "deployment-controller-release-manifest.json"
+            },
+            "size": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "release_id",
+            "asset_id",
+            "name",
+            "size",
+            "sha256"
+          ],
+          "properties": {
+            "release_id": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "asset_id": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "name": {
+              "const": "deployment-controller-release-manifest.json.sigstore.json"
+            },
+            "size": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "release_id",
+            "asset_id",
+            "name",
+            "size",
+            "sha256"
+          ],
+          "properties": {
+            "release_id": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "asset_id": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "name": {
+              "const": "deployment-controller-publisher-subject-manifest.json"
+            },
+            "size": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "release_id",
+            "asset_id",
+            "name",
+            "size",
+            "sha256"
+          ],
+          "properties": {
+            "release_id": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "asset_id": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "name": {
+              "const": "deployment-controller-publisher-subject-manifest.json.sigstore.json"
+            },
+            "size": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "additionalProperties": false
+        }
+      ],
+      "items": false
+    },
+    "retirement": {
+      "type": "object",
+      "required": [
+        "workflow_count",
+        "workflow_ids",
+        "legacy_authorities_revoked",
+        "old_outputs_or_reruns_accepted"
+      ],
+      "properties": {
+        "workflow_count": {
+          "const": 5
+        },
+        "workflow_ids": {
+          "const": [
+            "341194538",
+            "318365668",
+            "318365667",
+            "333279414",
+            "340335357"
+          ]
+        },
+        "legacy_authorities_revoked": {
+          "const": true
+        },
+        "old_outputs_or_reruns_accepted": {
+          "const": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "kube_binding_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "grant_migration_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "network_conformance_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    }
+  },
+  "additionalProperties": false
+}

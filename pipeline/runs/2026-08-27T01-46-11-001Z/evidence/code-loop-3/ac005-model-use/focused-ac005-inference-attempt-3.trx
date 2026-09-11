@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="a3cdbad4-c665-440f-967a-75362c82dcc8" name="@RICKEBO 2026-08-27 08:02:47" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2026-08-27T08:02:47.2780663+02:00" queuing="2026-08-27T08:02:47.2780663+02:00" start="2026-08-27T08:02:20.1000004+02:00" finish="2026-08-27T08:02:47.2814142+02:00" />
+  <TestSettings name="default" id="ebda8645-d571-4865-920a-a0d5e2395326">
+    <Deployment runDeploymentRoot="_RICKEBO_2026-08-27_08_02_47" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="79761a07-89aa-4201-95ba-6261f598cf54" testId="e3e4a78e-7353-6546-29d7-93b35f485d98" testName="WorkspaceManager.SystemTests.KnowledgeGenerationFlowTests.Source_snapshot_replay_after_bounded_model_outage_creates_one_persisted_build" computerName="RICKEBO" duration="00:00:26.7823852" startTime="2026-08-27T08:02:20.4242935+02:00" endTime="2026-08-27T08:02:47.2155296+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="79761a07-89aa-4201-95ba-6261f598cf54">
+      <Output>
+        <StdOut>Knowledge consumer startup boundary drained: model.events.v1[p0:next=0,high=0, p1:next=2,high=2, p2:next=0,high=0]; source.events.v1[p0:next=0,high=0, p1:next=0,high=0, p2:next=0,high=0]; workspace.events.v1[p0:next=0,high=0, p1:next=0,high=0, p2:next=0,high=0]
+FastSystem ready: Workspace=http://127.0.0.1:46389/, Source=http://127.0.0.1:37685/, Model=http://127.0.0.1:40459/, Knowledge=http://127.0.0.1:42671/
+Source snapshot 01a041d0-1f79-722c-8e35-8b9e8e77e457 observed on source.events.v1 partition 0; Knowledge worker started.
+Knowledge build 01a041d0-241f-753c-a127-bfc5f361df4a reached queued after 1 injected Model 503 response(s).</StdOut>
+        <ErrorInfo>
+          <Message>System.InvalidOperationException : knowledge_build=01a041d0-241f-753c-a127-bfc5f361df4a state=failed failure_code=processor_failed build_count=1 publication_count=0 publication_id=unset
+worker_diagnostics=Model: Model worker stdout: info: Microsoft.Hosting.Lifetime[0]
+Model worker stdout:       Application started. Press Ctrl+C to shut down.
+Model worker stdout: info: Microsoft.Hosting.Lifetime[0]
+Model worker stdout:       Hosting environment: Development
+Model worker stdout: info: Microsoft.Hosting.Lifetime[0]
+Model worker stdout:       Content root path: /tmp/workspace-manager-ac005-boundary.Jme0Vv/src
+Knowledge: Knowledge worker stdout: info: Microsoft.Hosting.Lifetime[0]
+Knowledge worker stdout:       Application started. Press Ctrl+C to shut down.
+Knowledge worker stdout: info: Microsoft.Hosting.Lifetime[0]
+Knowledge worker stdout:       Hosting environment: Development
+Knowledge worker stdout: info: Microsoft.Hosting.Lifetime[0]
+Knowledge worker stdout:       Content root path: /tmp/workspace-manager-ac005-boundary.Jme0Vv/src</Message>
+          <StackTrace>   at WorkspaceManager.SystemTests.Infrastructure.KnowledgeGenerationSystemFixture.WaitForBuildSucceededAsync(SourceSnapshotObservation snapshot, Guid buildId) in /tmp/workspace-manager-ac005-boundary.Jme0Vv/src/tests/system/WorkspaceManager.SystemTests/Infrastructure/KnowledgeGenerationSystemFixture.cs:line 815
+   at WorkspaceManager.SystemTests.KnowledgeGenerationFlowTests.Source_snapshot_replay_after_bounded_model_outage_creates_one_persisted_build() in /tmp/workspace-manager-ac005-boundary.Jme0Vv/src/tests/system/WorkspaceManager.SystemTests/KnowledgeGenerationFlowTests.cs:line 35
+   at WorkspaceManager.SystemTests.KnowledgeGenerationFlowTests.Source_snapshot_replay_after_bounded_model_outage_creates_one_persisted_build() in /tmp/workspace-manager-ac005-boundary.Jme0Vv/src/tests/system/WorkspaceManager.SystemTests/KnowledgeGenerationFlowTests.cs:line 49
+--- End of stack trace from previous location ---</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="WorkspaceManager.SystemTests.KnowledgeGenerationFlowTests.Source_snapshot_replay_after_bounded_model_outage_creates_one_persisted_build" storage="/tmp/workspace-manager-ac005-boundary.jme0vv/src/tests/system/workspacemanager.systemtests/bin/release/net10.0/workspacemanager.systemtests.dll" id="e3e4a78e-7353-6546-29d7-93b35f485d98">
+      <Execution id="79761a07-89aa-4201-95ba-6261f598cf54" />
+      <TestMethod codeBase="/tmp/workspace-manager-ac005-boundary.Jme0Vv/src/tests/system/WorkspaceManager.SystemTests/bin/Release/net10.0/WorkspaceManager.SystemTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="WorkspaceManager.SystemTests.KnowledgeGenerationFlowTests" name="Source_snapshot_replay_after_bounded_model_outage_creates_one_persisted_build" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="e3e4a78e-7353-6546-29d7-93b35f485d98" executionId="79761a07-89aa-4201-95ba-6261f598cf54" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Failed">
+    <Counters total="1" executed="1" passed="0" failed="1" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v4.0.0+05679a7ab5 (64-bit .NET 10.0.11)
+[xUnit.net 00:00:00.06]   Discovering: WorkspaceManager.SystemTests
+[xUnit.net 00:00:00.09]   Discovered:  WorkspaceManager.SystemTests
+[xUnit.net 00:00:00.11]   Starting:    WorkspaceManager.SystemTests
+[testcontainers.org 00:00:00.08] Connected to Docker:
+  Host: unix:///var/run/docker.sock
+  Server Version: 29.7.2
+  Kernel Version: 6.18.44-1-lts
+  API Version: 1.55
+  Operating System: Arch Linux
+  Total Memory: 60.48 GB
+[testcontainers.org 00:00:00.11] Docker network 8cdb5dbe555f created
+[testcontainers.org 00:00:00.30] Docker container 63f6f586ffbf created
+[testcontainers.org 00:00:00.32] Start Docker container 63f6f586ffbf
+[testcontainers.org 00:00:00.46] Wait for Docker container 63f6f586ffbf to complete readiness checks
+[testcontainers.org 00:00:01.47] Docker container 63f6f586ffbf ready
+[testcontainers.org 00:00:01.79] Docker container 10430aa63bf0 created
+[testcontainers.org 00:00:01.79] Start Docker container 10430aa63bf0
+[testcontainers.org 00:00:01.83] Docker container 739188866ee5 created
+[testcontainers.org 00:00:01.84] Start Docker container 739188866ee5
+[testcontainers.org 00:00:01.87] Docker container 48a599f1df8c created
+[testcontainers.org 00:00:01.87] Start Docker container 48a599f1df8c
+[testcontainers.org 00:00:02.10] Wait for Docker container 739188866ee5 to complete readiness checks
+[testcontainers.org 00:00:02.11] Execute "pg_isready --host localhost --dbname postgres --username postgres" at Docker container 739188866ee5
+[testcontainers.org 00:00:02.16] Wait for Docker container 10430aa63bf0 to complete readiness checks
+[testcontainers.org 00:00:02.21] Add file to tar archive: Content length: 149 byte(s), Target file: "/testcontainers.sh", UID: 0, GID: 0, Mode: 0755
+[testcontainers.org 00:00:02.21] Copy tar archive to container: Content length: 149 byte(s), Docker container: 48a599f1df8c
+[testcontainers.org 00:00:02.22] Wait for Docker container 48a599f1df8c to complete readiness checks
+[testcontainers.org 00:00:03.16] Execute "pg_isready --host localhost --dbname postgres --username postgres" at Docker container 739188866ee5
+[testcontainers.org 00:00:03.18] Docker container 10430aa63bf0 ready
+[testcontainers.org 00:00:04.18] Execute "pg_isready --host localhost --dbname postgres --username postgres" at Docker container 739188866ee5
+[testcontainers.org 00:00:05.22] Execute "pg_isready --host localhost --dbname postgres --username postgres" at Docker container 739188866ee5
+[testcontainers.org 00:00:06.26] Execute "pg_isready --host localhost --dbname postgres --username postgres" at Docker container 739188866ee5
+[testcontainers.org 00:00:06.28] Docker container 739188866ee5 ready
+[testcontainers.org 00:00:07.24] Docker container 48a599f1df8c ready
+[testcontainers.org 00:00:24.88] Delete Docker container 10430aa63bf0
+[testcontainers.org 00:00:25.70] Delete Docker container 48a599f1df8c
+[testcontainers.org 00:00:26.07] Delete Docker container 739188866ee5
+[testcontainers.org 00:00:26.39] Delete Docker network 8cdb5dbe555f
+[xUnit.net 00:00:26.92]       System.InvalidOperationException : knowledge_build=01a041d0-241f-753c-a127-bfc5f361df4a state=failed failure_code=processor_failed build_count=1 publication_count=0 publication_id=unset
+[xUnit.net 00:00:26.92]       worker_diagnostics=Model: Model worker stdout: info: Microsoft.Hosting.Lifetime[0]
+[xUnit.net 00:00:26.92]       Model worker stdout:       Application started. Press Ctrl+C to shut down.
+[xUnit.net 00:00:26.92]       Model worker stdout: info: Microsoft.Hosting.Lifetime[0]
+[xUnit.net 00:00:26.92]       Model worker stdout:       Hosting environment: Development
+[xUnit.net 00:00:26.92]       Model worker stdout: info: Microsoft.Hosting.Lifetime[0]
+[xUnit.net 00:00:26.92]       Model worker stdout:       Content root path: /tmp/workspace-manager-ac005-boundary.Jme0Vv/src
+[xUnit.net 00:00:26.92]       Knowledge: Knowledge worker stdout: info: Microsoft.Hosting.Lifetime[0]
+[xUnit.net 00:00:26.92]       Knowledge worker stdout:       Application started. Press Ctrl+C to shut down.
+[xUnit.net 00:00:26.92]       Knowledge worker stdout: info: Microsoft.Hosting.Lifetime[0]
+[xUnit.net 00:00:26.92]       Knowledge worker stdout:       Hosting environment: Development
+[xUnit.net 00:00:26.92]       Knowledge worker stdout: info: Microsoft.Hosting.Lifetime[0]
+[xUnit.net 00:00:26.92]       Knowledge worker stdout:       Content root path: /tmp/workspace-manager-ac005-boundary.Jme0Vv/src
+[xUnit.net 00:00:26.92]       Stack Trace:
+[xUnit.net 00:00:26.92]         /tmp/workspace-manager-ac005-boundary.Jme0Vv/src/tests/system/WorkspaceManager.SystemTests/Infrastructure/KnowledgeGenerationSystemFixture.cs(815,0): at WorkspaceManager.SystemTests.Infrastructure.KnowledgeGenerationSystemFixture.WaitForBuildSucceededAsync(SourceSnapshotObservation snapshot, Guid buildId)
+[xUnit.net 00:00:26.92]         /tmp/workspace-manager-ac005-boundary.Jme0Vv/src/tests/system/WorkspaceManager.SystemTests/KnowledgeGenerationFlowTests.cs(35,0): at WorkspaceManager.SystemTests.KnowledgeGenerationFlowTests.Source_snapshot_replay_after_bounded_model_outage_creates_one_persisted_build()
+[xUnit.net 00:00:26.92]         /tmp/workspace-manager-ac005-boundary.Jme0Vv/src/tests/system/WorkspaceManager.SystemTests/KnowledgeGenerationFlowTests.cs(49,0): at WorkspaceManager.SystemTests.KnowledgeGenerationFlowTests.Source_snapshot_replay_after_bounded_model_outage_creates_one_persisted_build()
+[xUnit.net 00:00:26.92]         --- End of stack trace from previous location ---
+[xUnit.net 00:00:26.92]       Output:
+[xUnit.net 00:00:26.92]         Knowledge consumer startup boundary drained: model.events.v1[p0:next=0,high=0, p1:next=2,high=2, p2:next=0,high=0]; source.events.v1[p0:next=0,high=0, p1:next=0,high=0, p2:next=0,high=0]; workspace.events.v1[p0:next=0,high=0, p1:next=0,high=0, p2:next=0,high=0]
+[xUnit.net 00:00:26.92]         FastSystem ready: Workspace=http://127.0.0.1:46389/, Source=http://127.0.0.1:37685/, Model=http://127.0.0.1:40459/, Knowledge=http://127.0.0.1:42671/
+[xUnit.net 00:00:26.92]         Source snapshot 01a041d0-1f79-722c-8e35-8b9e8e77e457 observed on source.events.v1 partition 0; Knowledge worker started.
+[xUnit.net 00:00:26.92]         Knowledge build 01a041d0-241f-753c-a127-bfc5f361df4a reached queued after 1 injected Model 503 response(s).
+[xUnit.net 00:00:26.93]   Finished:    WorkspaceManager.SystemTests
+</StdOut>
+    </Output>
+    <RunInfos>
+      <RunInfo computerName="RICKEBO" outcome="Error" timestamp="2026-08-27T08:02:47.2175876+02:00">
+        <Text>[xUnit.net 00:00:26.92]     WorkspaceManager.SystemTests.KnowledgeGenerationFlowTests.Source_snapshot_replay_after_bounded_model_outage_creates_one_persisted_build [FAIL]</Text>
+      </RunInfo>
+    </RunInfos>
+  </ResultSummary>
+</TestRun>

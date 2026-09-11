@@ -1,0 +1,782 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.codicarium.com/release/release-journal-v1.schema.json",
+  "title": "Dedicated PostgreSQL append-only release journal",
+  "type": "object",
+  "required": [
+    "schema",
+    "evidence_class",
+    "publication_authority",
+    "fixture_set",
+    "fixture_identity_jcs_sha256",
+    "claim_key",
+    "storage",
+    "procedure_migration",
+    "github_dispatch_contract",
+    "role_separation",
+    "operations",
+    "entries",
+    "terminal_state"
+  ],
+  "properties": {
+    "schema": {
+      "const": "codicarium.release-journal-fixture/v1"
+    },
+    "evidence_class": {
+      "const": "synthetic-conformance-fixture"
+    },
+    "publication_authority": {
+      "const": false
+    },
+    "fixture_set": {
+      "const": "issue93-v2.0"
+    },
+    "fixture_identity_jcs_sha256": {
+      "const": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9"
+    },
+    "claim_key": {
+      "type": "string",
+      "pattern": "^rel-v2-sha256:[0-9a-f]{64}$"
+    },
+    "storage": {
+      "type": "object",
+      "required": [
+        "authority",
+        "desired_endpoint",
+        "live_status",
+        "transactions",
+        "synchronous_commit",
+        "synchronous_replicas",
+        "append_only",
+        "constraints",
+        "runtime_grants",
+        "runtime_revocations",
+        "write_api",
+        "update_endpoint",
+        "delete_endpoint",
+        "tls_status"
+      ],
+      "properties": {
+        "authority": {
+          "const": "dedicated-dev-postgresql-not-s3"
+        },
+        "desired_endpoint": {
+          "const": "runner-platform-journal-rw.runner-platform-journal-dev.svc.cluster.local:5432"
+        },
+        "live_status": {
+          "const": "PREACTIVATION_NOT_MATERIALIZED"
+        },
+        "transactions": {
+          "const": "SERIALIZABLE"
+        },
+        "synchronous_commit": {
+          "const": "on"
+        },
+        "synchronous_replicas": {
+          "const": "REQUIRED_PREACTIVATION_NOT_PROVEN"
+        },
+        "append_only": {
+          "const": true
+        },
+        "constraints": {
+          "const": [
+            "PRIMARY KEY entry_id",
+            "UNIQUE claim_key+ordinal",
+            "UNIQUE claim_key+event+publication_sequence",
+            "NOT NULL and CHECK closed enums"
+          ]
+        },
+        "runtime_grants": {
+          "const": "CONNECT,USAGE,SELECT(read_view),EXECUTE(exact SECURITY DEFINER procedures)"
+        },
+        "runtime_revocations": {
+          "const": "CREATE,INSERT,UPDATE,DELETE,TRUNCATE,DDL,PUBLIC"
+        },
+        "write_api": {
+          "const": "stored-procedures-only"
+        },
+        "update_endpoint": {
+          "const": false
+        },
+        "delete_endpoint": {
+          "const": false
+        },
+        "tls_status": {
+          "const": "BLOCKED_UNTIL_VERIFY_FULL_CA_CONTRACT_EXISTS"
+        }
+      },
+      "additionalProperties": false
+    },
+    "procedure_migration": {
+      "const": {
+        "schema": "codicarium.release-journal-procedure-migration/v1",
+        "sql_path": "runner-config/release-journal/migrations/001_release_journal_v1.sql",
+        "implementation_status": "BLOCKED_PREACTIVATION_FAIL_CLOSED",
+        "migration_transactional": true,
+        "owner_role": "release_journal_owner",
+        "owner_role_login": false,
+        "runtime_role": "release_journal_runtime",
+        "runtime_is_owner": false,
+        "runtime_inherits_owner": false,
+        "runtime_schema_create_privilege": false,
+        "public_schema_create_privilege": false,
+        "runtime_database_temp_privilege": false,
+        "public_database_temp_privilege": false,
+        "public_database_connect_privilege": false,
+        "runtime_procedure_privileges": [
+          "EXECUTE"
+        ],
+        "runtime_direct_table_privileges": [],
+        "public_procedure_privileges": [],
+        "owner_default_public_execute_revoked": true,
+        "persistent_relation_references_fully_qualified": true,
+        "non_builtin_function_references_fully_qualified": true,
+        "builtin_function_references_pg_catalog_qualified": true,
+        "database_connect_public_revoke_sql": "REVOKE CONNECT ON DATABASE runner_platform_journal FROM PUBLIC;",
+        "database_temp_public_revoke_sql": "REVOKE TEMPORARY ON DATABASE runner_platform_journal FROM PUBLIC;",
+        "database_temp_runtime_revoke_sql": "REVOKE TEMPORARY ON DATABASE runner_platform_journal FROM release_journal_runtime;",
+        "schema_create_public_revoke_sql": "REVOKE CREATE ON SCHEMA release_journal FROM PUBLIC;",
+        "schema_create_runtime_revoke_sql": "REVOKE CREATE ON SCHEMA release_journal FROM release_journal_runtime;",
+        "default_privileges_sql": "ALTER DEFAULT PRIVILEGES FOR ROLE release_journal_owner IN SCHEMA release_journal REVOKE EXECUTE ON FUNCTIONS FROM PUBLIC;",
+        "temp_shadow_attack_vector": {
+          "name": "pg-temp-relation-and-function-shadow",
+          "attacker_role": "release_journal_runtime",
+          "attempted_objects": [
+            "pg_temp.release_claims relation",
+            "pg_temp.digest(jsonb) function"
+          ],
+          "runtime_create_result": "DENY_SQLSTATE_42501",
+          "privileged_test_harness_precreates_shadows": true,
+          "procedure_search_path": [
+            "pg_catalog",
+            "release_journal",
+            "pg_temp"
+          ],
+          "expected_resolution": {
+            "persistent_relations": "explicit release_journal qualification",
+            "non_builtin_functions": "explicit release_journal qualification",
+            "builtin_functions": "explicit pg_catalog qualification",
+            "pg_temp_objects": "never selected"
+          },
+          "unauthorized_writes": 0,
+          "activation_result": "REQUIRED_POSTGRES_INTEGRATION_EVIDENCE"
+        },
+        "migration_sql": "BEGIN;\n\nREVOKE CONNECT ON DATABASE runner_platform_journal FROM PUBLIC;\n\nREVOKE TEMPORARY ON DATABASE runner_platform_journal FROM PUBLIC;\n\nREVOKE TEMPORARY ON DATABASE runner_platform_journal FROM release_journal_runtime;\n\nREVOKE CREATE ON SCHEMA release_journal FROM PUBLIC;\n\nREVOKE CREATE ON SCHEMA release_journal FROM release_journal_runtime;\n\nALTER DEFAULT PRIVILEGES FOR ROLE release_journal_owner IN SCHEMA release_journal REVOKE EXECUTE ON FUNCTIONS FROM PUBLIC;\n\nCREATE OR REPLACE FUNCTION release_journal.claim_cas_v1(request jsonb)\nRETURNS jsonb\nLANGUAGE plpgsql\nSECURITY DEFINER\nSET search_path = pg_catalog, release_journal, pg_temp\nAS $procedure$\nBEGIN\n  RAISE EXCEPTION USING ERRCODE = '0A000', MESSAGE = 'release journal implementation not installed';\nEND;\n$procedure$;\nALTER FUNCTION release_journal.claim_cas_v1(jsonb) OWNER TO release_journal_owner;\nREVOKE ALL ON FUNCTION release_journal.claim_cas_v1(jsonb) FROM PUBLIC;\nGRANT EXECUTE ON FUNCTION release_journal.claim_cas_v1(jsonb) TO release_journal_runtime;\n\nCREATE OR REPLACE FUNCTION release_journal.reserve_v1(request jsonb)\nRETURNS jsonb\nLANGUAGE plpgsql\nSECURITY DEFINER\nSET search_path = pg_catalog, release_journal, pg_temp\nAS $procedure$\nBEGIN\n  RAISE EXCEPTION USING ERRCODE = '0A000', MESSAGE = 'release journal implementation not installed';\nEND;\n$procedure$;\nALTER FUNCTION release_journal.reserve_v1(jsonb) OWNER TO release_journal_owner;\nREVOKE ALL ON FUNCTION release_journal.reserve_v1(jsonb) FROM PUBLIC;\nGRANT EXECUTE ON FUNCTION release_journal.reserve_v1(jsonb) TO release_journal_runtime;\n\nCREATE OR REPLACE FUNCTION release_journal.commit_v1(request jsonb)\nRETURNS jsonb\nLANGUAGE plpgsql\nSECURITY DEFINER\nSET search_path = pg_catalog, release_journal, pg_temp\nAS $procedure$\nBEGIN\n  RAISE EXCEPTION USING ERRCODE = '0A000', MESSAGE = 'release journal implementation not installed';\nEND;\n$procedure$;\nALTER FUNCTION release_journal.commit_v1(jsonb) OWNER TO release_journal_owner;\nREVOKE ALL ON FUNCTION release_journal.commit_v1(jsonb) FROM PUBLIC;\nGRANT EXECUTE ON FUNCTION release_journal.commit_v1(jsonb) TO release_journal_runtime;\n\nCREATE OR REPLACE FUNCTION release_journal.authorize_v1(request jsonb)\nRETURNS jsonb\nLANGUAGE plpgsql\nSECURITY DEFINER\nSET search_path = pg_catalog, release_journal, pg_temp\nAS $procedure$\nBEGIN\n  RAISE EXCEPTION USING ERRCODE = '0A000', MESSAGE = 'release journal implementation not installed';\nEND;\n$procedure$;\nALTER FUNCTION release_journal.authorize_v1(jsonb) OWNER TO release_journal_owner;\nREVOKE ALL ON FUNCTION release_journal.authorize_v1(jsonb) FROM PUBLIC;\nGRANT EXECUTE ON FUNCTION release_journal.authorize_v1(jsonb) TO release_journal_runtime;\n\nCREATE OR REPLACE FUNCTION release_journal.complete_v1(request jsonb)\nRETURNS jsonb\nLANGUAGE plpgsql\nSECURITY DEFINER\nSET search_path = pg_catalog, release_journal, pg_temp\nAS $procedure$\nBEGIN\n  RAISE EXCEPTION USING ERRCODE = '0A000', MESSAGE = 'release journal implementation not installed';\nEND;\n$procedure$;\nALTER FUNCTION release_journal.complete_v1(jsonb) OWNER TO release_journal_owner;\nREVOKE ALL ON FUNCTION release_journal.complete_v1(jsonb) FROM PUBLIC;\nGRANT EXECUTE ON FUNCTION release_journal.complete_v1(jsonb) TO release_journal_runtime;\n\nCOMMIT;",
+        "migration_sha256": "d45f4676dd251ba842cf9cc3ff1a6c9de05b56482eabb6afd1afa0d455d268f0",
+        "procedures": [
+          {
+            "name": "release_journal.claim_cas_v1",
+            "signature": "release_journal.claim_cas_v1(jsonb)",
+            "create_signature": "release_journal.claim_cas_v1(request jsonb)",
+            "implemented": false,
+            "failure_sqlstate": "0A000",
+            "writes_on_call": 0,
+            "security_definer": true,
+            "search_path": [
+              "pg_catalog",
+              "release_journal",
+              "pg_temp"
+            ],
+            "persistent_relation_references": "fully-qualified-release_journal-only",
+            "non_builtin_function_references": "fully-qualified-release_journal-only",
+            "builtin_function_references": "fully-qualified-pg_catalog-only",
+            "owner_role": "release_journal_owner",
+            "runtime_privileges": [
+              "EXECUTE"
+            ],
+            "public_execute_revoked": true,
+            "definition_sql": "CREATE OR REPLACE FUNCTION release_journal.claim_cas_v1(request jsonb)\nRETURNS jsonb\nLANGUAGE plpgsql\nSECURITY DEFINER\nSET search_path = pg_catalog, release_journal, pg_temp\nAS $procedure$\nBEGIN\n  RAISE EXCEPTION USING ERRCODE = '0A000', MESSAGE = 'release journal implementation not installed';\nEND;\n$procedure$;\nALTER FUNCTION release_journal.claim_cas_v1(jsonb) OWNER TO release_journal_owner;\nREVOKE ALL ON FUNCTION release_journal.claim_cas_v1(jsonb) FROM PUBLIC;\nGRANT EXECUTE ON FUNCTION release_journal.claim_cas_v1(jsonb) TO release_journal_runtime;",
+            "definition_sha256": "3b512d7f89ca5b5402cdc2797731f372122024d64446211bc4e67b73caa9b8af"
+          },
+          {
+            "name": "release_journal.reserve_v1",
+            "signature": "release_journal.reserve_v1(jsonb)",
+            "create_signature": "release_journal.reserve_v1(request jsonb)",
+            "implemented": false,
+            "failure_sqlstate": "0A000",
+            "writes_on_call": 0,
+            "security_definer": true,
+            "search_path": [
+              "pg_catalog",
+              "release_journal",
+              "pg_temp"
+            ],
+            "persistent_relation_references": "fully-qualified-release_journal-only",
+            "non_builtin_function_references": "fully-qualified-release_journal-only",
+            "builtin_function_references": "fully-qualified-pg_catalog-only",
+            "owner_role": "release_journal_owner",
+            "runtime_privileges": [
+              "EXECUTE"
+            ],
+            "public_execute_revoked": true,
+            "definition_sql": "CREATE OR REPLACE FUNCTION release_journal.reserve_v1(request jsonb)\nRETURNS jsonb\nLANGUAGE plpgsql\nSECURITY DEFINER\nSET search_path = pg_catalog, release_journal, pg_temp\nAS $procedure$\nBEGIN\n  RAISE EXCEPTION USING ERRCODE = '0A000', MESSAGE = 'release journal implementation not installed';\nEND;\n$procedure$;\nALTER FUNCTION release_journal.reserve_v1(jsonb) OWNER TO release_journal_owner;\nREVOKE ALL ON FUNCTION release_journal.reserve_v1(jsonb) FROM PUBLIC;\nGRANT EXECUTE ON FUNCTION release_journal.reserve_v1(jsonb) TO release_journal_runtime;",
+            "definition_sha256": "570d738a7fa5c70eabcf74e60deedca4164022a67343560d969f5f11aa907ba9"
+          },
+          {
+            "name": "release_journal.commit_v1",
+            "signature": "release_journal.commit_v1(jsonb)",
+            "create_signature": "release_journal.commit_v1(request jsonb)",
+            "implemented": false,
+            "failure_sqlstate": "0A000",
+            "writes_on_call": 0,
+            "security_definer": true,
+            "search_path": [
+              "pg_catalog",
+              "release_journal",
+              "pg_temp"
+            ],
+            "persistent_relation_references": "fully-qualified-release_journal-only",
+            "non_builtin_function_references": "fully-qualified-release_journal-only",
+            "builtin_function_references": "fully-qualified-pg_catalog-only",
+            "owner_role": "release_journal_owner",
+            "runtime_privileges": [
+              "EXECUTE"
+            ],
+            "public_execute_revoked": true,
+            "definition_sql": "CREATE OR REPLACE FUNCTION release_journal.commit_v1(request jsonb)\nRETURNS jsonb\nLANGUAGE plpgsql\nSECURITY DEFINER\nSET search_path = pg_catalog, release_journal, pg_temp\nAS $procedure$\nBEGIN\n  RAISE EXCEPTION USING ERRCODE = '0A000', MESSAGE = 'release journal implementation not installed';\nEND;\n$procedure$;\nALTER FUNCTION release_journal.commit_v1(jsonb) OWNER TO release_journal_owner;\nREVOKE ALL ON FUNCTION release_journal.commit_v1(jsonb) FROM PUBLIC;\nGRANT EXECUTE ON FUNCTION release_journal.commit_v1(jsonb) TO release_journal_runtime;",
+            "definition_sha256": "73a2c4234339a11d138b491e6800dae771fd5aa2c640283939238548ac13fc1f"
+          },
+          {
+            "name": "release_journal.authorize_v1",
+            "signature": "release_journal.authorize_v1(jsonb)",
+            "create_signature": "release_journal.authorize_v1(request jsonb)",
+            "implemented": false,
+            "failure_sqlstate": "0A000",
+            "writes_on_call": 0,
+            "security_definer": true,
+            "search_path": [
+              "pg_catalog",
+              "release_journal",
+              "pg_temp"
+            ],
+            "persistent_relation_references": "fully-qualified-release_journal-only",
+            "non_builtin_function_references": "fully-qualified-release_journal-only",
+            "builtin_function_references": "fully-qualified-pg_catalog-only",
+            "owner_role": "release_journal_owner",
+            "runtime_privileges": [
+              "EXECUTE"
+            ],
+            "public_execute_revoked": true,
+            "definition_sql": "CREATE OR REPLACE FUNCTION release_journal.authorize_v1(request jsonb)\nRETURNS jsonb\nLANGUAGE plpgsql\nSECURITY DEFINER\nSET search_path = pg_catalog, release_journal, pg_temp\nAS $procedure$\nBEGIN\n  RAISE EXCEPTION USING ERRCODE = '0A000', MESSAGE = 'release journal implementation not installed';\nEND;\n$procedure$;\nALTER FUNCTION release_journal.authorize_v1(jsonb) OWNER TO release_journal_owner;\nREVOKE ALL ON FUNCTION release_journal.authorize_v1(jsonb) FROM PUBLIC;\nGRANT EXECUTE ON FUNCTION release_journal.authorize_v1(jsonb) TO release_journal_runtime;",
+            "definition_sha256": "ef54b8490691ffa7169be14655c072c1bf27f29a5a77ceb1322a6115a3772dc7"
+          },
+          {
+            "name": "release_journal.complete_v1",
+            "signature": "release_journal.complete_v1(jsonb)",
+            "create_signature": "release_journal.complete_v1(request jsonb)",
+            "implemented": false,
+            "failure_sqlstate": "0A000",
+            "writes_on_call": 0,
+            "security_definer": true,
+            "search_path": [
+              "pg_catalog",
+              "release_journal",
+              "pg_temp"
+            ],
+            "persistent_relation_references": "fully-qualified-release_journal-only",
+            "non_builtin_function_references": "fully-qualified-release_journal-only",
+            "builtin_function_references": "fully-qualified-pg_catalog-only",
+            "owner_role": "release_journal_owner",
+            "runtime_privileges": [
+              "EXECUTE"
+            ],
+            "public_execute_revoked": true,
+            "definition_sql": "CREATE OR REPLACE FUNCTION release_journal.complete_v1(request jsonb)\nRETURNS jsonb\nLANGUAGE plpgsql\nSECURITY DEFINER\nSET search_path = pg_catalog, release_journal, pg_temp\nAS $procedure$\nBEGIN\n  RAISE EXCEPTION USING ERRCODE = '0A000', MESSAGE = 'release journal implementation not installed';\nEND;\n$procedure$;\nALTER FUNCTION release_journal.complete_v1(jsonb) OWNER TO release_journal_owner;\nREVOKE ALL ON FUNCTION release_journal.complete_v1(jsonb) FROM PUBLIC;\nGRANT EXECUTE ON FUNCTION release_journal.complete_v1(jsonb) TO release_journal_runtime;",
+            "definition_sha256": "6e5c27eb1e13728ccdec166d03e71c86aa17e5e6f08bdfe86d6c3e94368b2f9d"
+          }
+        ]
+      }
+    },
+    "github_dispatch_contract": {
+      "const": {
+        "schema": "codicarium.github-workflow-dispatch-contract/v1",
+        "request": {
+          "api_version_header": "X-GitHub-Api-Version",
+          "api_version": "2026-03-10",
+          "accept": "application/vnd.github+json",
+          "return_run_details": true
+        },
+        "publisher_request": {
+          "schema": "codicarium.publisher-dispatch-request/v2",
+          "evidence_class": "synthetic-conformance-fixture",
+          "publication_authority": false,
+          "fixture_set": "issue93-v2.0",
+          "fixture_identity_jcs_sha256": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "claim_key": "rel-v2-sha256:d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "claim_identity_jcs_sha256": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "active_source_revision": "2aee9b5ba6ed8be8dc848df482a43f6a3f33b712",
+          "protected_main_revision": "6b82f94bf0c41381bd43f96a04baf909dac7ec52",
+          "publisher_workflow_path": ".github/workflows/publish-release-v2.yaml",
+          "publisher_workflow_sha": "6b82f94bf0c41381bd43f96a04baf909dac7ec52",
+          "legacy_raw_identity": {
+            "authority": false,
+            "handoff_sha256": "8abe528bb32aaa47f8fc496c3571d4b91248f3ebfe4c8be29463a25277bd9e88",
+            "dispatch_sha256": "b150fa8dad70a207fb7a78f6a41ab1bc1430833ba70b86fdc2f08a13c7c11f3b"
+          }
+        },
+        "positive": {
+          "http_status": 200,
+          "response": {
+            "workflow_run_id": "9005001",
+            "workflow_run_url": "https://api.github.com/repos/codicarium/deployment-controller/actions/runs/9005001",
+            "workflow_run_html_url": "https://github.com/codicarium/deployment-controller/actions/runs/9005001"
+          },
+          "identity_source": "direct-response.workflow_run_id",
+          "outcome": "DIRECT_RUN_ID_ACCEPTED",
+          "journal_commit": true,
+          "automatic_retry": false
+        },
+        "no_body": {
+          "http_status": 204,
+          "response": null,
+          "outcome": "UNKNOWN_MANUAL",
+          "journal_commit": false,
+          "automatic_retry": false
+        }
+      }
+    },
+    "role_separation": {
+      "type": "object",
+      "required": [
+        "target_writer_can_sign_or_commit",
+        "signer_can_mutate_or_commit",
+        "committer_can_mutate_or_sign"
+      ],
+      "properties": {
+        "target_writer_can_sign_or_commit": {
+          "const": false
+        },
+        "signer_can_mutate_or_commit": {
+          "const": false
+        },
+        "committer_can_mutate_or_sign": {
+          "const": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "operations": {
+      "type": "array",
+      "minItems": 22,
+      "maxItems": 22,
+      "items": {
+        "type": "object",
+        "required": [
+          "operation",
+          "sequence",
+          "request",
+          "request_sha256",
+          "readback",
+          "readback_sha256"
+        ],
+        "properties": {
+          "operation": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sequence": {
+            "oneOf": [
+              {
+                "type": "string",
+                "pattern": "^(0|[1-9]|1[0-9])$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "request": {
+            "type": "object",
+            "required": [
+              "method",
+              "endpoint",
+              "actor_role",
+              "github_api",
+              "target_jcs",
+              "target_sha256"
+            ],
+            "properties": {
+              "method": {
+                "enum": [
+                  "POST",
+                  "PUT",
+                  "PATCH",
+                  "GET"
+                ]
+              },
+              "endpoint": {
+                "type": "string",
+                "minLength": 1
+              },
+              "actor_role": {
+                "type": "string",
+                "pattern": "^(verifier|publisher)-target-writer(-[0-9]{2})?$"
+              },
+              "github_api": {
+                "oneOf": [
+                  {
+                    "const": {
+                      "api_version_header": "X-GitHub-Api-Version",
+                      "api_version": "2026-03-10",
+                      "accept": "application/vnd.github+json",
+                      "return_run_details": true
+                    }
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "target_jcs": {
+                "type": "string",
+                "minLength": 2
+              },
+              "target_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            },
+            "additionalProperties": false
+          },
+          "request_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "readback": {
+            "type": "object",
+            "required": [
+              "status",
+              "endpoint",
+              "target_sha256",
+              "state_jcs",
+              "state_sha256"
+            ],
+            "properties": {
+              "status": {
+                "enum": [
+                  200,
+                  201
+                ]
+              },
+              "endpoint": {
+                "type": "string",
+                "minLength": 1
+              },
+              "target_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "state_jcs": {
+                "type": "string",
+                "minLength": 2
+              },
+              "state_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            },
+            "additionalProperties": false
+          },
+          "readback_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "entries": {
+      "type": "array",
+      "minItems": 45,
+      "maxItems": 45,
+      "items": {
+        "type": "object",
+        "required": [
+          "entry",
+          "entry_sha256"
+        ],
+        "properties": {
+          "entry": {
+            "type": "object",
+            "required": [
+              "body",
+              "signature"
+            ],
+            "properties": {
+              "body": {
+                "type": "object",
+                "required": [
+                  "schema",
+                  "evidence_class",
+                  "publication_authority",
+                  "fixture_set",
+                  "fixture_identity_jcs_sha256",
+                  "journal_id",
+                  "ordinal",
+                  "event",
+                  "claim_key",
+                  "publication_sequence",
+                  "previous_entry_sha256",
+                  "payload",
+                  "actor",
+                  "created_at"
+                ],
+                "properties": {
+                  "schema": {
+                    "const": "codicarium.release-journal-entry/v1"
+                  },
+                  "evidence_class": {
+                    "const": "synthetic-conformance-fixture"
+                  },
+                  "publication_authority": {
+                    "const": false
+                  },
+                  "fixture_set": {
+                    "const": "issue93-v2.0"
+                  },
+                  "fixture_identity_jcs_sha256": {
+                    "const": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9"
+                  },
+                  "journal_id": {
+                    "type": "string",
+                    "pattern": "^jrnl-v1-[0-9a-f]{32}$"
+                  },
+                  "ordinal": {
+                    "type": "string",
+                    "pattern": "^[1-9][0-9]*$"
+                  },
+                  "event": {
+                    "enum": [
+                      "claim",
+                      "verifier-dispatch-reserve",
+                      "verifier-dispatch-commit",
+                      "verification-authorization",
+                      "publisher-dispatch-reserve",
+                      "publisher-dispatch-commit",
+                      "mutation-reserve",
+                      "mutation-commit",
+                      "complete",
+                      "UNKNOWN_MANUAL"
+                    ]
+                  },
+                  "claim_key": {
+                    "type": "string",
+                    "pattern": "^rel-v2-sha256:[0-9a-f]{64}$"
+                  },
+                  "publication_sequence": {
+                    "oneOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(0|[1-9]|1[0-9])$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "previous_entry_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "payload": {
+                    "type": "object",
+                    "required": [
+                      "operation",
+                      "phase",
+                      "request_sha256",
+                      "result_sha256",
+                      "reservation_entry_sha256",
+                      "publication_receipt_sha256",
+                      "workflow_run_id",
+                      "outcome"
+                    ],
+                    "properties": {
+                      "operation": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "phase": {
+                        "enum": [
+                          "claim",
+                          "reserve",
+                          "commit",
+                          "authorize",
+                          "complete"
+                        ]
+                      },
+                      "request_sha256": {
+                        "oneOf": [
+                          {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{64}$"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "result_sha256": {
+                        "oneOf": [
+                          {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{64}$"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "reservation_entry_sha256": {
+                        "oneOf": [
+                          {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{64}$"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "publication_receipt_sha256": {
+                        "oneOf": [
+                          {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{64}$"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "workflow_run_id": {
+                        "oneOf": [
+                          {
+                            "type": "string",
+                            "pattern": "^[1-9][0-9]*$"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "outcome": {
+                        "enum": [
+                          "CLAIMED",
+                          "RESERVED",
+                          "COMMITTED",
+                          "AUTHORIZED",
+                          "COMPLETE",
+                          "UNKNOWN_MANUAL"
+                        ]
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  "actor": {
+                    "type": "object",
+                    "required": [
+                      "principal",
+                      "role",
+                      "capabilities",
+                      "can_mutate_targets",
+                      "can_sign",
+                      "can_commit"
+                    ],
+                    "properties": {
+                      "principal": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "role": {
+                        "enum": [
+                          "claimer",
+                          "reserver",
+                          "committer",
+                          "authorizer"
+                        ]
+                      },
+                      "capabilities": {
+                        "type": "array",
+                        "minItems": 1,
+                        "uniqueItems": true,
+                        "items": {
+                          "enum": [
+                            "journal:claim",
+                            "journal:reserve",
+                            "journal:commit",
+                            "journal:authorize",
+                            "journal:complete"
+                          ]
+                        }
+                      },
+                      "can_mutate_targets": {
+                        "const": false
+                      },
+                      "can_sign": {
+                        "const": false
+                      },
+                      "can_commit": {
+                        "type": "boolean"
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  "created_at": {
+                    "type": "string",
+                    "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])-([0-2][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]Z$"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "signature": {
+                "type": "object",
+                "required": [
+                  "format",
+                  "transit_key",
+                  "transit_key_version",
+                  "kid",
+                  "payload_sha256",
+                  "signature_base64url"
+                ],
+                "properties": {
+                  "format": {
+                    "const": "vault-transit-ed25519-jcs/v1"
+                  },
+                  "transit_key": {
+                    "const": "release-journal-v1"
+                  },
+                  "transit_key_version": {
+                    "const": "1"
+                  },
+                  "kid": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9_-]+$"
+                  },
+                  "payload_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "signature_base64url": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9_-]+$"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "additionalProperties": false
+          },
+          "entry_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "terminal_state": {
+      "const": "complete"
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,35 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Clean HEAD 9f4102e closes both loop-4 blockers. Source proof composition emits one value for each signed header, and deletion tombstones/status responses now yield workspace_deleted before dependency contract classification while preserving durable same-group offset commits. Focused regressions, builds, the real FastSystem flow, cleanup audit, and combined preflight review all pass.",
+  "changed_files": [
+    "services/knowledge-service/src/KnowledgeService.Infrastructure/KnowledgeGenerationResolver.cs",
+    "services/knowledge-service/src/KnowledgeService.Infrastructure/NpgsqlKnowledgeRepository.cs",
+    "services/knowledge-service/src/KnowledgeService.Worker/Program.cs",
+    "services/knowledge-service/src/KnowledgeService.Worker/Workers.cs",
+    "tests/knowledge-service/KnowledgeService.IntegrationTests/HttpKnowledgeGenerationResolverTests.cs",
+    "tests/knowledge-service/KnowledgeService.IntegrationTests/KafkaIntegrationTests.cs",
+    "tests/knowledge-service/KnowledgeService.IntegrationTests/KnowledgeWorkerCompositionTests.cs",
+    "tests/knowledge-service/KnowledgeService.IntegrationTests/PostgresLifecycleTests.cs"
+  ],
+  "validation": [
+    "Configured Source client plus real WorkloadProof regression passed 2/2 and asserts exactly one value for all six signed proof headers",
+    "HTTP resolver matrix passed 18/18, including deleting/deleted mapping plus unauthorized, malformed, and mismatched fail-closed cases",
+    "Kafka deletion regression passed with a stopped and restarted identical consumer group, one redacted workspace_deleted DLQ, and one subsequent active build",
+    "Negative mutation removing consumer.Commit for the deleted event failed as expected; restored implementation passed",
+    "Knowledge Worker Release build passed with 0 warnings and 0 errors; git diff --check passed",
+    "Explicit-Docker real Source-to-Knowledge bounded-outage replay flow passed 1/1 in 33 seconds",
+    "Post-flow audit found no scoped containers, networks, volumes, service processes, PID files, or temporary directories",
+    "Independent combined loop-4 preflight review found no blocking findings",
+    "Canonical branch HEAD is 9f4102ec5ce93111e876f0c4d2d9abd4bf5842f9 and the worktree is clean"
+  ],
+  "blockers": [],
+  "next_action": "Advance to a fresh full-branch backend and QA/system review at clean HEAD 9f4102e; waive no finding.",
+  "route_to": "review",
+  "risk_level": "high",
+  "independent_lanes": [
+    "backend workload-proof composition and lifecycle classification",
+    "QA durable Kafka offset and real system-flow regression"
+  ],
+  "requires_council": false
+}

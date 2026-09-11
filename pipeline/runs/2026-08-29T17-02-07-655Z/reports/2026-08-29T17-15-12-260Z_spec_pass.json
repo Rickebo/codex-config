@@ -1,0 +1,27 @@
+{
+  "stage": "spec",
+  "status": "pass",
+  "summary": "Corrected spec passed structural, traceability, testability, and three-perspective Luna council gates. It defines exact fail-closed RoleBinding admission semantics, inert defaults, break-glass-safe webhook filtering, and independent exact-head Kafka staging gates.",
+  "changed_files": [
+    "/home/rickebo/.codex/pipeline/runs/2026-08-29T17-02-07-655Z/feature-spec.json",
+    "/home/rickebo/.codex/pipeline/runs/2026-08-29T17-02-07-655Z/spec-check.json",
+    "/home/rickebo/.codex/pipeline/runs/2026-08-29T17-02-07-655Z/council.md"
+  ],
+  "validation": [
+    "pipeline-spec-check ok=true with all five quality gates true and no warnings",
+    "Independent Luna planner, security, and QA council mandatory corrections incorporated",
+    "No repository or live desired-state mutation occurred during spec stage"
+  ],
+  "blockers": [],
+  "next_action": "Delegate deployment-controller issue #150 implementation to a Luna worker in a dedicated worktree; keep infra #1272 as an independently reviewed exact-head lane.",
+  "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-29T17-02-07-655Z/feature-spec.json",
+  "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-08-29T17-02-07-655Z/spec-check.json",
+  "council_file": "/home/rickebo/.codex/pipeline/runs/2026-08-29T17-02-07-655Z/council.md",
+  "requires_council": true,
+  "independent_lanes": [
+    "deployment-controller issue #150 implementation",
+    "infra PR #1272 merge-inert staging CI and review"
+  ],
+  "route_to": "code",
+  "risk_level": "critical"
+}

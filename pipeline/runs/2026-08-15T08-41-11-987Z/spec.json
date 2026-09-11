@@ -1,0 +1,78 @@
+{
+  "meta": {
+    "id": "SPEC-pr-validation-trust-boundary",
+    "title": "Protected preparation and secretless pull-request validation",
+    "author": "Codex manager",
+    "created_at": "2026-08-15T08:45:00Z",
+    "version": "1.0.0"
+  },
+  "feature": {
+    "problem_statement": "Infra and runner-config pull-request-controlled validation currently receives Nexus or private-repository credentials, allowing candidate code to exfiltrate persistent credentials.",
+    "goals": [
+      "Move all authenticated preparation into workflows and scripts loaded from protected main.",
+      "Give candidate validation only digest-bound non-secret artifacts.",
+      "Keep activation and bootstrap reconciliation fail closed."
+    ],
+    "non_goals": [
+      "Changing credential values or permissions.",
+      "Dispatching activation or mutating live infrastructure.",
+      "Making the current infra pull request directly deployable."
+    ],
+    "scope_in": [
+      "Focused protected-main prerequisite workflows in infra and runner-config.",
+      "Secretless updates to infra PR 1070 and runner-config PR 27.",
+      "Authenticated protected-main runner-config revision verification and post-merge lock candidate production."
+    ],
+    "scope_out": [
+      "Vault PR 196.",
+      "Main PR merges and live activation."
+    ]
+  },
+  "requirements": [
+    {"id":"REQ-001","priority":"MUST","statement":"Pull-request-controlled workflows, scripts, lockfiles, and jobs MUST receive no Nexus credentials, deploy key, SSH agent, or persistent credential.","rationale":"Candidate code must not be able to exfiltrate trusted credentials."},
+    {"id":"REQ-002","priority":"MUST","statement":"A protected-main workflow MUST prepare only fixed allowlisted exact-hash Nexus artifacts and, for infra, one fixed runner-config SHA, without executing candidate code.","rationale":"Preparation remains deterministic and base-controlled."},
+    {"id":"REQ-003","priority":"MUST","statement":"Untrusted validation MUST run in a separate secretless job and verify a manifest binding candidate SHA, trusted workflow SHA, runner SHA where applicable, and every artifact digest before executing candidate tests.","rationale":"Safe artifacts must not be substitutable or stale."},
+    {"id":"REQ-004","priority":"MUST","statement":"The protected activation producer MUST authenticate to the GitHub API and prove runner-config main is protected and resolves to the exact approved SHA without unauthenticated ls-remote.","rationale":"Private repository revision trust requires authenticated protected-branch evidence."},
+    {"id":"REQ-005","priority":"MUST","statement":"Bootstrap and validation tool acquisition MUST use fixed Nexus paths and hashes only, with no public fallback, while the checked-in infra PR bootstrap stays unsyncable.","rationale":"Tool provenance and deployment safety must remain fail closed."},
+    {"id":"REQ-006","priority":"MUST","statement":"A protected-main post-merge workflow MUST generate a digest-bound lock-materialization candidate artifact for separate review and MUST NOT apply or commit it automatically.","rationale":"The future merge SHA cannot be safely embedded in the current PR."}
+  ],
+  "acceptance_criteria": [
+    {"id":"AC-001","requirement_ids":["REQ-001"],"scenario":"Given a candidate modifies any PR workflow or script, when PR validation runs, then no candidate-controlled job receives a secret expression, deploy key, SSH agent, or persisted checkout credential."},
+    {"id":"AC-002","requirement_ids":["REQ-002"],"scenario":"Given a trusted preparation event, when artifacts are fetched, then the executed workflow and preparer come from protected main and candidate-controlled URLs, commands, scripts, and lockfiles are never used."},
+    {"id":"AC-003","requirement_ids":["REQ-003"],"scenario":"Given a missing, altered, stale, or cross-PR preparation bundle, when candidate validation starts, then manifest verification fails before candidate tests execute."},
+    {"id":"AC-004","requirement_ids":["REQ-004"],"scenario":"Given runner-config main is missing, unprotected, or resolves to a different SHA, when activation production starts, then it fails before cluster or signing work."},
+    {"id":"AC-005","requirement_ids":["REQ-005"],"scenario":"Given validation or bootstrap needs Python, Helm, or kubectl, when acquisition occurs, then only fixed Nexus URLs with exact hashes are accepted and the PR bootstrap Application remains excluded."},
+    {"id":"AC-006","requirement_ids":["REQ-006"],"scenario":"Given infra is merged to protected main, when the lock-materialization workflow runs, then it emits a reviewable exact-revision patch artifact but performs no commit, sync, or apply."}
+  ],
+  "test_plan": [
+    {"id":"TST-001","type":"automated","requirement_ids":["REQ-001"],"approach":"Parse workflows and scripts; reject secret expressions, SSH/deploy-key use, credential environment, or persisted checkouts in all candidate jobs."},
+    {"id":"TST-002","type":"automated","requirement_ids":["REQ-002"],"approach":"Assert pull_request_target/base-source trust, exact workflow/preparer SHA verification, fixed allowlists, and absence of candidate execution in trusted jobs."},
+    {"id":"TST-003","type":"automated","requirement_ids":["REQ-003"],"approach":"Exercise manifest verification negatives for candidate SHA, trusted SHA, runner SHA, artifact digest, missing file, and additional file drift."},
+    {"id":"TST-004","type":"automated","requirement_ids":["REQ-004"],"approach":"Mock authenticated GitHub branch API responses for exact protected success and missing, unprotected, or mismatched failure."},
+    {"id":"TST-005","type":"automated","requirement_ids":["REQ-005"],"approach":"Scan changed workflows and acquisition code for public endpoints, mutable URLs, missing hashes, and active bootstrap Application resources."},
+    {"id":"TST-006","type":"automated","requirement_ids":["REQ-006"],"approach":"Validate post-merge-only trigger, protected-main API binding, patch artifact digest, and absence of commit/apply/sync commands."}
+  ],
+  "traceability": [
+    {"requirement_id":"REQ-001","acceptance_ids":["AC-001"],"test_ids":["TST-001"],"review_checks":["Review every candidate job and workflow for credential reachability."],"validation_checks":["Static secret-boundary suite passes in both repositories."]},
+    {"requirement_id":"REQ-002","acceptance_ids":["AC-002"],"test_ids":["TST-002"],"review_checks":["Review event source, workflow SHA verification, allowlists, and job isolation."],"validation_checks":["Trusted-preparer contract tests pass."]},
+    {"requirement_id":"REQ-003","acceptance_ids":["AC-003"],"test_ids":["TST-003"],"review_checks":["Review manifest canonicalization and all SHA/digest bindings."],"validation_checks":["All bundle negative fixtures fail before test execution."]},
+    {"requirement_id":"REQ-004","acceptance_ids":["AC-004"],"test_ids":["TST-004"],"review_checks":["Review authenticated API request and protected-branch checks."],"validation_checks":["Protected-main revision API tests pass."]},
+    {"requirement_id":"REQ-005","acceptance_ids":["AC-005"],"test_ids":["TST-005"],"review_checks":["Review all Python, Helm, and kubectl acquisition paths and bootstrap kustomization."],"validation_checks":["Nexus-only and unsyncable-bootstrap tests pass."]},
+    {"requirement_id":"REQ-006","acceptance_ids":["AC-006"],"test_ids":["TST-006"],"review_checks":["Review post-merge artifact-only behavior and exact revision binding."],"validation_checks":["Lock-materialization contract tests pass."]}
+  ],
+  "quality_gates": {
+    "spec_review_required": true,
+    "testability_required": true,
+    "traceability_required": true
+  },
+  "council": {
+    "perspectives": [
+      {"role":"security","summary":"Secrets exist only in protected-main preparation jobs; candidate execution occurs only after job isolation with verified non-secret bundles."},
+      {"role":"GitHub Actions","summary":"Base-controlled pull_request_target prerequisites are required before candidate workflows are made secretless."},
+      {"role":"supply chain","summary":"All inputs are fixed allowlisted Nexus objects or an exact authenticated protected runner SHA and are digest-bound."},
+      {"role":"GitOps","summary":"The current bootstrap remains unsyncable and post-merge output is a review artifact, never an automatic apply."}
+    ],
+    "consensus_summary":"Proceed through focused prerequisite PRs first, then remove credentials from both existing main PRs and validate the complete boundary.",
+    "open_questions":[]
+  }
+}

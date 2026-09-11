@@ -1,0 +1,25 @@
+{
+  "stage": "validation",
+  "status": "pass",
+  "summary": "Exact clean commit 87de899 is locally release-ready. REQ-001 through REQ-009 are proven by source audit, focused tests, workflow lint, and parser checks. REQ-010 remains the explicitly post-merge live acceptance gate: automatic v0.6.13 publication and absence of v0.6.14 must be observed without manual release actions.",
+  "changed_files": [],
+  "validation": [
+    "Scope: clean HEAD 87de899f1d8f495045399d187f19e65e2da4e701 exactly; baseline ad52dfcbc45d71eccad1d49fbd905161af7a44b1; git diff --check passed.",
+    "REQ-001: Release Verify's post-verify, API-only handoff explicitly dispatches publish-release.yaml; Publish Release has workflow_dispatch only, so publication does not depend on token recursion.",
+    "REQ-002: dispatch-publish has only actions/checks write plus contents read, no checkout or shell; existing verify/publisher jobs retain their scoped OIDC, contents, and packages permissions.",
+    "REQ-003: publisher validates protected-main policy SHA and exact verifier, handoff check, coordinator/check, CI, tag/source, run/attempt, workflow, event, repo/ref, terminal success, and external IDs before writes.",
+    "REQ-004/005: planner prioritizes the highest reachable unpublished/exact-draft stable tag and preserves its SHA; resume requires unique exact successful CI and authenticated historical coordinator proof.",
+    "REQ-006: non-canceling automatic and per-tag publisher concurrency, atomic createRef, state re-reads, exact-public no-op, and duplicate/conflict rejection preserve serialization, create-only behavior, and idempotence.",
+    "REQ-007: publisher downloads by validated verifier run/attempt/source and re-verifies closed artifact sets, attestations, graph, manifest, chart, and image identities before existing promotion/publication stages.",
+    "REQ-008: normal publisher evidence requires workflow_dispatch at refs/heads/main; workflow_run provenance is accepted only with the explicit legacy opt-in exercised by historical recovery.",
+    "REQ-009: focused suites cover v0.6.13 chore/fix follow-ups, exact CI, invalid/duplicate identities, terminal verifier states/reruns, concurrency/idempotence, permissions, provenance, artifacts, and no workflow_run trigger.",
+    "Fresh local gates: make test-release-flow passed (26+6+46+2+14+11+6 tests plus policy/asset suites); handoff-policy target, repository validation, actionlint, and diff check passed.",
+    "Parse evidence: actionlint parsed all workflows; node --check passed both changed JS policy/test files; direct compile() passed all seven changed Python files; pipeline inputs parsed with jq.",
+    "REQ-010 residual/live gate: after merge, observe automatic CI/coordinator/verifier/publisher success, public v0.6.13 source ad52dfc and digests, no v0.6.14 tag/release, and no manual tag/dispatch/release action; record on issue #91."
+  ],
+  "blockers": [],
+  "next_action": "Advance this local validation pass to done, then merge through the PR workflow and complete REQ-010/AC-006 using read-only live evidence; any manual release action or unexpected v0.6.14 fails acceptance.",
+  "route_to": "done",
+  "risk_level": "high",
+  "issues": []
+}

@@ -1,0 +1,25 @@
+{
+  "stage": "test",
+  "status": "fail",
+  "summary": "Feature-specific render, Helm, static-policy, gate-matrix, and isolated backup fixture checks passed. The repository-wide Python suite has two baseline failures outside this change, so the required code-level test gate is not complete.",
+  "changed_files": [],
+  "validation": [
+    "pytest -q tests/test_workspace_context_llm_proxy_gitops.py: 8 passed.",
+    "./workspace-context/tests/static.sh: passed; gate-off and evidence render checks passed.",
+    "helm lint workspace-context and helm lint llm-proxy: both passed.",
+    "Exact Argo inline gate-off renders: both deterministic; no live workload/storage kinds rendered.",
+    "Workspace-context legal/illegal gate matrix: all legal cases rendered and all expected failures rejected.",
+    "llm-proxy legal/illegal gate matrix: database, workloads, backup, restore passed; illegal cases rejected.",
+    "Isolated fake pg_dump/Kopia fixtures: final-path checksums, retention, manifests, and snapshot handoff/readback passed.",
+    "Protected-path and historical-PVC diff checks: clean; no protected target files changed and no Longhorn/historical-PVC output.",
+    "Full PYTHONPATH=. pytest -q: failed in two unrelated baseline tests: servarr synthetic exporter and Codicarium service bridge.",
+    "pipeline-ci-check.mjs --run-dir canonical run: ok=true, checked_runs=1, failed_runs=0, warnings=0."
+  ],
+  "blockers": [
+    "The full Python regression suite has two failures outside the changed feature scope; the stage contract requires all required code-level tests to pass.",
+    "A custom storage assertion probe stopped on a harness duplicate-name keying error for paired PV/PVC objects; the targeted 8-test GitOps suite still passed its storage/security contract checks.",
+    "Runtime/provider/NAS/restore/deploy evidence was intentionally not performed and remains a downstream validation gate."
+  ],
+  "next_action": "Route to code to reconcile the two repository-wide Python failures, then rerun the full Python/static test gate before returning to validation.",
+  "route_to": "code"
+}

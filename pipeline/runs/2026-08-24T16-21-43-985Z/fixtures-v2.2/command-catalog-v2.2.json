@@ -1,0 +1,665 @@
+[
+  {
+    "id": "CMD-01-BASELINE-INVENTORY",
+    "payload_schema": "codicarium.baseline-inventory/v2",
+    "executor_digest": "9d7cd34bcc1c60049ef9dbd832826c9d214dc7cb7d1f4172b32259e70dc00760",
+    "argv": [
+      "/opt/codicarium/bin/evidence-command",
+      "--operation=baseline-inventory",
+      "--no-activation"
+    ],
+    "allowed_targets": [
+      "github",
+      "artifact",
+      "kubernetes"
+    ],
+    "max_age_seconds": 300,
+    "identity": "exact-workflow-or-kubernetes-principal",
+    "predicate": "PRED-01-BASELINE-INVENTORY"
+  },
+  {
+    "id": "CMD-02-COUNCIL-DECISION",
+    "payload_schema": "codicarium.council-decision/v2",
+    "executor_digest": "62e605354232050ddfdc61430a9cfc0617c97a1ad68efca83956591bbca46f39",
+    "argv": [
+      "/opt/codicarium/bin/evidence-command",
+      "--operation=council-decision",
+      "--no-activation"
+    ],
+    "allowed_targets": [
+      "github",
+      "artifact",
+      "kubernetes"
+    ],
+    "max_age_seconds": 300,
+    "identity": "exact-workflow-or-kubernetes-principal",
+    "predicate": "PRED-02-COUNCIL-DECISION"
+  },
+  {
+    "id": "CMD-03-REPOSITORY-CREATE",
+    "payload_schema": "codicarium.repository-create/v2",
+    "executor_digest": "12e78c6d36db146f0c3be92da16a4d2924fee84751af558b5dfe247415b25491",
+    "argv": [
+      "/opt/codicarium/bin/evidence-command",
+      "--operation=repository-create",
+      "--no-activation"
+    ],
+    "allowed_targets": [
+      "github",
+      "artifact",
+      "kubernetes"
+    ],
+    "max_age_seconds": 300,
+    "identity": "exact-workflow-or-kubernetes-principal",
+    "predicate": "PRED-03-REPOSITORY-CREATE"
+  },
+  {
+    "id": "CMD-04-REPOSITORY-READBACK",
+    "payload_schema": "codicarium.repository-readback/v2",
+    "executor_digest": "e3d2e892d98c1f503143fb18511ff0123740338b22dcc8b3d29b05653f4cedf1",
+    "argv": [
+      "/opt/codicarium/bin/evidence-command",
+      "--operation=repository-readback",
+      "--no-activation"
+    ],
+    "allowed_targets": [
+      "github",
+      "artifact",
+      "kubernetes"
+    ],
+    "max_age_seconds": 300,
+    "identity": "exact-workflow-or-kubernetes-principal",
+    "predicate": "PRED-04-REPOSITORY-READBACK"
+  },
+  {
+    "id": "CMD-05-REPOSITORY-BINDING",
+    "payload_schema": "codicarium.repository-binding/v2",
+    "executor_digest": "5c44dae89ad0c6f602c190a44f994e4d3f53ac1bd21b16dcd77f4d7e2a4f1818",
+    "argv": [
+      "/opt/codicarium/bin/evidence-command",
+      "--operation=repository-binding",
+      "--no-activation"
+    ],
+    "allowed_targets": [
+      "github",
+      "artifact",
+      "kubernetes"
+    ],
+    "max_age_seconds": 300,
+    "identity": "exact-workflow-or-kubernetes-principal",
+    "predicate": "PRED-05-REPOSITORY-BINDING"
+  },
+  {
+    "id": "CMD-06-GIT-TREE-READBACK",
+    "payload_schema": "codicarium.git-tree-readback/v2",
+    "executor_digest": "18a32d701aee5ed4c75e2a1d2c913cc00ccc3604a5e19570e3a2136002640ef3",
+    "argv": [
+      "/opt/codicarium/bin/evidence-command",
+      "--operation=git-tree-readback",
+      "--no-activation"
+    ],
+    "allowed_targets": [
+      "github",
+      "artifact",
+      "kubernetes"
+    ],
+    "max_age_seconds": 300,
+    "identity": "exact-workflow-or-kubernetes-principal",
+    "predicate": "PRED-06-GIT-TREE-READBACK"
+  },
+  {
+    "id": "CMD-07-GITHUB-POLICY-INVENTORY",
+    "payload_schema": "codicarium.github-policy-inventory/v2",
+    "executor_digest": "9a810a0b6f4b5ece23a4e60abed0866b663378a68f3c6deb562e789771b70e79",
+    "argv": [
+      "/opt/codicarium/bin/evidence-command",
+      "--operation=github-policy-inventory",
+      "--no-activation"
+    ],
+    "allowed_targets": [
+      "github",
+      "artifact",
+      "kubernetes"
+    ],
+    "max_age_seconds": 300,
+    "identity": "exact-workflow-or-kubernetes-principal",
+    "predicate": "PRED-07-GITHUB-POLICY-INVENTORY"
+  },
+  {
+    "id": "CMD-08-ADMIN-BYPASS-INVENTORY",
+    "payload_schema": "codicarium.admin-bypass-inventory/v2",
+    "executor_digest": "fa8e37860fb35644c9dea7e9201549ce62a92ebc7221f8414628ea8f52563b72",
+    "argv": [
+      "/opt/codicarium/bin/evidence-command",
+      "--operation=admin-bypass-inventory",
+      "--no-activation"
+    ],
+    "allowed_targets": [
+      "github",
+      "artifact",
+      "kubernetes"
+    ],
+    "max_age_seconds": 300,
+    "identity": "exact-workflow-or-kubernetes-principal",
+    "predicate": "PRED-08-ADMIN-BYPASS-INVENTORY"
+  },
+  {
+    "id": "CMD-09-LANE-REVIEW",
+    "payload_schema": "codicarium.lane-review/v2",
+    "executor_digest": "5ad95d1457dcb20d3fa8bbce4c8eb7e6d58655309c299c207299876ad31d2cb7",
+    "argv": [
+      "/opt/codicarium/bin/evidence-command",
+      "--operation=lane-review",
+      "--no-activation"
+    ],
+    "allowed_targets": [
+      "github",
+      "artifact",
+      "kubernetes"
+    ],
+    "max_age_seconds": 300,
+    "identity": "exact-workflow-or-kubernetes-principal",
+    "predicate": "PRED-09-LANE-REVIEW"
+  },
+  {
+    "id": "CMD-10-PROTECTED-CHECKS",
+    "payload_schema": "codicarium.protected-checks/v2",
+    "executor_digest": "26369509b90d09f60a4e0667ed2988d813e6dab262d2a109ad7e886d895bb4a1",
+    "argv": [
+      "/opt/codicarium/bin/evidence-command",
+      "--operation=protected-checks",
+      "--no-activation"
+    ],
+    "allowed_targets": [
+      "github",
+      "artifact",
+      "kubernetes"
+    ],
+    "max_age_seconds": 300,
+    "identity": "exact-workflow-or-kubernetes-principal",
+    "predicate": "PRED-10-PROTECTED-CHECKS"
+  },
+  {
+    "id": "CMD-11-GUARDED-MERGE",
+    "payload_schema": "codicarium.guarded-merge/v2",
+    "executor_digest": "23c6dd9f8ce9ceabe1ca14a4044557013b312a22759e97def7675cf5a4fbe022",
+    "argv": [
+      "/opt/codicarium/bin/evidence-command",
+      "--operation=guarded-merge",
+      "--no-activation"
+    ],
+    "allowed_targets": [
+      "github",
+      "artifact",
+      "kubernetes"
+    ],
+    "max_age_seconds": 300,
+    "identity": "exact-workflow-or-kubernetes-principal",
+    "predicate": "PRED-11-GUARDED-MERGE"
+  },
+  {
+    "id": "CMD-12-POSTMERGE-MAIN",
+    "payload_schema": "codicarium.postmerge-main/v2",
+    "executor_digest": "4e5ed8c8c31dd4ed17bbcbfa82b5318cf8b5828a4a1fdf36e18ac3b45cce8399",
+    "argv": [
+      "/opt/codicarium/bin/evidence-command",
+      "--operation=postmerge-main",
+      "--no-activation"
+    ],
+    "allowed_targets": [
+      "github",
+      "artifact",
+      "kubernetes"
+    ],
+    "max_age_seconds": 300,
+    "identity": "exact-workflow-or-kubernetes-principal",
+    "predicate": "PRED-12-POSTMERGE-MAIN"
+  },
+  {
+    "id": "CMD-13-NAMESPACE-ADMISSION",
+    "payload_schema": "codicarium.namespace-admission/v2",
+    "executor_digest": "f092b85918e1152d7b558ba2fe24b8513ca65cee4a90fa8628edff169f0d6a08",
+    "argv": [
+      "/opt/codicarium/bin/evidence-command",
+      "--operation=namespace-admission",
+      "--no-activation"
+    ],
+    "allowed_targets": [
+      "github",
+      "artifact",
+      "kubernetes"
+    ],
+    "max_age_seconds": 300,
+    "identity": "exact-workflow-or-kubernetes-principal",
+    "predicate": "PRED-13-NAMESPACE-ADMISSION"
+  },
+  {
+    "id": "CMD-14-NETWORK-CONFORMANCE",
+    "payload_schema": "codicarium.network-conformance/v2",
+    "executor_digest": "e8ea6e913a11803514f97ec34289a2b681ba8776e7fe1a1e2e966bc7aa798d39",
+    "argv": [
+      "/opt/codicarium/bin/evidence-command",
+      "--operation=network-conformance",
+      "--no-activation"
+    ],
+    "allowed_targets": [
+      "github",
+      "artifact",
+      "kubernetes"
+    ],
+    "max_age_seconds": 300,
+    "identity": "exact-workflow-or-kubernetes-principal",
+    "predicate": "PRED-14-NETWORK-CONFORMANCE"
+  },
+  {
+    "id": "CMD-15-VAULT-BOOTSTRAP",
+    "payload_schema": "codicarium.vault-bootstrap/v2",
+    "executor_digest": "b2c45d28283af21078748c418ceed1f1e2b496e03e3d583eb04e74e539e084e1",
+    "argv": [
+      "/opt/codicarium/bin/evidence-command",
+      "--operation=vault-bootstrap",
+      "--no-activation"
+    ],
+    "allowed_targets": [
+      "vault",
+      "kubernetes"
+    ],
+    "max_age_seconds": 300,
+    "identity": "exact-workflow-or-kubernetes-principal",
+    "predicate": "PRED-15-VAULT-BOOTSTRAP"
+  },
+  {
+    "id": "CMD-16-CNPG-CONTRACT",
+    "payload_schema": "codicarium.cnpg-contract/v2",
+    "executor_digest": "a4bd04b888ee91fa119f7ae9610a2a22fb00beaae16fc7c80a17b434601398fb",
+    "argv": [
+      "/opt/codicarium/bin/evidence-command",
+      "--operation=cnpg-contract",
+      "--no-activation"
+    ],
+    "allowed_targets": [
+      "kubernetes",
+      "postgres"
+    ],
+    "max_age_seconds": 300,
+    "identity": "exact-workflow-or-kubernetes-principal",
+    "predicate": "PRED-16-CNPG-CONTRACT"
+  },
+  {
+    "id": "CMD-17-CNPG-FAILURE",
+    "payload_schema": "codicarium.cnpg-failure/v2",
+    "executor_digest": "e6de6a862252f0aee0547f689b2770b9046cfd4c70c98384322b2ec4754d032a",
+    "argv": [
+      "/opt/codicarium/bin/evidence-command",
+      "--operation=cnpg-failure",
+      "--no-activation"
+    ],
+    "allowed_targets": [
+      "kubernetes",
+      "postgres"
+    ],
+    "max_age_seconds": 300,
+    "identity": "exact-workflow-or-kubernetes-principal",
+    "predicate": "PRED-17-CNPG-FAILURE"
+  },
+  {
+    "id": "CMD-18-SUCCESSOR-INERTNESS",
+    "payload_schema": "codicarium.successor-inertness/v2",
+    "executor_digest": "ba33a7efb4505ba336e0d0afe11cf50ded5c63716e8c05a593c64d32747f3f67",
+    "argv": [
+      "/opt/codicarium/bin/evidence-command",
+      "--operation=successor-inertness",
+      "--no-activation"
+    ],
+    "allowed_targets": [
+      "github",
+      "artifact",
+      "kubernetes"
+    ],
+    "max_age_seconds": 300,
+    "identity": "exact-workflow-or-kubernetes-principal",
+    "predicate": "PRED-18-SUCCESSOR-INERTNESS"
+  },
+  {
+    "id": "CMD-19-APPLICATION-SET",
+    "payload_schema": "codicarium.application-set/v2",
+    "executor_digest": "b5135e4ba21f67653fd5c8ed81d08337c1f34bc41e1633e82c88e898a20653cc",
+    "argv": [
+      "/opt/codicarium/bin/evidence-command",
+      "--operation=application-set",
+      "--no-activation"
+    ],
+    "allowed_targets": [
+      "github",
+      "artifact",
+      "kubernetes"
+    ],
+    "max_age_seconds": 300,
+    "identity": "exact-workflow-or-kubernetes-principal",
+    "predicate": "PRED-19-APPLICATION-SET"
+  },
+  {
+    "id": "CMD-20-LEGACY-RETIREMENT",
+    "payload_schema": "codicarium.legacy-retirement/v2",
+    "executor_digest": "1fb41e6b39edb6fa046e13e21ef829826d90e1bf6ca4fbd0ce6c8210ef0fa8de",
+    "argv": [
+      "/opt/codicarium/bin/evidence-command",
+      "--operation=legacy-retirement",
+      "--no-activation"
+    ],
+    "allowed_targets": [
+      "github",
+      "artifact",
+      "kubernetes"
+    ],
+    "max_age_seconds": 300,
+    "identity": "exact-workflow-or-kubernetes-principal",
+    "predicate": "PRED-20-LEGACY-RETIREMENT"
+  },
+  {
+    "id": "CMD-21-QUIESCENCE",
+    "payload_schema": "codicarium.quiescence/v2",
+    "executor_digest": "9cd0cd7771def009003c674d8d3d5375862cd22483b10f693d06b8a18ccd9e07",
+    "argv": [
+      "/opt/codicarium/bin/evidence-command",
+      "--operation=quiescence",
+      "--no-activation"
+    ],
+    "allowed_targets": [
+      "github",
+      "artifact",
+      "kubernetes"
+    ],
+    "max_age_seconds": 300,
+    "identity": "exact-workflow-or-kubernetes-principal",
+    "predicate": "PRED-21-QUIESCENCE"
+  },
+  {
+    "id": "CMD-22-GATE-INVENTORY",
+    "payload_schema": "codicarium.gate-inventory/v2",
+    "executor_digest": "646c27018868d9dc62b61a95304c8ed42675bcf1f15cc6fe9accbe0b7087e555",
+    "argv": [
+      "/opt/codicarium/bin/evidence-command",
+      "--operation=gate-inventory",
+      "--no-activation"
+    ],
+    "allowed_targets": [
+      "github",
+      "artifact",
+      "kubernetes"
+    ],
+    "max_age_seconds": 300,
+    "identity": "exact-workflow-or-kubernetes-principal",
+    "predicate": "PRED-22-GATE-INVENTORY"
+  },
+  {
+    "id": "CMD-23-PREDICATE-RECOMPUTATION",
+    "payload_schema": "codicarium.predicate-recomputation/v2",
+    "executor_digest": "fe4467672581def522c4246917494578c888941dd326aace17d320db7cd058bb",
+    "argv": [
+      "/opt/codicarium/bin/evidence-command",
+      "--operation=predicate-recomputation",
+      "--no-activation"
+    ],
+    "allowed_targets": [
+      "github",
+      "artifact",
+      "kubernetes"
+    ],
+    "max_age_seconds": 300,
+    "identity": "exact-workflow-or-kubernetes-principal",
+    "predicate": "PRED-23-PREDICATE-RECOMPUTATION"
+  },
+  {
+    "id": "CMD-24-WORK-ITEM-AUTHORIZATION",
+    "payload_schema": "codicarium.work-item-authorization/v2",
+    "executor_digest": "676dc6eb46187c84a5987d04417005a2090ef764f8c955793fb565e5e6e6436b",
+    "argv": [
+      "/opt/codicarium/bin/evidence-command",
+      "--operation=work-item-authorization",
+      "--no-activation"
+    ],
+    "allowed_targets": [
+      "github",
+      "artifact",
+      "kubernetes"
+    ],
+    "max_age_seconds": 300,
+    "identity": "exact-workflow-or-kubernetes-principal",
+    "predicate": "PRED-24-WORK-ITEM-AUTHORIZATION"
+  },
+  {
+    "id": "CMD-25-ACTIVATION-EPOCH",
+    "payload_schema": "codicarium.activation-epoch/v2",
+    "executor_digest": "43d6c5759557071a5ac83d146ca4ee66cb0a7b87d6713a08975e86dfc3bcaba0",
+    "argv": [
+      "/opt/codicarium/bin/evidence-command",
+      "--operation=activation-epoch",
+      "--no-activation"
+    ],
+    "allowed_targets": [
+      "github",
+      "artifact",
+      "kubernetes"
+    ],
+    "max_age_seconds": 300,
+    "identity": "exact-workflow-or-kubernetes-principal",
+    "predicate": "PRED-25-ACTIVATION-EPOCH"
+  },
+  {
+    "id": "CMD-26-ISOLATION-READBACK",
+    "payload_schema": "codicarium.isolation-readback/v2",
+    "executor_digest": "4f8d689324638128a9e1f0cdb6ffe192e400956ff59ef65c2255f9f403c51d61",
+    "argv": [
+      "/opt/codicarium/bin/evidence-command",
+      "--operation=isolation-readback",
+      "--no-activation"
+    ],
+    "allowed_targets": [
+      "github",
+      "artifact",
+      "kubernetes"
+    ],
+    "max_age_seconds": 300,
+    "identity": "exact-workflow-or-kubernetes-principal",
+    "predicate": "PRED-26-ISOLATION-READBACK"
+  },
+  {
+    "id": "CMD-27-CANDIDATE-SOURCE-CAPABILITY",
+    "payload_schema": "codicarium.candidate-source-capability/v2",
+    "executor_digest": "566757e11cc2653682dca256df5ecdd8a109ca11984aaf6b30636e545b965a14",
+    "argv": [
+      "/opt/codicarium/bin/evidence-command",
+      "--operation=candidate-source-capability",
+      "--no-activation"
+    ],
+    "allowed_targets": [
+      "github",
+      "artifact",
+      "kubernetes"
+    ],
+    "max_age_seconds": 300,
+    "identity": "exact-workflow-or-kubernetes-principal",
+    "predicate": "PRED-27-CANDIDATE-SOURCE-CAPABILITY"
+  },
+  {
+    "id": "CMD-28-CLAIM-CAS",
+    "payload_schema": "codicarium.claim-cas/v2",
+    "executor_digest": "1e78de6d6b4195ad6ee8ce485e772037809083ff7002529200ce303362a30fd6",
+    "argv": [
+      "/opt/codicarium/bin/evidence-command",
+      "--operation=claim-cas",
+      "--no-activation"
+    ],
+    "allowed_targets": [
+      "github",
+      "artifact",
+      "kubernetes"
+    ],
+    "max_age_seconds": 300,
+    "identity": "exact-workflow-or-kubernetes-principal",
+    "predicate": "PRED-28-CLAIM-CAS"
+  },
+  {
+    "id": "CMD-29-VERIFIER-DISPATCH",
+    "payload_schema": "codicarium.verifier-dispatch/v2",
+    "executor_digest": "c9fad2771da60e9afa127e779f4143cefb8b569f25de9196f127f593944e9324",
+    "argv": [
+      "/opt/codicarium/bin/evidence-command",
+      "--operation=verifier-dispatch",
+      "--no-activation"
+    ],
+    "allowed_targets": [
+      "github",
+      "artifact",
+      "kubernetes"
+    ],
+    "max_age_seconds": 300,
+    "identity": "exact-workflow-or-kubernetes-principal",
+    "predicate": "PRED-29-VERIFIER-DISPATCH"
+  },
+  {
+    "id": "CMD-30-PUBLICATION-AUTHORIZATION",
+    "payload_schema": "codicarium.publication-authorization/v2",
+    "executor_digest": "e3e3b14302797fea1d917c64b2b866977a165971ee83d2045e81f9af9df63f6d",
+    "argv": [
+      "/opt/codicarium/bin/evidence-command",
+      "--operation=publication-authorization",
+      "--no-activation"
+    ],
+    "allowed_targets": [
+      "github",
+      "artifact",
+      "kubernetes"
+    ],
+    "max_age_seconds": 300,
+    "identity": "exact-workflow-or-kubernetes-principal",
+    "predicate": "PRED-30-PUBLICATION-AUTHORIZATION"
+  },
+  {
+    "id": "CMD-31-PUBLISHER-DISPATCH",
+    "payload_schema": "codicarium.publisher-dispatch/v2",
+    "executor_digest": "9f10a9c3a4ce8c48c51c683737224564127fa75223950451d58b5ed1abe7f635",
+    "argv": [
+      "/opt/codicarium/bin/evidence-command",
+      "--operation=publisher-dispatch",
+      "--no-activation"
+    ],
+    "allowed_targets": [
+      "github",
+      "artifact",
+      "kubernetes"
+    ],
+    "max_age_seconds": 300,
+    "identity": "exact-workflow-or-kubernetes-principal",
+    "predicate": "PRED-31-PUBLISHER-DISPATCH"
+  },
+  {
+    "id": "CMD-32-MUTATION-INTENT",
+    "payload_schema": "codicarium.mutation-intent/v2",
+    "executor_digest": "ee8845f472b710d41c9523a1318a046c91c6fc2fde1b10934954c6c33a757a6c",
+    "argv": [
+      "/opt/codicarium/bin/evidence-command",
+      "--operation=mutation-intent",
+      "--no-activation"
+    ],
+    "allowed_targets": [
+      "github",
+      "artifact",
+      "kubernetes"
+    ],
+    "max_age_seconds": 300,
+    "identity": "dedicated-four-party-principal",
+    "predicate": "PRED-32-MUTATION-INTENT"
+  },
+  {
+    "id": "CMD-33-MUTATION-READBACK",
+    "payload_schema": "codicarium.mutation-readback/v2",
+    "executor_digest": "2b5df10511c3e7a6b0afc4db14e03358d4a616c5db5112fa07e58f6c63e04026",
+    "argv": [
+      "/opt/codicarium/bin/evidence-command",
+      "--operation=mutation-readback",
+      "--no-activation"
+    ],
+    "allowed_targets": [
+      "github",
+      "artifact",
+      "kubernetes"
+    ],
+    "max_age_seconds": 300,
+    "identity": "dedicated-four-party-principal",
+    "predicate": "PRED-33-MUTATION-READBACK"
+  },
+  {
+    "id": "CMD-34-MUTATION-SIGNATURE",
+    "payload_schema": "codicarium.mutation-signature/v2",
+    "executor_digest": "61e0165440d777fe7e78f194135800ac8e647e8b8b631e58169db6e9aab5dead",
+    "argv": [
+      "/opt/codicarium/bin/evidence-command",
+      "--operation=mutation-signature",
+      "--no-activation"
+    ],
+    "allowed_targets": [
+      "github",
+      "artifact",
+      "kubernetes"
+    ],
+    "max_age_seconds": 300,
+    "identity": "dedicated-four-party-principal",
+    "predicate": "PRED-34-MUTATION-SIGNATURE"
+  },
+  {
+    "id": "CMD-35-MUTATION-COMMIT",
+    "payload_schema": "codicarium.mutation-commit/v2",
+    "executor_digest": "9d55e6a31af9feabf5a80157760157438fdfd18d0d5b99c358acb04fccbb8440",
+    "argv": [
+      "/opt/codicarium/bin/evidence-command",
+      "--operation=mutation-commit",
+      "--no-activation"
+    ],
+    "allowed_targets": [
+      "github",
+      "artifact",
+      "kubernetes"
+    ],
+    "max_age_seconds": 300,
+    "identity": "dedicated-four-party-principal",
+    "predicate": "PRED-35-MUTATION-COMMIT"
+  },
+  {
+    "id": "CMD-36-ADMIN-AUTHORIZATION",
+    "payload_schema": "codicarium.admin-authorization/v2",
+    "executor_digest": "f6f34488575b65b7522856e1f30256b06ba2142464f9aecbf3fb1aeedf1f35d4",
+    "argv": [
+      "/opt/codicarium/bin/evidence-command",
+      "--operation=admin-authorization",
+      "--no-activation"
+    ],
+    "allowed_targets": [
+      "github",
+      "artifact",
+      "kubernetes"
+    ],
+    "max_age_seconds": 300,
+    "identity": "exact-workflow-or-kubernetes-principal",
+    "predicate": "PRED-36-ADMIN-AUTHORIZATION"
+  },
+  {
+    "id": "CMD-37-FORWARD-RECOVERY",
+    "payload_schema": "codicarium.forward-recovery/v2",
+    "executor_digest": "192a4fc0b15aebab946c157322957d04d8eb3ca1d6ae92f3f9f177287e896638",
+    "argv": [
+      "/opt/codicarium/bin/evidence-command",
+      "--operation=forward-recovery",
+      "--no-activation"
+    ],
+    "allowed_targets": [
+      "github",
+      "artifact",
+      "kubernetes"
+    ],
+    "max_age_seconds": 300,
+    "identity": "exact-workflow-or-kubernetes-principal",
+    "predicate": "PRED-37-FORWARD-RECOVERY"
+  }
+]

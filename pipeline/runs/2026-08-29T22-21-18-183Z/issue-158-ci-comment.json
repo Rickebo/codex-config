@@ -1,0 +1,3 @@
+{
+  "body": "Fix PR #159 is open at exact independently reviewed head 91080852320997f19ff268b65b85fb7f0d0ef5bc. CI run 33283046799 passed all five protected checks. GitHub reports the PR MERGEABLE but BLOCKED solely on the enforced review policy because the sole CODEOWNER is also the PR author/last pusher. No merge or release retry has occurred; immutable release state remains untouched pending a safe independent approval path."
+}

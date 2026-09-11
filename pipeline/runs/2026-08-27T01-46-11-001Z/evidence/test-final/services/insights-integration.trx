@@ -1,0 +1,343 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="07c252c9-e8c0-44ff-8c6c-d90eb11a7d45" name="@RICKEBO 2026-08-27 05:33:51" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2026-08-27T05:33:51.7222077+02:00" queuing="2026-08-27T05:33:51.7222078+02:00" start="2026-08-27T05:33:51.1105282+02:00" finish="2026-08-27T05:34:18.3556542+02:00" />
+  <TestSettings name="default" id="25d3a466-ef0c-4905-9c5b-778adf887f08">
+    <Deployment runDeploymentRoot="_RICKEBO_2026-08-27_05_33_51" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="8d553e40-04d3-4b47-a3cf-1de15e7c9c66" testId="fd05a60a-70d9-fe61-42dc-cf8d4700e4a6" testName="InsightsService.IntegrationTests.PostgresInsightsStoreTests.Restart_during_active_lease_retries_same_offset_then_activates_exactly_once" computerName="RICKEBO" duration="00:00:00.0342659" startTime="2026-08-27T05:34:05.2047194+02:00" endTime="2026-08-27T05:34:09.0133383+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="8d553e40-04d3-4b47-a3cf-1de15e7c9c66" />
+    <UnitTestResult executionId="f2ec3486-a094-4d99-b25d-8a09eb448259" testId="dd93a314-56ec-40dd-f312-211d349aff71" testName="InsightsService.IntegrationTests.VerticalSliceTests.Two_commits_publish_full_then_incremental_and_fork_reuses_content_without_knowledge" computerName="RICKEBO" duration="00:00:00.0821427" startTime="2026-08-27T05:33:57.1232037+02:00" endTime="2026-08-27T05:34:01.4160141+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f2ec3486-a094-4d99-b25d-8a09eb448259" />
+    <UnitTestResult executionId="031dc3c9-5696-4dae-af1a-537e36c46850" testId="ab58f3cb-c66d-e17c-2f79-7eb48b424a69" testName="InsightsService.IntegrationTests.SourceArtifactClientTests.Retrieves_an_artifact_through_the_lease_only_source_contract" computerName="RICKEBO" duration="00:00:00.0006777" startTime="2026-08-27T05:33:51.6955868+02:00" endTime="2026-08-27T05:33:51.6956125+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="031dc3c9-5696-4dae-af1a-537e36c46850" />
+    <UnitTestResult executionId="4fffa71b-dfaf-43b7-be8f-46dd9b08ff05" testId="a2729585-1e9f-7562-6aa3-0edbd47aea1b" testName="InsightsService.IntegrationTests.S3ArtifactStoreTests.Put_get_reuse_and_delete_are_checksum_verified" computerName="RICKEBO" duration="00:00:00.3328552" startTime="2026-08-27T05:33:51.6100971+02:00" endTime="2026-08-27T05:33:55.4870285+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="4fffa71b-dfaf-43b7-be8f-46dd9b08ff05" />
+    <UnitTestResult executionId="0ca1c1c2-38e1-4999-b13d-71f9d7446404" testId="60d1f0ba-0121-d6b2-90b1-b037643e20cf" testName="InsightsService.IntegrationTests.SourceArtifactClientTests.Treats_a_replayed_one_time_lease_as_a_redacted_fetch_failure" computerName="RICKEBO" duration="00:00:00.0005297" startTime="2026-08-27T05:33:51.7010143+02:00" endTime="2026-08-27T05:33:51.7010510+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="0ca1c1c2-38e1-4999-b13d-71f9d7446404" />
+    <UnitTestResult executionId="a870c77a-6612-4863-8436-882b090e40bb" testId="5e0bacf2-e1d5-e303-2436-93f68ae52047" testName="InsightsService.IntegrationTests.PostgresInsightsStoreTests.Out_of_order_event_can_be_replayed_after_the_missing_sequence_arrives" computerName="RICKEBO" duration="00:00:00.0262181" startTime="2026-08-27T05:34:14.3754306+02:00" endTime="2026-08-27T05:34:18.2800487+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a870c77a-6612-4863-8436-882b090e40bb" />
+    <UnitTestResult executionId="8a4a22e3-c4df-4a91-89dc-956afa9240e3" testId="f0dff167-03eb-7f81-5c31-d57e370baafe" testName="InsightsService.IntegrationTests.PostgresInsightsStoreTests.Gap_replay_before_predecessor_remains_held_instead_of_becoming_accepted" computerName="RICKEBO" duration="00:00:00.0226861" startTime="2026-08-27T05:34:11.6314106+02:00" endTime="2026-08-27T05:34:14.3750999+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="8a4a22e3-c4df-4a91-89dc-956afa9240e3" />
+    <UnitTestResult executionId="7fccd71f-7ef9-4ecb-8980-0a521dcd3f02" testId="60072519-2433-0f98-4a12-625c1ae9cd7e" testName="InsightsService.IntegrationTests.PostgresInsightsStoreTests.Migration_inbox_publication_head_and_outbox_are_atomic_and_idempotent" computerName="RICKEBO" duration="00:00:00.4097673" startTime="2026-08-27T05:33:51.6100452+02:00" endTime="2026-08-27T05:33:56.7924481+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="7fccd71f-7ef9-4ecb-8980-0a521dcd3f02" />
+    <UnitTestResult executionId="89e10399-3794-47cd-924c-768629f8176d" testId="6ab0780d-6090-b596-5ee6-04b38ad234f8" testName="InsightsService.IntegrationTests.SourceArtifactClientTests.Reprocessing_the_same_artifact_creates_a_fresh_lease_after_the_first_is_redeemed" computerName="RICKEBO" duration="00:00:00.0754583" startTime="2026-08-27T05:33:51.6100762+02:00" endTime="2026-08-27T05:33:51.6898265+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="89e10399-3794-47cd-924c-768629f8176d" />
+    <UnitTestResult executionId="411a8d37-4f8e-4eff-aca9-6f82e820e4c3" testId="7dc6d041-9f5c-5d20-1681-21d1d20016d4" testName="InsightsService.IntegrationTests.PostgresInsightsStoreTests.Recreated_track_generation_accepts_sequence_one_without_reusing_old_offset" computerName="RICKEBO" duration="00:00:00.0343010" startTime="2026-08-27T05:33:56.7926969+02:00" endTime="2026-08-27T05:34:00.7349685+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="411a8d37-4f8e-4eff-aca9-6f82e820e4c3" />
+    <UnitTestResult executionId="c1800e25-68d4-4d34-ad02-ae03bb08957a" testId="0e5ca85f-89b0-0f94-0a85-7ea91457f81c" testName="InsightsService.IntegrationTests.VerticalSliceTests.Missing_object_id_algorithm_is_rejected_before_source_materialization" computerName="RICKEBO" duration="00:00:00.0929366" startTime="2026-08-27T05:33:51.6101076+02:00" endTime="2026-08-27T05:33:57.1230012+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="c1800e25-68d4-4d34-ad02-ae03bb08957a" />
+    <UnitTestResult executionId="dc1f1382-8d50-4815-996a-dae94cfdc6d3" testId="95bf26e9-cc4c-6352-1279-a816a16722d8" testName="InsightsService.IntegrationTests.SourceArtifactClientTests.Redacts_source_failure_bodies_and_bounds_retrieval" computerName="RICKEBO" duration="00:00:00.0017952" startTime="2026-08-27T05:33:51.6952353+02:00" endTime="2026-08-27T05:33:51.6952771+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="dc1f1382-8d50-4815-996a-dae94cfdc6d3" />
+    <UnitTestResult executionId="ffe8e181-d5f9-4e03-aa27-af2b90a9b3dc" testId="4c4efb26-0d5a-822e-fa7d-f3162a46f610" testName="InsightsService.IntegrationTests.PostgresInsightsStoreTests.Per_track_heads_never_move_backwards_and_workspace_deletion_denies_queries" computerName="RICKEBO" duration="00:00:00.0357141" startTime="2026-08-27T05:34:00.7352824+02:00" endTime="2026-08-27T05:34:02.4561247+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ffe8e181-d5f9-4e03-aa27-af2b90a9b3dc" />
+    <UnitTestResult executionId="b01ad891-4dec-4279-99c8-fabb7b173516" testId="aa9bb7ec-43de-fb58-d5fc-ae4e3c4d8c7d" testName="InsightsService.IntegrationTests.PostgresInsightsStoreTests.Newly_stale_event_is_terminal_and_replay_never_reclaims_it" computerName="RICKEBO" duration="00:00:00.0251865" startTime="2026-08-27T05:34:02.4563204+02:00" endTime="2026-08-27T05:34:05.2045072+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="b01ad891-4dec-4279-99c8-fabb7b173516" />
+    <UnitTestResult executionId="b7ff10b4-8d12-4344-adbb-9df1855091b4" testId="e6eeb16a-2242-2210-9c37-07479e5d28e6" testName="InsightsService.IntegrationTests.ApiQueryTests.Exact_summary_and_bounded_code_map_require_authorization_and_do_not_cross_workspaces" computerName="RICKEBO" duration="00:00:00.5229414" startTime="2026-08-27T05:33:51.6093322+02:00" endTime="2026-08-27T05:33:57.4235961+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="b7ff10b4-8d12-4344-adbb-9df1855091b4" />
+    <UnitTestResult executionId="fd285a94-651f-4b01-9edc-26f5e6c7452d" testId="136e5f21-165b-3729-53f2-e83f30196c4a" testName="InsightsService.IntegrationTests.SourceArtifactClientTests.Rejects_a_lease_for_the_wrong_consumer_audience" computerName="RICKEBO" duration="00:00:00.0013419" startTime="2026-08-27T05:33:51.6956648+02:00" endTime="2026-08-27T05:33:51.6956827+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="fd285a94-651f-4b01-9edc-26f5e6c7452d" />
+    <UnitTestResult executionId="2f7b0740-8c81-4852-a16e-91bd977bae4f" testId="e43c9155-5558-fade-2034-fa907f48ebee" testName="InsightsService.IntegrationTests.PythonContentAnalyzerTests.Fixed_python_runtime_is_used_by_the_domain_engine" computerName="RICKEBO" duration="00:00:00.2674499" startTime="2026-08-27T05:33:51.6100854+02:00" endTime="2026-08-27T05:33:51.8806606+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="2f7b0740-8c81-4852-a16e-91bd977bae4f" />
+    <UnitTestResult executionId="04d9c099-0845-4d49-9c49-121cc082a72e" testId="d412f094-2c3f-72fe-3046-55eeb570b6bb" testName="InsightsService.IntegrationTests.PostgresInsightsStoreTests.Duplicate_predecessor_redelivery_retries_pending_gap_after_drain_failure" computerName="RICKEBO" duration="00:00:00.0317328" startTime="2026-08-27T05:34:09.0136739+02:00" endTime="2026-08-27T05:34:11.6310587+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="04d9c099-0845-4d49-9c49-121cc082a72e" />
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="InsightsService.IntegrationTests.SourceArtifactClientTests.Rejects_a_lease_for_the_wrong_consumer_audience" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/insightsservice.integrationtests/bin/release/net10.0/insightsservice.integrationtests.dll" id="136e5f21-165b-3729-53f2-e83f30196c4a">
+      <Execution id="fd285a94-651f-4b01-9edc-26f5e6c7452d" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/InsightsService.IntegrationTests/bin/Release/net10.0/InsightsService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="InsightsService.IntegrationTests.SourceArtifactClientTests" name="Rejects_a_lease_for_the_wrong_consumer_audience" />
+    </UnitTest>
+    <UnitTest name="InsightsService.IntegrationTests.PostgresInsightsStoreTests.Migration_inbox_publication_head_and_outbox_are_atomic_and_idempotent" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/insightsservice.integrationtests/bin/release/net10.0/insightsservice.integrationtests.dll" id="60072519-2433-0f98-4a12-625c1ae9cd7e">
+      <Execution id="7fccd71f-7ef9-4ecb-8980-0a521dcd3f02" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/InsightsService.IntegrationTests/bin/Release/net10.0/InsightsService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="InsightsService.IntegrationTests.PostgresInsightsStoreTests" name="Migration_inbox_publication_head_and_outbox_are_atomic_and_idempotent" />
+    </UnitTest>
+    <UnitTest name="InsightsService.IntegrationTests.PostgresInsightsStoreTests.Newly_stale_event_is_terminal_and_replay_never_reclaims_it" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/insightsservice.integrationtests/bin/release/net10.0/insightsservice.integrationtests.dll" id="aa9bb7ec-43de-fb58-d5fc-ae4e3c4d8c7d">
+      <Execution id="b01ad891-4dec-4279-99c8-fabb7b173516" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/InsightsService.IntegrationTests/bin/Release/net10.0/InsightsService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="InsightsService.IntegrationTests.PostgresInsightsStoreTests" name="Newly_stale_event_is_terminal_and_replay_never_reclaims_it" />
+    </UnitTest>
+    <UnitTest name="InsightsService.IntegrationTests.PostgresInsightsStoreTests.Restart_during_active_lease_retries_same_offset_then_activates_exactly_once" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/insightsservice.integrationtests/bin/release/net10.0/insightsservice.integrationtests.dll" id="fd05a60a-70d9-fe61-42dc-cf8d4700e4a6">
+      <Execution id="8d553e40-04d3-4b47-a3cf-1de15e7c9c66" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/InsightsService.IntegrationTests/bin/Release/net10.0/InsightsService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="InsightsService.IntegrationTests.PostgresInsightsStoreTests" name="Restart_during_active_lease_retries_same_offset_then_activates_exactly_once" />
+    </UnitTest>
+    <UnitTest name="InsightsService.IntegrationTests.ApiQueryTests.Exact_summary_and_bounded_code_map_require_authorization_and_do_not_cross_workspaces" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/insightsservice.integrationtests/bin/release/net10.0/insightsservice.integrationtests.dll" id="e6eeb16a-2242-2210-9c37-07479e5d28e6">
+      <Execution id="b7ff10b4-8d12-4344-adbb-9df1855091b4" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/InsightsService.IntegrationTests/bin/Release/net10.0/InsightsService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="InsightsService.IntegrationTests.ApiQueryTests" name="Exact_summary_and_bounded_code_map_require_authorization_and_do_not_cross_workspaces" />
+    </UnitTest>
+    <UnitTest name="InsightsService.IntegrationTests.PostgresInsightsStoreTests.Gap_replay_before_predecessor_remains_held_instead_of_becoming_accepted" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/insightsservice.integrationtests/bin/release/net10.0/insightsservice.integrationtests.dll" id="f0dff167-03eb-7f81-5c31-d57e370baafe">
+      <Execution id="8a4a22e3-c4df-4a91-89dc-956afa9240e3" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/InsightsService.IntegrationTests/bin/Release/net10.0/InsightsService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="InsightsService.IntegrationTests.PostgresInsightsStoreTests" name="Gap_replay_before_predecessor_remains_held_instead_of_becoming_accepted" />
+    </UnitTest>
+    <UnitTest name="InsightsService.IntegrationTests.S3ArtifactStoreTests.Put_get_reuse_and_delete_are_checksum_verified" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/insightsservice.integrationtests/bin/release/net10.0/insightsservice.integrationtests.dll" id="a2729585-1e9f-7562-6aa3-0edbd47aea1b">
+      <Execution id="4fffa71b-dfaf-43b7-be8f-46dd9b08ff05" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/InsightsService.IntegrationTests/bin/Release/net10.0/InsightsService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="InsightsService.IntegrationTests.S3ArtifactStoreTests" name="Put_get_reuse_and_delete_are_checksum_verified" />
+    </UnitTest>
+    <UnitTest name="InsightsService.IntegrationTests.SourceArtifactClientTests.Treats_a_replayed_one_time_lease_as_a_redacted_fetch_failure" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/insightsservice.integrationtests/bin/release/net10.0/insightsservice.integrationtests.dll" id="60d1f0ba-0121-d6b2-90b1-b037643e20cf">
+      <Execution id="0ca1c1c2-38e1-4999-b13d-71f9d7446404" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/InsightsService.IntegrationTests/bin/Release/net10.0/InsightsService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="InsightsService.IntegrationTests.SourceArtifactClientTests" name="Treats_a_replayed_one_time_lease_as_a_redacted_fetch_failure" />
+    </UnitTest>
+    <UnitTest name="InsightsService.IntegrationTests.SourceArtifactClientTests.Redacts_source_failure_bodies_and_bounds_retrieval" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/insightsservice.integrationtests/bin/release/net10.0/insightsservice.integrationtests.dll" id="95bf26e9-cc4c-6352-1279-a816a16722d8">
+      <Execution id="dc1f1382-8d50-4815-996a-dae94cfdc6d3" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/InsightsService.IntegrationTests/bin/Release/net10.0/InsightsService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="InsightsService.IntegrationTests.SourceArtifactClientTests" name="Redacts_source_failure_bodies_and_bounds_retrieval" />
+    </UnitTest>
+    <UnitTest name="InsightsService.IntegrationTests.PostgresInsightsStoreTests.Out_of_order_event_can_be_replayed_after_the_missing_sequence_arrives" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/insightsservice.integrationtests/bin/release/net10.0/insightsservice.integrationtests.dll" id="5e0bacf2-e1d5-e303-2436-93f68ae52047">
+      <Execution id="a870c77a-6612-4863-8436-882b090e40bb" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/InsightsService.IntegrationTests/bin/Release/net10.0/InsightsService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="InsightsService.IntegrationTests.PostgresInsightsStoreTests" name="Out_of_order_event_can_be_replayed_after_the_missing_sequence_arrives" />
+    </UnitTest>
+    <UnitTest name="InsightsService.IntegrationTests.PostgresInsightsStoreTests.Recreated_track_generation_accepts_sequence_one_without_reusing_old_offset" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/insightsservice.integrationtests/bin/release/net10.0/insightsservice.integrationtests.dll" id="7dc6d041-9f5c-5d20-1681-21d1d20016d4">
+      <Execution id="411a8d37-4f8e-4eff-aca9-6f82e820e4c3" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/InsightsService.IntegrationTests/bin/Release/net10.0/InsightsService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="InsightsService.IntegrationTests.PostgresInsightsStoreTests" name="Recreated_track_generation_accepts_sequence_one_without_reusing_old_offset" />
+    </UnitTest>
+    <UnitTest name="InsightsService.IntegrationTests.VerticalSliceTests.Missing_object_id_algorithm_is_rejected_before_source_materialization" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/insightsservice.integrationtests/bin/release/net10.0/insightsservice.integrationtests.dll" id="0e5ca85f-89b0-0f94-0a85-7ea91457f81c">
+      <Execution id="c1800e25-68d4-4d34-ad02-ae03bb08957a" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/InsightsService.IntegrationTests/bin/Release/net10.0/InsightsService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="InsightsService.IntegrationTests.VerticalSliceTests" name="Missing_object_id_algorithm_is_rejected_before_source_materialization" />
+    </UnitTest>
+    <UnitTest name="InsightsService.IntegrationTests.SourceArtifactClientTests.Retrieves_an_artifact_through_the_lease_only_source_contract" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/insightsservice.integrationtests/bin/release/net10.0/insightsservice.integrationtests.dll" id="ab58f3cb-c66d-e17c-2f79-7eb48b424a69">
+      <Execution id="031dc3c9-5696-4dae-af1a-537e36c46850" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/InsightsService.IntegrationTests/bin/Release/net10.0/InsightsService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="InsightsService.IntegrationTests.SourceArtifactClientTests" name="Retrieves_an_artifact_through_the_lease_only_source_contract" />
+    </UnitTest>
+    <UnitTest name="InsightsService.IntegrationTests.VerticalSliceTests.Two_commits_publish_full_then_incremental_and_fork_reuses_content_without_knowledge" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/insightsservice.integrationtests/bin/release/net10.0/insightsservice.integrationtests.dll" id="dd93a314-56ec-40dd-f312-211d349aff71">
+      <Execution id="f2ec3486-a094-4d99-b25d-8a09eb448259" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/InsightsService.IntegrationTests/bin/Release/net10.0/InsightsService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="InsightsService.IntegrationTests.VerticalSliceTests" name="Two_commits_publish_full_then_incremental_and_fork_reuses_content_without_knowledge" />
+    </UnitTest>
+    <UnitTest name="InsightsService.IntegrationTests.PythonContentAnalyzerTests.Fixed_python_runtime_is_used_by_the_domain_engine" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/insightsservice.integrationtests/bin/release/net10.0/insightsservice.integrationtests.dll" id="e43c9155-5558-fade-2034-fa907f48ebee">
+      <Execution id="2f7b0740-8c81-4852-a16e-91bd977bae4f" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/InsightsService.IntegrationTests/bin/Release/net10.0/InsightsService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="InsightsService.IntegrationTests.PythonContentAnalyzerTests" name="Fixed_python_runtime_is_used_by_the_domain_engine" />
+    </UnitTest>
+    <UnitTest name="InsightsService.IntegrationTests.PostgresInsightsStoreTests.Per_track_heads_never_move_backwards_and_workspace_deletion_denies_queries" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/insightsservice.integrationtests/bin/release/net10.0/insightsservice.integrationtests.dll" id="4c4efb26-0d5a-822e-fa7d-f3162a46f610">
+      <Execution id="ffe8e181-d5f9-4e03-aa27-af2b90a9b3dc" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/InsightsService.IntegrationTests/bin/Release/net10.0/InsightsService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="InsightsService.IntegrationTests.PostgresInsightsStoreTests" name="Per_track_heads_never_move_backwards_and_workspace_deletion_denies_queries" />
+    </UnitTest>
+    <UnitTest name="InsightsService.IntegrationTests.PostgresInsightsStoreTests.Duplicate_predecessor_redelivery_retries_pending_gap_after_drain_failure" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/insightsservice.integrationtests/bin/release/net10.0/insightsservice.integrationtests.dll" id="d412f094-2c3f-72fe-3046-55eeb570b6bb">
+      <Execution id="04d9c099-0845-4d49-9c49-121cc082a72e" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/InsightsService.IntegrationTests/bin/Release/net10.0/InsightsService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="InsightsService.IntegrationTests.PostgresInsightsStoreTests" name="Duplicate_predecessor_redelivery_retries_pending_gap_after_drain_failure" />
+    </UnitTest>
+    <UnitTest name="InsightsService.IntegrationTests.SourceArtifactClientTests.Reprocessing_the_same_artifact_creates_a_fresh_lease_after_the_first_is_redeemed" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/insightsservice.integrationtests/bin/release/net10.0/insightsservice.integrationtests.dll" id="6ab0780d-6090-b596-5ee6-04b38ad234f8">
+      <Execution id="89e10399-3794-47cd-924c-768629f8176d" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/insights-service/InsightsService.IntegrationTests/bin/Release/net10.0/InsightsService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="InsightsService.IntegrationTests.SourceArtifactClientTests" name="Reprocessing_the_same_artifact_creates_a_fresh_lease_after_the_first_is_redeemed" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="fd05a60a-70d9-fe61-42dc-cf8d4700e4a6" executionId="8d553e40-04d3-4b47-a3cf-1de15e7c9c66" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="dd93a314-56ec-40dd-f312-211d349aff71" executionId="f2ec3486-a094-4d99-b25d-8a09eb448259" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="ab58f3cb-c66d-e17c-2f79-7eb48b424a69" executionId="031dc3c9-5696-4dae-af1a-537e36c46850" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="a2729585-1e9f-7562-6aa3-0edbd47aea1b" executionId="4fffa71b-dfaf-43b7-be8f-46dd9b08ff05" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="60d1f0ba-0121-d6b2-90b1-b037643e20cf" executionId="0ca1c1c2-38e1-4999-b13d-71f9d7446404" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="5e0bacf2-e1d5-e303-2436-93f68ae52047" executionId="a870c77a-6612-4863-8436-882b090e40bb" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="f0dff167-03eb-7f81-5c31-d57e370baafe" executionId="8a4a22e3-c4df-4a91-89dc-956afa9240e3" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="60072519-2433-0f98-4a12-625c1ae9cd7e" executionId="7fccd71f-7ef9-4ecb-8980-0a521dcd3f02" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="6ab0780d-6090-b596-5ee6-04b38ad234f8" executionId="89e10399-3794-47cd-924c-768629f8176d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="7dc6d041-9f5c-5d20-1681-21d1d20016d4" executionId="411a8d37-4f8e-4eff-aca9-6f82e820e4c3" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="0e5ca85f-89b0-0f94-0a85-7ea91457f81c" executionId="c1800e25-68d4-4d34-ad02-ae03bb08957a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="95bf26e9-cc4c-6352-1279-a816a16722d8" executionId="dc1f1382-8d50-4815-996a-dae94cfdc6d3" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="4c4efb26-0d5a-822e-fa7d-f3162a46f610" executionId="ffe8e181-d5f9-4e03-aa27-af2b90a9b3dc" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="aa9bb7ec-43de-fb58-d5fc-ae4e3c4d8c7d" executionId="b01ad891-4dec-4279-99c8-fabb7b173516" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e6eeb16a-2242-2210-9c37-07479e5d28e6" executionId="b7ff10b4-8d12-4344-adbb-9df1855091b4" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="136e5f21-165b-3729-53f2-e83f30196c4a" executionId="fd285a94-651f-4b01-9edc-26f5e6c7452d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e43c9155-5558-fade-2034-fa907f48ebee" executionId="2f7b0740-8c81-4852-a16e-91bd977bae4f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="d412f094-2c3f-72fe-3046-55eeb570b6bb" executionId="04d9c099-0845-4d49-9c49-121cc082a72e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Completed">
+    <Counters total="18" executed="18" passed="18" failed="0" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v3.1.5+1b188a7b0a (64-bit .NET 10.0.11)
+[xUnit.net 00:00:00.08]   Discovering: InsightsService.IntegrationTests
+[xUnit.net 00:00:00.14]   Discovered:  InsightsService.IntegrationTests
+[xUnit.net 00:00:00.16]   Starting:    InsightsService.IntegrationTests
+[testcontainers.org 00:00:00.11] Connected to Docker:
+  Host: unix:///var/run/docker.sock
+  Server Version: 29.7.2
+  Kernel Version: 6.18.44-1-lts
+  API Version: 1.55
+  Operating System: Arch Linux
+  Total Memory: 60.48 GB
+[testcontainers.org 00:00:00.41] Docker container cd08ca48f4a3 created
+[testcontainers.org 00:00:00.48] Start Docker container cd08ca48f4a3
+[testcontainers.org 00:00:00.66] Wait for Docker container cd08ca48f4a3 to complete readiness checks
+[testcontainers.org 00:00:01.69] Docker container cd08ca48f4a3 ready
+[testcontainers.org 00:00:01.94] Docker container dbea59c2346f created
+[testcontainers.org 00:00:01.94] Docker container 63683af64360 created
+[testcontainers.org 00:00:01.94] Docker container 67c51fa278ce created
+[testcontainers.org 00:00:01.95] Start Docker container 63683af64360
+[testcontainers.org 00:00:01.95] Start Docker container 67c51fa278ce
+[testcontainers.org 00:00:01.95] Start Docker container dbea59c2346f
+[testcontainers.org 00:00:01.96] Docker container 0411d4b71599 created
+[testcontainers.org 00:00:01.96] Start Docker container 0411d4b71599
+[testcontainers.org 00:00:01.97] Docker container 06e05bac96c6 created
+[testcontainers.org 00:00:01.97] Start Docker container 06e05bac96c6
+[testcontainers.org 00:00:01.97] Docker container 3094bbddb1f9 created
+[testcontainers.org 00:00:01.97] Start Docker container 3094bbddb1f9
+[testcontainers.org 00:00:02.15] Wait for Docker container 63683af64360 to complete readiness checks
+[testcontainers.org 00:00:02.18] Wait for Docker container 3094bbddb1f9 to complete readiness checks
+[testcontainers.org 00:00:02.18] Wait for Docker container dbea59c2346f to complete readiness checks
+[testcontainers.org 00:00:02.19] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container 3094bbddb1f9
+[testcontainers.org 00:00:02.21] Wait for Docker container 67c51fa278ce to complete readiness checks
+[testcontainers.org 00:00:02.23] Wait for Docker container 06e05bac96c6 to complete readiness checks
+[testcontainers.org 00:00:02.23] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container 06e05bac96c6
+[testcontainers.org 00:00:02.24] Wait for Docker container 0411d4b71599 to complete readiness checks
+[testcontainers.org 00:00:02.25] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container 0411d4b71599
+[testcontainers.org 00:00:03.18] Docker container 63683af64360 ready
+[testcontainers.org 00:00:03.19] Docker container dbea59c2346f ready
+[testcontainers.org 00:00:03.22] Docker container 67c51fa278ce ready
+[testcontainers.org 00:00:03.22] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container 3094bbddb1f9
+[testcontainers.org 00:00:03.25] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container 06e05bac96c6
+[testcontainers.org 00:00:03.26] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container 0411d4b71599
+[testcontainers.org 00:00:03.42] Delete Docker container 63683af64360
+[testcontainers.org 00:00:04.25] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container 3094bbddb1f9
+[testcontainers.org 00:00:04.26] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container 06e05bac96c6
+[testcontainers.org 00:00:04.28] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container 0411d4b71599
+[testcontainers.org 00:00:04.29] Docker container 06e05bac96c6 ready
+[testcontainers.org 00:00:04.29] Docker container 3094bbddb1f9 ready
+[testcontainers.org 00:00:04.29] Delete Docker container 06e05bac96c6
+[testcontainers.org 00:00:04.30] Docker container 0411d4b71599 ready
+info: Microsoft.Hosting.Lifetime[0]
+      Application started. Press Ctrl+C to shut down.
+info: Microsoft.Hosting.Lifetime[0]
+      Hosting environment: Development
+info: Microsoft.Hosting.Lifetime[0]
+      Content root path: /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/services/insights-service/src/InsightsService.Api
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://localhost/health/ready - - -
+info: InsightsService.Api.StartupInitializer[0]
+      Insights service dependencies and migration version 2 are ready
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /health/ready'
+info: Microsoft.AspNetCore.Http.Result.OkObjectResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.OkObjectResult[3]
+      Writing value of type '&lt;&gt;f__AnonymousType4`2' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /health/ready'
+[testcontainers.org 00:00:04.61] Delete Docker container 3094bbddb1f9
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://localhost/health/ready - 200 - application/json;+charset=utf-8 97.2100ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://localhost/v1/workspaces/01a04148-0ddd-7b23-b91b-7e8183157eec/insights/summary?publication_id=01a04148-0ddf-7d25-a861-3b2fefaf7b3d - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /v1/workspaces/{workspaceId:guid}/insights/summary'
+info: Microsoft.AspNetCore.Http.Result.OkObjectResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.OkObjectResult[3]
+      Writing value of type '&lt;&gt;f__AnonymousType7`3' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /v1/workspaces/{workspaceId:guid}/insights/summary'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://localhost/v1/workspaces/01a04148-0ddd-7b23-b91b-7e8183157eec/insights/summary?publication_id=01a04148-0ddf-7d25-a861-3b2fefaf7b3d - 200 - application/json;+charset=utf-8 18.4442ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://localhost/v1/workspaces/01a04148-0ddd-7b23-b91b-7e8183157eec/insights/code-map?publication_id=01a04148-0ddf-7d25-a861-3b2fefaf7b3d&amp;limit=1 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /v1/workspaces/{workspaceId:guid}/insights/code-map'
+info: Microsoft.AspNetCore.Http.Result.OkObjectResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.OkObjectResult[3]
+      Writing value of type '&lt;&gt;f__AnonymousType7`3' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /v1/workspaces/{workspaceId:guid}/insights/code-map'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://localhost/v1/workspaces/01a04148-0ddd-7b23-b91b-7e8183157eec/insights/code-map?publication_id=01a04148-0ddf-7d25-a861-3b2fefaf7b3d&amp;limit=1 - 200 - application/json;+charset=utf-8 5.7773ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://localhost/v1/workspaces/01a04148-0e35-7ccb-973e-e4de575ef672/insights/summary?publication_id=01a04148-0ddf-7d25-a861-3b2fefaf7b3d - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /v1/workspaces/{workspaceId:guid}/insights/summary'
+info: Microsoft.AspNetCore.Http.HttpResults.ProblemHttpResult[1]
+      Setting HTTP status code 404.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /v1/workspaces/{workspaceId:guid}/insights/summary'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://localhost/v1/workspaces/01a04148-0e35-7ccb-973e-e4de575ef672/insights/summary?publication_id=01a04148-0ddf-7d25-a861-3b2fefaf7b3d - 404 - application/problem+json 8.7204ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://localhost/v1/workspaces/01a04148-0ddd-7b23-b91b-7e8183157eec/insights/summary?publication_id=01a04148-0ddf-7d25-a861-3b2fefaf7b3d - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /v1/workspaces/{workspaceId:guid}/insights/summary'
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /v1/workspaces/{workspaceId:guid}/insights/summary'
+fail: Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddleware[1]
+      An unhandled exception has occurred while executing the request.
+      InsightsService.Infrastructure.WorkspaceDeletingException: Workspace 01a04148-0ddd-7b23-b91b-7e8183157eec is being deleted.
+         at InsightsService.Infrastructure.PostgresInsightsStore.ThrowIfDeletingAsync(Guid workspaceId, CancellationToken cancellationToken) in /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/services/insights-service/src/InsightsService.Infrastructure/PostgresInsightsStore.cs:line 674
+         at InsightsService.Infrastructure.PostgresInsightsStore.ThrowIfDeletingAsync(Guid workspaceId, CancellationToken cancellationToken) in /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/services/insights-service/src/InsightsService.Infrastructure/PostgresInsightsStore.cs:line 674
+         at InsightsService.Infrastructure.PostgresInsightsStore.GetPublicationAsync(Guid workspaceId, Guid publicationId, CancellationToken cancellationToken) in /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/services/insights-service/src/InsightsService.Infrastructure/PostgresInsightsStore.cs:line 523
+         at InsightsService.Api.Endpoints.ResolveAsync(Guid workspaceId, Selector selector, PostgresInsightsStore store, CancellationToken cancellationToken) in /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/services/insights-service/src/InsightsService.Api/Endpoints.cs:line 130
+         at InsightsService.Api.Endpoints.ArtifactQueryAsync(HttpContext context, Guid workspaceId, String kind, PostgresInsightsStore store, S3ArtifactStore artifacts, IAuthorizationDecisionClient authorization, CancellationToken cancellationToken) in /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/services/insights-service/src/InsightsService.Api/Endpoints.cs:line 92
+         at Microsoft.AspNetCore.Http.RequestDelegateFactory.ExecuteTaskResult[T](Task`1 task, HttpContext httpContext)
+         at Microsoft.AspNetCore.Routing.EndpointMiddleware.&lt;Invoke&gt;g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+         at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl.&lt;Invoke&gt;g__Awaited|10_0(ExceptionHandlerMiddlewareImpl middleware, HttpContext context, Task task)
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://localhost/v1/workspaces/01a04148-0ddd-7b23-b91b-7e8183157eec/insights/summary?publication_id=01a04148-0ddf-7d25-a861-3b2fefaf7b3d - 410 - application/problem+json 11.9038ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://localhost/v1/workspaces/01a04148-0ddd-7b23-b91b-7e8183157eec/insights/summary?publication_id=01a04148-0ddf-7d25-a861-3b2fefaf7b3d - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /v1/workspaces/{workspaceId:guid}/insights/summary'
+info: Microsoft.AspNetCore.Http.HttpResults.ProblemHttpResult[1]
+      Setting HTTP status code 401.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /v1/workspaces/{workspaceId:guid}/insights/summary'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://localhost/v1/workspaces/01a04148-0ddd-7b23-b91b-7e8183157eec/insights/summary?publication_id=01a04148-0ddf-7d25-a861-3b2fefaf7b3d - 401 - application/problem+json 3.1392ms
+info: Microsoft.Hosting.Lifetime[0]
+      Application is shutting down...
+[testcontainers.org 00:00:04.74] Delete Docker container 0411d4b71599
+[testcontainers.org 00:00:04.88] Delete Docker container 67c51fa278ce
+[testcontainers.org 00:00:05.22] Docker container f244641133cf created
+[testcontainers.org 00:00:05.22] Start Docker container f244641133cf
+[testcontainers.org 00:00:05.39] Delete Docker container dbea59c2346f
+[testcontainers.org 00:00:05.42] Wait for Docker container f244641133cf to complete readiness checks
+[testcontainers.org 00:00:05.42] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container f244641133cf
+[testcontainers.org 00:00:05.59] Docker container 4f94ac74c116 created
+[testcontainers.org 00:00:05.59] Start Docker container 4f94ac74c116
+[testcontainers.org 00:00:05.61] Docker container 67e62720af3f created
+[testcontainers.org 00:00:05.61] Start Docker container 67e62720af3f
+[testcontainers.org 00:00:05.79] Wait for Docker container 4f94ac74c116 to complete readiness checks
+[testcontainers.org 00:00:05.80] Wait for Docker container 67e62720af3f to complete readiness checks
+[testcontainers.org 00:00:05.80] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container 67e62720af3f
+[testcontainers.org 00:00:06.47] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container f244641133cf
+[testcontainers.org 00:00:06.79] Docker container 4f94ac74c116 ready
+[testcontainers.org 00:00:06.83] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container 67e62720af3f
+[testcontainers.org 00:00:07.49] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container f244641133cf
+[testcontainers.org 00:00:07.88] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container 67e62720af3f
+[testcontainers.org 00:00:08.51] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container f244641133cf
+[testcontainers.org 00:00:08.58] Docker container f244641133cf ready
+[testcontainers.org 00:00:08.62] Delete Docker container f244641133cf
+[testcontainers.org 00:00:08.90] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container 67e62720af3f
+[testcontainers.org 00:00:08.92] Docker container 67e62720af3f ready
+[testcontainers.org 00:00:09.00] Delete Docker container 67e62720af3f
+[testcontainers.org 00:00:09.11] Docker container f08d8b08b10d created
+[testcontainers.org 00:00:09.11] Start Docker container f08d8b08b10d
+[testcontainers.org 00:00:09.31] Wait for Docker container f08d8b08b10d to complete readiness checks
+[testcontainers.org 00:00:09.31] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container f08d8b08b10d
+[testcontainers.org 00:00:09.32] Delete Docker container 4f94ac74c116
+[testcontainers.org 00:00:10.32] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container f08d8b08b10d
+[testcontainers.org 00:00:10.34] Docker container f08d8b08b10d ready
+[testcontainers.org 00:00:10.38] Delete Docker container f08d8b08b10d
+[testcontainers.org 00:00:10.84] Docker container 4b89bdb71360 created
+[testcontainers.org 00:00:10.84] Start Docker container 4b89bdb71360
+[testcontainers.org 00:00:10.94] Wait for Docker container 4b89bdb71360 to complete readiness checks
+[testcontainers.org 00:00:10.94] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container 4b89bdb71360
+[testcontainers.org 00:00:11.95] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container 4b89bdb71360
+[testcontainers.org 00:00:12.97] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container 4b89bdb71360
+[testcontainers.org 00:00:12.99] Docker container 4b89bdb71360 ready
+[testcontainers.org 00:00:13.02] Delete Docker container 4b89bdb71360
+[testcontainers.org 00:00:13.62] Docker container 353b615556d8 created
+[testcontainers.org 00:00:13.62] Start Docker container 353b615556d8
+[testcontainers.org 00:00:13.83] Wait for Docker container 353b615556d8 to complete readiness checks
+[testcontainers.org 00:00:13.83] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container 353b615556d8
+[testcontainers.org 00:00:14.88] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container 353b615556d8
+[testcontainers.org 00:00:15.90] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container 353b615556d8
+[testcontainers.org 00:00:16.92] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container 353b615556d8
+[testcontainers.org 00:00:16.94] Docker container 353b615556d8 ready
+[testcontainers.org 00:00:16.97] Delete Docker container 353b615556d8
+[testcontainers.org 00:00:17.39] Docker container 55e7c0d8625e created
+[testcontainers.org 00:00:17.39] Start Docker container 55e7c0d8625e
+[testcontainers.org 00:00:17.49] Wait for Docker container 55e7c0d8625e to complete readiness checks
+[testcontainers.org 00:00:17.49] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container 55e7c0d8625e
+[testcontainers.org 00:00:18.50] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container 55e7c0d8625e
+[testcontainers.org 00:00:19.52] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container 55e7c0d8625e
+[testcontainers.org 00:00:19.54] Docker container 55e7c0d8625e ready
+[testcontainers.org 00:00:19.57] Delete Docker container 55e7c0d8625e
+[testcontainers.org 00:00:20.01] Docker container e7f34a84b856 created
+[testcontainers.org 00:00:20.01] Start Docker container e7f34a84b856
+[testcontainers.org 00:00:20.11] Wait for Docker container e7f34a84b856 to complete readiness checks
+[testcontainers.org 00:00:20.11] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container e7f34a84b856
+[testcontainers.org 00:00:21.13] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container e7f34a84b856
+[testcontainers.org 00:00:22.15] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container e7f34a84b856
+[testcontainers.org 00:00:22.19] Docker container e7f34a84b856 ready
+[testcontainers.org 00:00:22.22] Delete Docker container e7f34a84b856
+[testcontainers.org 00:00:22.80] Docker container 5ff2b55bb13a created
+[testcontainers.org 00:00:22.80] Start Docker container 5ff2b55bb13a
+[testcontainers.org 00:00:23.00] Wait for Docker container 5ff2b55bb13a to complete readiness checks
+[testcontainers.org 00:00:23.00] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container 5ff2b55bb13a
+[testcontainers.org 00:00:24.02] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container 5ff2b55bb13a
+[testcontainers.org 00:00:25.08] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container 5ff2b55bb13a
+[testcontainers.org 00:00:26.10] Execute "pg_isready --host localhost --dbname insights_service --username insights_service" at Docker container 5ff2b55bb13a
+[testcontainers.org 00:00:26.12] Docker container 5ff2b55bb13a ready
+[testcontainers.org 00:00:26.15] Delete Docker container 5ff2b55bb13a
+[xUnit.net 00:00:26.84]   Finished:    InsightsService.IntegrationTests
+</StdOut>
+    </Output>
+  </ResultSummary>
+</TestRun>

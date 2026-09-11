@@ -1,0 +1,316 @@
+{
+  "meta": {
+    "id": "SPEC-infra-1290-authority-runner-consolidation",
+    "title": "Unified fail-closed Codicarium authority-runner package and ownership contract",
+    "author": "root-manager",
+    "created_at": "2026-08-30T11:29:00Z",
+    "version": "1.0.0"
+  },
+  "feature": {
+    "problem_statement": "Infra PR 1293 and PR 1294 independently describe incompatible privileged authority-runner packages, sudo protocols, file layouts, and verification boundaries. Merging either would leave the installer and ownership verifier able to certify different systems, while the current package also permits mixed-generation upgrade execution, unbounded privileged input, identity fallback, and cross-job cleanup of another handoff.",
+    "goals": [
+      "Publish one reviewable contract/package/verifier change whose declared desired state exactly matches the installed authority-runner boundary.",
+      "Make every privileged operation fail closed under partial installation, stale files, malformed input, identity drift, filesystem races, and cross-job interference.",
+      "Produce offline and protected-runner validation gates that distinguish desired-state correctness from live host convergence.",
+      "Keep runner authorization and host rollout separate until exact-head code and protected evidence are available."
+    ],
+    "non_goals": [
+      "Installing or removing files on runner-b-1 in this pipeline.",
+      "Changing GitHub runner-group workflow restrictions or repository access in this pipeline.",
+      "Dispatching Terraform, artifact-boundary, reconciliation, or protected validation workflows in this pipeline.",
+      "Restoring runner group 7 or using runner group 6 as a substitute protected PR producer.",
+      "Merging a PR or claiming live authority-runner convergence in this pipeline.",
+      "Defining the separate ownership boundary for the generic terraform-plan runner."
+    ],
+    "scope_in": [
+      "A new clean consolidation branch and PR from current codicarium/infra main that supersedes PR 1293 and PR 1294.",
+      "One canonical JSON ownership contract for immutable GitHub identities, host/service/workspace facts, package layout, sudo policy, protocol, and validation mode.",
+      "The versioned artifact-seal host package, root-only installer/uninstaller, privileged entrypoint, implementation, preflight, manifest, and effective sudo-policy verifier.",
+      "A read-only descriptor-anchored offline verifier and synthetic installed-root fixtures generated from the actual package contract.",
+      "Focused positive, adversarial, interruption, race, workflow-policy, syntax, and package-drift tests.",
+      "Protected verification workflow source and the terraform-apply protocol update, without authorizing or dispatching either workflow.",
+      "Rollback and host-owner runbook updates that keep issue 1290 open pending live proof."
+    ],
+    "scope_out": [
+      "terraform-plan-codicarium runner migration; its existing main-branch behavior is not modified by this consolidation.",
+      "Host installation, sudoers mutation, systemd mutation, or live runner inspection that requires a newly authorized workflow.",
+      "GitHub runner group 6 or group 7 policy changes.",
+      "Argo CD Phase 0 rollout, Access Controller deployment, or authorization-provider writes."
+    ]
+  },
+  "requirements": [
+    {
+      "id": "REQ-001",
+      "priority": "MUST",
+      "statement": "The change MUST define one canonical authority-runner ownership contract and one mechanically checked package generation; no second file, script, fixture, document, or workflow may independently redefine a conflicting installed layout or privilege protocol.",
+      "rationale": "PR 1293 and PR 1294 currently form a split-brain security boundary."
+    },
+    {
+      "id": "REQ-002",
+      "priority": "MUST",
+      "statement": "The contract MUST bind numeric GitHub organization 255540067, repository 1136354160, runner group 6, runner 6252, exact runner/group names and label, host and runner user, exact protected workflow/ref allowlist, systemd unit path/content/directives/state, workspace path/UID/GID/mode, handoff policy, package version and per-file SHA-256/mode/owner/link-count, and exact sudo policy. Runtime reviewed Git SHA evidence MUST remain external rather than a stale self-referential contract constant.",
+      "rationale": "Names are mutable, host state is separate from GitHub registration, and the old reviewedSourceRevision is stale and structurally cannot pin its own containing commit."
+    },
+    {
+      "id": "REQ-003",
+      "priority": "MUST",
+      "statement": "The installed package MUST match the contract's exact eight libexec files plus one sudoers file, and source/package manifests, documentation, preflight constants, verifier expectations, and workflow calls MUST be checked for exact digest, path, mode, and protocol agreement.",
+      "rationale": "PR 1294 documentation and checkers already contain digest drift, while PR 1293 describes a different four-file package."
+    },
+    {
+      "id": "REQ-004",
+      "priority": "MUST",
+      "statement": "Installation, upgrade, and uninstall MUST be root-only fail-closed transactions: revoke or remove the old sudo authorization before replacing any executable, capture and verify the exact bytes that are installed, stage and validate a complete generation, publish sudo authorization last, fsync durable boundaries, and leave no executable mixed generation after interruption. Uninstall MUST remove sudo authorization first and preserve unrelated files.",
+      "rationale": "PR 1294 currently leaves an old sudo rule active while publishing package files one at a time and hashes sources before reopening them for copy."
+    },
+    {
+      "id": "REQ-005",
+      "priority": "MUST",
+      "statement": "The sudo-authorized entrypoint MUST accept no command-line arguments, run with an empty fixed environment and isolated Python mode, parse operation-specific stdin records with explicit byte limits and exact newline/EOF rules, reject NUL/CR/extra/truncated/oversized input, and require the installed root-owned UID/user manifest without any production SUDO_UID or environment fallback.",
+      "rationale": "Unbounded root reads permit denial of service and missing identity metadata currently fails open."
+    },
+    {
+      "id": "REQ-006",
+      "priority": "MUST",
+      "statement": "The read-only verifier MUST use descriptor-relative no-follow bounded reads, reject duplicate/unknown contract fields and trailing data, reject symlinks/hardlinks/FIFOs/devices/sockets and raced objects, verify every privileged ancestor is root-owned and non-writable, validate the complete managed package namespace while allowing unrelated safe files outside it, and verify exact systemd bytes/directives/state, workspace metadata, package files, and sudoers/effective policy without executing checkout-controlled code.",
+      "rationale": "The verifier is the evidence boundary and must not block on special files, reopen raced paths, or overclaim live state."
+    },
+    {
+      "id": "REQ-007",
+      "priority": "MUST",
+      "statement": "Cleanup MUST be bound to the creating handoff/job by a root-validated unguessable capability or an equivalently strong root-owned ledger, so one job cannot delete another job's valid handoff even when it can enumerate /var/tmp.",
+      "rationale": "The current cleanup operation accepts any structurally valid codicarium-handoff directory and permits cross-job deletion."
+    },
+    {
+      "id": "REQ-008",
+      "priority": "MUST",
+      "statement": "The sudo contract MUST authorize only the argument-free fixed entrypoint and fixed preflight for the exact runner user as root with NOPASSWD, env_reset, a fixed secure_path, and !setenv; effective sudo output MUST reject SETENV, env_keep, PYTHON variables, wildcards, shells, file writers, and any additional command.",
+      "rationale": "Textual sudoers bytes alone do not prove the effective privilege boundary."
+    },
+    {
+      "id": "REQ-009",
+      "priority": "MUST",
+      "statement": "Tests MUST exercise the actual package and generated installed-root layout, including install, preflight, exact sudo policy, seal, archive/digest readback, cleanup, idempotent reinstall, safe uninstall, and an adversarial matrix covering identity, digest, input, filesystem type, ancestor, inventory, race, traversal, interruption, stale generation, missing manifest, and cross-handoff cases.",
+      "rationale": "Copied fixtures can pass while the package installed by another PR has drifted."
+    },
+    {
+      "id": "REQ-010",
+      "priority": "MUST",
+      "statement": "The protected verification workflow MUST be no-secret, exact-repository-ID, protected-main, immutable-SHA, first-attempt, exact actor/triggering-actor, exact group/label, and contract-driven; it MUST verify live package, service, workspace, and sudo state and produce sanitized evidence. Runner ID/group membership and selected-workflow policy MUST also be confirmed through read-only GitHub API evidence outside the job.",
+      "rationale": "A runs-on label does not by itself prove runner 6252 or live host ownership."
+    },
+    {
+      "id": "REQ-011",
+      "priority": "MUST",
+      "statement": "The consolidation MUST NOT install on the host, change runner-group policy, dispatch workflows, merge, or broaden group 6. Rollout and rollback MUST deauthorize first, preserve evidence, install or restore one reviewed complete generation, verify live state, then narrowly authorize exact protected-main workflows; failure MUST leave authority disabled.",
+      "rationale": "Code review and live privilege activation are distinct trust transitions."
+    },
+    {
+      "id": "REQ-012",
+      "priority": "MUST",
+      "statement": "Delivery MUST use a new clean worktree branch from current main and a new PR referencing, not closing, issue 1290. PR 1293 and PR 1294 may be closed as superseded only after the new PR exists. terraform-plan-codicarium MUST remain unchanged and its generic-runner ownership gap MUST be tracked separately. Exact-head local tests, independent Luna review, GitHub Validate/guards, and the protected group-7 producer check are merge gates; queued protected checks MUST never be bypassed or replaced with group 6 evidence.",
+      "rationale": "A clean review surface avoids inheriting incompatible claims, preserves issue truth, and keeps distinct runner boundaries separate."
+    }
+  ],
+  "acceptance_criteria": [
+    {
+      "id": "AC-001",
+      "requirement_ids": ["REQ-001", "REQ-002", "REQ-003"],
+      "scenario": "Given the consolidation branch, when the contract/package consistency suite reads every authoritative file and installed-file declaration, then exactly one package layout, identity set, digest set, and protocol is accepted and either predecessor layout is rejected."
+    },
+    {
+      "id": "AC-002",
+      "requirement_ids": ["REQ-004"],
+      "scenario": "Given an existing authorized generation, when installation or uninstall is interrupted at every publication step, then no mixed generation remains sudo-executable and unrelated files remain unchanged."
+    },
+    {
+      "id": "AC-003",
+      "requirement_ids": ["REQ-005", "REQ-008"],
+      "scenario": "Given the runner user can invoke only the declared sudo commands, when it supplies arguments, malformed records, oversized input, hostile environment variables, or a missing identity manifest, then the operation fails without invoking the implementation or broadening effective sudo."
+    },
+    {
+      "id": "AC-004",
+      "requirement_ids": ["REQ-006"],
+      "scenario": "Given a valid synthetic root, when any contract field, privileged ancestor, service object, workspace, package object, inventory entry, or sudo object is malformed, raced, replaced, unreadable, special, linked, writable, or stale, then the verifier returns a bounded sanitized failure and never blocks or executes the object."
+    },
+    {
+      "id": "AC-005",
+      "requirement_ids": ["REQ-007"],
+      "scenario": "Given two valid handoffs from distinct job capabilities, when either job attempts cleanup using the other handoff path or capability, then cleanup is denied and both valid handoffs remain intact until their creating job cleans its own."
+    },
+    {
+      "id": "AC-006",
+      "requirement_ids": ["REQ-009"],
+      "scenario": "Given a disposable root-capable test environment, when the actual package is installed, verified, used to seal and read back a benign artifact, reinstalled, cleaned, and uninstalled, then all positive checks pass and all declared adversarial cases fail closed."
+    },
+    {
+      "id": "AC-007",
+      "requirement_ids": ["REQ-010", "REQ-011"],
+      "scenario": "Given protected main and the separately authorized authority runner, when the no-secret verification workflow runs at its exact reviewed SHA, then live GitHub, systemd, workspace, package, protocol, and sudo evidence match the contract before any apply workflow is authorized; otherwise group 6 remains reconciliation-only."
+    },
+    {
+      "id": "AC-008",
+      "requirement_ids": ["REQ-012"],
+      "scenario": "Given current main and both incompatible PRs, when the consolidation is delivered, then a new PR contains the unified change, issue 1290 remains open, terraform-plan-codicarium is byte-identical to main, the old PRs are marked superseded, and no merge occurs until every exact-head required check passes."
+    }
+  ],
+  "test_plan": [
+    {
+      "id": "TST-001",
+      "type": "unit",
+      "requirement_ids": ["REQ-001", "REQ-002", "REQ-003"],
+      "approach": "Parse the strict contract, compare it mechanically to package manifests, installed-file declarations, preflight constants, docs, sudoers, and workflow protocol; reject both predecessor contracts and every single-field drift."
+    },
+    {
+      "id": "TST-002",
+      "type": "integration",
+      "requirement_ids": ["REQ-004"],
+      "approach": "Run root-capable install/upgrade/uninstall fault injection at every publication boundary and assert sudo is absent until one coherent generation passes verification."
+    },
+    {
+      "id": "TST-003",
+      "type": "non_functional",
+      "requirement_ids": ["REQ-005", "REQ-008"],
+      "approach": "Fuzz bounded stdin record counts, lengths, encodings, terminators, arguments, and environment while checking process memory/time bounds and exact effective sudo allowlist."
+    },
+    {
+      "id": "TST-004",
+      "type": "unit",
+      "requirement_ids": ["REQ-006"],
+      "approach": "Generate descriptor-anchored synthetic roots and mutate object types, metadata, ancestors, contents, inventory, service state, and timing; require deterministic bounded fail-closed reason codes."
+    },
+    {
+      "id": "TST-005",
+      "type": "integration",
+      "requirement_ids": ["REQ-007"],
+      "approach": "Create two handoffs, swap paths/capabilities, enumerate names, replay cleanup, and prove only the creating capability can delete its own handoff once."
+    },
+    {
+      "id": "TST-006",
+      "type": "integration",
+      "requirement_ids": ["REQ-009"],
+      "approach": "Install the actual package in a disposable container or namespace, run preflight, seal/read/verify/upload-compatible artifact, cleanup, reinstall, uninstall, and the full negative matrix including missing UID manifest and hardlink/symlink cases."
+    },
+    {
+      "id": "TST-007",
+      "type": "manual",
+      "requirement_ids": ["REQ-010", "REQ-011"],
+      "approach": "After separate host-owner installation and exact workflow authorization, query GitHub runner/group policy read-only and run the no-secret protected verifier once; capture sanitized service/package/sudo evidence and keep group 6 disabled on any mismatch."
+    },
+    {
+      "id": "TST-008",
+      "type": "e2e",
+      "requirement_ids": ["REQ-012"],
+      "approach": "Verify new-PR base/head, issue references, byte-identical terraform-plan workflow, independent Luna review, exact-head local suite, GitHub Validate/guards, protected ARC producer result, merge guard, and old-PR supersession state."
+    }
+  ],
+  "traceability": [
+    {
+      "requirement_id": "REQ-001",
+      "acceptance_ids": ["AC-001"],
+      "test_ids": ["TST-001"],
+      "review_checks": ["Confirm one canonical desired-state authority and no independently mutable duplicate contract."],
+      "validation_checks": ["Contract/package drift suite passes at exact head."]
+    },
+    {
+      "requirement_id": "REQ-002",
+      "acceptance_ids": ["AC-001"],
+      "test_ids": ["TST-001"],
+      "review_checks": ["Review immutable identity and host/service/workspace field completeness and avoid self-referential source SHA."],
+      "validation_checks": ["All required numeric identities and exact state fields are present and strict-schema validated."]
+    },
+    {
+      "requirement_id": "REQ-003",
+      "acceptance_ids": ["AC-001"],
+      "test_ids": ["TST-001"],
+      "review_checks": ["Compare actual installed outputs against the contract and every digest consumer."],
+      "validation_checks": ["Eight libexec files and one sudoers file have one exact checked definition."]
+    },
+    {
+      "requirement_id": "REQ-004",
+      "acceptance_ids": ["AC-002"],
+      "test_ids": ["TST-002"],
+      "review_checks": ["Review authorization removal order, source-byte capture, staging, fsync, publication, rollback, and unrelated-file preservation."],
+      "validation_checks": ["Every injected interruption leaves no sudo-executable mixed generation."]
+    },
+    {
+      "requirement_id": "REQ-005",
+      "acceptance_ids": ["AC-003"],
+      "test_ids": ["TST-003"],
+      "review_checks": ["Review bounded parser, empty environment, no argv, isolated interpreter, and absence of identity fallback."],
+      "validation_checks": ["Malformed and oversized inputs fail within resource bounds; missing UID manifest always denies."]
+    },
+    {
+      "requirement_id": "REQ-006",
+      "acceptance_ids": ["AC-004"],
+      "test_ids": ["TST-004"],
+      "review_checks": ["Review descriptor lifetime, no-follow semantics, post-read identity checks, special-file handling, schema bounds, and managed-prefix inventory semantics."],
+      "validation_checks": ["Adversarial filesystem and contract matrix returns deterministic sanitized failures without blocking."]
+    },
+    {
+      "requirement_id": "REQ-007",
+      "acceptance_ids": ["AC-005"],
+      "test_ids": ["TST-005"],
+      "review_checks": ["Review capability entropy, root-owned ledger lifecycle, replay behavior, and failure cleanup."],
+      "validation_checks": ["Cross-handoff and replay cleanup attempts fail while own cleanup succeeds once."]
+    },
+    {
+      "requirement_id": "REQ-008",
+      "acceptance_ids": ["AC-003"],
+      "test_ids": ["TST-003"],
+      "review_checks": ["Review canonical sudoers bytes and effective sudo parsing for hidden defaults or additional commands."],
+      "validation_checks": ["visudo and sudo -n -l evidence expose only the exact two argument-free commands and safe defaults."]
+    },
+    {
+      "requirement_id": "REQ-009",
+      "acceptance_ids": ["AC-006"],
+      "test_ids": ["TST-006"],
+      "review_checks": ["Confirm tests install and execute actual package files instead of copied predecessor fixtures."],
+      "validation_checks": ["Positive lifecycle and full negative matrix pass in a disposable root-capable environment."]
+    },
+    {
+      "requirement_id": "REQ-010",
+      "acceptance_ids": ["AC-007"],
+      "test_ids": ["TST-007"],
+      "review_checks": ["Review workflow identity before checkout, no-secret permissions, exact selectors, sanitized output, and distinction between job context and GitHub API runner proof."],
+      "validation_checks": ["One separately authorized exact-head protected run and read-only GitHub API evidence match runner 6252 and group 6 policy."]
+    },
+    {
+      "requirement_id": "REQ-011",
+      "acceptance_ids": ["AC-007"],
+      "test_ids": ["TST-007"],
+      "review_checks": ["Confirm this PR contains no host mutation, policy mutation, dispatch, merge, or authorization broadening."],
+      "validation_checks": ["Rollout record proves deauthorize-first and authorize-last; failure state remains disabled."]
+    },
+    {
+      "requirement_id": "REQ-012",
+      "acceptance_ids": ["AC-008"],
+      "test_ids": ["TST-008"],
+      "review_checks": ["Review clean-main provenance, issue lifecycle, plan-workflow non-change, old-PR supersession, exact-head checks, and no runner substitution."],
+      "validation_checks": ["New PR is independently reviewed and all required exact-head checks, including protected group 7, pass before merge consideration."]
+    }
+  ],
+  "quality_gates": {
+    "spec_review_required": true,
+    "testability_required": true,
+    "traceability_required": true
+  },
+  "council": {
+    "perspectives": [
+      {
+        "role": "architecture",
+        "summary": "One canonical identity/package/service contract; package and verifier must be consumers or mechanically proven identical."
+      },
+      {
+        "role": "security_review",
+        "summary": "Block both existing PRs; remediate mixed-generation publication, unbounded input, UID fallback, cross-job cleanup, incomplete live proof, and digest drift."
+      },
+      {
+        "role": "quality_validation",
+        "summary": "Use one clean PR from main with actual-package fixtures, fault injection, broad adversarial coverage, independent review, and protected-runner evidence."
+      }
+    ],
+    "consensus_summary": "Do not merge PR 1293 or PR 1294. Build one clean consolidation PR from main, keep live privilege and runner-policy changes outside it, and require exact-head offline plus protected-runner validation before merge or rollout.",
+    "open_questions": []
+  }
+}

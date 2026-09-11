@@ -1,0 +1,29 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Committed HEAD 1fbcad4 closes REV1-SYSTEM-OFFSET-001. Both issue #28 FastSystem group-offset probes now share a bounded same-group read-only consumer Committed helper; the confirmed librdkafka AdminClient OffsetFetch crash path is gone from the fixture while ordering retries and timeout diagnostics remain intact. Focused generation tests and two complete FastSystem repetitions are green.",
+  "changed_files": [
+    "tests/system/WorkspaceManager.SystemTests/Infrastructure/KnowledgeGenerationSystemFixture.cs"
+  ],
+  "validation": [
+    "Release system-test build passed with 0 warnings/errors",
+    "Focused KnowledgeGenerationSystemFixtureTests and KnowledgeGenerationFlowTests passed 4/4",
+    "Two consecutive Category=FastSystem runs passed 77/77 with exits 0/0",
+    "Scoped dotnet format and git diff --check passed; no ListConsumerGroupOffsetsAsync remains in the fixture",
+    "Independent review confirmed bounded read-only lifecycle, preserved retry and diagnostic semantics, and no group join or rebalance",
+    "No coredumps appeared after the known 2026-08-27 02:35:42 UTC crash window",
+    "No Testcontainers containers, networks, volumes, test processes, service children, or wm-system-knowledge temp directories remained",
+    "TRX evidence retained under evidence/code-loop-2/system-offset-fix with checksums",
+    "Unfiltered 88/89 runs transparently retain only the expected digest-pinned WM_*_IMAGE readiness gate failure and are not claimed as FastSystem passes",
+    "Workspace Context revision dba39f36 analyzed clean 99-path HEAD against 72728d; digest b99fd277abbe2b01bef1e47c1e9acf30ec94923aeaea9b6754665394c51dff63"
+  ],
+  "blockers": [],
+  "next_action": "Advance to fresh formal review of committed HEAD 1fbcad4, focusing on the shared FastSystem offset observer and confirming the previously accepted Model observer plus 99-path issue #28 branch remain sound.",
+  "route_to": "review",
+  "risk_level": "high",
+  "independent_lanes": [
+    "FastSystem Kafka offset-observer lifecycle and diagnostics",
+    "issue #28 cross-service acceptance and evidence continuity"
+  ],
+  "requires_council": false
+}

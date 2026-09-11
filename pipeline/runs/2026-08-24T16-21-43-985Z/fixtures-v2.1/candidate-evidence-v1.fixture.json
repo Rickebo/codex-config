@@ -1,0 +1,64 @@
+{
+  "schema": "codicarium.release-candidate-evidence/v1",
+  "repository": "codicarium/deployment-controller",
+  "tag": "v0.6.14",
+  "source_revision": "2aee9b5ba6ed8be8dc848df482a43f6a3f33b712",
+  "ci": {
+    "run_id": "9001001",
+    "run_attempt": "1"
+  },
+  "verifier": {
+    "run_id": "9003001",
+    "run_attempt": "1"
+  },
+  "archives": {
+    "deployment-controller-verified-image": {
+      "object_key": "artifacts/v1/orgs/255540067/repos/1303901324/releases/v0.6.14/sources/2aee9b5ba6ed8be8dc848df482a43f6a3f33b712/runs/9003001/attempts/1/deployment-controller-verified-image/0123456789abcdef0123456789abcdef.tar.zst",
+      "archive_sha256": "4d160c2f05daaf672b07d28ac5aaa9fa9076ecd6176c8c7cfc76012beb2bf299",
+      "byte_length": "653",
+      "capability_nonce": "0123456789abcdef0123456789abcdef",
+      "capability_expires_at": "2026-01-01T00:30:00Z",
+      "files": [
+        {
+          "path": "deployment-controller-linux-amd64.spdx.json",
+          "size": "116",
+          "sha256": "df6c7332c7189f0554879d91dba463a3b8eed15fd11a354b88c1737df5832fcf"
+        },
+        {
+          "path": "deployment-controller-linux-arm64.spdx.json",
+          "size": "116",
+          "sha256": "d7b874ac13803c4265846efaa5b21fb456bd41c04d4447a78b7ae07fcff48146"
+        },
+        {
+          "path": "deployment-controller.env",
+          "size": "98",
+          "sha256": "23bcff16b6206cbc8d86817eb253420ac8db756107ede4eacf3d03f2b2d18cf5"
+        },
+        {
+          "path": "deployment-controller.oci.tar",
+          "size": "102",
+          "sha256": "776973a9fa59d50a9027ff447eb5fda1bc8e3197a3c62204b089abd2b16eb0f5"
+        }
+      ]
+    },
+    "deployment-controller-verified-chart": {
+      "object_key": "artifacts/v1/orgs/255540067/repos/1303901324/releases/v0.6.14/sources/2aee9b5ba6ed8be8dc848df482a43f6a3f33b712/runs/9003001/attempts/1/deployment-controller-verified-chart/fedcba9876543210fedcba9876543210.tar.zst",
+      "archive_sha256": "22b86872cdcf35bbfaef82ce807dc49b9b6c7cd2d6d2f0dd72e0e8fb5d2716eb",
+      "byte_length": "378",
+      "capability_nonce": "fedcba9876543210fedcba9876543210",
+      "capability_expires_at": "2026-01-01T00:30:00Z",
+      "files": [
+        {
+          "path": "deployment-controller-0.6.14.tgz",
+          "size": "105",
+          "sha256": "c0d436b0298bc8c72da6297256474c09d6a6520fd47282f710e514dadab56fb5"
+        },
+        {
+          "path": "deployment-controller-chart.sha256",
+          "size": "107",
+          "sha256": "718ea677814b386cc876d37b9e9d50c1ba73437a198785897b858695d33d44e7"
+        }
+      ]
+    }
+  }
+}

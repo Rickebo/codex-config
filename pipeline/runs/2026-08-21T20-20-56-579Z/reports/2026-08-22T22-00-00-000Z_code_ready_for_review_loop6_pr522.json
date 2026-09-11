@@ -1,0 +1,25 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "PR #522 loop 6 closes exactly three mechanical restore-validation findings: non-root PostgreSQL fallback prerequisites, graph manifest capture and verification, and guarded exact disposable restore-directory recreation.",
+  "changed_files": [
+    "tests/fixtures/workspace_context_restore/run.sh",
+    "workspace-context/templates/backup.yaml",
+    "workspace-context/templates/gated.yaml"
+  ],
+  "validation": [
+    "pytest -q tests/test_workspace_context_llm_proxy_gitops.py: 13 passed",
+    "workspace-context/tests/static.sh passed",
+    "workspace_context_restore fixture passed on current host with marker count=2",
+    "fake-Kopia fixture passed",
+    "helm lint workspace-context and llm-proxy passed; default and evidence renders passed",
+    "rendered YAML parse, bash -n, git diff --check, and protected-file checks passed",
+    "commit f7e6376 pushed to PR #522 branch"
+  ],
+  "blockers": [
+    "No cluster, NAS, source, secret, deployment, or deployment-action validation was performed by scope.",
+    "PR status-check rollup currently reports no checks; current-run CI remains GitHub-controlled."
+  ],
+  "next_action": "Route to independent review/current-run CI for PR #522; no approval, merge, cluster, NAS, source, secret, or deployment action.",
+  "route_to": "review"
+}

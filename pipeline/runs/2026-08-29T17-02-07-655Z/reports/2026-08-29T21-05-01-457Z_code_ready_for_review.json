@@ -1,0 +1,36 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Luna implemented issue #154 as clean commit 8e27b77544ab66da77f3f71ffce73697dd8f279e: trusted publisher terminal-cap-failure evidence, coordinator validation, and planner retirement of only exact proven failed candidates while preserving immutable tags and normal resume behavior.",
+  "changed_files": [
+    ".github/workflows/automatic-release.yaml",
+    ".github/workflows/publish-release.yaml",
+    "Makefile",
+    "docs/releasing.md",
+    "hack/release-failure-policy.js",
+    "hack/release-plan.py",
+    "hack/test-release-failure-policy.js",
+    "hack/test-release-graph.py",
+    "hack/test-release-plan.py"
+  ],
+  "validation": [
+    "Terminal failure policy fixtures passed",
+    "Release planner 13/13 tests passed",
+    "Release graph 47/47 tests passed",
+    "Full make test-release-flow passed",
+    "Repository validation and git diff --check passed",
+    "Modified workflow actionlint and JavaScript syntax checks passed",
+    "Worktree is clean at exact commit 8e27b77544ab66da77f3f71ffce73697dd8f279e"
+  ],
+  "blockers": [
+    "Independent exact-head security review and protected CI are still required",
+    "No new immutable release exists yet; v0.14.0 remains untouched and unpublished"
+  ],
+  "next_action": "Push exact commit, open issue-linked PR, and obtain independent Luna security review of proof forgery, replay, stale evidence, concurrency, workflow permissions, and release invariants.",
+  "independent_lanes": [
+    "infra PR #1272 protected ARC queue remains unmerged",
+    "controller diagnostic issue #155 remains separate",
+    "Phase 0 SSO evidence remains blocked by no connected browser"
+  ],
+  "risk_level": "critical"
+}

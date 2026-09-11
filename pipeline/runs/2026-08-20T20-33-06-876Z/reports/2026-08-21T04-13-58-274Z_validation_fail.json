@@ -1,0 +1,53 @@
+{
+  "stage": "validation",
+  "status": "fail",
+  "summary": "Public MetaMCP validation passes all seven servers and seven safe calls, but repeated internal sessions drop Kubernetes; one stale unmapped row remains and OAuth metadata is not ChatGPT-ready.",
+  "changed_files": [],
+  "validation": [
+    "ArgoCD homelab application is Synced/Healthy and MetaMCP runs 2.4.22 at an immutable digest.",
+    "Public authenticated initialize and tools/list returned 145 tools across all seven required prefixes.",
+    "Public safe calls passed: Prometheus health, Loki datasource health, Tempo attributes, GitHub get_me, GitHub Actions list, ArgoCD applications, and Kubernetes namespaces.",
+    "Repeated in-cluster tools/list waited 60 seconds and returned 131 tools without Kubernetes; logs report no Kubernetes session.",
+    "OAuth protected-resource and authorization-server metadata return 200 and advertise PKCE S256 and DCR.",
+    "OAuth issuer strings differ by trailing slash; iss support and resource/audience propagation are absent or unproven against current MetaMCP behavior.",
+    "The supported management UI/API could not be used because no browser session is available; no direct SQL deletion was performed."
+  ],
+  "blockers": [
+    "Long-lived flock wraps the persistent Kubernetes MCP process and causes repeated child-session timeout; replace it with one-shot prefetch locking.",
+    "Stale unmapped observability-endpoint still targets the retired VPN hostname and causes startup ENOTFOUND noise.",
+    "ChatGPT OAuth readiness is incomplete: exact issuer match, iss response handling, resource echo/audience validation, and callback allowlisting are not proven.",
+    "No browser session is available to remove the stale row through the supported MetaMCP management UI/API or complete a real ChatGPT OAuth consent flow."
+  ],
+  "next_action": "Advance through the required approval gate to code, patch Kubernetes startup locking via GitOps, then rerun repeated aggregate and safe-call validation; retain OAuth/UI items as explicit residuals if user interaction remains unavailable.",
+  "route_to": "code",
+  "risk_level": "critical",
+  "independent_lanes": [
+    "Kubernetes child-session reliability",
+    "Stale MetaMCP registry cleanup",
+    "ChatGPT OAuth conformance"
+  ],
+  "requires_council": true,
+  "issues": [
+    {
+      "id": "VAL-K8S-FLOCK",
+      "title": "Persistent Kubernetes child is held behind flock",
+      "severity": "critical",
+      "details": "PR 447 locks the long-lived npx process, so a second session waits for MetaMCP timeout and loses Kubernetes from aggregate tools/list.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "VAL-STALE-ENDPOINT",
+      "title": "Unmapped retired observability endpoint remains",
+      "severity": "high",
+      "details": "The old VPN hostname remains as an unmapped database row and produces startup DNS failures; supported UI/API cleanup needs an authenticated browser session.",
+      "owner_stage": "validation"
+    },
+    {
+      "id": "VAL-OAUTH-METADATA",
+      "title": "OAuth metadata is not fully ChatGPT-compatible",
+      "severity": "high",
+      "details": "Current upstream behavior omits issuer-response support and resource propagation, while protected-resource and authorization metadata disagree on the issuer trailing slash.",
+      "owner_stage": "code"
+    }
+  ]
+}

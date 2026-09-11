@@ -1,0 +1,1 @@
+Implement configurable bind addresses, allowed hosts/origins, bearer-token authentication, and validate private dev-VM MetaMCP deployment for codicarium/agent-mcp issue #13

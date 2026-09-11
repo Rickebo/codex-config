@@ -1,0 +1,34 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "P2 finding: resolveCoordinatorProof accepts duplicate exact coordinator proof tuples. No P0/P1 findings; acceptance review is otherwise clean.",
+  "changed_files": [
+    ".github/workflows/automatic-release.yaml",
+    "hack/release-handoff-policy.js",
+    "hack/test-release-handoff-policy.js",
+    "hack/test-release-graph.py"
+  ],
+  "validation": [
+    "node hack/test-release-handoff-policy.js passed.",
+    "make test-release-flow passed all constituent suites.",
+    "Ad hoc two valid checks with identical external_id were accepted; newest check ID was selected.",
+    "Publisher workflow is byte-identical to d3565f5; explicit-ID reauthentication remains unchanged.",
+    "filter=all is present on all three check listings; stale handoffs filter by exact external_id.",
+    "Live gh api confirms canonical handoff details_url uses /runs/{check.id}."
+  ],
+  "blockers": [
+    "Duplicate exact coordinator external_id tuples are not rejected during proof recovery."
+  ],
+  "next_action": "Route to code: reject duplicate exact coordinator external_id values in resolveCoordinatorProof and add a focused duplicate fixture.",
+  "route_to": "code",
+  "risk_level": "high",
+  "issues": [
+    {
+      "id": "REV-0484456-001",
+      "title": "P2: resolveCoordinatorProof accepts duplicate exact coordinator proof tuples",
+      "severity": "medium",
+      "details": "hack/release-handoff-policy.js:92-137 sorts exact proof checks and returns the newest valid match without rejecting repeated identical external_id values. Track exact IDs and fail closed before workflow-run lookup.",
+      "owner_stage": "code"
+    }
+  ]
+}

@@ -1,0 +1,144 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+seed_prompt=$'Operating mode: manager-lite.\nPrefer one direct worker for single-domain implementation tasks.\nReserve tech leads for multi-domain work or integration-risk lanes.\nEnforce shallow delegation only: one layer, no recursive delegation.\nIf work is small and single-domain, execute directly or via one worker.\nKeep lane reports compact: summary<=600 chars, changed_files<=20, validation<=12, blockers<=8, next_action<=300 chars, issues<=15.'
+forced_config=(-c agents.max_depth=1 -c agents.max_threads=4)
+
+render_prompt() {
+  local user_prompt="${1-}"
+  if [[ -n "$user_prompt" ]]; then
+    printf '%s\n\n%s' "$seed_prompt" "$user_prompt"
+  else
+    printf '%s' "$seed_prompt"
+  fi
+}
+
+parse_top_level() {
+  local -a forward=(-p manager)
+  local prompt=""
+  local sandbox_set=false
+
+  while (($#)); do
+    case "$1" in
+      -h|--help|-V|--version)
+        exec codex "$@"
+        ;;
+      -c|--config|--enable|--disable|-i|--image|-m|--model|--local-provider|-p|--profile|-s|--sandbox|-a|--ask-for-approval|-C|--cd|--add-dir)
+        if [[ "$1" == "-s" || "$1" == "--sandbox" ]]; then
+          sandbox_set=true
+        fi
+        forward+=("$1")
+        shift
+        if (($# == 0)); then
+          printf 'codex-manager-lite: missing value for option\n' >&2
+          exit 2
+        fi
+        forward+=("$1")
+        shift
+        ;;
+      --sandbox=*)
+        sandbox_set=true
+        forward+=("$1")
+        shift
+        ;;
+      --*=*)
+        forward+=("$1")
+        shift
+        ;;
+      --oss|--full-auto|--dangerously-bypass-approvals-and-sandbox|--search|--no-alt-screen)
+        forward+=("$1")
+        shift
+        ;;
+      exec)
+        parse_exec "${@:2}"
+        return
+        ;;
+      review|login|logout|mcp|plugin|mcp-server|app-server|completion|sandbox|debug|apply|resume|fork|cloud|exec-server|features|help)
+        exec codex "$@"
+        ;;
+      --)
+        shift
+        prompt="$*"
+        break
+        ;;
+      -*)
+        forward+=("$1")
+        shift
+        ;;
+      *)
+        prompt="$*"
+        break
+        ;;
+    esac
+  done
+
+  if ! $sandbox_set; then
+    forward+=("-s" "read-only")
+  fi
+
+  exec /home/rickebo/.codex/bin/codex-stable "${forced_config[@]}" "${forward[@]}" "$(render_prompt "$prompt")"
+}
+
+parse_exec() {
+  local -a forward=(exec -p manager)
+  local prompt=""
+  local sandbox_set=false
+
+  while (($#)); do
+    case "$1" in
+      -h|--help|-V|--version)
+        exec codex exec "$@"
+        ;;
+      review|resume|help)
+        exec codex exec "$@"
+        ;;
+      -c|--config|--enable|--disable|-i|--image|-m|--model|--local-provider|-p|--profile|-s|--sandbox|-C|--cd|--add-dir|-o|--output-last-message|--output-schema|--color)
+        if [[ "$1" == "-s" || "$1" == "--sandbox" ]]; then
+          sandbox_set=true
+        fi
+        forward+=("$1")
+        shift
+        if (($# == 0)); then
+          printf 'codex-manager-lite exec: missing value for option\n' >&2
+          exit 2
+        fi
+        forward+=("$1")
+        shift
+        ;;
+      --sandbox=*)
+        sandbox_set=true
+        forward+=("$1")
+        shift
+        ;;
+      --*=*)
+        forward+=("$1")
+        shift
+        ;;
+      --oss|--full-auto|--dangerously-bypass-approvals-and-sandbox|--skip-git-repo-check|--ephemeral|--progress-cursor|--json)
+        forward+=("$1")
+        shift
+        ;;
+      --)
+        shift
+        prompt="$*"
+        break
+        ;;
+      -*)
+        forward+=("$1")
+        shift
+        ;;
+      *)
+        prompt="$*"
+        break
+        ;;
+    esac
+  done
+
+  if ! $sandbox_set; then
+    forward+=("-s" "read-only")
+  fi
+
+  exec /home/rickebo/.codex/bin/codex-stable "${forced_config[@]}" "${forward[@]}" "$(render_prompt "$prompt")"
+}
+
+parse_top_level "$@"

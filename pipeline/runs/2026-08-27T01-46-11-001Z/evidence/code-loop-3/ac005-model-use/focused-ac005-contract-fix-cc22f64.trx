@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="0b17bc89-5685-4cec-bfa2-ab87605ccea0" name="@RICKEBO 2026-08-27 08:54:34" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2026-08-27T08:54:34.6083440+02:00" queuing="2026-08-27T08:54:34.6083440+02:00" start="2026-08-27T08:54:34.1906241+02:00" finish="2026-08-27T08:54:34.6118382+02:00" />
+  <TestSettings name="default" id="d887887b-d04c-4f96-b1b8-b38ba0b0d717">
+    <Deployment runDeploymentRoot="_RICKEBO_2026-08-27_08_54_34" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="05187731-23ea-4cec-8ce4-4f894a39c586" testId="e3e4a78e-7353-6546-29d7-93b35f485d98" testName="WorkspaceManager.SystemTests.KnowledgeGenerationFlowTests.Source_snapshot_replay_after_bounded_model_outage_creates_one_persisted_build" computerName="RICKEBO" duration="00:00:00.0026258" startTime="2026-08-27T08:54:34.5214605+02:00" endTime="2026-08-27T08:54:34.5313914+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="05187731-23ea-4cec-8ce4-4f894a39c586">
+      <Output>
+        <ErrorInfo>
+          <Message>System.InvalidOperationException : Set WM_DOCKER_CONTEXT explicitly before running containerized system tests.</Message>
+          <StackTrace>   at WorkspaceManager.SystemTests.Infrastructure.DockerContextGuard.RequireVerifiedContextAsync(CancellationToken cancellationToken) in /tmp/workspace-manager-ac005-cc22f64.OaDxId/tests/system/WorkspaceManager.SystemTests/Infrastructure/DockerContextGuard.cs:line 13
+   at WorkspaceManager.SystemTests.KnowledgeGenerationFlowTests.Source_snapshot_replay_after_bounded_model_outage_creates_one_persisted_build() in /tmp/workspace-manager-ac005-cc22f64.OaDxId/tests/system/WorkspaceManager.SystemTests/KnowledgeGenerationFlowTests.cs:line 12
+--- End of stack trace from previous location ---</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="WorkspaceManager.SystemTests.KnowledgeGenerationFlowTests.Source_snapshot_replay_after_bounded_model_outage_creates_one_persisted_build" storage="/tmp/workspace-manager-ac005-cc22f64.oadxid/tests/system/workspacemanager.systemtests/bin/release/net10.0/workspacemanager.systemtests.dll" id="e3e4a78e-7353-6546-29d7-93b35f485d98">
+      <Execution id="05187731-23ea-4cec-8ce4-4f894a39c586" />
+      <TestMethod codeBase="/tmp/workspace-manager-ac005-cc22f64.OaDxId/tests/system/WorkspaceManager.SystemTests/bin/Release/net10.0/WorkspaceManager.SystemTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="WorkspaceManager.SystemTests.KnowledgeGenerationFlowTests" name="Source_snapshot_replay_after_bounded_model_outage_creates_one_persisted_build" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="e3e4a78e-7353-6546-29d7-93b35f485d98" executionId="05187731-23ea-4cec-8ce4-4f894a39c586" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Failed">
+    <Counters total="1" executed="1" passed="0" failed="1" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v4.0.0+05679a7ab5 (64-bit .NET 10.0.11)
+[xUnit.net 00:00:00.05]   Discovering: WorkspaceManager.SystemTests
+[xUnit.net 00:00:00.09]   Discovered:  WorkspaceManager.SystemTests
+[xUnit.net 00:00:00.11]   Starting:    WorkspaceManager.SystemTests
+[xUnit.net 00:00:00.14]       System.InvalidOperationException : Set WM_DOCKER_CONTEXT explicitly before running containerized system tests.
+[xUnit.net 00:00:00.14]       Stack Trace:
+[xUnit.net 00:00:00.14]         /tmp/workspace-manager-ac005-cc22f64.OaDxId/tests/system/WorkspaceManager.SystemTests/Infrastructure/DockerContextGuard.cs(13,0): at WorkspaceManager.SystemTests.Infrastructure.DockerContextGuard.RequireVerifiedContextAsync(CancellationToken cancellationToken)
+[xUnit.net 00:00:00.14]         /tmp/workspace-manager-ac005-cc22f64.OaDxId/tests/system/WorkspaceManager.SystemTests/KnowledgeGenerationFlowTests.cs(12,0): at WorkspaceManager.SystemTests.KnowledgeGenerationFlowTests.Source_snapshot_replay_after_bounded_model_outage_creates_one_persisted_build()
+[xUnit.net 00:00:00.14]         --- End of stack trace from previous location ---
+[xUnit.net 00:00:00.14]   Finished:    WorkspaceManager.SystemTests
+</StdOut>
+    </Output>
+    <RunInfos>
+      <RunInfo computerName="RICKEBO" outcome="Error" timestamp="2026-08-27T08:54:34.5329700+02:00">
+        <Text>[xUnit.net 00:00:00.14]     WorkspaceManager.SystemTests.KnowledgeGenerationFlowTests.Source_snapshot_replay_after_bounded_model_outage_creates_one_persisted_build [FAIL]</Text>
+      </RunInfo>
+    </RunInfos>
+  </ResultSummary>
+</TestRun>

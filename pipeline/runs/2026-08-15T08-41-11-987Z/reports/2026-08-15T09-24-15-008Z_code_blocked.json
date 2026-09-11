@@ -1,0 +1,30 @@
+{
+  "stage": "code",
+  "status": "blocked",
+  "summary": "Merged initial protected-main preparation prerequisites, made runner PR validation secretless, and completed local infra remediation. Follow-up immutable-verifier and exact-runner-pin prerequisites fail closed because protected Nexus credential bindings are unavailable or rejected.",
+  "changed_files": [
+    "runner-config:.github/workflows/validate.yaml",
+    "runner-config:scripts/policy_check.py",
+    "runner-config:tests/test_trusted_pr_validation_boundary.py",
+    "infra:.github/workflows/deployment-controller-bootstrap.yml",
+    "infra:.github/workflows/validate-arc-runners-security.yml",
+    "infra:.github/workflows/produce-arc-runners-activation-evidence.yml",
+    "infra:.github/workflows/prepare-arc-runners-revision-lock.yml",
+    "infra:scripts/verify-protected-runner-main.py",
+    "infra:tests/test-protected-runner-main.py"
+  ],
+  "validation": [
+    "Runner full scripts/validate.sh passes locally.",
+    "Infra secret-boundary, activation, cross-repo, deployment-controller, Proxmox, Terraform, and authenticated protected-main tests pass locally.",
+    "Infra prerequisite guards and legacy freeze pass.",
+    "Candidate metadata check passes without secrets."
+  ],
+  "blockers": [
+    "Infra protected preparer gets Nexus HTTP 401 with masked read-only values.",
+    "Runner protected preparer receives empty Nexus read-only values.",
+    "PR #1076 and PR #32 cannot merge without bypassing required fail-closed checks; infra #1070 local commit must not be pushed before #1076 merges."
+  ],
+  "next_action": "Credential agent must restore the existing read-only Nexus bindings; then rerun protected prerequisite checks, merge #1076/#32, merge their protected mains into existing PR branches, push infra #1070, and complete exact-head validation.",
+  "route_to": "code",
+  "risk_level": "critical"
+}

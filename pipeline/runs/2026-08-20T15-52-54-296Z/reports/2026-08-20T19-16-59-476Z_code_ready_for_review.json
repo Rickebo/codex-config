@@ -1,0 +1,32 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Repository workflow hardening is implemented and pushed on fix/123-pr-release-isolation; PR validation is hosted/read-only and release publication is restricted to a distinct trusted selector.",
+  "changed_files": [
+    ".github/workflows/ci.yml",
+    ".github/workflows/release.yml",
+    "Makefile",
+    "docs/deployment.md",
+    "tools/workflowtrust/main.go",
+    "tools/workflowtrust/main_test.go"
+  ],
+  "validation": [
+    "commit f5afaaa pushed and worktree clean",
+    "make ci-pr passed",
+    "make ci passed",
+    "actionlint, workflow parser, Go/Python tests, and git diff --check passed"
+  ],
+  "blockers": [
+    "External dedicated release runner provisioning, fork canary, VM teardown, cleanup, Docker isolation, and egress evidence remain required before issue closure."
+  ],
+  "next_action": "Run independent exact-head security review before testing and hosted validation.",
+  "route_to": "review",
+  "risk_level": "critical",
+  "independent_lanes": [
+    "PR workflow trust contract",
+    "Release trusted runner/ref/permission contract",
+    "Make ci-pr coverage and resource boundary",
+    "Operator evidence documentation"
+  ],
+  "requires_council": true
+}

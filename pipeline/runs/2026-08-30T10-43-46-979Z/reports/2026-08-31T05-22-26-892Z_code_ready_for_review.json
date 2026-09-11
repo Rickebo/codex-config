@@ -1,0 +1,38 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Luna remediation committed exact clean head a5530f9dbba226aef5f0cb2765925e33e4f38898. The full consolidation now binds GitHub evidence to exact run/job/runner/group identity, enforces deauthorize-first serialized lifecycle transactions with crash recovery, exercises the real package and publication fault boundaries, and makes handoff capability registration durable before exposure.",
+  "changed_files": [
+    ".github/workflows/verify-codicarium-artifact-seal-boundary.yml",
+    "contracts/authority-runner-ownership.json",
+    "docs/authority-runner-github-evidence.md",
+    "docs/codicarium-artifact-seal-host-prerequisite.md",
+    "platform/authority-runner/artifact-seal-v1/*",
+    "scripts/check-installed-codicarium-artifact-seal.sh",
+    "scripts/harden-codicarium-artifact-ownership.py",
+    "scripts/produce-github-authority-evidence.py",
+    "scripts/verify-authority-runner-contract.py",
+    "scripts/verify-github-authority-evidence.py",
+    "tests/test-authority-runner-*.py",
+    "tests/test-codicarium-artifact-ownership.*",
+    "tests/test-codicarium-artifact-seal-*.sh",
+    "tests/test-github-authority-evidence.py"
+  ],
+  "validation": [
+    "Exact branch head is a5530f9dbba226aef5f0cb2765925e33e4f38898 with merge-base e3ff966271dc76af47387e906a68dcd6cdc90360 and a clean worktree.",
+    "Luna writer passed lifecycle, package, ownership, GitHub evidence, authority contract, and installed-root test suites.",
+    "Luna writer passed deployment-controller bootstrap compatibility tests, actionlint, shell/Python/JSON syntax checks, and manifest digest verification.",
+    "Root verified git diff --check across the exact base..head range.",
+    "Root verified .github/workflows/terraform-plan-codicarium.yml is byte-identical to the base.",
+    "Generated caches and test debris were removed; no host install, workflow dispatch, push, PR mutation, merge, or live-system mutation occurred."
+  ],
+  "blockers": [],
+  "next_action": "Have fresh independent Luna reviewers inspect the complete e3ff9662..a5530f9d diff against every requirement and all REV4 findings before entering the test stage.",
+  "route_to": "review",
+  "risk_level": "critical",
+  "independent_lanes": [
+    "GitHub workflow and API evidence binding",
+    "root package lifecycle and crash recovery",
+    "contract, handoff capability, and acceptance traceability"
+  ]
+}

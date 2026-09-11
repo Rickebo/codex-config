@@ -1,0 +1,15 @@
+{
+  "task": "codicarium/lc-config#309 production delivery",
+  "decision": "GO for desired-state implementation and PR review; NO-GO for production activation until explicit prod context and dedicated LC Kata capacity are proven",
+  "perspectives": [
+    {"role":"planner","decision":"GO code","summary":"Implement substrate, controller policy, direct charts/descriptor, then conflict-free cutover in dependency order."},
+    {"role":"platform reviewer","decision":"GO single destination","summary":"deployment-controller permits one profile destination per repository/environment, so active prod delivery must converge on codicarium-prod."},
+    {"role":"security reviewer","decision":"NO-GO shared runner capacity","summary":"kata-clh must select dedicated LC nodes; proxy, lobby, and generated servers must retain restricted security and provenance controls."},
+    {"role":"tech_lead_qa","decision":"NO-GO live until preflight","summary":"Require strict renders, negative admission tests, activation proof, rollback rehearsal, explicit prod context, and player-path smoke evidence."}
+  ],
+  "external_gates": [
+    "Provision and prove a dedicated Kata-capable LC node pool in codicarium-prod.",
+    "Provide a kubeconfig containing an explicitly named codicarium-prod context; the current file exposes only default.",
+    "Merge and verify dependency PRs before controller activation; never overlap legacy and controller writers."
+  ]
+}

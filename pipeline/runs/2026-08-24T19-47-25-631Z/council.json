@@ -1,0 +1,144 @@
+{
+  "schema_version": 1,
+  "run_dir": "/home/rickebo/.codex/pipeline/runs/2026-08-24T19-47-25-631Z",
+  "generated_at": "2026-08-24T20:26:23Z",
+  "risk_level": "high",
+  "council_required": true,
+  "tracking": {
+    "repository": "codicarium/deployment-controller",
+    "existing_issue": "#93",
+    "delivery": "One issue-linked corrective PR from a dedicated .worktrees worktree; required checks must pass before merge; close #93 and delete the remote branch/worktree only after live v0.6.13 validation."
+  },
+  "perspectives": [
+    {
+      "role": "planner",
+      "assessment": "The smallest safe correction moves only completion coordination and publication authorization to Automatic Release. The coordinator already serializes release allocation and authenticates the historical v0.6.13 tuple, so it should remain alive while the tag-bound verifier completes, then authorize the existing publisher.",
+      "decisions": [
+        "Set Automatic Release coordinate timeout-minutes to 35 and use a 30-minute explicit wall-clock verifier deadline.",
+        "Dispatch release.yaml at the immutable tag with return_run_details=true; consume only its direct positive workflow_run_id, with no workflow-run list fallback or assumption that the response contains run_attempt.",
+        "Immediately GET and validate that exact run ID to capture its positive initial run_attempt, then poll only the same ID/attempt; after success resolve current protected refs/heads/main, create or reuse the deterministic handoff, and dispatch publish-release.yaml at main with the existing full tuple.",
+        "Preserve release.yaml verification/evidence stages and keep publish-release.yaml unchanged.",
+        "Treat v0.6.13 recovery as the only release outcome of the corrective merge; no v0.6.14 may be allocated while it is pending."
+      ],
+      "execution_steps": [
+        {
+          "step": 1,
+          "goal": "Implement direct verifier run capture and strict polling in the coordinator.",
+          "owner": "tech_lead_devops",
+          "expected_artifacts": [".github/workflows/automatic-release.yaml", "hack/release-handoff-policy.js"],
+          "validation": "Fake dispatch/poll tests, workflow policy checks, and release-flow suite."
+        },
+        {
+          "step": 2,
+          "goal": "Remove verifier publication authority without disturbing verification outputs.",
+          "owner": "tech_lead_devops",
+          "expected_artifacts": [".github/workflows/release.yaml"],
+          "validation": "Structural permission/job assertions and supply-chain evidence regression tests."
+        },
+        {
+          "step": 3,
+          "goal": "Prove fail-closed identity, handoff, ordering, idempotency, and recovery behavior.",
+          "owner": "tech_lead_qa",
+          "expected_artifacts": ["hack/test-release-handoff-policy.js", "targeted workflow policy tests if needed"],
+          "validation": "make test-release-flow and make verify-supply-chain pass; required CI checks pass on the PR."
+        },
+        {
+          "step": 4,
+          "goal": "Merge and validate automatic pending-release recovery.",
+          "owner": "tech_lead_qa with github_operator for tracking/evidence",
+          "expected_artifacts": ["Merged PR linked to #93", "issue evidence comment with run/release URLs and digests", "cleaned branch/worktree"],
+          "validation": "Exact-main CI, Automatic Release, Release Verify, and Publish Release succeed; v0.6.13 artifacts bind ad52dfc; no v0.6.14; ancestry to 989799c is proven."
+        }
+      ]
+    },
+    {
+      "role": "security",
+      "assessment": "The verifier currently has an unnecessary write boundary. Authorization must come only from trusted current-main coordinator code and must be bound to immutable identities on every observation, not inferred from timestamps or workflow listings.",
+      "required_controls": [
+        "Remove release.yaml dispatch-publish and any verifier actions: write or checks: write scope.",
+        "Reject an absent, malformed, zero, negative, non-integer, or ambiguous direct dispatch workflow_run_id; do not require run_attempt in that response and never list runs as fallback.",
+        "Immediately GET the exact returned workflow_run_id; validate its ID, positive run_attempt, name, path, event, repository, tag/head branch, and source SHA before capturing that run_attempt, then revalidate the same complete identity on every poll.",
+        "Fail immediately on attempt rollover, API error, identity drift, unsupported status, failure, cancelled, timed_out, or 30-minute deadline expiry.",
+        "Resolve the publisher revision only after exact verifier success and bind it into the deterministic handoff external_id.",
+        "Bind the handoff details_url to the exact verifier run/attempt and reject duplicate or non-exact candidate checks.",
+        "Permit release/package mutation only through unchanged publish-release.yaml after it revalidates the full tuple."
+      ],
+      "residual_risks": [
+        "GitHub dispatch response semantics are platform-critical; a missing or changed return_run_details workflow_run_id contract, or a failing/mismatched immediate exact-ID GET, must stop recovery rather than trigger correlation heuristics.",
+        "A coordinator runner interruption after verifier success but before publisher dispatch requires a serialized exact-tuple retry; duplicate/forged checks must remain fail-closed.",
+        "Live publication is irreversible at the package/release layer, so all fake-API and required CI gates must pass before merge."
+      ]
+    },
+    {
+      "role": "tech_lead_qa",
+      "assessment": "Tests must execute the coordinator state machine with injectable time and fake GitHub endpoints. Text-only workflow assertions are necessary for permissions and unchanged publisher policy but are insufficient for dispatch/poll/handoff behavior.",
+      "required_matrix": {
+        "dispatch_response": [
+          "positive workflow_run_id with optional URLs and no run_attempt requirement",
+          "missing fields",
+          "wrong types",
+          "zero/negative/unsafe integers",
+          "API rejection",
+          "assert no run-list fallback",
+          "assert response run_attempt is neither required nor trusted"
+        ],
+        "polling": [
+          "immediate exact-ID GET validates identity and captures positive initial run_attempt",
+          "queued to in_progress to completed/success on the same ID/attempt",
+          "failure",
+          "cancelled",
+          "timed_out",
+          "unsupported status",
+          "API error",
+          "30-minute deadline expiry",
+          "mismatch for ID, attempt, name, path, event, repository, tag/head branch, or source SHA",
+          "attempt rollover"
+        ],
+        "handoff": [
+          "create when zero matches",
+          "reuse exactly one exact successful match",
+          "duplicate exact matches",
+          "forged app/name/external_id/head SHA/status/conclusion/details_url",
+          "full tuple and exact-attempt details_url",
+          "race candidates and retry idempotence"
+        ],
+        "ordering_and_recovery": [
+          "no protected-main resolution before verifier success",
+          "no handoff before protected-main resolution",
+          "no publisher dispatch before exact handoff",
+          "full existing publisher tuple and main ref",
+          "pending v0.6.13 prevents v0.6.14",
+          "exact CI SHA/attempt and coordinator binding",
+          "publish-release.yaml unchanged"
+        ]
+      },
+      "live_acceptance": [
+        "Corrective PR required checks pass and merge to protected main.",
+        "Merge CI automatically triggers the coordinator; no manual tag, dispatch, or release action is used.",
+        "Release Verify and Publish Release succeed for v0.6.13/ad52dfcbc45d71eccad1d49fbd905161af7a44b1.",
+        "Git ancestry proves 989799cc99a4e9577bfd100dde320a71f7e7fb9f is an ancestor of the v0.6.13 source.",
+        "Release, Helm, image, manifest, provenance, and attestation URLs/digests are independently collected and source-bound.",
+        "No v0.6.14 exists; issue #93 is closed after evidence; merged branch/worktree are cleaned."
+      ]
+    }
+  ],
+  "consensus": {
+    "status": "approved_for_code",
+    "summary": "Implement a minimal high-risk trust-boundary correction in which Automatic Release accepts the directly returned verifier workflow_run_id, immediately GETs and validates that exact run to capture its initial attempt, polls only the same ID/attempt, then creates the existing deterministic handoff and dispatches the unchanged publisher. Remove all verifier-side dispatch/write authority. Fail closed on every ambiguity. Let the merged correction's exact-main CI recover v0.6.13 automatically and validate published evidence before cleanup.",
+    "non_negotiable_sequence": [
+      "Authenticate exact-main CI and recover the existing v0.6.13 tuple.",
+      "Dispatch tag-bound Release Verify with return_run_details=true and validate its direct positive workflow_run_id without assuming the response contains run_attempt.",
+      "Immediately GET and validate that exact ID, capture its positive initial run_attempt, and poll only that same ID/attempt to exact success within 30 minutes under a 35-minute coordinator timeout.",
+      "Resolve current protected main.",
+      "Create or exactly reuse one tuple/details-url-bound successful handoff check.",
+      "Dispatch unchanged Publish Release at main with the existing full tuple.",
+      "Validate artifacts and close/clean tracking state only after live success."
+    ],
+    "open_questions": [],
+    "assumptions": [
+      "GitHub's dispatch endpoint used by actions/github-script supports return_run_details=true and directly returns a positive workflow_run_id plus URLs, but not run_attempt; implementation must immediately GET that exact ID to validate identity and capture a positive initial run_attempt, and must fail if either contract is unavailable.",
+      "Issue #93 remains the durable tracking issue for this correction.",
+      "Protected main and tag rules remain active; implementation must query explicit refs and must not trust local CLI defaults."
+    ]
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "stage": "spec",
+  "status": "fail",
+  "summary": "Independent 2026-08-22 re-audit confirms the spec hard gates remain unresolved; no implementation or deployment is authorized.",
+  "changed_files": [
+    ".codex/pipeline/runs/2026-08-21T20-20-56-579Z/spec-reaudit-resumed-20260822T081844Z.json",
+    ".codex/pipeline/runs/2026-08-21T20-20-56-579Z/council-reaudit-resumed-20260822T081844Z.json"
+  ],
+  "validation": [
+    "Explicit source kubeconfig/context used; latest source backups completed at 02:17:15Z and 02:47:13Z with no source mutation.",
+    "No shared source cutoff, WAL continuity, or sanitized provider-side artifact existence/SHA proof is available.",
+    "Explicit target kubeconfig/context used; Longhorn has about 74GiB free versus about 180GiB scheduled and a NotReady data disk.",
+    "No unbound RWX PV at or above 100Gi exists; existing large Retain NFS PVs remain bound to other workloads.",
+    "Target backup target reports 25 completed backups at 100%; no target-only restore drill exists.",
+    "Bitwarden is Ready; target OIDC SecretStore is Ready=False because the required ServiceAccount is missing.",
+    "Sanitized handoff comment posted to #489; #482 and #483 retain the existing technical gate record.",
+    "Worktree has no implementation diff beyond pre-existing graphify-out/* edits; pipeline CI remains clean."
+  ],
+  "blockers": [
+    "D-001 source-side shared cutoff, WAL-gap, and artifact SHA evidence is missing.",
+    "D-002 dedicated target-owned artifact storage, capacity, retention, off-node backup, and restore proof are missing.",
+    "D-003 target-only Authentik restriction, OIDC ServiceAccount path, and fresh target credential decisions are unresolved.",
+    "D-004 requires leaving the two ownerless retained LLM Proxy PVCs untouched.",
+    "Two secret-adjacent output incidents require separate authorized credential review; no values are included in evidence."
+  ],
+  "next_action": "Obtain D-001 metadata and explicit D-002/D-003 decisions; keep spec, retained PVCs, and Codicarium unchanged until a fresh re-audit passes.",
+  "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-21T20-20-56-579Z/feature-spec.json",
+  "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-08-21T20-20-56-579Z/spec-reaudit-check-resumed-20260822T081844Z.json",
+  "council_file": "/home/rickebo/.codex/pipeline/runs/2026-08-21T20-20-56-579Z/council-reaudit-resumed-20260822T081844Z.json",
+  "requires_council": true,
+  "independent_lanes": [
+    "source backup, WAL, and artifact evidence",
+    "target storage, backup, and identity readiness",
+    "GitHub task-memory state"
+  ],
+  "risk_level": "high",
+  "issues": [
+    {
+      "id": "GH-482",
+      "title": "Homelab LLM point-in-time clone parent",
+      "severity": "high",
+      "details": "Parent issue tracks the source cutoff, target capacity, and deployment safety gates."
+    },
+    {
+      "id": "GH-483",
+      "title": "LLM proxy backup and storage inventory",
+      "severity": "high",
+      "details": "Issue tracks source backup/artifact and target storage/restore evidence."
+    },
+    {
+      "id": "GH-489",
+      "title": "Target-only identity and secret provisioning",
+      "severity": "high",
+      "details": "Issue now contains the sanitized current handoff for target identity decisions and incident review."
+    }
+  ],
+  "route_to": "spec"
+}

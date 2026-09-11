@@ -1,0 +1,555 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="aa101c57-980c-4b54-a272-2c97f961019a" name="@RICKEBO 2026-08-27 04:31:55" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2026-08-27T04:31:55.8952682+02:00" queuing="2026-08-27T04:31:55.8952682+02:00" start="2026-08-27T04:31:48.2285757+02:00" finish="2026-08-27T04:32:11.5234632+02:00" />
+  <TestSettings name="default" id="c3567f54-0122-4b29-857c-5339960ca263">
+    <Deployment runDeploymentRoot="_RICKEBO_2026-08-27_04_31_55" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="c63731ed-ea7b-41e8-9439-6c6557ed4983" testId="083e7172-1f87-3505-828d-d0e3cddb493f" testName="ModelService.IntegrationTests.KafkaOutboxTests.TransactionalOutbox_PublishesCloudEventWithWorkspacePartitionKey" computerName="RICKEBO" duration="00:00:01.6272316" startTime="2026-08-27T04:32:01.4556786+02:00" endTime="2026-08-27T04:32:07.0498036+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="c63731ed-ea7b-41e8-9439-6c6557ed4983" />
+    <UnitTestResult executionId="2b7ba552-0a4e-4a59-abef-85bfb83430c6" testId="2decbfb2-be3d-aeac-1677-818787bad6ef" testName="ModelService.IntegrationTests.ModelServiceApiFlowTests.WorkspaceAndUserCredentials_AreSelectedAttributedAndRevokedWithoutSecretLeakage" computerName="RICKEBO" duration="00:00:00.1871491" startTime="2026-08-27T04:31:58.6159450+02:00" endTime="2026-08-27T04:32:01.4534500+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="2b7ba552-0a4e-4a59-abef-85bfb83430c6" />
+    <UnitTestResult executionId="dc9d0a25-8197-49c6-b82a-866f95c10940" testId="5f913000-aa25-e109-e1b0-3c21d31dd7b0" testName="ModelService.IntegrationTests.ModelServiceApiFlowTests.KnowledgeGeneration_reads_policy_and_canonical_configuration_from_one_snapshot" computerName="RICKEBO" duration="00:00:01.5754713" startTime="2026-08-27T04:31:50.0232378+02:00" endTime="2026-08-27T04:31:55.8772899+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="dc9d0a25-8197-49c6-b82a-866f95c10940" />
+    <UnitTestResult executionId="834960ef-872d-423d-ac8e-b91ddd11c781" testId="5cd28f78-1552-9670-f987-69808253a3c4" testName="ModelService.IntegrationTests.ModelServiceApiFlowTests.KnowledgeGeneration_RequiresConfiguredWorkloadProofAndWorkspaceBinding" computerName="RICKEBO" duration="00:00:00.1056940" startTime="2026-08-27T04:31:55.8855347+02:00" endTime="2026-08-27T04:31:58.6152984+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="834960ef-872d-423d-ac8e-b91ddd11c781" />
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="ModelService.IntegrationTests.ModelServiceApiFlowTests.WorkspaceAndUserCredentials_AreSelectedAttributedAndRevokedWithoutSecretLeakage" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/model-service/modelservice.integrationtests/bin/release/net10.0/modelservice.integrationtests.dll" id="2decbfb2-be3d-aeac-1677-818787bad6ef">
+      <Execution id="2b7ba552-0a4e-4a59-abef-85bfb83430c6" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/model-service/ModelService.IntegrationTests/bin/Release/net10.0/ModelService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="ModelService.IntegrationTests.ModelServiceApiFlowTests" name="WorkspaceAndUserCredentials_AreSelectedAttributedAndRevokedWithoutSecretLeakage" />
+    </UnitTest>
+    <UnitTest name="ModelService.IntegrationTests.ModelServiceApiFlowTests.KnowledgeGeneration_RequiresConfiguredWorkloadProofAndWorkspaceBinding" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/model-service/modelservice.integrationtests/bin/release/net10.0/modelservice.integrationtests.dll" id="5cd28f78-1552-9670-f987-69808253a3c4">
+      <Execution id="834960ef-872d-423d-ac8e-b91ddd11c781" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/model-service/ModelService.IntegrationTests/bin/Release/net10.0/ModelService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="ModelService.IntegrationTests.ModelServiceApiFlowTests" name="KnowledgeGeneration_RequiresConfiguredWorkloadProofAndWorkspaceBinding" />
+    </UnitTest>
+    <UnitTest name="ModelService.IntegrationTests.KafkaOutboxTests.TransactionalOutbox_PublishesCloudEventWithWorkspacePartitionKey" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/model-service/modelservice.integrationtests/bin/release/net10.0/modelservice.integrationtests.dll" id="083e7172-1f87-3505-828d-d0e3cddb493f">
+      <Execution id="c63731ed-ea7b-41e8-9439-6c6557ed4983" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/model-service/ModelService.IntegrationTests/bin/Release/net10.0/ModelService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="ModelService.IntegrationTests.KafkaOutboxTests" name="TransactionalOutbox_PublishesCloudEventWithWorkspacePartitionKey" />
+    </UnitTest>
+    <UnitTest name="ModelService.IntegrationTests.ModelServiceApiFlowTests.KnowledgeGeneration_reads_policy_and_canonical_configuration_from_one_snapshot" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/model-service/modelservice.integrationtests/bin/release/net10.0/modelservice.integrationtests.dll" id="5f913000-aa25-e109-e1b0-3c21d31dd7b0">
+      <Execution id="dc9d0a25-8197-49c6-b82a-866f95c10940" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/model-service/ModelService.IntegrationTests/bin/Release/net10.0/ModelService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="ModelService.IntegrationTests.ModelServiceApiFlowTests" name="KnowledgeGeneration_reads_policy_and_canonical_configuration_from_one_snapshot" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="083e7172-1f87-3505-828d-d0e3cddb493f" executionId="c63731ed-ea7b-41e8-9439-6c6557ed4983" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="2decbfb2-be3d-aeac-1677-818787bad6ef" executionId="2b7ba552-0a4e-4a59-abef-85bfb83430c6" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="5f913000-aa25-e109-e1b0-3c21d31dd7b0" executionId="dc9d0a25-8197-49c6-b82a-866f95c10940" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="5cd28f78-1552-9670-f987-69808253a3c4" executionId="834960ef-872d-423d-ac8e-b91ddd11c781" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Failed">
+    <Counters total="4" executed="4" passed="4" failed="0" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v3.1.5+1b188a7b0a (64-bit .NET 10.0.11)
+[xUnit.net 00:00:00.66]   Discovering: ModelService.IntegrationTests
+[xUnit.net 00:00:00.68]   Discovered:  ModelService.IntegrationTests
+[xUnit.net 00:00:00.69]   Starting:    ModelService.IntegrationTests
+[testcontainers.org 00:00:00.23] Connected to Docker:
+  Host: unix:///var/run/docker.sock
+  Server Version: 29.7.2
+  Kernel Version: 6.18.44-1-lts
+  API Version: 1.55
+  Operating System: Arch Linux
+  Total Memory: 60.48 GB
+[testcontainers.org 00:00:00.48] Docker container 4069faad6f3b created
+[testcontainers.org 00:00:00.50] Start Docker container 4069faad6f3b
+[testcontainers.org 00:00:00.63] Wait for Docker container 4069faad6f3b to complete readiness checks
+[testcontainers.org 00:00:01.64] Docker container 4069faad6f3b ready
+[testcontainers.org 00:00:01.71] Docker container 7a9a82f09d80 created
+[testcontainers.org 00:00:01.71] Start Docker container 7a9a82f09d80
+[testcontainers.org 00:00:01.81] Wait for Docker container 7a9a82f09d80 to complete readiness checks
+[testcontainers.org 00:00:01.82] Execute "pg_isready --host localhost --dbname model_service --username model_service" at Docker container 7a9a82f09d80
+[testcontainers.org 00:00:02.85] Execute "pg_isready --host localhost --dbname model_service --username model_service" at Docker container 7a9a82f09d80
+[testcontainers.org 00:00:03.86] Execute "pg_isready --host localhost --dbname model_service --username model_service" at Docker container 7a9a82f09d80
+[testcontainers.org 00:00:03.88] Docker container 7a9a82f09d80 ready
+info: Microsoft.Hosting.Lifetime[0]
+      Application started. Press Ctrl+C to shut down.
+info: Microsoft.Hosting.Lifetime[0]
+      Hosting environment: Testing
+info: Microsoft.Hosting.Lifetime[0]
+      Content root path: /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/services/model-service/src/ModelService.Api
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://localhost/v1/workspaces/018f1000-0000-7000-8000-000000000001/model-endpoints - application/json;+charset=utf-8 178
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /v1/workspaces/{workspaceId:guid}/model-endpoints =&gt; CreateEndpointAsync'
+info: Microsoft.AspNetCore.Http.Result.CreatedResult[1]
+      Setting HTTP status code 201.
+info: Microsoft.AspNetCore.Http.Result.CreatedResult[3]
+      Writing value of type 'ProviderEndpointResponse' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /v1/workspaces/{workspaceId:guid}/model-endpoints =&gt; CreateEndpointAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://localhost/v1/workspaces/018f1000-0000-7000-8000-000000000001/model-endpoints - 201 - application/json;+charset=utf-8 90.4198ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://localhost/v1/workspaces/018f1000-0000-7000-8000-000000000001/model-endpoints - application/json;+charset=utf-8 178
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://localhost/v1/workspaces/018f1000-0000-7000-8000-000000000001/model-endpoints - 201 - application/json 2.0342ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://localhost/v1/workspaces/018f1000-0000-7000-8000-000000000001/model-configurations - application/json;+charset=utf-8 239
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /v1/workspaces/{workspaceId:guid}/model-configurations =&gt; CreateConfigurationAsync'
+info: Microsoft.AspNetCore.Http.Result.CreatedResult[1]
+      Setting HTTP status code 201.
+info: Microsoft.AspNetCore.Http.Result.CreatedResult[3]
+      Writing value of type 'ModelConfigurationResponse' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /v1/workspaces/{workspaceId:guid}/model-configurations =&gt; CreateConfigurationAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://localhost/v1/workspaces/018f1000-0000-7000-8000-000000000001/model-configurations - 201 - application/json;+charset=utf-8 39.4000ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://localhost/v1/workspaces/018f1000-0000-7000-8000-000000000001/model-credentials - application/json;+charset=utf-8 198
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /v1/workspaces/{workspaceId:guid}/model-credentials =&gt; CreateCredentialAsync'
+info: Microsoft.AspNetCore.Http.Result.CreatedResult[1]
+      Setting HTTP status code 201.
+info: Microsoft.AspNetCore.Http.Result.CreatedResult[3]
+      Writing value of type 'CredentialResponse' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /v1/workspaces/{workspaceId:guid}/model-credentials =&gt; CreateCredentialAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://localhost/v1/workspaces/018f1000-0000-7000-8000-000000000001/model-credentials - 201 - application/json;+charset=utf-8 8.1020ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 PUT http://localhost/v1/workspaces/018f1000-0000-7000-8000-000000000001/model-policy - application/json;+charset=utf-8 340
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: PUT /v1/workspaces/{workspaceId:guid}/model-policy =&gt; PutPolicyAsync'
+info: Microsoft.AspNetCore.Http.Result.OkObjectResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.OkObjectResult[3]
+      Writing value of type 'WorkspaceModelPolicyResponse' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: PUT /v1/workspaces/{workspaceId:guid}/model-policy =&gt; PutPolicyAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 PUT http://localhost/v1/workspaces/018f1000-0000-7000-8000-000000000001/model-policy - 200 - application/json;+charset=utf-8 12.4220ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://localhost/v1/workspaces/018f1000-0000-7000-8000-000000000001/model-configurations - application/json;+charset=utf-8 243
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /v1/workspaces/{workspaceId:guid}/model-configurations =&gt; CreateConfigurationAsync'
+info: Microsoft.AspNetCore.Http.Result.CreatedResult[1]
+      Setting HTTP status code 201.
+info: Microsoft.AspNetCore.Http.Result.CreatedResult[3]
+      Writing value of type 'ModelConfigurationResponse' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /v1/workspaces/{workspaceId:guid}/model-configurations =&gt; CreateConfigurationAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://localhost/v1/workspaces/018f1000-0000-7000-8000-000000000001/model-configurations - 201 - application/json;+charset=utf-8 1.4019ms
+info: Microsoft.Hosting.Lifetime[0]
+      Application is shutting down...
+[testcontainers.org 00:00:04.47] Delete Docker container 7a9a82f09d80
+[testcontainers.org 00:00:05.03] Docker container 990694f51dbb created
+[testcontainers.org 00:00:05.03] Start Docker container 990694f51dbb
+[testcontainers.org 00:00:05.14] Wait for Docker container 990694f51dbb to complete readiness checks
+[testcontainers.org 00:00:05.14] Execute "pg_isready --host localhost --dbname model_service --username model_service" at Docker container 990694f51dbb
+[testcontainers.org 00:00:06.16] Execute "pg_isready --host localhost --dbname model_service --username model_service" at Docker container 990694f51dbb
+[testcontainers.org 00:00:07.17] Execute "pg_isready --host localhost --dbname model_service --username model_service" at Docker container 990694f51dbb
+[testcontainers.org 00:00:07.19] Docker container 990694f51dbb ready
+info: Microsoft.Hosting.Lifetime[0]
+      Application started. Press Ctrl+C to shut down.
+info: Microsoft.Hosting.Lifetime[0]
+      Hosting environment: Testing
+info: Microsoft.Hosting.Lifetime[0]
+      Content root path: /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/services/model-service/src/ModelService.Api
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://localhost/v1/workspaces/018f1000-0000-7000-8000-000000000001/model-endpoints - application/json;+charset=utf-8 178
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /v1/workspaces/{workspaceId:guid}/model-endpoints =&gt; CreateEndpointAsync'
+info: Microsoft.AspNetCore.Http.Result.CreatedResult[1]
+      Setting HTTP status code 201.
+info: Microsoft.AspNetCore.Http.Result.CreatedResult[3]
+      Writing value of type 'ProviderEndpointResponse' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /v1/workspaces/{workspaceId:guid}/model-endpoints =&gt; CreateEndpointAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://localhost/v1/workspaces/018f1000-0000-7000-8000-000000000001/model-endpoints - 201 - application/json;+charset=utf-8 28.6638ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://localhost/v1/workspaces/018f1000-0000-7000-8000-000000000001/model-endpoints - application/json;+charset=utf-8 178
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://localhost/v1/workspaces/018f1000-0000-7000-8000-000000000001/model-endpoints - 201 - application/json 1.9634ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://localhost/v1/workspaces/018f1000-0000-7000-8000-000000000001/model-configurations - application/json;+charset=utf-8 239
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /v1/workspaces/{workspaceId:guid}/model-configurations =&gt; CreateConfigurationAsync'
+info: Microsoft.AspNetCore.Http.Result.CreatedResult[1]
+      Setting HTTP status code 201.
+info: Microsoft.AspNetCore.Http.Result.CreatedResult[3]
+      Writing value of type 'ModelConfigurationResponse' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /v1/workspaces/{workspaceId:guid}/model-configurations =&gt; CreateConfigurationAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://localhost/v1/workspaces/018f1000-0000-7000-8000-000000000001/model-configurations - 201 - application/json;+charset=utf-8 3.6390ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://localhost/v1/workspaces/018f1000-0000-7000-8000-000000000001/model-credentials - application/json;+charset=utf-8 200
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /v1/workspaces/{workspaceId:guid}/model-credentials =&gt; CreateCredentialAsync'
+info: Microsoft.AspNetCore.Http.Result.CreatedResult[1]
+      Setting HTTP status code 201.
+info: Microsoft.AspNetCore.Http.Result.CreatedResult[3]
+      Writing value of type 'CredentialResponse' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /v1/workspaces/{workspaceId:guid}/model-credentials =&gt; CreateCredentialAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://localhost/v1/workspaces/018f1000-0000-7000-8000-000000000001/model-credentials - 201 - application/json;+charset=utf-8 1.3204ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 PUT http://localhost/v1/workspaces/018f1000-0000-7000-8000-000000000001/model-policy - application/json;+charset=utf-8 340
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: PUT /v1/workspaces/{workspaceId:guid}/model-policy =&gt; PutPolicyAsync'
+info: Microsoft.AspNetCore.Http.Result.OkObjectResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.OkObjectResult[3]
+      Writing value of type 'WorkspaceModelPolicyResponse' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: PUT /v1/workspaces/{workspaceId:guid}/model-policy =&gt; PutPolicyAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 PUT http://localhost/v1/workspaces/018f1000-0000-7000-8000-000000000001/model-policy - 200 - application/json;+charset=utf-8 2.0982ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://localhost/internal/v1/workspaces/018f1000-0000-7000-8000-000000000001/knowledge-generation - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /internal/v1/workspaces/{workspaceId:guid}/knowledge-generation =&gt; GetKnowledgeGenerationAsync'
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /internal/v1/workspaces/{workspaceId:guid}/knowledge-generation =&gt; GetKnowledgeGenerationAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://localhost/internal/v1/workspaces/018f1000-0000-7000-8000-000000000001/knowledge-generation - 401 - application/json;+charset=utf-8 2.7185ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://localhost/internal/v1/workspaces/01a0410f-5202-7e43-84c6-8f60c1a88d91/knowledge-generation - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /internal/v1/workspaces/{workspaceId:guid}/knowledge-generation =&gt; GetKnowledgeGenerationAsync'
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /internal/v1/workspaces/{workspaceId:guid}/knowledge-generation =&gt; GetKnowledgeGenerationAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://localhost/internal/v1/workspaces/01a0410f-5202-7e43-84c6-8f60c1a88d91/knowledge-generation - 401 - application/json;+charset=utf-8 0.4879ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://localhost/internal/v1/workspaces/018f1000-0000-7000-8000-000000000001/knowledge-generation - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /internal/v1/workspaces/{workspaceId:guid}/knowledge-generation =&gt; GetKnowledgeGenerationAsync'
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /internal/v1/workspaces/{workspaceId:guid}/knowledge-generation =&gt; GetKnowledgeGenerationAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://localhost/internal/v1/workspaces/018f1000-0000-7000-8000-000000000001/knowledge-generation - 401 - application/json;+charset=utf-8 0.3387ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://localhost/internal/v1/workspaces/018f1000-0000-7000-8000-000000000001/knowledge-generation - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /internal/v1/workspaces/{workspaceId:guid}/knowledge-generation =&gt; GetKnowledgeGenerationAsync'
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /internal/v1/workspaces/{workspaceId:guid}/knowledge-generation =&gt; GetKnowledgeGenerationAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://localhost/internal/v1/workspaces/018f1000-0000-7000-8000-000000000001/knowledge-generation - 401 - application/json;+charset=utf-8 0.1237ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://localhost/internal/v1/workspaces/018f1000-0000-7000-8000-000000000001/knowledge-generation - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /internal/v1/workspaces/{workspaceId:guid}/knowledge-generation =&gt; GetKnowledgeGenerationAsync'
+info: Microsoft.AspNetCore.Http.Result.OkObjectResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.OkObjectResult[3]
+      Writing value of type 'KnowledgeGenerationResponse' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /internal/v1/workspaces/{workspaceId:guid}/knowledge-generation =&gt; GetKnowledgeGenerationAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://localhost/internal/v1/workspaces/018f1000-0000-7000-8000-000000000001/knowledge-generation - 200 - application/json;+charset=utf-8 3.6036ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://localhost/internal/v1/workspaces/018f1000-0000-7000-8000-000000000001/knowledge-generation - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /internal/v1/workspaces/{workspaceId:guid}/knowledge-generation =&gt; GetKnowledgeGenerationAsync'
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /internal/v1/workspaces/{workspaceId:guid}/knowledge-generation =&gt; GetKnowledgeGenerationAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://localhost/internal/v1/workspaces/018f1000-0000-7000-8000-000000000001/knowledge-generation - 401 - application/json;+charset=utf-8 0.1186ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://localhost/internal/v1/workspaces/018f1000-0000-7000-8000-000000000001/knowledge-generation - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /internal/v1/workspaces/{workspaceId:guid}/knowledge-generation =&gt; GetKnowledgeGenerationAsync'
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /internal/v1/workspaces/{workspaceId:guid}/knowledge-generation =&gt; GetKnowledgeGenerationAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://localhost/internal/v1/workspaces/018f1000-0000-7000-8000-000000000001/knowledge-generation - 401 - application/json;+charset=utf-8 0.0567ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://localhost/internal/v1/workspaces/018f1000-0000-7000-8000-000000000001/knowledge-generation - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /internal/v1/workspaces/{workspaceId:guid}/knowledge-generation =&gt; GetKnowledgeGenerationAsync'
+info: Microsoft.AspNetCore.Http.Result.OkObjectResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.OkObjectResult[3]
+      Writing value of type 'KnowledgeGenerationResponse' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /internal/v1/workspaces/{workspaceId:guid}/knowledge-generation =&gt; GetKnowledgeGenerationAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://localhost/internal/v1/workspaces/018f1000-0000-7000-8000-000000000001/knowledge-generation - 200 - application/json;+charset=utf-8 0.7698ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://localhost/internal/v1/workspaces/018f1000-0000-7000-8000-000000000001/knowledge-generation - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /internal/v1/workspaces/{workspaceId:guid}/knowledge-generation =&gt; GetKnowledgeGenerationAsync'
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /internal/v1/workspaces/{workspaceId:guid}/knowledge-generation =&gt; GetKnowledgeGenerationAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://localhost/internal/v1/workspaces/018f1000-0000-7000-8000-000000000001/knowledge-generation - 401 - application/json;+charset=utf-8 0.3407ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://localhost/internal/v1/workspaces/018f1000-0000-7000-8000-000000000001/knowledge-generation - application/json;+charset=utf-8 2
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint '405 HTTP Method Not Supported'
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint '405 HTTP Method Not Supported'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://localhost/internal/v1/workspaces/018f1000-0000-7000-8000-000000000001/knowledge-generation - 405 - - 0.1239ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://localhost/internal/v1/workspaces/018f1000-0000-7000-8000-000000000001/knowledge-generation - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /internal/v1/workspaces/{workspaceId:guid}/knowledge-generation =&gt; GetKnowledgeGenerationAsync'
+info: Microsoft.AspNetCore.Http.Result.OkObjectResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.OkObjectResult[3]
+      Writing value of type 'KnowledgeGenerationResponse' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /internal/v1/workspaces/{workspaceId:guid}/knowledge-generation =&gt; GetKnowledgeGenerationAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://localhost/internal/v1/workspaces/018f1000-0000-7000-8000-000000000001/knowledge-generation - 200 - application/json;+charset=utf-8 0.6299ms
+info: Microsoft.Hosting.Lifetime[0]
+      Application is shutting down...
+[testcontainers.org 00:00:07.30] Delete Docker container 990694f51dbb
+[testcontainers.org 00:00:07.77] Docker container e158fe7aa867 created
+[testcontainers.org 00:00:07.77] Start Docker container e158fe7aa867
+[testcontainers.org 00:00:07.88] Wait for Docker container e158fe7aa867 to complete readiness checks
+[testcontainers.org 00:00:07.88] Execute "pg_isready --host localhost --dbname model_service --username model_service" at Docker container e158fe7aa867
+[testcontainers.org 00:00:08.90] Execute "pg_isready --host localhost --dbname model_service --username model_service" at Docker container e158fe7aa867
+[testcontainers.org 00:00:09.92] Execute "pg_isready --host localhost --dbname model_service --username model_service" at Docker container e158fe7aa867
+[testcontainers.org 00:00:09.94] Docker container e158fe7aa867 ready
+info: Microsoft.Hosting.Lifetime[0]
+      Application started. Press Ctrl+C to shut down.
+info: Microsoft.Hosting.Lifetime[0]
+      Hosting environment: Testing
+info: Microsoft.Hosting.Lifetime[0]
+      Content root path: /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/services/model-service/src/ModelService.Api
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://localhost/v1/workspaces/018f1000-0000-7000-8000-000000000001/model-endpoints - application/json;+charset=utf-8 178
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /v1/workspaces/{workspaceId:guid}/model-endpoints =&gt; CreateEndpointAsync'
+info: Microsoft.AspNetCore.Http.Result.CreatedResult[1]
+      Setting HTTP status code 201.
+info: Microsoft.AspNetCore.Http.Result.CreatedResult[3]
+      Writing value of type 'ProviderEndpointResponse' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /v1/workspaces/{workspaceId:guid}/model-endpoints =&gt; CreateEndpointAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://localhost/v1/workspaces/018f1000-0000-7000-8000-000000000001/model-endpoints - 201 - application/json;+charset=utf-8 27.9731ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://localhost/v1/workspaces/018f1000-0000-7000-8000-000000000001/model-endpoints - application/json;+charset=utf-8 178
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://localhost/v1/workspaces/018f1000-0000-7000-8000-000000000001/model-endpoints - 201 - application/json 1.6165ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://localhost/v1/workspaces/018f1000-0000-7000-8000-000000000001/model-configurations - application/json;+charset=utf-8 239
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /v1/workspaces/{workspaceId:guid}/model-configurations =&gt; CreateConfigurationAsync'
+info: Microsoft.AspNetCore.Http.Result.CreatedResult[1]
+      Setting HTTP status code 201.
+info: Microsoft.AspNetCore.Http.Result.CreatedResult[3]
+      Writing value of type 'ModelConfigurationResponse' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /v1/workspaces/{workspaceId:guid}/model-configurations =&gt; CreateConfigurationAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://localhost/v1/workspaces/018f1000-0000-7000-8000-000000000001/model-configurations - 201 - application/json;+charset=utf-8 4.1350ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://localhost/v1/workspaces/018f1000-0000-7000-8000-000000000001/model-credentials - application/json;+charset=utf-8 199
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /v1/workspaces/{workspaceId:guid}/model-credentials =&gt; CreateCredentialAsync'
+info: Microsoft.AspNetCore.Http.Result.CreatedResult[1]
+      Setting HTTP status code 201.
+info: Microsoft.AspNetCore.Http.Result.CreatedResult[3]
+      Writing value of type 'CredentialResponse' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /v1/workspaces/{workspaceId:guid}/model-credentials =&gt; CreateCredentialAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://localhost/v1/workspaces/018f1000-0000-7000-8000-000000000001/model-credentials - 201 - application/json;+charset=utf-8 1.4199ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://localhost/v1/workspaces/018f1000-0000-7000-8000-000000000001/model-credentials - application/json;+charset=utf-8 191
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /v1/workspaces/{workspaceId:guid}/model-credentials =&gt; CreateCredentialAsync'
+info: Microsoft.AspNetCore.Http.Result.CreatedResult[1]
+      Setting HTTP status code 201.
+info: Microsoft.AspNetCore.Http.Result.CreatedResult[3]
+      Writing value of type 'CredentialResponse' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /v1/workspaces/{workspaceId:guid}/model-credentials =&gt; CreateCredentialAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://localhost/v1/workspaces/018f1000-0000-7000-8000-000000000001/model-credentials - 201 - application/json;+charset=utf-8 1.4663ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 PUT http://localhost/v1/workspaces/018f1000-0000-7000-8000-000000000001/model-policy - application/json;+charset=utf-8 340
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: PUT /v1/workspaces/{workspaceId:guid}/model-policy =&gt; PutPolicyAsync'
+info: Microsoft.AspNetCore.Http.Result.OkObjectResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.OkObjectResult[3]
+      Writing value of type 'WorkspaceModelPolicyResponse' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: PUT /v1/workspaces/{workspaceId:guid}/model-policy =&gt; PutPolicyAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 PUT http://localhost/v1/workspaces/018f1000-0000-7000-8000-000000000001/model-policy - 200 - application/json;+charset=utf-8 2.3523ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://localhost/internal/v1/model-delegations - application/json;+charset=utf-8 661
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /internal/v1/model-delegations =&gt; CreateDelegationAsync'
+info: Microsoft.AspNetCore.Http.Result.CreatedResult[1]
+      Setting HTTP status code 201.
+info: Microsoft.AspNetCore.Http.Result.CreatedResult[3]
+      Writing value of type 'ModelDelegationResponse' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /internal/v1/model-delegations =&gt; CreateDelegationAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://localhost/internal/v1/model-delegations - 201 - application/json;+charset=utf-8 14.0349ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://localhost/openai/v1/chat/completions - application/json;+charset=utf-8 131
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /openai/v1/chat/completions =&gt; ChatCompletionsAsync'
+info: System.Net.Http.HttpClient.OpenAiCompatibleProviderClient.LogicalHandler[100]
+      Start processing HTTP request POST http://127.0.0.1:44683/v1/chat/completions
+info: System.Net.Http.HttpClient.OpenAiCompatibleProviderClient.ClientHandler[100]
+      Sending HTTP request POST http://127.0.0.1:44683/v1/chat/completions
+info: System.Net.Http.HttpClient.OpenAiCompatibleProviderClient.ClientHandler[101]
+      Received HTTP response headers after 10.1931ms - 200
+info: System.Net.Http.HttpClient.OpenAiCompatibleProviderClient.LogicalHandler[101]
+      End processing HTTP request after 14.6227ms - 200
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'JsonElement' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /openai/v1/chat/completions =&gt; ChatCompletionsAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://localhost/openai/v1/chat/completions - 200 - application/json;+charset=utf-8 37.0911ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://localhost/internal/v1/model-delegations - application/json;+charset=utf-8 687
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /internal/v1/model-delegations =&gt; CreateDelegationAsync'
+info: Microsoft.AspNetCore.Http.Result.CreatedResult[1]
+      Setting HTTP status code 201.
+info: Microsoft.AspNetCore.Http.Result.CreatedResult[3]
+      Writing value of type 'ModelDelegationResponse' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /internal/v1/model-delegations =&gt; CreateDelegationAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://localhost/internal/v1/model-delegations - 201 - application/json;+charset=utf-8 3.2241ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://localhost/openai/v1/chat/completions - application/json;+charset=utf-8 131
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /openai/v1/chat/completions =&gt; ChatCompletionsAsync'
+info: System.Net.Http.HttpClient.OpenAiCompatibleProviderClient.LogicalHandler[100]
+      Start processing HTTP request POST http://127.0.0.1:44683/v1/chat/completions
+info: System.Net.Http.HttpClient.OpenAiCompatibleProviderClient.ClientHandler[100]
+      Sending HTTP request POST http://127.0.0.1:44683/v1/chat/completions
+info: System.Net.Http.HttpClient.OpenAiCompatibleProviderClient.ClientHandler[101]
+      Received HTTP response headers after 0.3499ms - 200
+info: System.Net.Http.HttpClient.OpenAiCompatibleProviderClient.LogicalHandler[101]
+      End processing HTTP request after 0.3792ms - 200
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'JsonElement' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /openai/v1/chat/completions =&gt; ChatCompletionsAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://localhost/openai/v1/chat/completions - 200 - application/json;+charset=utf-8 3.0449ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://localhost/v1/workspaces/018f1000-0000-7000-8000-000000000001/model-credentials/01a0410f-5ca9-75fb-b14b-3ffac910e9f5/rotations - application/json;+charset=utf-8 33
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /v1/workspaces/{workspaceId:guid}/model-credentials/{credentialId:guid}/rotations =&gt; RotateCredentialAsync'
+info: Microsoft.AspNetCore.Http.Result.OkObjectResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.OkObjectResult[3]
+      Writing value of type 'CredentialResponse' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /v1/workspaces/{workspaceId:guid}/model-credentials/{credentialId:guid}/rotations =&gt; RotateCredentialAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://localhost/v1/workspaces/018f1000-0000-7000-8000-000000000001/model-credentials/01a0410f-5ca9-75fb-b14b-3ffac910e9f5/rotations - 200 - application/json;+charset=utf-8 5.3099ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://localhost/internal/v1/model-delegations - application/json;+charset=utf-8 687
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /internal/v1/model-delegations =&gt; CreateDelegationAsync'
+info: Microsoft.AspNetCore.Http.Result.CreatedResult[1]
+      Setting HTTP status code 201.
+info: Microsoft.AspNetCore.Http.Result.CreatedResult[3]
+      Writing value of type 'ModelDelegationResponse' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /internal/v1/model-delegations =&gt; CreateDelegationAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://localhost/internal/v1/model-delegations - 201 - application/json;+charset=utf-8 1.1854ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://localhost/openai/v1/chat/completions - application/json;+charset=utf-8 131
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /openai/v1/chat/completions =&gt; ChatCompletionsAsync'
+info: System.Net.Http.HttpClient.OpenAiCompatibleProviderClient.LogicalHandler[100]
+      Start processing HTTP request POST http://127.0.0.1:44683/v1/chat/completions
+info: System.Net.Http.HttpClient.OpenAiCompatibleProviderClient.ClientHandler[100]
+      Sending HTTP request POST http://127.0.0.1:44683/v1/chat/completions
+info: System.Net.Http.HttpClient.OpenAiCompatibleProviderClient.ClientHandler[101]
+      Received HTTP response headers after 0.1211ms - 200
+info: System.Net.Http.HttpClient.OpenAiCompatibleProviderClient.LogicalHandler[101]
+      End processing HTTP request after 0.1524ms - 200
+info: Microsoft.AspNetCore.Http.Result.JsonResult[3]
+      Writing value of type 'JsonElement' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /openai/v1/chat/completions =&gt; ChatCompletionsAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://localhost/openai/v1/chat/completions - 200 - application/json;+charset=utf-8 2.3763ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 GET http://localhost/v1/workspaces/018f1000-0000-7000-8000-000000000001/model-usage - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: GET /v1/workspaces/{workspaceId:guid}/model-usage =&gt; ListUsageAsync'
+info: Microsoft.AspNetCore.Http.Result.OkObjectResult[1]
+      Setting HTTP status code 200.
+info: Microsoft.AspNetCore.Http.Result.OkObjectResult[3]
+      Writing value of type '&lt;&gt;f__AnonymousType2`2' as Json.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: GET /v1/workspaces/{workspaceId:guid}/model-usage =&gt; ListUsageAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 GET http://localhost/v1/workspaces/018f1000-0000-7000-8000-000000000001/model-usage - 200 - application/json;+charset=utf-8 3.3340ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 DELETE http://localhost/v1/workspaces/018f1000-0000-7000-8000-000000000001/model-credentials/01a0410f-5ca8-7bc4-a19b-43784fee7ea6 - - -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: DELETE /v1/workspaces/{workspaceId:guid}/model-credentials/{credentialId:guid} =&gt; RevokeCredentialAsync'
+info: Microsoft.AspNetCore.Http.Result.NoContentResult[1]
+      Setting HTTP status code 204.
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: DELETE /v1/workspaces/{workspaceId:guid}/model-credentials/{credentialId:guid} =&gt; RevokeCredentialAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 DELETE http://localhost/v1/workspaces/018f1000-0000-7000-8000-000000000001/model-credentials/01a0410f-5ca8-7bc4-a19b-43784fee7ea6 - 204 - - 4.1384ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/1.1 POST http://localhost/openai/v1/chat/completions - application/json;+charset=utf-8 131
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'HTTP: POST /openai/v1/chat/completions =&gt; ChatCompletionsAsync'
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'HTTP: POST /openai/v1/chat/completions =&gt; ChatCompletionsAsync'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/1.1 POST http://localhost/openai/v1/chat/completions - 401 - application/json;+charset=utf-8 0.6180ms
+info: Microsoft.Hosting.Lifetime[0]
+      Application is shutting down...
+[testcontainers.org 00:00:10.12] Delete Docker container e158fe7aa867
+[testcontainers.org 00:00:10.68] Docker container 0b34c5c73a2e created
+[testcontainers.org 00:00:10.68] Start Docker container 0b34c5c73a2e
+[testcontainers.org 00:00:10.68] Docker container 463904a75954 created
+[testcontainers.org 00:00:10.68] Start Docker container 463904a75954
+[testcontainers.org 00:00:10.81] Wait for Docker container 0b34c5c73a2e to complete readiness checks
+[testcontainers.org 00:00:10.81] Execute "pg_isready --host localhost --dbname model_service --username model_service" at Docker container 0b34c5c73a2e
+[testcontainers.org 00:00:10.93] Add file to tar archive: Content length: 131 byte(s), Target file: "/testcontainers.sh", UID: 0, GID: 0, Mode: 0755
+[testcontainers.org 00:00:10.94] Copy tar archive to container: Content length: 131 byte(s), Docker container: 463904a75954
+[testcontainers.org 00:00:10.94] Wait for Docker container 463904a75954 to complete readiness checks
+[testcontainers.org 00:00:11.83] Execute "pg_isready --host localhost --dbname model_service --username model_service" at Docker container 0b34c5c73a2e
+[testcontainers.org 00:00:12.85] Execute "pg_isready --host localhost --dbname model_service --username model_service" at Docker container 0b34c5c73a2e
+[testcontainers.org 00:00:12.87] Docker container 0b34c5c73a2e ready
+[testcontainers.org 00:00:13.95] Docker container 463904a75954 ready
+[testcontainers.org 00:00:15.55] Delete Docker container 463904a75954
+[testcontainers.org 00:00:15.55] Delete Docker container 0b34c5c73a2e
+[testcontainers.org 00:00:16.20] Docker container 9528640919a0 created
+[testcontainers.org 00:00:16.21] Start Docker container 9528640919a0
+[testcontainers.org 00:00:16.21] Docker container 36f231d77b0f created
+[testcontainers.org 00:00:16.21] Start Docker container 36f231d77b0f
+[testcontainers.org 00:00:16.32] Add file to tar archive: Content length: 131 byte(s), Target file: "/testcontainers.sh", UID: 0, GID: 0, Mode: 0755
+[testcontainers.org 00:00:16.32] Copy tar archive to container: Content length: 131 byte(s), Docker container: 9528640919a0
+[testcontainers.org 00:00:16.32] Wait for Docker container 9528640919a0 to complete readiness checks
+[testcontainers.org 00:00:16.33] Wait for Docker container 36f231d77b0f to complete readiness checks
+[testcontainers.org 00:00:16.33] Execute "pg_isready --host localhost --dbname model_service --username model_service" at Docker container 36f231d77b0f
+[testcontainers.org 00:00:17.34] Execute "pg_isready --host localhost --dbname model_service --username model_service" at Docker container 36f231d77b0f
+[testcontainers.org 00:00:18.36] Execute "pg_isready --host localhost --dbname model_service --username model_service" at Docker container 36f231d77b0f
+[testcontainers.org 00:00:18.38] Docker container 36f231d77b0f ready
+[testcontainers.org 00:00:19.34] Docker container 9528640919a0 ready
+</StdOut>
+    </Output>
+    <RunInfos>
+      <RunInfo computerName="RICKEBO" outcome="Error" timestamp="2026-08-27T04:32:11.5084400+02:00">
+        <Text>The active test run was aborted. Reason: Test host process crashed</Text>
+      </RunInfo>
+    </RunInfos>
+  </ResultSummary>
+</TestRun>

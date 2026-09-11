@@ -1,0 +1,87 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "PR #310 head 0d4e2ea remediates the failed review: all eight deployment-controller charts now render required resources, Kata placement and admission are fail-closed, every workload image is immutable, and the verified server-sidecar 0.1.18 artifact is pinned.",
+  "changed_files": [
+    ".codicarium/prod/deploy.yaml",
+    ".github/workflows/lc-explicit-service-bridge-gate.yml",
+    ".github/workflows/lc-prod-promotion-gate.yml",
+    "charts/orchestrator-api-prod/**",
+    "charts/orchestrator-worker-prod/**",
+    "charts/lc-prod-workload-runtime/**",
+    "charts/luckperms-postgres/**",
+    "charts/lobby/**",
+    "charts/lobby-offline-test/values.yaml",
+    "charts/proxy/**",
+    "charts/proxy-offline-test/values.yaml",
+    "docs/deployment-controller-prod.md",
+    "docs/secrets.yaml",
+    "scripts/validate-deployment-controller-prod.py",
+    "scripts/tests/test-deployment-controller-prod.sh",
+    "scripts/validate-prod-generated-server-cleanup.sh",
+    "scripts/tests/test-prod-generated-server-cleanup-tracking.sh",
+    "scripts/validate-lc-release-chart.py",
+    "scripts/validate-lc-zero-trust-runtime-controls.sh"
+  ],
+  "validation": [
+    "Full descriptor validator rendered all eight mappings with counts 19/5/30/8/9/11/7/8.",
+    "Descriptor positive and negative suites passed, including immutable workload and generated-sidecar image cases.",
+    "Eight strict Helm lints and eight client renders passed.",
+    "Cleanup validator and Docker runtime tracking test passed with the exact kubectl image.",
+    "Zero-trust, dev/prod model, release-chart, retirement-guard, and explicit-service evidence checks passed.",
+    "Actionlint, Ruff, shell/Python syntax, and git diff checks passed.",
+    "Independent final code review reported no blocking findings.",
+    "Graphify refreshed 114 files into 362 nodes and 489 edges.",
+    "Verified server-sidecar OCI index 0.1.18@sha256:49bc594b... re-read identically with amd64 provenance.",
+    "Commit 0d4e2ea3fac6dc6aba7dce368b49a4134f7a3f58 pushed to PR #310."
+  ],
+  "blockers": [
+    "GitHub Actions jobs cannot start because the organization billing/spending limit is blocked; tracked in codicarium/platform#177."
+  ],
+  "next_action": "Independently re-review PR #310 for controller render completeness, runtime security, PostgreSQL safety, and immutable artifact correctness.",
+  "requires_council": false,
+  "independent_lanes": [
+    "deployment-controller descriptor and rendered resource completeness",
+    "Kata runtime, admission, credentials, and immutable-image security",
+    "PostgreSQL persistence, initialization, and least privilege"
+  ],
+  "risk_level": "critical",
+  "issues": [
+    {
+      "id": "EXT-INFRA-1296",
+      "title": "Dedicated Kata-capable LC production nodes are external",
+      "severity": "critical",
+      "details": "Tracked in codicarium/infra#1296; no infrastructure changes are authorized in this task.",
+      "owner_stage": "validation"
+    },
+    {
+      "id": "EXT-INFRA-1298",
+      "title": "Explicit codicarium-prod kube context is external",
+      "severity": "critical",
+      "details": "Tracked in codicarium/infra#1298; no live validation may use the ambiguous default context.",
+      "owner_stage": "validation"
+    },
+    {
+      "id": "EXT-PLATFORM-169",
+      "title": "Controller grant, profile, RuntimeClass, allowlist, and issuer are external",
+      "severity": "critical",
+      "details": "Tracked in codicarium/platform#169; no platform implementation is authorized here.",
+      "owner_stage": "validation"
+    },
+    {
+      "id": "EXT-APPCONFIG-728",
+      "title": "Legacy LC Argo owner retirement is external",
+      "severity": "high",
+      "details": "Tracked in codicarium/app-config#728; controller activation must not overlap legacy ownership.",
+      "owner_stage": "validation"
+    },
+    {
+      "id": "EXT-PLATFORM-177",
+      "title": "GitHub Actions billing prevents PR checks from starting",
+      "severity": "high",
+      "details": "Tracked in codicarium/platform#177; both PR jobs have zero steps and an account billing annotation.",
+      "owner_stage": "test"
+    }
+  ],
+  "route_to": "review"
+}

@@ -1,0 +1,27 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Luna committed REV6 remediation at exact clean head 0c18d6cc2cfa5eac916aa51e1ea484d74f89cf01: privileged source opens are nonblocking, the FIFO race is regression-tested, and cleanup protocol wording/guards/digests are synchronized.",
+  "changed_files": [
+    "scripts/harden-codicarium-artifact-ownership.py",
+    "tests/test-codicarium-artifact-ownership.py",
+    "platform/authority-runner/artifact-seal-v1/README.md",
+    "scripts/verify-authority-runner-contract.py",
+    "contracts/authority-runner-ownership.json",
+    "platform/authority-runner/artifact-seal-v1/manifest.sha256"
+  ],
+  "validation": [
+    "Bounded stat-to-open FIFO replacement regression passed.",
+    "Authority-runner contract and artifact-seal package contract tests passed.",
+    "Full artifact ownership and install integration tests passed.",
+    "SHA-256 manifest verification, Python compilation, shell syntax, and git diff --check passed.",
+    "Root independently confirmed clean exact head 0c18d6cc and a clean diff check from REV5."
+  ],
+  "blockers": [],
+  "next_action": "Run fresh independent Luna full-diff security review at exact head 0c18d6cc; do not push, install, dispatch, merge, or mutate live state.",
+  "route_to": "review",
+  "risk_level": "critical",
+  "independent_lanes": [
+    "Luna worker /root/fix_consolidation_rev6"
+  ]
+}

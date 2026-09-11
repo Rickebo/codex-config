@@ -1,0 +1,34 @@
+{
+  "stage": "validation",
+  "status": "fail",
+  "summary": "Live validation reached the unchanged publisher but failed before any promotion or release mutation. At exact merge tree f1ee15f, CI, Automatic Release, and Release Verify succeeded for immutable v0.6.13/ad52dfc. Publish Release 32888967370 failed when trusted current verify-chart-artifact.sh unconditionally rendered poll-only runtime values against the immutable older chart schema, which rejects the absent-era runtime property.",
+  "changed_files": [],
+  "validation": [
+    "Pipeline state is current_stage=validation, loop_count=3, done=false; no pipeline transition was executed.",
+    "Exact protected-main merge tree is f1ee15f8916cbb939e88e5a1491588d3b7a95f7d.",
+    "CI 32887054590/1 completed successfully for push main at f1ee15f8916cbb939e88e5a1491588d3b7a95f7d.",
+    "Automatic Release 32887971571/1 completed successfully at f1ee15f and dispatched the verified publication chain.",
+    "Release Verify 32888015603/1 completed successfully for workflow_dispatch v0.6.13 at ad52dfcbc45d71eccad1d49fbd905161af7a44b1.",
+    "Publish Release 32888967370/1 authenticated policy, tag/history, subjects, provenance, ORAS, and Helm, then failed at Recheck downloaded chart subject before publication.",
+    "The trusted current verify-chart-artifact.sh poll-only render supplied runtime, while immutable v0.6.13 values.schema.json rejects additional property runtime; the step exited 1.",
+    "All image/chart promotion, provenance attachment, release shell, manifest, bundle, and public-release steps were skipped after the chart compatibility failure.",
+    "No public v0.6.13 GitHub Release exists; refs/tags/v0.6.13 remains a direct immutable commit ref at ad52dfcbc45d71eccad1d49fbd905161af7a44b1.",
+    "v0.6.14 tag/release is absent, and issue #104 is open with priority:p0 for this publisher compatibility defect."
+  ],
+  "blockers": [
+    "Trusted current publisher chart revalidation unconditionally exercises poll-only runtime values that immutable v0.6.13 predates and rejects, blocking publication before promotion.",
+    "The compatibility decision lacks a focused capability gate and regression coverage for immutable historical charts that do not declare the runtime schema capability."
+  ],
+  "next_action": "Route to code: create a dedicated #104 worktree, add a focused capability gate and historical/current chart tests, deliver a new #104-linked PR through all checks, then rely on a fresh automatic chain; do not rerun or dispatch manually.",
+  "route_to": "code",
+  "risk_level": "high",
+  "issues": [
+    {
+      "id": "GH-104",
+      "title": "Publish Release recheck rejects immutable v0.6.13 chart after runtime validation change",
+      "severity": "high",
+      "details": "Publish Release 32888967370 failed before promotion because trusted current chart verification applied poll-only runtime values to immutable v0.6.13, whose older schema rejects runtime. Track the minimal capability gate, focused tests, checked PR, and fresh automatic proof here.",
+      "owner_stage": "code"
+    }
+  ]
+}

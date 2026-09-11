@@ -1,0 +1,168 @@
+{
+  "meta": {
+    "id": "SPEC-deployment-controller-156-final-recovery",
+    "title": "Deployment Controller Failed-Candidate Recovery Completion",
+    "author": "root-manager",
+    "created_at": "2026-08-29T22:21:18Z",
+    "version": "0.1.0"
+  },
+  "feature": {
+    "problem_statement": "PR #156 implements authenticated retirement of an immutable failed release candidate, but its operator contract still names the obsolete coordinator-only concurrency group and the corrected release has not yet been reviewed, merged, or proven by live workflow evidence.",
+    "goals": [
+      "Make the release documentation match the shared non-canceling mutation reservation used by every automated ref and release-shell writer.",
+      "Preserve an evidence-backed trusted-main boundary and merge only an independently reviewed exact head with all protected checks successful.",
+      "Recover from immutable unpublished v0.14.0 through signed workflow evidence and publish a corrected immutable release under the unchanged size cap."
+    ],
+    "non_goals": [
+      "Move, delete, overwrite, or manually publish v0.14.0 or create a release shell outside the reviewed workflows.",
+      "Deploy deployment-controller or activate Argo, Kubernetes, Rancher, Authentik, admission, or Access Controller authorization writes.",
+      "Claim resistance to a malicious organization or platform administrator; administrators remain the documented break-glass trust boundary."
+    ],
+    "scope_in": [
+      "A Luna-authored documentation-only correction on PR #156, independent Luna re-review, exact-head protected CI, exact-head squash merge, main CI, and workflow-driven immutable release recovery evidence.",
+      "Read-only verification of effective repository writers, organization owners, rulesets, tag immutability, workflow runs, signed artifact structure, release assets, digests, architecture, and subject size."
+    ],
+    "scope_out": [
+      "Unrelated documentation cleanup, workflow refactoring, changes to the fixed 134217728-byte cap, deployment, or live authorization mutation."
+    ]
+  },
+  "requirements": [
+    {
+      "id": "REQ-001",
+      "priority": "MUST",
+      "statement": "The release contract MUST name codicarium-release-mutations as the shared non-canceling concurrency group and MUST state that Automatic Release, Publish Release, and every future automated ref or release-shell writer use it.",
+      "rationale": "Operators and future maintainers must reason from the same serialization boundary enforced by the workflows."
+    },
+    {
+      "id": "REQ-002",
+      "priority": "MUST",
+      "statement": "Before merge, effective repository write, maintain, admin, organization-owner, GitHub App, branch-rule, and tag-rule state MUST prove ordinary project principals cannot merge release-control changes or bypass immutable tag protection; any membership or rule change invalidates prior evidence.",
+      "rationale": "GitHub OIDC authenticates workflow identity, so protected trusted main is part of the signing trust boundary."
+    },
+    {
+      "id": "REQ-003",
+      "priority": "MUST",
+      "statement": "PR #156 MUST receive an independent Luna review with no blocker and all five protected checks on the exact final head, then be squash-merged only with exact-head matching and a non-closing PR body.",
+      "rationale": "Stale review or CI evidence cannot authorize security-critical release workflow changes."
+    },
+    {
+      "id": "REQ-004",
+      "priority": "MUST",
+      "statement": "Post-merge recovery MUST preserve v0.14.0 unchanged and unpublished, obtain an exact two-regular-file keylessly signed terminal-failure artifact from the failed publisher, authenticate and consume it through protected workflows, and publish only the next immutable corrected version with successful Release Verify and Publish Release evidence under the unchanged 134217728-byte cap.",
+      "rationale": "Recovery must be explainable, fail closed, and must not rewrite an immutable failed release tuple."
+    },
+    {
+      "id": "REQ-005",
+      "priority": "MUST",
+      "statement": "This pipeline MUST NOT deploy deployment-controller or mutate live authorization, Argo, Kubernetes, Rancher, Authentik, tags, releases, or release assets outside the reviewed workflow path.",
+      "rationale": "Release recovery is separate from rollout and authorization activation safety gates."
+    }
+  ],
+  "acceptance_criteria": [
+    {
+      "id": "AC-001",
+      "requirement_ids": ["REQ-001"],
+      "scenario": "Given the final branch, when documentation and all workflow writers are inspected, then they name exactly codicarium-release-mutations with cancel-in-progress false and static tests reject direct writers outside the allowlist."
+    },
+    {
+      "id": "AC-002",
+      "requirement_ids": ["REQ-002"],
+      "scenario": "Given live GitHub state immediately before merge, when effective collaborators, teams, owners, Apps, main rules, and v* tag rules are enumerated, then only the trusted platform-administrator boundary can merge or bypass release-control changes and no ordinary principal or App has an unreviewed mutation path."
+    },
+    {
+      "id": "AC-003",
+      "requirement_ids": ["REQ-003"],
+      "scenario": "Given the final PR head, when independent review and protected CI complete, then chart, integration, lint, supply-chain, and test are successful on that SHA and squash merge uses --match-head-commit for the same SHA."
+    },
+    {
+      "id": "AC-004",
+      "requirement_ids": ["REQ-004"],
+      "scenario": "Given immutable unpublished v0.14.0, when protected post-merge workflows run, then the failed publisher uploads exactly the signed statement and Sigstore bundle while remaining failed, the coordinator authenticates the exact proof, v0.14.0 stays unchanged, and v0.14.1 or the actual next version publishes successfully with verified assets, digests, five binaries, amd64 and arm64, and subject size below the fixed cap."
+    },
+    {
+      "id": "AC-005",
+      "requirement_ids": ["REQ-005"],
+      "scenario": "Given the completed pipeline, when GitHub and cluster audit evidence is reviewed, then no manual ref/release mutation, deployment, or live authorization change occurred."
+    }
+  ],
+  "test_plan": [
+    {
+      "id": "TST-001",
+      "type": "unit",
+      "requirement_ids": ["REQ-001", "REQ-004"],
+      "approach": "Run release failure-policy, release-graph, actionlint, repository validation, action-pin, syntax, and full make test-release-flow suites; statically compare documentation and writer groups."
+    },
+    {
+      "id": "TST-002",
+      "type": "manual",
+      "requirement_ids": ["REQ-002", "REQ-003"],
+      "approach": "Enumerate effective GitHub principals and active main/tag rules immediately before merge, record exact review and check SHAs, and merge with exact-head matching."
+    },
+    {
+      "id": "TST-003",
+      "type": "e2e",
+      "requirement_ids": ["REQ-004", "REQ-005"],
+      "approach": "Observe only workflow-driven terminal failure, proof consumption, next-version allocation, verification, publication, asset/digest/architecture/size evidence, and unchanged cluster/live authorization state."
+    }
+  ],
+  "traceability": [
+    {
+      "requirement_id": "REQ-001",
+      "acceptance_ids": ["AC-001"],
+      "test_ids": ["TST-001"],
+      "review_checks": ["Documentation names the exact shared group and every writer is allowlisted."],
+      "validation_checks": ["Focused static checks and full release-flow suite pass."]
+    },
+    {
+      "requirement_id": "REQ-002",
+      "acceptance_ids": ["AC-002"],
+      "test_ids": ["TST-002"],
+      "review_checks": ["Trusted-main boundary is supported by current effective principals and enforced rules, not assumption."],
+      "validation_checks": ["Live collaborator, team, owner, App, branch, and tag evidence is captured immediately before merge."]
+    },
+    {
+      "requirement_id": "REQ-003",
+      "acceptance_ids": ["AC-003"],
+      "test_ids": ["TST-002"],
+      "review_checks": ["Independent Luna review is exact-head and finds no blocker or scope expansion."],
+      "validation_checks": ["All five protected checks and exact-head squash merge are proven by GitHub state."]
+    },
+    {
+      "requirement_id": "REQ-004",
+      "acceptance_ids": ["AC-004"],
+      "test_ids": ["TST-001", "TST-003"],
+      "review_checks": ["Signed proof, cross-run binding, no-publication state, create-only allocation, and fixed cap remain intact."],
+      "validation_checks": ["Live failed proof and successful immutable next release are verified end to end."]
+    },
+    {
+      "requirement_id": "REQ-005",
+      "acceptance_ids": ["AC-005"],
+      "test_ids": ["TST-003"],
+      "review_checks": ["No deployment or authorization activation is included."],
+      "validation_checks": ["Audit evidence shows only reviewed GitHub workflow mutations occurred."]
+    }
+  ],
+  "quality_gates": {
+    "spec_review_required": true,
+    "testability_required": true,
+    "traceability_required": true
+  },
+  "council": {
+    "perspectives": [
+      {
+        "role": "planner",
+        "summary": "GO only for a documentation-only Luna correction followed by fresh exact-head review, CI, squash merge, main CI, workflow-driven signed recovery, and immutable next-version verification."
+      },
+      {
+        "role": "security reviewer",
+        "summary": "Require the exact shared group in docs and prove the trusted-main boundary from effective writers, owners, Apps, rules, and immutable tags before merge; stop on any mismatch or bypass."
+      },
+      {
+        "role": "QA lead",
+        "summary": "Current head is NO-GO because docs omit the literal group; require fresh exact-head five-check CI and independent review, then distinguish static proof from live signed recovery and publication evidence."
+      }
+    ],
+    "consensus_summary": "Proceed narrowly after correcting the documentation and proving current trusted-main GitHub state. Preserve immutable v0.14.0, use only protected workflow recovery, and do not deploy or activate authorization.",
+    "open_questions": []
+  }
+}

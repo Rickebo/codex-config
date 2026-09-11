@@ -1,0 +1,41 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Three high-risk security findings require code fixes before testing: login CSRF, unbounded poll limiter memory, and an unprotected mutating poll endpoint.",
+  "changed_files": [],
+  "validation": [
+    "PR #95 CI is green: Go, container, vulnerability, secret, and artifact checks passed.",
+    "Review covered commit aac06dc against main; no live systems, secrets, or deployments were accessed."
+  ],
+  "blockers": [
+    "Unauthenticated password login lacks bootstrap CSRF and Origin validation.",
+    "Unique invalid poll cookies allocate unbounded rate-limiter entries.",
+    "GET polling performs authentication state transitions without CSRF or Origin protection."
+  ],
+  "next_action": "Route to code: fix REV-001 through REV-003, add regression tests, then rerun review.",
+  "route_to": "code",
+  "risk_level": "high",
+  "issues": [
+    {
+      "id": "REV-001",
+      "title": "Password fallback permits login CSRF",
+      "severity": "high",
+      "details": "internal/publicapi/server.go:login issues a session without bootstrap CSRF or Origin validation. A cross-site request can force the victim into an attacker-selected Jellyfin account, causing wrong-user Google linking. Require bootstrap CSRF and same-origin validation; test all aliases.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV-002",
+      "title": "Poll limiter has unbounded key growth",
+      "severity": "high",
+      "details": "quickConnectStatus keys the limiter by an unvalidated cookie hash before flow lookup. RateLimiter.entries has no global eviction, so unique invalid cookies grow memory without bound despite the 256-flow cap. Validate first and add bounded expiry/eviction.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV-003",
+      "title": "Mutating GET poll lacks CSRF protection",
+      "severity": "high",
+      "details": "quickConnectStatus performs Connect, AuthenticateWithQuickConnect, and session issuance on GET without CSRF or Origin checks. SameSite=Lax permits cross-site top-level navigation with the flow cookie. Use CSRF-protected POST polling or equivalent strict origin controls.",
+      "owner_stage": "code"
+    }
+  ]
+}

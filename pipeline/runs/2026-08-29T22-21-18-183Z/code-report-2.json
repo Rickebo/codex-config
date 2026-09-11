@@ -1,0 +1,19 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Luna documented the automation-App exclusion and bootstrap sequence in exact head 37267d0e1dafa7d005187a041a8419f6049927b1; root enabled live code-owner review and stale-review dismissal while preserving strict five-check enforcement and zero bypass actors.",
+  "changed_files": ["docs/releasing.md"],
+  "validation": [
+    "Full make test-release-flow passed",
+    "Repository policy, repository validation, Markdown-link validation, actionlint, and diff checks passed",
+    "Live ruleset is active with require_code_owner_review=true and dismiss_stale_reviews_on_push=true",
+    "Five required checks remain strict with Actions app ID 15368, bypass actors empty, force-push/deletion forbidden",
+    "require_last_push_approval remains false only until immediately after the documented one-time bootstrap merge"
+  ],
+  "blockers": [
+    "Independent Luna exact-head re-review and fresh protected CI required before merge",
+    "Last-push approval must be enabled and re-read immediately after bootstrap merge"
+  ],
+  "next_action": "Push 37267d0, obtain independent exact-head review and protected CI, then execute the guarded bootstrap merge and immediately enable last-push approval.",
+  "risk_level": "critical"
+}

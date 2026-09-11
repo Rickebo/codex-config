@@ -1,0 +1,632 @@
+{
+  "schema": "codicarium.deployment-controller-release-spec/v2.4",
+  "generated_at": "2026-08-26T12:00:00Z",
+  "predecessor_council_hashes": {
+    "v2_1": "ed0e9615847927c41f08c2e08ac37423de4f1d2d669b4c7c69c94c3a02958996",
+    "v2_2": "b8d5fd6157c112f841e5d03d2f2df2cc0418f118f83361c85ec7c9ae12fa0f29",
+    "v2_3": "4b5786803c2fbd05cb277e08f51cd36b8d629c84c7a367dfd118e068bab5bb3d"
+  },
+  "baselines": {
+    "source_version": "v2.2",
+    "spec_sha256": "6f40175774db541c642712c774def6f723c3f0ba361c9b04c547f75aa2f459b0",
+    "annex_sha256": "f0364037778afed75514a936517144f82f52460f595c565ece60b202ead685a9",
+    "issue_93": "closed",
+    "released": "v0.6.13",
+    "absent": "v0.6.14",
+    "newer_tags": "verified v0.7.x exist"
+  },
+  "release_identity": {
+    "requested": "NEXT_SEMVER",
+    "old_prerequisite": "v0.6.14",
+    "objective_change": "replace historical-line prerequisite with monotonic verified-tag resolution",
+    "resolver": {
+      "algorithm": "max verified semver then increment patch",
+      "verified_tag_source": "implementation-time tag snapshot",
+      "freeze_node": "X39",
+      "symbolic": "NEXT_SEMVER"
+    }
+  },
+  "app_config_lane": [
+    "AP20",
+    "AP21",
+    "AP22",
+    "AP23",
+    "AP24",
+    "AP25"
+  ],
+  "app_config_boundary": "bootstrap wiring only; workload desired state remains release-platform-config",
+  "dag": {
+    "path": "fixtures-v2.4/rollout-dag-v2.4.json",
+    "root": "S00",
+    "join": "AP25->X41"
+  },
+  "semantic_trace": [
+    {
+      "requirement_id": "REQ-001",
+      "semantic_statement": "Freeze the v2.4 artifact set with canonical JSON bytes and a fixed generation clock.",
+      "dag_nodes": [
+        "S00"
+      ],
+      "command_id": "cmd.freeze.spec",
+      "schema_id": "payload.v2.4",
+      "positive_fixture": "fixtures-v2.4/base-command-v2.4.json",
+      "negative_oracles": [
+        "N01"
+      ],
+      "effect_oracle": "derive pre/post target digest and effect count from target bytes",
+      "state_owner": "release-platform-config"
+    },
+    {
+      "requirement_id": "REQ-002",
+      "semantic_statement": "Bind the v2.2 baseline spec and annex digests before planning changes.",
+      "dag_nodes": [
+        "X01"
+      ],
+      "command_id": "cmd.bind.baseline",
+      "schema_id": "payload.v2.4",
+      "positive_fixture": "fixtures-v2.4/base-command-v2.4.json",
+      "negative_oracles": [
+        "N02"
+      ],
+      "effect_oracle": "derive pre/post target digest and effect count from target bytes",
+      "state_owner": "release-platform-config"
+    },
+    {
+      "requirement_id": "REQ-003",
+      "semantic_statement": "Resolve NEXT_SEMVER as the first verified tag greater than every verified v0.7.x tag and freeze it at X39.",
+      "dag_nodes": [
+        "X02"
+      ],
+      "command_id": "cmd.resolve.semver",
+      "schema_id": "payload.v2.4",
+      "positive_fixture": "fixtures-v2.4/base-command-v2.4.json",
+      "negative_oracles": [
+        "N03"
+      ],
+      "effect_oracle": "derive pre/post target digest and effect count from target bytes",
+      "state_owner": "release-platform-config"
+    },
+    {
+      "requirement_id": "REQ-004",
+      "semantic_statement": "Materialize one S00 root and reject any second root or unreachable success node.",
+      "dag_nodes": [
+        "X03"
+      ],
+      "command_id": "cmd.validate.root",
+      "schema_id": "fsm.v2.4",
+      "positive_fixture": "fixtures-v2.4/base-command-v2.4.json",
+      "negative_oracles": [
+        "N04"
+      ],
+      "effect_oracle": "derive pre/post target digest and effect count from target bytes",
+      "state_owner": "release-platform-config"
+    },
+    {
+      "requirement_id": "REQ-005",
+      "semantic_statement": "Run AP20 through AP25 in app-config, with only bootstrap wiring and an explicit join to X41.",
+      "dag_nodes": [
+        "AP20",
+        "AP21",
+        "AP22",
+        "AP23",
+        "AP24",
+        "AP25"
+      ],
+      "command_id": "cmd.app-config.bootstrap",
+      "schema_id": "payload.v2.4",
+      "positive_fixture": "fixtures-v2.4/base-command-v2.4.json",
+      "negative_oracles": [
+        "N05"
+      ],
+      "effect_oracle": "derive pre/post target digest and effect count from target bytes",
+      "state_owner": "app-config"
+    },
+    {
+      "requirement_id": "REQ-006",
+      "semantic_statement": "Bind every DAG command to immutable argv, digest, no shell and no network.",
+      "dag_nodes": [
+        "X04",
+        "X05"
+      ],
+      "command_id": "cmd.bind.command",
+      "schema_id": "command.v2.4",
+      "positive_fixture": "fixtures-v2.4/base-command-v2.4.json",
+      "negative_oracles": [
+        "N06"
+      ],
+      "effect_oracle": "derive pre/post target digest and effect count from target bytes",
+      "state_owner": "release-platform-config"
+    },
+    {
+      "requirement_id": "REQ-007",
+      "semantic_statement": "Validate each typed payload against an actual strict JSON schema before predicate evaluation.",
+      "dag_nodes": [
+        "X06"
+      ],
+      "command_id": "cmd.validate.schema",
+      "schema_id": "payload.v2.4",
+      "positive_fixture": "fixtures-v2.4/base-command-v2.4.json",
+      "negative_oracles": [
+        "N07"
+      ],
+      "effect_oracle": "derive pre/post target digest and effect count from target bytes",
+      "state_owner": "release-platform-config"
+    },
+    {
+      "requirement_id": "REQ-008",
+      "semantic_statement": "Sign the exact RFC 8785-compatible payload bytes inside an offline DSSE-style envelope.",
+      "dag_nodes": [
+        "X07"
+      ],
+      "command_id": "cmd.verify.signature",
+      "schema_id": "signature.v2.4",
+      "positive_fixture": "fixtures-v2.4/base-command-v2.4.json",
+      "negative_oracles": [
+        "N08"
+      ],
+      "effect_oracle": "derive pre/post target digest and effect count from target bytes",
+      "state_owner": "release-platform-config"
+    },
+    {
+      "requirement_id": "REQ-009",
+      "semantic_statement": "Treat offline fixture signatures as authority=false and reject Sigstore or Vault evidence without complete live verification inputs.",
+      "dag_nodes": [
+        "X08"
+      ],
+      "command_id": "cmd.reject.live",
+      "schema_id": "signature.v2.4",
+      "positive_fixture": "fixtures-v2.4/base-command-v2.4.json",
+      "negative_oracles": [
+        "N09"
+      ],
+      "effect_oracle": "derive pre/post target digest and effect count from target bytes",
+      "state_owner": "release-platform-config"
+    },
+    {
+      "requirement_id": "REQ-010",
+      "semantic_statement": "Compare issued_at and expires_at with an injected fixed clock and thirty-second skew.",
+      "dag_nodes": [
+        "X09"
+      ],
+      "command_id": "cmd.check.freshness",
+      "schema_id": "payload.v2.4",
+      "positive_fixture": "fixtures-v2.4/base-command-v2.4.json",
+      "negative_oracles": [
+        "N10"
+      ],
+      "effect_oracle": "derive pre/post target digest and effect count from target bytes",
+      "state_owner": "release-platform-config"
+    },
+    {
+      "requirement_id": "REQ-011",
+      "semantic_statement": "Reject a nonce present in the durable replay ledger, including when two validator processes read the same snapshot.",
+      "dag_nodes": [
+        "X10"
+      ],
+      "command_id": "cmd.check.replay",
+      "schema_id": "payload.v2.4",
+      "positive_fixture": "fixtures-v2.4/base-command-v2.4.json",
+      "negative_oracles": [
+        "N11"
+      ],
+      "effect_oracle": "derive pre/post target digest and effect count from target bytes",
+      "state_owner": "release-platform-config"
+    },
+    {
+      "requirement_id": "REQ-012",
+      "semantic_statement": "Recompute immutable repository, Kubernetes and artifact target bindings instead of trusting declared target text.",
+      "dag_nodes": [
+        "X11"
+      ],
+      "command_id": "cmd.check.target",
+      "schema_id": "payload.v2.4",
+      "positive_fixture": "fixtures-v2.4/base-command-v2.4.json",
+      "negative_oracles": [
+        "N12"
+      ],
+      "effect_oracle": "derive pre/post target digest and effect count from target bytes",
+      "state_owner": "release-platform-config"
+    },
+    {
+      "requirement_id": "REQ-013",
+      "semantic_statement": "Derive pre-target and post-target digests and effect count from bytes independently of declared counts.",
+      "dag_nodes": [
+        "X12"
+      ],
+      "command_id": "cmd.derive.effects",
+      "schema_id": "mutation.v2.4",
+      "positive_fixture": "fixtures-v2.4/base-command-v2.4.json",
+      "negative_oracles": [
+        "N13"
+      ],
+      "effect_oracle": "derive pre/post target digest and effect count from target bytes",
+      "state_owner": "release-platform-config"
+    },
+    {
+      "requirement_id": "REQ-014",
+      "semantic_statement": "Execute every negative as a distinct patch through schema, signature, predicate and ledger evaluators.",
+      "dag_nodes": [
+        "X13"
+      ],
+      "command_id": "cmd.run.negatives",
+      "schema_id": "mutation.v2.4",
+      "positive_fixture": "fixtures-v2.4/base-command-v2.4.json",
+      "negative_oracles": [
+        "N01",
+        "N02",
+        "N03",
+        "N04",
+        "N05",
+        "N06",
+        "N07",
+        "N08",
+        "N09",
+        "N10",
+        "N11",
+        "N12",
+        "N13",
+        "N14",
+        "N15",
+        "N16",
+        "N17",
+        "N18",
+        "N19",
+        "N20",
+        "N21",
+        "N22",
+        "N23",
+        "N24"
+      ],
+      "effect_oracle": "derive pre/post target digest and effect count from target bytes",
+      "state_owner": "release-platform-config"
+    },
+    {
+      "requirement_id": "REQ-015",
+      "semantic_statement": "Link exactly four signed records per M01 through M19 with a predecessor hash chain.",
+      "dag_nodes": [
+        "M01",
+        "M02",
+        "M03",
+        "M04",
+        "M12",
+        "M13",
+        "M14",
+        "M19"
+      ],
+      "command_id": "cmd.verify.chain",
+      "schema_id": "mutation.v2.4",
+      "positive_fixture": "fixtures-v2.4/signed-command-evidence-positive-v2.4.json",
+      "negative_oracles": [
+        "N15"
+      ],
+      "effect_oracle": "derive pre/post target digest and effect count from target bytes",
+      "state_owner": "release-platform-config"
+    },
+    {
+      "requirement_id": "REQ-016",
+      "semantic_statement": "Publish fourteen named assets with exact media type, source digest and destination binding.",
+      "dag_nodes": [
+        "M05",
+        "M06",
+        "M07",
+        "M08",
+        "M09",
+        "M10",
+        "M11",
+        "M12",
+        "M13",
+        "M14",
+        "M15",
+        "M16",
+        "M17",
+        "M18"
+      ],
+      "command_id": "cmd.bind.assets",
+      "schema_id": "asset.v2.4",
+      "positive_fixture": "fixtures-v2.4/assets-v2.4.json",
+      "negative_oracles": [
+        "N16"
+      ],
+      "effect_oracle": "derive pre/post target digest and effect count from target bytes",
+      "state_owner": "release-platform-config"
+    },
+    {
+      "requirement_id": "REQ-017",
+      "semantic_statement": "Keep app-config paths limited to bootstrap descriptors and prohibit workload chart or values ownership.",
+      "dag_nodes": [
+        "AP25"
+      ],
+      "command_id": "cmd.app-config.bootstrap",
+      "schema_id": "payload.v2.4",
+      "positive_fixture": "fixtures-v2.4/base-command-v2.4.json",
+      "negative_oracles": [
+        "N17"
+      ],
+      "effect_oracle": "derive pre/post target digest and effect count from target bytes",
+      "state_owner": "app-config"
+    },
+    {
+      "requirement_id": "REQ-018",
+      "semantic_statement": "Require normal administration to use three exact distinct identities, bounded TTL, one-use credentials, audit and revocation.",
+      "dag_nodes": [
+        "X14"
+      ],
+      "command_id": "cmd.check.admin.normal",
+      "schema_id": "admin.v2.4",
+      "positive_fixture": "fixtures-v2.4/admin-contracts-v2.4.json",
+      "negative_oracles": [
+        "N18"
+      ],
+      "effect_oracle": "derive pre/post target digest and effect count from target bytes",
+      "state_owner": "release-platform-config"
+    },
+    {
+      "requirement_id": "REQ-019",
+      "semantic_statement": "Require break-glass to use two exact approvers and a distinct executor with shorter TTL and forbidden publish operations.",
+      "dag_nodes": [
+        "X15"
+      ],
+      "command_id": "cmd.check.admin.breakglass",
+      "schema_id": "admin.v2.4",
+      "positive_fixture": "fixtures-v2.4/admin-contracts-v2.4.json",
+      "negative_oracles": [
+        "N19"
+      ],
+      "effect_oracle": "derive pre/post target digest and effect count from target bytes",
+      "state_owner": "release-platform-config"
+    },
+    {
+      "requirement_id": "REQ-020",
+      "semantic_statement": "Verify candidate archive media, byte length and digest before no-network extraction.",
+      "dag_nodes": [
+        "X16"
+      ],
+      "command_id": "cmd.verify.candidate",
+      "schema_id": "asset.v2.4",
+      "positive_fixture": "fixtures-v2.4/assets-v2.4.json",
+      "negative_oracles": [
+        "N20"
+      ],
+      "effect_oracle": "derive pre/post target digest and effect count from target bytes",
+      "state_owner": "release-platform-config"
+    },
+    {
+      "requirement_id": "REQ-021",
+      "semantic_statement": "Verify Vault transit role, exact Kubernetes identity and revoked-key state before secret evidence is accepted.",
+      "dag_nodes": [
+        "X17"
+      ],
+      "command_id": "cmd.verify.vault",
+      "schema_id": "signature.v2.4",
+      "positive_fixture": "fixtures-v2.4/base-command-v2.4.json",
+      "negative_oracles": [
+        "N21"
+      ],
+      "effect_oracle": "derive pre/post target digest and effect count from target bytes",
+      "state_owner": "release-platform-config"
+    },
+    {
+      "requirement_id": "REQ-022",
+      "semantic_statement": "Require the three-node PostgreSQL placement and TLS identity contract before release-platform workloads.",
+      "dag_nodes": [
+        "X18"
+      ],
+      "command_id": "cmd.verify.postgres",
+      "schema_id": "payload.v2.4",
+      "positive_fixture": "fixtures-v2.4/base-command-v2.4.json",
+      "negative_oracles": [
+        "N22"
+      ],
+      "effect_oracle": "derive pre/post target digest and effect count from target bytes",
+      "state_owner": "release-platform-config"
+    },
+    {
+      "requirement_id": "REQ-023",
+      "semantic_statement": "Allow only the enumerated GitHub proxy operations with fixed host, listener, audience and SNI.",
+      "dag_nodes": [
+        "X19"
+      ],
+      "command_id": "cmd.verify.proxy",
+      "schema_id": "command.v2.4",
+      "positive_fixture": "fixtures-v2.4/base-command-v2.4.json",
+      "negative_oracles": [
+        "N23"
+      ],
+      "effect_oracle": "derive pre/post target digest and effect count from target bytes",
+      "state_owner": "release-platform-config"
+    },
+    {
+      "requirement_id": "REQ-024",
+      "semantic_statement": "Route every UNKNOWN, TIMEOUT, PARTIAL_EFFECT and MISMATCH from every executable node to atomic U00.",
+      "dag_nodes": [
+        "X20",
+        "X21"
+      ],
+      "command_id": "cmd.fsm.failure",
+      "schema_id": "fsm.v2.4",
+      "positive_fixture": "fixtures-v2.4/base-command-v2.4.json",
+      "negative_oracles": [
+        "N24"
+      ],
+      "effect_oracle": "derive pre/post target digest and effect count from target bytes",
+      "state_owner": "release-platform-config"
+    },
+    {
+      "requirement_id": "REQ-025",
+      "semantic_statement": "Traverse U00 through U08 as fence, cancel, quarantine, revoke, reconcile, successor, audit and terminal actions.",
+      "dag_nodes": [
+        "X22"
+      ],
+      "command_id": "cmd.fsm.recovery",
+      "schema_id": "fsm.v2.4",
+      "positive_fixture": "fixtures-v2.4/base-command-v2.4.json",
+      "negative_oracles": [
+        "N01"
+      ],
+      "effect_oracle": "derive pre/post target digest and effect count from target bytes",
+      "state_owner": "release-platform-config"
+    },
+    {
+      "requirement_id": "REQ-026",
+      "semantic_statement": "Join AP25 to X41 before any release mutation node is reachable.",
+      "dag_nodes": [
+        "X41"
+      ],
+      "command_id": "cmd.join.app-config",
+      "schema_id": "fsm.v2.4",
+      "positive_fixture": "fixtures-v2.4/base-command-v2.4.json",
+      "negative_oracles": [
+        "N02"
+      ],
+      "effect_oracle": "derive pre/post target digest and effect count from target bytes",
+      "state_owner": "release-platform-config"
+    },
+    {
+      "requirement_id": "REQ-027",
+      "semantic_statement": "Map every requirement, criterion and executable test to its own semantic node, command, schema and oracles.",
+      "dag_nodes": [
+        "X23",
+        "X27",
+        "X28",
+        "X29",
+        "X30",
+        "X31",
+        "X32",
+        "X33",
+        "X34",
+        "X35",
+        "X36",
+        "X37",
+        "X38"
+      ],
+      "command_id": "cmd.validate.trace",
+      "schema_id": "payload.v2.4",
+      "positive_fixture": "fixtures-v2.4/base-command-v2.4.json",
+      "negative_oracles": [
+        "N03"
+      ],
+      "effect_oracle": "derive pre/post target digest and effect count from target bytes",
+      "state_owner": "release-platform-config"
+    },
+    {
+      "requirement_id": "REQ-028",
+      "semantic_statement": "Hash the pre-council bundle manifest over spec, annex, spec-check, fixtures, builder and validator.",
+      "dag_nodes": [
+        "X24"
+      ],
+      "command_id": "cmd.hash.bundle",
+      "schema_id": "payload.v2.4",
+      "positive_fixture": "fixtures-v2.4/base-command-v2.4.json",
+      "negative_oracles": [
+        "N04"
+      ],
+      "effect_oracle": "derive pre/post target digest and effect count from target bytes",
+      "state_owner": "release-platform-config"
+    },
+    {
+      "requirement_id": "REQ-029",
+      "semantic_statement": "Hash the pre-council validator report over the bundle hash and all computed results.",
+      "dag_nodes": [
+        "X25"
+      ],
+      "command_id": "cmd.hash.report",
+      "schema_id": "payload.v2.4",
+      "positive_fixture": "fixtures-v2.4/base-command-v2.4.json",
+      "negative_oracles": [
+        "N05"
+      ],
+      "effect_oracle": "derive pre/post target digest and effect count from target bytes",
+      "state_owner": "release-platform-config"
+    },
+    {
+      "requirement_id": "REQ-030",
+      "semantic_statement": "Require detached council lane signatures, verdicts, manifest hash and report hash in a closure check.",
+      "dag_nodes": [
+        "X26"
+      ],
+      "command_id": "cmd.verify.council",
+      "schema_id": "signature.v2.4",
+      "positive_fixture": "fixtures-v2.4/council-closure-v2.4.json",
+      "negative_oracles": [
+        "N06"
+      ],
+      "effect_oracle": "derive pre/post target digest and effect count from target bytes",
+      "state_owner": "release-platform-config"
+    },
+    {
+      "requirement_id": "REQ-031",
+      "semantic_statement": "Keep activation BLOCKED_PREACTIVATION with zero live gates and reject any live promotion command.",
+      "dag_nodes": [
+        "S99"
+      ],
+      "command_id": "cmd.block.activation",
+      "schema_id": "payload.v2.4",
+      "positive_fixture": "fixtures-v2.4/base-command-v2.4.json",
+      "negative_oracles": [
+        "N07"
+      ],
+      "effect_oracle": "derive pre/post target digest and effect count from target bytes",
+      "state_owner": "release-platform-config"
+    },
+    {
+      "requirement_id": "REQ-032",
+      "semantic_statement": "Record the objective change from the historical v0.6.14 prerequisite to the monotonic NEXT_SEMVER resolver.",
+      "dag_nodes": [
+        "X39"
+      ],
+      "command_id": "cmd.resolve.semver",
+      "schema_id": "payload.v2.4",
+      "positive_fixture": "fixtures-v2.4/base-command-v2.4.json",
+      "negative_oracles": [
+        "N08"
+      ],
+      "effect_oracle": "derive pre/post target digest and effect count from target bytes",
+      "state_owner": "release-platform-config"
+    }
+  ],
+  "admin_contracts": {
+    "path": "fixtures-v2.4/admin-contracts-v2.4.json",
+    "normal_ttl_seconds": 1800,
+    "break_glass_ttl_seconds": 900
+  },
+  "signer_policy": {
+    "offline_fixture": {
+      "algorithm": "Ed25519",
+      "authority": false
+    },
+    "live_default": "REJECT",
+    "sigstore_required": [
+      "Fulcio chain",
+      "certificate SAN",
+      "OIDC issuer",
+      "repository/ref/SHA",
+      "Rekor inclusion proof",
+      "integrated time"
+    ],
+    "vault_required": [
+      "transit public key version",
+      "exact Kubernetes principal",
+      "revocation state"
+    ],
+    "clock": {
+      "fixed": "2026-08-26T12:00:00Z",
+      "max_skew_seconds": 30
+    },
+    "replay": {
+      "store": "durable replay ledger",
+      "cross_process": true
+    }
+  },
+  "hash_closure": {
+    "manifest": "fixtures-v2.4/pre-council-bundle-manifest-v2.4.json",
+    "report": "fixtures-v2.4/pre-council-validation-report-v2.4.json",
+    "council_detached": true
+  },
+  "activation": {
+    "state": "BLOCKED_PREACTIVATION",
+    "live_gate_count": 0,
+    "required_live_gate_count": 32,
+    "synthetic_evidence_authorizes": false,
+    "live_evidence_policy": "reject-without-full-certificate-key-identity-inputs"
+  }
+}

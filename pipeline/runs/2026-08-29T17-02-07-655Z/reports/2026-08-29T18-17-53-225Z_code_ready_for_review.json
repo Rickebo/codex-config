@@ -1,0 +1,45 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Luna implemented issue #150 as a distinct rollout-inert RoleBinding admission service and opened deployment-controller PR #151 at c717aee83385a4d5f05b7d7a90802a4aea11145f. Local Go, race, vet, build, cross-build, chart, schema, and repository policy validations pass.",
+  "changed_files": [
+    "Dockerfile",
+    "charts/deployment-controller/templates/_helpers.tpl",
+    "charts/deployment-controller/templates/rolebinding-admission.yaml",
+    "charts/deployment-controller/values.schema.json",
+    "charts/deployment-controller/values.yaml",
+    "cmd/rolebinding-admission/config.go",
+    "cmd/rolebinding-admission/config_test.go",
+    "cmd/rolebinding-admission/main.go",
+    "docs/README.md",
+    "docs/rolebinding-admission.md",
+    "hack/rolebinding-admission-ci-values.yaml",
+    "hack/test-rolebinding-admission-chart.py",
+    "hack/validate-chart.sh",
+    "internal/rolebindingadmission/handler.go",
+    "internal/rolebindingadmission/handler_test.go",
+    "internal/rolebindingadmission/source.go",
+    "internal/rolebindingadmission/source_test.go",
+    "internal/rolebindingadmission/validator.go",
+    "internal/rolebindingadmission/validator_test.go"
+  ],
+  "validation": [
+    "go test ./... passed",
+    "go test -race ./... passed",
+    "go vet ./... and builds/cross-builds passed",
+    "chart/schema/repository validation passed, including disabled-default negative guards",
+    "default and active values render no RoleBinding admission webhook resources",
+    "PR #151 exact remote head matches c717aee83385a4d5f05b7d7a90802a4aea11145f"
+  ],
+  "blockers": [
+    "PR #151 exact-head protected CI is still running",
+    "Independent Luna security review is in progress",
+    "Live rollout remains explicitly out of scope and blocked by controller health and break-glass preflight"
+  ],
+  "next_action": "Complete independent exact-head security review of PR #151 and route any finding back to Luna implementation; otherwise advance to protected test evidence.",
+  "independent_lanes": [
+    "deployment-controller PR #151 security review",
+    "infra PR #1272 protected CI"
+  ],
+  "risk_level": "critical"
+}

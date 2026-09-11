@@ -1,0 +1,85 @@
+{
+  "meta": {
+    "id": "SPEC-deployment-controller-auto-release-91",
+    "title": "Automatic verified releases from successful main CI",
+    "author": "Codex manager council",
+    "created_at": "2026-08-24T06:40:44Z",
+    "version": "1.0"
+  },
+  "feature": {
+    "problem_statement": "Merging to main only runs CI. Release Verify is tag-push-only and Publish Release only follows that verifier, so no component selects a version or creates a tag after a successful merge and Kafka fix 989799c remains unreleased.",
+    "goals": [
+      "Automatically create one immutable SemVer release candidate after successful exact-SHA main CI.",
+      "Preserve the existing verified artifact, provenance, attestation, Release Verify, and Publish Release stages.",
+      "Publish v0.6.13 from the automation PR merge without a manual tag."
+    ],
+    "non_goals": [
+      "Deploy or promote the release to a Kubernetes environment.",
+      "Retain the manual tag-push release entry for backwards compatibility.",
+      "Create a parallel artifact publisher or replace existing provenance formats."
+    ],
+    "scope_in": [
+      "GitHub Actions release triggers, permissions, concurrency, and exact-SHA validation.",
+      "Conventional-commit SemVer planning and focused policy tests.",
+      "Release process documentation and end-to-end v0.6.13 verification."
+    ],
+    "scope_out": [
+      "Cluster changes, Argo CD changes, and production promotion.",
+      "Manual creation of v0.6.13 or manual mutation of any version tag or release."
+    ]
+  },
+  "requirements": [
+    {"id":"REQ-001","priority":"MUST","statement":"Document that current main CI has no release handoff, Release Verify requires a pre-existing tag push, and Publish Release only follows Release Verify.","rationale":"The missing trigger and version allocator are the root cause."},
+    {"id":"REQ-002","priority":"MUST","statement":"A trusted workflow_run coordinator must consider only successful same-repository CI push runs for branch main and bind the candidate to the exact lowercase 40-hex CI head SHA in protected main history.","rationale":"Artifacts and tags must never be selected from PR, fork, failed, or unrelated workflow runs."},
+    {"id":"REQ-003","priority":"MUST","statement":"The highest bump across unreleased first-parent conventional commits must be breaking major, feat minor, or fix patch; all other commit types alone must produce a successful no-release result.","rationale":"This defines deterministic repository SemVer policy."},
+    {"id":"REQ-004","priority":"MUST","statement":"Release candidate selection and tag creation must use one repository-wide non-canceling concurrency group and re-read tag/release state after acquiring it.","rationale":"Concurrent main merges must not allocate the same version."},
+    {"id":"REQ-005","priority":"MUST","statement":"Version tags must be created atomically as lightweight refs and never updated, deleted, moved, or recreated; exact existing state may resume, covered candidates no-op, and mismatches fail closed.","rationale":"Version identity is immutable and reruns must be safe."},
+    {"id":"REQ-006","priority":"MUST","statement":"After create-or-resume, the coordinator must explicitly dispatch the existing Release Verify workflow at the exact tag with tag, source SHA, CI run ID, and CI attempt inputs.","rationale":"GITHUB_TOKEN tag creation does not reliably recurse into tag-push workflows; workflow_dispatch is a supported exception."},
+    {"id":"REQ-007","priority":"MUST","statement":"Release Verify must validate its dispatched tag/source/CI inputs and exact successful CI run before building artifacts, and Publish Release must accept and cryptographically verify only the workflow_dispatch verifier trigger.","rationale":"The preserved verified stages must enforce the new trusted handoff."},
+    {"id":"REQ-008","priority":"MUST","statement":"Write permissions must exist only on the trusted coordinator mutation job and the existing publisher; PR CI remains read-only and Release Verify receives only actions read, contents read, and OIDC signing authority.","rationale":"Untrusted or PR-derived code must not receive tag or release credentials."},
+    {"id":"REQ-009","priority":"MUST","statement":"Existing tags, drafts, public releases, and assets must never be overwritten or recreated; exact public release state is a successful no-op and inconsistent state is a hard failure.","rationale":"Reruns and partial failures must preserve immutable published state."},
+    {"id":"REQ-010","priority":"MUST","statement":"Focused tests must cover SemVer selection, non-releasable ranges, exact-SHA CI binding, existing-tag/release handling, reruns, serialized candidates, dispatch recursion protection, and permission boundaries.","rationale":"The trusted release state machine needs deterministic regression coverage."},
+    {"id":"REQ-011","priority":"MUST","statement":"Merging the implementation PR must automatically publish v0.6.13 from a source descendant of Kafka fix 989799c through successful Release Verify and Publish Release runs.","rationale":"This is the production acceptance proof and forbids manual bootstrap tagging."}
+  ],
+  "acceptance_criteria": [
+    {"id":"AC-001","requirement_ids":["REQ-001"],"scenario":"Given the old tag-first workflows, When the release documentation is read, Then it explains the missing main-CI handoff and the new automatic coordinator."},
+    {"id":"AC-002","requirement_ids":["REQ-002","REQ-007"],"scenario":"Given a failed, PR, fork, wrong-branch, wrong-workflow, malformed-SHA, mismatched-attempt, or non-main-history CI identity, When the trusted handoff validates it, Then it is rejected before tag or artifact mutation."},
+    {"id":"AC-003","requirement_ids":["REQ-003"],"scenario":"Given conventional commit ranges, When the planner evaluates them, Then fix selects patch, feat selects minor, breaking selects major with precedence, mixed ranges select the maximum, and other-only ranges select no release."},
+    {"id":"AC-004","requirement_ids":["REQ-004","REQ-005","REQ-009"],"scenario":"Given concurrent or rerun candidates, When they pass through the serialized allocator, Then ordered releasable candidates get distinct versions, covered and exact completed candidates no-op, and mismatched immutable state fails without mutation."},
+    {"id":"AC-005","requirement_ids":["REQ-006","REQ-007"],"scenario":"Given a create-or-resume release candidate, When the coordinator hands it off, Then it calls createWorkflowDispatch at the exact tag with exact source and CI inputs without relying on tag-push recursion."},
+    {"id":"AC-006","requirement_ids":["REQ-008"],"scenario":"Given all repository workflows, When their triggers and permissions are audited, Then no pull_request write path exists, only the coordinator mutation job has contents/actions write, the verifier is read-only plus OIDC, and publisher authority is unchanged."},
+    {"id":"AC-007","requirement_ids":["REQ-010"],"scenario":"Given the implementation head, When focused tests, release-flow, actionlint, repository policy validation, diff checks, and protected CI run, Then every gate passes."},
+    {"id":"AC-008","requirement_ids":["REQ-011"],"scenario":"Given the implementation PR merges without a manual tag, When its successful main CI completes, Then v0.6.13 is published through successful Release Verify and Publish Release, its manifest source is the merge SHA descended from 989799c, and its graph reports chart and image digests."}
+  ],
+  "test_plan": [
+    {"id":"TST-001","type":"unit","requirement_ids":["REQ-003","REQ-005","REQ-009"],"approach":"Test pure release planner fixtures for version parsing, bump precedence, no-release, existing exact/mismatched tags, covered candidates, and release state."},
+    {"id":"TST-002","type":"unit","requirement_ids":["REQ-002","REQ-006","REQ-007","REQ-008"],"approach":"Add workflow policy tests for exact CI/run inputs, constant concurrency, explicit dispatch, minimal permissions, immutable createRef, and removal of tag-push recursion."},
+    {"id":"TST-003","type":"integration","requirement_ids":["REQ-004","REQ-005","REQ-009"],"approach":"Exercise sequential and stale candidate fixtures so the second plan observes the first tag and no path updates or recreates refs/releases."},
+    {"id":"TST-004","type":"integration","requirement_ids":["REQ-007","REQ-010"],"approach":"Run the existing make test-release-flow suite, actionlint, validate-repository, and release provenance tests with workflow_dispatch trigger expectations."},
+    {"id":"TST-005","type":"e2e","requirement_ids":["REQ-011"],"approach":"After merge, observe CI to Automatic Release to Release Verify to Publish Release, then download v0.6.13 manifest/graph and verify source ancestry, tag, checksums, and OCI digests."},
+    {"id":"TST-006","type":"manual","requirement_ids":["REQ-001","REQ-008"],"approach":"Review issue, workflow permissions, GitHub version-tag ruleset, documentation, PR exact head, and cleanup evidence."}
+  ],
+  "traceability": [
+    {"requirement_id":"REQ-001","acceptance_ids":["AC-001"],"test_ids":["TST-006"],"review_checks":["Compare old and new workflow trigger documentation."],"validation_checks":["Documentation cites CI, Release Verify, and Publish Release handoff." ]},
+    {"requirement_id":"REQ-002","acceptance_ids":["AC-002"],"test_ids":["TST-002"],"review_checks":["Inspect event and API revalidation before mutation."],"validation_checks":["Negative identity fixtures pass." ]},
+    {"requirement_id":"REQ-003","acceptance_ids":["AC-003"],"test_ids":["TST-001"],"review_checks":["Review Conventional Commit parser and first-parent range semantics."],"validation_checks":["Patch, minor, major, mixed, and no-release fixtures pass." ]},
+    {"requirement_id":"REQ-004","acceptance_ids":["AC-004"],"test_ids":["TST-003"],"review_checks":["Verify constant non-canceling concurrency and state reread."],"validation_checks":["Two-candidate fixture cannot reuse one version." ]},
+    {"requirement_id":"REQ-005","acceptance_ids":["AC-004"],"test_ids":["TST-001","TST-003"],"review_checks":["Reject ref update/delete and mismatched targets."],"validation_checks":["Exact resume/no-op and mismatch fixtures pass." ]},
+    {"requirement_id":"REQ-006","acceptance_ids":["AC-005"],"test_ids":["TST-002"],"review_checks":["Require createWorkflowDispatch at the exact tag with CI inputs."],"validation_checks":["Static test proves no reliance on tag-push recursion." ]},
+    {"requirement_id":"REQ-007","acceptance_ids":["AC-002","AC-005"],"test_ids":["TST-002","TST-004"],"review_checks":["Trace CI identity into verifier and workflow_dispatch provenance into publisher."],"validation_checks":["Release provenance and publisher verification suites pass." ]},
+    {"requirement_id":"REQ-008","acceptance_ids":["AC-006"],"test_ids":["TST-002","TST-006"],"review_checks":["Audit workflow permissions and checkout trust boundaries."],"validation_checks":["No PR-triggered job has contents/actions write." ]},
+    {"requirement_id":"REQ-009","acceptance_ids":["AC-004"],"test_ids":["TST-001","TST-003"],"review_checks":["Audit every tag/release mutation call for create-only semantics."],"validation_checks":["Rerun and public-release no-op fixtures pass." ]},
+    {"requirement_id":"REQ-010","acceptance_ids":["AC-007"],"test_ids":["TST-001","TST-002","TST-003","TST-004"],"review_checks":["Map each risk to a focused test."],"validation_checks":["Local and protected test gates pass." ]},
+    {"requirement_id":"REQ-011","acceptance_ids":["AC-008"],"test_ids":["TST-005"],"review_checks":["Do not create v0.6.13 manually."],"validation_checks":["Public manifest, workflow runs, tag ancestry, chart digest, and image digest are verified." ]}
+  ],
+  "quality_gates": {"spec_review_required":true,"testability_required":true,"traceability_required":true},
+  "council": {
+    "perspectives": [
+      {"role":"planner","summary":"Serialized workflow_run coordinator with explicit dispatch and conventional SemVer."},
+      {"role":"security reviewer","summary":"Exact CI/tag provenance, create-only mutations, and narrow trusted write path."},
+      {"role":"QA lead","summary":"Focused state-machine tests plus live v0.6.13 acceptance verification."}
+    ],
+    "consensus_summary":"Adopt explicit workflow_dispatch at the created tag, remove tag-push release entry, and retain the existing verifier/publisher as the only artifact path.",
+    "open_questions":[]
+  }
+}

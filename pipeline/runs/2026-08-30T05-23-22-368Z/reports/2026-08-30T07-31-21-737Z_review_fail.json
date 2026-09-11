@@ -1,0 +1,51 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Independent Luna review of PR #1293 head 254513f3 remains NO-GO: managed-prefix inventory can ignore undeclared systemd entries, cleanup arguments do not match randomized handoff paths, descriptor reads are unbounded, and the /var/tmp handoff parent is not validated.",
+  "changed_files": [],
+  "validation": [
+    "Exact head 254513f33dda571e2c9d1a7e2d4a5dd8ffb2afbf reviewed against base efb9faac0606e02b7cac8e36e716f1ede9a50fb6.",
+    "Reviewer confirmed an outside-prefix systemd entry can be added to the synthetic snapshot while the complete verifier returns PASS.",
+    "Sudo cleanup argument and helper-emitted randomized handoff path were compared directly and are incompatible.",
+    "Guard and ARC classifier pass on the exact head; Validate and protected ARC producer remain queued."
+  ],
+  "blockers": [
+    "Resolve managed-prefix inventory semantics: every security-relevant entry must be explicitly allowed or validated, while unrelated host services must not become accidental platform authority; add an outside-prefix regression test.",
+    "Replace the incompatible cleanup path contract with a safely constrained deterministic or argument-free cleanup interface and test emitted-to-cleanup path compatibility.",
+    "Bound every descriptor read by per-object maximum size and emit deterministic sanitized oversize evidence.",
+    "Validate /var/tmp or the selected handoff parent ownership, mode, and sticky-bit security before publication/cleanup; include it in the contract and tests."
+  ],
+  "next_action": "Return to Luna code owner for loop-4 remediation and explicit security-scope reasoning, then independently re-review the new exact head.",
+  "route_to": "code",
+  "risk_level": "high",
+  "issues": [
+    {
+      "id": "REV-1290-013",
+      "title": "Managed-prefix inventory silently ignores outside-prefix systemd entries",
+      "severity": "high",
+      "details": "The verifier accepts an undeclared systemd entry outside managed prefixes; define and enforce the exact security-relevant inventory boundary without claiming unrelated host services.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV-1290-014",
+      "title": "Cleanup sudo contract cannot address emitted randomized handoff path",
+      "severity": "high",
+      "details": "The sudo rule allows only the fixed handoff path while seal-handoff emits a randomized suffix and cleanup requires that randomized form.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV-1290-015",
+      "title": "Descriptor reads lack size bounds",
+      "severity": "medium",
+      "details": "Root-owned service, state, sudo, or helper files can cause unbounded memory consumption before validation produces evidence.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV-1290-016",
+      "title": "Handoff parent security properties are not validated",
+      "severity": "medium",
+      "details": "The helper opens /var/tmp without verifying root ownership, world-writable sticky protection, or replacement safety before publishing a root-owned handoff.",
+      "owner_stage": "code"
+    }
+  ]
+}

@@ -1,0 +1,2012 @@
+{
+  "meta": {
+    "id": "SPEC-deployment-controller-successor-v2-6",
+    "title": "Release platform v2.6 executable authority correction",
+    "author": "Codex release manager",
+    "created_at": "2026-08-26T12:00:00Z",
+    "version": "2.6.0-council-draft"
+  },
+  "feature": {
+    "problem_statement": "v2.6 corrects v2.5 invalid nonce and schema bindings, incomplete edge evidence, unsafe negative harnesses, and builder-generated council authority.",
+    "goals": [
+      "Validate every positive and edge with Draft 2020-12.",
+      "Prove durable replay races and zero effects.",
+      "Keep live gates blocked until external council closure."
+    ],
+    "non_goals": [
+      "Live GitHub, Vault, registry, Kubernetes or Argo mutation.",
+      "Treating an unsigned council template as authority."
+    ],
+    "scope_in": [
+      "release DAG and recovery",
+      "app-config bootstrap wiring",
+      "offline validator and immutable fixtures"
+    ],
+    "scope_out": [
+      "workload charts and values",
+      "live signer enrollment",
+      "production promotion"
+    ]
+  },
+  "requirements": [
+    {
+      "id": "REQ-001",
+      "priority": "MUST",
+      "statement": "Freeze canonical bytes at injected clock",
+      "rationale": "The v2.6 corpus provides an exact positive and executable negative oracle."
+    },
+    {
+      "id": "REQ-002",
+      "priority": "MUST",
+      "statement": "Bind exact predecessor council hashes",
+      "rationale": "The v2.6 corpus provides an exact positive and executable negative oracle."
+    },
+    {
+      "id": "REQ-003",
+      "priority": "MUST",
+      "statement": "Resolve NEXT_SEMVER from refreshed verified tags",
+      "rationale": "The v2.6 corpus provides an exact positive and executable negative oracle."
+    },
+    {
+      "id": "REQ-004",
+      "priority": "MUST",
+      "statement": "Reject second root and prove success reachability",
+      "rationale": "The v2.6 corpus provides an exact positive and executable negative oracle."
+    },
+    {
+      "id": "REQ-005",
+      "priority": "MUST",
+      "statement": "Bind immutable argv digest shell and network",
+      "rationale": "The v2.6 corpus provides an exact positive and executable negative oracle."
+    },
+    {
+      "id": "REQ-006",
+      "priority": "MUST",
+      "statement": "Validate payloads with Draft 2020-12",
+      "rationale": "The v2.6 corpus provides an exact positive and executable negative oracle."
+    },
+    {
+      "id": "REQ-007",
+      "priority": "MUST",
+      "statement": "Verify offline RFC 8785 signatures",
+      "rationale": "The v2.6 corpus provides an exact positive and executable negative oracle."
+    },
+    {
+      "id": "REQ-008",
+      "priority": "MUST",
+      "statement": "Reject incomplete live Sigstore or Vault evidence",
+      "rationale": "The v2.6 corpus provides an exact positive and executable negative oracle."
+    },
+    {
+      "id": "REQ-009",
+      "priority": "MUST",
+      "statement": "Evaluate issued not-before expiry fixed clock skew",
+      "rationale": "The v2.6 corpus provides an exact positive and executable negative oracle."
+    },
+    {
+      "id": "REQ-010",
+      "priority": "MUST",
+      "statement": "Read SQLite replay state without writes",
+      "rationale": "The v2.6 corpus provides an exact positive and executable negative oracle."
+    },
+    {
+      "id": "REQ-011",
+      "priority": "MUST",
+      "statement": "Recompute target identity and bytes",
+      "rationale": "The v2.6 corpus provides an exact positive and executable negative oracle."
+    },
+    {
+      "id": "REQ-012",
+      "priority": "MUST",
+      "statement": "Derive pre post bytes and effect in finally",
+      "rationale": "The v2.6 corpus provides an exact positive and executable negative oracle."
+    },
+    {
+      "id": "REQ-013",
+      "priority": "MUST",
+      "statement": "Apply distinct negatives and reject no-op harness",
+      "rationale": "The v2.6 corpus provides an exact positive and executable negative oracle."
+    },
+    {
+      "id": "REQ-014",
+      "priority": "MUST",
+      "statement": "Execute explicit spec pipeline node",
+      "rationale": "The v2.6 corpus provides an exact positive and executable negative oracle."
+    },
+    {
+      "id": "REQ-015",
+      "priority": "MUST",
+      "statement": "Execute explicit code pipeline node",
+      "rationale": "The v2.6 corpus provides an exact positive and executable negative oracle."
+    },
+    {
+      "id": "REQ-016",
+      "priority": "MUST",
+      "statement": "Execute explicit review pipeline node",
+      "rationale": "The v2.6 corpus provides an exact positive and executable negative oracle."
+    },
+    {
+      "id": "REQ-017",
+      "priority": "MUST",
+      "statement": "Execute explicit test pipeline node",
+      "rationale": "The v2.6 corpus provides an exact positive and executable negative oracle."
+    },
+    {
+      "id": "REQ-018",
+      "priority": "MUST",
+      "statement": "Execute explicit validation pipeline node",
+      "rationale": "The v2.6 corpus provides an exact positive and executable negative oracle."
+    },
+    {
+      "id": "REQ-019",
+      "priority": "MUST",
+      "statement": "Enforce normal administrator identities TTL one-use audit revocation",
+      "rationale": "The v2.6 corpus provides an exact positive and executable negative oracle."
+    },
+    {
+      "id": "REQ-020",
+      "priority": "MUST",
+      "statement": "Enforce break-glass dual approvers distinct executor and forbidden operations",
+      "rationale": "The v2.6 corpus provides an exact positive and executable negative oracle."
+    },
+    {
+      "id": "REQ-021",
+      "priority": "MUST",
+      "statement": "Bootstrap AP20 descriptor and Argo object",
+      "rationale": "The v2.6 corpus provides an exact positive and executable negative oracle."
+    },
+    {
+      "id": "REQ-022",
+      "priority": "MUST",
+      "statement": "Bootstrap AP21 descriptor and Argo object",
+      "rationale": "The v2.6 corpus provides an exact positive and executable negative oracle."
+    },
+    {
+      "id": "REQ-023",
+      "priority": "MUST",
+      "statement": "Bootstrap AP22 descriptor and Argo object",
+      "rationale": "The v2.6 corpus provides an exact positive and executable negative oracle."
+    },
+    {
+      "id": "REQ-024",
+      "priority": "MUST",
+      "statement": "Bootstrap AP23 descriptor and Argo object",
+      "rationale": "The v2.6 corpus provides an exact positive and executable negative oracle."
+    },
+    {
+      "id": "REQ-025",
+      "priority": "MUST",
+      "statement": "Bootstrap AP24 descriptor and Argo object",
+      "rationale": "The v2.6 corpus provides an exact positive and executable negative oracle."
+    },
+    {
+      "id": "REQ-026",
+      "priority": "MUST",
+      "statement": "Join AP25 bootstrap to X41 before mutation",
+      "rationale": "The v2.6 corpus provides an exact positive and executable negative oracle."
+    },
+    {
+      "id": "REQ-027",
+      "priority": "MUST",
+      "statement": "Verify candidate bytes media and sandbox",
+      "rationale": "The v2.6 corpus provides an exact positive and executable negative oracle."
+    },
+    {
+      "id": "REQ-028",
+      "priority": "MUST",
+      "statement": "Verify proxy host listener audience SNI operations",
+      "rationale": "The v2.6 corpus provides an exact positive and executable negative oracle."
+    },
+    {
+      "id": "REQ-029",
+      "priority": "MUST",
+      "statement": "Verify Vault role principal key and revocation",
+      "rationale": "The v2.6 corpus provides an exact positive and executable negative oracle."
+    },
+    {
+      "id": "REQ-030",
+      "priority": "MUST",
+      "statement": "Verify three-node CNPG synchronous TLS contract",
+      "rationale": "The v2.6 corpus provides an exact positive and executable negative oracle."
+    },
+    {
+      "id": "REQ-031",
+      "priority": "MUST",
+      "statement": "Verify four unique roles keys nonces bytes hashes",
+      "rationale": "The v2.6 corpus provides an exact positive and executable negative oracle."
+    },
+    {
+      "id": "REQ-032",
+      "priority": "MUST",
+      "statement": "Route every failure to atomic fence cancel quarantine classify",
+      "rationale": "The v2.6 corpus provides an exact positive and executable negative oracle."
+    },
+    {
+      "id": "REQ-033",
+      "priority": "MUST",
+      "statement": "Execute U00-U08 recovery commands to terminal",
+      "rationale": "The v2.6 corpus provides an exact positive and executable negative oracle."
+    },
+    {
+      "id": "REQ-034",
+      "priority": "MUST",
+      "statement": "Bind detached council to manifest and report hashes",
+      "rationale": "The v2.6 corpus provides an exact positive and executable negative oracle."
+    },
+    {
+      "id": "REQ-035",
+      "priority": "MUST",
+      "statement": "Keep activation blocked and refresh before mutation",
+      "rationale": "The v2.6 corpus provides an exact positive and executable negative oracle."
+    },
+    {
+      "id": "REQ-036",
+      "priority": "MUST",
+      "statement": "Execute M01 with exact identity key nonce target predecessor and asset binding",
+      "rationale": "The v2.6 corpus provides an exact positive and executable negative oracle."
+    },
+    {
+      "id": "REQ-037",
+      "priority": "MUST",
+      "statement": "Execute M02 with exact identity key nonce target predecessor and asset binding",
+      "rationale": "The v2.6 corpus provides an exact positive and executable negative oracle."
+    },
+    {
+      "id": "REQ-038",
+      "priority": "MUST",
+      "statement": "Execute M03 with exact identity key nonce target predecessor and asset binding",
+      "rationale": "The v2.6 corpus provides an exact positive and executable negative oracle."
+    },
+    {
+      "id": "REQ-039",
+      "priority": "MUST",
+      "statement": "Execute M04 with exact identity key nonce target predecessor and asset binding",
+      "rationale": "The v2.6 corpus provides an exact positive and executable negative oracle."
+    },
+    {
+      "id": "REQ-040",
+      "priority": "MUST",
+      "statement": "Execute M05 with exact identity key nonce target predecessor and asset binding",
+      "rationale": "The v2.6 corpus provides an exact positive and executable negative oracle."
+    },
+    {
+      "id": "REQ-041",
+      "priority": "MUST",
+      "statement": "Execute M06 with exact identity key nonce target predecessor and asset binding",
+      "rationale": "The v2.6 corpus provides an exact positive and executable negative oracle."
+    },
+    {
+      "id": "REQ-042",
+      "priority": "MUST",
+      "statement": "Execute M07 with exact identity key nonce target predecessor and asset binding",
+      "rationale": "The v2.6 corpus provides an exact positive and executable negative oracle."
+    },
+    {
+      "id": "REQ-043",
+      "priority": "MUST",
+      "statement": "Execute M08 with exact identity key nonce target predecessor and asset binding",
+      "rationale": "The v2.6 corpus provides an exact positive and executable negative oracle."
+    },
+    {
+      "id": "REQ-044",
+      "priority": "MUST",
+      "statement": "Execute M09 with exact identity key nonce target predecessor and asset binding",
+      "rationale": "The v2.6 corpus provides an exact positive and executable negative oracle."
+    },
+    {
+      "id": "REQ-045",
+      "priority": "MUST",
+      "statement": "Execute M10 with exact identity key nonce target predecessor and asset binding",
+      "rationale": "The v2.6 corpus provides an exact positive and executable negative oracle."
+    },
+    {
+      "id": "REQ-046",
+      "priority": "MUST",
+      "statement": "Execute M11 with exact identity key nonce target predecessor and asset binding",
+      "rationale": "The v2.6 corpus provides an exact positive and executable negative oracle."
+    },
+    {
+      "id": "REQ-047",
+      "priority": "MUST",
+      "statement": "Execute M12 with exact identity key nonce target predecessor and asset binding",
+      "rationale": "The v2.6 corpus provides an exact positive and executable negative oracle."
+    },
+    {
+      "id": "REQ-048",
+      "priority": "MUST",
+      "statement": "Execute M13 with exact identity key nonce target predecessor and asset binding",
+      "rationale": "The v2.6 corpus provides an exact positive and executable negative oracle."
+    },
+    {
+      "id": "REQ-049",
+      "priority": "MUST",
+      "statement": "Execute M14 with exact identity key nonce target predecessor and asset binding",
+      "rationale": "The v2.6 corpus provides an exact positive and executable negative oracle."
+    },
+    {
+      "id": "REQ-050",
+      "priority": "MUST",
+      "statement": "Execute M15 with exact identity key nonce target predecessor and asset binding",
+      "rationale": "The v2.6 corpus provides an exact positive and executable negative oracle."
+    },
+    {
+      "id": "REQ-051",
+      "priority": "MUST",
+      "statement": "Execute M16 with exact identity key nonce target predecessor and asset binding",
+      "rationale": "The v2.6 corpus provides an exact positive and executable negative oracle."
+    },
+    {
+      "id": "REQ-052",
+      "priority": "MUST",
+      "statement": "Execute M17 with exact identity key nonce target predecessor and asset binding",
+      "rationale": "The v2.6 corpus provides an exact positive and executable negative oracle."
+    },
+    {
+      "id": "REQ-053",
+      "priority": "MUST",
+      "statement": "Execute M18 with exact identity key nonce target predecessor and asset binding",
+      "rationale": "The v2.6 corpus provides an exact positive and executable negative oracle."
+    },
+    {
+      "id": "REQ-054",
+      "priority": "MUST",
+      "statement": "Execute M19 with exact identity key nonce target predecessor and asset binding",
+      "rationale": "The v2.6 corpus provides an exact positive and executable negative oracle."
+    }
+  ],
+  "acceptance_criteria": [
+    {
+      "id": "AC-001",
+      "requirement_ids": [
+        "REQ-001"
+      ],
+      "scenario": "Given S00 has exact evidence When the read-only validator runs cmd.S00 Then it proves the predicate and zero-effect negative."
+    },
+    {
+      "id": "AC-002",
+      "requirement_ids": [
+        "REQ-002"
+      ],
+      "scenario": "Given X01 has exact evidence When the read-only validator runs cmd.X01 Then it proves the predicate and zero-effect negative."
+    },
+    {
+      "id": "AC-003",
+      "requirement_ids": [
+        "REQ-003"
+      ],
+      "scenario": "Given X02 has exact evidence When the read-only validator runs cmd.X02 Then it proves the predicate and zero-effect negative."
+    },
+    {
+      "id": "AC-004",
+      "requirement_ids": [
+        "REQ-004"
+      ],
+      "scenario": "Given X03 has exact evidence When the read-only validator runs cmd.X03 Then it proves the predicate and zero-effect negative."
+    },
+    {
+      "id": "AC-005",
+      "requirement_ids": [
+        "REQ-005"
+      ],
+      "scenario": "Given X04 has exact evidence When the read-only validator runs cmd.X04 Then it proves the predicate and zero-effect negative."
+    },
+    {
+      "id": "AC-006",
+      "requirement_ids": [
+        "REQ-006"
+      ],
+      "scenario": "Given X05 has exact evidence When the read-only validator runs cmd.X05 Then it proves the predicate and zero-effect negative."
+    },
+    {
+      "id": "AC-007",
+      "requirement_ids": [
+        "REQ-007"
+      ],
+      "scenario": "Given X06 has exact evidence When the read-only validator runs cmd.X06 Then it proves the predicate and zero-effect negative."
+    },
+    {
+      "id": "AC-008",
+      "requirement_ids": [
+        "REQ-008"
+      ],
+      "scenario": "Given X07 has exact evidence When the read-only validator runs cmd.X07 Then it proves the predicate and zero-effect negative."
+    },
+    {
+      "id": "AC-009",
+      "requirement_ids": [
+        "REQ-009"
+      ],
+      "scenario": "Given X08 has exact evidence When the read-only validator runs cmd.X08 Then it proves the predicate and zero-effect negative."
+    },
+    {
+      "id": "AC-010",
+      "requirement_ids": [
+        "REQ-010"
+      ],
+      "scenario": "Given X09 has exact evidence When the read-only validator runs cmd.X09 Then it proves the predicate and zero-effect negative."
+    },
+    {
+      "id": "AC-011",
+      "requirement_ids": [
+        "REQ-011"
+      ],
+      "scenario": "Given X10 has exact evidence When the read-only validator runs cmd.X10 Then it proves the predicate and zero-effect negative."
+    },
+    {
+      "id": "AC-012",
+      "requirement_ids": [
+        "REQ-012"
+      ],
+      "scenario": "Given X11 has exact evidence When the read-only validator runs cmd.X11 Then it proves the predicate and zero-effect negative."
+    },
+    {
+      "id": "AC-013",
+      "requirement_ids": [
+        "REQ-013"
+      ],
+      "scenario": "Given X12 has exact evidence When the read-only validator runs cmd.X12 Then it proves the predicate and zero-effect negative."
+    },
+    {
+      "id": "AC-014",
+      "requirement_ids": [
+        "REQ-014"
+      ],
+      "scenario": "Given X14 has exact evidence When the read-only validator runs cmd.pipeline.spec Then it proves the predicate and zero-effect negative."
+    },
+    {
+      "id": "AC-015",
+      "requirement_ids": [
+        "REQ-015"
+      ],
+      "scenario": "Given X15 has exact evidence When the read-only validator runs cmd.pipeline.code Then it proves the predicate and zero-effect negative."
+    },
+    {
+      "id": "AC-016",
+      "requirement_ids": [
+        "REQ-016"
+      ],
+      "scenario": "Given X16 has exact evidence When the read-only validator runs cmd.pipeline.review Then it proves the predicate and zero-effect negative."
+    },
+    {
+      "id": "AC-017",
+      "requirement_ids": [
+        "REQ-017"
+      ],
+      "scenario": "Given X17 has exact evidence When the read-only validator runs cmd.pipeline.test Then it proves the predicate and zero-effect negative."
+    },
+    {
+      "id": "AC-018",
+      "requirement_ids": [
+        "REQ-018"
+      ],
+      "scenario": "Given X18 has exact evidence When the read-only validator runs cmd.pipeline.validation Then it proves the predicate and zero-effect negative."
+    },
+    {
+      "id": "AC-019",
+      "requirement_ids": [
+        "REQ-019"
+      ],
+      "scenario": "Given X19 has exact evidence When the read-only validator runs cmd.admin.normal Then it proves the predicate and zero-effect negative."
+    },
+    {
+      "id": "AC-020",
+      "requirement_ids": [
+        "REQ-020"
+      ],
+      "scenario": "Given X25 has exact evidence When the read-only validator runs cmd.admin.breakglass Then it proves the predicate and zero-effect negative."
+    },
+    {
+      "id": "AC-021",
+      "requirement_ids": [
+        "REQ-021"
+      ],
+      "scenario": "Given AP20 has exact evidence When the read-only validator runs cmd.AP20 Then it proves the predicate and zero-effect negative."
+    },
+    {
+      "id": "AC-022",
+      "requirement_ids": [
+        "REQ-022"
+      ],
+      "scenario": "Given AP21 has exact evidence When the read-only validator runs cmd.AP21 Then it proves the predicate and zero-effect negative."
+    },
+    {
+      "id": "AC-023",
+      "requirement_ids": [
+        "REQ-023"
+      ],
+      "scenario": "Given AP22 has exact evidence When the read-only validator runs cmd.AP22 Then it proves the predicate and zero-effect negative."
+    },
+    {
+      "id": "AC-024",
+      "requirement_ids": [
+        "REQ-024"
+      ],
+      "scenario": "Given AP23 has exact evidence When the read-only validator runs cmd.AP23 Then it proves the predicate and zero-effect negative."
+    },
+    {
+      "id": "AC-025",
+      "requirement_ids": [
+        "REQ-025"
+      ],
+      "scenario": "Given AP24 has exact evidence When the read-only validator runs cmd.AP24 Then it proves the predicate and zero-effect negative."
+    },
+    {
+      "id": "AC-026",
+      "requirement_ids": [
+        "REQ-026"
+      ],
+      "scenario": "Given AP25|X41 has exact evidence When the read-only validator runs cmd.X41 Then it proves the predicate and zero-effect negative."
+    },
+    {
+      "id": "AC-027",
+      "requirement_ids": [
+        "REQ-027"
+      ],
+      "scenario": "Given X26 has exact evidence When the read-only validator runs cmd.X26 Then it proves the predicate and zero-effect negative."
+    },
+    {
+      "id": "AC-028",
+      "requirement_ids": [
+        "REQ-028"
+      ],
+      "scenario": "Given X27 has exact evidence When the read-only validator runs cmd.X27 Then it proves the predicate and zero-effect negative."
+    },
+    {
+      "id": "AC-029",
+      "requirement_ids": [
+        "REQ-029"
+      ],
+      "scenario": "Given X28 has exact evidence When the read-only validator runs cmd.X28 Then it proves the predicate and zero-effect negative."
+    },
+    {
+      "id": "AC-030",
+      "requirement_ids": [
+        "REQ-030"
+      ],
+      "scenario": "Given X29 has exact evidence When the read-only validator runs cmd.X29 Then it proves the predicate and zero-effect negative."
+    },
+    {
+      "id": "AC-031",
+      "requirement_ids": [
+        "REQ-031"
+      ],
+      "scenario": "Given X30 has exact evidence When the read-only validator runs cmd.X30 Then it proves the predicate and zero-effect negative."
+    },
+    {
+      "id": "AC-032",
+      "requirement_ids": [
+        "REQ-032"
+      ],
+      "scenario": "Given X31 has exact evidence When the read-only validator runs cmd.X31 Then it proves the predicate and zero-effect negative."
+    },
+    {
+      "id": "AC-033",
+      "requirement_ids": [
+        "REQ-033"
+      ],
+      "scenario": "Given X32 has exact evidence When the read-only validator runs cmd.X32 Then it proves the predicate and zero-effect negative."
+    },
+    {
+      "id": "AC-034",
+      "requirement_ids": [
+        "REQ-034"
+      ],
+      "scenario": "Given X33|X34|X35|X36 has exact evidence When the read-only validator runs cmd.X36 Then it proves the predicate and zero-effect negative."
+    },
+    {
+      "id": "AC-035",
+      "requirement_ids": [
+        "REQ-035"
+      ],
+      "scenario": "Given X39 has exact evidence When the read-only validator runs cmd.X39 Then it proves the predicate and zero-effect negative."
+    },
+    {
+      "id": "AC-036",
+      "requirement_ids": [
+        "REQ-036"
+      ],
+      "scenario": "Given M01 has exact evidence When the read-only validator runs cmd.M01 Then it proves the predicate and zero-effect negative."
+    },
+    {
+      "id": "AC-037",
+      "requirement_ids": [
+        "REQ-037"
+      ],
+      "scenario": "Given M02 has exact evidence When the read-only validator runs cmd.M02 Then it proves the predicate and zero-effect negative."
+    },
+    {
+      "id": "AC-038",
+      "requirement_ids": [
+        "REQ-038"
+      ],
+      "scenario": "Given M03 has exact evidence When the read-only validator runs cmd.M03 Then it proves the predicate and zero-effect negative."
+    },
+    {
+      "id": "AC-039",
+      "requirement_ids": [
+        "REQ-039"
+      ],
+      "scenario": "Given M04 has exact evidence When the read-only validator runs cmd.M04 Then it proves the predicate and zero-effect negative."
+    },
+    {
+      "id": "AC-040",
+      "requirement_ids": [
+        "REQ-040"
+      ],
+      "scenario": "Given M05 has exact evidence When the read-only validator runs cmd.M05 Then it proves the predicate and zero-effect negative."
+    },
+    {
+      "id": "AC-041",
+      "requirement_ids": [
+        "REQ-041"
+      ],
+      "scenario": "Given M06 has exact evidence When the read-only validator runs cmd.M06 Then it proves the predicate and zero-effect negative."
+    },
+    {
+      "id": "AC-042",
+      "requirement_ids": [
+        "REQ-042"
+      ],
+      "scenario": "Given M07 has exact evidence When the read-only validator runs cmd.M07 Then it proves the predicate and zero-effect negative."
+    },
+    {
+      "id": "AC-043",
+      "requirement_ids": [
+        "REQ-043"
+      ],
+      "scenario": "Given M08 has exact evidence When the read-only validator runs cmd.M08 Then it proves the predicate and zero-effect negative."
+    },
+    {
+      "id": "AC-044",
+      "requirement_ids": [
+        "REQ-044"
+      ],
+      "scenario": "Given M09 has exact evidence When the read-only validator runs cmd.M09 Then it proves the predicate and zero-effect negative."
+    },
+    {
+      "id": "AC-045",
+      "requirement_ids": [
+        "REQ-045"
+      ],
+      "scenario": "Given M10 has exact evidence When the read-only validator runs cmd.M10 Then it proves the predicate and zero-effect negative."
+    },
+    {
+      "id": "AC-046",
+      "requirement_ids": [
+        "REQ-046"
+      ],
+      "scenario": "Given M11 has exact evidence When the read-only validator runs cmd.M11 Then it proves the predicate and zero-effect negative."
+    },
+    {
+      "id": "AC-047",
+      "requirement_ids": [
+        "REQ-047"
+      ],
+      "scenario": "Given M12 has exact evidence When the read-only validator runs cmd.M12 Then it proves the predicate and zero-effect negative."
+    },
+    {
+      "id": "AC-048",
+      "requirement_ids": [
+        "REQ-048"
+      ],
+      "scenario": "Given M13 has exact evidence When the read-only validator runs cmd.M13 Then it proves the predicate and zero-effect negative."
+    },
+    {
+      "id": "AC-049",
+      "requirement_ids": [
+        "REQ-049"
+      ],
+      "scenario": "Given M14 has exact evidence When the read-only validator runs cmd.M14 Then it proves the predicate and zero-effect negative."
+    },
+    {
+      "id": "AC-050",
+      "requirement_ids": [
+        "REQ-050"
+      ],
+      "scenario": "Given M15 has exact evidence When the read-only validator runs cmd.M15 Then it proves the predicate and zero-effect negative."
+    },
+    {
+      "id": "AC-051",
+      "requirement_ids": [
+        "REQ-051"
+      ],
+      "scenario": "Given M16 has exact evidence When the read-only validator runs cmd.M16 Then it proves the predicate and zero-effect negative."
+    },
+    {
+      "id": "AC-052",
+      "requirement_ids": [
+        "REQ-052"
+      ],
+      "scenario": "Given M17 has exact evidence When the read-only validator runs cmd.M17 Then it proves the predicate and zero-effect negative."
+    },
+    {
+      "id": "AC-053",
+      "requirement_ids": [
+        "REQ-053"
+      ],
+      "scenario": "Given M18 has exact evidence When the read-only validator runs cmd.M18 Then it proves the predicate and zero-effect negative."
+    },
+    {
+      "id": "AC-054",
+      "requirement_ids": [
+        "REQ-054"
+      ],
+      "scenario": "Given M19 has exact evidence When the read-only validator runs cmd.M19 Then it proves the predicate and zero-effect negative."
+    }
+  ],
+  "test_plan": [
+    {
+      "id": "TST-001",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-001"
+      ],
+      "approach": "Run cmd.S00 at S00 against payload.v2.6, a positive fixture, and one distinct negative mutation; assert exact error and effect count."
+    },
+    {
+      "id": "TST-002",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-002"
+      ],
+      "approach": "Run cmd.X01 at X01 against payload.v2.6, a positive fixture, and one distinct negative mutation; assert exact error and effect count."
+    },
+    {
+      "id": "TST-003",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-003"
+      ],
+      "approach": "Run cmd.X02 at X02 against semver.v2.6, a positive fixture, and one distinct negative mutation; assert exact error and effect count."
+    },
+    {
+      "id": "TST-004",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-004"
+      ],
+      "approach": "Run cmd.X03 at X03 against fsm.v2.6, a positive fixture, and one distinct negative mutation; assert exact error and effect count."
+    },
+    {
+      "id": "TST-005",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-005"
+      ],
+      "approach": "Run cmd.X04 at X04 against command.v2.6, a positive fixture, and one distinct negative mutation; assert exact error and effect count."
+    },
+    {
+      "id": "TST-006",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-006"
+      ],
+      "approach": "Run cmd.X05 at X05 against payload.v2.6, a positive fixture, and one distinct negative mutation; assert exact error and effect count."
+    },
+    {
+      "id": "TST-007",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-007"
+      ],
+      "approach": "Run cmd.X06 at X06 against signature.v2.6, a positive fixture, and one distinct negative mutation; assert exact error and effect count."
+    },
+    {
+      "id": "TST-008",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-008"
+      ],
+      "approach": "Run cmd.X07 at X07 against signature.v2.6, a positive fixture, and one distinct negative mutation; assert exact error and effect count."
+    },
+    {
+      "id": "TST-009",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-009"
+      ],
+      "approach": "Run cmd.X08 at X08 against payload.v2.6, a positive fixture, and one distinct negative mutation; assert exact error and effect count."
+    },
+    {
+      "id": "TST-010",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-010"
+      ],
+      "approach": "Run cmd.X09 at X09 against replay.v2.6, a positive fixture, and one distinct negative mutation; assert exact error and effect count."
+    },
+    {
+      "id": "TST-011",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-011"
+      ],
+      "approach": "Run cmd.X10 at X10 against target.v2.6, a positive fixture, and one distinct negative mutation; assert exact error and effect count."
+    },
+    {
+      "id": "TST-012",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-012"
+      ],
+      "approach": "Run cmd.X11 at X11 against mutation.v2.6, a positive fixture, and one distinct negative mutation; assert exact error and effect count."
+    },
+    {
+      "id": "TST-013",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-013"
+      ],
+      "approach": "Run cmd.X12 at X12 against mutation.v2.6, a positive fixture, and one distinct negative mutation; assert exact error and effect count."
+    },
+    {
+      "id": "TST-014",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-014"
+      ],
+      "approach": "Run cmd.pipeline.spec at X14 against fsm.v2.6, a positive fixture, and one distinct negative mutation; assert exact error and effect count."
+    },
+    {
+      "id": "TST-015",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-015"
+      ],
+      "approach": "Run cmd.pipeline.code at X15 against fsm.v2.6, a positive fixture, and one distinct negative mutation; assert exact error and effect count."
+    },
+    {
+      "id": "TST-016",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-016"
+      ],
+      "approach": "Run cmd.pipeline.review at X16 against fsm.v2.6, a positive fixture, and one distinct negative mutation; assert exact error and effect count."
+    },
+    {
+      "id": "TST-017",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-017"
+      ],
+      "approach": "Run cmd.pipeline.test at X17 against fsm.v2.6, a positive fixture, and one distinct negative mutation; assert exact error and effect count."
+    },
+    {
+      "id": "TST-018",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-018"
+      ],
+      "approach": "Run cmd.pipeline.validation at X18 against fsm.v2.6, a positive fixture, and one distinct negative mutation; assert exact error and effect count."
+    },
+    {
+      "id": "TST-019",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-019"
+      ],
+      "approach": "Run cmd.admin.normal at X19 against admin.v2.6, a positive fixture, and one distinct negative mutation; assert exact error and effect count."
+    },
+    {
+      "id": "TST-020",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-020"
+      ],
+      "approach": "Run cmd.admin.breakglass at X25 against admin.v2.6, a positive fixture, and one distinct negative mutation; assert exact error and effect count."
+    },
+    {
+      "id": "TST-021",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-021"
+      ],
+      "approach": "Run cmd.AP20 at AP20 against app-bootstrap.v2.6, a positive fixture, and one distinct negative mutation; assert exact error and effect count."
+    },
+    {
+      "id": "TST-022",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-022"
+      ],
+      "approach": "Run cmd.AP21 at AP21 against app-bootstrap.v2.6, a positive fixture, and one distinct negative mutation; assert exact error and effect count."
+    },
+    {
+      "id": "TST-023",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-023"
+      ],
+      "approach": "Run cmd.AP22 at AP22 against app-bootstrap.v2.6, a positive fixture, and one distinct negative mutation; assert exact error and effect count."
+    },
+    {
+      "id": "TST-024",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-024"
+      ],
+      "approach": "Run cmd.AP23 at AP23 against app-bootstrap.v2.6, a positive fixture, and one distinct negative mutation; assert exact error and effect count."
+    },
+    {
+      "id": "TST-025",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-025"
+      ],
+      "approach": "Run cmd.AP24 at AP24 against app-bootstrap.v2.6, a positive fixture, and one distinct negative mutation; assert exact error and effect count."
+    },
+    {
+      "id": "TST-026",
+      "type": "unit",
+      "requirement_ids": [
+        "REQ-026"
+      ],
+      "approach": "Run cmd.X41 at AP25|X41 against fsm.v2.6, a positive fixture, and one distinct negative mutation; assert exact error and effect count."
+    },
+    {
+      "id": "TST-027",
+      "type": "unit",
+      "requirement_ids": [
+        "REQ-027"
+      ],
+      "approach": "Run cmd.X26 at X26 against candidate.v2.6, a positive fixture, and one distinct negative mutation; assert exact error and effect count."
+    },
+    {
+      "id": "TST-028",
+      "type": "unit",
+      "requirement_ids": [
+        "REQ-028"
+      ],
+      "approach": "Run cmd.X27 at X27 against proxy.v2.6, a positive fixture, and one distinct negative mutation; assert exact error and effect count."
+    },
+    {
+      "id": "TST-029",
+      "type": "unit",
+      "requirement_ids": [
+        "REQ-029"
+      ],
+      "approach": "Run cmd.X28 at X28 against vault.v2.6, a positive fixture, and one distinct negative mutation; assert exact error and effect count."
+    },
+    {
+      "id": "TST-030",
+      "type": "unit",
+      "requirement_ids": [
+        "REQ-030"
+      ],
+      "approach": "Run cmd.X29 at X29 against cnpg.v2.6, a positive fixture, and one distinct negative mutation; assert exact error and effect count."
+    },
+    {
+      "id": "TST-031",
+      "type": "unit",
+      "requirement_ids": [
+        "REQ-031"
+      ],
+      "approach": "Run cmd.X30 at X30 against mutation.v2.6, a positive fixture, and one distinct negative mutation; assert exact error and effect count."
+    },
+    {
+      "id": "TST-032",
+      "type": "unit",
+      "requirement_ids": [
+        "REQ-032"
+      ],
+      "approach": "Run cmd.X31 at X31 against fsm.v2.6, a positive fixture, and one distinct negative mutation; assert exact error and effect count."
+    },
+    {
+      "id": "TST-033",
+      "type": "unit",
+      "requirement_ids": [
+        "REQ-033"
+      ],
+      "approach": "Run cmd.X32 at X32 against recovery.v2.6, a positive fixture, and one distinct negative mutation; assert exact error and effect count."
+    },
+    {
+      "id": "TST-034",
+      "type": "unit",
+      "requirement_ids": [
+        "REQ-034"
+      ],
+      "approach": "Run cmd.X36 at X33|X34|X35|X36 against closure.v2.6, a positive fixture, and one distinct negative mutation; assert exact error and effect count."
+    },
+    {
+      "id": "TST-035",
+      "type": "unit",
+      "requirement_ids": [
+        "REQ-035"
+      ],
+      "approach": "Run cmd.X39 at X39 against activation.v2.6, a positive fixture, and one distinct negative mutation; assert exact error and effect count."
+    },
+    {
+      "id": "TST-036",
+      "type": "unit",
+      "requirement_ids": [
+        "REQ-036"
+      ],
+      "approach": "Run cmd.M01 at M01 against mutation.v2.6, a positive fixture, and one distinct negative mutation; assert exact error and effect count."
+    },
+    {
+      "id": "TST-037",
+      "type": "unit",
+      "requirement_ids": [
+        "REQ-037"
+      ],
+      "approach": "Run cmd.M02 at M02 against mutation.v2.6, a positive fixture, and one distinct negative mutation; assert exact error and effect count."
+    },
+    {
+      "id": "TST-038",
+      "type": "unit",
+      "requirement_ids": [
+        "REQ-038"
+      ],
+      "approach": "Run cmd.M03 at M03 against mutation.v2.6, a positive fixture, and one distinct negative mutation; assert exact error and effect count."
+    },
+    {
+      "id": "TST-039",
+      "type": "unit",
+      "requirement_ids": [
+        "REQ-039"
+      ],
+      "approach": "Run cmd.M04 at M04 against mutation.v2.6, a positive fixture, and one distinct negative mutation; assert exact error and effect count."
+    },
+    {
+      "id": "TST-040",
+      "type": "unit",
+      "requirement_ids": [
+        "REQ-040"
+      ],
+      "approach": "Run cmd.M05 at M05 against mutation.v2.6, a positive fixture, and one distinct negative mutation; assert exact error and effect count."
+    },
+    {
+      "id": "TST-041",
+      "type": "unit",
+      "requirement_ids": [
+        "REQ-041"
+      ],
+      "approach": "Run cmd.M06 at M06 against mutation.v2.6, a positive fixture, and one distinct negative mutation; assert exact error and effect count."
+    },
+    {
+      "id": "TST-042",
+      "type": "unit",
+      "requirement_ids": [
+        "REQ-042"
+      ],
+      "approach": "Run cmd.M07 at M07 against mutation.v2.6, a positive fixture, and one distinct negative mutation; assert exact error and effect count."
+    },
+    {
+      "id": "TST-043",
+      "type": "unit",
+      "requirement_ids": [
+        "REQ-043"
+      ],
+      "approach": "Run cmd.M08 at M08 against mutation.v2.6, a positive fixture, and one distinct negative mutation; assert exact error and effect count."
+    },
+    {
+      "id": "TST-044",
+      "type": "unit",
+      "requirement_ids": [
+        "REQ-044"
+      ],
+      "approach": "Run cmd.M09 at M09 against mutation.v2.6, a positive fixture, and one distinct negative mutation; assert exact error and effect count."
+    },
+    {
+      "id": "TST-045",
+      "type": "unit",
+      "requirement_ids": [
+        "REQ-045"
+      ],
+      "approach": "Run cmd.M10 at M10 against mutation.v2.6, a positive fixture, and one distinct negative mutation; assert exact error and effect count."
+    },
+    {
+      "id": "TST-046",
+      "type": "unit",
+      "requirement_ids": [
+        "REQ-046"
+      ],
+      "approach": "Run cmd.M11 at M11 against mutation.v2.6, a positive fixture, and one distinct negative mutation; assert exact error and effect count."
+    },
+    {
+      "id": "TST-047",
+      "type": "unit",
+      "requirement_ids": [
+        "REQ-047"
+      ],
+      "approach": "Run cmd.M12 at M12 against mutation.v2.6, a positive fixture, and one distinct negative mutation; assert exact error and effect count."
+    },
+    {
+      "id": "TST-048",
+      "type": "unit",
+      "requirement_ids": [
+        "REQ-048"
+      ],
+      "approach": "Run cmd.M13 at M13 against mutation.v2.6, a positive fixture, and one distinct negative mutation; assert exact error and effect count."
+    },
+    {
+      "id": "TST-049",
+      "type": "unit",
+      "requirement_ids": [
+        "REQ-049"
+      ],
+      "approach": "Run cmd.M14 at M14 against mutation.v2.6, a positive fixture, and one distinct negative mutation; assert exact error and effect count."
+    },
+    {
+      "id": "TST-050",
+      "type": "unit",
+      "requirement_ids": [
+        "REQ-050"
+      ],
+      "approach": "Run cmd.M15 at M15 against mutation.v2.6, a positive fixture, and one distinct negative mutation; assert exact error and effect count."
+    },
+    {
+      "id": "TST-051",
+      "type": "unit",
+      "requirement_ids": [
+        "REQ-051"
+      ],
+      "approach": "Run cmd.M16 at M16 against mutation.v2.6, a positive fixture, and one distinct negative mutation; assert exact error and effect count."
+    },
+    {
+      "id": "TST-052",
+      "type": "unit",
+      "requirement_ids": [
+        "REQ-052"
+      ],
+      "approach": "Run cmd.M17 at M17 against mutation.v2.6, a positive fixture, and one distinct negative mutation; assert exact error and effect count."
+    },
+    {
+      "id": "TST-053",
+      "type": "unit",
+      "requirement_ids": [
+        "REQ-053"
+      ],
+      "approach": "Run cmd.M18 at M18 against mutation.v2.6, a positive fixture, and one distinct negative mutation; assert exact error and effect count."
+    },
+    {
+      "id": "TST-054",
+      "type": "unit",
+      "requirement_ids": [
+        "REQ-054"
+      ],
+      "approach": "Run cmd.M19 at M19 against mutation.v2.6, a positive fixture, and one distinct negative mutation; assert exact error and effect count."
+    }
+  ],
+  "traceability": [
+    {
+      "requirement_id": "REQ-001",
+      "acceptance_ids": [
+        "AC-001"
+      ],
+      "test_ids": [
+        "TST-001"
+      ],
+      "review_checks": [
+        "RC-v2.6-001"
+      ],
+      "validation_checks": [
+        "VC-v2.6-001"
+      ]
+    },
+    {
+      "requirement_id": "REQ-002",
+      "acceptance_ids": [
+        "AC-002"
+      ],
+      "test_ids": [
+        "TST-002"
+      ],
+      "review_checks": [
+        "RC-v2.6-002"
+      ],
+      "validation_checks": [
+        "VC-v2.6-002"
+      ]
+    },
+    {
+      "requirement_id": "REQ-003",
+      "acceptance_ids": [
+        "AC-003"
+      ],
+      "test_ids": [
+        "TST-003"
+      ],
+      "review_checks": [
+        "RC-v2.6-003"
+      ],
+      "validation_checks": [
+        "VC-v2.6-003"
+      ]
+    },
+    {
+      "requirement_id": "REQ-004",
+      "acceptance_ids": [
+        "AC-004"
+      ],
+      "test_ids": [
+        "TST-004"
+      ],
+      "review_checks": [
+        "RC-v2.6-004"
+      ],
+      "validation_checks": [
+        "VC-v2.6-004"
+      ]
+    },
+    {
+      "requirement_id": "REQ-005",
+      "acceptance_ids": [
+        "AC-005"
+      ],
+      "test_ids": [
+        "TST-005"
+      ],
+      "review_checks": [
+        "RC-v2.6-005"
+      ],
+      "validation_checks": [
+        "VC-v2.6-005"
+      ]
+    },
+    {
+      "requirement_id": "REQ-006",
+      "acceptance_ids": [
+        "AC-006"
+      ],
+      "test_ids": [
+        "TST-006"
+      ],
+      "review_checks": [
+        "RC-v2.6-006"
+      ],
+      "validation_checks": [
+        "VC-v2.6-006"
+      ]
+    },
+    {
+      "requirement_id": "REQ-007",
+      "acceptance_ids": [
+        "AC-007"
+      ],
+      "test_ids": [
+        "TST-007"
+      ],
+      "review_checks": [
+        "RC-v2.6-007"
+      ],
+      "validation_checks": [
+        "VC-v2.6-007"
+      ]
+    },
+    {
+      "requirement_id": "REQ-008",
+      "acceptance_ids": [
+        "AC-008"
+      ],
+      "test_ids": [
+        "TST-008"
+      ],
+      "review_checks": [
+        "RC-v2.6-008"
+      ],
+      "validation_checks": [
+        "VC-v2.6-008"
+      ]
+    },
+    {
+      "requirement_id": "REQ-009",
+      "acceptance_ids": [
+        "AC-009"
+      ],
+      "test_ids": [
+        "TST-009"
+      ],
+      "review_checks": [
+        "RC-v2.6-009"
+      ],
+      "validation_checks": [
+        "VC-v2.6-009"
+      ]
+    },
+    {
+      "requirement_id": "REQ-010",
+      "acceptance_ids": [
+        "AC-010"
+      ],
+      "test_ids": [
+        "TST-010"
+      ],
+      "review_checks": [
+        "RC-v2.6-010"
+      ],
+      "validation_checks": [
+        "VC-v2.6-010"
+      ]
+    },
+    {
+      "requirement_id": "REQ-011",
+      "acceptance_ids": [
+        "AC-011"
+      ],
+      "test_ids": [
+        "TST-011"
+      ],
+      "review_checks": [
+        "RC-v2.6-011"
+      ],
+      "validation_checks": [
+        "VC-v2.6-011"
+      ]
+    },
+    {
+      "requirement_id": "REQ-012",
+      "acceptance_ids": [
+        "AC-012"
+      ],
+      "test_ids": [
+        "TST-012"
+      ],
+      "review_checks": [
+        "RC-v2.6-012"
+      ],
+      "validation_checks": [
+        "VC-v2.6-012"
+      ]
+    },
+    {
+      "requirement_id": "REQ-013",
+      "acceptance_ids": [
+        "AC-013"
+      ],
+      "test_ids": [
+        "TST-013"
+      ],
+      "review_checks": [
+        "RC-v2.6-013"
+      ],
+      "validation_checks": [
+        "VC-v2.6-013"
+      ]
+    },
+    {
+      "requirement_id": "REQ-014",
+      "acceptance_ids": [
+        "AC-014"
+      ],
+      "test_ids": [
+        "TST-014"
+      ],
+      "review_checks": [
+        "RC-v2.6-014"
+      ],
+      "validation_checks": [
+        "VC-v2.6-014"
+      ]
+    },
+    {
+      "requirement_id": "REQ-015",
+      "acceptance_ids": [
+        "AC-015"
+      ],
+      "test_ids": [
+        "TST-015"
+      ],
+      "review_checks": [
+        "RC-v2.6-015"
+      ],
+      "validation_checks": [
+        "VC-v2.6-015"
+      ]
+    },
+    {
+      "requirement_id": "REQ-016",
+      "acceptance_ids": [
+        "AC-016"
+      ],
+      "test_ids": [
+        "TST-016"
+      ],
+      "review_checks": [
+        "RC-v2.6-016"
+      ],
+      "validation_checks": [
+        "VC-v2.6-016"
+      ]
+    },
+    {
+      "requirement_id": "REQ-017",
+      "acceptance_ids": [
+        "AC-017"
+      ],
+      "test_ids": [
+        "TST-017"
+      ],
+      "review_checks": [
+        "RC-v2.6-017"
+      ],
+      "validation_checks": [
+        "VC-v2.6-017"
+      ]
+    },
+    {
+      "requirement_id": "REQ-018",
+      "acceptance_ids": [
+        "AC-018"
+      ],
+      "test_ids": [
+        "TST-018"
+      ],
+      "review_checks": [
+        "RC-v2.6-018"
+      ],
+      "validation_checks": [
+        "VC-v2.6-018"
+      ]
+    },
+    {
+      "requirement_id": "REQ-019",
+      "acceptance_ids": [
+        "AC-019"
+      ],
+      "test_ids": [
+        "TST-019"
+      ],
+      "review_checks": [
+        "RC-v2.6-019"
+      ],
+      "validation_checks": [
+        "VC-v2.6-019"
+      ]
+    },
+    {
+      "requirement_id": "REQ-020",
+      "acceptance_ids": [
+        "AC-020"
+      ],
+      "test_ids": [
+        "TST-020"
+      ],
+      "review_checks": [
+        "RC-v2.6-020"
+      ],
+      "validation_checks": [
+        "VC-v2.6-020"
+      ]
+    },
+    {
+      "requirement_id": "REQ-021",
+      "acceptance_ids": [
+        "AC-021"
+      ],
+      "test_ids": [
+        "TST-021"
+      ],
+      "review_checks": [
+        "RC-v2.6-021"
+      ],
+      "validation_checks": [
+        "VC-v2.6-021"
+      ]
+    },
+    {
+      "requirement_id": "REQ-022",
+      "acceptance_ids": [
+        "AC-022"
+      ],
+      "test_ids": [
+        "TST-022"
+      ],
+      "review_checks": [
+        "RC-v2.6-022"
+      ],
+      "validation_checks": [
+        "VC-v2.6-022"
+      ]
+    },
+    {
+      "requirement_id": "REQ-023",
+      "acceptance_ids": [
+        "AC-023"
+      ],
+      "test_ids": [
+        "TST-023"
+      ],
+      "review_checks": [
+        "RC-v2.6-023"
+      ],
+      "validation_checks": [
+        "VC-v2.6-023"
+      ]
+    },
+    {
+      "requirement_id": "REQ-024",
+      "acceptance_ids": [
+        "AC-024"
+      ],
+      "test_ids": [
+        "TST-024"
+      ],
+      "review_checks": [
+        "RC-v2.6-024"
+      ],
+      "validation_checks": [
+        "VC-v2.6-024"
+      ]
+    },
+    {
+      "requirement_id": "REQ-025",
+      "acceptance_ids": [
+        "AC-025"
+      ],
+      "test_ids": [
+        "TST-025"
+      ],
+      "review_checks": [
+        "RC-v2.6-025"
+      ],
+      "validation_checks": [
+        "VC-v2.6-025"
+      ]
+    },
+    {
+      "requirement_id": "REQ-026",
+      "acceptance_ids": [
+        "AC-026"
+      ],
+      "test_ids": [
+        "TST-026"
+      ],
+      "review_checks": [
+        "RC-v2.6-026"
+      ],
+      "validation_checks": [
+        "VC-v2.6-026"
+      ]
+    },
+    {
+      "requirement_id": "REQ-027",
+      "acceptance_ids": [
+        "AC-027"
+      ],
+      "test_ids": [
+        "TST-027"
+      ],
+      "review_checks": [
+        "RC-v2.6-027"
+      ],
+      "validation_checks": [
+        "VC-v2.6-027"
+      ]
+    },
+    {
+      "requirement_id": "REQ-028",
+      "acceptance_ids": [
+        "AC-028"
+      ],
+      "test_ids": [
+        "TST-028"
+      ],
+      "review_checks": [
+        "RC-v2.6-028"
+      ],
+      "validation_checks": [
+        "VC-v2.6-028"
+      ]
+    },
+    {
+      "requirement_id": "REQ-029",
+      "acceptance_ids": [
+        "AC-029"
+      ],
+      "test_ids": [
+        "TST-029"
+      ],
+      "review_checks": [
+        "RC-v2.6-029"
+      ],
+      "validation_checks": [
+        "VC-v2.6-029"
+      ]
+    },
+    {
+      "requirement_id": "REQ-030",
+      "acceptance_ids": [
+        "AC-030"
+      ],
+      "test_ids": [
+        "TST-030"
+      ],
+      "review_checks": [
+        "RC-v2.6-030"
+      ],
+      "validation_checks": [
+        "VC-v2.6-030"
+      ]
+    },
+    {
+      "requirement_id": "REQ-031",
+      "acceptance_ids": [
+        "AC-031"
+      ],
+      "test_ids": [
+        "TST-031"
+      ],
+      "review_checks": [
+        "RC-v2.6-031"
+      ],
+      "validation_checks": [
+        "VC-v2.6-031"
+      ]
+    },
+    {
+      "requirement_id": "REQ-032",
+      "acceptance_ids": [
+        "AC-032"
+      ],
+      "test_ids": [
+        "TST-032"
+      ],
+      "review_checks": [
+        "RC-v2.6-032"
+      ],
+      "validation_checks": [
+        "VC-v2.6-032"
+      ]
+    },
+    {
+      "requirement_id": "REQ-033",
+      "acceptance_ids": [
+        "AC-033"
+      ],
+      "test_ids": [
+        "TST-033"
+      ],
+      "review_checks": [
+        "RC-v2.6-033"
+      ],
+      "validation_checks": [
+        "VC-v2.6-033"
+      ]
+    },
+    {
+      "requirement_id": "REQ-034",
+      "acceptance_ids": [
+        "AC-034"
+      ],
+      "test_ids": [
+        "TST-034"
+      ],
+      "review_checks": [
+        "RC-v2.6-034"
+      ],
+      "validation_checks": [
+        "VC-v2.6-034"
+      ]
+    },
+    {
+      "requirement_id": "REQ-035",
+      "acceptance_ids": [
+        "AC-035"
+      ],
+      "test_ids": [
+        "TST-035"
+      ],
+      "review_checks": [
+        "RC-v2.6-035"
+      ],
+      "validation_checks": [
+        "VC-v2.6-035"
+      ]
+    },
+    {
+      "requirement_id": "REQ-036",
+      "acceptance_ids": [
+        "AC-036"
+      ],
+      "test_ids": [
+        "TST-036"
+      ],
+      "review_checks": [
+        "RC-v2.6-036"
+      ],
+      "validation_checks": [
+        "VC-v2.6-036"
+      ]
+    },
+    {
+      "requirement_id": "REQ-037",
+      "acceptance_ids": [
+        "AC-037"
+      ],
+      "test_ids": [
+        "TST-037"
+      ],
+      "review_checks": [
+        "RC-v2.6-037"
+      ],
+      "validation_checks": [
+        "VC-v2.6-037"
+      ]
+    },
+    {
+      "requirement_id": "REQ-038",
+      "acceptance_ids": [
+        "AC-038"
+      ],
+      "test_ids": [
+        "TST-038"
+      ],
+      "review_checks": [
+        "RC-v2.6-038"
+      ],
+      "validation_checks": [
+        "VC-v2.6-038"
+      ]
+    },
+    {
+      "requirement_id": "REQ-039",
+      "acceptance_ids": [
+        "AC-039"
+      ],
+      "test_ids": [
+        "TST-039"
+      ],
+      "review_checks": [
+        "RC-v2.6-039"
+      ],
+      "validation_checks": [
+        "VC-v2.6-039"
+      ]
+    },
+    {
+      "requirement_id": "REQ-040",
+      "acceptance_ids": [
+        "AC-040"
+      ],
+      "test_ids": [
+        "TST-040"
+      ],
+      "review_checks": [
+        "RC-v2.6-040"
+      ],
+      "validation_checks": [
+        "VC-v2.6-040"
+      ]
+    },
+    {
+      "requirement_id": "REQ-041",
+      "acceptance_ids": [
+        "AC-041"
+      ],
+      "test_ids": [
+        "TST-041"
+      ],
+      "review_checks": [
+        "RC-v2.6-041"
+      ],
+      "validation_checks": [
+        "VC-v2.6-041"
+      ]
+    },
+    {
+      "requirement_id": "REQ-042",
+      "acceptance_ids": [
+        "AC-042"
+      ],
+      "test_ids": [
+        "TST-042"
+      ],
+      "review_checks": [
+        "RC-v2.6-042"
+      ],
+      "validation_checks": [
+        "VC-v2.6-042"
+      ]
+    },
+    {
+      "requirement_id": "REQ-043",
+      "acceptance_ids": [
+        "AC-043"
+      ],
+      "test_ids": [
+        "TST-043"
+      ],
+      "review_checks": [
+        "RC-v2.6-043"
+      ],
+      "validation_checks": [
+        "VC-v2.6-043"
+      ]
+    },
+    {
+      "requirement_id": "REQ-044",
+      "acceptance_ids": [
+        "AC-044"
+      ],
+      "test_ids": [
+        "TST-044"
+      ],
+      "review_checks": [
+        "RC-v2.6-044"
+      ],
+      "validation_checks": [
+        "VC-v2.6-044"
+      ]
+    },
+    {
+      "requirement_id": "REQ-045",
+      "acceptance_ids": [
+        "AC-045"
+      ],
+      "test_ids": [
+        "TST-045"
+      ],
+      "review_checks": [
+        "RC-v2.6-045"
+      ],
+      "validation_checks": [
+        "VC-v2.6-045"
+      ]
+    },
+    {
+      "requirement_id": "REQ-046",
+      "acceptance_ids": [
+        "AC-046"
+      ],
+      "test_ids": [
+        "TST-046"
+      ],
+      "review_checks": [
+        "RC-v2.6-046"
+      ],
+      "validation_checks": [
+        "VC-v2.6-046"
+      ]
+    },
+    {
+      "requirement_id": "REQ-047",
+      "acceptance_ids": [
+        "AC-047"
+      ],
+      "test_ids": [
+        "TST-047"
+      ],
+      "review_checks": [
+        "RC-v2.6-047"
+      ],
+      "validation_checks": [
+        "VC-v2.6-047"
+      ]
+    },
+    {
+      "requirement_id": "REQ-048",
+      "acceptance_ids": [
+        "AC-048"
+      ],
+      "test_ids": [
+        "TST-048"
+      ],
+      "review_checks": [
+        "RC-v2.6-048"
+      ],
+      "validation_checks": [
+        "VC-v2.6-048"
+      ]
+    },
+    {
+      "requirement_id": "REQ-049",
+      "acceptance_ids": [
+        "AC-049"
+      ],
+      "test_ids": [
+        "TST-049"
+      ],
+      "review_checks": [
+        "RC-v2.6-049"
+      ],
+      "validation_checks": [
+        "VC-v2.6-049"
+      ]
+    },
+    {
+      "requirement_id": "REQ-050",
+      "acceptance_ids": [
+        "AC-050"
+      ],
+      "test_ids": [
+        "TST-050"
+      ],
+      "review_checks": [
+        "RC-v2.6-050"
+      ],
+      "validation_checks": [
+        "VC-v2.6-050"
+      ]
+    },
+    {
+      "requirement_id": "REQ-051",
+      "acceptance_ids": [
+        "AC-051"
+      ],
+      "test_ids": [
+        "TST-051"
+      ],
+      "review_checks": [
+        "RC-v2.6-051"
+      ],
+      "validation_checks": [
+        "VC-v2.6-051"
+      ]
+    },
+    {
+      "requirement_id": "REQ-052",
+      "acceptance_ids": [
+        "AC-052"
+      ],
+      "test_ids": [
+        "TST-052"
+      ],
+      "review_checks": [
+        "RC-v2.6-052"
+      ],
+      "validation_checks": [
+        "VC-v2.6-052"
+      ]
+    },
+    {
+      "requirement_id": "REQ-053",
+      "acceptance_ids": [
+        "AC-053"
+      ],
+      "test_ids": [
+        "TST-053"
+      ],
+      "review_checks": [
+        "RC-v2.6-053"
+      ],
+      "validation_checks": [
+        "VC-v2.6-053"
+      ]
+    },
+    {
+      "requirement_id": "REQ-054",
+      "acceptance_ids": [
+        "AC-054"
+      ],
+      "test_ids": [
+        "TST-054"
+      ],
+      "review_checks": [
+        "RC-v2.6-054"
+      ],
+      "validation_checks": [
+        "VC-v2.6-054"
+      ]
+    }
+  ],
+  "quality_gates": {
+    "spec_review_required": true,
+    "testability_required": true,
+    "traceability_required": true
+  },
+  "council": {
+    "perspectives": [
+      {
+        "role": "planner",
+        "summary": "Clean DAG and explicit pipeline stages are bound."
+      },
+      {
+        "role": "security",
+        "summary": "Live authority is rejected without complete identity evidence."
+      },
+      {
+        "role": "tech_lead_devops",
+        "summary": "AP bootstrap objects are exact and workload ownership is outside app-config."
+      },
+      {
+        "role": "tech_lead_qa",
+        "summary": "Negative and replay harnesses prove exact failures and zero effects."
+      }
+    ],
+    "consensus_summary": "Pre-council corpus is reviewable; live activation remains blocked.",
+    "open_questions": [
+      "External council must sign fixed manifest and report hashes."
+    ]
+  }
+}

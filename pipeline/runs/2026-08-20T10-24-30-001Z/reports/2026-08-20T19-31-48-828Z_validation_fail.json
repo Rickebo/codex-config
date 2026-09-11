@@ -1,0 +1,15 @@
+{
+  "stage": "validation",
+  "status": "fail",
+  "summary": "PR CI passed workflow, Python, container, and syntax checks but systemd user verification failed because the runner has no user manager.",
+  "changed_files": [".github/workflows/ci.yml"],
+  "validation": [
+    "PR run 32408907118: workflow syntax, Python validation, and container build passed",
+    "PR run 32408907118: systemd-analyze --user verify failed with no user manager"
+  ],
+  "blockers": ["Codicarium runner lacks a user systemd manager; user-unit syntax still needs a non-manager verification fallback."],
+  "next_action": "Use systemd user verification when available and system-mode unit verification only for the known no-user-manager condition, then rerun CI.",
+  "route_to": "code",
+  "risk_level": "medium",
+  "independent_lanes": ["systemd unit validation"]
+}

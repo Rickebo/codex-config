@@ -1,0 +1,70 @@
+{
+  "meta": {
+    "id": "SPEC-128-real-container-smoke",
+    "title": "Make container smoke tests verify real artifacts and the current schema",
+    "author": "Codex manager",
+    "created_at": "2026-08-21T15:00:00+02:00",
+    "version": "1.0"
+  },
+  "feature": {
+    "problem_statement": "The Docker build can silently emit placeholder server/UI artifacts, and container smoke only applies the first migration and checks generic HTTP/HTML responses. A stale or malformed release image can therefore pass CI and reach deployment.",
+    "goals": [
+      "Fail image builds when real server or UI artifacts are absent or still contain the historical placeholder.",
+      "Run smoke migrations with the same complete ordered/checksum mechanism used by the Helm migration job.",
+      "Verify a recognizable versioned UI marker and a representative current API that exercises schema introduced after migration 0001.",
+      "Run release smoke against the resolved immutable image digest and declared architecture, with cleanup on success and failure.",
+      "Add negative fixtures for missing/placeholder artifacts, stale schemas, and invalid or mismatched image references."
+    ],
+    "non_goals": [
+      "Redesigning application routes, migration semantics, or the Helm migration job contract",
+      "Changing production deployment policy or adding a new smoke-test service",
+      "Replacing the existing release workflow with an unrelated CI system"
+    ],
+    "scope_in": [
+      "Dockerfile server/UI build strictness and placeholder removal",
+      "Makefile/container smoke migration and current-route assertions",
+      "Release workflow wiring from resolved image digest to final-image smoke",
+      "Migration parity/latest-version and immutable-reference regression tests",
+      "Documentation of the smoke contract where existing operator/release docs require updates"
+    ],
+    "scope_out": [
+      "New application functionality",
+      "Database schema changes solely to support the smoke test",
+      "Live production rollout"
+    ]
+  },
+  "requirements": [
+    {"id":"REQ-128-001","priority":"MUST","statement":"Production image builds must fail when the real Go server target or built web UI is missing, empty, or contains the historical placeholder marker; no release-path fallback artifacts may be generated.","rationale":"A successful build must prove it contains the application, not a CI-only placeholder."},
+    {"id":"REQ-128-002","priority":"MUST","statement":"Container smoke must apply every current migration in deterministic order with the same file/checksum/latest-version contract as the Helm migration job, and root/chart migration assets must remain identical.","rationale":"Connectivity and migration 0001 alone do not prove the deployed schema is current."},
+    {"id":"REQ-128-003","priority":"MUST","statement":"Smoke must verify a recognizable real, versioned UI marker and exercise a representative current API plus a table or column introduced after migration 0001.","rationale":"Generic HTML and health responses can pass while the shipped UI/API or schema is stale."},
+    {"id":"REQ-128-004","priority":"MUST","statement":"Release validation must run the final published image reference at an immutable sha256 digest and declared release architecture, and reject tag-only, malformed, or digest-mismatched references.","rationale":"A mutable local tag is not evidence about the artifact that will be published or deployed."},
+    {"id":"REQ-128-005","priority":"MUST","statement":"Smoke fixtures and cleanup tests must prove missing/placeholder artifacts, omitted later migrations/stale schema, and failed smoke runs are rejected without leaving owned containers, networks, or temporary artifacts.","rationale":"Negative coverage and cleanup prevent regressions and shared-runner leakage."},
+    {"id":"REQ-128-006","priority":"SHOULD","statement":"OpenAPI or equivalent route/schema validation must resolve references and detect missing current registered routes where the existing checker claims API validity.","rationale":"A stale or dangling API contract can otherwise survive the new runtime smoke gate."}
+  ],
+  "acceptance_criteria": [
+    {"id":"AC-128-001","requirement_ids":["REQ-128-001"],"scenario":"Given missing server/UI build inputs or historical placeholder content, when the production Docker build runs, then it fails with a specific artifact error and emits no fallback binary or placeholder index."},
+    {"id":"AC-128-002","requirement_ids":["REQ-128-002"],"scenario":"Given the current root and chart migration sets, when smoke starts its database, then the canonical ordered/checksum runner applies every migration through the repository's declared latest version and rejects an omitted or stale asset."},
+    {"id":"AC-128-003","requirement_ids":["REQ-128-003"],"scenario":"Given the final image and current schema, when smoke fetches the UI and representative API, then it observes the real version marker and successfully exercises a post-0001 table/column rather than only readiness."},
+    {"id":"AC-128-004","requirement_ids":["REQ-128-004"],"scenario":"Given a release image repository@sha256:digest and declared architecture, when release smoke runs, then the running image's resolved digest/platform match and tag-only or mismatched references fail before startup."},
+    {"id":"AC-128-005","requirement_ids":["REQ-128-005"],"scenario":"Given positive and intentionally failing smoke runs, when the test exits by success, assertion failure, or cancellation, then all owned containers, networks, and temporary files are removed and the failure is preserved."},
+    {"id":"AC-128-006","requirement_ids":["REQ-128-006"],"scenario":"Given an API spec with an unresolved reference or missing current route, when contract validation runs, then it fails with an actionable mismatch rather than accepting syntax-only validity."}
+  ],
+  "test_plan": [
+    {"id":"TST-128-001","type":"unit","requirement_ids":["REQ-128-001"],"approach":"Build isolated Docker fixtures with missing server target, missing/empty UI dist, and historical placeholder marker; assert non-zero build and no fallback outputs."},
+    {"id":"TST-128-002","type":"integration","requirement_ids":["REQ-128-002","REQ-128-003"],"approach":"Run disposable Postgres and final image with canonical migration assets; assert complete schema_migrations/checksums, a later-migration table/column, real UI marker, and representative authenticated/current API read/write."},
+    {"id":"TST-128-003","type":"workflow","requirement_ids":["REQ-128-004"],"approach":"Exercise release workflow resolution fixtures and assert final-image smoke receives repository@sha256:digest plus declared architecture; reject mutable or mismatched references."},
+    {"id":"TST-128-004","type":"regression","requirement_ids":["REQ-128-005"],"approach":"Run positive and intentionally failing smoke paths under traps and assert owned Docker resources and temporary files are absent afterward."},
+    {"id":"TST-128-005","type":"contract","requirement_ids":["REQ-128-006"],"approach":"Add OpenAPI reference-resolution and registered-route parity fixtures for unresolved components and missing current handlers."},
+    {"id":"TST-128-006","type":"integration","requirement_ids":["REQ-128-001","REQ-128-002","REQ-128-003","REQ-128-004","REQ-128-005"],"approach":"Run focused tests, race/vet where applicable, make ci, hosted validate, and exact release-image smoke evidence without recording credentials."}
+  ],
+  "traceability": [
+    {"requirement_id":"REQ-128-001","acceptance_ids":["AC-128-001"],"test_ids":["TST-128-001"],"review_checks":["No Docker fallback binary or placeholder UI remains"],"validation_checks":["Release image build fails on missing/placeholder fixtures"]},
+    {"requirement_id":"REQ-128-002","acceptance_ids":["AC-128-002"],"test_ids":["TST-128-002"],"review_checks":["Smoke and Helm share complete migration/checksum contract"],"validation_checks":["All current migrations and root/chart parity verified"]},
+    {"requirement_id":"REQ-128-003","acceptance_ids":["AC-128-003"],"test_ids":["TST-128-002"],"review_checks":["UI marker and API touch post-0001 schema"],"validation_checks":["Protected current API/UI smoke succeeds"]},
+    {"requirement_id":"REQ-128-004","acceptance_ids":["AC-128-004"],"test_ids":["TST-128-003","TST-128-006"],"review_checks":["No mutable tag-only release smoke path"],"validation_checks":["Final image digest/platform match recorded"]},
+    {"requirement_id":"REQ-128-005","acceptance_ids":["AC-128-005"],"test_ids":["TST-128-004"],"review_checks":["Failure cleanup preserves assertion status"],"validation_checks":["No owned resource residue after positive/negative runs"]},
+    {"requirement_id":"REQ-128-006","acceptance_ids":["AC-128-006"],"test_ids":["TST-128-005"],"review_checks":["Contract check resolves refs and route parity"],"validation_checks":["OpenAPI negative fixtures fail"]}
+  ],
+  "quality_gates": {"spec_review_required":true,"testability_required":true,"traceability_required":true},
+  "council": {"perspectives":[{"role":"planner_lite","summary":"Separate strict artifact, canonical migration, final-image smoke, and cleanup lanes; preserve app/migration semantics."},{"role":"reviewer","summary":"Placeholder fallbacks, readiness-only checks, mutable tags, and stale OpenAPI/migration expectations are high-risk release gaps."},{"role":"tech_lead_qa","summary":"Require positive/negative fixtures, current UI/API/schema assertions, exact digest/platform, and cleanup evidence."}],"consensus_summary":"Make container smoke a release-fidelity gate: fail closed on placeholders and stale schema, exercise current behavior, use immutable final artifacts, and prove cleanup.","open_questions":["What exact current UI version marker should be treated as stable contract?","Which current API route is safest for an authenticated post-0001 schema assertion?","How does the release workflow expose the resolved app digest and architecture to the smoke step without rebuilding or using a mutable tag?"]}
+}

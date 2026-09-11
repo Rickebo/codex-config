@@ -1,0 +1,15 @@
+{
+  "stage":"spec",
+  "status":"pass",
+  "summary":"Issue #124 has a full supply-chain spec separating repository-verifiable controls from external Nexus/signing/admission prerequisites.",
+  "changed_files":[],
+  "validation":["Workflow/image/dependency evidence mapped", "Public and private action SHA research completed", "External provenance feasibility explicitly gated"],
+  "blockers":["Signed provenance/referrer storage and deployment enforcement require platform capability evidence before claiming complete release acceptance."],
+  "next_action":"Approve the full spec and delegate repository-side implementation while platform capability research proceeds.",
+  "route_to":"code",
+  "risk_level":"high",
+  "spec_file":"/home/rickebo/.codex/pipeline/runs/2026-08-21T04-39-46-847Z/issue-124-spec.json",
+  "spec_check_file":"/home/rickebo/.codex/pipeline/runs/2026-08-21T04-39-46-847Z/issue-124-spec-check.json",
+  "council_file":"/home/rickebo/.codex/pipeline/runs/2026-08-21T04-39-46-847Z/issue-124-spec.json",
+  "independent_lanes":["Immutable action/image pinning and checker", "Dependabot/vulnerability/SBOM release controls", "Platform capability evidence and external prerequisites"]
+}

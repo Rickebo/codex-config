@@ -1,0 +1,68 @@
+[
+  {
+    "id": "AP20",
+    "repository": "codicarium/app-config",
+    "path": "argocd/codicarium-local/apps/codicarium-config-apps.yaml",
+    "argo_kind": "Application",
+    "application_name": "codicarium-config-apps",
+    "artifact_sha256": "50a29de02ce27c1ad4b1cba67e0f8e165249140e0b70841f0285d1d09ceb359c",
+    "artifact_byte_length": 583,
+    "artifact_bytes_base64": "YXBpVmVyc2lvbjogYXJnb3Byb2ouaW8vdjFhbHBoYTEKa2luZDogQXBwbGljYXRpb24KbWV0YWRhdGE6CiAgbmFtZTogY29kaWNhcml1bS1jb25maWctYXBwcwogIG5hbWVzcGFjZTogYXJnb2NkCiAgYW5ub3RhdGlvbnM6CiAgICBhcmdvY2QuYXJnb3Byb2ouaW8vc3luYy13YXZlOiAiMjAiCnNwZWM6CiAgcHJvamVjdDogZGVmYXVsdAogIHNvdXJjZToKICAgIHJlcG9VUkw6IGh0dHBzOi8vZ2l0aHViLmNvbS9jb2RpY2FyaXVtL2FwcC1jb25maWcuZ2l0CiAgICB0YXJnZXRSZXZpc2lvbjogNWNlMTA1OTQwYmZiNjM5NDNlNzMzMWQwNDE0ZGNiOGZkMTc3OWU0NgogICAgcGF0aDogYXJnb2NkL2NvZGljYXJpdW0tbG9jYWwvbGVnYWN5LXJldGFpbmVkLWFwcGxpY2F0aW9ucy9jb2RpY2FyaXVtLWNvbmZpZy1hcHBzCiAgZGVzdGluYXRpb246CiAgICBuYW1lOiBjb2RpY2FyaXVtLWRldgogICAgbmFtZXNwYWNlOiBhcmdvY2QKICBzeW5jUG9saWN5OgogICAgYXV0b21hdGVkOgogICAgICBwcnVuZTogZmFsc2UKICAgICAgc2VsZkhlYWw6IHRydWUKICAgIHN5bmNPcHRpb25zOgogICAgICAtIENyZWF0ZU5hbWVzcGFjZT10cnVlCg==",
+    "bootstrap_only": true
+  },
+  {
+    "id": "AP21",
+    "repository": "codicarium/app-config",
+    "path": "argocd/codicarium-local/apps/lc-config-apps.yaml",
+    "argo_kind": "Application",
+    "application_name": "lc-config-apps",
+    "artifact_sha256": "067dcd35f9bf0360fe4e6ced458479f596206c12a41f80dd83c861578fe1323d",
+    "artifact_byte_length": 674,
+    "artifact_bytes_base64": "YXBpVmVyc2lvbjogYXJnb3Byb2ouaW8vdjFhbHBoYTEKa2luZDogQXBwbGljYXRpb24KbWV0YWRhdGE6CiAgbmFtZTogbGMtY29uZmlnLWFwcHMKICBuYW1lc3BhY2U6IGFyZ29jZAogIGxhYmVsczoKICAgIGFwcC5rdWJlcm5ldGVzLmlvL3BhcnQtb2Y6IGxpZ2h0bmluZy1jcmFmdAogICAgY29kaWNhcml1bS5jb20vcHJvamVjdDogbGMKICBhbm5vdGF0aW9uczoKICAgIGFyZ29jZC5hcmdvcHJvai5pby9zeW5jLXdhdmU6ICIyMCIKc3BlYzoKICBwcm9qZWN0OiBsYy1jb25maWctY29udHJvbAogIHNvdXJjZToKICAgIHJlcG9VUkw6IGh0dHBzOi8vZ2l0aHViLmNvbS9jb2RpY2FyaXVtL2xjLWNvbmZpZy5naXQKICAgIHRhcmdldFJldmlzaW9uOiAyNzZmMThkNGRlNjQ2NTNmMDQ3OGE3ZTY4YTFmNWY5ZTZjODYxNTNkCiAgICBwYXRoOiBhcHBzCiAgICBkaXJlY3Rvcnk6CiAgICAgIHJlY3Vyc2U6IHRydWUKICAgICAgZXhjbHVkZTogJyoqL2FwcHNldC1jb25maWcueWFtbCcKICBkZXN0aW5hdGlvbjoKICAgIG5hbWU6IGNvZGljYXJpdW0tZGV2CiAgICBuYW1lc3BhY2U6IGFyZ29jZAogIHN5bmNQb2xpY3k6CiAgICBhdXRvbWF0ZWQ6CiAgICAgIHBydW5lOiB0cnVlCiAgICAgIHNlbGZIZWFsOiB0cnVlCiAgICBzeW5jT3B0aW9uczoKICAgICAgLSBDcmVhdGVOYW1lc3BhY2U9dHJ1ZQo=",
+    "bootstrap_only": true
+  },
+  {
+    "id": "AP22",
+    "repository": "codicarium/app-config",
+    "path": "argocd/codicarium-local/apps/self-service-dev-apps-app.yaml",
+    "argo_kind": "Application",
+    "application_name": "self-service-dev-apps-app",
+    "artifact_sha256": "00988044cbb8adc028c0b878ffc6e6f1fff6235d557c5e97cdb45fb15a9740ba",
+    "artifact_byte_length": 498,
+    "artifact_bytes_base64": "YXBpVmVyc2lvbjogYXJnb3Byb2ouaW8vdjFhbHBoYTEKa2luZDogQXBwbGljYXRpb24KbWV0YWRhdGE6CiAgbmFtZTogc2VsZi1zZXJ2aWNlLWRldi1hcHBzCiAgbmFtZXNwYWNlOiBhcmdvY2QKICBhbm5vdGF0aW9uczoKICAgIGFyZ29jZC5hcmdvcHJvai5pby9zeW5jLXdhdmU6ICIyMCIKc3BlYzoKICBwcm9qZWN0OiBkZWZhdWx0CiAgc291cmNlOgogICAgcmVwb1VSTDogaHR0cHM6Ly9naXRodWIuY29tL2NvZGljYXJpdW0vYXBwLWNvbmZpZy5naXQKICAgIHRhcmdldFJldmlzaW9uOiBtYWluCiAgICBwYXRoOiBhcmdvY2Qvc2VsZi1zZXJ2aWNlLWRldi1hcHBzCiAgZGVzdGluYXRpb246CiAgICBuYW1lOiBjb2RpY2FyaXVtLWRldgogICAgbmFtZXNwYWNlOiBhcmdvY2QKICBzeW5jUG9saWN5OgogICAgYXV0b21hdGVkOgogICAgICBwcnVuZTogdHJ1ZQogICAgICBzZWxmSGVhbDogdHJ1ZQogICAgc3luY09wdGlvbnM6CiAgICAgIC0gQ3JlYXRlTmFtZXNwYWNlPXRydWUK",
+    "bootstrap_only": true
+  },
+  {
+    "id": "AP23",
+    "repository": "codicarium/app-config",
+    "path": "argocd/codicarium-local/apps/codicarium-prod-root-app.yaml",
+    "argo_kind": "Application",
+    "application_name": "codicarium-prod-root-app",
+    "artifact_sha256": "4e81650d34b307274250fd1bc7395ec6a0dcc8152ba54d6cd00e02ab7c57c06a",
+    "artifact_byte_length": 532,
+    "artifact_bytes_base64": "YXBpVmVyc2lvbjogYXJnb3Byb2ouaW8vdjFhbHBoYTEKa2luZDogQXBwbGljYXRpb24KbWV0YWRhdGE6CiAgbmFtZTogY29kaWNhcml1bS1wcm9kLXJvb3QKICBuYW1lc3BhY2U6IGFyZ29jZAogIGFubm90YXRpb25zOgogICAgYXJnb2NkLmFyZ29wcm9qLmlvL3N5bmMtd2F2ZTogIjEwMCIKc3BlYzoKICBwcm9qZWN0OiBkZWZhdWx0CiAgc291cmNlOgogICAgcmVwb1VSTDogaHR0cHM6Ly9naXRodWIuY29tL2NvZGljYXJpdW0vYXBwLWNvbmZpZy5naXQKICAgIHRhcmdldFJldmlzaW9uOiBtYWluCiAgICBwYXRoOiBhcmdvY2QvY29kaWNhcml1bS1wcm9kL2FwcHMKICAgIGRpcmVjdG9yeToKICAgICAgcmVjdXJzZTogdHJ1ZQogIGRlc3RpbmF0aW9uOgogICAgbmFtZTogY29kaWNhcml1bS1kZXYKICAgIG5hbWVzcGFjZTogYXJnb2NkCiAgc3luY1BvbGljeToKICAgIGF1dG9tYXRlZDoKICAgICAgcHJ1bmU6IHRydWUKICAgICAgc2VsZkhlYWw6IHRydWUKICAgIHN5bmNPcHRpb25zOgogICAgICAtIENyZWF0ZU5hbWVzcGFjZT10cnVlCg==",
+    "bootstrap_only": true
+  },
+  {
+    "id": "AP24",
+    "repository": "codicarium/app-config",
+    "path": "argocd/codicarium-prod/apps/self-service-prod-apps-app.yaml",
+    "argo_kind": "Application",
+    "application_name": "self-service-prod-apps-app",
+    "artifact_sha256": "28b3c9ad14a751373bd201ce4b7f38ad4010f5dc580625769215ece96c3afb3e",
+    "artifact_byte_length": 500,
+    "artifact_bytes_base64": "YXBpVmVyc2lvbjogYXJnb3Byb2ouaW8vdjFhbHBoYTEKa2luZDogQXBwbGljYXRpb24KbWV0YWRhdGE6CiAgbmFtZTogc2VsZi1zZXJ2aWNlLXByb2QtYXBwcwogIG5hbWVzcGFjZTogYXJnb2NkCiAgYW5ub3RhdGlvbnM6CiAgICBhcmdvY2QuYXJnb3Byb2ouaW8vc3luYy13YXZlOiAiMjAiCnNwZWM6CiAgcHJvamVjdDogZGVmYXVsdAogIHNvdXJjZToKICAgIHJlcG9VUkw6IGh0dHBzOi8vZ2l0aHViLmNvbS9jb2RpY2FyaXVtL2FwcC1jb25maWcuZ2l0CiAgICB0YXJnZXRSZXZpc2lvbjogSEVBRAogICAgcGF0aDogYXJnb2NkL3NlbGYtc2VydmljZS1wcm9kLWFwcHMKICBkZXN0aW5hdGlvbjoKICAgIG5hbWU6IGNvZGljYXJpdW0tZGV2CiAgICBuYW1lc3BhY2U6IGFyZ29jZAogIHN5bmNQb2xpY3k6CiAgICBhdXRvbWF0ZWQ6CiAgICAgIHBydW5lOiB0cnVlCiAgICAgIHNlbGZIZWFsOiB0cnVlCiAgICBzeW5jT3B0aW9uczoKICAgICAgLSBDcmVhdGVOYW1lc3BhY2U9dHJ1ZQo=",
+    "bootstrap_only": true
+  },
+  {
+    "id": "AP25",
+    "repository": "codicarium/app-config",
+    "path": "argocd/codicarium-prod/apps/prod-dplanner-app.yaml",
+    "argo_kind": "Application",
+    "application_name": "prod-dplanner-app",
+    "artifact_sha256": "c89187756c347431b789b48a23fe8a5f67b7bdf5d0698ac7ffe87a9efe6b42ff",
+    "artifact_byte_length": 903,
+    "artifact_bytes_base64": "YXBpVmVyc2lvbjogYXJnb3Byb2ouaW8vdjFhbHBoYTEKa2luZDogQXBwbGljYXRpb24KbWV0YWRhdGE6CiAgbmFtZTogcHJvZC1kcGxhbm5lcgogIG5hbWVzcGFjZTogYXJnb2NkCiAgYW5ub3RhdGlvbnM6CiAgICBhcmdvY2QuYXJnb3Byb2ouaW8vc3luYy13YXZlOiAiMTAiCiAgZmluYWxpemVyczoKICAgIC0gcmVzb3VyY2VzLWZpbmFsaXplci5hcmdvY2QuYXJnb3Byb2ouaW8Kc3BlYzoKICBwcm9qZWN0OiBkZWZhdWx0CiAgc291cmNlczoKICAgIC0gcmVwb1VSTDogaHR0cHM6Ly9naXRodWIuY29tL2NvZGljYXJpdW0vZHBsYW5uZXItY29uZmlnLmdpdAogICAgICB0YXJnZXRSZXZpc2lvbjogbWFpbgogICAgICBwYXRoOiBjaGFydHMvZHBsYW5uZXIKICAgICAgaGVsbToKICAgICAgICByZWxlYXNlTmFtZTogZHBsYW5uZXIKICAgICAgICB2YWx1ZUZpbGVzOgogICAgICAgICAgLSAkdmFsdWVzLy5jb2RpY2FyaXVtL3Byb2QvdmFsdWVzLnlhbWwKICAgIC0gcmVwb1VSTDogaHR0cHM6Ly9naXRodWIuY29tL2NvZGljYXJpdW0vZHBsYW5uZXItY29uZmlnLmdpdAogICAgICB0YXJnZXRSZXZpc2lvbjogbWFpbgogICAgICByZWY6IHZhbHVlcwogICAgLSByZXBvVVJMOiBodHRwczovL2dpdGh1Yi5jb20vY29kaWNhcml1bS9kcGxhbm5lci1jb25maWcuZ2l0CiAgICAgIHRhcmdldFJldmlzaW9uOiBtYWluCiAgICAgIHBhdGg6IC5jb2RpY2FyaXVtL3Byb2QvcmVzb3VyY2VzCiAgZGVzdGluYXRpb246CiAgICBuYW1lOiBjb2RpY2FyaXVtLXByb2QKICAgIG5hbWVzcGFjZTogZHBsYW5uZXIKICBzeW5jUG9saWN5OgogICAgYXV0b21hdGVkOgogICAgICBwcnVuZTogdHJ1ZQogICAgICBzZWxmSGVhbDogdHJ1ZQogICAgc3luY09wdGlvbnM6CiAgICAgIC0gQ3JlYXRlTmFtZXNwYWNlPXRydWUK",
+    "bootstrap_only": true
+  }
+]

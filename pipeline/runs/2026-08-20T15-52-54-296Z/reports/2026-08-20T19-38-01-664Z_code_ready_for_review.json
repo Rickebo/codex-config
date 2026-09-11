@@ -1,0 +1,28 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Review findings are fixed at dc19064: release tag pushes use scoped temporary token auth and the workflow checker now validates permissions, every checkout, and actual make invocations.",
+  "changed_files": [
+    ".github/workflows/release.yml",
+    "tools/workflowtrust/main.go",
+    "tools/workflowtrust/main_test.go"
+  ],
+  "validation": [
+    "commit dc19064 pushed and worktree clean",
+    "make ci-pr and make ci passed",
+    "Go tests/vet, actionlint, workflow parser, static auth checks, and git diff --check passed"
+  ],
+  "blockers": [
+    "External dedicated release runner provisioning, fork canary, VM teardown, cleanup, Docker isolation, and egress evidence remain required before issue closure."
+  ],
+  "next_action": "Repeat independent security review at exact head dc19064.",
+  "route_to": "review",
+  "risk_level": "critical",
+  "independent_lanes": [
+    "Release tag authentication",
+    "Release permission allowlist",
+    "All-checkout credential enforcement",
+    "Structured PR command enforcement"
+  ],
+  "requires_council": true
+}

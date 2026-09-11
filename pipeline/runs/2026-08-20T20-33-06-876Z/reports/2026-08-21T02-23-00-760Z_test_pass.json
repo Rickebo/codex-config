@@ -1,0 +1,27 @@
+{
+  "stage": "test",
+  "status": "pass",
+  "summary": "Focused offline validation passed for PR #442's two-file remediation: AppProject YAML rendering and the MetaMCP bootstrap SQL environment change are structurally valid and scoped exactly to the requested files.",
+  "changed_files": [
+    "argocd/default-project.yaml",
+    "scripts/metamcp/bootstrap.sql"
+  ],
+  "validation": [
+    "PR #442 head 2c4f318eebd4355f97ebef05b1eec82164839a72 contains exactly the two requested changed files.",
+    "git diff --check passed; the exact PR diff is 7 additions and 1 deletion.",
+    "AppProject YAML parsed with yq and rendered to JSON successfully; apiVersion, kind, metadata, and sourceRepos assertions passed.",
+    "The exact Grafana Community Helm repository appears once in the 15-entry sourceRepos list.",
+    "Bootstrap SQL static structure passed: one explicit Kubernetes service-env jsonb_build_object with the expected host and ports.",
+    "Existing Kubernetes child read-only, destructive-operation, in-cluster, and single-cluster flags remain present.",
+    "No live-cluster or server-side Kubernetes operation was run; kubectl client probing was not used because it attempted default localhost API discovery."
+  ],
+  "blockers": [],
+  "next_action": "Proceed to the validation stage for authorized live reconciliation and runtime discovery checks.",
+  "route_to": "validation",
+  "risk_level": "critical",
+  "independent_lanes": [
+    "AppProject YAML parse and render",
+    "MetaMCP bootstrap SQL static validation"
+  ],
+  "requires_council": true
+}

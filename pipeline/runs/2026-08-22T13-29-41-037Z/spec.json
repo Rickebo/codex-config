@@ -1,0 +1,257 @@
+{
+  "meta": {
+    "id": "SPEC-rickebo-kafka-platform",
+    "title": "Rickebo-owned homelab Kafka platform for Deployment Controller",
+    "author": "manager",
+    "created_at": "2026-08-22T13:29:41Z",
+    "version": "1.1.0"
+  },
+  "feature": {
+    "problem_statement": "The homelab Deployment Controller needs a local Redpanda/Kafka broker, durable delivery topics, and least-privilege ACLs, but the current GitOps source reuses a Codicarium kafka-acls repository and creates an unwanted cross-organization dependency.",
+    "goals": [
+      "Create Rickebo-owned kafka-config and kafka-acls repositories.",
+      "Deploy and operate a single-node Redpanda Kafka-compatible broker in the explicitly selected homelab cluster.",
+      "Provision the Deployment Controller delivery and dead-letter topics with TLS and exact ACLs from Rickebo-owned GitOps sources.",
+      "Remove direct and indirect homelab Kafka dependencies on Codicarium repositories or artifacts.",
+      "Validate the broker, ACL reconciler, Deployment Controller, and runner-config integration."
+    ],
+    "non_goals": [
+      "Production multi-broker Kafka high availability.",
+      "Migrating Codicarium's Kafka platform or application workloads.",
+      "Replacing the Deployment Controller implementation itself.",
+      "Transferring pve-infra to rickebo-com in this rollout.",
+      "Performing the legacy ARC resource handoff before all credential and controller gates pass."
+    ],
+    "scope_in": [
+      "rickebo-com/kafka-config repository and validation workflow",
+      "rickebo-com/kafka-acls repository and validation workflow",
+      "Homelab Redpanda Helm deployment and persistent storage",
+      "Deployment Controller Kafka topics, mTLS integration, and ACL reconciliation",
+      "Argo Applications and repository credentials needed for Rickebo-owned Kafka sources",
+      "Explicit-context homelab rollout and smoke validation"
+    ],
+    "scope_out": [
+      "Codicarium repositories, OCI artifacts, and Kafka runtime for Kafka-related sources",
+      "Broad GitHub App permission expansion beyond required Rickebo repository access",
+      "Untracked imperative production changes"
+    ]
+  },
+  "requirements": [
+    {
+      "id": "REQ-001",
+      "priority": "MUST",
+      "statement": "The implementation MUST create private rickebo-com/kafka-config and rickebo-com/kafka-acls repositories with CI validation and documented ownership.",
+      "rationale": "Kafka platform configuration and ACL policy must have durable Rickebo ownership and reviewable changes."
+    },
+    {
+      "id": "REQ-002",
+      "priority": "MUST",
+      "statement": "The homelab MUST deploy Redpanda through an Argo-managed Helm release using Rickebo-owned kafka-config values and the explicit target kubeconfig /home/rickebo/.kube/homelab.yaml, context default, API server https://192.168.1.89:6443, and namespace deployment-controller.",
+      "rationale": "The Deployment Controller needs a local Kafka-compatible broker and a wrong kube context would be an unsafe deployment."
+    },
+    {
+      "id": "REQ-003",
+      "priority": "MUST",
+      "statement": "The homelab MUST reconcile only the Deployment Controller delivery and dead-letter topics plus the exact least-privilege ACLs required by its webhook and controller mTLS identities.",
+      "rationale": "The Kafka policy must be specific to the homelab controller and must not import Codicarium application policy."
+    },
+    {
+      "id": "REQ-004",
+      "priority": "MUST",
+      "statement": "No homelab Kafka-related Argo source, Helm dependency, Kustomize base, Git submodule, reusable workflow, OCI artifact, or generated manifest MAY depend on the codicarium organization.",
+      "rationale": "The user explicitly requires no cross-organization Kafka dependencies, including indirect dependency paths."
+    },
+    {
+      "id": "REQ-005",
+      "priority": "MUST",
+      "statement": "The Deployment Controller MUST become Ready and successfully publish/consume its delivery path against the homelab Redpanda broker after the Kafka platform rollout.",
+      "rationale": "Healthy broker resources alone do not prove the controller's authenticated runtime contract."
+    },
+    {
+      "id": "REQ-006",
+      "priority": "SHOULD",
+      "statement": "The design SHOULD keep the Redpanda broker single-node and resource-bounded for the current homelab while preserving a migration path to broker HA.",
+      "rationale": "The current environment is a homelab, but storage and topic policy should not block future scaling."
+    },
+    {
+      "id": "REQ-007",
+      "priority": "MUST",
+      "statement": "The migration MUST preserve the existing Redpanda StatefulSet identity, PVC, release name, and TLS material, and MUST use phased Argo health gates with prune disabled or explicitly guarded until the Rickebo sources are proven healthy.",
+      "rationale": "The homelab already has live broker data and controller certificates; replacing them blindly risks data loss or controller outage."
+    },
+    {
+      "id": "REQ-008",
+      "priority": "MUST",
+      "statement": "Private Rickebo repository checkout credentials MUST be scoped to the required Rickebo repository URL prefixes and stored through the existing ExternalSecrets/Bitwarden path without exposing secret values.",
+      "rationale": "The new repositories are private and Argo must be able to fetch them without broad or cross-organization credentials."
+    }
+  ],
+  "acceptance_criteria": [
+    {
+      "id": "AC-001",
+      "requirement_ids": ["REQ-001"],
+      "scenario": "Given the rickebo-com organization, when repository setup completes, then both private repositories exist with passing CI, documented ownership, and no Codicarium repository as their source."
+    },
+    {
+      "id": "AC-002",
+      "requirement_ids": ["REQ-002"],
+      "scenario": "Given kubeconfig /home/rickebo/.kube/homelab.yaml, context default, and API server https://192.168.1.89:6443, when Argo reconciles kafka-config, then the Redpanda StatefulSet is Ready, its PVC is Bound, and its Kafka/TLS services are present in deployment-controller."
+    },
+    {
+      "id": "AC-003",
+      "requirement_ids": ["REQ-003"],
+      "scenario": "Given the ACL reconciler, when it runs against homelab Redpanda, then codicarium.deployment.deliveries.v1 and codicarium.deployment.deliveries.dlq.v1 exist, the webhook/controller principals have the exact required operations, and no unrelated application policy is present."
+    },
+    {
+      "id": "AC-004",
+      "requirement_ids": ["REQ-004"],
+      "scenario": "Given all Kafka-related repository trees, Argo Applications, Helm dependencies, workflows, submodules, and rendered manifests, when dependency closure is scanned, then every source is Rickebo-owned or an approved public Redpanda upstream source and none references codicarium."
+    },
+    {
+      "id": "AC-005",
+      "requirement_ids": ["REQ-005"],
+      "scenario": "Given the broker and ACLs are Ready, when the Deployment Controller webhook and controller are checked, then both are Ready without Kafka authentication/authorization errors and the runner-config activation path can proceed to its normal guarded validation."
+    },
+    {
+      "id": "AC-006",
+      "requirement_ids": ["REQ-006"],
+      "scenario": "Given homelab resource constraints, when the Redpanda release is rendered and deployed, then its replica/storage/resource settings are explicit, bounded, and documented for later HA expansion."
+    },
+    {
+      "id": "AC-007",
+      "requirement_ids": ["REQ-007"],
+      "scenario": "Given the existing live Redpanda StatefulSet and PVC, when GitOps ownership moves to kafka-config, then the same release identity and PVC remain attached, old sources are not pruned before health proof, and rollback instructions are recorded."
+    },
+    {
+      "id": "AC-008",
+      "requirement_ids": ["REQ-008"],
+      "scenario": "Given private Rickebo repositories, when Argo fetches kafka-config and kafka-acls, then repository-scoped credentials resolve through ExternalSecrets and no secret value appears in logs, manifests, issue comments, or memory."
+    }
+  ],
+  "test_plan": [
+    {
+      "id": "TST-001",
+      "type": "unit",
+      "requirement_ids": ["REQ-001", "REQ-003"],
+      "approach": "Run repository-local YAML/schema/Helm validation and focused exact-set ACL policy tests for kafka-config and kafka-acls."
+    },
+    {
+      "id": "TST-002",
+      "type": "integration",
+      "requirement_ids": ["REQ-002", "REQ-003"],
+      "approach": "Render Argo/Helm manifests and apply client-side dry-runs with the explicit kubeconfig/context/API-server preflight; then inspect live StatefulSet, PVC, services, certificates, topics, and ACL reconciler Job/CronJob."
+    },
+    {
+      "id": "TST-003",
+      "type": "non_functional",
+      "requirement_ids": ["REQ-004"],
+      "approach": "Scan repository trees, dependency locks, workflows, submodules, Argo sources, Helm dependencies, OCI references, and rendered manifests for codicarium references; fail closed on any Kafka-related match."
+    },
+    {
+      "id": "TST-004",
+      "type": "e2e",
+      "requirement_ids": ["REQ-005"],
+      "approach": "Verify Deployment Controller readiness, Kafka client authentication/authorization logs, webhook delivery ingestion, and the runner-config guarded activation/runner resource path without bypassing safety gates."
+    },
+    {
+      "id": "TST-005",
+      "type": "manual",
+      "requirement_ids": ["REQ-006"],
+      "approach": "Review rendered resource requests, PVC size/storage class, single-node replication settings, and documented HA follow-up."
+    },
+    {
+      "id": "TST-006",
+      "type": "manual",
+      "requirement_ids": ["REQ-007", "REQ-008"],
+      "approach": "Capture pre-change inventory and PVC/Secret identity evidence, verify phased sync/prune/rollback controls, and inspect only Secret key names and ExternalSecret status while keeping values hidden."
+    }
+  ],
+  "traceability": [
+    {
+      "requirement_id": "REQ-001",
+      "acceptance_ids": ["AC-001"],
+      "test_ids": ["TST-001"],
+      "review_checks": ["Repository ownership, branch protection, CI, and secret scanning are reviewed."],
+      "validation_checks": ["Both repositories exist and their required checks pass."]
+    },
+    {
+      "requirement_id": "REQ-002",
+      "acceptance_ids": ["AC-002"],
+      "test_ids": ["TST-002"],
+      "review_checks": ["Argo source, Helm values, storage, TLS, and exact target cluster identity are reviewed."],
+      "validation_checks": ["The API server preflight matches https://192.168.1.89:6443 and Redpanda storage is healthy on that context."]
+    },
+    {
+      "requirement_id": "REQ-003",
+      "acceptance_ids": ["AC-003"],
+      "test_ids": ["TST-001", "TST-002"],
+      "review_checks": ["Topic names, principals, operations, CA/SANs, and absence of wildcard/application policy are reviewed."],
+      "validation_checks": ["The ACL reconciler proves the declared topic and ACL universe live, including negative access checks where supported."]
+    },
+    {
+      "requirement_id": "REQ-004",
+      "acceptance_ids": ["AC-004"],
+      "test_ids": ["TST-003"],
+      "review_checks": ["Direct and indirect Kafka dependency closure is inspected."],
+      "validation_checks": ["Cross-organization Kafka dependency scan returns no forbidden source."]
+    },
+    {
+      "requirement_id": "REQ-005",
+      "acceptance_ids": ["AC-005"],
+      "test_ids": ["TST-004"],
+      "review_checks": ["Controller Kafka endpoints, TLS identities, readiness, and guarded runner path are reviewed."],
+      "validation_checks": ["Controller is Ready and activation/runner validation reaches the expected guarded state."]
+    },
+    {
+      "requirement_id": "REQ-006",
+      "acceptance_ids": ["AC-006"],
+      "test_ids": ["TST-005"],
+      "review_checks": ["Homelab resource bounds and HA migration notes are reviewed."],
+      "validation_checks": ["Rendered values are explicit and fit the current cluster constraints."]
+    },
+    {
+      "requirement_id": "REQ-007",
+      "acceptance_ids": ["AC-007"],
+      "test_ids": ["TST-006"],
+      "review_checks": ["Existing StatefulSet/PVC identity, sync ordering, prune behavior, inventory evidence, and rollback are reviewed."],
+      "validation_checks": ["The live PVC and broker identity survive source migration and rollback evidence is available."]
+    },
+    {
+      "requirement_id": "REQ-008",
+      "acceptance_ids": ["AC-008"],
+      "test_ids": ["TST-006"],
+      "review_checks": ["Repository-scoped App access, ExternalSecret mappings, rotation path, and secret redaction are reviewed."],
+      "validation_checks": ["Argo fetches both repositories and no secret values are exposed."]
+    }
+  ],
+  "quality_gates": {
+    "spec_review_required": true,
+    "testability_required": true,
+    "traceability_required": true
+  },
+  "council": {
+    "perspectives": [
+      {
+        "role": "planner",
+        "summary": "Own the repository split, GitOps dependencies, sequencing, and migration boundary from current pve-infra."
+      },
+      {
+        "role": "reviewer",
+        "summary": "Require exact kubeconfig/API-server preflight, phased migration safety, explicit TLS/ACL matrix, repository-scoped credentials, and complete indirect dependency closure."
+      },
+      {
+        "role": "tech_lead_devops",
+        "summary": "Validate Redpanda chart integration, Argo source ownership, explicit homelab context, PVC-preserving rollout, and Deployment Controller Kafka contracts."
+      },
+      {
+        "role": "tech_lead_qa",
+        "summary": "Define repository, render, live Kafka, controller, and runner-path evidence needed before completion."
+      }
+    ],
+    "consensus_summary": "Use existing Codicarium repositories only as reference material. Create Rickebo-owned sources, retain only the local Deployment Controller Kafka contract, preserve the current broker identity/PVC during source migration, and deploy through Argo with exact homelab targeting and fail-closed dependency/credential checks.",
+    "open_questions": [
+      "Whether pve-infra transfer to rickebo-com is completed in a separate follow-up; this rollout integrates the new repositories without waiting for that transfer.",
+      "Whether the Redpanda wrapper chart should initially be a direct values/config repository or a pinned wrapper around the public Redpanda chart; both designs must keep Kafka sources Rickebo-owned apart from the approved public upstream chart."
+    ]
+  }
+}

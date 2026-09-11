@@ -1,0 +1,216 @@
+{
+  "version": 1,
+  "created_at": "2026-08-24T12:26:04.024Z",
+  "updated_at": "2026-08-24T19:00:02.917Z",
+  "task": "Fix GitHub recursion suppression after token-dispatched Release Verify by explicitly authenticating and dispatching Publish Release, then automatically resume and publish existing unpublished v0.6.13 without manual actions",
+  "policy_path": "/home/rickebo/.codex/pipeline/transitions.json",
+  "approval_rules_path": "/home/rickebo/.codex/pipeline/approval-rules.json",
+  "initial_stage": "spec",
+  "current_stage": "done",
+  "pipeline_profile": "full",
+  "done": true,
+  "max_loops": 6,
+  "loop_count": 1,
+  "approval_required_count": 5,
+  "approvals": [
+    {
+      "at": "2026-08-24T13:19:33.272Z",
+      "approver": "Codex manager",
+      "note": "Approved after schema-valid spec, complete traceability, and planner/QA/security council consensus on the least-privilege recovery design.",
+      "gate": "spec_to_code",
+      "reason": "Spec pass requires explicit approval before implementation starts.",
+      "risk_level": "high",
+      "from_stage": "spec",
+      "next_stage": "code",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T12-26-04-023Z/reports/2026-08-24T13-19-20-769Z_spec_pass.json"
+    },
+    {
+      "at": "2026-08-24T13:51:58.851Z",
+      "approver": "Codex manager",
+      "note": "Approved for independent review after clean code-stage commit and green release-flow, repository, actionlint, diff, and Workspace Context impact checks.",
+      "gate": "risk_threshold",
+      "reason": "Risk level high meets or exceeds threshold high.",
+      "risk_level": "high",
+      "from_stage": "code",
+      "next_stage": "review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T12-26-04-023Z/reports/2026-08-24T13-51-36-014Z_code_ready_for_review.json"
+    },
+    {
+      "at": "2026-08-24T14:04:58.544Z",
+      "approver": "Codex manager",
+      "note": "Approved corrective loop for independently confirmed high-severity verifier-state and unproven-tag trust defects plus executable negative-test gaps.",
+      "gate": "risk_threshold",
+      "reason": "Risk level high meets or exceeds threshold high.",
+      "risk_level": "high",
+      "from_stage": "review",
+      "next_stage": "code",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T12-26-04-023Z/reports/2026-08-24T14-04-48-028Z_review_fail.json"
+    },
+    {
+      "at": "2026-08-24T17:59:57.867Z",
+      "approver": "Codex manager",
+      "note": "Approved loop-1 independent re-review after terminal-verifier, coordinator-proof, same-source resume, exact-CI, and API fixture fixes passed all local gates and focused review.",
+      "gate": "risk_threshold",
+      "reason": "Risk level high meets or exceeds threshold high.",
+      "risk_level": "high",
+      "from_stage": "code",
+      "next_stage": "review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T12-26-04-023Z/reports/2026-08-24T17-58-44-399Z_code_ready_for_review.json"
+    },
+    {
+      "at": "2026-08-24T19:00:02.917Z",
+      "approver": "Codex manager",
+      "note": "Approved local implementation pipeline completion after clean independent review/test/traceability validation; live REQ-010 remains mandatory post-merge acceptance outside this local gate.",
+      "gate": "validation_to_done",
+      "reason": "Validation pass requires explicit approval before done.",
+      "risk_level": "high",
+      "from_stage": "validation",
+      "next_stage": "done",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T12-26-04-023Z/reports/2026-08-24T18-59-29-194Z_validation_pass.json"
+    }
+  ],
+  "awaiting_approval": null,
+  "spec_gate": {
+    "passed": true,
+    "passed_at": "2026-08-24T13:19:33.272Z",
+    "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T12-26-04-023Z/feature-spec.json",
+    "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T12-26-04-023Z/spec-check.json",
+    "council_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T12-26-04-023Z/council.json"
+  },
+  "council_policy": {
+    "required": "always"
+  },
+  "history": [
+    {
+      "at": "2026-08-24T13:19:20.770Z",
+      "event": "approval_required",
+      "stage": "spec",
+      "status": "pass",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T12-26-04-023Z/reports/2026-08-24T13-19-20-769Z_spec_pass.json",
+      "requested_next_stage": "code",
+      "gate": "spec_to_code",
+      "reason": "Spec pass requires explicit approval before implementation starts.",
+      "risk_level": "high",
+      "spec_gate": {
+        "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T12-26-04-023Z/feature-spec.json",
+        "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T12-26-04-023Z/spec-check.json",
+        "council_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T12-26-04-023Z/council.json",
+        "checked_at": "2026-08-24T13:19:11.482Z"
+      }
+    },
+    {
+      "at": "2026-08-24T13:19:33.272Z",
+      "event": "approved_transition",
+      "stage": "spec",
+      "status": "pass",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T12-26-04-023Z/reports/2026-08-24T13-19-20-769Z_spec_pass.json",
+      "approver": "Codex manager",
+      "note": "Approved after schema-valid spec, complete traceability, and planner/QA/security council consensus on the least-privilege recovery design.",
+      "next_stage": "code"
+    },
+    {
+      "at": "2026-08-24T13:51:36.015Z",
+      "event": "approval_required",
+      "stage": "code",
+      "status": "ready_for_review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T12-26-04-023Z/reports/2026-08-24T13-51-36-014Z_code_ready_for_review.json",
+      "requested_next_stage": "review",
+      "gate": "risk_threshold",
+      "reason": "Risk level high meets or exceeds threshold high.",
+      "risk_level": "high",
+      "spec_gate": null
+    },
+    {
+      "at": "2026-08-24T13:51:58.851Z",
+      "event": "approved_transition",
+      "stage": "code",
+      "status": "ready_for_review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T12-26-04-023Z/reports/2026-08-24T13-51-36-014Z_code_ready_for_review.json",
+      "approver": "Codex manager",
+      "note": "Approved for independent review after clean code-stage commit and green release-flow, repository, actionlint, diff, and Workspace Context impact checks.",
+      "next_stage": "review"
+    },
+    {
+      "at": "2026-08-24T14:04:48.028Z",
+      "event": "approval_required",
+      "stage": "review",
+      "status": "fail",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T12-26-04-023Z/reports/2026-08-24T14-04-48-028Z_review_fail.json",
+      "requested_next_stage": "code",
+      "gate": "risk_threshold",
+      "reason": "Risk level high meets or exceeds threshold high.",
+      "risk_level": "high",
+      "spec_gate": null
+    },
+    {
+      "at": "2026-08-24T14:04:58.545Z",
+      "event": "approved_transition",
+      "stage": "review",
+      "status": "fail",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T12-26-04-023Z/reports/2026-08-24T14-04-48-028Z_review_fail.json",
+      "approver": "Codex manager",
+      "note": "Approved corrective loop for independently confirmed high-severity verifier-state and unproven-tag trust defects plus executable negative-test gaps.",
+      "next_stage": "code"
+    },
+    {
+      "at": "2026-08-24T17:58:44.399Z",
+      "event": "approval_required",
+      "stage": "code",
+      "status": "ready_for_review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T12-26-04-023Z/reports/2026-08-24T17-58-44-399Z_code_ready_for_review.json",
+      "requested_next_stage": "review",
+      "gate": "risk_threshold",
+      "reason": "Risk level high meets or exceeds threshold high.",
+      "risk_level": "high",
+      "spec_gate": null
+    },
+    {
+      "at": "2026-08-24T17:59:57.867Z",
+      "event": "approved_transition",
+      "stage": "code",
+      "status": "ready_for_review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T12-26-04-023Z/reports/2026-08-24T17-58-44-399Z_code_ready_for_review.json",
+      "approver": "Codex manager",
+      "note": "Approved loop-1 independent re-review after terminal-verifier, coordinator-proof, same-source resume, exact-CI, and API fixture fixes passed all local gates and focused review.",
+      "next_stage": "review"
+    },
+    {
+      "at": "2026-08-24T18:24:22.798Z",
+      "event": "transition",
+      "stage": "review",
+      "status": "pass",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T12-26-04-023Z/reports/2026-08-24T18-24-22-798Z_review_pass.json",
+      "next_stage": "test"
+    },
+    {
+      "at": "2026-08-24T18:41:25.518Z",
+      "event": "transition",
+      "stage": "test",
+      "status": "pass",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T12-26-04-023Z/reports/2026-08-24T18-41-25-517Z_test_pass.json",
+      "next_stage": "validation"
+    },
+    {
+      "at": "2026-08-24T18:59:29.195Z",
+      "event": "approval_required",
+      "stage": "validation",
+      "status": "pass",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T12-26-04-023Z/reports/2026-08-24T18-59-29-194Z_validation_pass.json",
+      "requested_next_stage": "done",
+      "gate": "validation_to_done",
+      "reason": "Validation pass requires explicit approval before done.",
+      "risk_level": "high",
+      "spec_gate": null
+    },
+    {
+      "at": "2026-08-24T19:00:02.917Z",
+      "event": "approved_transition",
+      "stage": "validation",
+      "status": "pass",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T12-26-04-023Z/reports/2026-08-24T18-59-29-194Z_validation_pass.json",
+      "approver": "Codex manager",
+      "note": "Approved local implementation pipeline completion after clean independent review/test/traceability validation; live REQ-010 remains mandatory post-merge acceptance outside this local gate.",
+      "next_stage": "done"
+    }
+  ]
+}

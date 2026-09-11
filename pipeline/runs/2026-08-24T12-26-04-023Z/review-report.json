@@ -1,0 +1,49 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Independent security and QA review found two high-severity trust/lifecycle defects and two material executable-test gaps. The publisher can proceed from an in-progress verifier, and pending-tag recovery lacks proof that Automatic Release created the tag.",
+  "changed_files": [],
+  "validation": [
+    "Reviewed exact commit 3aba8c788d7284bc906a9b02515c2351c1cb471e against ad52dfcbc45d71eccad1d49fbd905161af7a44b1.",
+    "Local release-flow, repository validation, actionlint, and diff checks pass but do not exercise the reported lifecycle/API cases.",
+    "Planner chore/fix pending-v0.6.13 coverage and explicit legacy provenance opt-in are present."
+  ],
+  "blockers": [
+    "Publisher accepts an in-progress verifier and overwrites its conclusion with success.",
+    "Ancestor-tag resumption does not require an exact Automatic Release coordinator proof.",
+    "Exact-CI selection and verifier terminal-state behavior need executable policy/API fixtures."
+  ],
+  "next_action": "Require terminal successful verifier state before publication, authenticate resumed tags with exact coordinator proof, and add focused executable negative tests before re-review.",
+  "route_to": "code",
+  "risk_level": "high",
+  "issues": [
+    {
+      "id": "REV-001",
+      "title": "Publisher accepts in-progress verifier as successful",
+      "severity": "high",
+      "details": ".github/workflows/publish-release.yaml verifierStateValid permits in_progress and later constructs a verifier object with conclusion success. Poll the exact run to completed success before downloads or writes; fail on cancellation, failure, or timeout.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV-002",
+      "title": "Unproven reachable tags can be auto-published",
+      "severity": "high",
+      "details": "release-plan.py resumes any reachable unpublished stable tag. Require an exact Automatic Release coordinator check/external ID binding tag, source, and successful CI before resumption; reject manually-created tags.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV-003",
+      "title": "Exact CI resolver lacks executable API coverage",
+      "severity": "high",
+      "details": "Add a pure or mocked resolver fixture for exact successful CI selection, zero/duplicate matches, wrong workflow/event/branch/SHA/repository, and rerun attempt selection.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV-004",
+      "title": "Verifier terminal states and attempts lack executable coverage",
+      "severity": "high",
+      "details": "Add policy fixtures for queued/in-progress polling, completed success, failure/cancellation/timeout, attempt mismatch, and stale artifact attempts.",
+      "owner_stage": "code"
+    }
+  ]
+}

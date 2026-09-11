@@ -1,0 +1,70 @@
+{
+  "stage": "spec",
+  "status": "fail",
+  "summary": "All four exact-hash council lanes rejected v1.8. Canonical identity and forward-only release intent are sound, but broker read/write protocols, archive schemas, publisher run binding, append-only mutation receipts, old-workflow retirement, and cross-repository platform ownership remain incomplete.",
+  "changed_files": [
+    "/home/rickebo/.codex/pipeline/runs/2026-08-24T16-21-43-985Z/feature-spec.v1.8.draft.json",
+    "/home/rickebo/.codex/pipeline/runs/2026-08-24T16-21-43-985Z/spec-check.v1.8.draft.json",
+    "/home/rickebo/.codex/pipeline/runs/2026-08-24T16-21-43-985Z/council-v1.8.json"
+  ],
+  "validation": [
+    "Exact draft SHA was 63c355d130461a9e54c4b3f49ff29b4ce673378fcaab0d32a4a1bf3ec50b77c5.",
+    "Remote deployment-controller main remained d3565f534b2f64585c3e15e35d8d645449f4f09d.",
+    "Strict structure passed 24 MUSTs, 12 acceptance criteria, 12 tests, and 24 trace rows.",
+    "Both golden identity lengths, SHA-256 values, and digest-base64url values recomputed exactly.",
+    "Administrator evidence matched 4024 bytes and SHA-256 55dbee3772ce06d0af59df8cb21d6862d4d167470065e2580ff9adb3d28efb58.",
+    "Planner, security, QA, and DevOps independently returned NO-GO.",
+    "No repository, workflow, release, registry, package, or cluster mutation occurred during council review."
+  ],
+  "blockers": [
+    "Define closed mint/upload/read/readback capability schemas, token claims, object keys, exact archive bytes, and ambiguity semantics.",
+    "Bind two candidate archives to separate one-object capabilities and define exact signed-authorization read/write capabilities.",
+    "Move exact publisher-run receipt creation to trusted coordinator authority and add an append-only per-mutation receipt chain.",
+    "Retire the old privileged workflow ID and remove or rotate its reusable credentials so old-tag dispatch or rerun cannot regain authority.",
+    "Bound runner-config, codicarium-actions, Vault, app wiring, DNS/TLS, network policy, runner isolation, rollout, and rollback ownership.",
+    "Separate external administrator review from repository CI; CI only proves runtime non-consumption.",
+    "Add executable 1000-suite horizon, live-evidence schema, exact tuple-base64url, job mapping, and total sequencing fixtures."
+  ],
+  "next_action": "Revise to v1.9 with closed protocol/schema fixtures and explicit platform dependencies, then rerun an exact-hash planner/security/QA/DevOps council before implementation.",
+  "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T16-21-43-985Z/feature-spec.v1.8.draft.json",
+  "council_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T16-21-43-985Z/council-v1.8.json",
+  "requires_council": true,
+  "independent_lanes": [
+    "capability protocol, archive, and isolated runner",
+    "publisher binding and append-only receipts",
+    "old-workflow retirement and credential revocation",
+    "external review, CI, and live evidence"
+  ],
+  "route_to": "spec",
+  "risk_level": "critical",
+  "issues": [
+    {
+      "id": "SPEC-CAPABILITY-CONTRACT",
+      "title": "Artifact capability and archive contracts are incomplete",
+      "severity": "critical",
+      "details": "Read/write token, object, archive, runner, and platform ownership cannot yet be implemented or tested without invention.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "SPEC-PUBLISHER-BINDING",
+      "title": "Publisher run and mutation receipts are not safely bound",
+      "severity": "critical",
+      "details": "A manual run can race the public claim, and one immutable pre-write receipt cannot contain later mutation outcomes.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "SPEC-OLD-WORKFLOW",
+      "title": "Immutable old workflow retains privileged execution",
+      "severity": "high",
+      "details": "Current-main guards cannot remove OIDC and reusable credentials from the v0.6.13 workflow or its reruns.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "SPEC-EXTERNAL-EVIDENCE",
+      "title": "Administrator evidence gate conflicts with CI non-consumption",
+      "severity": "high",
+      "details": "Administrator-only live validation must be manual/council evidence, while repository CI only scans for runtime non-use.",
+      "owner_stage": "validation"
+    }
+  ]
+}

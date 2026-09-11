@@ -1,0 +1,1 @@
+Execute homelab Workspace Context and LLM Proxy point-in-time clone from /home/rickebo/homelab-workspace-context-llm-proxy-plan.md; keep Codicarium strictly read-only; begin with spec/preflight only.

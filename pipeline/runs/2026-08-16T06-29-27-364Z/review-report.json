@@ -1,0 +1,43 @@
+{
+  "stage": "review",
+  "status": "pass",
+  "summary": "Independent review found no blocking correctness or security findings in the owned contract and protected-validation changes.",
+  "changed_files": [
+    "codicarium/infra:.github/workflows/trusted-arc-pr-validation.yml",
+    "codicarium/infra:scripts/prepare-trusted-arc-pr-validation.py",
+    "codicarium/infra:tests/test-trusted-arc-pr-validation-boundary.py",
+    "codicarium/runner-config:scripts/activation_evidence.py",
+    "codicarium/runner-config:scripts/activation-evidence.schema.json",
+    "codicarium/infra-prerequisite:tests/trusted-arc-validation-harness.py"
+  ],
+  "validation": [
+    "Protected preparation selector is fixed and is the only job with Nexus credentials.",
+    "Candidate checkout is isolated to the validation job; candidate tests/code are not present in preparation.",
+    "Full and bootstrap candidate validation use unshare user/network isolation and secretless validation environments.",
+    "Manifest, workflow SHA, candidate SHA, runner SHA, verifier blob SHA, schema digest, network digest, and contract revision are exact-bound.",
+    "No compatibility alias or stale runner-config/schema binding remains in the repaired paths.",
+    "Boundary/actionlint tests pass for both the owned PR repair and protected-base prerequisite."
+  ],
+  "blockers": [
+    "The protected-base prerequisite PR #1085 must merge before #1078 can observe the repaired pull_request_target workflow.",
+    "Nexus HTTP 403 remains an external protected-runner gate; bypass is prohibited."
+  ],
+  "next_action": "Route to controller test stage for full local cross-repo test evidence and exact pushed-head checks.",
+  "route_to": "test",
+  "risk_level": "high",
+  "requires_council": false,
+  "independent_lanes": [
+    "protected ARC workflow boundary",
+    "infra producer evidence contract",
+    "runner-config consumer verifier contract"
+  ],
+  "issues": [
+    {
+      "id": "codicarium/infra#1084",
+      "title": "Land protected ARC validation handoff before contract repair",
+      "severity": "high",
+      "details": "The prerequisite PR is open at 8c2259a and has not been merged.",
+      "owner_stage": "validation"
+    }
+  ]
+}

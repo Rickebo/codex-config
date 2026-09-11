@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rickebo.local/codex/pipeline/lane-report.schema.json",
+  "title": "Codex Lane Report",
+  "type": "object",
+  "required": ["lane", "status", "changed_files", "validation", "blockers", "next_action"],
+  "properties": {
+    "lane": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 120
+    },
+    "status": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80
+    },
+    "summary": {
+      "type": "string",
+      "maxLength": 600
+    },
+    "changed_files": {
+      "type": "array",
+      "maxItems": 20,
+      "items": {
+        "type": "string",
+        "maxLength": 240
+      }
+    },
+    "validation": {
+      "type": "array",
+      "maxItems": 12,
+      "items": {
+        "type": "string",
+        "maxLength": 280
+      }
+    },
+    "blockers": {
+      "type": "array",
+      "maxItems": 8,
+      "items": {
+        "type": "string",
+        "maxLength": 280
+      }
+    },
+    "next_action": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 300
+    },
+    "issues": {
+      "type": "array",
+      "maxItems": 15,
+      "items": {
+        "type": "object",
+        "required": ["severity", "file_or_symbol", "issue", "fix_direction"],
+        "properties": {
+          "severity": {
+            "type": "string",
+            "enum": ["low", "medium", "high", "critical"]
+          },
+          "file_or_symbol": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 180
+          },
+          "issue": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 360
+          },
+          "fix_direction": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 240
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

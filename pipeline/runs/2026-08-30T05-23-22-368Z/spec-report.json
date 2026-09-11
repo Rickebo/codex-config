@@ -1,0 +1,21 @@
+{
+  "stage": "spec",
+  "status": "pass",
+  "summary": "Council approved a PR-only desired-state contract, offline read-only verifier, adversarial tests, and rollback runbook in codicarium/infra. All installation, host access, apply authorization, workflow dispatch, and live claims remain prohibited.",
+  "changed_files": [],
+  "validation": [
+    "Spec checker passed with 6 traced requirements, 4 acceptance scenarios, 4 test groups, and zero warnings.",
+    "Planner, security reviewer, and QA perspectives are recorded in council.json.",
+    "Authority boundary verified as codicarium/infra; runner-config remains ARC-manifest authority only.",
+    "Open question requires implementation-time confirmation of exact systemd unit and full immutable helper digests."
+  ],
+  "blockers": [],
+  "next_action": "Assign the PR-only code stage to a Luna DevOps owner in a fresh workspace-root worktree; no installation or live verification.",
+  "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T05-23-22-368Z/feature-spec.json",
+  "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T05-23-22-368Z/spec-check.json",
+  "council_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T05-23-22-368Z/council.json",
+  "requires_council": true,
+  "independent_lanes": ["ownership contract and offline verifier with adversarial tests"],
+  "route_to": "code",
+  "risk_level": "high"
+}

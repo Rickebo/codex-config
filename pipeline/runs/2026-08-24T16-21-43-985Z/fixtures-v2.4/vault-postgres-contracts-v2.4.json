@@ -1,0 +1,14 @@
+{
+  "vault": {
+    "role": "release-platform-v2.4",
+    "identity": "system:serviceaccount:release-platform:controller",
+    "tls_sni": "vault.int.codicarium.com",
+    "wildcard_paths": false
+  },
+  "postgres": {
+    "instances": 3,
+    "synchronous": true,
+    "tls_sni": "postgres-rw.postgres.svc.cluster.local",
+    "node_loss": "RPO=0,RTO<=120s"
+  }
+}

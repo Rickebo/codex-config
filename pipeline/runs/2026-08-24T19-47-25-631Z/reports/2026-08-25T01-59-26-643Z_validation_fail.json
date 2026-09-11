@@ -1,0 +1,33 @@
+{
+  "stage": "validation",
+  "status": "fail",
+  "summary": "Live validation failed after exact Release Verify success. Automatic Release 32798160604/1 dispatched and observed successful verifier 32798188729/1, then rejected the resulting existing Release Verify Publish Handoff check as forged or not exact successful state. No Publish Release run or public release followed; v0.6.13 remains immutable at ad52dfc and v0.6.14 remains absent.",
+  "changed_files": [],
+  "validation": [
+    "Pipeline state.json is current_stage=validation, loop_count=1, done=false; no pipeline transition was executed.",
+    "Automatic Release 32798160604/1 ran from main d3565f534b2f64585c3e15e35d8d645449f4f09d and completed with failure.",
+    "Automatic Release steps through exact CI/proof resolution passed; failure occurred in Create immutable tag and coordinate verified publication after verifier completion.",
+    "Release Verify 32798188729/1 was workflow_dispatch at v0.6.13/ad52dfc and completed successfully, including Buildx, reproducible/scanned inputs, chart validation, provenance, and subject uploads.",
+    "The live error was: existing release verifier handoff check is forged or not exact successful state, raised by selectPublishHandoff after verifier success.",
+    "Existing handoff check 97655710504 is completed success from github-actions with the exact external tuple, but GitHub reports details_url ending /runs/97655710504; exact selection rejected it.",
+    "No Publish Release workflow run was created at or after Automatic Release 32798160604, and no v0.6.13 GitHub Release exists.",
+    "refs/tags/v0.6.13 remains a direct immutable commit ref at ad52dfcbc45d71eccad1d49fbd905161af7a44b1; v0.6.14 tag and release are absent.",
+    "Issue #93 remains open with priority:p0; this failed live handoff requires a focused code regression and a new issue-linked PR through all required checks."
+  ],
+  "blockers": [
+    "Post-verifier handoff exact-reuse validation rejects the GitHub-returned existing Release Verify Publish Handoff check 97655710504 after successful verifier 32798188729/1, preventing publisher dispatch.",
+    "The implementation/test contract assumes an exact handoff details_url representation that does not match the live GitHub check response, so no Publish Release run or public v0.6.13 can be produced."
+  ],
+  "next_action": "Route to code: add a focused regression for the live returned handoff check, fix exact reuse securely, then deliver a new #93-linked PR through review and all required checks before repeating automatic live validation.",
+  "route_to": "code",
+  "risk_level": "high",
+  "issues": [
+    {
+      "id": "GH-93",
+      "title": "Pending v0.6.13 Release Verify to Publish Release handoff",
+      "severity": "high",
+      "details": "Live verifier 32798188729/1 succeeded, but Automatic Release 32798160604/1 rejected handoff check 97655710504 and never dispatched the publisher. Track the regression, secure fix, checked PR, and repeated live proof here.",
+      "owner_stage": "code"
+    }
+  ]
+}

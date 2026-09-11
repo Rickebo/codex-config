@@ -1,0 +1,1 @@
+Implement access-controller issue #82 as an inert, centrally constrained observability contract: ServiceMonitor and evidence-based reconciliation alerts with no provider writes, secrets, or live activation

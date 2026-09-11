@@ -1,0 +1,15 @@
+{
+  "stage": "spec",
+  "status": "pass",
+  "summary": "Issue #132 is a documentation-focused reconciliation with explicit shipped/planned boundaries, desired-state version checks, and tracker-scope preservation.",
+  "changed_files": [],
+  "validation": ["Read-only contradiction map completed", "Current desired chart version read from .codicarium/dev/deploy.yaml", "UI implementation and live routes confirmed in apps/web"],
+  "blockers": [],
+  "next_action": "Approve the spec gate and delegate documentation implementation in the dedicated issue-132 worktree.",
+  "route_to": "code",
+  "risk_level": "low",
+  "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-21T03-27-59-346Z/issue-132-spec.json",
+  "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-08-21T03-27-59-346Z/issue-132-spec-check.json",
+  "council_file": "/home/rickebo/.codex/pipeline/runs/2026-08-21T03-27-59-346Z/issue-132-spec.json",
+  "independent_lanes": ["README and deployment tracker reconciliation", "Documentation regression checker", "Independent docs review and exact-head QA"]
+}

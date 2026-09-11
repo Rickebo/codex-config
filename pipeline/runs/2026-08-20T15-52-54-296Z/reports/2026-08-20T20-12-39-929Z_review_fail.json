@@ -1,0 +1,23 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Fourth review found residual shell-command indirection: substitutions, negation, and bare make can hide privileged targets from the parser.",
+  "changed_files": [],
+  "validation": [
+    "Exact head 4b1a448 reviewed",
+    "Prior extra-job and quoted-target findings were resolved"
+  ],
+  "blockers": [
+    "Require the PR validate run step to match an exact statically allowed command rather than attempting partial shell parsing."
+  ],
+  "next_action": "Replace parser acceptance with exact allowed run-script matching and regression tests, then repeat review.",
+  "route_to": "code",
+  "risk_level": "critical",
+  "independent_lanes": [
+    "Exact PR run command contract"
+  ],
+  "requires_council": true,
+  "issues": [
+    {"id":"REV-123-009","title":"Shell indirection hides privileged make execution","severity":"medium","details":"echo $(make ci), ! make ci, and bare make are ignored; require the sole run step to be exactly make ci-pr (or explicit -f Makefile ci-pr).","owner_stage":"code"}
+  ]
+}

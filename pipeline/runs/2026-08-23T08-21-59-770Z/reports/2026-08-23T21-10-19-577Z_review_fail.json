@@ -1,0 +1,64 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Independent review rejected infra b25cf66. The protected workflow choreography is not sufficient: the activation program itself under-verifies the runner checkout, mutable live-state snapshot, Helm source/value binding, rendered/live network inventory, and controller pod template.",
+  "changed_files": [
+    ".github/workflows/runner-config-producer-activation.yml",
+    "platform/deployment-controller/README.md",
+    "platform/deployment-controller/runner-config-producer-activation.json",
+    "platform/deployment-controller/scripts/runner-config-producer-activation.py",
+    "tests/test-deployment-controller-runner-producer-activation.py"
+  ],
+  "validation": [
+    "Independent read-only security review compared b25cf66 to ec8cfdfe",
+    "Review traced checkout validation, snapshot comparisons, mutations, post-verification, render inventory, and controller attestation",
+    "No push, PR, workflow dispatch, reconciliation, activation, or cluster mutation occurred"
+  ],
+  "blockers": [
+    "Activation script does not verify runner checkout HEAD/origin/clean state",
+    "Mutation TOCTOU checks omit grant/profile/router/root and CAS preconditions",
+    "Post-verification omits Helm releaseName/valueFiles",
+    "Render/live NetworkPolicy and resource inventories are not exact",
+    "Controller attestation allows unexpected sidecars/pod-template drift"
+  ],
+  "next_action": "Remediate all five findings with negative tests, amend the infra commit, and return the exact new SHA for another independent review.",
+  "route_to": "code",
+  "risk_level": "critical",
+  "issues": [
+    {
+      "id": "REVIEW-CHKOUT-001",
+      "title": "Activation authority is not internally bound to exact runner checkout",
+      "severity": "high",
+      "details": "render_from_checkout accepts any directory with expected paths while evidence still claims reviewed SHA 70f6508. Verify exact HEAD, origin, and clean state inside the script before mutation.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REVIEW-TOCTOU-002",
+      "title": "Mutable controller state lacks complete snapshot and CAS protection",
+      "severity": "high",
+      "details": "Compare grant/profile/router/root UID, generation, resourceVersion, and spec digests immediately before each mutation and use conflict-safe resourceVersion preconditions.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REVIEW-HELM-003",
+      "title": "Post-activation Helm source binding is incomplete",
+      "severity": "high",
+      "details": "Assert the exact repoURL, targetRevision, path/chart contract, releaseName, and valueFiles derived from the fixed producer component.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REVIEW-NETPOL-004",
+      "title": "Rendered and live resource/network policy inventories are under-validated",
+      "severity": "high",
+      "details": "Reject every unexpected rendered resource and compare complete DNS/proxy NetworkPolicy specs before and after activation.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REVIEW-CONTROLLER-005",
+      "title": "Controller attestation permits unexpected sidecars and pod-template drift",
+      "severity": "medium",
+      "details": "Require the exact controller container inventory and security-relevant live pod template expected for v0.6.8.",
+      "owner_stage": "code"
+    }
+  ]
+}

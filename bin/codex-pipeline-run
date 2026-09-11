@@ -1,0 +1,291 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+PIPELINE_CONTROLLER="/home/rickebo/.codex/bin/pipeline-controller.mjs"
+PIPELINE_SPEC_CHECK="/home/rickebo/.codex/bin/pipeline-spec-check.mjs"
+PIPELINE_LAUNCHER="/home/rickebo/.codex/bin/codex-pipeline"
+SPEC_TEMPLATE="/home/rickebo/.codex/pipeline/feature-spec.template.json"
+
+usage() {
+  cat <<'EOF'
+Usage:
+  codex-pipeline-run [--run-dir DIR] [--spec FILE] [--profile lite|full|emergency] [--approve-spec] [--no-launch] [--json] <task prompt>
+
+Behavior:
+  1) Initializes pipeline run state (stage: spec)
+  2) Creates or copies a feature spec JSON
+  3) Runs pipeline-spec-check
+  4) Writes first spec-stage report and advances the run
+  5) Optionally approves spec->code gate
+  6) Launches codex-pipeline session at this run state
+
+Options:
+  --run-dir DIR      Use specific run directory
+  --spec FILE        Use an existing spec JSON file instead of template
+  --profile NAME     Pipeline profile: lite, full, or emergency
+  --lite             Shortcut for --profile lite
+  --emergency        Shortcut for --profile emergency
+  --approve-spec     Auto-approve spec->code gate if approval is required
+  --no-launch        Do not open codex session after bootstrap
+  --json             Emit machine-readable JSON summary
+  -h, --help         Show this help
+EOF
+}
+
+abs_path() {
+  if [[ "$1" = /* ]]; then
+    printf '%s\n' "$1"
+  else
+    printf '%s\n' "$(pwd)/$1"
+  fi
+}
+
+json_field() {
+  local json="$1"
+  local field="$2"
+  printf '%s' "$json" | node -e '
+let raw = "";
+process.stdin.on("data", (d) => (raw += d));
+process.stdin.on("end", () => {
+  const obj = JSON.parse(raw);
+  const key = process.argv[1];
+  const val = obj?.[key];
+  process.stdout.write(val == null ? "" : String(val));
+});
+' "$field"
+}
+
+run_dir=""
+spec_source=""
+approve_spec="false"
+no_launch="false"
+json_output="false"
+pipeline_profile="full"
+task_prompt=""
+
+while (($#)); do
+  case "$1" in
+    --run-dir)
+      shift
+      if (($# == 0)); then
+        echo "codex-pipeline-run: --run-dir requires a value" >&2
+        exit 2
+      fi
+      run_dir="$1"
+      shift
+      ;;
+    --spec)
+      shift
+      if (($# == 0)); then
+        echo "codex-pipeline-run: --spec requires a value" >&2
+        exit 2
+      fi
+      spec_source="$1"
+      shift
+      ;;
+    --approve-spec)
+      approve_spec="true"
+      shift
+      ;;
+    --profile)
+      shift
+      if (($# == 0)); then
+        echo "codex-pipeline-run: --profile requires a value" >&2
+        exit 2
+      fi
+      pipeline_profile="$1"
+      shift
+      ;;
+    --lite)
+      pipeline_profile="lite"
+      shift
+      ;;
+    --emergency)
+      pipeline_profile="emergency"
+      shift
+      ;;
+    --no-launch)
+      no_launch="true"
+      shift
+      ;;
+    --json)
+      json_output="true"
+      shift
+      ;;
+    -h|--help)
+      usage
+      exit 0
+      ;;
+    --)
+      shift
+      task_prompt="$*"
+      break
+      ;;
+    -*)
+      echo "codex-pipeline-run: unknown option: $1" >&2
+      exit 2
+      ;;
+    *)
+      task_prompt="$*"
+      break
+      ;;
+  esac
+done
+
+if [[ -z "$task_prompt" ]]; then
+  usage >&2
+  exit 2
+fi
+
+if [[ -n "$run_dir" ]]; then
+  run_dir="$(abs_path "$run_dir")"
+  init_json="$(node "$PIPELINE_CONTROLLER" init --task "$task_prompt" --run-dir "$run_dir" --profile "$pipeline_profile")"
+else
+  init_json="$(node "$PIPELINE_CONTROLLER" init --task "$task_prompt" --profile "$pipeline_profile")"
+  run_dir="$(json_field "$init_json" run_dir)"
+fi
+
+if [[ -z "$run_dir" ]]; then
+  echo "codex-pipeline-run: failed to resolve run_dir from init output" >&2
+  exit 1
+fi
+
+spec_file="$run_dir/feature-spec.json"
+spec_check_file="$run_dir/spec-check.json"
+council_file="$run_dir/council-notes.md"
+spec_report_file="$run_dir/report-spec-bootstrap.json"
+
+mkdir -p "$run_dir"
+
+if [[ -n "$spec_source" ]]; then
+  spec_source="$(abs_path "$spec_source")"
+  cp "$spec_source" "$spec_file"
+else
+  cp "$SPEC_TEMPLATE" "$spec_file"
+fi
+
+SPEC_FILE="$spec_file" TASK_PROMPT="$task_prompt" node -e '
+const fs = require("fs");
+const file = process.env.SPEC_FILE;
+const task = process.env.TASK_PROMPT;
+const spec = JSON.parse(fs.readFileSync(file, "utf8"));
+spec.meta.created_at = new Date().toISOString();
+spec.meta.id = `SPEC-${Date.now()}`;
+spec.meta.title = task.slice(0, 120);
+spec.meta.author = process.env.USER || "manager";
+if (Array.isArray(spec.council?.open_questions) && spec.council.open_questions.length === 0) {
+  spec.council.open_questions = ["Confirm assumptions before implementation."];
+}
+fs.writeFileSync(file, `${JSON.stringify(spec, null, 2)}\n`);
+'
+
+cat > "$council_file" <<EOF
+# Council Bootstrap Notes
+
+Task:
+$task_prompt
+
+This is an initial council placeholder. Expand with planner/reviewer/QA perspectives in-session.
+EOF
+
+node "$PIPELINE_SPEC_CHECK" --spec "$spec_file" --out "$spec_check_file" >/dev/null
+
+SPEC_FILE="$spec_file" SPEC_CHECK_FILE="$spec_check_file" COUNCIL_FILE="$council_file" REPORT_FILE="$spec_report_file" node -e '
+const fs = require("fs");
+const specFile = process.env.SPEC_FILE;
+const specCheckFile = process.env.SPEC_CHECK_FILE;
+const councilFile = process.env.COUNCIL_FILE;
+const reportFile = process.env.REPORT_FILE;
+const check = JSON.parse(fs.readFileSync(specCheckFile, "utf8"));
+const ok = check?.ok === true;
+const report = {
+  stage: "spec",
+  status: ok ? "pass" : "fail",
+  summary: ok
+    ? "Bootstrap spec check passed. Continue with refinement or implementation."
+    : "Bootstrap spec check failed. Refine spec before implementation.",
+  changed_files: [specFile, specCheckFile, councilFile],
+  validation: ["pipeline-spec-check"],
+  blockers: ok ? [] : (Array.isArray(check.errors) ? check.errors.slice(0, 20) : ["spec check failed"]),
+  next_action: ok
+    ? "Review/approve spec gate, then proceed to code stage."
+    : "Address spec check errors and rerun spec stage.",
+  route_to: ok ? "code" : "spec",
+  requires_council: true,
+};
+if (ok) {
+  report.spec_file = specFile;
+  report.spec_check_file = specCheckFile;
+  report.council_file = councilFile;
+}
+fs.writeFileSync(reportFile, `${JSON.stringify(report, null, 2)}\n`);
+'
+
+advance_json="$(node "$PIPELINE_CONTROLLER" advance --run-dir "$run_dir" --report "$spec_report_file")"
+approval_required="$(json_field "$advance_json" approval_required)"
+
+if [[ "$approve_spec" == "true" && "$approval_required" == "true" ]]; then
+  node "$PIPELINE_CONTROLLER" approve --run-dir "$run_dir" --approver "${USER:-manager}" --note "bootstrap approval" >/dev/null
+fi
+
+status_json="$(node "$PIPELINE_CONTROLLER" status --run-dir "$run_dir")"
+current_stage="$(printf '%s' "$status_json" | node -e '
+let raw = "";
+process.stdin.on("data", (d) => (raw += d));
+process.stdin.on("end", () => {
+  const obj = JSON.parse(raw);
+  process.stdout.write(String(obj?.state?.current_stage || ""));
+});
+')"
+
+bootstrap_json="$(RUN_DIR="$run_dir" \
+CURRENT_STAGE="$current_stage" \
+APPROVAL_REQUIRED="$approval_required" \
+PIPELINE_PROFILE="$pipeline_profile" \
+SPEC_FILE="$spec_file" \
+SPEC_CHECK_FILE="$spec_check_file" \
+SPEC_REPORT_FILE="$spec_report_file" \
+NO_LAUNCH="$no_launch" \
+node -e '
+const payload = {
+  ok: true,
+  run_dir: process.env.RUN_DIR,
+  current_stage: process.env.CURRENT_STAGE || "unknown",
+  approval_required: process.env.APPROVAL_REQUIRED === "true",
+  pipeline_profile: process.env.PIPELINE_PROFILE,
+  spec_file: process.env.SPEC_FILE,
+  spec_check_file: process.env.SPEC_CHECK_FILE,
+  spec_report_file: process.env.SPEC_REPORT_FILE,
+  launched: process.env.NO_LAUNCH !== "true",
+};
+process.stdout.write(`${JSON.stringify(payload, null, 2)}\n`);
+')"
+
+if [[ "$json_output" == "true" ]]; then
+  printf '%s' "$bootstrap_json"
+else
+  echo "Bootstrapped pipeline run: $run_dir"
+  echo "Pipeline profile: $pipeline_profile"
+  echo "Current stage: ${current_stage:-unknown}"
+  echo "Spec file: $spec_file"
+  echo "Spec check: $spec_check_file"
+  echo "Spec report: $spec_report_file"
+fi
+
+if [[ "$no_launch" == "true" ]]; then
+  exit 0
+fi
+
+launch_prompt=$(
+  cat <<EOF
+Continue the existing pipeline run at: $run_dir
+Current stage: ${current_stage:-unknown}
+
+Use \$manager-pipeline and continue this exact run with:
+- node /home/rickebo/.codex/bin/pipeline-controller.mjs status --run-dir "$run_dir"
+- follow stage-gated flow and approvals
+- keep all stage reports in "$run_dir"
+EOF
+)
+
+exec "$PIPELINE_LAUNCHER" -s workspace-write "$launch_prompt"

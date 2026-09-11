@@ -1,0 +1,18 @@
+{
+  "stage": "validation",
+  "status": "pass",
+  "summary": "Issue #124 merged normally as PR #154 after exact-head local review/QA and hosted validation passed.",
+  "changed_files": [],
+  "validation": [
+    "PR #154 merged with merge commit d17e9b9294c6e2bead194ae15dc9b03cec63108c",
+    "Hosted validate run 32453971906 and check 96687591887 passed on exact head 3cb2262094b1165438bc625ba7921f88df8fded9",
+    "Issue #124 closed as completed",
+    "Project item 232426924 set to Done / Idle with blocker cleared",
+    "Merged remote branch fix/124-pin-supply-chain-metadata deleted"
+  ],
+  "blockers": [
+    "Nexus OCI referrer/signing support and Argo admission enforcement remain documented external follow-ups; no unsupported release claim was made."
+  ],
+  "next_action": "Approve the validation-to-done pipeline transition and retain the external Nexus follow-up for a future roadmap issue.",
+  "route_to": "done"
+}

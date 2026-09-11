@@ -1,0 +1,18 @@
+{
+  "stage": "test",
+  "status": "pass",
+  "summary": "All protected deployment-controller PR #151 checks passed on unchanged exact head 6b468b4719040a560457c1b69ae14fd6d79a0ac2 after the SBOM and canonical body-limit corrections.",
+  "changed_files": [],
+  "validation": [
+    "chart passed in 17s",
+    "integration passed in 2m20s",
+    "lint passed in 4m34s",
+    "supply-chain passed in 7m20s",
+    "test passed in 9m9s",
+    "All checks belong to CI run 33269166310 at exact head 6b468b4719040a560457c1b69ae14fd6d79a0ac2"
+  ],
+  "blockers": [],
+  "next_action": "Validate requirement traceability, inert merge behavior, exact head/mergeability, and residual rollout gates before merge.",
+  "route_to": "validation",
+  "risk_level": "critical"
+}

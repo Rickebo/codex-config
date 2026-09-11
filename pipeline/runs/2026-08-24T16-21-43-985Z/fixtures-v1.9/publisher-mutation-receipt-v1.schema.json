@@ -1,0 +1,529 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.codicarium.com/release/publisher-mutation-receipt-v1.schema.json",
+  "title": "Codicarium publisher mutation receipt v1",
+  "type": "object",
+  "required": [
+    "body",
+    "signature"
+  ],
+  "properties": {
+    "body": {
+      "type": "object",
+      "required": [
+        "schema",
+        "kind",
+        "dispatch_receipt_sha256",
+        "sequence",
+        "previous_receipt_sha256",
+        "mutation",
+        "request_sha256",
+        "readback_sha256",
+        "publisher_ref",
+        "publisher_revision",
+        "publisher_run_id",
+        "publisher_run_attempt",
+        "issued_at",
+        "issuer",
+        "target"
+      ],
+      "properties": {
+        "schema": {
+          "const": "codicarium.publisher-mutation-receipt/v1"
+        },
+        "kind": {
+          "const": "publisher-mutation-receipt"
+        },
+        "dispatch_receipt_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "sequence": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        },
+        "previous_receipt_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "mutation": {
+          "enum": [
+            "release-create",
+            "release-asset-create",
+            "image-publish",
+            "chart-publish",
+            "release-finalize"
+          ]
+        },
+        "request_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "readback_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "publisher_ref": {
+          "const": "refs/heads/main"
+        },
+        "publisher_revision": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "publisher_run_id": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        },
+        "publisher_run_attempt": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        },
+        "issued_at": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])-([0-2][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]Z$"
+        },
+        "issuer": {
+          "type": "object",
+          "required": [
+            "kind",
+            "repository_id",
+            "workflow",
+            "ref",
+            "workflow_sha",
+            "run_id",
+            "run_attempt"
+          ],
+          "properties": {
+            "kind": {
+              "const": "github-actions"
+            },
+            "repository_id": {
+              "const": "1303901324"
+            },
+            "workflow": {
+              "type": "string",
+              "minLength": 1
+            },
+            "ref": {
+              "const": "refs/heads/main"
+            },
+            "workflow_sha": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{40}$"
+            },
+            "run_id": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "run_attempt": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            }
+          },
+          "additionalProperties": false
+        },
+        "target": {
+          "oneOf": [
+            {
+              "type": "object",
+              "required": [
+                "release_id",
+                "tag",
+                "target_commitish",
+                "draft",
+                "prerelease"
+              ],
+              "properties": {
+                "release_id": {
+                  "type": "string",
+                  "pattern": "^[1-9][0-9]*$"
+                },
+                "tag": {
+                  "const": "v0.6.14"
+                },
+                "target_commitish": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{40}$"
+                },
+                "draft": {
+                  "const": true
+                },
+                "prerelease": {
+                  "const": false
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "required": [
+                "release_id",
+                "asset_id",
+                "name",
+                "size",
+                "sha256"
+              ],
+              "properties": {
+                "release_id": {
+                  "type": "string",
+                  "pattern": "^[1-9][0-9]*$"
+                },
+                "asset_id": {
+                  "type": "string",
+                  "pattern": "^[1-9][0-9]*$"
+                },
+                "name": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "size": {
+                  "type": "string",
+                  "pattern": "^[1-9][0-9]*$"
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "required": [
+                "registry",
+                "repository",
+                "reference",
+                "digest"
+              ],
+              "properties": {
+                "registry": {
+                  "const": "docker-push.nexus.int.codicarium.com"
+                },
+                "repository": {
+                  "const": "codicarium/deployment-controller"
+                },
+                "reference": {
+                  "const": "v0.6.14"
+                },
+                "digest": {
+                  "type": "string",
+                  "pattern": "^sha256:[0-9a-f]{64}$"
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "required": [
+                "registry",
+                "repository",
+                "version",
+                "digest"
+              ],
+              "properties": {
+                "registry": {
+                  "const": "charts.nexus.int.codicarium.com"
+                },
+                "repository": {
+                  "const": "codicarium/deployment-controller"
+                },
+                "version": {
+                  "const": "0.6.14"
+                },
+                "digest": {
+                  "type": "string",
+                  "pattern": "^sha256:[0-9a-f]{64}$"
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "required": [
+                "release_id",
+                "tag",
+                "target_commitish",
+                "draft",
+                "prerelease"
+              ],
+              "properties": {
+                "release_id": {
+                  "type": "string",
+                  "pattern": "^[1-9][0-9]*$"
+                },
+                "tag": {
+                  "const": "v0.6.14"
+                },
+                "target_commitish": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{40}$"
+                },
+                "draft": {
+                  "const": false
+                },
+                "prerelease": {
+                  "const": false
+                }
+              },
+              "additionalProperties": false
+            }
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "mutation": {
+                "const": "release-create"
+              }
+            },
+            "required": [
+              "mutation"
+            ]
+          },
+          "then": {
+            "properties": {
+              "target": {
+                "type": "object",
+                "required": [
+                  "release_id",
+                  "tag",
+                  "target_commitish",
+                  "draft",
+                  "prerelease"
+                ],
+                "properties": {
+                  "release_id": {
+                    "type": "string",
+                    "pattern": "^[1-9][0-9]*$"
+                  },
+                  "tag": {
+                    "const": "v0.6.14"
+                  },
+                  "target_commitish": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{40}$"
+                  },
+                  "draft": {
+                    "const": true
+                  },
+                  "prerelease": {
+                    "const": false
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "mutation": {
+                "const": "release-asset-create"
+              }
+            },
+            "required": [
+              "mutation"
+            ]
+          },
+          "then": {
+            "properties": {
+              "target": {
+                "type": "object",
+                "required": [
+                  "release_id",
+                  "asset_id",
+                  "name",
+                  "size",
+                  "sha256"
+                ],
+                "properties": {
+                  "release_id": {
+                    "type": "string",
+                    "pattern": "^[1-9][0-9]*$"
+                  },
+                  "asset_id": {
+                    "type": "string",
+                    "pattern": "^[1-9][0-9]*$"
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "size": {
+                    "type": "string",
+                    "pattern": "^[1-9][0-9]*$"
+                  },
+                  "sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "mutation": {
+                "const": "image-publish"
+              }
+            },
+            "required": [
+              "mutation"
+            ]
+          },
+          "then": {
+            "properties": {
+              "target": {
+                "type": "object",
+                "required": [
+                  "registry",
+                  "repository",
+                  "reference",
+                  "digest"
+                ],
+                "properties": {
+                  "registry": {
+                    "const": "docker-push.nexus.int.codicarium.com"
+                  },
+                  "repository": {
+                    "const": "codicarium/deployment-controller"
+                  },
+                  "reference": {
+                    "const": "v0.6.14"
+                  },
+                  "digest": {
+                    "type": "string",
+                    "pattern": "^sha256:[0-9a-f]{64}$"
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "mutation": {
+                "const": "chart-publish"
+              }
+            },
+            "required": [
+              "mutation"
+            ]
+          },
+          "then": {
+            "properties": {
+              "target": {
+                "type": "object",
+                "required": [
+                  "registry",
+                  "repository",
+                  "version",
+                  "digest"
+                ],
+                "properties": {
+                  "registry": {
+                    "const": "charts.nexus.int.codicarium.com"
+                  },
+                  "repository": {
+                    "const": "codicarium/deployment-controller"
+                  },
+                  "version": {
+                    "const": "0.6.14"
+                  },
+                  "digest": {
+                    "type": "string",
+                    "pattern": "^sha256:[0-9a-f]{64}$"
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "mutation": {
+                "const": "release-finalize"
+              }
+            },
+            "required": [
+              "mutation"
+            ]
+          },
+          "then": {
+            "properties": {
+              "target": {
+                "type": "object",
+                "required": [
+                  "release_id",
+                  "tag",
+                  "target_commitish",
+                  "draft",
+                  "prerelease"
+                ],
+                "properties": {
+                  "release_id": {
+                    "type": "string",
+                    "pattern": "^[1-9][0-9]*$"
+                  },
+                  "tag": {
+                    "const": "v0.6.14"
+                  },
+                  "target_commitish": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{40}$"
+                  },
+                  "draft": {
+                    "const": false
+                  },
+                  "prerelease": {
+                    "const": false
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        }
+      ]
+    },
+    "signature": {
+      "type": "object",
+      "required": [
+        "format",
+        "kid",
+        "payload_sha256",
+        "signature_base64url"
+      ],
+      "properties": {
+        "format": {
+          "const": "ed25519-jcs/v1"
+        },
+        "kid": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "payload_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "signature_base64url": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]+$"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,29 @@
+{
+  "normal": {
+    "requester": "admin.requester.v2.5",
+    "approver": "admin.approver.v2.5",
+    "executor": "admin.executor.v2.5",
+    "approval_ttl_seconds": 1800,
+    "credential_ttl_seconds": 600,
+    "one_use": true,
+    "audit_required": true,
+    "revocation_required": true
+  },
+  "break_glass": {
+    "requester": "breakglass.requester.v2.5",
+    "approver_one": "breakglass.one.v2.5",
+    "approver_two": "breakglass.two.v2.5",
+    "executor": "breakglass.executor.v2.5",
+    "approval_ttl_seconds": 900,
+    "credential_ttl_seconds": 300,
+    "one_use": true,
+    "audit_required": true,
+    "revocation_required": true,
+    "forbidden_operations": [
+      "publish",
+      "mint-candidate",
+      "mutate-admission",
+      "clear-unknown"
+    ]
+  }
+}

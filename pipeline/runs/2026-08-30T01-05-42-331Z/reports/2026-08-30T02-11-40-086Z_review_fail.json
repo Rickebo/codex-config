@@ -1,0 +1,24 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Independent Luna review found a P1 sequencing defect: the MetaMCP revocation script requires policy.default to equal role:readonly before and after revocation, so it fails closed after the deny-by-default empty value is deployed and may leave the legacy admin credential active.",
+  "changed_files": [
+    "scripts/revoke-legacy-metamcp-argocd-credentials.sh",
+    "tests/test-revoke-legacy-metamcp-argocd-credentials.py",
+    "tests/test-revoke-legacy-metamcp-argocd-credentials-transaction.py",
+    "tests/test-revoke-legacy-metamcp-argocd-credentials-kubectl.py"
+  ],
+  "validation": [
+    "Exact reviewed HEAD e1ede4d3fbb0f17798361ec364a500cbca578ce6 and base 09e6e5405d799446354d531ae76c314374576e74 verified",
+    "Range-diff confirms seven commits remain isolated from the intervening main change",
+    "Reviewer identified hard-coded role:readonly checks at script lines 90 and 192",
+    "Existing focused tests pass but do not cover revocation after policy.default becomes empty"
+  ],
+  "blockers": [
+    "Revocation must accept both centrally approved defaults, preserve the observed value, and reject all other values",
+    "Tests must cover old-default and deny-by-default transaction paths before re-review"
+  ],
+  "next_action": "Route to Luna code lane for the minimal fail-closed two-state guard and regression tests; do not push before independent re-review.",
+  "route_to": "code",
+  "risk_level": "critical"
+}

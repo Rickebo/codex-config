@@ -1,0 +1,44 @@
+{
+  "body": {
+    "schema": "codicarium.publisher-dispatch-receipt/v2",
+    "evidence_class": "synthetic-conformance-fixture",
+    "publication_authority": false,
+    "fixture_set": "issue93-v2.0",
+    "fixture_identity_jcs_sha256": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+    "kind": "publisher-dispatch",
+    "claim_key": "rel-v2-sha256:d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+    "active_source_revision": "2aee9b5ba6ed8be8dc848df482a43f6a3f33b712",
+    "claim_identity_jcs_sha256": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+    "protected_main_revision": "6b82f94bf0c41381bd43f96a04baf909dac7ec52",
+    "sequence": "0",
+    "previous_receipt_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "reservation_entry_sha256": "86197e909034425de778d76880363eea82fe38715a1917056e54ea4f73a277c2",
+    "authorization_sha256": "1e2b601571a1ab4d6faf41b19cd22cdafe27e70ee9bbc11ae1d37a7553bbe830",
+    "handoff_sha256": "8abe528bb32aaa47f8fc496c3571d4b91248f3ebfe4c8be29463a25277bd9e88",
+    "legacy_raw_identity_authority": false,
+    "dispatch_request_sha256": "f852a4c540eff200c4b3ce0b73455265429a77b522d10a5f686225c76241b62d",
+    "dispatch_readback_sha256": "9e3e4fe36588fe36a8f088bdd44934ae93052a37f2ba6044909eaf6da90da30b",
+    "publisher_workflow": "codicarium/deployment-controller/.github/workflows/publish-release-v2.yaml",
+    "publisher_workflow_sha": "6b82f94bf0c41381bd43f96a04baf909dac7ec52",
+    "publisher_ref": "refs/heads/main",
+    "publisher_revision": "6b82f94bf0c41381bd43f96a04baf909dac7ec52",
+    "publisher_run_id": "9005001",
+    "publisher_run_attempt": "1",
+    "issued_at": "2026-01-01T00:00:05Z",
+    "issuer": {
+      "kind": "vault-transit",
+      "principal": "release-journal-signer",
+      "vault_role": "release-journal-sign-v1",
+      "can_mutate_targets": false,
+      "can_commit_journal": false
+    }
+  },
+  "signature": {
+    "format": "vault-transit-ed25519-jcs/v1",
+    "transit_key": "release-journal-v1",
+    "transit_key_version": "1",
+    "kid": "kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+    "payload_sha256": "abb0b3465baad0bb2741a56989afa1e7a9cca6812dc6680a91568567f4a8b31a",
+    "signature_base64url": "ohhA-yPsXWvKmZjr7x-c-kE0aSXkDP3Plu67-9XxJR4TRUmcluNWhuhXOw0PLjQwwgInQDOO7xhG02yXJNLXAw"
+  }
+}

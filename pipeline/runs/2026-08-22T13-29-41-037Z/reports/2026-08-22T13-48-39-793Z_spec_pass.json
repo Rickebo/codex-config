@@ -1,0 +1,40 @@
+{
+  "stage": "spec",
+  "status": "pass",
+  "summary": "Specification revised after council review. It now enforces exact homelab targeting, PVC-preserving phased migration, exact Deployment Controller Kafka policy, Rickebo-only Kafka dependency closure, and repository-scoped credentials.",
+  "changed_files": [
+    "/home/rickebo/.codex/pipeline/runs/2026-08-22T13-29-41-037Z/spec.json",
+    "/home/rickebo/.codex/pipeline/runs/2026-08-22T13-29-41-037Z/spec-check.json",
+    "/home/rickebo/.codex/pipeline/runs/2026-08-22T13-29-41-037Z/council.json"
+  ],
+  "validation": [
+    "pipeline-spec-check.mjs returned ok=true with no errors or warnings.",
+    "Live preflight identified homelab API server https://192.168.1.89:6443 for kubeconfig /home/rickebo/.kube/homelab.yaml context default.",
+    "Live Redpanda StatefulSet is 1/1 and its 10 GiB PVC is Bound.",
+    "Live Deployment Controller controller and webhook are both 2/2 Ready.",
+    "Current Kafka ACL Application failure is isolated to the Codicarium repository source."
+  ],
+  "blockers": [],
+  "next_action": "Create Rickebo-owned repositories and implement the pinned Redpanda values and ACL chart in disjoint worktrees.",
+  "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-22T13-29-41-037Z/spec.json",
+  "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-08-22T13-29-41-037Z/spec-check.json",
+  "council_file": "/home/rickebo/.codex/pipeline/runs/2026-08-22T13-29-41-037Z/council.json",
+  "requires_council": true,
+  "independent_lanes": [
+    "Repository bootstrap and kafka-config implementation",
+    "kafka-acls implementation and exact policy tests",
+    "pve-infra Argo source/credential cutover",
+    "Live homelab validation and Deployment Controller smoke tests"
+  ],
+  "route_to": "code",
+  "risk_level": "high",
+  "issues": [
+    {
+      "id": "runner-config-2",
+      "title": "Bootstrap Rickebo-owned Kafka platform for homelab Deployment Controller",
+      "severity": "high",
+      "details": "Tracking issue created in rickebo-com/runner-config; project status is unavailable because no project is configured.",
+      "owner_stage": "code"
+    }
+  ]
+}

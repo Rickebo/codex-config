@@ -1,0 +1,27 @@
+{
+  "stage": "test",
+  "status": "pass",
+  "summary": "Exact-head QA passes at 3d82e34c157b4b5f7aa5b06fce48b2846231b084 with local/full/race/vet, immutable dual-image smoke, manifest/OpenAPI/Helm/workflow checks, and real interruption cleanup.",
+  "changed_files": [],
+  "validation": [
+    "DOCKER_CONTEXT=default make ci passed",
+    "go test -race ./... and go vet ./... passed",
+    "Focused smoke/migration tests passed 16/16",
+    "All 11 migration manifest/parity checks and current schema assertions passed",
+    "Real app and migration digest smoke passed on linux/amd64",
+    "Real SIGTERM/interrupted-create fixtures left no owned resources"
+  ],
+  "blockers": [
+    "No GitHub PR or hosted workflow run exists at this exact head.",
+    "No published release artifact has yet been validated through the release workflow."
+  ],
+  "next_action": "Advance to validation, open the exact-head PR, run hosted validate, and verify the published release image/digest before merge.",
+  "route_to": "validation",
+  "risk_level": "high",
+  "independent_lanes": [
+    "Hosted exact-head validation",
+    "Release publication and final immutable smoke",
+    "GitHub tracking and protected merge"
+  ],
+  "requires_council": true
+}

@@ -1,0 +1,228 @@
+{
+  "meta": {
+    "id": "SPEC-DEPLOYMENT-CONTROLLER-90-LEGACY-QUARANTINE",
+    "title": "Exact v0.6.4 pre-approval quarantine compatibility",
+    "author": "Codex manager",
+    "created_at": "2026-08-24T05:46:51Z",
+    "version": "1.0"
+  },
+  "feature": {
+    "problem_statement": "The controller upgrade must quarantine three persisted v0.6.4 pre-approval requests without mutating their durable audit graph, while the current compatibility hook still intercepts modern activations, mishandles terminal legacy requests, omits a legacy-only classifier field, and does not model the valid consumed-proof state where v0.6.4 already deleted the issuance Lease.",
+    "goals": [
+      "Preserve protected-main behavior for every modern or unclassifiable activation event.",
+      "Make exact terminal v0.6.4 requests unconditional zero-write no-ops.",
+      "Quarantine only exact nonterminal v0.6.4 shapes with status-only writes and fail closed on ambiguity.",
+      "Prove compatibility through real API-server migration from immutable v0.6.4 CRD fixtures to current CRDs."
+    ],
+    "non_goals": [
+      "Repair, delete, consume, recreate, or synthesize legacy proofs, activations, Leases, Work, or approval data.",
+      "Resume or retry a legacy activation.",
+      "Change modern approval, work, admission, or activation semantics.",
+      "Provide generic backward compatibility for shapes other than exact v0.6.4 objects.",
+      "Push, release, import, deploy, or mutate live resources during this implementation pipeline."
+    ],
+    "scope_in": [
+      "internal activation reconciler routing and exact legacy classifiers",
+      "legacy audit-state validation including Issued and Consumed proof marker semantics",
+      "unit regression tests for modern, terminal, ambiguous, and legacy-only shapes",
+      "isolated integration envtest with immutable v0.6.4 CRD fixtures and current-CRD upgrade",
+      "generated CRD/schema changes only if envtest proves a status-only update is otherwise rejected"
+    ],
+    "scope_out": [
+      "infra import and Helm upgrade",
+      "runner producer activation",
+      "Argo CD deny-by-default rollout",
+      "Access Controller implementation"
+    ]
+  },
+  "requirements": [
+    {
+      "id": "REQ-001",
+      "priority": "MUST",
+      "statement": "Legacy activation-event handling must begin only after fetching the referenced request, proving exact name and UID binding, and classifying the request as an exact v0.6.4 Activate request; all modern or unclassifiable events must retain protected-main behavior.",
+      "rationale": "A broad activation candidate hook can change missing-request, UID-mismatch, Active, deleting, Failed, and failed-epoch-recovery behavior outside the compatibility boundary."
+    },
+    {
+      "id": "REQ-002",
+      "priority": "MUST",
+      "statement": "After exact legacy request classification, a terminal request phase must return success before listing or validating linked activations, proofs, Leases, or Work.",
+      "rationale": "Already-terminal audit records must remain stable no-ops even when related historical state is incomplete or duplicated."
+    },
+    {
+      "id": "REQ-003",
+      "priority": "MUST",
+      "statement": "Exact v0.6.4 classification must require the known generation/action/target shape, absence of oneTimeApproval and failedEpochRecovery, and all existing immutable digest and identity bindings.",
+      "rationale": "Modern recovery-shaped or drifted requests must never bypass strict modern admission through the legacy path."
+    },
+    {
+      "id": "REQ-004",
+      "priority": "MUST",
+      "statement": "Legacy audit validation must accept an absent issuance Lease only when an exactly bound proof is already Consumed, require and validate the marker for an Issued proof, and never create, delete, or mutate either object.",
+      "rationale": "The v0.6.4 consumeProof path legitimately deletes the marker after consuming the proof, matching the live MetaMCP residual state."
+    },
+    {
+      "id": "REQ-005",
+      "priority": "MUST",
+      "statement": "Successful legacy migration may update only ReconciliationRequest status to Rejected for PrepareActivation or Failed for Activate using code LEGACY_PRE_APPROVAL_REQUEST; every ambiguous or non-exact state must return a terminal error with zero writes.",
+      "rationale": "Durable audit objects are evidence and repository contents or residual drift must not broaden authority."
+    },
+    {
+      "id": "REQ-006",
+      "priority": "MUST",
+      "statement": "An isolated envtest must seed API-server-assigned v0.6.4 objects from immutable CRD fixtures, upgrade to current CRDs, run request- and activation-triggered reconciliation, and prove status-only migration plus object/resourceVersion preservation.",
+      "rationale": "Fake clients cannot prove CRD decoding, UID, generation, resourceVersion, CEL, or status-subresource behavior across the actual schema upgrade."
+    },
+    {
+      "id": "REQ-007",
+      "priority": "MUST",
+      "statement": "If current CEL validation blocks a status-only update of an exact persisted v0.6.4 object, any schema exception must be limited to that exact legacy shape and tests must prove modern approval requirements remain enforced.",
+      "rationale": "The migration must not weaken current admission or allow new unapproved activation requests."
+    }
+  ],
+  "acceptance_criteria": [
+    {
+      "id": "AC-001",
+      "requirement_ids": ["REQ-001"],
+      "scenario": "Given modern or unclassifiable activation events with deleting, Active, Failed, missing-request, UID-mismatch, nonterminal, or failed-epoch-recovery states, when reconciliation runs, then status, error, and write behavior matches protected main and legacy quarantine is not entered."
+    },
+    {
+      "id": "AC-002",
+      "requirement_ids": ["REQ-002"],
+      "scenario": "Given an exact terminal legacy request with missing, duplicate, mismatched, deleting, or malformed related audit objects, when request- or activation-triggered reconciliation runs, then it returns success and leaves every object unchanged."
+    },
+    {
+      "id": "AC-003",
+      "requirement_ids": ["REQ-003"],
+      "scenario": "Given a request with failedEpochRecovery or any other post-v0.6.4 or drifted field, when the request is classified, then exact legacy classification rejects it and the normal strict path retains authority."
+    },
+    {
+      "id": "AC-004",
+      "requirement_ids": ["REQ-004"],
+      "scenario": "Given an exactly bound Consumed proof whose v0.6.4 issuance Lease is absent or an Issued proof with its exact nondeleting marker, when migration runs, then it succeeds status-only and neither proof nor Lease state is mutated."
+    },
+    {
+      "id": "AC-005",
+      "requirement_ids": ["REQ-005"],
+      "scenario": "Given exact nonterminal legacy Prepare and Activate objects, when migration succeeds, then only request status changes to the documented terminal phase/code while specs, activations, proofs, Leases, Work, owner references, finalizers, timestamps, and list cardinalities remain unchanged."
+    },
+    {
+      "id": "AC-006",
+      "requirement_ids": ["REQ-006"],
+      "scenario": "Given immutable v0.6.4 CRDs and stored objects with API-assigned identity/version fields, when the isolated envtest upgrades to current CRDs and reconciles, then exact objects are quarantined status-only and terminal or ambiguous cases perform zero writes."
+    },
+    {
+      "id": "AC-007",
+      "requirement_ids": ["REQ-007"],
+      "scenario": "Given current CRDs after any empirically required narrow schema adjustment, when exact persisted legacy status updates and unapproved modern Prepare or Activate writes are attempted, then legacy status updates succeed and modern unapproved writes remain rejected."
+    }
+  ],
+  "test_plan": [
+    {
+      "id": "TST-001",
+      "type": "unit",
+      "requirement_ids": ["REQ-001", "REQ-002", "REQ-003"],
+      "approach": "Add focused red/green activation reconciler tests for modern missing/mismatch/Active/Failed/recovery behavior, terminal legacy no-op ordering, and exact classifier exclusions."
+    },
+    {
+      "id": "TST-002",
+      "type": "unit",
+      "requirement_ids": ["REQ-004", "REQ-005"],
+      "approach": "Test Issued proof with exact marker, Consumed proof with absent marker, drifted/deleting states, status-only writes, and zero-write preservation snapshots."
+    },
+    {
+      "id": "TST-003",
+      "type": "integration",
+      "requirement_ids": ["REQ-001", "REQ-006"],
+      "approach": "Use the repository envtest harness to exercise current-CRD modern activation regressions and an isolated old-CRD-to-current-CRD legacy migration fixture."
+    },
+    {
+      "id": "TST-004",
+      "type": "integration",
+      "requirement_ids": ["REQ-005", "REQ-006", "REQ-007"],
+      "approach": "Assert API-assigned UID/generation/resourceVersion behavior, unchanged linked objects and cardinalities, current status-subresource acceptance, and continued modern approval rejection."
+    },
+    {
+      "id": "TST-005",
+      "type": "non_functional",
+      "requirement_ids": ["REQ-001", "REQ-005", "REQ-006", "REQ-007"],
+      "approach": "Run focused and full Go tests, race tests, vet, integration suite, generated/schema/chart verification, documentation checks, and git diff checks."
+    }
+  ],
+  "traceability": [
+    {
+      "requirement_id": "REQ-001",
+      "acceptance_ids": ["AC-001"],
+      "test_ids": ["TST-001", "TST-003", "TST-005"],
+      "review_checks": ["Compare routing order and modern semantics against base 989799c"],
+      "validation_checks": ["Focused modern regression tests and envtest pass"]
+    },
+    {
+      "requirement_id": "REQ-002",
+      "acceptance_ids": ["AC-002"],
+      "test_ids": ["TST-001", "TST-005"],
+      "review_checks": ["Terminal phase check precedes all related-object listing and validation"],
+      "validation_checks": ["Terminal legacy no-op snapshot tests pass"]
+    },
+    {
+      "requirement_id": "REQ-003",
+      "acceptance_ids": ["AC-003"],
+      "test_ids": ["TST-001"],
+      "review_checks": ["Exact classifier excludes failedEpochRecovery and all later fields"],
+      "validation_checks": ["Classifier and modern recovery regression tests pass"]
+    },
+    {
+      "requirement_id": "REQ-004",
+      "acceptance_ids": ["AC-004"],
+      "test_ids": ["TST-002", "TST-004"],
+      "review_checks": ["Consumed proof permits only absent marker; Issued proof requires exact marker"],
+      "validation_checks": ["Unit and old-CRD envtest marker-state cases pass"]
+    },
+    {
+      "requirement_id": "REQ-005",
+      "acceptance_ids": ["AC-005"],
+      "test_ids": ["TST-002", "TST-004", "TST-005"],
+      "review_checks": ["All validation completes before the sole request status write"],
+      "validation_checks": ["Object snapshots and resourceVersions prove status-only behavior"]
+    },
+    {
+      "requirement_id": "REQ-006",
+      "acceptance_ids": ["AC-006"],
+      "test_ids": ["TST-003", "TST-004", "TST-005"],
+      "review_checks": ["Fixture is pinned to v0.6.4 commit 17688f7 and isolated from shared current-CRD suite"],
+      "validation_checks": ["Focused integration tests execute without skip and make test-integration passes"]
+    },
+    {
+      "requirement_id": "REQ-007",
+      "acceptance_ids": ["AC-007"],
+      "test_ids": ["TST-004", "TST-005"],
+      "review_checks": ["No schema relaxation unless reproduced; exception matches exact legacy shape only"],
+      "validation_checks": ["Modern missing-approval negative admission tests remain green"]
+    }
+  ],
+  "quality_gates": {
+    "spec_review_required": true,
+    "testability_required": true,
+    "traceability_required": true
+  },
+  "council": {
+    "perspectives": [
+      {
+        "role": "architecture",
+        "summary": "Preserve original modern routing, make terminal exact-legacy state an early no-op, and isolate old-CRD upgrade testing from the shared envtest suite."
+      },
+      {
+        "role": "security review",
+        "summary": "Accept consumed-proof marker absence only for an exact bound proof, exclude failed-epoch recovery from legacy classification, and preserve every durable audit object."
+      },
+      {
+        "role": "quality engineering",
+        "summary": "Use immutable v0.6.4 CRD fixtures plus real API-server UID/generation/resourceVersion/status semantics; prove modern admission remains strict."
+      }
+    ],
+    "consensus_summary": "Proceed with a test-first, minimal compatibility correction. No release work is allowed until exact-SHA review and full unit/integration/schema validation pass.",
+    "open_questions": [
+      "Will current CEL validation accept a status-only update of an exact persisted v0.6.4 request after CRD upgrade?",
+      "Can the isolated envtest replace CRDs in-place reliably, or should it use a separate environment for old-object seeding and upgrade?"
+    ]
+  }
+}

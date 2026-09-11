@@ -1,0 +1,42 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Fresh independent Luna review of PR #1293 head d11e3694 remains NO-GO: unit contents are not pinned, privileged ancestors below the snapshot root need root ownership, and pathname reopens leave TOCTOU gaps after metadata validation.",
+  "changed_files": [],
+  "validation": [
+    "Exact head d11e3694a4f651eb62e2076fc4da30b2ebf075ba reviewed against base efb9faac0606e02b7cac8e36e716f1ede9a50fb6.",
+    "Reviewer locally proved a user-owned 0700 root/etc ancestor can contain otherwise root-owned privileged files and still pass.",
+    "Exact-head Validate passed in 7m06s; guard and ARC classifier pass; protected ARC producer remains queued and is not merge evidence."
+  ],
+  "blockers": [
+    "Pin and verify reviewed systemd unit contents by digest or strict directive allowlist; add a unit-content tamper test.",
+    "Require root ownership for every privileged-path ancestor below snapshot root, with only a narrowly explicit workspace exception; add ownership mutation coverage.",
+    "Replace lstat-then-pathname-read sequences with descriptor-anchored no-follow opens, fstat, and descriptor reads/parsing; add a real swap-race test."
+  ],
+  "next_action": "Return to Luna code owner for loop-3 remediation of unit integrity, ancestor ownership, and descriptor-anchored race safety, then independently re-review the new exact head.",
+  "route_to": "code",
+  "risk_level": "high",
+  "issues": [
+    {
+      "id": "REV-1290-010",
+      "title": "Runner systemd unit contents are not verified",
+      "severity": "high",
+      "details": "A root-owned correctly named unit with arbitrary ExecStart passes because only path, ownership, mode, and synthetic service state are checked.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV-1290-011",
+      "title": "Privileged ancestors below snapshot root need root ownership",
+      "severity": "high",
+      "details": "A user-owned non-writable-to-group-or-other ancestor can contain root-owned privileged artifacts and still pass the trust-chain validation.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV-1290-012",
+      "title": "Metadata-to-content checks retain pathname TOCTOU windows",
+      "severity": "high",
+      "details": "Artifacts, sudo policy, and service checks validate metadata then reopen by pathname, permitting concurrent object replacement or symlink substitution.",
+      "owner_stage": "code"
+    }
+  ]
+}

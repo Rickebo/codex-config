@@ -1,0 +1,19 @@
+{
+  "stage": "validation",
+  "status": "pass",
+  "route_to": "done",
+  "risk_level": "medium",
+  "changed_files": [],
+  "summary": "Internal OAuth setup infrastructure is live and the VPN-path setup page is reachable and verified.",
+  "validation": [
+    "Argo youtarr is Synced/Healthy/Succeeded at merge revision a02dd0f692a4bc4237dcafabc563907fd51b32ab.",
+    "Google ExternalSecret is Ready=True SecretSynced; target Secret metadata exposes only client_id, client_secret, and token_key keys.",
+    "Controller and worker are 1/1 Running with zero restarts; public Service endpoint and VPN-only TLS Ingress are live.",
+    "Headscale DNS records contain youtarr.arr.rickebo.com; proxy HTTPS returns TLS-verified HTTP 200 /setup/ with Jellyfin and Connect Google UI.",
+    "Controller logs showed no sensitive-token or cookie pattern."
+  ],
+  "blockers": [
+    "User Google OAuth connection, subscription synchronization, and periodic reconciliation remain unvalidated until the user completes setup."
+  ],
+  "next_action": "User should open https://youtarr.arr.rickebo.com/setup/ through the homelab VPN, sign in with Jellyfin, and connect Google."
+}

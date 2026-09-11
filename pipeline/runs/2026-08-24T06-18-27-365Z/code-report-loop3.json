@@ -1,0 +1,20 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Pinned Release Verify policy loading to the minimally prevalidated exact Automatic Release workflow SHA, then refetched and fully bound that same coordinator revision through the executable trust policy.",
+  "changed_files": [
+    ".github/workflows/release.yaml",
+    "hack/release-coordinator-policy.js",
+    "hack/test-release-coordinator-policy.js",
+    "hack/test-release-graph.py"
+  ],
+  "validation": [
+    "hack/test-release-graph.py: 43 tests passed",
+    "node hack/test-release-coordinator-policy.js: passed",
+    "actionlint on Release Verify and Publish Release: passed",
+    "git diff --check: passed",
+    "diff SHA-256: 4e4e94fafe09fdb1759a528d28be657c9b37edb4cfbe112278d0727f4d0d4e73"
+  ],
+  "blockers": [],
+  "next_action": "Perform final independent exact-snapshot review of immutable coordinator policy loading and the complete release design."
+}

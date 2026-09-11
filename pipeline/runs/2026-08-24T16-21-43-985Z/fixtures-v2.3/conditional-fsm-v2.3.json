@@ -1,0 +1,324 @@
+{
+  "schema": "codicarium.release-fsm/v2.3",
+  "initial": "F01",
+  "failure_outcomes": [
+    "UNKNOWN",
+    "TIMEOUT",
+    "PARTIAL_EFFECT",
+    "MISMATCH"
+  ],
+  "edges": [
+    {
+      "from": "F01",
+      "on": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "to": "U00",
+      "actions": [
+        "freeze epoch",
+        "cancel outstanding dispatches",
+        "deny new claims"
+      ]
+    },
+    {
+      "from": "M01",
+      "on": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "to": "U00",
+      "actions": [
+        "freeze epoch",
+        "cancel outstanding dispatches",
+        "deny new claims"
+      ]
+    },
+    {
+      "from": "M02",
+      "on": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "to": "U00",
+      "actions": [
+        "freeze epoch",
+        "cancel outstanding dispatches",
+        "deny new claims"
+      ]
+    },
+    {
+      "from": "M03",
+      "on": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "to": "U00",
+      "actions": [
+        "freeze epoch",
+        "cancel outstanding dispatches",
+        "deny new claims"
+      ]
+    },
+    {
+      "from": "M04",
+      "on": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "to": "U00",
+      "actions": [
+        "freeze epoch",
+        "cancel outstanding dispatches",
+        "deny new claims"
+      ]
+    },
+    {
+      "from": "M05",
+      "on": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "to": "U00",
+      "actions": [
+        "freeze epoch",
+        "cancel outstanding dispatches",
+        "deny new claims"
+      ]
+    },
+    {
+      "from": "M06",
+      "on": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "to": "U00",
+      "actions": [
+        "freeze epoch",
+        "cancel outstanding dispatches",
+        "deny new claims"
+      ]
+    },
+    {
+      "from": "M07",
+      "on": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "to": "U00",
+      "actions": [
+        "freeze epoch",
+        "cancel outstanding dispatches",
+        "deny new claims"
+      ]
+    },
+    {
+      "from": "M08",
+      "on": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "to": "U00",
+      "actions": [
+        "freeze epoch",
+        "cancel outstanding dispatches",
+        "deny new claims"
+      ]
+    },
+    {
+      "from": "M09",
+      "on": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "to": "U00",
+      "actions": [
+        "freeze epoch",
+        "cancel outstanding dispatches",
+        "deny new claims"
+      ]
+    },
+    {
+      "from": "M10",
+      "on": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "to": "U00",
+      "actions": [
+        "freeze epoch",
+        "cancel outstanding dispatches",
+        "deny new claims"
+      ]
+    },
+    {
+      "from": "M11",
+      "on": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "to": "U00",
+      "actions": [
+        "freeze epoch",
+        "cancel outstanding dispatches",
+        "deny new claims"
+      ]
+    },
+    {
+      "from": "M12",
+      "on": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "to": "U00",
+      "actions": [
+        "freeze epoch",
+        "cancel outstanding dispatches",
+        "deny new claims"
+      ]
+    },
+    {
+      "from": "M13",
+      "on": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "to": "U00",
+      "actions": [
+        "freeze epoch",
+        "cancel outstanding dispatches",
+        "deny new claims"
+      ]
+    },
+    {
+      "from": "M14",
+      "on": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "to": "U00",
+      "actions": [
+        "freeze epoch",
+        "cancel outstanding dispatches",
+        "deny new claims"
+      ]
+    },
+    {
+      "from": "M15",
+      "on": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "to": "U00",
+      "actions": [
+        "freeze epoch",
+        "cancel outstanding dispatches",
+        "deny new claims"
+      ]
+    },
+    {
+      "from": "M16",
+      "on": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "to": "U00",
+      "actions": [
+        "freeze epoch",
+        "cancel outstanding dispatches",
+        "deny new claims"
+      ]
+    },
+    {
+      "from": "M17",
+      "on": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "to": "U00",
+      "actions": [
+        "freeze epoch",
+        "cancel outstanding dispatches",
+        "deny new claims"
+      ]
+    },
+    {
+      "from": "M18",
+      "on": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "to": "U00",
+      "actions": [
+        "freeze epoch",
+        "cancel outstanding dispatches",
+        "deny new claims"
+      ]
+    },
+    {
+      "from": "M19",
+      "on": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "to": "U00",
+      "actions": [
+        "freeze epoch",
+        "cancel outstanding dispatches",
+        "deny new claims"
+      ]
+    }
+  ],
+  "recovery": [
+    "U00",
+    "U01",
+    "U02",
+    "U03",
+    "U04",
+    "U05",
+    "U06",
+    "U07",
+    "U08"
+  ],
+  "retry_edges": []
+}

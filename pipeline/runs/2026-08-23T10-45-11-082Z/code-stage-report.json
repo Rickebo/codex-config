@@ -1,0 +1,18 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Added Argo CD wave -1 annotations to every Youtarr ExternalSecret so OAuth and runtime secrets exist before wave-0 controller and worker Deployments, fixing the live CreateContainerConfigError ordering failure.",
+  "changed_files": ["youtarr/templates/externalsecrets.yaml", "youtarr/tests/test_render.py"],
+  "validation": ["Focused render and Google OAuth tests: 19 passed", "Full Youtarr suite: 107 passed", "helm lint youtarr passed", "helm template output parsed as 22 YAML documents", "git diff --check passed", "No Service or Ingress templates changed"],
+  "blockers": [],
+  "next_action": "Review the PR for issue #505; do not merge, deploy, or sync in this stage.",
+  "route_to": "review",
+  "risk_level": "high",
+  "issues": [{
+    "id": "pve-infra#505",
+    "title": "Fix Youtarr secret and Deployment sync ordering",
+    "severity": "high",
+    "details": "Live Argo CD ordering allowed wave-0 Youtarr Deployments to start before ExternalSecrets, causing CreateContainerConfigError; wave -1 creates prerequisites first.",
+    "owner_stage": "review"
+  }]
+}

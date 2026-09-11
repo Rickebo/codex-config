@@ -1,0 +1,94 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Independent backend and system-harness reviewers found blocking lifecycle reconciliation, transient consumer recovery, duplicate desired-state identity, secret-redaction, and replay-proof defects, plus contract validation and cleanup gaps. The candidate must return to code before formal testing.",
+  "changed_files": [],
+  "validation": [
+    "Backend reviewer inspected final origin/main...bb2625a delta against all eight feature requirements",
+    "System reviewer inspected only final tests/system delta for real-service fidelity, replay semantics, redaction, bounded waits, and cleanup",
+    "Review tree was clean and stable; reviewers performed no mutations"
+  ],
+  "blockers": [
+    "Lifecycle invalidation stales/blocks active heads but does not transactionally create a new pending desired state/build.",
+    "Transient non-HTTP infrastructure failures can escape and terminate the Knowledge consumer instead of bounded ordered retry/DLQ.",
+    "A distinct replay event ID for the same snapshot/generation can reference a new desired-state ID that was not inserted.",
+    "System child-process diagnostics retain raw output despite configured database, object-store, JWT, and workload secrets.",
+    "Replay proof uses a fixed two-second drain instead of a captured Kafka high-watermark boundary.",
+    "System Model path does not launch Model worker and reuses a GitHub fixture URL as the provider endpoint."
+  ],
+  "next_action": "Route to code owners for focused backend and tests/system remediation, then rerun independent review on the corrected delta.",
+  "route_to": "code",
+  "risk_level": "high",
+  "issues": [
+    {
+      "id": "REV-BE-001",
+      "title": "Lifecycle invalidation never enqueues replacement generation",
+      "severity": "high",
+      "details": "InvalidateGenerationAsync marks publications stale and desired states blocked, while ClaimNextBuildAsync only claims pending states. Re-resolve the active head and transactionally enqueue the new desired state/build with a concurrency regression test.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV-BE-002",
+      "title": "Transient infrastructure failures can terminate Knowledge consumer",
+      "severity": "high",
+      "details": "Retry classification covers HttpRequestException only. Classify bounded retryable database/object-store failures and route terminal outcomes through the existing ordered DLQ path without advancing later offsets.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV-BE-003",
+      "title": "Distinct replay event can reference non-inserted desired-state ID",
+      "severity": "high",
+      "details": "IngestSnapshotAsync uses ON CONFLICT DO NOTHING for desired state but proceeds with a newly generated ID. Return/use the existing snapshot+generation desired-state ID and create at most one build; add replay coverage with a distinct CloudEvent ID.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV-BE-004",
+      "title": "Source snapshot object/ref fields are incompletely validated",
+      "severity": "medium",
+      "details": "Validate schema-required object format, commit/tree/ref metadata, and relevant cross-field consistency before persistence/materialization; retain nullable semantics only where producer schema permits them.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV-BE-005",
+      "title": "Model workload endpoint omits documented 401 response",
+      "severity": "low",
+      "details": "Runtime returns 401 for missing/invalid HMAC proof while OpenAPI describes 403 only. Align the producer-owned contract with actual 401 authentication failure and retain 403 only for an implemented authorization denial.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV-SYS-001",
+      "title": "System proof omits real Model worker/provider fixture",
+      "severity": "high",
+      "details": "The harness starts Model API only and points configuration at a GitHub fixture that has no model endpoint. Start the real Model worker with production configuration and use a dedicated deterministic OpenAI-compatible fixture, or narrow the proof with explicit requirement evidence if worker/provider execution is not part of resolution.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV-SYS-002",
+      "title": "Replay proof relies on fixed drain duration",
+      "severity": "high",
+      "details": "GetPersistedBuildsAsync can miss delayed duplicate output or count retry-generated builds. Capture Kafka high-watermark after replay, drain to that boundary, and count only root queued events causally tied to the original Source event.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV-SYS-003",
+      "title": "Raw child-process diagnostics can retain secrets",
+      "severity": "high",
+      "details": "LocalDotNetProcess stores and returns raw stdout/stderr while child environments contain database passwords, S3 credentials, JWTs, and workload/model secrets. Redact known configured secret values before retaining bounded output and add a redaction test.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV-SYS-004",
+      "title": "Process and Kafka cleanup are not fully exception-safe",
+      "severity": "medium",
+      "details": "Bound post-kill waits; ensure Subscribe failures dispose the newly built consumer; and dispose consumers in finally even if Close throws, recording close/dispose failures independently.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV-SYS-005",
+      "title": "Loopback port reservation has an address-reuse race",
+      "severity": "medium",
+      "details": "Ports are released before migrations and API startup, so concurrent processes may claim them. Keep reservations through binding or implement bounded address-in-use retry with ownership-safe readiness verification.",
+      "owner_stage": "code"
+    }
+  ]
+}

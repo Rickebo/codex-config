@@ -1,0 +1,22 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Review-loop commit 7552adb466554ae64181c21732f3975263b30b36 strengthens the issue #104 regression by building v0.6.13 through the exported ad52dfc source revision's own package-chart-artifact.sh twice, proving exact-byte determinism, pinning the live Release Verify digest, and passing that exact archive/checksum to the current trusted verifier.",
+  "changed_files": [
+    "hack/test-chart-verifier-compat.py"
+  ],
+  "validation": [
+    "TDD RED: renamed source-era test failed because package_legacy_and_verify was absent, proving the prior helper still used current chart-source-revision.sh.",
+    "Digest-pin RED: two independent source-era package builds agreed on cd7e023df18c9062335181af66e8e30bcf2f7d78cdc6ee23ed15a83e05b5e706 and rejected the placeholder pin.",
+    "Live read-only evidence: Release Verify run 32888015603 logged the identical cd7e023df18c9062335181af66e8e30bcf2f7d78cdc6ee23ed15a83e05b5e706 after source-era packaging and full verification for ad52dfcbc45d71eccad1d49fbd905161af7a44b1.",
+    "Focused GREEN: python3 -m unittest hack/test-chart-verifier-compat.py passed 5 tests.",
+    "Nearest release suite GREEN: make test-release-chart-flow passed 11 tests, including existing chart mutation negatives.",
+    "Nearest chart suite GREEN: make verify-chart passed source-revision, CRD, bootstrap-ordering, lint, reproducibility, render, and security checks.",
+    "bash syntax, Python compilation, git diff --check, and JSON report validation passed.",
+    ".github/workflows/publish-release.yaml and .github/workflows/release.yaml remain byte-identical to exact base f1ee15f8916cbb939e88e5a1491588d3b7a95f7d."
+  ],
+  "blockers": [],
+  "next_action": "Review commits 897c78dec850617315fbbe55a0704219145c787b and 7552adb466554ae64181c21732f3975263b30b36, focusing on the capability predicate and exact source-era artifact reproduction.",
+  "route_to": "review",
+  "risk_level": "high"
+}

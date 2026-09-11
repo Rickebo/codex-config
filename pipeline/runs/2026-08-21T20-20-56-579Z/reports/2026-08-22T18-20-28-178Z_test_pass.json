@@ -1,0 +1,28 @@
+{
+  "stage": "test",
+  "status": "pass",
+  "summary": "TEST loop 2 passes: unchanged HEAD 1d6d249 has no feature regression; targeted, isolated-fixture, Helm/static, and gate-matrix checks pass. The two full-suite failures reproduce identically at base and HEAD and are documented non-regressions.",
+  "changed_files": [],
+  "validation": [
+    "HEAD 1d6d2492021cfed0f7b7d975509a779485c8bfac; only three pre-existing graphify-out files are dirty; no source/environment mutation.",
+    "Targeted PYTHONPATH=. pytest -q tests/test_workspace_context_llm_proxy_gitops.py: 8 passed.",
+    "Isolated fake pg_dump/Kopia backup fixture: final-path checksums, retention, manifests, snapshot handoff/readback passed.",
+    "workspace-context/tests/static.sh passed; Helm lint for workspace-context and llm-proxy both passed.",
+    "Workspace-context legal/illegal gate matrix passed; llm-proxy database, workloads, backup, and restore matrix passed; illegal cases rejected.",
+    "Protected-path diff checks are clean; worker, bridge, historical-PVC, Servarr, observability, and baseline-failure paths are unchanged.",
+    "HEAD full PYTHONPATH=. pytest -q: 2 failed, 221 passed, 1 skipped; failures are Servarr synthetic exporter and Codicarium service bridge.",
+    "Base f039009 full PYTHONPATH=. pytest -q: 2 failed, 213 passed, 1 skipped; the same two failure IDs and paths reproduce.",
+    "Current-run pipeline CI: ok=true, checked_runs=1, failed_runs=0, warnings=0.",
+    "Residual validation risk: runtime/provider/NAS/live-restore/deploy evidence was not exercised in TEST and remains for validation."
+  ],
+  "blockers": [],
+  "next_action": "Route to validation for runtime/provider/NAS/live-restore/deploy gates; do not approve this TEST result or mutate source/environment.",
+  "route_to": "validation",
+  "risk_level": "high",
+  "requires_council": true,
+  "independent_lanes": [
+    "Bounded feature, Helm, static, gate-matrix, and isolated backup-fixture evidence",
+    "HEAD-versus-base full-suite failure identity and changed-path non-regression adjudication"
+  ],
+  "issues": []
+}

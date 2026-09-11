@@ -1,0 +1,1 @@
+Remediate deployment-controller issue #93: replace the nondeterministic Release Verify to Publish Release workflow_run handoff with an exact-identity, least-privilege, retry-safe dispatch contract; recover v0.6.13 only after reviewed code and protected CI

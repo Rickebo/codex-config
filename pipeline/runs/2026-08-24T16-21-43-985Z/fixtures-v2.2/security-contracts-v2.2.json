@@ -1,0 +1,95 @@
+{
+  "candidate_source": {
+    "schema": "codicarium.candidate-source-capability/v2",
+    "media_type": "application/gzip",
+    "purpose": "deployment-controller-candidate-source",
+    "object_key": "<repo-id>/<commit-sha>/<archive-sha256>/<byte-length>.tar.gz",
+    "create": {
+      "success": 201,
+      "conflict": 409,
+      "mismatch": 422
+    },
+    "read": {
+      "success_once": 200,
+      "consumed": 410
+    },
+    "raw_fetcher": "hash and count only; never extract",
+    "extractor": "destroyed no-network Kata sandbox only"
+  },
+  "vault": {
+    "owner": "codicarium/vault-config",
+    "evidence_schema": "codicarium.vault-bootstrap/v2",
+    "requirements": [
+      "exact context IP port SNI CA SAN role policy and KV path",
+      "create-only KV v2 version 1",
+      "wrong CA SNI expiry plaintext and wildcard negatives",
+      "retire bootstrap role and workload"
+    ]
+  },
+  "cnpg": {
+    "owner": "codicarium/postgres-config",
+    "evidence_schemas": [
+      "codicarium.cnpg-contract/v2",
+      "codicarium.cnpg-failure/v2"
+    ],
+    "instances": 3,
+    "distinct_nodes": 3,
+    "synchronous_replicas": 1,
+    "tls": "verify-full",
+    "app_secret": "runner-platform-journal-app",
+    "ca_secret": "runner-platform-journal-ca",
+    "rpo_seconds": 0,
+    "rto_seconds_max": 120,
+    "tests": [
+      "backup",
+      "isolated restore",
+      "loss of each node",
+      "runtime execute-only",
+      "migration role retired"
+    ]
+  },
+  "admin": {
+    "normal": {
+      "requester": "one",
+      "approvers": 1,
+      "executor": "third distinct",
+      "approval_ttl_seconds_max": 1800,
+      "credential_ttl_seconds_max": 600
+    },
+    "break_glass": {
+      "approvers": 2,
+      "executor": "third distinct",
+      "approval_ttl_seconds_max": 900,
+      "credential_ttl_seconds_max": 300,
+      "single_use": true,
+      "forbidden": [
+        "bypass gates",
+        "mint candidate",
+        "mutate admission",
+        "publish",
+        "clear UNKNOWN"
+      ],
+      "negative_effect_count": 0
+    }
+  },
+  "legacy": {
+    "schema": "codicarium.legacy-retirement/v2",
+    "workflows": 5,
+    "requirements": [
+      "disable and delete",
+      "cancel queued and in-progress",
+      "terminal readback",
+      "revoke credentials routes sessions",
+      "wait maximum TTL plus skew"
+    ]
+  },
+  "forward_recovery": {
+    "schema": "codicarium.forward-recovery/v2",
+    "requirements": [
+      "new work item claim epoch nonce and unused release ID",
+      "no retry edge",
+      "no retag resume overwrite or legacy authority",
+      "signed successor handoff ends current DAG"
+    ]
+  }
+}

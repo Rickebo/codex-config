@@ -1,0 +1,39 @@
+{
+  "stage": "test",
+  "status": "fail",
+  "summary": "Formal test found one reproducible candidate-only suite-lifecycle blocker. Source 35/35, Knowledge 112/112 plus domain/runtime, Model/Workspace Release builds and unit tests, and static gates are green. The complete candidate Model integration suite aborted twice with native librdkafka SIGSEGVs after 4 and 3 passes; clean main passed its complete 4/4 suite, while identical isolated deletion tests passed 1/1 on both trees and the candidate Kafka classes passed 2/2 together.",
+  "changed_files": [],
+  "validation": [
+    "Source complete Release suite passed 35/35: contract 5, domain 12, provider 12, integration 6",
+    "Knowledge Release build 0 warnings/errors; runtime 3/3, domain 19/19, integration 112/112",
+    "Model and Workspace Release builds each completed with 0 warnings/errors; unit suites passed 16/16 and 10/10",
+    "validate-specs, fixture generator check and unit test, Source container validation, worktree shell syntax, and git diff checks passed",
+    "Candidate complete Model integration attempt 1 exited 1 after 4 passes; coredump PID 2436524 is SIGSEGV in librdkafka OffsetFetch handling",
+    "Candidate complete Model integration attempt 2 exited 1 after 3 passes; coredump PID 2459971 is SIGSEGV",
+    "Clean-main complete Model integration exited 0 with 4/4 passes",
+    "Identical WorkspaceDeletionConsumerTests filter exited 0 and passed 1/1 on candidate and clean main with separate TRX files",
+    "Candidate KafkaOutboxTests plus WorkspaceDeletionConsumerTests filter exited 0 and passed 2/2",
+    "No Testcontainers resources or testhost processes remained between comparison runs"
+  ],
+  "blockers": [
+    "The expanded candidate Model integration suite triggers a repeatable native librdkafka OffsetFetch lifecycle crash under full-suite scheduling; the complete required suite cannot be counted green despite isolated tests passing."
+  ],
+  "next_action": "Return to code for a bounded Model integration lifecycle/serialization fix with a red full-suite reproduction, then rerun the entire formal matrix; do not change production behavior without evidence.",
+  "route_to": "code",
+  "risk_level": "high",
+  "issues": [
+    {
+      "id": "TEST0-MODEL-001",
+      "title": "Full candidate Model integration suite crashes native Kafka testhost",
+      "severity": "high",
+      "details": "Two full candidate runs SIGSEGV in librdkafka OffsetFetch while clean main and isolated deletion/Kafka filters pass. Stabilize integration test collection/resource lifecycle, prove the original full-suite command passes repeatedly, and retain candidate/main TRX plus coredump classification.",
+      "owner_stage": "code"
+    }
+  ],
+  "independent_lanes": [
+    "service and static validation",
+    "candidate versus clean-main Model comparison",
+    "native coredump and Testcontainers lifecycle classification"
+  ],
+  "requires_council": false
+}

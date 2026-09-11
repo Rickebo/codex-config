@@ -1,0 +1,295 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.codicarium.com/release/recovery-retirement-v1.schema.json",
+  "title": "Permanent retirement of five privileged workflow authorities",
+  "type": "object",
+  "required": [
+    "schema",
+    "must_complete_before",
+    "workflows",
+    "legacy_secret_authorities",
+    "recovery_authorities",
+    "replacement"
+  ],
+  "properties": {
+    "schema": {
+      "const": "codicarium.recovery-retirement/v1"
+    },
+    "must_complete_before": {
+      "const": "v0.6.14-first-release-side-effect"
+    },
+    "workflows": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "prefixItems": [
+        {
+          "type": "object",
+          "required": [
+            "id",
+            "name",
+            "path",
+            "workflow_state",
+            "path_state",
+            "old_outputs_accepted",
+            "reruns_accepted"
+          ],
+          "properties": {
+            "id": {
+              "const": "341194538"
+            },
+            "name": {
+              "const": "Automatic Release"
+            },
+            "path": {
+              "const": ".github/workflows/automatic-release.yaml"
+            },
+            "workflow_state": {
+              "const": "disabled_manually"
+            },
+            "path_state": {
+              "const": "deleted-before-v0.6.14"
+            },
+            "old_outputs_accepted": {
+              "const": false
+            },
+            "reruns_accepted": {
+              "const": false
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "id",
+            "name",
+            "path",
+            "workflow_state",
+            "path_state",
+            "old_outputs_accepted",
+            "reruns_accepted"
+          ],
+          "properties": {
+            "id": {
+              "const": "318365668"
+            },
+            "name": {
+              "const": "Release Verify"
+            },
+            "path": {
+              "const": ".github/workflows/release.yaml"
+            },
+            "workflow_state": {
+              "const": "disabled_manually"
+            },
+            "path_state": {
+              "const": "deleted-before-v0.6.14"
+            },
+            "old_outputs_accepted": {
+              "const": false
+            },
+            "reruns_accepted": {
+              "const": false
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "id",
+            "name",
+            "path",
+            "workflow_state",
+            "path_state",
+            "old_outputs_accepted",
+            "reruns_accepted"
+          ],
+          "properties": {
+            "id": {
+              "const": "318365667"
+            },
+            "name": {
+              "const": "Publish Release"
+            },
+            "path": {
+              "const": ".github/workflows/publish-release.yaml"
+            },
+            "workflow_state": {
+              "const": "disabled_manually"
+            },
+            "path_state": {
+              "const": "deleted-before-v0.6.14"
+            },
+            "old_outputs_accepted": {
+              "const": false
+            },
+            "reruns_accepted": {
+              "const": false
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "id",
+            "name",
+            "path",
+            "workflow_state",
+            "path_state",
+            "old_outputs_accepted",
+            "reruns_accepted"
+          ],
+          "properties": {
+            "id": {
+              "const": "333279414"
+            },
+            "name": {
+              "const": "Recover Release Attestations"
+            },
+            "path": {
+              "const": ".github/workflows/recover-release-attestations.yaml"
+            },
+            "workflow_state": {
+              "const": "disabled_manually"
+            },
+            "path_state": {
+              "const": "deleted-before-v0.6.14"
+            },
+            "old_outputs_accepted": {
+              "const": false
+            },
+            "reruns_accepted": {
+              "const": false
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "id",
+            "name",
+            "path",
+            "workflow_state",
+            "path_state",
+            "old_outputs_accepted",
+            "reruns_accepted"
+          ],
+          "properties": {
+            "id": {
+              "const": "340335357"
+            },
+            "name": {
+              "const": "Recover v0.6.8 Publisher Evidence"
+            },
+            "path": {
+              "const": ".github/workflows/recover-release-v068.yaml"
+            },
+            "workflow_state": {
+              "const": "disabled_manually"
+            },
+            "path_state": {
+              "const": "deleted-before-v0.6.14"
+            },
+            "old_outputs_accepted": {
+              "const": false
+            },
+            "reruns_accepted": {
+              "const": false
+            }
+          },
+          "additionalProperties": false
+        }
+      ],
+      "items": false
+    },
+    "legacy_secret_authorities": {
+      "const": [
+        "ACTIONS_STORAGE_OVH_ACCESS_KEY_ID",
+        "ACTIONS_STORAGE_OVH_ACCESS_KEY_SECRET",
+        "CODICARIUM_PACKAGE_REGISTRY_PASSWORD",
+        "CODICARIUM_PACKAGE_REGISTRY_USERNAME",
+        "NEXUS_PASSWORD",
+        "NEXUS_USERNAME"
+      ]
+    },
+    "recovery_authorities": {
+      "type": "object",
+      "required": [
+        "v068_s3_credentials",
+        "environments",
+        "runner_routing",
+        "revoked"
+      ],
+      "properties": {
+        "v068_s3_credentials": {
+          "const": [
+            "V068_RECOVERY_S3_READ_ACCESS_KEY_ID",
+            "V068_RECOVERY_S3_READ_ACCESS_KEY_SECRET"
+          ]
+        },
+        "environments": {
+          "const": [
+            "deployment-controller-attestation-recovery",
+            "deployment-controller-v068-recovery"
+          ]
+        },
+        "runner_routing": {
+          "const": "[self-hosted,Linux,codicarium] and its general runner group"
+        },
+        "revoked": {
+          "const": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "replacement": {
+      "type": "object",
+      "required": [
+        "activation_time",
+        "workflow_path",
+        "workflow_id",
+        "mutation_broker",
+        "target_count",
+        "contents_write",
+        "broad_token",
+        "reusable_secret",
+        "signing_key"
+      ],
+      "properties": {
+        "activation_time": {
+          "const": "strictly-after-verified-v0.6.14"
+        },
+        "workflow_path": {
+          "const": ".github/workflows/recover-release-v068-v2.yaml"
+        },
+        "workflow_id": {
+          "const": "NEW_ID_NOT_ANY_RETIRED_ID"
+        },
+        "mutation_broker": {
+          "const": "typed-one-target"
+        },
+        "target_count": {
+          "const": 1
+        },
+        "contents_write": {
+          "const": false
+        },
+        "broad_token": {
+          "const": false
+        },
+        "reusable_secret": {
+          "const": false
+        },
+        "signing_key": {
+          "const": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

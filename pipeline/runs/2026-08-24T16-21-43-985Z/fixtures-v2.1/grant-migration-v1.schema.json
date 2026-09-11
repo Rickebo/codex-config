@@ -1,0 +1,210 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.codicarium.com/platform/grant-migration-v1.schema.json",
+  "title": "UID-aware no-dual-owner runner-config-dev grant migration",
+  "type": "object",
+  "required": [
+    "schema",
+    "repository_id",
+    "environment",
+    "uniqueness_key",
+    "current_grant",
+    "new_profile",
+    "activation_compatibility",
+    "preserved_objects",
+    "steps",
+    "rollback"
+  ],
+  "properties": {
+    "schema": {
+      "const": "codicarium.grant-migration/v1"
+    },
+    "repository_id": {
+      "const": "1303372884"
+    },
+    "environment": {
+      "const": "dev"
+    },
+    "uniqueness_key": {
+      "const": "repository_id=1303372884/environment=dev/max_grants=1"
+    },
+    "current_grant": {
+      "type": "object",
+      "required": [
+        "name",
+        "uid",
+        "resource_version",
+        "profile_ref",
+        "profile_ref_immutable",
+        "profile_uid",
+        "duplicate_repo_environment_grant_allowed"
+      ],
+      "properties": {
+        "name": {
+          "const": "runner-config-dev"
+        },
+        "uid": {
+          "const": "60cf8514-cbc3-4659-ba5c-22c4d4658bae"
+        },
+        "resource_version": {
+          "const": "27561715"
+        },
+        "profile_ref": {
+          "const": "arc-path-helm"
+        },
+        "profile_ref_immutable": {
+          "const": true
+        },
+        "profile_uid": {
+          "const": "868dbd03-3a59-43bd-9c70-e393eb69d8eb"
+        },
+        "duplicate_repo_environment_grant_allowed": {
+          "const": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "new_profile": {
+      "type": "object",
+      "required": [
+        "name",
+        "create_before_grant_retirement",
+        "preserve_existing_arc_scopes",
+        "resources",
+        "destinations"
+      ],
+      "properties": {
+        "name": {
+          "const": "artifact-capability-path-helm"
+        },
+        "create_before_grant_retirement": {
+          "const": true
+        },
+        "preserve_existing_arc_scopes": {
+          "const": true
+        },
+        "resources": {
+          "const": [
+            "Certificate",
+            "Deployment",
+            "Issuer",
+            "Job",
+            "NetworkPolicy",
+            "PodDisruptionBudget",
+            "PrometheusRule",
+            "Service",
+            "ServiceAccount",
+            "ServiceMonitor"
+          ]
+        },
+        "destinations": {
+          "const": [
+            "arc-runners",
+            "arc-systems",
+            "artifact-capability"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "activation_compatibility": {
+      "type": "object",
+      "required": [
+        "chosen_runtime_mode",
+        "environment",
+        "deployment_activation_source",
+        "request_ref_required",
+        "kafka_required",
+        "poll_only_admissible",
+        "current_main_impact"
+      ],
+      "properties": {
+        "chosen_runtime_mode": {
+          "const": "event-driven"
+        },
+        "environment": {
+          "const": "dev"
+        },
+        "deployment_activation_source": {
+          "type": "null"
+        },
+        "request_ref_required": {
+          "const": true
+        },
+        "kafka_required": {
+          "const": true
+        },
+        "poll_only_admissible": {
+          "const": false
+        },
+        "current_main_impact": {
+          "const": "#103 PollOnly remains prod-only; dev runner-config-dev preserves event-driven RequestRef+Kafka authority and tests reject PollOnly/dev."
+        }
+      },
+      "additionalProperties": false
+    },
+    "preserved_objects": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "items": {
+        "type": "object",
+        "required": [
+          "kind",
+          "namespace",
+          "name",
+          "uid",
+          "resource_version",
+          "spec_sha256"
+        ],
+        "properties": {
+          "kind": {
+            "type": "string",
+            "minLength": 1
+          },
+          "namespace": {
+            "oneOf": [
+              {
+                "type": "string",
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uid": {
+            "type": "string",
+            "pattern": "^[0-9a-f-]{36}$"
+          },
+          "resource_version": {
+            "type": "string",
+            "pattern": "^[1-9][0-9]*$"
+          },
+          "spec_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "steps": {
+      "type": "array",
+      "minItems": 10,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "rollback": {
+      "const": "preactivation-only; after new authorization epoch activation use forward remediation, never restore old UID, proof, activation, work, or dual ownership"
+    }
+  },
+  "additionalProperties": false
+}

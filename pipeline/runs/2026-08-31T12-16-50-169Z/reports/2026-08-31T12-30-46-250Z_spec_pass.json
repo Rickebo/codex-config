@@ -1,0 +1,32 @@
+{
+  "stage": "spec",
+  "status": "pass",
+  "summary": "Re-baselined LC production delivery to use the standard container runtime now, organization self-hosted runners, lc-config/controller sole ownership, and a dependency-tracked Kata migration with no platform, infrastructure, deprecated-infra, or app-config implementation.",
+  "changed_files": [
+    "/home/rickebo/.codex/pipeline/runs/2026-08-31T12-16-50-169Z/feature-spec.json",
+    "/home/rickebo/.codex/pipeline/runs/2026-08-31T12-16-50-169Z/spec-check.json",
+    "/home/rickebo/.codex/pipeline/runs/2026-08-31T12-16-50-169Z/council.json"
+  ],
+  "validation": [
+    "pipeline-spec-check ok: 8 requirements, 6 acceptance criteria, 6 tests, 8 complete traceability rows, zero errors or warnings",
+    "Independent planner recommended a new spec run because the prior FSM cannot transition code back to spec",
+    "GitHub runner evidence: CommonBackend and API already self-hosted; lc-config promotion and bridge gates still use ubuntu-latest"
+  ],
+  "blockers": [
+    "Nexus NuGet HTTP 401 remains independent of hosted-runner billing until corrected credentials are proven",
+    "Production activation still requires an explicit codicarium-prod context and conflict-free legacy-owner retirement"
+  ],
+  "next_action": "Approve transition to code, create current-owner issue dependencies, update lc-config workflows and regular-runtime manifests, then validate exact PR heads.",
+  "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-31T12-16-50-169Z/feature-spec.json",
+  "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-08-31T12-16-50-169Z/spec-check.json",
+  "council_file": "/home/rickebo/.codex/pipeline/runs/2026-08-31T12-16-50-169Z/council.json",
+  "requires_council": true,
+  "independent_lanes": [
+    "lc-config regular-container manifests, policies, validators, and docs",
+    "lc-config organization self-hosted runner workflow migration",
+    "GitHub issue ownership and Kata dependency graph",
+    "CommonBackend and API immutable artifact release chain"
+  ],
+  "route_to": "code",
+  "risk_level": "critical"
+}

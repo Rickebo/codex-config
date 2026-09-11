@@ -1,0 +1,27 @@
+{
+  "stage": "validation",
+  "status": "pass",
+  "summary": "Integrated candidate 930a5113 is safe to publish to the existing overlapping PR #1293 with an exact force-with-lease. It is 12 commits ahead and 0 behind current main, fully tested and reviewed; no candidate runs, deployments, dispatches, or live mutations exist.",
+  "changed_files": [],
+  "validation": [
+    "Remote main unchanged at e56e0e9513a647fabe973cc1fc53b756453d1529",
+    "Candidate 930a511373c7929b26331a8ec2a1780f39267b60, tree 2bba9ae47cda80f34d91ed4ba2211f043fde3287, 12 ahead and 0 behind",
+    "Existing PR #1293 head security/1290-authority-runner-contract at exact old SHA 74d211b8c77ec2aefaed3d4ddc7d1b4ef4f7f2df",
+    "No candidate-specific remote branch, PR, Actions runs, deployments, or dispatches",
+    "Runner group 7 is selected for infra/app-config but has zero runners",
+    "Safe publication action: update existing PR #1293 head ref using exact force-with-lease; do not create duplicate PR"
+  ],
+  "blockers": [],
+  "next_action": "Complete pipeline, then publish exact candidate to PR #1293 with an exact lease and update its description; keep merge/install/dispatch/live activation blocked until protected ARC validation can run.",
+  "route_to": "done",
+  "risk_level": "critical",
+  "issues": [
+    {
+      "id": "VAL-RUNNER-001",
+      "title": "Protected runner group 7 has zero runners",
+      "severity": "high",
+      "details": "This blocks protected ARC validation and all merge/install/live rollout, but not safe PR branch publication.",
+      "owner_stage": "validation"
+    }
+  ]
+}

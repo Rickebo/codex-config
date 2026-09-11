@@ -1,0 +1,30 @@
+{
+  "stage": "review",
+  "status": "pass",
+  "summary": "Review found no blocking correctness, security, ownership, or stateful migration findings. The wrapper values are nested once under redpanda and render the same release/PVC identities as the existing direct upstream chart contract.",
+  "changed_files": [
+    "README.md",
+    "values.schema.json",
+    "scripts/validate.rb"
+  ],
+  "validation": [
+    "Argo-shaped wrapper render used releaseName redpanda and namespace deployment-controller",
+    "Wrapper and direct charts.redpanda.com 5.10.2 render both produced StatefulSet redpanda, serviceName redpanda, claim template datadir, one replica, and image v25.1.2",
+    "values.yaml has exactly one top-level key redpanda and contains no nested redpanda key",
+    "Strict Helm lint, schema-negative test, Ruby syntax, YAML/JSON parsing, dependency lock checks, and forbidden-reference scan passed",
+    "No secret or PEM material was found in deployable files"
+  ],
+  "blockers": [],
+  "next_action": "Run the complete test/validation suite, then commit the reviewed files and push the feature branch for the PR.",
+  "spec_file": "/tmp/kafka-config-feature-spec.json",
+  "spec_check_file": "/tmp/kafka-config-feature-spec-check.json",
+  "council_file": "/tmp/kafka-config-council.json",
+  "requires_council": true,
+  "independent_lanes": [
+    "Chart/resource identity and stateful storage review",
+    "Documentation, CI, schema, and secret-boundary review"
+  ],
+  "route_to": "test",
+  "risk_level": "high",
+  "issues": []
+}

@@ -1,0 +1,428 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.codicarium.com/artifact-capability/api-v1.schema.json",
+  "title": "Codicarium Artifact Capability API v1 schema bundle",
+  "$defs": {
+    "token_header": {
+      "type": "object",
+      "required": [
+        "alg",
+        "kid",
+        "typ"
+      ],
+      "properties": {
+        "alg": {
+          "const": "EdDSA"
+        },
+        "kid": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "typ": {
+          "const": "codicarium-artifact-capability+jwt"
+        }
+      },
+      "additionalProperties": false
+    },
+    "token_claims": {
+      "type": "object",
+      "required": [
+        "iss",
+        "aud",
+        "sub",
+        "iat",
+        "nbf",
+        "exp",
+        "jti",
+        "capability_version",
+        "operation",
+        "purpose",
+        "object_key",
+        "nonce",
+        "content_type",
+        "max_compressed_bytes",
+        "max_uncompressed_bytes",
+        "owner_id",
+        "repository_id",
+        "mint_run_id",
+        "mint_run_attempt",
+        "subject_run_id",
+        "subject_run_attempt",
+        "tag",
+        "source_revision"
+      ],
+      "properties": {
+        "iss": {
+          "const": "https://artifact-capability.artifact-capability.svc.cluster.local:8443"
+        },
+        "aud": {
+          "const": "codicarium-artifact-capability-api"
+        },
+        "sub": {
+          "type": "string",
+          "minLength": 1
+        },
+        "iat": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "nbf": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "exp": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "jti": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{32}$"
+        },
+        "capability_version": {
+          "const": "1"
+        },
+        "operation": {
+          "enum": [
+            "create",
+            "read",
+            "readback"
+          ]
+        },
+        "purpose": {
+          "enum": [
+            "deployment-controller-verified-image",
+            "deployment-controller-verified-chart",
+            "deployment-controller-signed-authorization"
+          ]
+        },
+        "object_key": {
+          "type": "string",
+          "pattern": "^artifacts/v1/orgs/255540067/repos/1303901324/releases/v0\\.6\\.14/sources/[0-9a-f]{40}/runs/[1-9][0-9]*/attempts/[1-9][0-9]*/(deployment-controller-verified-image|deployment-controller-verified-chart|deployment-controller-signed-authorization)/[0-9a-f]{32}\\.tar\\.zst$"
+        },
+        "nonce": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{32}$"
+        },
+        "content_type": {
+          "const": "application/zstd"
+        },
+        "max_compressed_bytes": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        },
+        "max_uncompressed_bytes": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        },
+        "owner_id": {
+          "const": "255540067"
+        },
+        "repository_id": {
+          "const": "1303901324"
+        },
+        "mint_run_id": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        },
+        "mint_run_attempt": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        },
+        "subject_run_id": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        },
+        "subject_run_attempt": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        },
+        "tag": {
+          "const": "v0.6.14"
+        },
+        "source_revision": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "archive_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "byte_length": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "operation": {
+                "const": "create"
+              }
+            },
+            "required": [
+              "operation"
+            ]
+          },
+          "then": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "archive_sha256"
+                  ]
+                },
+                {
+                  "required": [
+                    "byte_length"
+                  ]
+                }
+              ]
+            }
+          },
+          "else": {
+            "required": [
+              "archive_sha256",
+              "byte_length"
+            ]
+          }
+        }
+      ]
+    },
+    "mint_request": {
+      "type": "object",
+      "required": [
+        "schema",
+        "operation",
+        "purpose",
+        "subject_run_id",
+        "subject_run_attempt",
+        "tag",
+        "source_revision"
+      ],
+      "properties": {
+        "schema": {
+          "const": "codicarium.artifact-capability-mint/v1"
+        },
+        "operation": {
+          "enum": [
+            "create",
+            "read",
+            "readback"
+          ]
+        },
+        "purpose": {
+          "enum": [
+            "deployment-controller-verified-image",
+            "deployment-controller-verified-chart",
+            "deployment-controller-signed-authorization"
+          ]
+        },
+        "subject_run_id": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        },
+        "subject_run_attempt": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        },
+        "tag": {
+          "const": "v0.6.14"
+        },
+        "source_revision": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "expected_archive_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "expected_byte_length": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "operation": {
+                "const": "create"
+              }
+            },
+            "required": [
+              "operation"
+            ]
+          },
+          "then": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "expected_archive_sha256"
+                  ]
+                },
+                {
+                  "required": [
+                    "expected_byte_length"
+                  ]
+                }
+              ]
+            }
+          },
+          "else": {
+            "required": [
+              "expected_archive_sha256",
+              "expected_byte_length"
+            ]
+          }
+        }
+      ]
+    },
+    "mint_response": {
+      "type": "object",
+      "required": [
+        "schema",
+        "access_token",
+        "token_type",
+        "operation",
+        "purpose",
+        "object_key",
+        "nonce",
+        "jti",
+        "expires_at",
+        "max_compressed_bytes",
+        "max_uncompressed_bytes"
+      ],
+      "properties": {
+        "schema": {
+          "const": "codicarium.artifact-capability/v1"
+        },
+        "access_token": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]+\\.[A-Za-z0-9_-]+\\.[A-Za-z0-9_-]+$"
+        },
+        "token_type": {
+          "const": "Bearer"
+        },
+        "operation": {
+          "enum": [
+            "create",
+            "read",
+            "readback"
+          ]
+        },
+        "purpose": {
+          "type": "string",
+          "minLength": 1
+        },
+        "object_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "nonce": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{32}$"
+        },
+        "jti": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{32}$"
+        },
+        "expires_at": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])-([0-2][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]Z$"
+        },
+        "max_compressed_bytes": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        },
+        "max_uncompressed_bytes": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        }
+      },
+      "additionalProperties": false
+    },
+    "upload_response": {
+      "type": "object",
+      "required": [
+        "schema",
+        "object_key",
+        "archive_sha256",
+        "byte_length",
+        "nonce",
+        "created_at",
+        "verified_at",
+        "expires_at"
+      ],
+      "properties": {
+        "schema": {
+          "const": "codicarium.artifact-create-receipt/v1"
+        },
+        "object_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "archive_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "byte_length": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        },
+        "nonce": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{32}$"
+        },
+        "created_at": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])-([0-2][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]Z$"
+        },
+        "verified_at": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])-([0-2][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]Z$"
+        },
+        "expires_at": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])-([0-2][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]Z$"
+        }
+      },
+      "additionalProperties": false
+    },
+    "readback_response": {
+      "type": "object",
+      "required": [
+        "schema",
+        "object_key",
+        "archive_sha256",
+        "byte_length",
+        "verified_at"
+      ],
+      "properties": {
+        "schema": {
+          "const": "codicarium.artifact-readback/v1"
+        },
+        "object_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "archive_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "byte_length": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        },
+        "verified_at": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])-([0-2][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]Z$"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,49 @@
+model = "gpt-5.6-sol"
+model_reasoning_effort = "low"
+model_verbosity = "low"
+tool_output_token_limit = 5000
+developer_instructions = """
+Act as the orchestration-focused manager in a fire-and-forget execution model.
+Delegate bounded implementation, exploration, review, and testing work to suitable subagents using fork_turns="none" and self-contained, unambiguous prompts.
+Every delegation prompt must specify bounded scope, clear testable acceptance criteria, and explicit self-verification commands (e.g., test suites, linters, git diff inspection).
+Enforce worktree isolation under .worktrees/<repo>-<branch> for all implementation subagents to prevent directory collisions and remove mid-flight file monitoring.
+Do not babysit, busy-poll, loop on list_agents, or send intermediate check-in messages. Issue a single blocking wait until subagents finish.
+Subagents execute autonomously to completion and report back only once upon full completion with validation evidence, or immediately upon hitting an unresolvable external blocker.
+Consolidate results and validation evidence from completed agents before reporting completion.
+"""
+
+[projects."/mnt/rickebo-p/deployment-controller"]
+trust_level = "trusted"
+
+[projects."/mnt/rickebo-p/trip-planner"]
+trust_level = "trusted"
+
+[projects."/mnt/rickebo-p/codex-stats"]
+trust_level = "trusted"
+
+[projects."/mnt/rickebo-p/rickebo-com/infra/runner-config"]
+trust_level = "trusted"
+
+[projects."/mnt/rickebo-p/workspace-manager"]
+trust_level = "trusted"
+
+[projects."/mnt/rickebo-p/devops"]
+trust_level = "trusted"
+
+[projects."/mnt/rickebo-p/rickebo-com"]
+trust_level = "trusted"
+
+[projects."/mnt/rickebo-p/rickebo-com/infra"]
+trust_level = "trusted"
+
+[projects."/mnt/rickebo-p/lc"]
+trust_level = "trusted"
+
+[projects."/mnt/rickebo-p/building-blocks"]
+trust_level = "trusted"
+
+[projects."/mnt/rickebo-p/apps/food-tracker"]
+trust_level = "trusted"
+
+[projects."/mnt/rickebo-p/apps/workout-tracker"]
+trust_level = "trusted"

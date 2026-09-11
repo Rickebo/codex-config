@@ -1,0 +1,24 @@
+{
+  "stage": "spec",
+  "status": "pass",
+  "summary": "The specification defines a minimal public-chart wrapper, the complete homelab Redpanda contract, stateful migration safeguards, and focused automated validation with full traceability.",
+  "changed_files": [],
+  "validation": [
+    "pipeline-spec-check.mjs accepted /tmp/kafka-config-feature-spec.json",
+    "7 MUST requirements, 4 acceptance criteria, 3 tests, and 7 complete traceability rows",
+    "Council perspectives cover planning, correctness risk, and testability"
+  ],
+  "blockers": [],
+  "next_action": "Create the private repository on main, branch from main in the requested worktree, and implement the specified chart and validation files.",
+  "spec_file": "/tmp/kafka-config-feature-spec.json",
+  "spec_check_file": "/tmp/kafka-config-feature-spec-check.json",
+  "council_file": "/tmp/kafka-config-council.json",
+  "requires_council": true,
+  "independent_lanes": [
+    "Helm chart dependency, values, schema, and rendered resources",
+    "README migration/ownership contract and CI/local validation"
+  ],
+  "route_to": "code",
+  "risk_level": "high",
+  "issues": []
+}

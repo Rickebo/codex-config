@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="4c5079ae-698a-4d21-9378-9426479a8914" name="@RICKEBO 2026-08-27 10:22:51" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2026-08-27T10:22:51.6590406+02:00" queuing="2026-08-27T10:22:51.6590407+02:00" start="2026-08-27T10:22:24.1520684+02:00" finish="2026-08-27T10:22:51.6627494+02:00" />
+  <TestSettings name="default" id="33ae8e96-849a-4536-9b23-bd9003287cf0">
+    <Deployment runDeploymentRoot="_RICKEBO_2026-08-27_10_22_51" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="f68851d9-e6d7-4d81-bae3-8d3810db5c3a" testId="e3e4a78e-7353-6546-29d7-93b35f485d98" testName="WorkspaceManager.SystemTests.KnowledgeGenerationFlowTests.Source_snapshot_replay_after_bounded_model_outage_creates_one_persisted_build" computerName="RICKEBO" duration="00:00:27.1348724" startTime="2026-08-27T10:22:24.4631331+02:00" endTime="2026-08-27T10:22:51.6031362+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f68851d9-e6d7-4d81-bae3-8d3810db5c3a">
+      <Output>
+        <StdOut>Knowledge consumer startup boundary drained: model.events.v1[p0:next=0,high=0, p1:next=2,high=2, p2:next=0,high=0]; source.events.v1[p0:next=0,high=0, p1:next=0,high=0, p2:next=0,high=0]; workspace.events.v1[p0:next=0,high=0, p1:next=0,high=0, p2:next=0,high=0]
+FastSystem ready: Workspace=http://127.0.0.1:35535/, Source=http://127.0.0.1:41789/, Model=http://127.0.0.1:35399/, Knowledge=http://127.0.0.1:36369/
+Source snapshot 01a04250-5cec-70e1-bea4-659716e4f52b observed on source.events.v1 partition 1; Knowledge worker started.
+Knowledge build 01a04250-617d-7a4c-859e-379941f9c2f9 reached queued after 1 injected Model 503 response(s).</StdOut>
+      </Output>
+    </UnitTestResult>
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="WorkspaceManager.SystemTests.KnowledgeGenerationFlowTests.Source_snapshot_replay_after_bounded_model_outage_creates_one_persisted_build" storage="/tmp/workspace-manager-ac005-final-7d99bfe-1l7kvz/tests/system/workspacemanager.systemtests/bin/release/net10.0/workspacemanager.systemtests.dll" id="e3e4a78e-7353-6546-29d7-93b35f485d98">
+      <Execution id="f68851d9-e6d7-4d81-bae3-8d3810db5c3a" />
+      <TestMethod codeBase="/tmp/workspace-manager-ac005-final-7d99bfe-1L7kVZ/tests/system/WorkspaceManager.SystemTests/bin/Release/net10.0/WorkspaceManager.SystemTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="WorkspaceManager.SystemTests.KnowledgeGenerationFlowTests" name="Source_snapshot_replay_after_bounded_model_outage_creates_one_persisted_build" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="e3e4a78e-7353-6546-29d7-93b35f485d98" executionId="f68851d9-e6d7-4d81-bae3-8d3810db5c3a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Completed">
+    <Counters total="1" executed="1" passed="1" failed="0" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v4.0.0+05679a7ab5 (64-bit .NET 10.0.11)
+[xUnit.net 00:00:00.05]   Discovering: WorkspaceManager.SystemTests
+[xUnit.net 00:00:00.09]   Discovered:  WorkspaceManager.SystemTests
+[xUnit.net 00:00:00.11]   Starting:    WorkspaceManager.SystemTests
+[testcontainers.org 00:00:00.07] Connected to Docker:
+  Host: unix:///var/run/docker.sock
+  Server Version: 29.7.2
+  Kernel Version: 6.18.44-1-lts
+  API Version: 1.55
+  Operating System: Arch Linux
+  Total Memory: 60.48 GB
+[testcontainers.org 00:00:00.11] Docker network ae7e2e27c147 created
+[testcontainers.org 00:00:00.36] Docker container ffc56d125192 created
+[testcontainers.org 00:00:00.38] Start Docker container ffc56d125192
+[testcontainers.org 00:00:00.65] Wait for Docker container ffc56d125192 to complete readiness checks
+[testcontainers.org 00:00:01.67] Docker container ffc56d125192 ready
+[testcontainers.org 00:00:01.82] Docker container 1ec1a7ede640 created
+[testcontainers.org 00:00:01.82] Start Docker container 1ec1a7ede640
+[testcontainers.org 00:00:01.83] Docker container 56ce5cfb6ae8 created
+[testcontainers.org 00:00:01.83] Start Docker container 56ce5cfb6ae8
+[testcontainers.org 00:00:01.83] Docker container 6ecf07131cd4 created
+[testcontainers.org 00:00:01.83] Start Docker container 6ecf07131cd4
+[testcontainers.org 00:00:02.02] Wait for Docker container 6ecf07131cd4 to complete readiness checks
+[testcontainers.org 00:00:02.03] Execute "pg_isready --host localhost --dbname postgres --username postgres" at Docker container 6ecf07131cd4
+[testcontainers.org 00:00:02.05] Wait for Docker container 1ec1a7ede640 to complete readiness checks
+[testcontainers.org 00:00:02.13] Add file to tar archive: Content length: 149 byte(s), Target file: "/testcontainers.sh", UID: 0, GID: 0, Mode: 0755
+[testcontainers.org 00:00:02.13] Copy tar archive to container: Content length: 149 byte(s), Docker container: 56ce5cfb6ae8
+[testcontainers.org 00:00:02.14] Wait for Docker container 56ce5cfb6ae8 to complete readiness checks
+[testcontainers.org 00:00:03.11] Execute "pg_isready --host localhost --dbname postgres --username postgres" at Docker container 6ecf07131cd4
+[testcontainers.org 00:00:03.13] Docker container 1ec1a7ede640 ready
+[testcontainers.org 00:00:04.13] Execute "pg_isready --host localhost --dbname postgres --username postgres" at Docker container 6ecf07131cd4
+[testcontainers.org 00:00:05.20] Execute "pg_isready --host localhost --dbname postgres --username postgres" at Docker container 6ecf07131cd4
+[testcontainers.org 00:00:05.22] Docker container 6ecf07131cd4 ready
+[testcontainers.org 00:00:07.19] Docker container 56ce5cfb6ae8 ready
+[testcontainers.org 00:00:25.61] Delete Docker container 1ec1a7ede640
+[testcontainers.org 00:00:26.05] Delete Docker container 56ce5cfb6ae8
+[testcontainers.org 00:00:26.41] Delete Docker container 6ecf07131cd4
+[testcontainers.org 00:00:26.74] Delete Docker network ae7e2e27c147
+[xUnit.net 00:00:27.27]   Finished:    WorkspaceManager.SystemTests
+</StdOut>
+    </Output>
+  </ResultSummary>
+</TestRun>

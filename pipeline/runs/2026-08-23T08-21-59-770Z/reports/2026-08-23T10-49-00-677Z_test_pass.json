@@ -1,0 +1,19 @@
+{
+  "stage": "test",
+  "status": "pass",
+  "summary": "Fresh exact-version semantic verification passed on rebased head 1d91033: one correct RBAC ConfigMap, valid v3.4.4 policy, and all 20 authorization cases passed offline.",
+  "changed_files": [],
+  "validation": [
+    "Exact chart argo-cd 10.1.2 SHA-256 5f581fdcaa657c393b78059bd1bcc29111a2708f7d7cdfadc064108773a305e3 and v3.4.4 image digest ending 6da09 used with no network.",
+    "20/20 matrix passed: ordinary user denied five operations; each of three admin groups allowed all five.",
+    "Fresh manifest 502dffcf8627af291b9f378bd316d38a0e1e6bfc9b957137455399d55fce86ee and canonical RBAC ConfigMap e063ea04576193453a3eb9c8f9668d70c0738e0787b67b6de4a20be7ac754b60.",
+    "Temporary artifacts removed and worktree remains clean."
+  ],
+  "blockers": ["PR CI/exact plan still pending.","Real SSO identity and MetaMCP drift remain hard merge/deployment gates."],
+  "next_action": "Retry fresh-base push and PR creation for exact head 1d91033, then observe all checks without merge or deployment.",
+  "requires_council": false,
+  "independent_lanes": ["rebased-head exact chart render","rebased-head v3.4.4 policy matrix"],
+  "route_to": "validation",
+  "risk_level": "critical",
+  "issues": [{"id":"validation-base-drift","title":"Reviewed branch base is stale","severity":"high","details":"Rebase and fresh semantic evidence complete; verify base again immediately before push.","owner_stage":"validation"}]
+}

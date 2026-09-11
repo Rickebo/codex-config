@@ -1,0 +1,40 @@
+{
+  "run": "2026-08-31T05-30-28-734Z",
+  "decision": "GO_CODE_ONLY_AFTER_SPEC_GATE",
+  "perspectives": [
+    {
+      "role": "architecture_planning",
+      "agent": "plan_dc_150_152_spec",
+      "conclusion": "Add one platform-owned exact dev namespace scope and require the existing unique fresh DeploymentGrant/Profile join to report environment dev. Do not add another entitlement database or repository-controlled security input."
+    },
+    {
+      "role": "security_review",
+      "agent": "review_deployment_controller_151",
+      "conclusion": "PR #151 is merged and inert but unsafe to enable: matching repository ID plus namespace without an explicit dev boundary permits a production grant. CREATE and DELETE need a pre-authorization dev fence and prod-negative tests."
+    },
+    {
+      "role": "quality_operations",
+      "agent": "research_access_controller_bootstrap",
+      "conclusion": "Access-controller must remain undeployed/plan-only until this external admission boundary is merged, released, and proven. The image-cap implementation is already merged; immutable publication and rollout remain later gates."
+    }
+  ],
+  "consensus": [
+    "Implement the dev-only boundary in deployment-controller on current main and keep roleBindingAdmission disabled.",
+    "Keep namespace, repository identity, group subject, roleRef, and break-glass authority centrally controlled and fail closed for prod, unknown, stale, malformed, partial, or ambiguous state.",
+    "Preserve the merged five-binary image-size and supply-chain invariants; do not raise the publisher cap or duplicate PR #153.",
+    "Do not dispatch releases, publish artifacts, deploy, enable admission, or change access-controller apply mode in this pipeline.",
+    "Require exact-head CI and independent review before merge consideration; require separate fresh release and deployment evidence later."
+  ],
+  "source_heads": {
+    "remote_main": "26e4b12e3932d7eb97cc1e78f90110fb03034827",
+    "merged_admission_pr_151": "6b468b4719040a560457c1b69ae14fd6d79a0ac2",
+    "merged_image_fix_pr_153": "ce2272d0c10170369ef0fd27682061785c18c094",
+    "release_coordinator_pr_172": "018912fb9a122afd62a17dc1ba0331fb944411a0"
+  },
+  "live_constraints": {
+    "admission": "disabled and inert; no live exposure",
+    "access_controller": "undeployed and plan-only source defaults",
+    "release": "no post-v0.13.0 immutable release; v0.14.0 must not be reused",
+    "deployment": "not authorized by this pipeline"
+  }
+}

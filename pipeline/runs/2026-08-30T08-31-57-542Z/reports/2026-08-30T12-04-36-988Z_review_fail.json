@@ -1,0 +1,35 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "PR #310 is not controller-complete: Helm-only materialization omits required resources, production Kata admission, service accounts/credentials, and offline RuntimeClass; proxy strategy is also ignored.",
+  "changed_files": [],
+  "validation": [
+    "Independent descriptor/controller contract review completed and REVIEW STAGE: FAIL posted on PR #310.",
+    "Independent Helm/security review rendered production and offline proxy/lobby variants.",
+    "Controller v0.13 API confirmed no repository resourcesPath materialization field.",
+    "Helm output confirmed required resources are absent from direct chart renders."
+  ],
+  "blockers": [
+    "Required resources under component resources/ directories are not rendered by the declared PathHelm components.",
+    "Production generated-server ValidatingAdmissionPolicy is absent from the controller-rendered runtime chart.",
+    "Proxy service accounts and pull credentials are legacy-resource-only and absent under controller ownership.",
+    "Offline lobby renders runtimeClassName as an empty string.",
+    "Proxy strategy Recreate is declared but ignored by its Deployment template."
+  ],
+  "next_action": "Return to code; migrate required resource bundles into Helm-rendered templates, place admission in the runtime chart, fix service-account/image-pull ownership and variant RuntimeClass/strategy behavior, then rerun review.",
+  "requires_council": false,
+  "independent_lanes": [
+    "Helm resource-bundle materialization",
+    "Kata admission and scheduling variants",
+    "proxy service-account/pull-secret and rollout behavior"
+  ],
+  "risk_level": "critical",
+  "issues": [
+    {"id":"REV-P1-RESOURCES","title":"Controller omits component resources directories","severity":"critical","details":"Kafka/TLS/RBAC/ExternalSecret/network/DNS/monitoring resources are not part of Helm output.","owner_stage":"code"},
+    {"id":"REV-P1-ADMISSION","title":"Production generated-server admission policy is not rendered","severity":"critical","details":"The changed policy is outside the prod controller-rendered runtime chart.","owner_stage":"code"},
+    {"id":"REV-P1-SA","title":"Proxy service accounts and pull credentials are absent","severity":"critical","details":"Chart references service accounts created only by legacy resource bundles.","owner_stage":"code"},
+    {"id":"REV-P1-OFFLINE-RUNTIME","title":"Offline lobby has empty RuntimeClass","severity":"high","details":"Unconditional template renders runtimeClassName empty with the offline values file.","owner_stage":"code"},
+    {"id":"REV-P2-STRATEGY","title":"Proxy Recreate strategy is ignored","severity":"medium","details":"Deployment template omits spec.strategy despite values contract.","owner_stage":"code"}
+  ],
+  "route_to": "code"
+}

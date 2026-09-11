@@ -1,0 +1,24 @@
+{
+  "stage": "test",
+  "status": "pass",
+  "summary": "Exact-head QA passed for PR #175 release smoke contract remediation.",
+  "changed_files": [
+    "Makefile",
+    "tools/test_docker_smoke.py"
+  ],
+  "validation": [
+    "make ci passed with Go 1.26.7 and zero govulncheck findings.",
+    "Focused Docker smoke suite passed 11/11, including digest, stale-asset, interruption, and cleanup fixtures.",
+    "go test -race ./..., go vet ./..., builds, migration integration, and web checks passed.",
+    "OpenAPI, actionlint, workflow parser, supply-chain, migration manifest, Helm, kubeconform, shell, and diff checks passed.",
+    "Docker cleanup left zero owned smoke or migration containers and networks."
+  ],
+  "blockers": [
+    "Post-merge release publication must produce immutable app/migration digests, chart, and metadata.",
+    "DEV deployment bump/rollout must be verified before issue #128 is closed.",
+    "The release workflow currently verifies linux/amd64 only; no arm64 claim is made."
+  ],
+  "next_action": "Merge PR #175 normally and monitor the post-merge release workflow through artifact publication and DEV rollout.",
+  "route_to": "validation",
+  "risk_level": "low"
+}

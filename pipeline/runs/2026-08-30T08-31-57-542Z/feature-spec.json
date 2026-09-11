@@ -1,0 +1,164 @@
+{
+  "meta": {
+    "id": "SPEC-lc-309-prod-deployment-controller",
+    "title": "Operate Lightning Craft production through deployment-controller with Kata isolation",
+    "author": "manager",
+    "created_at": "2026-08-30T11:20:00+02:00",
+    "version": "1.0.0"
+  },
+  "feature": {
+    "problem_statement": "Lightning Craft production is currently delivered by nested legacy Argo Application/ApplicationSet resources split between codicarium-prod and lc-prod-workload. This cannot be represented by deployment-controller's single grant/profile destination contract, leaves proxy and lobby outside the generated-server Kata policy, and has no verified dedicated LC Kata node pool on codicarium-prod.",
+    "goals": [
+      "Make codicarium/lc-config the repository owner for every static LC production workload and policy.",
+      "Make deployment-controller the sole materializer for the LC production repository/environment.",
+      "Run proxy, lobby, and every generated Minecraft server with RuntimeClass kata-clh on dedicated LC nodes in codicarium-prod.",
+      "Prove the production stack is healthy and can create, reach, and retire a representative game server."
+    ],
+    "non_goals": [
+      "Make individual dynamically created game-server instances Git-managed; the orchestrator remains their lifecycle owner.",
+      "Preserve the legacy split-cluster Application/ApplicationSet architecture or backwards-compatible delivery paths.",
+      "Schedule LC workloads on ARC runner nodes or weaken existing generated-server security controls."
+    ],
+    "scope_in": [
+      "lc-config production descriptors, direct PathHelm charts, values, policies, tests, runbooks, and legacy-owner retirement.",
+      "codicarium/platform deployment-controller profile, grant, exposure classifications, resource allowlists, and activation evidence.",
+      "Codicarium prod infrastructure and platform GitOps needed for dedicated Kata-capable LC worker nodes and RuntimeClass kata-clh.",
+      "app-config removal of the legacy LC Argo owner after controller activation readiness is proven.",
+      "Production rollout, health checks, Minecraft proxy/lobby/generated-server smoke checks, rollback evidence, issue and PR lifecycle."
+    ],
+    "scope_out": [
+      "Unrelated LC application features, service rewrites, and artifact migrations.",
+      "Live kubectl mutation as a deployment mechanism.",
+      "Reuse of ambiguous kubeconfig defaults or unnamed production contexts."
+    ]
+  },
+  "requirements": [
+    {
+      "id": "REQ-001",
+      "priority": "MUST",
+      "statement": "The LC prod repository/environment MUST be materialized only by deployment-controller v0.13-compatible descriptors and one central DeploymentGrant/Profile after cutover; legacy nested Argo writers MUST be suppressed without overlapping ownership.",
+      "rationale": "One authoritative reconciler prevents conflicting Applications and provides auditable, fail-closed activation."
+    },
+    {
+      "id": "REQ-002",
+      "priority": "MUST",
+      "statement": "lc-config MUST directly own PathHelm-compatible production charts and values for orchestrator API, orchestrator worker, runtime policy/resources, database dependencies, proxy, and lobby, with explicit per-component exposureClass in central policy.",
+      "rationale": "deployment-controller rejects repository attempts to define central authority and cannot materialize the current nested multi-source Application meta-chart unchanged."
+    },
+    {
+      "id": "REQ-003",
+      "priority": "MUST",
+      "statement": "All static LC prod components and their runtime namespaces MUST target codicarium-prod under one destination profile; the separate lc-prod-workload destination MUST be retired from the LC prod delivery contract.",
+      "rationale": "One grant references one profile and one destination; consolidating fulfills the requested Codicarium prod hosting model."
+    },
+    {
+      "id": "REQ-004",
+      "priority": "MUST",
+      "statement": "RuntimeClass kata-clh MUST exist with a verified Kata handler and LC-specific scheduling constraints, and proxy, lobby, and all generated game-server Pods MUST set runtimeClassName kata-clh and schedule only on dedicated non-runner LC nodes.",
+      "rationale": "Kata isolation must cover every player-facing server process without consuming or trusting ARC runner capacity."
+    },
+    {
+      "id": "REQ-005",
+      "priority": "MUST",
+      "statement": "The consolidated prod stack MUST preserve least-privilege RBAC, generated-server admission, restricted pod security, image provenance, ExternalSecret-based credentials, persistent storage, network policy, public proxy routing, and internal service connectivity.",
+      "rationale": "Changing the delivery and cluster boundary must not remove existing security or operational dependencies."
+    },
+    {
+      "id": "REQ-006",
+      "priority": "MUST",
+      "statement": "Cutover MUST use deployment-controller prepare/activate evidence tied to the exact lc-config default-branch SHA, MUST avoid simultaneous legacy/controller ownership, and MUST provide a tested GitOps rollback that restores one known-good owner without deleting persistent data.",
+      "rationale": "The production migration is high risk and controller activation is intentionally fail closed."
+    },
+    {
+      "id": "REQ-007",
+      "priority": "MUST",
+      "statement": "Production validation MUST use an explicitly named codicarium-prod kube context and prove controller, Argo, nodes, RuntimeClass, storage, proxy, lobby, control-plane services, and a representative generated game-server lifecycle healthy.",
+      "rationale": "Rendered desired state is not sufficient evidence that the player path is operational."
+    }
+  ],
+  "acceptance_criteria": [
+    {
+      "id": "AC-001",
+      "requirement_ids": ["REQ-001", "REQ-002"],
+      "scenario": "Given merged controller policy and lc-config descriptor, when deployment-controller validates the prod repository, then every declared component ID/path matches one classified grant component, all rendered GVKs are allowlisted, and no legacy LC root/meta Application remains an active writer."
+    },
+    {
+      "id": "AC-002",
+      "requirement_ids": ["REQ-003", "REQ-005"],
+      "scenario": "Given the prod render, when destinations and namespaces are inspected, then all static LC resources target codicarium-prod, no lc-prod-workload destination remains, and required RBAC, secrets, storage, network, and route resources render without plaintext secrets."
+    },
+    {
+      "id": "AC-003",
+      "requirement_ids": ["REQ-004", "REQ-005"],
+      "scenario": "Given dedicated LC Kata nodes and RuntimeClass kata-clh, when proxy, lobby, and a generated game server are admitted, then each Pod declares kata-clh, lands on an LC node, cannot land on ARC runner nodes, and satisfies the generated-server security contract."
+    },
+    {
+      "id": "AC-004",
+      "requirement_ids": ["REQ-001", "REQ-006"],
+      "scenario": "Given exact default-branch SHA and absent/conflict-free target Applications, when prepare and activate are executed through the controller workflow, then proof is accepted once, the controller owns all Applications, and rollback can restore the known-good Git owner without data deletion."
+    },
+    {
+      "id": "AC-005",
+      "requirement_ids": ["REQ-007"],
+      "scenario": "Given an explicitly named codicarium-prod context, when post-merge validation runs, then deployment-controller and Argo are healthy, all LC workloads are ready, a client reaches the public proxy and lobby, one generated server reaches ready and is reachable through the proxy, and cleanup/stop completes successfully."
+    }
+  ],
+  "test_plan": [
+    {
+      "id": "TST-001",
+      "type": "integration",
+      "requirement_ids": ["REQ-001", "REQ-002"],
+      "approach": "Strictly decode both prod descriptor and central grant/profile using deployment-controller v0.13.0 contracts; assert exact component/path/value/exposure mappings and rejection of unknown or missing fields."
+    },
+    {
+      "id": "TST-002",
+      "type": "integration",
+      "requirement_ids": ["REQ-002", "REQ-003", "REQ-005"],
+      "approach": "Run Helm lint/template for every local component chart and assert one codicarium-prod destination, exact namespaces, required GVK allowlist, no nested Applications, no plaintext secrets, and expected storage/network/RBAC resources."
+    },
+    {
+      "id": "TST-003",
+      "type": "integration",
+      "requirement_ids": ["REQ-004", "REQ-005"],
+      "approach": "Render and server-side dry-run RuntimeClass, proxy, lobby, and generated-server fixtures; positive kata-clh cases pass while missing/wrong runtime, unsafe security settings, wrong node placement, mutable images, and runner-node placement fail closed."
+    },
+    {
+      "id": "TST-004",
+      "type": "e2e",
+      "requirement_ids": ["REQ-006"],
+      "approach": "Exercise controller dry-run/prepare/activate checks and a documented rollback rehearsal using exact immutable SHAs and conflict detection before production activation."
+    },
+    {
+      "id": "TST-005",
+      "type": "e2e",
+      "requirement_ids": ["REQ-007"],
+      "approach": "With explicit prod kubeconfig/context, verify nodes/controllers/Argo/workloads/storage and run the public proxy to lobby to generated-server lifecycle smoke test, collecting non-secret evidence."
+    }
+  ],
+  "traceability": [
+    {"requirement_id":"REQ-001","acceptance_ids":["AC-001","AC-004"],"test_ids":["TST-001","TST-004"],"review_checks":["Verify exactly one materializer and no nested/overlapping Argo ownership."],"validation_checks":["Controller activation evidence and Application ownership are exact-SHA bound."]},
+    {"requirement_id":"REQ-002","acceptance_ids":["AC-001","AC-002"],"test_ids":["TST-001","TST-002"],"review_checks":["Verify direct local charts, central authority fields, and every component classification."],"validation_checks":["All controller descriptor/grant mappings and Helm renders pass."]},
+    {"requirement_id":"REQ-003","acceptance_ids":["AC-002"],"test_ids":["TST-002"],"review_checks":["Verify removal of lc-prod-workload destination references from active prod delivery."],"validation_checks":["All static LC workloads observed in codicarium-prod only."]},
+    {"requirement_id":"REQ-004","acceptance_ids":["AC-003"],"test_ids":["TST-003"],"review_checks":["Verify handler, overhead/scheduling, LC node isolation, and all three workload paths."],"validation_checks":["Proxy, lobby, and generated server report kata-clh and LC-node placement."]},
+    {"requirement_id":"REQ-005","acceptance_ids":["AC-002","AC-003"],"test_ids":["TST-002","TST-003"],"review_checks":["Review RBAC, admission, secrets, images, storage, networking, and public exposure least privilege."],"validation_checks":["Negative policy tests fail and dependency health checks pass."]},
+    {"requirement_id":"REQ-006","acceptance_ids":["AC-004"],"test_ids":["TST-004"],"review_checks":["Verify conflict-free activation ordering and persistent-data-safe rollback."],"validation_checks":["Prepare/activate and rollback rehearsal evidence accepted."]},
+    {"requirement_id":"REQ-007","acceptance_ids":["AC-005"],"test_ids":["TST-005"],"review_checks":["Verify commands pin kubeconfig and codicarium-prod context and expose no secrets."],"validation_checks":["End-to-end player path and generated-server cleanup pass live."]}
+  ],
+  "quality_gates": {
+    "spec_review_required": true,
+    "testability_required": true,
+    "traceability_required": true
+  },
+  "council": {
+    "perspectives": [
+      {"role":"planner","summary":"Use a staged four-repository cutover: substrate, controller policy, lc-config direct charts/descriptor, then legacy-owner suppression and activation."},
+      {"role":"platform reviewer","summary":"One grant/profile cannot preserve the current two destinations. Consolidate into codicarium-prod and require exact resource allowlists and exposure classes."},
+      {"role":"security reviewer","summary":"Keep Kata on dedicated LC nodes, retain fail-closed generated-server admission, ExternalSecrets, restricted pods, and prevent ARC runner placement."},
+      {"role":"QA","summary":"Require offline render/contract negatives, controller activation proof, explicit-context live checks, and a player-path lifecycle smoke test before completion."}
+    ],
+    "consensus_summary": "Proceed with desired-state implementation and PRs. Production activation is NO-GO until a dedicated Kata-capable LC node pool exists and an explicitly named codicarium-prod kube context passes preflight.",
+    "open_questions": [
+      "The exact Kata containerd handler and RuntimeClass overhead must be derived from the pinned platform chart and proven on the dedicated LC node pool before activation."
+    ]
+  }
+}

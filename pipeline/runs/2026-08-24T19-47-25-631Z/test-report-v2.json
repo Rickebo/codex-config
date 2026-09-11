@@ -1,0 +1,25 @@
+{
+  "stage": "test",
+  "status": "pass",
+  "summary": "TEST loop 1 passed all material checks at exact clean HEAD da479fcaa9aeb141967c028b4be47338b68560e2 over origin/main ca55729de7a58bef5b49ebdce8c28773bb7e1b2e. Real-tuple ancestry, divergence, malformed response, and API-failure fixtures are fail-closed. Protected PR supply-chain remains mandatory because the local NFS worktree cannot be Docker bind-mounted reliably and the host lacks buildx.",
+  "changed_files": [],
+  "validation": [
+    "Before and after testing, HEAD was da479fcaa9aeb141967c028b4be47338b68560e2, origin/main and merge-base were ca55729de7a58bef5b49ebdce8c28773bb7e1b2e, the worktree was clean, and current_stage remained test.",
+    "Focused handoff and coordinator Node policy fixtures passed 2/2 suites; the handoff suite directly invoked the new historical ancestry fixture from its main test runner.",
+    "Real tuple ad52dfc -> 6053f97 -> ca55729 passed; diverged/behind ancestry, malformed SHAs/main refs, main-ref API errors, and compare API errors were explicitly rejected before handoff.",
+    "python3 hack/test-release-graph.py passed 46/46 tests; make test-release-flow passed 111/111 Python tests plus 2/2 JavaScript fixture suites.",
+    "make test passed 23/23 Go packages.",
+    "CI lint mapping passed: fmt-check, tidy-check, vet, govulncheck, validate-repository, and separately ordered actionlint; govulncheck found 0 vulnerabilities.",
+    "CI chart mapping passed: verify-chart-crds plus make verify-chart completed 4/4 Python tests, 3/3 Helm lints, and rendered 26+19 Kubernetes objects.",
+    "CI integration mapping used make test-integration because make integration is an undeclared directory no-op; 18/18 top-level tests and 10/10 subtests passed.",
+    "actionlint passed all 6/6 workflow files; Ruby YAML safe-load parsed 6/6; node --check passed both changed JavaScript files.",
+    "git diff --check ca55729..HEAD passed; .github/workflows/publish-release.yaml was byte-for-byte unchanged from ca55729 (1/1 protected-file invariant).",
+    "Prior reproducible supply-chain probes on this same worktree showed Docker/NFS bind-mount permission failure for kubeconform; the current filesystem remains NFS and Docker still reports buildx unavailable.",
+    "No material policy, release-flow, graph, Go, lint, chart, integration, workflow, syntax, ancestry, API-failure, or diff assertion failed; protected PR supply-chain must close the local-only gaps."
+  ],
+  "blockers": [],
+  "next_action": "Proceed to validation, but require the protected PR supply-chain job to pass kubeconform and image/buildx verification before merge or release; preserve the exact reviewed SHA and unchanged publisher workflow.",
+  "route_to": "validation",
+  "risk_level": "high",
+  "issues": []
+}

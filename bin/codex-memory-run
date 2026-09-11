@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+set -u
+
+usage() { printf 'usage: %s root|agent -- command [arg ...]\n' "${0##*/}" >&2; }
+if (( $# < 3 )) || [[ $1 != root && $1 != agent ]] || [[ $2 != -- ]]; then
+  usage
+  exit 64
+fi
+tier=$1
+shift 2
+if [[ $tier == root ]]; then
+  target_score=400
+  target_slice=codex-root.slice
+else
+  target_score=800
+  target_slice=codex-agents.slice
+fi
+current_score=0
+if [[ -r /proc/self/oom_score_adj ]]; then current_score=$(< /proc/self/oom_score_adj); fi
+[[ $current_score =~ ^-?[0-9]+$ ]] || current_score=0
+if (( current_score < target_score )); then
+  printf '%s\n' "$target_score" > /proc/self/oom_score_adj 2>/dev/null || true
+  current_score=$(< /proc/self/oom_score_adj) 2>/dev/null || true
+  [[ $current_score =~ ^-?[0-9]+$ ]] || current_score=$target_score
+fi
+current_cgroup=
+while IFS= read -r line; do
+  case $line in 0::*) current_cgroup=${line#0::}; break;; esac
+done < /proc/self/cgroup
+if [[ $tier == root && $current_score -ge 800 ]] ||
+   [[ $current_cgroup == */codex-agents.slice || $current_cgroup == */codex-agents.slice/* ]]; then
+  exec "$@"
+fi
+if [[ $current_cgroup == */$target_slice || $current_cgroup == */$target_slice/* ]]; then exec "$@"; fi
+if ! command -v systemd-run >/dev/null 2>&1; then
+  printf 'codex-memory-run: cannot enforce %s: systemd-run is unavailable\n' "$target_slice" >&2
+  exit 69
+fi
+if ! systemctl --user show-environment >/dev/null 2>&1; then
+  printf 'codex-memory-run: cannot enforce %s: user systemd is unavailable\n' "$target_slice" >&2
+  exit 69
+fi
+exec systemd-run --user --scope --collect --quiet --slice="$target_slice" -- "$@"

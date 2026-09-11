@@ -1,0 +1,35 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "PR #450 releases the Kubernetes child startup lock before the persistent MCP process while preserving the homelab read-only in-cluster command and environment.",
+  "changed_files": [
+    "scripts/metamcp/bootstrap.sql"
+  ],
+  "validation": [
+    "PR #450 is open, non-draft, merge state CLEAN, and contains only the scoped bootstrap SQL change.",
+    "The lock now guards one-shot npx package prefetch and the persistent command runs via exec npx after lock release.",
+    "Focused concurrent-start test passed three times with approximately 302-303 ms persistent-start gaps.",
+    "Shell argv/quoting, static checks, Helm lint/template, explicit homelab Argo dry-run, and diff checks passed.",
+    "No live cluster mutation or secret output was reported."
+  ],
+  "blockers": [
+    "GitHub checks have not reported for PR #450; independent review is required before merge."
+  ],
+  "next_action": "Run the required focused review of PR #450, then advance through the pipeline approval gate to test.",
+  "route_to": "review",
+  "risk_level": "critical",
+  "independent_lanes": [
+    "Bootstrap SQL command contract",
+    "Concurrent persistent-child startup test"
+  ],
+  "requires_council": true,
+  "issues": [
+    {
+      "id": "VAL-K8S-FLOCK",
+      "title": "Persistent Kubernetes child is held behind flock",
+      "severity": "critical",
+      "details": "PR #450 is the scoped remediation for the long-lived lock that caused repeated in-cluster tools/list timeout.",
+      "owner_stage": "review"
+    }
+  ]
+}

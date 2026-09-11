@@ -1,0 +1,23 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "PR #177 now fails closed for non-main manual release dispatches.",
+  "changed_files": [
+    ".github/workflows/release.yml",
+    "tools/test_check_main_protection.py"
+  ],
+  "validation": [
+    "Exact head is 00831489605411bda1c4d1d24f85c8cfeaaccf06.",
+    "Hosted validate run 32571303676 passed at the updated exact head.",
+    "Local protection tests passed 17/17, including main-allowed and non-main-rejected dispatch cases.",
+    "Actionlint, workflow parser, and diff checks passed.",
+    "The guard rejects non-main refs before setting release outputs.",
+    "Validation-only gating and artifact-only publication conditions remain unchanged."
+  ],
+  "blockers": [
+    "Fresh independent exact-head review and QA must clear before merge."
+  ],
+  "next_action": "Complete independent review and QA, then merge PR #177 normally.",
+  "route_to": "review",
+  "risk_level": "low"
+}

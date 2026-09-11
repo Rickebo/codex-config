@@ -1,0 +1,36 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Corrective GitOps review fails: recovery jobs only enumerate dumps, no fixture-backed disposable PostgreSQL restore exists, and no enabled target-only storage/identity contract is exercised. External D-001/D-002/D-003 and Argo access evidence remain validation gates, not code claims.",
+  "changed_files": [
+    "llm-proxy/templates/restore.yaml",
+    "workspace-context/templates/gated.yaml",
+    "workspace-context/templates/storage.yaml",
+    "apps/llm-proxy.yaml",
+    "apps/workspace-context.yaml",
+    "llm-proxy/templates/oidc-secret-replication.yaml",
+    "llm-proxy/vendor/llm-proxy/templates/authentik-blueprint.yaml",
+    "argocd/default-project.yaml",
+    "tests/test_workspace_context_llm_proxy_gitops.py"
+  ],
+  "validation": [
+    "origin/main contains 1d6d2492021cfed0f7b7d975509a779485c8bfac; no source files were edited in this review.",
+    "llm-proxy/templates/restore.yaml:46-48 runs checksum plus pg_restore --list only; it never connects to a disposable PostgreSQL instance.",
+    "workspace-context/templates/gated.yaml:51-56 likewise runs pg_restore --list and graph-manifest checks only; migration at :121-122 only tests directory existence.",
+    "apps/llm-proxy.yaml:19-41 and apps/workspace-context.yaml:19-51 keep target gates disabled and NFS server/path blank; this is the safe inert default, not live target evidence.",
+    "Identity templates are conditional: oidc-secret-replication.yaml:1-3 and vendor authentik-blueprint.yaml:1 require enabled values; the gate-off application render therefore contains no identity resources.",
+    "Current validation report records llm-proxy OutOfSync/Degraded and unauthenticated Argo access; project/access parity cannot be established from external evidence.",
+    "Current validation report records missing sanitized provider cutoff/WAL/artifact-SHA closure, NAS/ACL/capacity/readback proof, and fresh identity reauthentication proof; these are external D-001/D-002/D-003 gates.",
+    "Historical PVCs remain out of scope; any corrective render/test must prove no historical PVC selectors, ownership, deletion, or prune path is introduced."
+  ],
+  "blockers": [
+    "HIGH — llm-proxy/templates/restore.yaml:46-48 and workspace-context/templates/gated.yaml:51-56 are list-only. Fix: restore into isolated disposable PostgreSQL, assert data and artifact SHA readback, and reject source/production endpoints.",
+    "HIGH — workspace-context/templates/gated.yaml:93-122 has no fixture producer; migration only tests directories. Fix: add a deterministic target-only fixture and an integration test for dump/artifact creation, disposable-PostgreSQL restore, and coupled-data verification.",
+    "HIGH — apps/llm-proxy.yaml:19-41 and apps/workspace-context.yaml:19-51 test only blank-NFS, gate-off renders. Fix: add a non-production enabled overlay/test matrix with explicit NFS fixtures and storage/restore/backup/identity assertions; retain inert defaults.",
+    "HIGH — conditional identity templates are not exercised enabled. Fix: test ExternalSecret, least-privilege reader RBAC, Authentik blueprint, callback, and fresh-credential references without secret values.",
+    "SAFETY — apps retain Argo finalizers and target templates create new PVC/PV names. Fix: test no historical-PVC ownership/prune, Retain behavior, or source/worker selection; do not weaken protection to make restore pass.",
+    "EXTERNAL, not code — D-001/D-002/D-003 and Argo project/access are unproven. Authenticated target validation must provide cutoff/WAL/artifact SHA, NAS ACL/readback, identity reauth, and AppProject parity; fix Git only if mismatch is evidenced."
+  ],
+  "next_action": "Route to code for the corrective GitOps implementation and its fixture-backed enabled-path tests; preserve inert defaults and historical PVC/prune protections. Do not approve, sync Argo, restore live data, activate credentials, or mutate source state.",
+  "route_to": "code"
+}

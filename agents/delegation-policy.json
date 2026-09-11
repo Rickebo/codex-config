@@ -1,0 +1,84 @@
+{
+  "version": 1,
+  "default_max_depth": 1,
+  "default_max_threads": 6,
+  "rules": [
+    {
+      "task_shape": "tiny_low_risk_patch",
+      "triggers": ["literal edit", "one-file tweak", "mechanical simple code change", "clear acceptance criteria"],
+      "plan": ["root_direct", "backend_fixer", "ui_fixer"],
+      "max_agents": 1,
+      "notes": "Use only when the parent can provide exact files, desired behavior, and fast validation. If discovery is needed, use code_mapper or a normal fixer first."
+    },
+    {
+      "task_shape": "trivial_read_only_lookup",
+      "triggers": ["find where X lives", "identify owner file", "quick config lookup"],
+      "plan": ["root_direct", "code_mapper"],
+      "max_agents": 1,
+      "notes": "Prefer root direct when the lookup is immediate; use code_mapper for unfamiliar code paths."
+    },
+    {
+      "task_shape": "single_file_or_single_module_bug",
+      "triggers": ["narrow bug", "known owner file", "small config fix"],
+      "plan": ["root_direct", "backend_fixer", "ui_fixer"],
+      "max_agents": 1,
+      "notes": "Use the unified fixer only when the cause and edit are already clear; otherwise perform discovery first."
+    },
+    {
+      "task_shape": "single_domain_feature",
+      "triggers": ["backend only", "frontend only", "CLI only", "small feature"],
+      "plan": ["one_worker", "optional_reviewer"],
+      "max_agents": 2,
+      "notes": "Skip tech leads unless integration or ownership risk is material."
+    },
+    {
+      "task_shape": "frontend_backend_feature",
+      "triggers": ["frontend plus backend", "API plus UI", "shared contract change"],
+      "plan": ["tech_lead_frontend", "tech_lead_backend", "reviewer"],
+      "max_agents": 4,
+      "notes": "Use direct workers instead of leads when the contract is already obvious and write scopes are disjoint."
+    },
+    {
+      "task_shape": "ui_visual_unknown",
+      "triggers": ["visual bug", "responsive issue", "unknown browser behavior"],
+      "plan": ["ui_fixer"],
+      "max_agents": 2,
+      "notes": "Gather browser evidence first; do not spend implementation tokens until reproduction is clear."
+    },
+    {
+      "task_shape": "runtime_browser_bug",
+      "triggers": ["console error", "network failure", "browser runtime defect"],
+      "plan": ["ui_fixer", "backend_fixer"],
+      "max_agents": 3,
+      "notes": "Route to the owner after evidence identifies frontend or backend cause."
+    },
+    {
+      "task_shape": "ci_failure",
+      "triggers": ["GitHub Actions failure", "workflow failure", "test logs"],
+      "plan": ["github_operator", "backend_fixer", "ui_fixer"],
+      "max_agents": 2,
+      "notes": "Fetch only the failing job/log slice before assigning a fixer."
+    },
+    {
+      "task_shape": "infra_gitops",
+      "triggers": ["Argo", "Kubernetes", "Terraform", "GitOps", "deployment"],
+      "plan": ["tech_lead_devops", "environment_devops_agent"],
+      "max_agents": 3,
+      "notes": "Use the environment-specific devops agent directly when the affected environment is singular and known."
+    },
+    {
+      "task_shape": "security_ci_release_high_risk",
+      "triggers": ["security", ".github/workflows", "release", "migration", "data loss risk"],
+      "plan": ["codex-pipeline", "planner", "reviewer", "tech_lead_qa"],
+      "max_agents": 8,
+      "notes": "Use pipeline or deep review; do not optimize away stage gates for high-risk paths."
+    },
+    {
+      "task_shape": "repeated_failure",
+      "triggers": ["same validation failed twice", "unclear after one focused loop"],
+      "plan": ["escalate_reasoning", "planner", "reviewer"],
+      "max_agents": 3,
+      "notes": "Escalate model or reasoning before increasing fan-out blindly."
+    }
+  ]
+}

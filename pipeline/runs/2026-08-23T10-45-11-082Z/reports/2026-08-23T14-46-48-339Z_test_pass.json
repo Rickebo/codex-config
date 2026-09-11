@@ -1,0 +1,18 @@
+{
+  "stage": "test",
+  "status": "pass",
+  "summary": "Independent read-only Youtarr test matrix passed on PR #536 head 326261b.",
+  "changed_files": [],
+  "validation": [
+    "Temporary checkout of 326261b: PYTHONPATH=. pytest -q youtarr/tests passed, 107 tests.",
+    "helm lint youtarr passed: 1 chart linted, 0 failed.",
+    "helm template rendered and YAML parsed successfully: 22 documents.",
+    "All 5 rendered ExternalSecrets, including youtarr-google-oauth, have sync-wave -1; controller and worker deployments have wave 0.",
+    "Diff audit: only externalsecrets.yaml annotations and matching render assertions changed; no unrelated topology, values, or secret changes.",
+    "No secret values read; no repository edits, comments, merge, deploy, or GitHub Actions triggered."
+  ],
+  "blockers": [],
+  "next_action": "Route to validation stage.",
+  "route_to": "validation",
+  "risk_level": "high"
+}

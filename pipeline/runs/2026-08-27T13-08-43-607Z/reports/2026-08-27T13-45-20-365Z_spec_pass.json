@@ -1,0 +1,35 @@
+{
+  "stage": "spec",
+  "status": "pass",
+  "summary": "The four-perspective council unanimously approves an implementation-ready Milestone 4 specification after resolving malformed S4/S15/S17 acceptance text, DLQ/replay scope and crash-window semantics, #46/#54 overlap, dependency ordering, full runtime topology, eighteen immutable image roles, and identical S1-S17 FastSystem/System evidence. Milestone 5 remains excluded until #26 closes.",
+  "changed_files": [
+    "/home/rickebo/.codex/pipeline/runs/2026-08-27T13-08-43-607Z/feature-spec.json",
+    "/home/rickebo/.codex/pipeline/runs/2026-08-27T13-08-43-607Z/council.json",
+    "/home/rickebo/.codex/pipeline/runs/2026-08-27T13-08-43-607Z/spec-check.json"
+  ],
+  "validation": [
+    "Strict pipeline-spec-check passed with 15 MUST requirements, 14 acceptance criteria, 11 test entries, 15 trace rows, zero errors, and zero warnings",
+    "Planner PASS: exact dependency order, disjoint ownership, and #46/#54 reconciliation are explicit",
+    "Reviewer PASS: S4/S15/S17 repair, DLQ security, stable-key crash-window deduplication, and forced restart proof are mandatory",
+    "Backend PASS: scoped #46/#54 reliability boundary, service slices, Source order, Knowledge scope, and eighteen runtime roles are feasible",
+    "QA PASS: identical S1-S17 matrices, complete worker/fixture topology, immutable role provenance, full suites, diagnostics, cleanup, and clean repeats are mandatory",
+    "Workspace Context revision d951f1d7-d065-499a-9982-ce42207528e5 is current at main e6de435fccf9497f453208fa8bfd6be706bce769",
+    "Repository main remains clean and synchronized"
+  ],
+  "blockers": [],
+  "next_action": "Approve spec-to-code, then implement the scenario/contract foundation before starting disjoint reliability, Knowledge, Source, and system-acceptance worktrees.",
+  "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-27T13-08-43-607Z/feature-spec.json",
+  "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-08-27T13-08-43-607Z/spec-check.json",
+  "council_file": "/home/rickebo/.codex/pipeline/runs/2026-08-27T13-08-43-607Z/council.json",
+  "requires_council": true,
+  "independent_lanes": [
+    "normative scenarios and coordinated reliability contract",
+    "Source #46 then #20, #18, and #19",
+    "Insights combined #46 and #54",
+    "Model and Workspace #46 slices",
+    "Knowledge #23 administration and lifecycle",
+    "system topology, S1-S17, images, fault, browser, and release evidence"
+  ],
+  "route_to": "code",
+  "risk_level": "high"
+}

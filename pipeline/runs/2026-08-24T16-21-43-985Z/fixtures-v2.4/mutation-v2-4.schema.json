@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://codicarium.local/v2.4/mutation.v2.4",
+  "title": "mutation.v2.4",
+  "type": "object",
+  "required": [
+    "mutation_id",
+    "records"
+  ],
+  "properties": {
+    "mutation_id": {
+      "type": "string",
+      "pattern": "^M[0-9]{2}$"
+    },
+    "records": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": {
+        "type": "object"
+      }
+    }
+  },
+  "additionalProperties": false
+}

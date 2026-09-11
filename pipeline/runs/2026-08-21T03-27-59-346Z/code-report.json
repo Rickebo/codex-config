@@ -1,0 +1,30 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Issue #132 documentation reconciliation is committed with honest shipped/planned UI status, desired chart version tracking, historical blocker wording, and durable consistency checks.",
+  "changed_files": [
+    ".codicarium/README.md",
+    "Makefile",
+    "README.md",
+    "docs/deployment.md",
+    "docs/operator-quickstart.md",
+    "tools/check_docs_consistency.py",
+    "tools/test_check_docs_consistency.py",
+    "tools/test_check_operator_quickstart.py"
+  ],
+  "validation": [
+    "make docs-check",
+    "Documentation consistency and quickstart tests",
+    "Helm contract/lint/validate/kubeconform",
+    "Full Go tests, race, vet, and make ci-go",
+    "actionlint",
+    "make ci IMAGE_TAG=issue-132",
+    "git diff --check"
+  ],
+  "blockers": [],
+  "next_action": "Independent exact-head review and docs QA must verify no live-rollout overclaim and that tracker boundaries remain accurate.",
+  "route_to": "review",
+  "risk_level": "low",
+  "commit": "fa4a93c2e1992c96c42ad5192c753d9aad337d78",
+  "worktree": "/mnt/rickebo-p/agent-orchestrator/.worktrees/agent-orchestrator-issue_132"
+}

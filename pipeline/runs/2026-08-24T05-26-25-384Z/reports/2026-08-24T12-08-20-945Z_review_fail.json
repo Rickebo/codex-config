@@ -1,0 +1,51 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Re-review of 0a319468 found the caller still discards legacy-hook read errors, one envtest count helper reads the wrong namespace, request-first Activate validation is unproven, and anomaly/full-snapshot coverage remains incomplete.",
+  "changed_files": [
+    "internal/controller/activation/reconciler.go",
+    "internal/controller/activation/legacy_preapproval.go",
+    "internal/controller/activation/legacy_preapproval_test.go",
+    "integration/legacy_preapproval_runtime_test.go"
+  ],
+  "validation": [
+    "Independent full go test and focused unit tests: pass",
+    "Independent canonical integration binary: exit 0 with both migration cases executed",
+    "All v0.6.4 fixtures remain byte-identical to commit 17688f7",
+    "Worktree clean at exact reviewed SHA 0a319468",
+    "Static execution-order and namespace review exposed the remaining gaps"
+  ],
+  "blockers": [
+    "Reconciler checks handled before err, discarding a non-NotFound hook error and allowing a second read plus mutation.",
+    "Both valid Activate envtests run activation reconciliation first, so subsequent RequestReconciler exits terminal without exercising its linked-state validation.",
+    "No real-API terminal anomaly/duplicate or malformed/ambiguous zero-write fixture exists.",
+    "Consumed migration does not compare full request/activation/proof/Work metadata, specs, identities, and audit fields.",
+    "Issued-case list-count helper queries legacy-upgrade instead of the fixture namespace legacy-issued."
+  ],
+  "next_action": "Fix hook error propagation, namespace-aware counts, add request-first and separate activation fixtures plus anomaly zero-write cases and complete snapshots, then re-review the next exact SHA.",
+  "route_to": "code",
+  "risk_level": "critical",
+  "issues": [
+    {
+      "id": "LEGACY-REVIEW3-001",
+      "title": "Caller discards legacy hook state-read error",
+      "severity": "high",
+      "details": "Return hook errors before handled dispatch and test a one-shot failing reader cannot lead to a second read or mutation.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "LEGACY-REVIEW3-002",
+      "title": "Request-first and anomaly envtest paths are missing",
+      "severity": "medium",
+      "details": "Use fresh fixtures for RequestReconciler-first, activation-event, terminal anomaly, and malformed zero-write cases.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "LEGACY-REVIEW3-003",
+      "title": "Preservation counts and snapshots are incomplete",
+      "severity": "medium",
+      "details": "Parameterize namespace and compare full objects while excluding only the intended request status/resourceVersion transition.",
+      "owner_stage": "code"
+    }
+  ]
+}

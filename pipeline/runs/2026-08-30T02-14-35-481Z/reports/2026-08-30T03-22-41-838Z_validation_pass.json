@@ -1,0 +1,27 @@
+{
+  "stage": "validation",
+  "status": "pass",
+  "summary": "Access-controller PR #93 was exact-head squash-merged without bypass. Protected main validation and automatic immutable image publication both succeeded; issue #92 is implemented while deployment, rules, and provider activation remain explicitly out of scope.",
+  "changed_files": [
+    "README.md",
+    "docs/observability.md",
+    "internal/metrics/metrics.go",
+    "internal/metrics/metrics_test.go",
+    "internal/runtime/runtime.go",
+    "internal/runtime/runtime_test.go",
+    "internal/reconciliation/runner_test.go"
+  ],
+  "validation": [
+    "PR #93 merged as main commit 3091cb65cfd165e78b271f3c10f98c7806a753a0",
+    "Protected main Validate run 33289992367 succeeded",
+    "Release image run 33289992358 succeeded",
+    "Immutable source tag access-controller-image-v0.1.13 points to merged main",
+    "Published container digest sha256:281ea3acb9decd513fb84b09c8b6d03a14e70d7568bdc648820afd8127364168",
+    "Remote feature branch is deleted",
+    "No ServiceMonitor, PrometheusRule, deployment, runtime activation, provider write, or live authorization change occurred"
+  ],
+  "blockers": [],
+  "next_action": "Close access-controller#92 with verification evidence, remove the merged local worktree/branch, and keep alert issue observability-config#45 gated on plan-only target evidence.",
+  "route_to": "done",
+  "risk_level": "medium"
+}

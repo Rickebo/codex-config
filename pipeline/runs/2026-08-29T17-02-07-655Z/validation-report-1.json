@@ -1,0 +1,29 @@
+{
+  "stage": "validation",
+  "status": "fail",
+  "summary": "Post-merge release validation failed safely: verified v0.14.0 OCI subject size 154537984 bytes exceeds the protected publisher cap 134217728 bytes after adding the fifth binary. No artifact was published or deployed.",
+  "changed_files": [],
+  "validation": [
+    "PR #151 merged as 7b5a96bde05d3a0e0bc8c9f8e629a5e71be78042",
+    "Post-merge main CI 33269696161 passed all jobs",
+    "Automatic Release 33270112998 passed",
+    "Release Verify 33270133139 passed",
+    "Publish Release 33270639373 failed before publication at exact subject-size guard: 154537984 > 134217728"
+  ],
+  "blockers": [
+    "Image subject must be reduced below the existing protected 128 MiB publisher cap without removing required binaries or weakening provenance/SBOM coverage",
+    "A corrected release must rerun CI, verify, and publication before completion"
+  ],
+  "next_action": "Create a Luna-owned focused image-size remediation from current main, preserving the publisher cap and all security contracts.",
+  "route_to": "code",
+  "risk_level": "critical",
+  "issues": [
+    {
+      "id": "VAL-001",
+      "title": "Verified multi-binary OCI subject exceeds protected publisher cap",
+      "severity": "high",
+      "details": "The fifth admission binary raises the verified OCI subject to 154537984 bytes, above the 134217728-byte publisher limit. Publication failed before registry mutation.",
+      "owner_stage": "code"
+    }
+  ]
+}

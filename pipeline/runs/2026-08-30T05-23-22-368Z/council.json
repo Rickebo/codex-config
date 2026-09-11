@@ -1,0 +1,14 @@
+{
+  "task": "codicarium/infra#1290 slice 1",
+  "decision": "GO for PR-only contract and offline verifier; NO-GO for merge until review/test and NO-GO for all live actions",
+  "perspectives": [
+    {"role": "planner", "decision": "GO code", "summary": "Use codicarium/infra, immutable numeric identities and source revisions, exact root tool and sudo contracts, DESIRED_ONLY evidence."},
+    {"role": "reviewer", "decision": "NO-GO until exact diff review", "summary": "Require fixed root-owned non-writable realpaths, exact command tuples, no checkout execution, independent state verification, and adversarial coverage."},
+    {"role": "tech_lead_qa", "decision": "GO test design; NO-GO merge/rollout", "summary": "Require deterministic isolated positive/negative fixtures and proof of no mutation or sensitive output."}
+  ],
+  "external_gates": [
+    "A later slice must install the reviewed immutable bundle through a declarative owner and prove live state.",
+    "PR #1246 protected apply and group-6 apply authorization remain prohibited.",
+    "ARC producer activation remains prohibited until the authority-runner boundary and downstream gates pass."
+  ]
+}

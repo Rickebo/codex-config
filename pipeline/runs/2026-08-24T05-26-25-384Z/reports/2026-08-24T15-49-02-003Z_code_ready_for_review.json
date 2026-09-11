@@ -1,0 +1,35 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Completed the third remediation pass and rebased the unpushed issue #90 branch onto exact current main ad52dfc. HEAD 7e8a2073 preserves modern routing, fixes hook error propagation, and adds real API-server request-first, activation-first, terminal, ambiguity, and full-preservation coverage.",
+  "changed_files": [
+    "Makefile",
+    "api/v1alpha1/reconciliationrequest_types.go",
+    "config/crd/bases/*.yaml",
+    "charts/deployment-controller/crds/*.yaml",
+    "docs/operations.md",
+    "go.mod",
+    "hack/run-checks.sh",
+    "integration/legacy_preapproval_runtime_test.go",
+    "integration/suite_test.go",
+    "integration/testdata/v0.6.4/crds/*",
+    "internal/controller/activation/legacy_preapproval.go",
+    "internal/controller/activation/legacy_preapproval_test.go",
+    "internal/controller/activation/reconciler.go"
+  ],
+  "validation": [
+    "Rebased commit map 96945d2/9c4f741/0a319468/a6211b57 -> dfb8ff6/745bc56/28d9c29/7e8a207 on base ad52dfc",
+    "Focused activation tests and go test ./...: pass",
+    "go test -race ./internal/controller/activation ./internal/controller/runtime: pass",
+    "go vet ./...: pass",
+    "Repository validation, chart/CRD parity, docs links, and generated verification: pass",
+    "make test-integration: pass; both legacy migration tests executed",
+    "No deployment-controller integration containers remained; no Docker pruning performed",
+    "git diff --check: pass; worktree clean at 7e8a2073fcc24784edaedc3ddcf3e49fa9bf5f15",
+    "Diff from current main contains only intended issue #90 implementation/test/schema paths"
+  ],
+  "blockers": [],
+  "next_action": "Independently review exact SHA 7e8a2073 against base ad52dfc and the approved feature spec before any push or PR.",
+  "route_to": "review",
+  "risk_level": "critical"
+}

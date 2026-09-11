@@ -1,0 +1,31 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Commit 8565c45 pairs empty Argo policy.default values in Terraform and break-glass bootstrap and extends the management topology guard to enforce default, groups scope, and exact admin mappings.",
+  "changed_files": [
+    "scripts/bootstrap-codicarium-local-argo.sh",
+    "terraform/stacks/prod/main.tf",
+    "scripts/check-mgmt-topology.sh"
+  ],
+  "validation": [
+    "TDD red: topology guard failed on both role:readonly renderers for the expected reason.",
+    "TDD green: scripts/check-mgmt-topology.sh passed after the paired minimal change.",
+    "bash -n and tests/test-bootstrap-codicarium-local-argo-pve1-user.sh passed.",
+    "Worktree is clean at 8565c45 on security/argo-default-deny; no push, PR, plan, apply, or live mutation occurred."
+  ],
+  "blockers": [
+    "Terraform fmt reports pre-existing unrelated main.tf formatting drift.",
+    "Terraform validate is blocked by pre-existing vendored kube-hetzner/hcloud input errors.",
+    "Live g, metamcp, role:admin drift will be removed by an upgrade and must be remediated or proven safe before merge.",
+    "Real SSO administrator and ordinary-user sessions remain unavailable for the live gate."
+  ],
+  "next_action": "Independently review commit 8565c45 for policy semantics, parser robustness, regression risk, and adequacy of tests before any push or PR.",
+  "requires_council": false,
+  "independent_lanes": ["paired renderer implementation", "live ownership and drift investigation"],
+  "route_to": "review",
+  "risk_level": "critical",
+  "issues": [
+    {"id":"infra-1143","title":"Argo CD authenticated default deny","severity":"critical","details":"Primary Phase 0 implementation and rollout tracker.","owner_stage":"validation"},
+    {"id":"infra-1146","title":"Undeclared MetaMCP Argo administrator drift","severity":"critical","details":"Blocks rollout until replaced by least privilege or removal is proven safe.","owner_stage":"validation"}
+  ]
+}

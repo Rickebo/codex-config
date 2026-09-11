@@ -1,0 +1,1 @@
+Remediate deployment-controller issue #90 final legacy pre-approval quarantine review findings: preserve modern activation reconciliation, make terminal legacy requests unconditional no-ops, add envtest coverage for stored v0.6.4 status-only migration, then independently review and validate the exact SHA before GitHub release work

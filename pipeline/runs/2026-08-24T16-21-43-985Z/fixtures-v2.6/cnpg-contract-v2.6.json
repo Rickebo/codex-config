@@ -1,0 +1,7 @@
+{
+  "instances": 3,
+  "synchronous": true,
+  "tls_sni": "postgres-rw.postgres.svc.cluster.local",
+  "rpo_seconds": 0,
+  "rto_seconds": 120
+}

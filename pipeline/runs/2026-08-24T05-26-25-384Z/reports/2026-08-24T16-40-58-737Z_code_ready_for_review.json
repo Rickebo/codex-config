@@ -1,0 +1,24 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Remediated both fourth-review findings at exact f0fb77b: transient proof/Lease read failures are retryable state reads, Consumed accepts only actual Lease NotFound, and deleting/Active activations retain protected-main zero-read short-circuits.",
+  "changed_files": [
+    "internal/controller/activation/legacy_preapproval.go",
+    "internal/controller/activation/legacy_preapproval_test.go",
+    "internal/controller/activation/reconciler.go"
+  ],
+  "validation": [
+    "TDD tests reproduced both defects before implementation and passed afterward",
+    "Focused activation tests: pass",
+    "go test ./...: pass",
+    "Race tests for activation/runtime: pass",
+    "go vet ./...: pass",
+    "Repository, chart/CRD, documentation, and generated validation: pass",
+    "git diff --check: pass; worktree clean at f0fb77b642c3b1f2e19eb24bad05db3945df3b30",
+    "No fetch, rebase, push, release, GitHub, or live mutation occurred"
+  ],
+  "blockers": [],
+  "next_action": "Independently re-review exact f0fb77b against base ad52dfc, concentrating on the incremental retry and short-circuit corrections plus cumulative spec compliance.",
+  "route_to": "review",
+  "risk_level": "critical"
+}

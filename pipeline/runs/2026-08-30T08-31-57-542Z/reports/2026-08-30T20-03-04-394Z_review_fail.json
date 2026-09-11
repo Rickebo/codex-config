@@ -1,0 +1,83 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Independent review of exact PR head 3e6ebed found fresh-install and recovery risks in database initialization, malformed activation commands, one remaining service-account token mount, incomplete ephemeral-image negatives, and incomplete private-registry linkage coverage.",
+  "changed_files": [],
+  "validation": [
+    "Four independent read-only lanes reviewed exact commit 3e6ebed709bc0dc1e60fda968b7dbf9ef7526073.",
+    "Controller materialization review rendered all eight components and found no ownership or inventory blocker.",
+    "Runtime-security review linted/rendered the exact head and found no CEL, security-context, registry, or proxy-token blocker.",
+    "Database review traced Job ordering and initializer source behavior through common-backend.",
+    "QA/operations review audited executable runbook commands and negative/private-image test coverage."
+  ],
+  "blockers": [
+    "Initializer ordering creates ExternalSecret objects but does not wait for their target Secrets before the five-minute Job deadline.",
+    "The shipped schema initializer is not transactionally/idempotently recoverable after partial DDL failure.",
+    "New lobby pull-secret contracts lack lifecycle, rotation, deletion, and recovery documentation.",
+    "Platform exact-SHA/blob verification commands in the activation runbook are malformed and cannot execute as written.",
+    "Production worker still automounts a Kubernetes API token despite receiving an explicit kubeconfig.",
+    "Admission negatives do not exercise malformed/non-Nexus ephemeralContainer references.",
+    "Private-image pull-secret validation omits API, worker, proxy, and PostgreSQL workloads."
+  ],
+  "next_action": "Return to code; fix the lc-config gaps, make the application initializer transactionally retryable with a released immutable API image, update the prod pin, and rerun all local gates.",
+  "requires_council": false,
+  "independent_lanes": [
+    "fresh-sync and database recovery safety",
+    "cutover runbook correctness",
+    "service-account and private-registry hardening",
+    "admission and render-contract test coverage"
+  ],
+  "risk_level": "critical",
+  "issues": [
+    {
+      "id": "REV3-P1-SECRET-READINESS",
+      "title": "Initializer does not wait for ExternalSecret target Secrets",
+      "severity": "critical",
+      "details": "Sync waves order resources, not asynchronous secret reconciliation; a fresh install can exhaust the Job deadline before DB or pull credentials exist.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV3-P1-INIT-ATOMICITY",
+      "title": "Database initializer cannot safely resume partial schema creation",
+      "severity": "critical",
+      "details": "Schema DDL lacks an encompassing transaction/idempotent migration path; retries after a mid-script failure can remain permanently broken.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV3-P2-LOBBY-SECRET-DOCS",
+      "title": "Lobby pull-secret lifecycle is undocumented",
+      "severity": "medium",
+      "details": "The new production/offline credential targets need creation, rotation, deletion, retention, and recovery contracts.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV3-P1-PLATFORM-SHA-COMMANDS",
+      "title": "Platform SHA verification commands are malformed",
+      "severity": "high",
+      "details": "The activation runbook omits required git -C, test comparison, and command substitution syntax for Platform checks.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV3-P2-WORKER-TOKEN",
+      "title": "Production worker automounts an unnecessary API token",
+      "severity": "medium",
+      "details": "The worker receives an explicit kubeconfig but its service account still automounts the in-cluster token.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV3-P2-EPHEMERAL-NEGATIVES",
+      "title": "Admission negatives do not exercise ephemeralContainers",
+      "severity": "medium",
+      "details": "A regression in effective ephemeral-container enforcement could pass current string-level checks.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV3-P2-PRIVATE-PULL-COVERAGE",
+      "title": "Private-image pull-secret validation is incomplete",
+      "severity": "medium",
+      "details": "API, worker, proxy, and PostgreSQL rendered workloads are not asserted against their controller-rendered Nexus credential resources.",
+      "owner_stage": "code"
+    }
+  ],
+  "route_to": "code"
+}

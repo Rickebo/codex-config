@@ -1,0 +1,44 @@
+{
+  "stage": "test",
+  "status": "pass",
+  "summary": "Final local cross-repo test, actionlint, policy, digest, isolation, and exact-head checks pass for all pushed owned branches.",
+  "changed_files": [
+    "codicarium/infra PR #1078 @ 4c6bafb3eacabbea5844ed9bb4e44a9834daac88",
+    "codicarium/runner-config PR #44 @ 7f528311ed36423e2f95990f37cb0b5ea9c4cb12",
+    "codicarium/infra PR #1085 @ 8c2259a983e9361738296e899e7dd33fff4c9007"
+  ],
+  "validation": [
+    "infra evidence/boundary/Argo-scope/readback/bootstrap tests and shell contract: pass",
+    "infra actionlint, Python compileall, kubectl kustomize, JSON, git diff --check: pass",
+    "runner-config unittest discovery: 68 passed",
+    "runner-config policy_check, validate.sh, actionlint, git diff --check: pass",
+    "protected-base prerequisite actionlint, boundary, compileall, isolated unshare harness: pass",
+    "cross-repo canonical digest assertions: schema 1.3.0 => 419f..., network contract 1.4.0 => 93e085...",
+    "GitHub repo-scoped PR inspection confirms #1078, #44, and #1085 are open at exact pushed heads",
+    "runner verifier blob SHA at #44 head: 854c4959d1ca3c0008f7ffea36a409b6c7c5b2042183a442421582db43a57d22"
+  ],
+  "blockers": [
+    "Terraform/OpenTofu fmt/validate cannot run locally because the binary is unavailable.",
+    "GitHub protected preparation currently fails Nexus HTTP 403 before candidate validation; bypass is prohibited.",
+    "#1085 must merge before #1078 can observe the repaired pull_request_target workflow; no merge was performed.",
+    "runner-config #44 currently reports no GitHub checks."
+  ],
+  "next_action": "Route to controller validation stage for live PR gate inspection and final exact dependency handoff.",
+  "route_to": "validation",
+  "risk_level": "high",
+  "requires_council": false,
+  "independent_lanes": [
+    "infra tests and workflow policy",
+    "runner-config tests and policy",
+    "protected-base prerequisite and GitHub gate inspection"
+  ],
+  "issues": [
+    {
+      "id": "codicarium/infra#1084",
+      "title": "Land protected ARC validation handoff before contract repair",
+      "severity": "high",
+      "details": "PR #1085 is open at 8c2259a; merge and protected checks remain external.",
+      "owner_stage": "validation"
+    }
+  ]
+}

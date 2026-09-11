@@ -1,0 +1,8 @@
+{
+  "schema": "codicarium.candidate/v2.4",
+  "media_type": "application/gzip",
+  "byte_length": 64,
+  "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+  "extraction": "destroyed-no-network-sandbox",
+  "authority": false
+}

@@ -1,0 +1,329 @@
+{
+  "schema": "codicarium.pipeline.validation-preflight/v2",
+  "generated_at": "2026-08-25T01:05:30Z",
+  "pipeline_run": "/home/rickebo/.codex/pipeline/runs/2026-08-24T19-47-25-631Z",
+  "pipeline": {
+    "current_stage": "validation",
+    "loop_count": 1,
+    "done": false,
+    "awaiting_approval": null,
+    "state_matches_request": true,
+    "advanced_by_preflight": false
+  },
+  "decision": {
+    "result": "GO",
+    "scope": "push_and_open_issue_linked_pull_request",
+    "merge_authorized": false,
+    "reason": "The rebased exact candidate closes the prior live resume blocker with distinct authenticated release-source, historical coordinator-workflow, and current protected-main identities. The real tuple passes locally and both live GitHub ancestry edges are exact forward history; divergent, behind, malformed, and API-error states fail closed. Fresh origin/main and live GitHub main remain ca55729, matching the candidate merge base.",
+    "merge_guard": "Do not merge unless the strict required PR checks test, lint, chart, integration, and supply-chain all pass from GitHub Actions app 15368 on the current protected-main result. Post-merge v0.6.13 publication evidence remains mandatory before final validation completion.",
+    "main_advanced_after_rebase": false
+  },
+  "workspace_context": {
+    "publication_state": "current",
+    "revision_id": "ca2b1a96-06a4-4a0d-a68d-b814c97e8f13",
+    "input_fingerprint": "e47054385eabf56130e87471e4dce1d2e245de04c2409cb68746343af054c32c",
+    "published_deployment_controller_sha": "ca55729de7a58bef5b49ebdce8c28773bb7e1b2e"
+  },
+  "git": {
+    "worktree": "/mnt/rickebo-p/deployment-controller/.worktrees/deployment-controller-codex_issue-93-coordinator-handoff",
+    "branch": "codex/issue-93-coordinator-handoff",
+    "head": "da479fcaa9aeb141967c028b4be47338b68560e2",
+    "origin_main_after_explicit_fetch": "ca55729de7a58bef5b49ebdce8c28773bb7e1b2e",
+    "merge_base": "ca55729de7a58bef5b49ebdce8c28773bb7e1b2e",
+    "live_github_main": "ca55729de7a58bef5b49ebdce8c28773bb7e1b2e",
+    "clean": true,
+    "ahead_by_commits": 2,
+    "commits": [
+      {
+        "sha": "7180787ff68a0b5a763258b3417299a41d603f0b",
+        "subject": "fix(release): complete verified publish handoff",
+        "conventional_commit": true
+      },
+      {
+        "sha": "da479fcaa9aeb141967c028b4be47338b68560e2",
+        "subject": "fix(release): validate coordinator workflow ancestry",
+        "conventional_commit": true
+      }
+    ],
+    "changed_files": [
+      ".github/workflows/automatic-release.yaml",
+      ".github/workflows/release.yaml",
+      "docs/releasing.md",
+      "hack/release-handoff-policy.js",
+      "hack/test-release-graph.py",
+      "hack/test-release-handoff-policy.js"
+    ],
+    "diff_check": "pass",
+    "publisher_workflow_unchanged_from_origin_main": true
+  },
+  "prior_blocker": {
+    "live_run": {
+      "id": 32785641531,
+      "attempt": 1,
+      "event": "workflow_run",
+      "head_sha": "ca55729de7a58bef5b49ebdce8c28773bb7e1b2e",
+      "action": "resume",
+      "source": "ad52dfcbc45d71eccad1d49fbd905161af7a44b1",
+      "failure": "unpublished tag coordinator run is not exact completed success",
+      "mutation_after_failure": "none"
+    },
+    "real_proof": {
+      "check_run_id": 97564382788,
+      "external_id": "automatic-release:32768808057/1:v0.6.13:ad52dfcbc45d71eccad1d49fbd905161af7a44b1:32724242226/1",
+      "coordinator_run_id": 32768808057,
+      "coordinator_run_attempt": 1,
+      "coordinator_workflow_sha": "6053f97326157807c4323c44e0d14f3ee65c09bf",
+      "release_source_sha": "ad52dfcbc45d71eccad1d49fbd905161af7a44b1",
+      "current_main_sha": "ca55729de7a58bef5b49ebdce8c28773bb7e1b2e"
+    },
+    "repair": {
+      "status": "satisfied_premerge",
+      "code_evidence": [
+        "hack/release-handoff-policy.js validateCompletedCoordinatorRun preserves exact run identity and returns the authenticated lowercase 40-hex workflow head instead of requiring it to equal the release source.",
+        "validateHistoricalCoordinatorAncestry freshly resolves refs/heads/main and requires exact forward source-to-workflow and workflow-to-current-main comparisons.",
+        ".github/workflows/automatic-release.yaml invokes both validations before the new verifier dispatch/handoff path."
+      ],
+      "local_real_tuple_result": {
+        "source": "ad52dfcbc45d71eccad1d49fbd905161af7a44b1",
+        "coordinator_workflow": "6053f97326157807c4323c44e0d14f3ee65c09bf",
+        "current_main": "ca55729de7a58bef5b49ebdce8c28773bb7e1b2e",
+        "result": "pass"
+      },
+      "live_ancestry": [
+        {
+          "edge": "ad52dfc...6053f97",
+          "status": "ahead",
+          "ahead_by": 1,
+          "behind_by": 0
+        },
+        {
+          "edge": "6053f97...ca55729",
+          "status": "ahead",
+          "ahead_by": 1,
+          "behind_by": 0
+        }
+      ],
+      "fail_closed_result": "A direct local diverged comparison was rejected with 'release source to coordinator revision is not exact forward history'. Focused fixtures also reject behind, malformed SHA/ref/response, main-ref API, and compare API cases."
+    }
+  },
+  "review_and_test_v2": {
+    "review_report": "/home/rickebo/.codex/pipeline/runs/2026-08-24T19-47-25-631Z/review-report-v2.json",
+    "review_status": "pass",
+    "review_blockers": [],
+    "test_report": "/home/rickebo/.codex/pipeline/runs/2026-08-24T19-47-25-631Z/test-report-v2.json",
+    "test_status": "pass",
+    "test_blockers": [],
+    "fresh_preflight_commands": [
+      {
+        "command": "node hack/test-release-handoff-policy.js",
+        "result": "pass"
+      },
+      {
+        "command": "PYTHONDONTWRITEBYTECODE=1 python3 hack/test-release-graph.py",
+        "result": "pass, 46 tests"
+      },
+      {
+        "command": "direct real-tuple and divergence Node probe",
+        "result": "real tuple passed; divergence rejected"
+      }
+    ],
+    "reported_full_results": [
+      "make test-release-flow: 111/111 Python tests and 2/2 JavaScript suites passed",
+      "make test: 23/23 Go packages passed",
+      "CI-equivalent lint and govulncheck passed with zero vulnerabilities",
+      "chart checks passed 4/4 Python tests, 3/3 Helm lints, and 26+19 rendered objects",
+      "integration passed 18/18 top-level tests and 10/10 subtests",
+      "actionlint and YAML parsing passed all 6 workflows; Node syntax passed both changed JavaScript files",
+      "publisher workflow remained byte-identical"
+    ]
+  },
+  "protected_pr": {
+    "candidate_pr_exists": false,
+    "branch_ruleset_id": 21317510,
+    "ruleset_active": true,
+    "strict_up_to_date_policy": true,
+    "bypass_actors": [],
+    "required_approvals": 0,
+    "required_checks": [
+      {
+        "context": "test",
+        "integration_id": 15368,
+        "status": "pending_pr"
+      },
+      {
+        "context": "lint",
+        "integration_id": 15368,
+        "status": "pending_pr"
+      },
+      {
+        "context": "chart",
+        "integration_id": 15368,
+        "status": "pending_pr"
+      },
+      {
+        "context": "integration",
+        "integration_id": 15368,
+        "status": "pending_pr"
+      },
+      {
+        "context": "supply-chain",
+        "integration_id": 15368,
+        "status": "pending_pr"
+      }
+    ],
+    "supply_chain_reason": "The local NFS Docker bind-mount and missing buildx limitations did not produce a code assertion failure, but only the protected PR supply-chain job provisions Buildx and can close kubeconform and image verification. A successful result is mandatory before merge."
+  },
+  "live_github": {
+    "repository": "codicarium/deployment-controller",
+    "observed_at": "2026-08-25T01:05:30Z",
+    "main_sha": "ca55729de7a58bef5b49ebdce8c28773bb7e1b2e",
+    "v0_6_13": {
+      "tag_sha": "ad52dfcbc45d71eccad1d49fbd905161af7a44b1",
+      "tag_type": "commit",
+      "public_release_exists": false,
+      "latest_release_verify_run": 32768847731,
+      "latest_release_verify_conclusion": "success",
+      "matching_publish_release_run_exists": false
+    },
+    "v0_6_14": {
+      "tag_exists": false,
+      "public_release_exists": false
+    },
+    "issue_93": {
+      "state": "open",
+      "labels": ["codex-tracked", "priority:p0"],
+      "candidate_pr_exists": false
+    },
+    "tag_ruleset": {
+      "id": 19595482,
+      "active": true,
+      "no_bypass_actors": true,
+      "blocks_update_and_deletion": true
+    },
+    "manual_action": {
+      "new_manual_recovery_action_during_loop_1": false,
+      "new_tag_release_publish_or_package_mutation": false,
+      "historical_context": "Issue #93 still records the earlier manual rerun of Release Verify run 32725490751 to attempt 2; it produced no publisher dispatch, tag mutation, GitHub Release, or package publication. This preflight performed no workflow mutation."
+    }
+  },
+  "acceptance_trace": [
+    {
+      "acceptance": "AC-001",
+      "requirement": "REQ-001",
+      "classification": "requires_postmerge_live_proof",
+      "premerge_status": "implementation_and_real_tuple_satisfied",
+      "evidence": [
+        "The planner still selects resume for pending v0.6.13; local release-flow and exact real-tuple ancestry tests pass.",
+        "Live v0.6.13 remains unpublished and v0.6.14 absent."
+      ],
+      "pending": "After merge, exact-main CI must automatically resume v0.6.13 and must not allocate or dispatch v0.6.14."
+    },
+    {
+      "acceptance": "AC-002",
+      "requirement": "REQ-002",
+      "classification": "satisfied_premerge",
+      "evidence": [
+        "Direct tag-bound dispatch requires return_run_details=true and a positive workflow_run_id; immediate exact-ID GET authenticates the verifier and captures the initial positive attempt.",
+        "Focused dispatch/GET/no-list-fallback fixtures pass."
+      ]
+    },
+    {
+      "acceptance": "AC-003",
+      "requirement": "REQ-003",
+      "classification": "satisfied_premerge",
+      "evidence": [
+        "The 35-minute coordinator and 30-minute wall-clock verifier budget remain enforced.",
+        "Queued/in-progress/success, every identity field, attempt rollover, terminal failure, API error, malformed time, and expiry fixtures pass fail-closed."
+      ]
+    },
+    {
+      "acceptance": "AC-004",
+      "requirement": "REQ-004",
+      "classification": "satisfied_premerge",
+      "evidence": [
+        "Protected main is resolved after exact verifier success; the deterministic handoff binds the complete tuple and exact-attempt details URL.",
+        "Create, exact reuse, duplicate, forged, and race fixtures pass."
+      ]
+    },
+    {
+      "acceptance": "AC-005",
+      "requirement": "REQ-005",
+      "classification": "satisfied_premerge",
+      "evidence": [
+        "Publisher dispatch remains after verifier success, fresh protected-main resolution, and exact handoff, at ref main with all existing inputs.",
+        "Ordering and full tuple fixtures pass."
+      ]
+    },
+    {
+      "acceptance": "AC-006",
+      "requirement": "REQ-006",
+      "classification": "satisfied_premerge",
+      "evidence": [
+        "release.yaml has no dispatch-publish job and no actions/checks write permission; required read and OIDC permissions remain.",
+        "All 46 structural workflow tests pass."
+      ]
+    },
+    {
+      "acceptance": "AC-007",
+      "requirement": "REQ-007",
+      "classification": "requires_postmerge_live_proof",
+      "premerge_status": "static_contract_satisfied",
+      "evidence": [
+        "publish-release.yaml is byte-identical to origin/main and verifier evidence stages remain covered by release-flow tests.",
+        "No public v0.6.13 or matching publisher run exists yet."
+      ],
+      "pending": "Verify the public release, chart, image, manifest, provenance, and attestations bind source ad52dfc after merge."
+    },
+    {
+      "acceptance": "AC-008",
+      "requirement": "REQ-008",
+      "classification": "satisfied_premerge",
+      "evidence": [
+        "Serialized concurrency, create-only immutable tag handling, exact safe reuse, and duplicate/forged/racing state rejection remain tested.",
+        "Historical resume now additionally requires exact forward source-to-workflow-to-current-main ancestry; divergent and behind states fail closed."
+      ]
+    },
+    {
+      "acceptance": "AC-009",
+      "requirement": "REQ-009",
+      "classification": "requires_protected_pr_check",
+      "premerge_status": "focused_and_full_local_matrix_passed",
+      "evidence": [
+        "Fresh focused policy and 46 graph tests pass; v2 test report records all material local suites green.",
+        "Real tuple, identical/ahead, divergent/behind, malformed SHA/ref/response, and API-error fixtures execute from the main test runner."
+      ],
+      "pending": "All five protected PR checks must pass, especially supply-chain for Docker/buildx-backed kubeconform and image validation."
+    },
+    {
+      "acceptance": "AC-010",
+      "requirement": "REQ-010",
+      "classification": "requires_postmerge_live_proof",
+      "premerge_status": "ready_for_issue_linked_pr",
+      "evidence": [
+        "Issue #93 remains open priority:p0; current main and immutable tag protections are active; Kafka-fix ancestry was previously proven.",
+        "No candidate PR, public v0.6.13, v0.6.14 tag, or matching Publish Release run exists."
+      ],
+      "pending": "Open the issue-linked PR, pass all required checks, merge, observe automatic exact-main CI/Automatic Release/Release Verify/Publish Release, record source-bound URLs and digests, close #93, then clean branch/worktree."
+    }
+  ],
+  "pending_protected_pr_evidence": [
+    "Issue-linked PR head and merge-base identities.",
+    "Successful strict required checks: test, lint, chart, integration, and supply-chain.",
+    "No unresolved review threads and current-main mergeability."
+  ],
+  "pending_postmerge_evidence": [
+    "Successful exact-main CI automatically triggers Automatic Release with no manual recovery action.",
+    "Automatic Release resumes v0.6.13 and creates no v0.6.14 tag or run.",
+    "Exact Release Verify and Publish Release runs succeed for v0.6.13/ad52dfc.",
+    "GitHub Release, Helm OCI, multi-architecture image, manifest source_revision, provenance, and attestations are independently verified with URLs and digests.",
+    "Issue #93 is closed only after evidence; merged remote branch and local worktree are cleaned."
+  ],
+  "explicit_non_actions": [
+    "No repository file was edited by this preflight.",
+    "No branch was pushed.",
+    "No pull request was opened or merged.",
+    "No workflow was dispatched or rerun.",
+    "No tag, GitHub Release, package, deployment, or pipeline stage was mutated.",
+    "No final validation stage report was written."
+  ]
+}

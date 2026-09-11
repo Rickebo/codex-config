@@ -1,0 +1,20 @@
+{
+  "stage": "validation",
+  "status": "fail",
+  "summary": "PR #156 merged as c540d017698699c39c9fd97a3920d3a5d205e701, main CI and post-bootstrap rules passed, but Automatic Release 33281536283 failed before dispatch because shell default expansion transformed an existing {} retirement map into invalid {}} JSON.",
+  "changed_files": [],
+  "validation": [
+    "PR #156 exact-head squash merge succeeded and main CI 33281151036 passed all five jobs",
+    "Live ruleset now enforces code-owner review, stale dismissal, last-push approval, five strict checks, and zero bypass actors",
+    "Automatic Release 33281536283 failed in Plan conventional release with JSONDecodeError Extra data",
+    "The expression ${RETIRED_CANDIDATES_JSON:-{}} was reproduced locally: an existing {} value becomes {}}",
+    "No Release Verify or Publish Release run was dispatched; v0.14.0 remains 7b5a96b and unpublished; v0.14.1 is absent"
+  ],
+  "blockers": [
+    "Replace ambiguous shell default expansion with JSON parsing that safely handles both empty and existing {} values",
+    "Add regression coverage and repeat protected review/CI before any fresh recovery event"
+  ],
+  "next_action": "Create a focused issue/worktree, delegate the workflow and regression-test fix to Luna, then independently review and merge it before a fresh protected main CI triggers recovery.",
+  "route_to": "code",
+  "risk_level": "critical"
+}

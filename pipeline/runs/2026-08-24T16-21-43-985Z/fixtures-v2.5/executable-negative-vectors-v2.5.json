@@ -1,0 +1,386 @@
+[
+  {
+    "id": "N01",
+    "base_fixture": "fixtures-v2.5/base-contracts-v2.5.json",
+    "path": "/payload/command_id",
+    "replacement": "cmd.unbound",
+    "expected_error": "COMMAND_CONST",
+    "expected_effect_count": 0,
+    "stages": [
+      "schema",
+      "signature",
+      "predicate",
+      "replay"
+    ],
+    "pre_target_sha256": "5149e3d3df1b746e8e0b04b183ec61058a317f511c286721934327d29ca5b1bb",
+    "post_target_sha256": "5149e3d3df1b746e8e0b04b183ec61058a317f511c286721934327d29ca5b1bb"
+  },
+  {
+    "id": "N02",
+    "base_fixture": "fixtures-v2.5/base-contracts-v2.5.json",
+    "path": "/payload/schema_id",
+    "replacement": "schema.unknown.v2.5",
+    "expected_error": "SCHEMA",
+    "expected_effect_count": 0,
+    "stages": [
+      "schema",
+      "signature",
+      "predicate",
+      "replay"
+    ],
+    "pre_target_sha256": "5149e3d3df1b746e8e0b04b183ec61058a317f511c286721934327d29ca5b1bb",
+    "post_target_sha256": "5149e3d3df1b746e8e0b04b183ec61058a317f511c286721934327d29ca5b1bb"
+  },
+  {
+    "id": "N03",
+    "base_fixture": "fixtures-v2.5/base-contracts-v2.5.json",
+    "path": "/payload/signer_kind",
+    "replacement": "sigstore-live",
+    "expected_error": "LIVE_SIGNER",
+    "expected_effect_count": 0,
+    "stages": [
+      "schema",
+      "signature",
+      "predicate",
+      "replay"
+    ],
+    "pre_target_sha256": "5149e3d3df1b746e8e0b04b183ec61058a317f511c286721934327d29ca5b1bb",
+    "post_target_sha256": "5149e3d3df1b746e8e0b04b183ec61058a317f511c286721934327d29ca5b1bb"
+  },
+  {
+    "id": "N04",
+    "base_fixture": "fixtures-v2.5/base-contracts-v2.5.json",
+    "path": "/payload/nonce",
+    "replacement": "nonce-replay-v2.5",
+    "expected_error": "REPLAY",
+    "expected_effect_count": 0,
+    "stages": [
+      "schema",
+      "signature",
+      "predicate",
+      "replay"
+    ],
+    "pre_target_sha256": "5149e3d3df1b746e8e0b04b183ec61058a317f511c286721934327d29ca5b1bb",
+    "post_target_sha256": "5149e3d3df1b746e8e0b04b183ec61058a317f511c286721934327d29ca5b1bb"
+  },
+  {
+    "id": "N05",
+    "base_fixture": "fixtures-v2.5/base-contracts-v2.5.json",
+    "path": "/payload/issued_at",
+    "replacement": "2020-01-01T00:00:00Z",
+    "expected_error": "CLOCK",
+    "expected_effect_count": 0,
+    "stages": [
+      "schema",
+      "signature",
+      "predicate",
+      "replay"
+    ],
+    "pre_target_sha256": "5149e3d3df1b746e8e0b04b183ec61058a317f511c286721934327d29ca5b1bb",
+    "post_target_sha256": "5149e3d3df1b746e8e0b04b183ec61058a317f511c286721934327d29ca5b1bb"
+  },
+  {
+    "id": "N06",
+    "base_fixture": "fixtures-v2.5/base-contracts-v2.5.json",
+    "path": "/payload/not_before",
+    "replacement": "2030-01-01T00:00:00Z",
+    "expected_error": "CLOCK",
+    "expected_effect_count": 0,
+    "stages": [
+      "schema",
+      "signature",
+      "predicate",
+      "replay"
+    ],
+    "pre_target_sha256": "5149e3d3df1b746e8e0b04b183ec61058a317f511c286721934327d29ca5b1bb",
+    "post_target_sha256": "5149e3d3df1b746e8e0b04b183ec61058a317f511c286721934327d29ca5b1bb"
+  },
+  {
+    "id": "N07",
+    "base_fixture": "fixtures-v2.5/base-contracts-v2.5.json",
+    "path": "/payload/expires_at",
+    "replacement": "2020-01-01T00:00:00Z",
+    "expected_error": "CLOCK",
+    "expected_effect_count": 0,
+    "stages": [
+      "schema",
+      "signature",
+      "predicate",
+      "replay"
+    ],
+    "pre_target_sha256": "5149e3d3df1b746e8e0b04b183ec61058a317f511c286721934327d29ca5b1bb",
+    "post_target_sha256": "5149e3d3df1b746e8e0b04b183ec61058a317f511c286721934327d29ca5b1bb"
+  },
+  {
+    "id": "N08",
+    "base_fixture": "fixtures-v2.5/base-contracts-v2.5.json",
+    "path": "/payload/target_digest",
+    "replacement": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+    "expected_error": "TARGET",
+    "expected_effect_count": 0,
+    "stages": [
+      "schema",
+      "signature",
+      "predicate",
+      "replay"
+    ],
+    "pre_target_sha256": "5149e3d3df1b746e8e0b04b183ec61058a317f511c286721934327d29ca5b1bb",
+    "post_target_sha256": "5149e3d3df1b746e8e0b04b183ec61058a317f511c286721934327d29ca5b1bb"
+  },
+  {
+    "id": "N09",
+    "base_fixture": "fixtures-v2.5/base-contracts-v2.5.json",
+    "path": "/payload/signature",
+    "replacement": "AA==",
+    "expected_error": "SIGNATURE",
+    "expected_effect_count": 0,
+    "stages": [
+      "schema",
+      "signature",
+      "predicate",
+      "replay"
+    ],
+    "pre_target_sha256": "5149e3d3df1b746e8e0b04b183ec61058a317f511c286721934327d29ca5b1bb",
+    "post_target_sha256": "5149e3d3df1b746e8e0b04b183ec61058a317f511c286721934327d29ca5b1bb"
+  },
+  {
+    "id": "N10",
+    "base_fixture": "fixtures-v2.5/base-contracts-v2.5.json",
+    "path": "/payload/identity",
+    "replacement": "unauthorized.principal",
+    "expected_error": "IDENTITY",
+    "expected_effect_count": 0,
+    "stages": [
+      "schema",
+      "signature",
+      "predicate",
+      "replay"
+    ],
+    "pre_target_sha256": "5149e3d3df1b746e8e0b04b183ec61058a317f511c286721934327d29ca5b1bb",
+    "post_target_sha256": "5149e3d3df1b746e8e0b04b183ec61058a317f511c286721934327d29ca5b1bb"
+  },
+  {
+    "id": "N11",
+    "base_fixture": "fixtures-v2.5/base-contracts-v2.5.json",
+    "path": "/payload/outer_nonce",
+    "replacement": "wrong-outer",
+    "expected_error": "NONCE_BINDING",
+    "expected_effect_count": 0,
+    "stages": [
+      "schema",
+      "signature",
+      "predicate",
+      "replay"
+    ],
+    "pre_target_sha256": "5149e3d3df1b746e8e0b04b183ec61058a317f511c286721934327d29ca5b1bb",
+    "post_target_sha256": "5149e3d3df1b746e8e0b04b183ec61058a317f511c286721934327d29ca5b1bb"
+  },
+  {
+    "id": "N12",
+    "base_fixture": "fixtures-v2.5/base-contracts-v2.5.json",
+    "path": "/payload/inner_nonce",
+    "replacement": "wrong-inner",
+    "expected_error": "NONCE_BINDING",
+    "expected_effect_count": 0,
+    "stages": [
+      "schema",
+      "signature",
+      "predicate",
+      "replay"
+    ],
+    "pre_target_sha256": "5149e3d3df1b746e8e0b04b183ec61058a317f511c286721934327d29ca5b1bb",
+    "post_target_sha256": "5149e3d3df1b746e8e0b04b183ec61058a317f511c286721934327d29ca5b1bb"
+  },
+  {
+    "id": "N13",
+    "base_fixture": "fixtures-v2.5/base-contracts-v2.5.json",
+    "path": "/payload/mutation_id",
+    "replacement": "M99",
+    "expected_error": "MUTATION_ID",
+    "expected_effect_count": 0,
+    "stages": [
+      "schema",
+      "signature",
+      "predicate",
+      "replay"
+    ],
+    "pre_target_sha256": "5149e3d3df1b746e8e0b04b183ec61058a317f511c286721934327d29ca5b1bb",
+    "post_target_sha256": "5149e3d3df1b746e8e0b04b183ec61058a317f511c286721934327d29ca5b1bb"
+  },
+  {
+    "id": "N14",
+    "base_fixture": "fixtures-v2.5/base-contracts-v2.5.json",
+    "path": "/payload/sequence",
+    "replacement": 99,
+    "expected_error": "SEQUENCE",
+    "expected_effect_count": 0,
+    "stages": [
+      "schema",
+      "signature",
+      "predicate",
+      "replay"
+    ],
+    "pre_target_sha256": "5149e3d3df1b746e8e0b04b183ec61058a317f511c286721934327d29ca5b1bb",
+    "post_target_sha256": "5149e3d3df1b746e8e0b04b183ec61058a317f511c286721934327d29ca5b1bb"
+  },
+  {
+    "id": "N15",
+    "base_fixture": "fixtures-v2.5/base-contracts-v2.5.json",
+    "path": "/payload/previous_hash",
+    "replacement": "bad-predecessor",
+    "expected_error": "CHAIN",
+    "expected_effect_count": 0,
+    "stages": [
+      "schema",
+      "signature",
+      "predicate",
+      "replay"
+    ],
+    "pre_target_sha256": "5149e3d3df1b746e8e0b04b183ec61058a317f511c286721934327d29ca5b1bb",
+    "post_target_sha256": "5149e3d3df1b746e8e0b04b183ec61058a317f511c286721934327d29ca5b1bb"
+  },
+  {
+    "id": "N16",
+    "base_fixture": "fixtures-v2.5/base-contracts-v2.5.json",
+    "path": "/payload/role",
+    "replacement": "collector",
+    "expected_error": "ROLE_COLLAPSE",
+    "expected_effect_count": 0,
+    "stages": [
+      "schema",
+      "signature",
+      "predicate",
+      "replay"
+    ],
+    "pre_target_sha256": "5149e3d3df1b746e8e0b04b183ec61058a317f511c286721934327d29ca5b1bb",
+    "post_target_sha256": "5149e3d3df1b746e8e0b04b183ec61058a317f511c286721934327d29ca5b1bb"
+  },
+  {
+    "id": "N17",
+    "base_fixture": "fixtures-v2.5/base-contracts-v2.5.json",
+    "path": "/payload/key_fingerprint",
+    "replacement": "wrong-key",
+    "expected_error": "KEY",
+    "expected_effect_count": 0,
+    "stages": [
+      "schema",
+      "signature",
+      "predicate",
+      "replay"
+    ],
+    "pre_target_sha256": "5149e3d3df1b746e8e0b04b183ec61058a317f511c286721934327d29ca5b1bb",
+    "post_target_sha256": "5149e3d3df1b746e8e0b04b183ec61058a317f511c286721934327d29ca5b1bb"
+  },
+  {
+    "id": "N18",
+    "base_fixture": "fixtures-v2.5/base-contracts-v2.5.json",
+    "path": "/payload/target_bytes_sha256",
+    "replacement": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "expected_error": "TARGET_BYTES",
+    "expected_effect_count": 0,
+    "stages": [
+      "schema",
+      "signature",
+      "predicate",
+      "replay"
+    ],
+    "pre_target_sha256": "5149e3d3df1b746e8e0b04b183ec61058a317f511c286721934327d29ca5b1bb",
+    "post_target_sha256": "5149e3d3df1b746e8e0b04b183ec61058a317f511c286721934327d29ca5b1bb"
+  },
+  {
+    "id": "N19",
+    "base_fixture": "fixtures-v2.5/base-contracts-v2.5.json",
+    "path": "/payload/request_hash",
+    "replacement": "bad-request",
+    "expected_error": "REQUEST_HASH",
+    "expected_effect_count": 0,
+    "stages": [
+      "schema",
+      "signature",
+      "predicate",
+      "replay"
+    ],
+    "pre_target_sha256": "5149e3d3df1b746e8e0b04b183ec61058a317f511c286721934327d29ca5b1bb",
+    "post_target_sha256": "5149e3d3df1b746e8e0b04b183ec61058a317f511c286721934327d29ca5b1bb"
+  },
+  {
+    "id": "N20",
+    "base_fixture": "fixtures-v2.5/base-contracts-v2.5.json",
+    "path": "/payload/readback_hash",
+    "replacement": "bad-readback",
+    "expected_error": "READBACK_HASH",
+    "expected_effect_count": 0,
+    "stages": [
+      "schema",
+      "signature",
+      "predicate",
+      "replay"
+    ],
+    "pre_target_sha256": "5149e3d3df1b746e8e0b04b183ec61058a317f511c286721934327d29ca5b1bb",
+    "post_target_sha256": "5149e3d3df1b746e8e0b04b183ec61058a317f511c286721934327d29ca5b1bb"
+  },
+  {
+    "id": "N21",
+    "base_fixture": "fixtures-v2.5/base-contracts-v2.5.json",
+    "path": "/payload/commit_hash",
+    "replacement": "bad-commit",
+    "expected_error": "COMMIT_HASH",
+    "expected_effect_count": 0,
+    "stages": [
+      "schema",
+      "signature",
+      "predicate",
+      "replay"
+    ],
+    "pre_target_sha256": "5149e3d3df1b746e8e0b04b183ec61058a317f511c286721934327d29ca5b1bb",
+    "post_target_sha256": "5149e3d3df1b746e8e0b04b183ec61058a317f511c286721934327d29ca5b1bb"
+  },
+  {
+    "id": "N22",
+    "base_fixture": "fixtures-v2.5/base-contracts-v2.5.json",
+    "path": "/payload/release_version",
+    "replacement": "v0.6.14",
+    "expected_error": "SEMVER",
+    "expected_effect_count": 0,
+    "stages": [
+      "schema",
+      "signature",
+      "predicate",
+      "replay"
+    ],
+    "pre_target_sha256": "5149e3d3df1b746e8e0b04b183ec61058a317f511c286721934327d29ca5b1bb",
+    "post_target_sha256": "5149e3d3df1b746e8e0b04b183ec61058a317f511c286721934327d29ca5b1bb"
+  },
+  {
+    "id": "N23",
+    "base_fixture": "fixtures-v2.5/base-contracts-v2.5.json",
+    "path": "/payload/live_evidence",
+    "replacement": true,
+    "expected_error": "LIVE_EVIDENCE",
+    "expected_effect_count": 0,
+    "stages": [
+      "schema",
+      "signature",
+      "predicate",
+      "replay"
+    ],
+    "pre_target_sha256": "5149e3d3df1b746e8e0b04b183ec61058a317f511c286721934327d29ca5b1bb",
+    "post_target_sha256": "5149e3d3df1b746e8e0b04b183ec61058a317f511c286721934327d29ca5b1bb"
+  },
+  {
+    "id": "N24",
+    "base_fixture": "fixtures-v2.5/base-contracts-v2.5.json",
+    "path": "/payload/app_config_path",
+    "replacement": "charts/workload/values.yaml",
+    "expected_error": "APP_CONFIG_SCOPE",
+    "expected_effect_count": 0,
+    "stages": [
+      "schema",
+      "signature",
+      "predicate",
+      "replay"
+    ],
+    "pre_target_sha256": "5149e3d3df1b746e8e0b04b183ec61058a317f511c286721934327d29ca5b1bb",
+    "post_target_sha256": "5149e3d3df1b746e8e0b04b183ec61058a317f511c286721934327d29ca5b1bb"
+  }
+]

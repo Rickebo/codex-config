@@ -1,0 +1,230 @@
+{
+  "meta": {
+    "id": "SPEC-agent-mcp-mvp",
+    "title": "agent-mcp MVP v0.1.0",
+    "author": "manager",
+    "created_at": "2026-08-20T10:24:30Z",
+    "version": "0.1.0"
+  },
+  "feature": {
+    "problem_statement": "Agents need bounded filesystem and command access through one small private MCP service, while MetaMCP owns authentication and public exposure.",
+    "goals": [
+      "Deliver codicarium/agent-mcp issue #1 as release v0.1.0.",
+      "Provide one consistent Python MCP server with deterministic, bounded tool behavior and documented operational deployment."
+    ],
+    "non_goals": [
+      "OAuth, bearer authentication, TLS termination, or a public endpoint.",
+      "Root execution, sudo, user switching, privilege management, interactive terminals, or persistent command sessions.",
+      "Delete, move, binary-file, arbitrary patch, Git, browser, cloud, GitHub, database, queue, cache, telemetry, or plugin tools.",
+      "Kubernetes, Helm, .codicarium, automatic VM deployment, or undocumented pre-v1 backwards compatibility."
+    ],
+    "scope_in": [
+      "Python 3.12+ src-layout package managed by uv and the official MCP Python SDK v2.",
+      "Eight tools: list_directory, find_files, file_info, read_file, search_files, write_file, edit_file, and run_command.",
+      "Streamable HTTP at /mcp, legacy SSE at /sse and /messages/, stdio, and /healthz.",
+      "Header/environment/process-directory working-directory precedence with symlink-aware allowed-root confinement and bounded operations.",
+      "Unprivileged systemd user service and non-root container packaging.",
+      "Conventional PR validation, convco versioning, GitHub Release, and public GHCR publication after a main merge.",
+      "Private MetaMCP consumption documentation and end-to-end verification."
+    ],
+    "scope_out": [
+      "Service-owned authentication or public TLS/network exposure.",
+      "Kubernetes/GitOps deployment descriptors or automatic VM rollout.",
+      "New compatibility layers or product abstractions not required by two implemented modules."
+    ]
+  },
+  "requirements": [
+    {
+      "id": "REQ-001",
+      "priority": "MUST",
+      "statement": "The application MUST implement all eight documented MCP tool contracts, stable expected error codes, and documented read-only/destructive annotations.",
+      "rationale": "Issue #1 and docs/tools.md define the public MVP capability and contract."
+    },
+    {
+      "id": "REQ-002",
+      "priority": "MUST",
+      "statement": "Every filesystem and command working-directory operation MUST use the shared request-scoped policy, reject paths outside configured allowed roots after symlink resolution, and re-check immediately before use.",
+      "rationale": "The service handles agent-controlled paths and must preserve the documented safety boundary."
+    },
+    {
+      "id": "REQ-003",
+      "priority": "MUST",
+      "statement": "Working-directory selection MUST follow header, environment, then process-directory precedence without os.chdir(), and concurrent request contexts MUST remain isolated and reset on completion or failure.",
+      "rationale": "Header-driven private MetaMCP requests require predictable context isolation."
+    },
+    {
+      "id": "REQ-004",
+      "priority": "MUST",
+      "statement": "Reads, searches, writes, edits, and commands MUST enforce configured size/count/time/output limits; mutations MUST use optimistic hashes and atomic replacement; commands MUST use argv execution with no implicit shell or TTY and clean up timed-out process groups.",
+      "rationale": "Bounded, non-interactive behavior prevents hangs, accidental overwrites, and unbounded resource use."
+    },
+    {
+      "id": "REQ-005",
+      "priority": "MUST",
+      "statement": "The same eight tools and instructions MUST be exposed over stdio, Streamable HTTP /mcp, and SSE /sse plus /messages/, with /healthz independent of MCP sessions and logs kept off stdio protocol output.",
+      "rationale": "Clients use all three documented transports and health checks must not require a session."
+    },
+    {
+      "id": "REQ-006",
+      "priority": "MUST",
+      "statement": "Deployment artifacts MUST run the application as an unprivileged systemd user service and non-root container without hardcoded user, home, host, port, or work-root assumptions.",
+      "rationale": "The VM user service is the operational target and the container is a release artifact."
+    },
+    {
+      "id": "REQ-007",
+      "priority": "MUST",
+      "statement": "Pull-request CI MUST validate conventional commits and title, locked dependencies, lint, type checks, tests, package build, image build, and available documentation/workflow/unit syntax on the configured Codicarium runner.",
+      "rationale": "The repository requires PR-only changes and shared Codicarium validation."
+    },
+    {
+      "id": "REQ-008",
+      "priority": "MUST",
+      "statement": "A merged main change MUST calculate the initial convco version v0.1.0, publish immutable and latest GHCR images, then create an annotated Git tag and generated-notes GitHub Release in a serialized rerun-safe workflow.",
+      "rationale": "The MVP is complete only when the release artifacts and public image are verified."
+    }
+  ],
+  "acceptance_criteria": [
+    {
+      "id": "AC-001",
+      "requirement_ids": ["REQ-001", "REQ-002", "REQ-003", "REQ-004"],
+      "scenario": "Given configured temporary allowed roots and concurrent request contexts, When all eight tools are exercised, Then the tools match docs/tools.md, escapes and symlink boundaries are rejected, contexts do not leak, stale/ambiguous mutations do not change bytes, and bounded commands preserve argv and clean up descendants on timeout."
+    },
+    {
+      "id": "AC-002",
+      "requirement_ids": ["REQ-005"],
+      "scenario": "Given ephemeral test roots and ports, When a client initializes, lists tools, and calls a read tool over stdio, Streamable HTTP, and SSE, Then the same eight tools are exposed, header contexts remain isolated, invalid headers reject, and /healthz returns JSON without an MCP session."
+    },
+    {
+      "id": "AC-003",
+      "requirement_ids": ["REQ-006"],
+      "scenario": "Given the packaged application, When systemd-analyze verifies the user unit and the multi-stage container starts, Then the service runs as a non-root user with configurable binding and a temporary allowed-root mount."
+    },
+    {
+      "id": "AC-004",
+      "requirement_ids": ["REQ-007", "REQ-008"],
+      "scenario": "Given a conventional feature PR and a merge to main, When the real CI and release workflows run on the configured runner, Then CI passes, repository rules block direct main changes, and exactly the verified v0.1.0 tag, GitHub Release, and public GHCR immutable/latest images are produced."
+    },
+    {
+      "id": "AC-005",
+      "requirement_ids": ["REQ-005", "REQ-006", "REQ-008"],
+      "scenario": "Given the released artifact and intended VM user, When documentation is followed to configure private MetaMCP access to /mcp and restart the service, Then health/read/edit/command/path-rejection smoke tests pass, the service survives restart, and direct public exposure is absent."
+    }
+  ],
+  "test_plan": [
+    {
+      "id": "TST-001",
+      "type": "unit",
+      "requirement_ids": ["REQ-001", "REQ-002", "REQ-003", "REQ-004"],
+      "approach": "Run focused config, policy, file-tool, and command-tool tests covering contracts, errors, roots, symlinks, limits, concurrent contexts, atomic guarded writes, argv preservation, separate streams, and timeout cleanup."
+    },
+    {
+      "id": "TST-002",
+      "type": "integration",
+      "requirement_ids": ["REQ-005"],
+      "approach": "Run ephemeral-port stdio, Streamable HTTP, SSE/messages, health, header isolation, invalid-header, schema, annotation, and clean shutdown integration tests."
+    },
+    {
+      "id": "TST-003",
+      "type": "non_functional",
+      "requirement_ids": ["REQ-002", "REQ-004", "REQ-006"],
+      "approach": "Validate deterministic bounded results, special-file and symlink boundaries, no shell/TTY, non-root systemd/container execution, unit hardening, image health, and temporary-root operation."
+    },
+    {
+      "id": "TST-004",
+      "type": "integration",
+      "requirement_ids": ["REQ-007", "REQ-008"],
+      "approach": "Run local workflow syntax/build checks and real PR/main workflows, then inspect CI, tag, release, image digest, ruleset, and rerun/concurrency evidence."
+    },
+    {
+      "id": "TST-005",
+      "type": "e2e",
+      "requirement_ids": ["REQ-005", "REQ-006", "REQ-008"],
+      "approach": "Verify the released image and intended VM user service, then exercise private MetaMCP listing, reading, guarded editing, bounded command, and path-escape rejection."
+    }
+  ],
+  "traceability": [
+    {
+      "requirement_id": "REQ-001",
+      "acceptance_ids": ["AC-001", "AC-002"],
+      "test_ids": ["TST-001", "TST-002"],
+      "review_checks": ["Compare every registered tool schema and annotation with docs/tools.md."],
+      "validation_checks": ["Focused and full pytest suites pass across all transport integration tests."]
+    },
+    {
+      "requirement_id": "REQ-002",
+      "acceptance_ids": ["AC-001"],
+      "test_ids": ["TST-001", "TST-003"],
+      "review_checks": ["Audit every path-consuming operation for shared policy use, symlink handling, immediate re-check, and sanitized errors."],
+      "validation_checks": ["Traversal, symlink, missing-parent, special-file, and outside-root tests pass without outside access."]
+    },
+    {
+      "requirement_id": "REQ-003",
+      "acceptance_ids": ["AC-001", "AC-002"],
+      "test_ids": ["TST-001", "TST-002"],
+      "review_checks": ["Confirm contextvars are reset in all middleware success, error, cancellation, and rejected-header paths."],
+      "validation_checks": ["Concurrent directory fixtures remain isolated over unit and HTTP/SSE tests."]
+    },
+    {
+      "requirement_id": "REQ-004",
+      "acceptance_ids": ["AC-001"],
+      "test_ids": ["TST-001", "TST-003"],
+      "review_checks": ["Inspect atomic temp-file replacement, hash guards, process groups, bounded drains, and no-shell execution."],
+      "validation_checks": ["Stale, ambiguous, limit, nonzero, and timeout tests pass and leave no child or temp-file residue."]
+    },
+    {
+      "requirement_id": "REQ-005",
+      "acceptance_ids": ["AC-002", "AC-005"],
+      "test_ids": ["TST-002", "TST-005"],
+      "review_checks": ["Verify separate stateful server instances, route mounts, Host/Origin settings, stderr-only logs, and session context binding."],
+      "validation_checks": ["All three transport conformance tests and independent health check pass."]
+    },
+    {
+      "requirement_id": "REQ-006",
+      "acceptance_ids": ["AC-003", "AC-005"],
+      "test_ids": ["TST-003", "TST-005"],
+      "review_checks": ["Inspect unit hardening, no hardcoded paths, image user, bind configuration, and private topology notes."],
+      "validation_checks": ["systemd, container, and intended-user restart/health/read smoke checks pass."]
+    },
+    {
+      "requirement_id": "REQ-007",
+      "acceptance_ids": ["AC-004"],
+      "test_ids": ["TST-004"],
+      "review_checks": ["Check runner expression, action policy, least permissions, full history, conventional title/commit validation, and stable check name."],
+      "validation_checks": ["Real CI / validate check passes and repository rules read back as required."]
+    },
+    {
+      "requirement_id": "REQ-008",
+      "acceptance_ids": ["AC-004", "AC-005"],
+      "test_ids": ["TST-004", "TST-005"],
+      "review_checks": ["Check main-only serialized release, idempotent tag/release/image publication, OCI labels, and public GHCR visibility."],
+      "validation_checks": ["v0.1.0 tag, release URL, image digest/tags, and release smoke tests are recorded."]
+    }
+  ],
+  "quality_gates": {
+    "spec_review_required": true,
+    "testability_required": true,
+    "traceability_required": true
+  },
+  "council": {
+    "perspectives": [
+      {
+        "role": "planner_lite",
+        "summary": "The documented MVP is coherent and stageable with the stated transports, tools, confinement, deployment, and release scope."
+      },
+      {
+        "role": "reviewer",
+        "summary": "Confinement race boundaries, transport context isolation, release concurrency/idempotency, and shared worktree preservation require explicit review checks."
+      },
+      {
+        "role": "tech_lead_qa",
+        "summary": "Every Stage 0-8 has observable validation; critical coverage includes limits, special files, timeout cleanup, transport parity, non-root packaging, and final private MetaMCP evidence."
+      }
+    ],
+    "consensus_summary": "Proceed in the documented order and keep all reviewer safeguards within MVP boundaries. Treat external runner, GitHub, GHCR, VM, and MetaMCP evidence as hard final gates.",
+    "open_questions": [
+      "Use MIT if no owner license preference is discovered and state the assumption in the PR.",
+      "The empty bootstrap commit is required solely to create the feature worktree.",
+      "Live environment availability and organization policies must be verified at Stages 7-8."
+    ]
+  }
+}

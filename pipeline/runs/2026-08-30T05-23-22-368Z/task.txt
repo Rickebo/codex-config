@@ -1,0 +1,1 @@
+codicarium/infra#1290 slice 1: define and test a non-secret authority-runner OS/helper/sudo ownership contract and read-only verifier; no host installation or mutation

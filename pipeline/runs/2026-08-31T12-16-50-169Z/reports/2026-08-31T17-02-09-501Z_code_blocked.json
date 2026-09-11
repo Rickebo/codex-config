@@ -1,0 +1,38 @@
+{
+  "stage": "code",
+  "status": "blocked",
+  "summary": "Regular-runtime lc-config delivery and authenticated application restores are implemented. lc-config passed locally and on ARC, but required exact-head validation on the user-directed external self-hosted fleet is blocked by runner Python/toolcache and internal Nexus connectivity; ARC independently terminates the CommonBackend build.",
+  "changed_files": [
+    "codicarium/lc-config PR #310 head 7d8b4c4d84ed268b8547f66d37d9f18c3f6c4651",
+    "codicarium/lc-common-backend PR #65 head 459fc6ccdea0b7119d37ae057e1d5c6ae92ed6d0",
+    "codicarium/lc-orchestrator-api PR #61 head b32c35c5ec4c614c3dc4ba27692cc3299565de87",
+    "GitHub org variable RUNNER_CODICARIUM_LINUX=[\"self-hosted\",\"Linux\",\"external\"]",
+    "lc-config#311 and platform#196/#197 issue dependency graph",
+    "deprecated infra#1296/#1298 closed as superseded"
+  ],
+  "validation": [
+    "lc-config aggregate deployment-controller suite passed: 8 rendered components plus immutable-image and malformed-descriptor negatives",
+    "lc-config zero-trust static/live-default tests, actionlint, Ruff, Python/Bash syntax, exact-path diff-check, and Graphify 407 nodes/558 edges passed",
+    "Independent review found four issues; all remediated and re-review returned no blocking findings",
+    "lc-config ARC exact-head bridge job 99542173386 and promotion job 99542172597 passed on self-hosted runners",
+    "CommonBackend authenticated Nexus restore succeeds on ARC; API authenticated restore enumerates Nexus packages and no longer returns 401",
+    "CommonBackend/API/lc-config workflow YAML, actionlint, scoped diff checks, and Graphify validations passed"
+  ],
+  "blockers": [
+    "platform#210: external Debian 13 runners lack setup-python 3.13.5 support and external runner Nexus restore hangs beyond 15 minutes",
+    "platform#209: two ARC CommonBackend attempts terminate at the same 11-minute boundary with runner shutdown signal",
+    "platform#196: supported explicitly named codicarium-prod kube context remains unavailable",
+    "app-config#728 and platform#169: conflict-free deployment-controller activation readiness remains external",
+    "CommonBackend 0.1.34 cannot publish until exact-head build/tests pass; API image and lc-config digest pin therefore remain unavailable"
+  ],
+  "next_action": "After platform#210 provides a compatible external runner fleet, rerun lc-config and CommonBackend exact heads, merge/publish CommonBackend 0.1.34, validate/publish API, digest-pin lc-config, then enter independent review.",
+  "requires_council": true,
+  "independent_lanes": [
+    "lc-config regular-runtime and self-hosted workflow implementation complete",
+    "CommonBackend atomic initializer and authenticated restore implementation complete",
+    "API 0.1.34 consumption and authenticated restore implementation complete",
+    "Platform runner remediation external to authorized repository scope"
+  ],
+  "route_to": "code",
+  "risk_level": "critical"
+}

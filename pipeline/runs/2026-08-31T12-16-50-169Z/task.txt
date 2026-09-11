@@ -1,0 +1,1 @@
+Deploy Lightning Craft production through deployment-controller GitOps on regular containers; lc-config owns control-plane hosting; all affected CI uses Codicarium org self-hosted runners; Kata migration remains a tracked dependent follow-up

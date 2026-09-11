@@ -1,0 +1,1 @@
+Fix GitHub recursion suppression after token-dispatched Release Verify by explicitly authenticating and dispatching Publish Release, then automatically resume and publish existing unpublished v0.6.13 without manual actions

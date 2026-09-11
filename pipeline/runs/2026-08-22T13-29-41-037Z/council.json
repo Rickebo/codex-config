@@ -1,0 +1,49 @@
+{
+  "run": "2026-08-22T13-29-41-037Z",
+  "decision": "pass_with_required_controls",
+  "perspectives": [
+    {
+      "role": "planner",
+      "status": "pass_with_changes",
+      "findings": [
+        "Keep kafka-config responsible for Redpanda values and broker lifecycle.",
+        "Keep kafka-acls responsible for the standalone ACL reconciler and exact Deployment Controller policy.",
+        "Keep pve-infra responsible for Argo Applications, certificates, namespaces, and cluster wiring.",
+        "Do not base kafka-config on Codicarium's Strimzi Kafka platform repository; use the existing single-node Redpanda contract instead.",
+        "Preserve the existing StatefulSet, release, PVC, services, and TLS identities during source migration."
+      ]
+    },
+    {
+      "role": "reviewer",
+      "status": "pass_after_revision",
+      "findings": [
+        "The original spec needed exact kubeconfig/API-server fail-closed targeting; the revised spec now names /home/rickebo/.kube/homelab.yaml, context default, and https://192.168.1.89:6443.",
+        "The revised spec adds phased migration, PVC preservation, prune/rollback controls, exact TLS/ACL policy evidence, repository-scoped credentials, and indirect dependency closure scanning.",
+        "No Kafka source may use Codicarium repositories or artifacts; public Redpanda upstream is permitted only as an explicitly approved chart source."
+      ]
+    },
+    {
+      "role": "tech_lead_devops",
+      "status": "manager_verified",
+      "findings": [
+        "Live homelab Redpanda is StatefulSet redpanda 1/1 with a Bound 10 GiB local-path PVC and service ports 9093/9644.",
+        "Live Deployment Controller controller and webhook are both 2/2 Ready and use the local redpanda.deployment-controller.svc.cluster.local endpoint.",
+        "The current kafka ACL Argo Application is Unknown only because it points at codicarium/kafka-acls; replacing that source is the required cutover.",
+        "The current broker source uses public charts.redpanda.com and existing Redpanda values; the new Rickebo repo can own the values/wrapper without importing Codicarium Kafka configuration."
+      ]
+    },
+    {
+      "role": "tech_lead_qa",
+      "status": "pending_agent_result",
+      "findings": [
+        "Manager-defined test plan covers repository CI, Helm/Argo render checks, explicit cluster preflight, live topics/ACLs, controller readiness, dependency closure, and guarded runner activation."
+      ]
+    }
+  ],
+  "consensus": "Proceed to implementation only with Rickebo-owned Kafka repositories, exact homelab target preflight, in-place broker/PVC migration, exact ACL proof, and fail-closed cross-organization dependency scanning.",
+  "open_risks": [
+    "pve-infra is currently under the Rickebo account and its later transfer to rickebo-com remains a separate migration.",
+    "The Deployment Controller runtime artifact remains Codicarium-owned; this rollout removes only Kafka-related Codicarium dependencies as requested.",
+    "Existing controller topic names have Codicarium branding; the implementation must decide whether to preserve them for compatibility or rename before first managed ACL reconciliation, with no untracked data migration."
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "stage": "review",
+  "status": "pass",
+  "summary": "Focused review found no blocking findings in the corrective PostgreSQL image digest change; the patch is limited to the verified homelab amd64 manifest digest.",
+  "changed_files": [
+    "charts/metamcp/values.yaml"
+  ],
+  "validation": [
+    "The PR diff contains exactly one changed value: the PostgreSQL image digest.",
+    "The replacement digest was verified against Docker Hub for the homelab amd64 node in the preceding code stage.",
+    "The preceding code stage passed Helm lint, immutable image render assertions, and explicit homelab server-side dry-run.",
+    "git diff --check passed for the corrective commit and the restored graphify-out files contain no conflict markers.",
+    "PR #440 is merge-clean and contains no automated check failures."
+  ],
+  "blockers": [
+    "PR #440 must be merged before Argo can reconcile the corrected PostgreSQL image.",
+    "PostgreSQL readiness, registry bootstrap, MCP calls, OAuth redirect registration, and public ChatGPT connectivity remain validation work."
+  ],
+  "next_action": "Advance to the test stage, merge PR #440, then reconcile the homelab Argo application with the explicit homelab kubeconfig and context.",
+  "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T20-33-06-876Z/spec.json",
+  "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T20-33-06-876Z/spec-check.json",
+  "council_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T20-33-06-876Z/council.json",
+  "requires_council": true,
+  "independent_lanes": [
+    "Immutable image review",
+    "Helm and Argo reconciliation review",
+    "Post-recovery MCP and OAuth validation"
+  ],
+  "route_to": "test",
+  "risk_level": "critical",
+  "issues": []
+}

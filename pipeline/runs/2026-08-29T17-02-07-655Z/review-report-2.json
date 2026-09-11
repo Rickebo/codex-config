@@ -1,0 +1,26 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Exact-head review of PR #151 found the enabled chart could render maxBodyBytes in scientific notation rather than the canonical decimal string required by the admission binary. The finding required a head change and invalidated prior CI/review evidence.",
+  "changed_files": [],
+  "validation": [
+    "Luna reviewer reproduced noncanonical maxBodyBytes rendering",
+    "Other reviewed enableServiceLinks concern was disproven against Kubernetes v1.31.14 kubelet behavior"
+  ],
+  "blockers": [
+    "Chart template must coerce maxBodyBytes to a canonical integer and test exact output",
+    "Fresh CI and review required after the fix"
+  ],
+  "next_action": "Route the canonical body-size rendering correction to Luna code owner, then repeat exact-head review.",
+  "route_to": "code",
+  "risk_level": "critical",
+  "issues": [
+    {
+      "id": "REV-002",
+      "title": "Admission body-size limit renders noncanonically",
+      "severity": "high",
+      "details": "The chart value could render in scientific notation instead of the exact decimal string accepted by the runtime contract.",
+      "owner_stage": "code"
+    }
+  ]
+}

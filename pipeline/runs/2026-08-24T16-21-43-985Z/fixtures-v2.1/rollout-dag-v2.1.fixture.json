@@ -1,0 +1,191 @@
+[
+  {
+    "id": "S01",
+    "repository": "pipeline/spec",
+    "action": "unanimous exact-hash spec approval with unresolved repository ID",
+    "depends_on": [],
+    "gate_ids": []
+  },
+  {
+    "id": "R10",
+    "repository": "github/codicarium",
+    "action": "create repository and stop if it already exists",
+    "depends_on": [
+      "S01"
+    ],
+    "gate_ids": []
+  },
+  {
+    "id": "R11",
+    "repository": "codicarium/release-platform-config",
+    "action": "commit authenticated RepositoryBindingEnvelope",
+    "depends_on": [
+      "R10"
+    ],
+    "gate_ids": [
+      "GATE-001"
+    ]
+  },
+  {
+    "id": "C20",
+    "repository": "codicarium/codicarium-actions",
+    "action": "land shared schemas readback archive and replay contracts",
+    "depends_on": [
+      "R11"
+    ],
+    "gate_ids": [
+      "GATE-012"
+    ]
+  },
+  {
+    "id": "A20",
+    "repository": "codicarium/infra",
+    "action": "land central namespaces admission capacity Kata and proxy",
+    "depends_on": [
+      "C20"
+    ],
+    "gate_ids": [
+      "GATE-003",
+      "GATE-006",
+      "GATE-007"
+    ]
+  },
+  {
+    "id": "T20",
+    "repository": "codicarium/postgres-config+codicarium/vault-config",
+    "action": "land CNPG TLS journal and exact Vault authority",
+    "depends_on": [
+      "R11"
+    ],
+    "gate_ids": [
+      "GATE-004",
+      "GATE-005",
+      "GATE-006"
+    ]
+  },
+  {
+    "id": "G20",
+    "repository": "codicarium/release-platform-config",
+    "action": "land activation-disabled desired state using committed binding",
+    "depends_on": [
+      "A20",
+      "T20"
+    ],
+    "gate_ids": [
+      "GATE-008",
+      "GATE-009",
+      "GATE-010"
+    ]
+  },
+  {
+    "id": "W20",
+    "repository": "codicarium/deployment-controller",
+    "action": "disable and delete five legacy workflow definitions",
+    "depends_on": [
+      "S01"
+    ],
+    "gate_ids": []
+  },
+  {
+    "id": "W21",
+    "repository": "codicarium/deployment-controller",
+    "action": "cancel runs and prove credential and session quiescence",
+    "depends_on": [
+      "W20"
+    ],
+    "gate_ids": [
+      "GATE-011"
+    ]
+  },
+  {
+    "id": "P20",
+    "repository": "codicarium/deployment-controller",
+    "action": "bind exact protected checks and non-fixture identity",
+    "depends_on": [
+      "W21"
+    ],
+    "gate_ids": [
+      "GATE-013"
+    ]
+  },
+  {
+    "id": "Q30",
+    "repository": "codicarium/release-security",
+    "action": "qualify infrastructure trust workflow and authority evidence",
+    "depends_on": [
+      "G20",
+      "P20"
+    ],
+    "gate_ids": [
+      "GATE-002"
+    ]
+  },
+  {
+    "id": "X31",
+    "repository": "codicarium/release-platform-config",
+    "action": "require every grant Application absent and reject subsets",
+    "depends_on": [
+      "Q30"
+    ],
+    "gate_ids": []
+  },
+  {
+    "id": "X32",
+    "repository": "codicarium/release-platform-config",
+    "action": "create complete new grant and Application set atomically",
+    "depends_on": [
+      "X31"
+    ],
+    "gate_ids": []
+  },
+  {
+    "id": "X33",
+    "repository": "codicarium/release-platform-config",
+    "action": "prove complete set ready with runner-config-dev unchanged",
+    "depends_on": [
+      "X32"
+    ],
+    "gate_ids": []
+  },
+  {
+    "id": "D40",
+    "repository": "codicarium/deployment-controller",
+    "action": "land successor work linked to closed issue 93 without reopening",
+    "depends_on": [
+      "S01"
+    ],
+    "gate_ids": []
+  },
+  {
+    "id": "D41",
+    "repository": "cross-repository",
+    "action": "collect forward-only v0.6.14 evidence after X33 and D40",
+    "depends_on": [
+      "X33",
+      "D40"
+    ],
+    "gate_ids": [
+      "GATE-014"
+    ]
+  },
+  {
+    "id": "D42",
+    "repository": "codicarium/release-security",
+    "action": "aggregate fresh live gates without activation side effects",
+    "depends_on": [
+      "D41"
+    ],
+    "gate_ids": [
+      "GATE-015"
+    ]
+  },
+  {
+    "id": "Z50",
+    "repository": "codicarium/release-platform-config",
+    "action": "perform separate post-authorization activation as leaf",
+    "depends_on": [
+      "D42"
+    ],
+    "gate_ids": []
+  }
+]

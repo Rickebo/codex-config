@@ -1,0 +1,824 @@
+model = "gpt-5.6-luna"
+model_verbosity = "low"
+tool_output_token_limit = 6000
+approvals_reviewer = "user"
+approval_policy = "never"
+sandbox_mode = "danger-full-access"
+model_reasoning_effort = "xhigh"
+model_provider = "headroom"
+openai_base_url = "https://llm-proxy.int.codicarium.com/openai/rickebo/headroom/v1"
+service_tier = "default"
+
+[model_providers.headroom]
+name = "Headroom through homelab LLM Proxy bridge"
+base_url = "https://llm-proxy.int.codicarium.com/openai/rickebo/headroom/v1"
+wire_api = "responses"
+env_key="LLM_PROXY_API_KEY"
+supports_websockets = false
+requires_openai_auth = true
+
+[agents]
+max_threads = 4
+max_depth = 1
+default_subagent_model = "gpt-5.6-luna"
+default_subagent_reasoning_effort = "medium"
+
+[profiles.normal]
+model = "gpt-5.6-sol"
+model_reasoning_effort = "medium"
+model_verbosity = "low"
+tool_output_token_limit = 6000
+
+[profiles.fast]
+model = "gpt-5.6-luna"
+model_reasoning_effort = "low"
+model_verbosity = "low"
+tool_output_token_limit = 4000
+
+[profiles.fast_code]
+model = "gpt-5.6-luna"
+model_reasoning_effort = "low"
+model_verbosity = "low"
+tool_output_token_limit = 5000
+
+[profiles.deep]
+model = "gpt-5.6"
+model_reasoning_effort = "high"
+model_verbosity = "low"
+tool_output_token_limit = 8000
+
+[profiles.xhigh]
+model = "gpt-5.6"
+model_reasoning_effort = "xhigh"
+model_verbosity = "low"
+tool_output_token_limit = 10000
+
+[profiles.spark_code]
+model = "gpt-5.6-luna"
+model_reasoning_effort = "medium"
+model_verbosity = "low"
+tool_output_token_limit = 3000
+
+[projects."/home/rickebo/p/codicarium/Codexus"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/p/codicarium/codicarium-host-agent"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/p/devops"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/p/cs/LK"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/p/gitops/dev-config"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/p/devops/pve-infra"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/Desktop/temp"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/p/codicarium/dev-config"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/p/codicarium"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/p/dl/n8n"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/Services/ChatMock"]
+trust_level = "trusted"
+
+[projects."/home/rickebo"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/p/Matrixbot"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/p/Autologin"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/p/cs/event-calendar"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/p/cs/RN"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/p/codicarium/Codexus2"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/VM"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/.codex"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/Desktop"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/p/codicarium/docs"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/p/codicarium/kvdb"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/p/lk"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/p/akta"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/p/codicarium/Blazorponents"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/p/codicarium/Matrixbot"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/Backups"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/p/codicarium/Codexus2/Codexus"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/p/codicarium/Codexus2/repo"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/p/codicarium/infra"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/p/codicarium/Codexus2/codicarium-host-agent"]
+trust_level = "trusted"
+
+[projects."/"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/Downloads/cv"]
+trust_level = "trusted"
+
+[projects."/tmp"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/Documents"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/p/cartracker"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/p/car"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/p/car/cartracker"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/p/car/carpod"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/p/cs/ntoskrnlib"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/p/lc"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/p/lc/server-sidecar"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/p/lc/common-backend"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/p/lc/lc-docs"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/p/rhx"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/p/py/proxy-finder"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/.config"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/p/lc/proxy-plugin"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/p/bolagsekonomi"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/Desktop/stock-analysis"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/Apps"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/p/pve-infra"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/p/lc/infra"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/p/ekonomi"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/p/mcs"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/p/agents"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/p/scb-data"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/.agents"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/p/gvm"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/p-backup/gvm"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/p/lc/lc-runtime-service"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/p/lc/lc-config"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/p/rhx/legacy/rHXBG"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/p/rhx/references/docs"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/Documents/Codex/2026-06-19/how-is-the-nz-climate-compared"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/p"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/temp1"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/Downloads"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/p/llm-proxy"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/Documents/LLM proxy"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/Documents/Codex/2026-07-18/9"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/p/RN"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/p/homelab-codicarium-bridge-test"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/p/codicarium/codicarium-skills"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/p/codicarium-platform"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/p/agent-orchestrator"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/.worktrees/agent-runtime-main-local"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/p/trip-planner"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/p/codicarium/vault-config"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/p/embedded/zigbee-radar"]
+trust_level = "trusted"
+
+[projects."/tmp/ao-issue5-live-oYtC6C/repo"]
+trust_level = "trusted"
+
+[projects."/tmp/tmp.ObKopMpGV3"]
+trust_level = "trusted"
+
+[projects."/tmp/tmp.2JZyIyaXO4"]
+trust_level = "trusted"
+
+[projects."/tmp/tmp.27txugLsNR"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/p/server-finder"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/p/fan-controller-mqtt"]
+trust_level = "trusted"
+
+[projects."/mnt/rickebo-p/embedded/fan-controller-mqtt"]
+trust_level = "trusted"
+
+[projects."/mnt/rickebo-p/devops/pve-infra"]
+trust_level = "trusted"
+
+[projects."/mnt/rickebo-p/gaming/valheim"]
+trust_level = "trusted"
+
+[projects."/mnt/rickebo-p/agent-runtime"]
+trust_level = "trusted"
+
+[projects."/mnt/rickebo-p"]
+trust_level = "trusted"
+
+[projects."/mnt/rickebo-p/agent-orchestrator"]
+trust_level = "trusted"
+
+[projects."/mnt/rickebo-p/RN"]
+trust_level = "trusted"
+
+[projects."/mnt/rickebo-p/codicarium/nexus-config"]
+trust_level = "trusted"
+
+[projects."/mnt/rickebo-p/embedded/auto-hid"]
+trust_level = "trusted"
+
+[projects."/mnt/rickebo-p/llm-proxy"]
+trust_level = "trusted"
+
+[projects."/mnt/rickebo-p/codicarium-platform"]
+trust_level = "trusted"
+
+[projects."/mnt/rickebo-p/Matrixbot"]
+trust_level = "trusted"
+
+[projects."/mnt/rickebo-p/codicarium"]
+trust_level = "trusted"
+
+[projects."/mnt/rickebo-p/workspace-context"]
+trust_level = "trusted"
+
+[projects."/mnt/rickebo-p/rhx"]
+trust_level = "trusted"
+
+[projects."/mnt/rickebo-p/other/cpu-score-extension"]
+trust_level = "trusted"
+
+[projects."/mnt/rickebo-p/deployment-controller"]
+trust_level = "trusted"
+
+[projects."/mnt/rickebo-p/geosearch"]
+trust_level = "trusted"
+
+[projects."/mnt/rickebo-p/codicarium/infra"]
+trust_level = "trusted"
+
+[projects."/mnt/rickebo-p/llm-context-services"]
+trust_level = "trusted"
+
+[projects."/mnt/rickebo-p/codicarium/codicarium-actions"]
+trust_level = "trusted"
+
+[projects."/mnt/rickebo-p/codex-stats"]
+trust_level = "trusted"
+
+[projects."/mnt/rickebo-p/codicarium-platform/audits/dev-cluster-2026-08-13"]
+trust_level = "trusted"
+
+[projects."/mnt/rickebo-p/nexus-config"]
+trust_level = "trusted"
+
+[projects."/mnt/rickebo-p/app-config"]
+trust_level = "trusted"
+
+[projects."/mnt/rickebo-p/infra-source"]
+trust_level = "trusted"
+
+[projects."/mnt/rickebo-p/runner-config"]
+trust_level = "trusted"
+
+[projects."/mnt/rickebo-p/agent-mcp"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/Desktop/pa"]
+trust_level = "trusted"
+
+[projects."/mnt/rickebo-p/rickebo-com/infra/runner-config"]
+trust_level = "trusted"
+
+[projects."/mnt/rickebo-p/workspace-manager"]
+trust_level = "trusted"
+
+[projects."/mnt/rickebo-p/codicarium/workspace-context"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/.worktrees/llm-proxy-codex_ghcr-release"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/Documents/nl-reflection"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/.worktrees/llm-proxy-main"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/.worktrees/workspace-context-ghcr-first-publication"]
+trust_level = "trusted"
+
+[projects."/mnt/rickebo-p/workspace-manager/llm-proxy"]
+trust_level = "trusted"
+
+[projects."/mnt/rickebo-p/devops/youtarr/source"]
+trust_level = "trusted"
+
+[projects."/mnt/rickebo-p/rickebo-com/infra"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/workspace-context"]
+trust_level = "trusted"
+
+[projects."/mnt/rickebo-p/devops/youtarr"]
+trust_level = "trusted"
+
+[projects."/mnt/rickebo-p/rickebo-com"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/backup-b/devops/pve-infra"]
+trust_level = "trusted"
+
+[projects."/mnt/rickebo-p/mcs"]
+trust_level = "trusted"
+
+[projects."/mnt/rickebo-p/codicarium-platform/platform"]
+trust_level = "trusted"
+
+[projects."/home/rickebo/.repos/pve-infra"]
+trust_level = "trusted"
+
+[projects."/mnt/rickebo-p/lc"]
+trust_level = "trusted"
+
+[projects."/mnt/rickebo-p/other/lupin"]
+trust_level = "trusted"
+
+[projects."/mnt/rickebo-p/other/ApiDehash"]
+trust_level = "trusted"
+
+[projects."/mnt/rickebo-p/agent-harness"]
+trust_level = "trusted"
+
+[projects."/tmp/task-010-live-evidence.QgMqow/fixture"]
+trust_level = "trusted"
+
+[projects."/mnt/rickebo-p/agent-harness/.worktrees/agent-harness-feat_010_live_e2e/fixture"]
+trust_level = "trusted"
+
+[projects."/tmp/task-010-live-final.e8S4IV/fixture"]
+trust_level = "trusted"
+
+[projects."/tmp/task-010-live-final2.LsRh3e/fixture"]
+trust_level = "trusted"
+
+[projects."/tmp/task-010-live-final3.7ibBht/fixture"]
+trust_level = "trusted"
+
+[projects."/tmp/task-010-live-final4.JqlLWw/fixture"]
+trust_level = "trusted"
+
+[projects."/tmp/task-010-live-final5.QOaA6Y/fixture"]
+trust_level = "trusted"
+
+[projects."/tmp/task-010-live-final6.QOK8bz/fixture"]
+trust_level = "trusted"
+
+[projects."/mnt/rickebo-p/apps"]
+trust_level = "trusted"
+
+[projects."/mnt/rickebo-p/trip-planner"]
+trust_level = "trusted"
+
+[projects."/mnt/rickebo-p/apps/food-tracker"]
+trust_level = "trusted"
+
+[projects."/mnt/rickebo-p/building-blocks"]
+trust_level = "trusted"
+
+[projects."/mnt/rickebo-p/akta"]
+trust_level = "trusted"
+
+[projects."/mnt/rickebo-p/other/Lemmy.Net"]
+trust_level = "trusted"
+
+[projects."/mnt/rickebo-p/other/ntoskrnlib"]
+trust_level = "trusted"
+
+[features]
+use_linux_sandbox_bwrap = true
+multi_agent = true
+apps = false
+guardian_approval = true
+js_repl = true
+realtime_conversation = false
+browser_use = false
+computer_use = false
+
+[notice]
+hide_full_access_warning = true
+hide_rate_limit_model_nudge = true
+
+[tui]
+status_line = ["model-with-reasoning", "current-dir", "five-hour-limit", "weekly-limit", "used-tokens", "total-input-tokens", "total-output-tokens", "context-used"]
+
+[tui.model_availability_nux]
+"gpt-5.6-sol" = 4
+gpt-6-astra = 4
+
+[plugins."superpowers@openai-curated"]
+enabled = true
+
+[plugins."documents@openai-primary-runtime"]
+enabled = false
+
+[plugins."spreadsheets@openai-primary-runtime"]
+enabled = false
+
+[plugins."presentations@openai-primary-runtime"]
+enabled = false
+
+[plugins."slack@openai-curated"]
+enabled = false
+
+[plugins."pdf@openai-primary-runtime"]
+enabled = false
+
+[plugins."template-creator@openai-primary-runtime"]
+enabled = false
+
+[plugins."codicarium-platform@codicarium-skills"]
+enabled = true
+
+[plugins."visualize@openai-bundled"]
+enabled = true
+
+[plugins."browser@openai-bundled"]
+enabled = false
+
+[plugins."codex-app-tools@openai-bundled"]
+enabled = true
+
+[plugins."unified-computer-use@openai-bundled"]
+enabled = true
+
+[plugins."sites@openai-bundled"]
+enabled = true
+
+[mcp_servers.playwright]
+command = "/home/rickebo/.codex/bin/codex-memory-run"
+args = ["agent", "--", "npx", "-y", "@playwright/mcp@0.0.79", "--isolated", "--browser", "chrome", "--proxy-server", "http://127.0.0.1:1057", "--output-dir", "/tmp/codex-playwright-mcp"]
+enabled = true
+required = false
+startup_timeout_sec = 60
+tool_timeout_sec = 180
+
+[mcp_servers.qdrant_memory]
+url = "http://127.0.0.1:8790/mcp"
+startup_timeout_sec = 120.0
+tool_timeout_sec = 120.0
+
+
+[mcp_servers.node_repl]
+args = []
+command = "/usr/lib/chatgpt/resources/cua_node/bin/node_repl"
+startup_timeout_sec = 120
+
+[mcp_servers.node_repl.env]
+NODE_REPL_NATIVE_PIPE_CONNECT_TIMEOUT_MS = "1000"
+NODE_REPL_NODE_MODULE_DIRS = "/usr/lib/chatgpt/resources/cua_node/lib/node_modules"
+NODE_REPL_NODE_PATH = "/usr/lib/chatgpt/resources/cua_node/bin/node"
+NODE_REPL_TRUSTED_CODE_PATHS = "/home/rickebo/.codex:/usr/lib/chatgpt/resources/cua_node/lib/node_modules"
+
+CODEX_HOME = "/home/rickebo/.codex"
+BROWSER_USE_AVAILABLE_BACKENDS = "chrome"
+BROWSER_USE_TINYSKY_ENABLED = "1"
+NODE_REPL_INSTRUCTIONS_USE_CASE_CHROME = ""
+BROWSER_USE_CODEX_APP_BUILD_FLAVOR = "prod"
+BROWSER_USE_CODEX_APP_VERSION = "26.901.20858"
+NODE_REPL_TRUSTED_SERVICES = '{"browser":"/home/rickebo/.codex/plugins/cache/openai-bundled/browser/26.901.20858/scripts/browser-service.mjs"}'
+CODEX_CLI_PATH = "/home/rickebo/.codex/packages/standalone/current/codex"
+NODE_REPL_INSTRUCTIONS_USE_CASE_BROWSER = ""
+
+#[mcp_servers.node_repl]
+#args = []
+#command = "/home/rickebo/.local/opt/codex-desktop-linux/codex-app/resources/node_repl"
+#startup_timeout_sec = 120
+
+#[mcp_servers.node_repl.env]
+#NODE_REPL_NATIVE_PIPE_CONNECT_TIMEOUT_MS = "1000"
+#NODE_REPL_NODE_MODULE_DIRS = ""
+#NODE_REPL_NODE_PATH = "/home/rickebo/.local/opt/codex-desktop-linux/codex-app/resources/node-runtime/bin/node"
+#NODE_REPL_TRUSTED_CODE_PATHS = "/home/rickebo/.codex"
+#CODEX_HOME = "/home/rickebo/.codex"
+#NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = "028a14b6eaa6d98dac2aae00764345ab9f244801ed8493d42b9af3be5575006e,f204d340535055781952b10ed396de20b842f00a19e430852f7e121ad1ce91f6"
+#BROWSER_USE_AVAILABLE_BACKENDS = "chrome,iab"
+#NODE_REPL_INSTRUCTIONS_USE_CASE_BROWSER = "Control the in-app browser in conjunction with the Browser Plugin."
+#NODE_REPL_INSTRUCTIONS_USE_CASE_CHROME = "Control the Chrome browser in conjunction with the Chrome Plugin. Prefer this method of controlling Chrome over alternatives (such as Computer Use) unless the user explicitly mentions an alternative."
+#BROWSER_USE_CODEX_APP_BUILD_FLAVOR = "prod"
+#BROWSER_USE_CODEX_APP_VERSION = "26.727.51351"
+#CODEX_CLI_PATH = "/home/rickebo/.codex/packages/standalone/releases/0.147.0-x86_64-unknown-linux-musl/bin/codex"
+
+#[mcp_servers.node_repl.tools]
+
+#[mcp_servers.node_repl.tools.js]
+#approval_mode = "approve"
+
+#[mcp_servers.openaiDeveloperDocs]
+#url = "https://developers.openai.com/mcp"
+
+#[mcp_servers.agents]
+#url = "http://127.0.0.1:8765/mcp"
+
+#[mcp_servers.gvm_codex]
+#command = "/home/rickebo/.codex/bin/start-gvm-codex-mcp"
+#startup_timeout_sec = 300.0
+#tool_timeout_sec = 3600.0
+
+#[mcp_servers.node_repl]
+#args = []
+#command = "/home/rickebo/.local/opt/codex-desktop-linux/codex-app/resources/node_repl"
+#startup_timeout_sec = 120
+
+#[mcp_servers.node_repl.env]
+#NODE_REPL_NATIVE_PIPE_CONNECT_TIMEOUT_MS = "1000"
+#NODE_REPL_NODE_MODULE_DIRS = ""
+#NODE_REPL_NODE_PATH = "/home/rickebo/.local/opt/codex-desktop-linux/codex-app/resources/node-runtime/bin/node"
+#NODE_REPL_TRUSTED_CODE_PATHS = "/home/rickebo/.codex"
+#CODEX_HOME = "/home/rickebo/.codex"
+#NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = "6d25aa7656feac858f3a3bdaea5bcbab0dbfd426c9de8e6931ce90c399ee8e4f,c8b7e809d7cf9e20a57123b2530d476ccec9a01a6230a7b2b924fea7d94d7f4a,505eba02c6eed6bcc3f2883e6c705c3377eef8c172bb2d99c909134b0da6e57d,0c77a3b75646e46fa857011b4cde14be2f580b5655461b7c0aabf54f86fc6781"
+#BROWSER_USE_AVAILABLE_BACKENDS = "chrome,iab"
+#NODE_REPL_INSTRUCTIONS_USE_CASE_BROWSER = "Control the in-app browser in conjunction with the Browser Plugin."
+#NODE_REPL_INSTRUCTIONS_USE_CASE_CHROME = "Control the Chrome browser in conjunction with the Chrome Plugin. Prefer this method of controlling Chrome over alternatives (such as Computer Use) unless the user explicitly mentions an alternative."
+#BROWSER_USE_CODEX_APP_BUILD_FLAVOR = "prod"
+#BROWSER_USE_CODEX_APP_VERSION = "26.707.31428"
+
+#[mcp_servers.node_repl.tools]
+
+#[mcp_servers.node_repl.tools.js]
+#approval_mode = "approve"
+
+[[skills.config]]
+path = "/home/rickebo/.codex/plugins/cache/openai-curated/superpowers/f9c120537a03fc6ae0134e3523f8f1e9d73f36e5/skills/using-superpowers/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/home/rickebo/.codex/plugins/cache/openai-curated/superpowers/f9c120537a03fc6ae0134e3523f8f1e9d73f36e5/skills/brainstorming/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/home/rickebo/.codex/plugins/cache/openai-curated/superpowers/f9c120537a03fc6ae0134e3523f8f1e9d73f36e5/skills/writing-plans/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/home/rickebo/.codex/plugins/cache/openai-curated/superpowers/f9c120537a03fc6ae0134e3523f8f1e9d73f36e5/skills/executing-plans/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/home/rickebo/.codex/plugins/cache/openai-curated/superpowers/f9c120537a03fc6ae0134e3523f8f1e9d73f36e5/skills/test-driven-development/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/home/rickebo/.codex/plugins/cache/openai-curated/superpowers/f9c120537a03fc6ae0134e3523f8f1e9d73f36e5/skills/systematic-debugging/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/home/rickebo/.codex/plugins/cache/openai-curated/superpowers/f9c120537a03fc6ae0134e3523f8f1e9d73f36e5/skills/subagent-driven-development/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/home/rickebo/.codex/plugins/cache/openai-curated/superpowers/f9c120537a03fc6ae0134e3523f8f1e9d73f36e5/skills/requesting-code-review/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/home/rickebo/.codex/skills/compact-tdd/SKILL.md"
+enabled = true
+
+[[skills.config]]
+path = "/home/rickebo/.codex/skills/compact-verification/SKILL.md"
+enabled = true
+
+[marketplaces.openai-bundled]
+source_type = "local"
+source = "/home/rickebo/.codex/.tmp/bundled-marketplaces/openai-bundled"
+
+[marketplaces.openai-primary-runtime]
+source_type = "local"
+source = "/home/rickebo/.cache/codex-runtimes/codex-primary-runtime/plugins/openai-primary-runtime"
+
+[marketplaces.alexgreensh-token-optimizer]
+last_updated = "2026-08-30T02:03:54Z"
+last_revision = "a686f5cbbd27489fe0033cac680428071b1e4e84"
+source_type = "git"
+source = "https://github.com/alexgreensh/token-optimizer.git"
+
+[marketplaces.codicarium-skills]
+last_updated = "2026-07-06T07:54:36Z"
+source_type = "local"
+source = "/home/rickebo/p/codicarium/codicarium-skills"
+
+[hooks.state]
+
+[hooks.state."/home/rickebo/.codex/.codex/hooks.json:pre_tool_use:0:0"]
+trusted_hash = "sha256:79b73283826b29f68d8d227ca197b9522d3afb94935b5ac4584497d41e6be745"
+
+[hooks.state."/home/rickebo/p/codicarium/Codexus2/.codex/hooks.json:pre_tool_use:0:0"]
+trusted_hash = "sha256:39057ebd30cc98418da09c661f1ff844e076ba83820ea7f8a14b085993f1a440"
+
+[hooks.state."/home/rickebo/.codex/hooks.json:pre_tool_use:0:0"]
+trusted_hash = "sha256:79b73283826b29f68d8d227ca197b9522d3afb94935b5ac4584497d41e6be745"
+
+[hooks.state."token-optimizer@alexgreensh-token-optimizer:hooks/hooks.json:pre_tool_use:0:0"]
+trusted_hash = "sha256:51a32287ef223384d8a330a3e5ac2f3dadff7b6c4a8a13e4a44f691ccddffb64"
+
+[hooks.state."token-optimizer@alexgreensh-token-optimizer:hooks/hooks.json:pre_tool_use:1:0"]
+trusted_hash = "sha256:545412be242103b472b12ce9e1ed578b94038c8a831ff42d24b2dc29caa36cdc"
+
+[hooks.state."token-optimizer@alexgreensh-token-optimizer:hooks/hooks.json:pre_tool_use:2:0"]
+trusted_hash = "sha256:632caccf9cf2bd17c3062063c37e65261bae444bd2a10dc5cb07c0ebf5e5bf95"
+
+[hooks.state."token-optimizer@alexgreensh-token-optimizer:hooks/hooks.json:post_tool_use:0:0"]
+trusted_hash = "sha256:89868b9947e46e934b8f1e4ac0ee1d9af229527b05ba1acf345087b47ba63ca5"
+
+[hooks.state."token-optimizer@alexgreensh-token-optimizer:hooks/hooks.json:post_tool_use:1:0"]
+trusted_hash = "sha256:ff127d72a13e4cf04c790194b54e0937935ed07ec9819db025a15add3bbba01a"
+
+[hooks.state."token-optimizer@alexgreensh-token-optimizer:hooks/hooks.json:post_tool_use:2:0"]
+trusted_hash = "sha256:b82b2977c38b785c5fc51b00d305d9dd8a75a725c987fe8fb7122a4c32d1d084"
+
+[hooks.state."token-optimizer@alexgreensh-token-optimizer:hooks/hooks.json:post_tool_use:3:0"]
+trusted_hash = "sha256:8f397e841bc747d434aaa2021616b56e4405bd0be9e5f6150031a159afe9fd3f"
+
+[hooks.state."token-optimizer@alexgreensh-token-optimizer:hooks/hooks.json:pre_compact:0:0"]
+trusted_hash = "sha256:0fedca9c81c7a7147bc4afc5552bd78a0668c62c02831808ac71a64951026c66"
+
+[hooks.state."token-optimizer@alexgreensh-token-optimizer:hooks/hooks.json:pre_compact:1:0"]
+trusted_hash = "sha256:20130495e168b0b481ae4b0fcbc7504e1d12a36f6919a503f208976e10aaa171"
+
+[hooks.state."token-optimizer@alexgreensh-token-optimizer:hooks/hooks.json:pre_compact:2:0"]
+trusted_hash = "sha256:2c313e7177004b50e82c67f4d08e2cf4ebcc33d34d65df8c4b232af67fcdc509"
+
+[hooks.state."token-optimizer@alexgreensh-token-optimizer:hooks/hooks.json:post_compact:0:0"]
+trusted_hash = "sha256:930b48399789203d0c62e4a6ff8845c7a91894b6b3e378e0cb9a6d42999946de"
+
+[hooks.state."token-optimizer@alexgreensh-token-optimizer:hooks/hooks.json:session_start:1:0"]
+trusted_hash = "sha256:2f311fbae70e597bf6b18fdb075ad90aa071a15db3fde22c5fb825c66314f024"
+
+[hooks.state."token-optimizer@alexgreensh-token-optimizer:hooks/hooks.json:session_start:2:0"]
+trusted_hash = "sha256:dd876d1c0b087bd93b4cf245d09c98a791925245c56a0070805b71b32de49e72"
+
+[hooks.state."token-optimizer@alexgreensh-token-optimizer:hooks/hooks.json:session_start:3:0"]
+trusted_hash = "sha256:61f8317aee96f2ac1705b558550c89902e694b30555abeaad5d1ced9df180801"
+
+[hooks.state."token-optimizer@alexgreensh-token-optimizer:hooks/hooks.json:user_prompt_submit:0:0"]
+trusted_hash = "sha256:5d82141e988354148df3c3f42f095ec31b7bb48548d0bb1958e61c5d4c31ed08"
+
+[hooks.state."token-optimizer@alexgreensh-token-optimizer:hooks/hooks.json:user_prompt_submit:1:0"]
+trusted_hash = "sha256:5dce13726c9ccb503444372c61c7b11cc7c25d8b56293ec980f3b926a973ea50"
+
+[hooks.state."token-optimizer@alexgreensh-token-optimizer:hooks/hooks.json:user_prompt_submit:2:0"]
+trusted_hash = "sha256:280b01bf02f4f72a1e813c4aa6622cd36c8be0994a14f4bc96b98240e1f048db"
+
+[hooks.state."token-optimizer@alexgreensh-token-optimizer:hooks/hooks.json:stop:0:0"]
+trusted_hash = "sha256:2ddffb1cf1825732f3263ca39d26e1f907e63aa83e6111f78e1cba19a6ab2e51"
+
+[hooks.state."token-optimizer@alexgreensh-token-optimizer:hooks/hooks.json:stop:0:1"]
+trusted_hash = "sha256:e915f8a4687739728491b96b882213b9d240c016094cbde07d819d8f9d873987"
+
+[hooks.state."token-optimizer@alexgreensh-token-optimizer:hooks/hooks.json:stop:0:2"]
+trusted_hash = "sha256:38b16e8e074a6fe1f77bc5cc811235678caedc5771a208f50f2db8a3f8bfe6dd"
+
+[hooks.state."/home/rickebo/p/devops/pve-infra/.codex/hooks.json:pre_tool_use:0:0"]
+trusted_hash = "sha256:79b73283826b29f68d8d227ca197b9522d3afb94935b5ac4584497d41e6be745"
+
+[hooks.state."/home/rickebo/p/pve-infra/.codex/hooks.json:pre_tool_use:0:0"]
+trusted_hash = "sha256:79b73283826b29f68d8d227ca197b9522d3afb94935b5ac4584497d41e6be745"
+
+[hooks.state."/mnt/rickebo-p/devops/pve-infra/.codex/hooks.json:pre_tool_use:0:0"]
+trusted_hash = "sha256:79b73283826b29f68d8d227ca197b9522d3afb94935b5ac4584497d41e6be745"
+
+[hooks.state."/mnt/rickebo-p/codicarium/infra/.codex/hooks.json:pre_tool_use:0:0"]
+trusted_hash = "sha256:79b73283826b29f68d8d227ca197b9522d3afb94935b5ac4584497d41e6be745"
+
+[desktop]
+ambient-suggestions-enabled = false
+preventSleepWhileRunning = true
+keepRemoteControlAwakeWhilePluggedIn = true
+conversationDetailMode = "STEPS_PROSE"
+followUpQueueMode = "queue"
+
+[desktop.open-in-target-preferences]
+global = "fileManager"
+
+[desktop.open-in-target-preferences.perPath]
+"/home/rickebo/p/lc" = "fileManager"
+
+[shell_environment_policy.set]
+NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = "9230e2bd8b24b7ac7a0ba6774c64bf0d78ecdabbdd91d0ed627b02a587bae2df"

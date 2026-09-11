@@ -1,0 +1,1 @@
+Implement and deploy Jellyfin Quick Connect as Youtarr's default login, with configured Jellyfin browser URL, password fallback without editable URL, secure per-user session binding, and end-to-end VPN-only validation

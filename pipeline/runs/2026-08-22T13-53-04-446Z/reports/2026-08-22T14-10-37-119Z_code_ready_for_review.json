@@ -1,0 +1,37 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Implemented the self-contained public-chart wrapper, pinned homelab values/schema, ownership and stateful migration documentation, and repository-local CI validation.",
+  "changed_files": [
+    "Chart.yaml",
+    "Chart.lock",
+    "values.yaml",
+    "values.schema.json",
+    "README.md",
+    ".github/workflows/validate.yaml",
+    "scripts/validate.rb",
+    "templates/_keep.tpl",
+    ".gitignore",
+    ".helmignore"
+  ],
+  "validation": [
+    "helm dependency build . succeeded and generated the locked public redpanda 5.10.2 dependency",
+    "helm lint . --strict --values values.yaml passed",
+    "helm template redpanda . --namespace deployment-controller --values values.yaml plus ruby scripts/validate.rb passed",
+    "helm template with --set redpanda.statefulset.replicas=2 failed as required by values.schema.json",
+    "ruby -c scripts/validate.rb and deployable-file forbidden-reference scan passed"
+  ],
+  "blockers": [],
+  "next_action": "Review the implementation for release/PVC identity, dependency ownership, secret handling, and validation coverage before running the test and validation stages.",
+  "spec_file": "/tmp/kafka-config-feature-spec.json",
+  "spec_check_file": "/tmp/kafka-config-feature-spec-check.json",
+  "council_file": "/tmp/kafka-config-council.json",
+  "requires_council": true,
+  "independent_lanes": [
+    "Review chart identity, dependency pin, values/schema, and rendered resources",
+    "Review README migration safety, CI boundary, and secret/reference scanning"
+  ],
+  "route_to": "review",
+  "risk_level": "high",
+  "issues": []
+}

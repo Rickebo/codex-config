@@ -1,0 +1,22 @@
+{
+  "run": "2026-08-31T11-31-21-067Z",
+  "decision": "GO_CODE_ONLY_REV7",
+  "perspectives": [
+    {"role":"security","agent":"review_consolidation_0c18","conclusion":"Directory metadata enforcement is a high-severity privileged-boundary gap; unrelated-entry behavior needs executable race and unsafe-object coverage."},
+    {"role":"operations","agent":"review_consolidation_07cd_second","conclusion":"Fresh-host installation requires an explicit immutable admission staging procedure and admission root."},
+    {"role":"quality_validation","agent":"root-manager","conclusion":"Canonical service digest expectations must not be overwritten by fixtures; all four findings require exact-head review and root-capable tests."}
+  ],
+  "consensus": [
+    "Remediate only the four verified REV7 findings and mechanically synchronized digests.",
+    "Preserve all earlier consolidation controls and never substitute group 6 for group 7.",
+    "Do not push, install, dispatch, merge, or mutate live authorization in this continuation pipeline."
+  ],
+  "source_heads": {
+    "base": "e3ff966271dc76af47387e906a68dcd6cdc90360",
+    "rev6": "0c18d6cc2cfa5eac916aa51e1ea484d74f89cf01"
+  },
+  "live_constraints": {
+    "runner_group_7": "zero runners in last verified inventory; protected evidence absent",
+    "delivery": "source-only until exact-head review/test/validation and external host-owner gates"
+  }
+}

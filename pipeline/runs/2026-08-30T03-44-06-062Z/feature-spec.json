@@ -1,0 +1,174 @@
+{
+  "meta": {
+    "id": "SPEC-infra-1288-stable-api-vip",
+    "title": "Use the authoritative stable Kubernetes API VIP for the guarded deployment-controller upgrade",
+    "author": "manager",
+    "created_at": "2026-08-30T03:55:00Z",
+    "version": "1.0.0"
+  },
+  "feature": {
+    "problem_statement": "The protected deployment-controller upgrade expects the control-node endpoint https://10.99.0.21:6443, while typed inventory, kube-vip, DNS, TLS, and the protected kubeconfig publisher establish https://10.99.0.10:6443 as the stable API frontend. The mismatch makes the upgrade fail safely before mutation and blocks restoration of controller health.",
+    "goals": [
+      "Make every active guarded upgrade identity source agree on the typed stable API VIP https://10.99.0.10:6443.",
+      "Preserve exact, fail-closed context and server validation with sanitized pre-mutation diagnostics.",
+      "Prevent the backend control-node endpoint, DNS names, environment values, or kubeconfig defaults from becoming fallback upgrade authority.",
+      "Classify and preserve legitimate 10.99.0.21 references that represent the control node, post-DNAT NetworkPolicy egress, or immutable history."
+    ],
+    "non_goals": [
+      "Provide high availability or change the current kube_vip_single_host topology.",
+      "Change typed kubeconfig publication, Terraform endpoint authority, Kubernetes Service endpoints, or controller NetworkPolicy CIDRs.",
+      "Dispatch the live upgrade, change GitHub environment protection, or provision the trusted runner boundary.",
+      "Bulk-replace historical locks, recovery evidence, or unrelated node-address contracts."
+    ],
+    "scope_in": [
+      "The active deployment-controller artifact lock, upgrade script, bootstrap checker, active producer or activation consumers coupled to that lock, and focused tests.",
+      "A static contract tying active upgrade expectations to .codicarium_inventory_input.cluster.frontends.kubernetes_api vip and port without runtime Terraform execution.",
+      "Repository validation and exact-head CI for the PR-only correction."
+    ],
+    "scope_out": [
+      "Live workflow dispatch, Helm or Kubernetes mutation, Argo changes, and authorization activation.",
+      "Environment protection remediation tracked by infra #1259 and trusted-runner remediation tracked by infra #1289.",
+      "Historical or separately versioned one-shot recovery artifacts unless an active-lock coupling is proven."
+    ]
+  },
+  "requirements": [
+    {
+      "id": "REQ-001",
+      "priority": "MUST",
+      "statement": "Active guarded deployment-controller upgrade identity sources MUST expect exactly https://10.99.0.10:6443, derived from the typed Kubernetes API frontend VIP and port.",
+      "rationale": "The stable kube-vip frontend is the declared platform endpoint and the endpoint published in protected kubeconfigs."
+    },
+    {
+      "id": "REQ-002",
+      "priority": "MUST",
+      "statement": "The upgrade MUST preserve exact context and server equality, explicit kubectl and Helm endpoint pinning, pre-mutation failure, sanitized evidence, and no fallback endpoint.",
+      "rationale": "The correction must not weaken the cluster-identity security boundary."
+    },
+    {
+      "id": "REQ-003",
+      "priority": "MUST",
+      "statement": "The implementation MUST classify all active 10.99.0.21 references and change only upgrade-identity consumers; node, post-DNAT egress, and immutable historical uses MUST remain intact.",
+      "rationale": "10.99.0.21 remains the real control-node and Service backend endpoint."
+    },
+    {
+      "id": "REQ-004",
+      "priority": "MUST",
+      "statement": "Negative regression coverage MUST reject the node endpoint, DNS-only values, URL suffixes, wrong ports, and inventory-lock-script drift before any live or mutating command.",
+      "rationale": "A focused fail-closed contract prevents recurrence and accidental broadening."
+    },
+    {
+      "id": "REQ-005",
+      "priority": "SHOULD",
+      "statement": "The PR MUST pass focused upgrade/bootstrap tests, topology and diff checks, workflow validation, and exact-head protected CI before merge.",
+      "rationale": "The endpoint is part of a protected live-upgrade path and requires auditable delivery evidence."
+    }
+  ],
+  "acceptance_criteria": [
+    {
+      "id": "AC-001",
+      "requirement_ids": ["REQ-001", "REQ-003"],
+      "scenario": "Given current typed inventory, when active upgrade identity contracts are evaluated, then the lock, guard, checker, and coupled active consumers resolve exactly to https://10.99.0.10:6443 while legitimate node and post-DNAT references remain 10.99.0.21."
+    },
+    {
+      "id": "AC-002",
+      "requirement_ids": ["REQ-002", "REQ-004"],
+      "scenario": "Given a wrong context or server, when upgrade preflight runs, then it aborts before readiness or mutation, records mutation=false, and emits only match or mismatch outcomes without actual identity values."
+    },
+    {
+      "id": "AC-003",
+      "requirement_ids": ["REQ-002", "REQ-004"],
+      "scenario": "Given attempts to substitute https://10.99.0.21:6443, the API DNS name, a URL suffix, wrong port, environment override, or kubeconfig default, when static and unit guards run, then each substitution is rejected and generated commands remain pinned to https://10.99.0.10:6443."
+    },
+    {
+      "id": "AC-004",
+      "requirement_ids": ["REQ-005"],
+      "scenario": "Given the exact PR head, when repository and protected CI validation runs, then all required checks pass without dispatching a live workflow or mutating the cluster."
+    }
+  ],
+  "test_plan": [
+    {
+      "id": "TST-001",
+      "type": "unit",
+      "requirement_ids": ["REQ-001", "REQ-003", "REQ-004"],
+      "approach": "Add focused contract tests that parse typed inventory and assert active lock, script, checker, and coupled active consumers equal https://10.99.0.10:6443; maintain an explicit classification for retained 10.99.0.21 uses."
+    },
+    {
+      "id": "TST-002",
+      "type": "unit",
+      "requirement_ids": ["REQ-002", "REQ-004"],
+      "approach": "Exercise wrong-context, wrong-server, dual-mismatch, node-endpoint, DNS, suffix, port, and override cases; assert sanitized evidence, mutation=false, and zero mutating commands."
+    },
+    {
+      "id": "TST-003",
+      "type": "integration",
+      "requirement_ids": ["REQ-001", "REQ-002", "REQ-005"],
+      "approach": "Run focused upgrade/bootstrap suites, workflow syntax or actionlint, topology validation, and repository diff checks; inspect generated kubectl and Helm arguments for exact VIP pinning."
+    },
+    {
+      "id": "TST-004",
+      "type": "manual",
+      "requirement_ids": ["REQ-005"],
+      "approach": "Verify exact-head GitHub checks and perform read-only explicit-context VIP reachability, TLS SAN, release, and resource-version preflight without workflow dispatch or mutation."
+    }
+  ],
+  "traceability": [
+    {
+      "requirement_id": "REQ-001",
+      "acceptance_ids": ["AC-001"],
+      "test_ids": ["TST-001", "TST-003"],
+      "review_checks": ["Confirm typed inventory is the only endpoint authority and active consumers agree."],
+      "validation_checks": ["Static contract and exact-head CI pass for https://10.99.0.10:6443."]
+    },
+    {
+      "requirement_id": "REQ-002",
+      "acceptance_ids": ["AC-002", "AC-003"],
+      "test_ids": ["TST-002", "TST-003"],
+      "review_checks": ["Confirm no fallback, override, default-context, or unsanitized diagnostic path was introduced."],
+      "validation_checks": ["Mismatch tests prove pre-mutation failure and mutation=false evidence."]
+    },
+    {
+      "requirement_id": "REQ-003",
+      "acceptance_ids": ["AC-001"],
+      "test_ids": ["TST-001"],
+      "review_checks": ["Review the classified 10.99.0.21 reference inventory and preserve node, NetworkPolicy, and immutable history uses."],
+      "validation_checks": ["Focused scan finds no stale active upgrade identity source and no unrelated replacement."]
+    },
+    {
+      "requirement_id": "REQ-004",
+      "acceptance_ids": ["AC-002", "AC-003"],
+      "test_ids": ["TST-001", "TST-002"],
+      "review_checks": ["Inspect negative cases for .21, DNS, suffix, wrong port, and independent drift."],
+      "validation_checks": ["All negative tests fail closed before live or mutating commands."]
+    },
+    {
+      "requirement_id": "REQ-005",
+      "acceptance_ids": ["AC-004"],
+      "test_ids": ["TST-003", "TST-004"],
+      "review_checks": ["Require independent review of the exact PR head and unchanged live-upgrade gates."],
+      "validation_checks": ["Protected exact-head CI succeeds; no workflow dispatch or cluster mutation occurred."]
+    }
+  ],
+  "quality_gates": {
+    "spec_review_required": true,
+    "testability_required": true,
+    "traceability_required": true
+  },
+  "council": {
+    "perspectives": [
+      {
+        "role": "planner",
+        "summary": "GO for a narrow PR-only correction; avoid claiming HA, preserve node and historical references, and audit all active lock consumers."
+      },
+      {
+        "role": "reviewer",
+        "summary": "GO provided all active upgrade/bootstrap identity copies use the typed VIP and negative drift tests prove no fallback or independent divergence."
+      },
+      {
+        "role": "tech_lead_qa",
+        "summary": "NO-GO for live dispatch; code may proceed to obtain implementation, exact-head CI, sanitized pre-mutation proof, and read-only readiness evidence."
+      }
+    ],
+    "consensus_summary": "Proceed to a PR-only code stage. Keep live upgrade blocked by environment protection issue #1259 and dedicated trusted runner issue #1289, and never replace legitimate 10.99.0.21 node or post-DNAT egress uses.",
+    "open_questions": []
+  }
+}

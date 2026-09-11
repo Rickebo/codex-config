@@ -1,0 +1,27 @@
+{
+  "stage": "spec",
+  "status": "pass",
+  "summary": "Council and traceable specification define board-owner installation-token projection, static-token removal, bounded refresh/retry, durable replay tests, and live App validation gates.",
+  "changed_files": [],
+  "validation": [
+    "pipeline-spec-check: ok",
+    "four independent council perspectives synthesized",
+    "seven MUST requirements traced to six Gherkin acceptance criteria and five test plans"
+  ],
+  "blockers": [
+    "Live App permission/readback and DEV rollout evidence are external closure gates."
+  ],
+  "next_action": "Delegate token-aware client/server/config implementation in a dedicated worktree.",
+  "route_to": "code",
+  "risk_level": "high",
+  "independent_lanes": [
+    "Token provider/client and retry behavior",
+    "Board-owner projector resolution and durable replay",
+    "Static token removal from config/Helm/docs",
+    "Focused and live validation"
+  ],
+  "requires_council": true,
+  "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T21-03-36-770Z/issue-125-spec.json",
+  "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T21-03-36-770Z/issue-125-spec-check.json",
+  "council_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T21-03-36-770Z/issue-125-council.json"
+}

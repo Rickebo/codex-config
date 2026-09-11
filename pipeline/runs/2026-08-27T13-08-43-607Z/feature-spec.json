@@ -1,0 +1,188 @@
+{
+  "meta": {
+    "id": "SPEC-workspace-manager-milestone-4-completion",
+    "title": "Workspace Manager Milestone 4 whole-system completion",
+    "author": "root-manager-council",
+    "created_at": "2026-08-27T13:08:43.608Z",
+    "version": "1.0.0"
+  },
+  "feature": {
+    "problem_statement": "Milestone 4 issue #26 cannot close because the accepted scenario document contains malformed normative scenarios, four cross-service consumers lack durable dead-letter and replay safety, Insights has incomplete Source-event validation, Knowledge and Source follow-up capabilities remain incomplete, and the current containerized profile does not execute the complete whole-system matrix with immutable application images.",
+    "goals": [
+      "Repair and lint the normative S1-S17 acceptance contract before implementation proceeds.",
+      "Complete issues #46, #54, #23, #20, #18, and #19 through service-owned, independently reviewable PRs.",
+      "Run the identical S1-S17 matrix in FastSystem and digest-pinned System profiles, including fault, deletion, audit, and browser acceptance.",
+      "Merge verified PRs, close their issues and #26, and leave the repository and test environment clean."
+    ],
+    "non_goals": [
+      "Milestone 5 Workspace Context migration, shadowing, cutover, rollback, or decommissioning.",
+      "Backward-compatibility shims for superseded alpha behavior.",
+      "Live GitHub, cloud, Kubernetes, external OIDC, or external model-provider dependencies in acceptance tests.",
+      "Cross-service database access, raw secret/source/prompt/response storage in dead letters, or production debug endpoints for fault injection."
+    ],
+    "scope_in": [
+      "Normative scenario repair and scenario-structure linting.",
+      "Canonical durable dead-letter, replay, redaction, retention, ACL, audit, and centrally provisioned Kafka resource semantics.",
+      "Four #46 consumer slices, the combined Insights implementation for #46/#54, Knowledge #23, and Source #20/#18/#19.",
+      "Complete application topology, deterministic Git/OIDC/model fixtures, all service and frontend suites, and identical S1-S17 FastSystem/System execution.",
+      "Immutable image provenance, diagnostics, clean-checkout repeatability, secret/resource cleanup, PR integration, issue closure, and branch/worktree cleanup."
+    ],
+    "scope_out": [
+      "Any Milestone 5 implementation or production deployment.",
+      "Unrelated feature development outside the listed issues and S1-S17 acceptance needs."
+    ]
+  },
+  "requirements": [
+    {
+      "id": "REQ-001",
+      "priority": "MUST",
+      "statement": "Before service implementation begins, the normative S1-S17 document MUST repair the malformed or incomplete S4, S15, and S17 text and a repository check MUST reject every scenario lacking an unambiguous title, nonempty ordered steps, and nonempty required results; setup MAY be explicitly omitted when unnecessary.",
+      "rationale": "Tests cannot be authoritative while normative scenarios contain fragments or structurally incomplete obligations."
+    },
+    {
+      "id": "REQ-002",
+      "priority": "MUST",
+      "statement": "A coordinated contract PR MUST define the canonical reliability boundary before service slices for each in-scope #46/#54 consumer. Handling a malformed, unsupported, or permanent record MUST use an explicit two-phase order: first atomically persist the service-owned durable database dead-letter record and transactional outbox entry; then await acknowledgement from the centrally provisioned per-service <service>.dead-letter.v1 topic; only then commit the original source Kafka offset. The database record, outbox, and topic publication MUST deduplicate idempotently by a stable unique key derived from service, consumer group, original topic, partition, offset, and failure contract identity, including when the consumer crashes after DLQ acknowledgement but before source-offset commit. Topics MUST have auto-creation disabled, explicit retention, bounded size, and least-privilege producer/replay/audit ACLs. This requirement does not expand Knowledge's existing topic-only DLQ into a database DLQ, and #23 MUST NOT silently change that Knowledge boundary.",
+      "rationale": "A common contract prevents four incompatible DLQ implementations and makes offset safety testable."
+    },
+    {
+      "id": "REQ-003",
+      "priority": "MUST",
+      "statement": "The canonical dead-letter envelope MUST contain a stable dead_letter_id, service and consumer group, original topic/partition/offset, original event and contract identity when valid, workspace/aggregate/correlation/causation identity when valid, failure class/code, first and last failure time, attempt count, payload digest and size, replay state/attempts/timestamps, and resolution; it MUST exclude raw payloads, tokens, credentials, source content, prompts, model responses, and provider secrets. Database evidence MUST be retained for at least 30 days after terminal resolution or longer when workspace/audit policy requires it, while Kafka retention MUST be explicit and bounded.",
+      "rationale": "Operations need deterministic evidence without turning failure handling into a sensitive-data store."
+    },
+    {
+      "id": "REQ-004",
+      "priority": "MUST",
+      "statement": "Replay MUST use an authorized bounded list/get/request interface with deterministic pagination, current Workspace authorization or an explicitly allowed workload identity, Idempotency-Key and version-conflict protection, bounded batch size, idempotent duplicate handling, and audit facts for request and outcome. Replay MUST seek the retained original topic/partition/offset. If that offset has expired, replay MUST invoke authoritative reconciliation when valid identity keys exist; when they do not, it MUST record and return a terminal unreplayable result. Replay MUST NOT republish a raw payload from the dead-letter record. Transient processing or DLQ persistence/publication failure MUST leave the original offset uncommitted and preserve partition ordering.",
+      "rationale": "Replay must be recoverable, secure, and safe under retries and broker restarts."
+    },
+    {
+      "id": "REQ-005",
+      "priority": "MUST",
+      "statement": "Issue #46 MUST be delivered as four service-owned slices for Source deletion consumption, Insights deletion consumption, Model deletion consumption, and Workspace deletion-completion consumption, each proving malformed, unsupported/permanent, transient, database/outbox/topic outage, duplicate replay, successful replay, redaction, broker-restart behavior, and a forced restart in the post-DLQ-acknowledgement/pre-source-offset-commit crash window. That crash-window proof MUST observe one canonical database record and one canonical topic fact under the stable unique key, followed by safe source-record reprocessing and offset commit. #46 MUST remain open until all four slices and the cross-service proof pass.",
+      "rationale": "One successful implementation does not close the cross-service reliability gap."
+    },
+    {
+      "id": "REQ-006",
+      "priority": "MUST",
+      "statement": "The Insights lane MUST implement one Insights-owned dead-letter store, outbox publisher, replay interface, redaction policy, and offset discipline shared by the deletion-event scope of #46 and Source snapshot-event scope of #54, while preserving separate validation and closure criteria. Source snapshot intake MUST validate the complete producer-owned CloudEvent and data schema before persistence, including identity, subject, source/type, spec/schema/content type/contract version, aggregate/generation/sequence/status, correlation/actor/classification, and payload constraints. The Insights PR MAY close #54 but MUST only contribute to #46.",
+      "rationale": "The issues overlap in one worker but cover distinct event contracts; duplicate facilities would diverge."
+    },
+    {
+      "id": "REQ-007",
+      "priority": "MUST",
+      "statement": "Knowledge issue #23 MUST add authorized manual build/rebuild/cancel, build status, retained publication list/status/retract, internal artifact-lease operations, idempotent lifecycle invalidation/reconciliation, and transactional stale/retracted facts; AsyncAPI MUST advertise those facts only when runtime emission exists, and last-known-good publications MUST survive failure, cancellation, supersession, and replay.",
+      "rationale": "Issue #28 completed generation resolution but did not complete the administration and lifecycle surface required by S9 and S11."
+    },
+    {
+      "id": "REQ-008",
+      "priority": "MUST",
+      "statement": "The Source lane MUST execute sequentially after its #46 slice as #20 then #18 then #19: first management commands and ETag/version-conflict/retraction contracts, then same_name/default_branch/fixed_ref/explicit_map multi-repository vectors and configuration-change snapshots, then retention/grace sweeping, reference-count garbage collection, bounded object batches where justified, Kafka/object-store recovery, concurrent reconciliation, long/empty/archive histories, and two-workspace isolation.",
+      "rationale": "Multi-repository configuration depends on mutable binding/track semantics, and safe garbage collection depends on the completed reference model."
+    },
+    {
+      "id": "REQ-009",
+      "priority": "MUST",
+      "statement": "Implementation ownership MUST remain disjoint: Source, Insights, Model, Workspace, and Knowledge agents own only their service/test/contract trees; system integration owns tests/system, dev/testcontainers, compatibility fixtures, and coordinated normative specifications; Web/QA owns browser composition and acceptance without modifying service implementations. The merge order MUST be scenario repair and coordinated reliability contract, parallel service reliability slices plus #23, sequential Source #20/#18/#19, incremental system scenarios, full FastSystem, then full System/browser and closure.",
+      "rationale": "Explicit lanes and order avoid conflicting migrations/contracts and premature scenario enablement."
+    },
+    {
+      "id": "REQ-010",
+      "priority": "MUST",
+      "statement": "FastSystem and digest-pinned System MUST execute the identical named S1-S17 behavioral matrix through accepted public/internal contracts; System MUST NOT be accepted from readiness, topology, compatibility, or a reduced smoke subset alone. Both profiles MUST include authorization, branch/vector, incremental/cold, model, replay/outage, corruption, audit, deletion, and separately served browser behavior.",
+      "rationale": "The milestone promises whole-system behavior in both profiles, not merely container startup."
+    },
+    {
+      "id": "REQ-011",
+      "priority": "MUST",
+      "statement": "The containerized topology MUST run all required APIs, migrators, hosted components, and the six explicit dedicated worker roles WM_KNOWLEDGE_SERVICE_WORKER_IMAGE, WM_INSIGHTS_SERVICE_WORKER_IMAGE, WM_MODEL_SERVICE_WORKER_IMAGE, WM_AUDIT_SERVICE_CONSUMER_IMAGE, WM_AUDIT_SERVICE_EXPORT_WORKER_IMAGE, and WM_AUDIT_SERVICE_MAINTENANCE_WORKER_IMAGE, plus the frontend and deterministic Git, OIDC, and OpenAI-compatible model fixtures. It MUST provide isolated service databases/buckets/identities, centrally provisioned topics/ACLs, dynamic ports, bounded readiness/version checks, and fixture-boundary fault controls. The Model worker MAY intentionally share the Model API digest only with the explicit /app/worker/ModelService.Worker.dll entrypoint; every other dedicated worker role MUST use an image whose declared Dockerfile/target contains that role's binary.",
+      "rationale": "API-only topology cannot exercise asynchronous publication, deletion, replay, or browser scenarios."
+    },
+    {
+      "id": "REQ-012",
+      "priority": "MUST",
+      "statement": "System preflight MUST require and record immutable registry/repository@sha256 provenance for exactly eighteen roles: WM_WORKSPACE_SERVICE_API_IMAGE, WM_WORKSPACE_SERVICE_MIGRATOR_IMAGE, WM_SOURCE_SERVICE_API_IMAGE, WM_SOURCE_SERVICE_MIGRATOR_IMAGE, WM_KNOWLEDGE_SERVICE_API_IMAGE, WM_KNOWLEDGE_SERVICE_MIGRATOR_IMAGE, WM_KNOWLEDGE_SERVICE_WORKER_IMAGE, WM_INSIGHTS_SERVICE_API_IMAGE, WM_INSIGHTS_SERVICE_MIGRATOR_IMAGE, WM_INSIGHTS_SERVICE_WORKER_IMAGE, WM_MODEL_SERVICE_API_IMAGE, WM_MODEL_SERVICE_MIGRATOR_IMAGE, WM_MODEL_SERVICE_WORKER_IMAGE, WM_AUDIT_SERVICE_API_IMAGE, WM_AUDIT_SERVICE_MIGRATOR_IMAGE, WM_AUDIT_SERVICE_CONSUMER_IMAGE, WM_AUDIT_SERVICE_EXPORT_WORKER_IMAGE, and WM_AUDIT_SERVICE_MAINTENANCE_WORKER_IMAGE. It MUST reject missing, tag-only, mutable, malformed, unresolved, wrong-platform, missing-role-binary, or provenance-mismatched references before startup and record resolved digest, source commit/tree, Dockerfile/target or entrypoint role, platform, and build attestation/SBOM availability. The Model worker MAY intentionally share the Model API digest only when its explicit entrypoint is /app/worker/ModelService.Worker.dll; every other dedicated worker variable MUST resolve to an image whose declared Dockerfile/target contains the named role binary. Any intentional Model API/migrator digest sharing MUST also be explicitly declared.",
+      "rationale": "Category=System must prove exactly which immutable application artifacts were tested."
+    },
+    {
+      "id": "REQ-013",
+      "priority": "MUST",
+      "statement": "Completion validation MUST run every service unit/domain/API/integration/contract suite, Release builds with zero warnings/errors, fixture generation/spec/schema/static/format checks, frontend unit/component/accessibility suites, Playwright S17, the full FastSystem S1-S17 matrix, and the identical full System S1-S17 matrix from a clean checkout. Fault runs MUST preserve correlation-scoped service logs, event traces/lag, API state, container health/logs, database operation state, object metadata, screenshots/traces/video where applicable, and timing without exposing secrets.",
+      "rationale": "Focused green tests cannot substitute for the milestone-wide regression and diagnostic contract."
+    },
+    {
+      "id": "REQ-014",
+      "priority": "MUST",
+      "statement": "The final matrix MUST pass twice from clean checkouts with explicit Docker context and no reliance on active CLI defaults; each run MUST prove no leaked containers, networks, volumes, processes, worktrees, temporary credentials, browser storage, screenshots/logs containing secrets, or task-owned temporary artifacts. Each issue PR MUST pass checks before merge, reference or close its issue correctly, delete merged remote/local branches and worktrees, and #26 MUST close only after remote main contains every merge and the final repeat evidence.",
+      "rationale": "Repeatability, cleanup, and durable GitHub state are explicit milestone exit criteria."
+    },
+    {
+      "id": "REQ-015",
+      "priority": "MUST",
+      "statement": "Milestone 5 migration and cutover work MUST remain out of scope and MUST NOT begin until #26 is closed with the complete evidence defined by this specification.",
+      "rationale": "The accepted plan gates migration on the completed Milestone 4 vertical slice."
+    }
+  ],
+  "acceptance_criteria": [
+    {"id":"AC-001","requirement_ids":["REQ-001"],"scenario":"Given the normative scenario file, when scenario lint runs, then repaired S4, S15, and S17 and every S1-S17 entry have a title, ordered nonempty steps, and nonempty required results, while a fixture with a fragment or missing section fails."},
+    {"id":"AC-002","requirement_ids":["REQ-002","REQ-003"],"scenario":"Given a malformed or permanent consumed record, when handling completes or crashes after service-DLQ acknowledgement but before source-offset commit, then the canonical redacted database record and service outbox exist, topic acknowledgement precedes offset commit, and restart deduplicates the database record, outbox, and topic fact by the stable service/consumer-group/topic/partition/offset/failure-contract key before safely reprocessing and committing; envelope/retention/ACL checks reject prohibited fields and unauthorized access."},
+    {"id":"AC-003","requirement_ids":["REQ-004"],"scenario":"Given authorized, unauthorized, duplicate, stale-version, oversized-batch, retained-offset, and expired-offset replay requests, when replay executes, then authorization, idempotency, bounds, audit, and partition ordering match the canonical contract; retained offsets are sought, expired offsets reconcile only from valid identity, missing valid identity yields a terminal unreplayable result, and no raw payload is republished."},
+    {"id":"AC-004","requirement_ids":["REQ-005"],"scenario":"Given each of the four #46 consumers, when malformed/permanent/transient and DLQ dependency failures, broker restart, duplicate/successful replay, and a forced post-ack/pre-commit restart are injected, then each crash-window run yields one canonical database record and topic fact plus safe reprocessing/commit, and all four pass their service matrix and cross-service test before #46 closes."},
+    {"id":"AC-005","requirement_ids":["REQ-006"],"scenario":"Given deletion and Source snapshot messages in Insights, when complete valid and systematically invalid variants are consumed, then one shared Insights DLQ/replay facility handles both, complete Source contract validation precedes persistence, #54 closes, and #46 remains pending until its other service slices pass."},
+    {"id":"AC-006","requirement_ids":["REQ-007"],"scenario":"Given automatic and caller-attributed Knowledge work, when builds are rebuilt, cancelled, failed, retracted, invalidated, and replayed, then authorized status/list/lease APIs and transactional lifecycle facts are contract-conformant and the last-known-good head remains active."},
+    {"id":"AC-007","requirement_ids":["REQ-008"],"scenario":"Given Source management changes, four multi-repository policies, history variants, faults, retention expiry, concurrency, and two workspaces, when #20, #18, and #19 execute in order, then exact reproducible vectors, optimistic conflicts, recovery, and reference/grace-safe deletion pass without cross-workspace disclosure."},
+    {"id":"AC-008","requirement_ids":["REQ-009"],"scenario":"Given parallel agents and PRs, when implementation and integration proceed, then no lane writes another lane's owned paths, coordinated files merge first, Source PRs preserve their dependency order, and scenarios enable only after supplying contracts merge."},
+    {"id":"AC-009","requirement_ids":["REQ-010"],"scenario":"Given the S1-S17 manifest, when FastSystem and System run, then both report the same seventeen scenario IDs and behavioral assertions with no readiness-only or skipped replacement for a scenario."},
+    {"id":"AC-010","requirement_ids":["REQ-011"],"scenario":"Given the System fixture, when topology starts and faults are injected, then all APIs, migrators, the six explicit dedicated worker/consumer roles, frontend, and Git/OIDC/model fixtures become ready with isolated resources and asynchronous flows recover through fixture-boundary controls; the Model worker uses the allowed explicit DLL entrypoint and every other worker image contains its declared role binary."},
+    {"id":"AC-011","requirement_ids":["REQ-012"],"scenario":"Given all eighteen image variables, when preflight runs, then only resolvable immutable references with matching commit/tree/role/platform and role-binary provenance proceed, the narrowly allowed Model sharing is explicit, and every missing, mutable, mismatched, wrong-entrypoint, or missing-role-binary variant fails before containers start."},
+    {"id":"AC-012","requirement_ids":["REQ-013"],"scenario":"Given the final merged candidate, when the complete service, contract, frontend, browser, FastSystem, and System matrix runs, then every suite passes, Release builds have zero warnings/errors, and induced failure evidence is complete, bounded, correlation-scoped, and secret-free."},
+    {"id":"AC-013","requirement_ids":["REQ-014"],"scenario":"Given two clean checkouts and explicit Docker context, when the final matrix completes twice, then results are repeatable, secret/resource/process/worktree scans are clean, all PRs are merged with checks passing, issue state is correct, main contains every merge, and merged branches/worktrees are removed."},
+    {"id":"AC-014","requirement_ids":["REQ-015"],"scenario":"Given #26 remains open or any final gate is incomplete, when work is selected, then no Milestone 5 migration/cutover implementation begins; after #26 closes, Milestone 5 may be planned separately."}
+  ],
+  "test_plan": [
+    {"id":"TST-001","type":"unit","requirement_ids":["REQ-001"],"approach":"Run scenario-structure lint on the normative file and malformed fixtures covering missing titles, steps, results, fragments, duplicate IDs, and empty sections."},
+    {"id":"TST-002","type":"integration","requirement_ids":["REQ-002","REQ-003","REQ-004","REQ-005"],"approach":"For Source, Insights, Model, and Workspace, use PostgreSQL and Kafka containers to prove durable record/outbox/topic/offset ordering, envelope schema, ACL/redaction/retention, dependency outage, replay authorization/idempotency/bounds, reconciliation, and restart behavior. Force termination after DLQ topic acknowledgement and before source-offset commit, restart the consumer, and assert stable-key deduplication produces exactly one canonical database record, outbox delivery, and topic fact before safe source-record reprocessing and commit."},
+    {"id":"TST-003","type":"integration","requirement_ids":["REQ-006"],"approach":"Replay the complete producer Source fixture plus negative mutations through Insights; assert validation-before-persistence, unified DLQ behavior for both event families, redaction, offset rewind, and successful replay."},
+    {"id":"TST-004","type":"integration","requirement_ids":["REQ-007"],"approach":"Exercise Knowledge administration, caller attribution, lifecycle fences, transactional outbox facts, artifact leases, failure/cancel/supersession, duplicate replay, and last-known-good preservation with real service dependencies or deterministic fixtures."},
+    {"id":"TST-005","type":"integration","requirement_ids":["REQ-008"],"approach":"Exercise Source ETag management, four policy vectors, configuration snapshots, long/empty/archive histories, Kafka/object outages, concurrent reconcilers, retention clock advancement, garbage collection, and two-workspace isolation."},
+    {"id":"TST-006","type":"manual","requirement_ids":["REQ-009"],"approach":"At each PR boundary verify owned-path diff, dependency issue linkage, compatibility report, merge-base synchronization, checks, and the prescribed merge order."},
+    {"id":"TST-007","type":"e2e","requirement_ids":["REQ-010","REQ-011"],"approach":"Use one scenario manifest to parameterize both profiles and compare their emitted S1-S17 result inventory while running the complete topology and deterministic Git/OIDC/model fixtures."},
+    {"id":"TST-008","type":"non_functional","requirement_ids":["REQ-012"],"approach":"Run positive and negative preflight tests for all eighteen image variables; record registry digest resolution, commit/tree, Dockerfile/target, role-binary presence, entrypoint, platform, attestation/SBOM state, and explicitly permitted Model sharing. Prove the exact /app/worker/ModelService.Worker.dll exception and reject every other dedicated worker image whose declared build target lacks its role binary."},
+    {"id":"TST-009","type":"e2e","requirement_ids":["REQ-013"],"approach":"Run all service/frontend/static/build suites, Playwright, and identical FastSystem/System S1-S17 matrices; induce representative faults and validate diagnostic bundles and secret scans."},
+    {"id":"TST-010","type":"non_functional","requirement_ids":["REQ-014"],"approach":"Repeat the entire final matrix from two clean checkouts with explicit Docker context, then audit containers/networks/volumes/processes/temp roots/browser artifacts/Git state/GitHub issue and PR state."},
+    {"id":"TST-011","type":"manual","requirement_ids":["REQ-015"],"approach":"Review the final diff and GitHub queue for absence of Milestone 5 implementation and verify #26 closed before creating or starting cutover work."}
+  ],
+  "traceability": [
+    {"requirement_id":"REQ-001","acceptance_ids":["AC-001"],"test_ids":["TST-001"],"review_checks":["S4, S15, and S17 wording is complete and normative."],"validation_checks":["Scenario lint passes on S1-S17 and fails malformed fixtures."]},
+    {"requirement_id":"REQ-002","acceptance_ids":["AC-002"],"test_ids":["TST-002"],"review_checks":["Scope is limited to in-scope #46/#54 consumers; the DB-plus-outbox transaction, topic acknowledgement, and source-offset commit phases are explicit; the stable unique key covers service, consumer group, original topic/partition/offset, and failure contract identity; Knowledge topic-only behavior is not expanded by #23."],"validation_checks":["Four service integration suites prove persist-and-outbox, await acknowledgement, forced post-ack/pre-commit restart with one canonical DB/outbox/topic fact, then safe reprocessing/commit, while Knowledge #23 retains its existing DLQ boundary."]},
+    {"requirement_id":"REQ-003","acceptance_ids":["AC-002"],"test_ids":["TST-002"],"review_checks":["Envelope fields and prohibited data are schema-enforced."],"validation_checks":["Schema, redaction, retention, and secret scans pass."]},
+    {"requirement_id":"REQ-004","acceptance_ids":["AC-003"],"test_ids":["TST-002"],"review_checks":["Replay cannot bypass authorization, bounds, idempotency, or ordering; expired offsets have exhaustive reconcile-or-terminal behavior."],"validation_checks":["Positive, negative, expired-offset reconciliation, and terminal-unreplayable tests pass."]},
+    {"requirement_id":"REQ-005","acceptance_ids":["AC-004"],"test_ids":["TST-002"],"review_checks":["All four #46 consumers implement the stable-key post-ack/pre-commit crash boundary before issue closure."],"validation_checks":["Each service and the cross-service matrix prove one canonical DB record/topic fact and safe reprocessing/commit after forced crash-window restart."]},
+    {"requirement_id":"REQ-006","acceptance_ids":["AC-005"],"test_ids":["TST-003"],"review_checks":["One Insights facility serves two separately traced scopes."],"validation_checks":["Complete negative Source contract and deletion replay matrices pass."]},
+    {"requirement_id":"REQ-007","acceptance_ids":["AC-006"],"test_ids":["TST-004"],"review_checks":["Runtime paths precede AsyncAPI advertisement."],"validation_checks":["Knowledge admin/lifecycle and last-known-good tests pass."]},
+    {"requirement_id":"REQ-008","acceptance_ids":["AC-007"],"test_ids":["TST-005"],"review_checks":["#20 precedes #18 and #18 precedes #19."],"validation_checks":["Source management/vector/recovery/GC/isolation matrix passes."]},
+    {"requirement_id":"REQ-009","acceptance_ids":["AC-008"],"test_ids":["TST-006"],"review_checks":["Owned-path diffs and coordinated PR boundaries are disjoint."],"validation_checks":["Merged PR and issue history reflects prescribed order."]},
+    {"requirement_id":"REQ-010","acceptance_ids":["AC-009"],"test_ids":["TST-007"],"review_checks":["Neither profile substitutes readiness for behavior."],"validation_checks":["Both result manifests contain passing S1-S17 exactly once."]},
+    {"requirement_id":"REQ-011","acceptance_ids":["AC-010"],"test_ids":["TST-007"],"review_checks":["Every asynchronous runtime and deterministic fixture is launched through its explicit role; only the Model worker has the specified shared-image entrypoint exception."],"validation_checks":["Topology/readiness, dedicated role-binary, entrypoint, and fault recovery tests pass."]},
+    {"requirement_id":"REQ-012","acceptance_ids":["AC-011"],"test_ids":["TST-008"],"review_checks":["All eighteen roles, provenance fields, dedicated binaries, and the narrow Model sharing exception are enumerated."],"validation_checks":["Preflight positive and negative tests pass for all eighteen variables, role binaries, and entrypoints."]},
+    {"requirement_id":"REQ-013","acceptance_ids":["AC-012"],"test_ids":["TST-009"],"review_checks":["Full service/frontend/system and diagnostic coverage is retained."],"validation_checks":["All suites and secret-free diagnostic assertions pass."]},
+    {"requirement_id":"REQ-014","acceptance_ids":["AC-013"],"test_ids":["TST-010"],"review_checks":["Repeat, cleanup, merge, issue, branch, and main-state gates are explicit."],"validation_checks":["Two clean-checkout runs and post-run audits pass."]},
+    {"requirement_id":"REQ-015","acceptance_ids":["AC-014"],"test_ids":["TST-011"],"review_checks":["No Milestone 5 implementation appears in scope or diff."],"validation_checks":["#26 is closed before subsequent cutover work starts."]}
+  ],
+  "quality_gates": {
+    "spec_review_required": true,
+    "testability_required": true,
+    "traceability_required": true
+  },
+  "council": {
+    "perspectives": [
+      {"role":"planner","summary":"Initial FAIL on ambiguous order and overlapping ownership is resolved by mandatory scenario-first, contract-first ordering, the explicit dependency DAG, disjoint service/system/Web lanes, combined Insights facility, and Source #20 to #18 to #19 sequence."},
+      {"role":"reviewer","summary":"Initial FAIL on malformed scenarios and underspecified replay is resolved by REQ-001 through REQ-006, now explicitly limited to in-scope #46/#54 consumers, preserving Knowledge's topic-only boundary, enforcing DB/outbox then topic acknowledgement then source-offset commit, stable-key deduplication across the post-ack/pre-commit crash window, and expired-offset reconcile-or-terminal behavior."},
+      {"role":"backend","summary":"Initial FAIL on incomplete runtime topology and unclear reliability semantics is resolved by per-service #46 slices with forced post-ack/pre-commit restart proof yielding one DB record/topic fact and safe commit, distinct #54 validation scope, six explicit dedicated worker/consumer roles, the narrow Model worker shared-image DLL entrypoint exception, deterministic fixtures, and public-contract recovery behavior."},
+      {"role":"tech_lead_qa","summary":"Initial FAIL on readiness-only System evidence and incomplete release validation is resolved by an identical S1-S17 matrix in both profiles, exact eighteen-image provenance/role-binary preflight, full service/frontend/browser suites, diagnostics, secret/resource cleanup, and two clean-checkout repeats."}
+    ],
+    "consensus_summary": "All initial council FAIL conditions are resolved as mandatory, traced requirements and acceptance gates. Implementation starts only after normative scenario repair and the coordinated reliability contract; Milestone 5 remains excluded until #26 closes.",
+    "open_questions": []
+  }
+}

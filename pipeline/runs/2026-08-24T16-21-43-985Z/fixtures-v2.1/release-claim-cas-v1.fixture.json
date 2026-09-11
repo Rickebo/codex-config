@@ -1,0 +1,75 @@
+{
+  "schema": "codicarium.release-claim-cas-fixture/v1",
+  "evidence_class": "synthetic-conformance-fixture",
+  "publication_authority": false,
+  "fixture_set": "issue93-v2.0",
+  "fixture_identity_jcs_sha256": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+  "identity": {
+    "evidence_class": "synthetic-conformance-fixture",
+    "publication_authority": false,
+    "fixture_set": "issue93-v2.0",
+    "repository_id": "1303901324",
+    "repository": "codicarium/deployment-controller",
+    "tag": "v0.6.14",
+    "source_revision": "2aee9b5ba6ed8be8dc848df482a43f6a3f33b712",
+    "protected_main_revision": "6b82f94bf0c41381bd43f96a04baf909dac7ec52",
+    "coordinator_workflow": {
+      "repository_id": "1303901324",
+      "workflow_path": ".github/workflows/automatic-release-v2.yaml",
+      "ref": "refs/heads/main",
+      "workflow_sha": "6b82f94bf0c41381bd43f96a04baf909dac7ec52"
+    },
+    "publisher_workflow": {
+      "repository_id": "1303901324",
+      "workflow_path": ".github/workflows/publish-release-v2.yaml",
+      "ref": "refs/heads/main",
+      "workflow_sha": "6b82f94bf0c41381bd43f96a04baf909dac7ec52"
+    }
+  },
+  "identity_jcs_sha256": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+  "claim_key": "rel-v2-sha256:d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+  "authority": {
+    "storage": "dedicated-dev-postgresql",
+    "transaction_isolation": "SERIALIZABLE",
+    "synchronous_commit": "on",
+    "first_durable_release_side_effect": true
+  },
+  "api": {
+    "procedure": "release_journal.claim_cas_v1",
+    "create_status": 201,
+    "exact_replay_status": 200,
+    "conflict_status": 409,
+    "ambiguity_outcome": "UNKNOWN_MANUAL",
+    "automatic_retry": false
+  },
+  "vectors": [
+    {
+      "name": "first-create",
+      "http_status": 201,
+      "outcome": "CLAIMED",
+      "journal_writes": 1,
+      "automatic_retry": false
+    },
+    {
+      "name": "exact-read-only-replay",
+      "http_status": 200,
+      "outcome": "EXACT_REPLAY",
+      "journal_writes": 0,
+      "automatic_retry": false
+    },
+    {
+      "name": "same-key-conflict",
+      "http_status": 409,
+      "outcome": "CONFLICT",
+      "journal_writes": 0,
+      "automatic_retry": false
+    },
+    {
+      "name": "ambiguous-response",
+      "http_status": null,
+      "outcome": "UNKNOWN_MANUAL",
+      "journal_writes": 0,
+      "automatic_retry": false
+    }
+  ]
+}

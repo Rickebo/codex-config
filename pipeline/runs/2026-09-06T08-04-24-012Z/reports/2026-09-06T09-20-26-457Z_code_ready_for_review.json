@@ -1,0 +1,32 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Resolved all first-review blockers in commit f192f60: restored historical pricing, added atomic timestamp-conflict rejection, hardened workflow credentials/dispatch, and gated naturally discoverable parser tests.",
+  "changed_files": [
+    ".github/workflows/pricing-catalog.yml",
+    ".github/workflows/ci.yml",
+    "charts/codex-stats/files/pricing.json",
+    "scripts/pricing_catalog.py",
+    "scripts/test_pricing_catalog.py",
+    "docs/pricing.md"
+  ],
+  "validation": [
+    "Python unittest discovery: 5 passed",
+    "Live official-source dry-run and byte-identical no-op passed",
+    "Production loader passed with 13 rows",
+    "go test ./..., go test -race ./..., and go vet ./... passed",
+    "Helm lint/template and canonical rendered-byte comparison passed",
+    "Dashboard tests: 44 passed",
+    "actionlint, shell contracts, changed-artifact tests, jq, and diff checks passed"
+  ],
+  "blockers": [],
+  "next_action": "Re-review the complete two-commit implementation and confirm each prior blocker is closed.",
+  "route_to": "review",
+  "risk_level": "high",
+  "independent_lanes": [
+    "parser and historical catalog correctness",
+    "workflow credentials and dispatch hardening",
+    "chart and production loader compatibility"
+  ],
+  "requires_council": false
+}

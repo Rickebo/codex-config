@@ -1,0 +1,36 @@
+{
+  "task": "Complete Workspace Manager Milestone 4 issue #26 with repaired normative scenarios, cross-service consumer reliability, remaining Knowledge and Source capabilities, and identical full FastSystem/System acceptance",
+  "perspectives": [
+    {
+      "role": "planner",
+      "agent": "/root/m4_spec_planner",
+      "summary": "Initial FAIL: the proposal lacked an exact dependency order, disjoint lane ownership, and an unambiguous #46/#54 reconciliation. Resolved by mandatory scenario-first and contract-first gates, service-owned lanes, one Insights DLQ/replay facility with distinct issue closure, Source order #20 then #18 then #19, and explicit integration order."
+    },
+    {
+      "role": "reviewer",
+      "agent": "/root/m4_spec_reviewer",
+      "summary": "Initial FAIL: malformed/incomplete S4, S15, and S17 made the normative contract unreliable, and DLQ/replay scope and semantics were underspecified. Resolved by REQ-001 through REQ-006, which limit the database DLQ contract to in-scope #46/#54 consumers, preserve Knowledge's topic-only boundary under #23, enforce DB/outbox then topic acknowledgement then source-offset commit, require stable-key deduplication across a forced post-ack/pre-commit crash, and define expired-offset reconcile-or-terminal behavior."
+    },
+    {
+      "role": "backend",
+      "agent": "/root/m4_spec_backend",
+      "summary": "Initial FAIL: the design did not guarantee canonical in-scope durable DB dead letters, crash-window deduplication, centrally provisioned topic resources, all four consumer slices, complete Insights Source validation, or explicit worker images. Resolved by the scoped reliability contract, stable unique key and forced post-ack/pre-commit restart proof, four service slices, combined Insights facility, six dedicated worker/consumer roles, and the narrow Model worker shared-image DLL entrypoint exception."
+    },
+    {
+      "role": "tech_lead_qa",
+      "agent": "/root/m4_spec_qa",
+      "summary": "Initial FAIL: Category=System could pass readiness-only and lacked exact eighteen-image provenance and role-binary proof, identical S1-S17 coverage, full service/frontend suites, diagnostics, cleanup, and repeatability. Resolved by mandatory identical behavioral matrices, immutable role/entrypoint preflight, all-suite validation, secret/resource audits, and two clean-checkout repeats."
+    }
+  ],
+  "consensus": [
+    "No implementation begins until malformed normative S4, S15, and S17 are repaired and scenario-structure lint protects all S1-S17.",
+    "The canonical reliability contract merges before service slices and applies to each in-scope #46/#54 consumer: atomically persist its DB dead letter and outbox, await centrally provisioned service-DLQ topic acknowledgement, then commit the source offset. A stable key derived from service, consumer group, original topic/partition/offset, and failure contract identity deduplicates the DB record, outbox, and topic publication if a forced crash occurs after acknowledgement but before offset commit; restart must yield one canonical DB record/topic fact and safe reprocessing/commit. It preserves Knowledge's existing topic-only DLQ under #23 and requires redaction, retention, ACLs, authorized bounded idempotent replay, audit, and expired-offset reconcile-or-terminal semantics.",
+    "Insights uses one facility for #46 deletion and #54 Source-event failures while validating and closing the scopes independently; #54 may close from the Insights PR, but #46 closes only after all four consumer slices and cross-service restart proof.",
+    "Ownership and integration order are mandatory: disjoint service lanes, system-owned shared harness/spec work, Knowledge #23 in parallel, and Source #20 then #18 then #19 after its #46 slice.",
+    "FastSystem and digest-pinned System execute the identical complete S1-S17 behavior matrix with all required workers/consumers and deterministic Git/OIDC/model fixtures; readiness-only evidence is insufficient.",
+    "All eighteen application image roles require immutable provenance and role-binary preflight. The Model worker alone may share the Model API digest with explicit /app/worker/ModelService.Worker.dll entrypoint; every other dedicated worker role must resolve to an image whose declared Dockerfile/target contains its binary. Final validation includes every service/frontend suite, browser acceptance, diagnostics, secret/resource cleanup, and two clean-checkout repeats.",
+    "Milestone 5 is outside this specification and remains gated on verified closure of #26.",
+    "The four council perspectives' initial FAIL verdicts are resolved by these mandatory traced requirements and acceptance gates."
+  ],
+  "open_questions": []
+}

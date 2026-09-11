@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://codicarium.local/v2.4/signature.v2.4",
+  "title": "signature.v2.4",
+  "type": "object",
+  "required": [
+    "payload",
+    "signature",
+    "public_key",
+    "signer_kind",
+    "authority"
+  ],
+  "properties": {
+    "payload": {
+      "type": "object"
+    },
+    "signature": {
+      "type": "string",
+      "minLength": 1
+    },
+    "public_key": {
+      "type": "string",
+      "minLength": 1
+    },
+    "signer_kind": {
+      "type": "string",
+      "minLength": 1
+    },
+    "authority": {
+      "type": "boolean"
+    }
+  },
+  "additionalProperties": false
+}

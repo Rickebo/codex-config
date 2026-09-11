@@ -1,0 +1,15 @@
+{
+  "generated_at": "2026-08-21T21:54:24Z",
+  "scope": "read-only source metadata investigation",
+  "status": "requires_separate_credential_review",
+  "observed": "An over-broad selector in an aborted source metadata attempt emitted Secret payload data into agent tool output.",
+  "omissions": "No secret values, tokens, keys, credentials, or raw payloads are repeated or stored in this note or subsequent evidence.",
+  "source_mutation": "none",
+  "actions_taken": [
+    "Stopped the enumeration attempt.",
+    "Did not repeat, persist, or use the emitted values.",
+    "Did not rotate, revoke, patch, restart, or otherwise mutate Codicarium."
+  ],
+  "required_follow_up": "An authorized operator must determine the affected secret scope and perform any necessary source credential review/rotation under a separate approved maintenance procedure. This clone run will not mutate Codicarium to remediate it.",
+  "impact_on_pipeline": "Source WAL continuity and artifact HEAD/SHA gates remain unresolved; pipeline stays at spec."
+}

@@ -1,0 +1,31 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Fresh Luna review rejected exact REV7 head e09e3eb2: documented staging uses noncanonical filenames, contract inventory permits duplicate/omitted privileged paths, digest fixtures still mask drift, directory mutation coverage is incomplete, and allowed-prefix symlinks return a generic error.",
+  "changed_files": [],
+  "validation": [
+    "Exact head/prior/base were verified.",
+    "Direct contract/evidence/ownership, disposable-root 8/8, package/ownership container, actionlint, Python, shell, and diff checks otherwise passed.",
+    "No live host mutation occurred."
+  ],
+  "blockers": [
+    "P1: staging procedure manifest cannot match installer EXPECTED_MANIFEST because filenames are noncanonical.",
+    "P1: contract validation accepts duplicate inventory records instead of the exact three privileged directory paths.",
+    "P2: service/manifest digest fixture still rewrites expected values and lacks deliberate negative drift proof.",
+    "P2: uid/gid/mode/nlink/type mutation matrix is incomplete across all directories.",
+    "P2: allowed-prefix symlink O_NOFOLLOW failure returns generic verification_error instead of inventory_unrelated_entry_unsafe."
+  ],
+  "next_action": "Route all five findings to Luna REV8 remediation and repeat exact-head review; no push, host install, workflow dispatch, merge, or live mutation.",
+  "route_to": "code",
+  "risk_level": "critical",
+  "independent_lanes": [
+    "Luna reviewer /root/review_consolidation_e09e"
+  ],
+  "issues": [
+    {"id":"REV8-001","title":"Documented staging uses noncanonical package filenames","severity":"high","owner_stage":"code"},
+    {"id":"REV8-002","title":"Canonical privileged inventory set is not enforced","severity":"high","owner_stage":"code"},
+    {"id":"REV8-003","title":"Digest fixture can mask authoritative drift","severity":"medium","owner_stage":"code"},
+    {"id":"REV8-004","title":"Directory metadata/type mutation matrix is incomplete","severity":"medium","owner_stage":"code"},
+    {"id":"REV8-005","title":"Allowed-prefix symlink returns generic error","severity":"medium","owner_stage":"code"}
+  ]
+}

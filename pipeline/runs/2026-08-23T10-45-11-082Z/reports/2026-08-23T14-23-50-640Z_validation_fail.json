@@ -1,0 +1,15 @@
+{
+  "stage": "validation",
+  "status": "fail",
+  "route_to": "code",
+  "risk_level": "high",
+  "changed_files": [],
+  "summary": "Validation failed because the OAuth ExternalSecret was not applied before the controller rollout.",
+  "validation": [
+    "Argo full sync at 93f4721e36d1ad52f5f37c7ade05bbbf33efd4d3 failed; OAuth resources and ingress were not live."
+  ],
+  "blockers": [
+    "Argo applies youtarr-controller before youtarr-google-oauth ExternalSecret and stops when the controller reaches CreateContainerConfigError because its target Secret is missing."
+  ],
+  "next_action": "Update the chart sync ordering so youtarr-google-oauth is applied before youtarr-controller, then rerun the full Argo sync."
+}

@@ -1,0 +1,26 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Luna implemented issue #158 at exact local head 8c9b076587c4aa8826ede15abfed6a26a468474f: retirement JSON now defaults explicitly only when unset or empty, preserves provided objects, and fails closed for malformed or non-object JSON.",
+  "changed_files": [
+    ".github/workflows/automatic-release.yaml",
+    "hack/test-release-graph.py"
+  ],
+  "validation": [
+    "make test-release-flow passed with 49 release-graph tests",
+    "./hack/validate-repository.sh passed",
+    "actionlint passed",
+    "Python and Node syntax checks passed",
+    "git diff --check passed",
+    "Worktree clean at 8c9b076587c4aa8826ede15abfed6a26a468474f"
+  ],
+  "blockers": [],
+  "next_action": "Obtain independent Luna security/correctness review of exact head before pushing or opening the PR.",
+  "route_to": "review",
+  "risk_level": "critical",
+  "independent_lanes": [
+    "release workflow JSON merge behavior",
+    "regression-test adequacy and fail-closed semantics"
+  ],
+  "requires_council": false
+}

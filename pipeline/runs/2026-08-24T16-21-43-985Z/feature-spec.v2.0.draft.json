@@ -1,0 +1,1127 @@
+{
+  "meta": {
+    "id": "SPEC-deployment-controller-issue-93-release-proof-v2-0",
+    "title": "PostgreSQL-journaled credentialless protected-main release authorization and forward-only issue #93 recovery",
+    "author": "Codex release manager",
+    "created_at": "2026-08-25T09:30:00Z",
+    "version": "2.0.0-exact-candidate"
+  },
+  "feature": {
+    "problem_statement": "The historical release boundary used mutable privileged workflows, candidate-adjacent reusable authority, Check Run-shaped authorization, and no first-side-effect release CAS. v2.0 replaces authority with an exact protected-main claim and independently signed PostgreSQL journal before any forward v0.6.14 publication.",
+    "goals": [
+      "Make one exact claim and append-only signed journal the sole release authority.",
+      "Keep candidate execution credentialless and network-confined while separating target mutation, signing, and commit roles.",
+      "Retire all historical privileged authorities and publish only forward v0.6.14 after infrastructure, migration, and evidence gates."
+    ],
+    "non_goals": [
+      "Resume, retag, publish, or fabricate success for v0.6.13.",
+      "Use S3, Check Runs, workflow outputs, repository content, or runtime owner privileges as the journal.",
+      "Assert currently missing Vault, proxy, Kata, worker-capacity, PostgreSQL TLS, or UID/spec snapshots as live."
+    ],
+    "scope_in": [
+      "Exact annex SHA-256 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0 and its 36-file fixture manifest.",
+      "Seven repository baselines, five-workflow retirement, grant migration, network/Kata/proxy/Vault/PostgreSQL prerequisites, and strict #98 -> #99 -> #94 follow-up."
+    ],
+    "scope_out": [
+      "Repository, GitHub, cluster, Vault, registry, release, or database mutation during this spec stage.",
+      "Activation while any explicit preactivation blocker remains."
+    ]
+  },
+  "requirements": [
+    {
+      "id": "REQ-001",
+      "priority": "MUST",
+      "statement": "Freeze all seven repository IDs and remote-main SHAs exactly as the annex records; any movement requires focused re-audit before code.",
+      "rationale": "This condition preserves a fail-closed release authority boundary and is executable against annex 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+    },
+    {
+      "id": "REQ-002",
+      "priority": "MUST",
+      "statement": "Account for deployment-controller #103 by retaining admissible dev event-driven RequestRef+Kafka activation and rejecting PollOnly/dev; account for vault-config #258 with schema-2 paired data/metadata deny evidence.",
+      "rationale": "This condition preserves a fail-closed release authority boundary and is executable against annex 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+    },
+    {
+      "id": "REQ-003",
+      "priority": "MUST",
+      "statement": "Treat every generated source/workflow identity and signed chain as synthetic-conformance-fixture with publication_authority=false and its exact fixture identity digest; after the protected corrective merge derive the only live claim key from the separately discovered non-fixture live identity JCS.",
+      "rationale": "This condition preserves a fail-closed release authority boundary and is executable against annex 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+    },
+    {
+      "id": "REQ-004",
+      "priority": "MUST",
+      "statement": "Make a live-identity-bound claim CAS the first durable release side effect: reject every synthetic SHA/digest/key even if relabeled or re-signed; first create 201, exact read-only replay 200, conflict 409, and ambiguity UNKNOWN_MANUAL with no retry.",
+      "rationale": "This condition preserves a fail-closed release authority boundary and is executable against annex 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+    },
+    {
+      "id": "REQ-005",
+      "priority": "MUST",
+      "statement": "Use a new dedicated dev PostgreSQL journal, never S3, with SERIALIZABLE transactions, synchronous_commit=on, primary/unique/check constraints, append-only rows, synchronous replicas, and N-1 evidence.",
+      "rationale": "This condition preserves a fail-closed release authority boundary and is executable against annex 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+    },
+    {
+      "id": "REQ-006",
+      "priority": "MUST",
+      "statement": "Define every journal function as SECURITY DEFINER with SET search_path = pg_catalog, release_journal, pg_temp; fully qualify persistent relations/non-builtins with release_journal and builtins with pg_catalog; revoke PUBLIC/runtime database TEMP and schema CREATE, and test relation/function temp-shadow attacks in addition to PUBLIC execute, direct DML, TRUNCATE, and DDL denial.",
+      "rationale": "This condition preserves a fail-closed release authority boundary and is executable against annex 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+    },
+    {
+      "id": "REQ-007",
+      "priority": "MUST",
+      "statement": "Enforce the closed journal FSM: claim; verifier reserve/commit; authorization; publisher reserve/commit; mutation reserve/commit 1..19; complete or UNKNOWN_MANUAL, with exactly one next sequence.",
+      "rationale": "This condition preserves a fail-closed release authority boundary and is executable against annex 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+    },
+    {
+      "id": "REQ-008",
+      "priority": "MUST",
+      "statement": "Make every reservation/commit immutable, previous-hash linked, and independently Vault-transit signed; target writers cannot sign/commit and signers/committers cannot mutate targets.",
+      "rationale": "This condition preserves a fail-closed release authority boundary and is executable against annex 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+    },
+    {
+      "id": "REQ-009",
+      "priority": "MUST",
+      "statement": "Expose claim/read/reserve/commit/authorize/complete procedures only; no update or delete endpoint exists.",
+      "rationale": "This condition preserves a fail-closed release authority boundary and is executable against annex 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+    },
+    {
+      "id": "REQ-010",
+      "priority": "MUST",
+      "statement": "Treat Check Runs only as observations with checks:read; no Check Run, external ID, URL, or checks:write grants publication authority.",
+      "rationale": "This condition preserves a fail-closed release authority boundary and is executable against annex 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+    },
+    {
+      "id": "REQ-011",
+      "priority": "MUST",
+      "statement": "Dispatch verifier with X-GitHub-Api-Version 2026-03-10 and return_run_details=true; accept only the direct HTTP-200 workflow_run_id/URLs, while HTTP 204 or any missing response is UNKNOWN_MANUAL with zero retry and no commit.",
+      "rationale": "This condition preserves a fail-closed release authority boundary and is executable against annex 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+    },
+    {
+      "id": "REQ-012",
+      "priority": "MUST",
+      "statement": "Record one closed verification-authorization state that binds claim, candidate evidence, protected verifier identity, and authorization digest.",
+      "rationale": "This condition preserves a fail-closed release authority boundary and is executable against annex 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+    },
+    {
+      "id": "REQ-013",
+      "priority": "MUST",
+      "statement": "Dispatch publisher with X-GitHub-Api-Version 2026-03-10 and return_run_details=true; accept only the direct HTTP-200 workflow_run_id/URLs, commit it as sequence 0, and map HTTP 204, manual, independent, or rerun execution to UNKNOWN_MANUAL with zero retry.",
+      "rationale": "This condition preserves a fail-closed release authority boundary and is executable against annex 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+    },
+    {
+      "id": "REQ-014",
+      "priority": "MUST",
+      "statement": "Move tag creation out of Automatic Release into publisher mutation 1; execute draft release, image, chart, fourteen assets, and finalize as mutations 2..19.",
+      "rationale": "This condition preserves a fail-closed release authority boundary and is executable against annex 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+    },
+    {
+      "id": "REQ-015",
+      "priority": "MUST",
+      "statement": "Emit exactly twenty signed publication receipts: one dispatch plus nineteen mutation receipts, each over actual canonical body/request/readback/target hashes rather than placeholder labels.",
+      "rationale": "This condition preserves a fail-closed release authority boundary and is executable against annex 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+    },
+    {
+      "id": "REQ-016",
+      "priority": "MUST",
+      "statement": "Stop permanently at UNKNOWN_MANUAL after any ambiguous reservation, target write, readback, signing, or commit; never retry or advance sequence.",
+      "rationale": "This condition preserves a fail-closed release authority boundary and is executable against annex 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+    },
+    {
+      "id": "REQ-017",
+      "priority": "MUST",
+      "statement": "Preserve raw release-handoff-v1.json at exactly 697 bytes/SHA-256 8abe528b... and raw publisher-dispatch-v1.json at exactly 436 bytes/SHA-256 b150fa8d..., with independently recomputed canonical metadata.",
+      "rationale": "This condition preserves a fail-closed release authority boundary and is executable against annex 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+    },
+    {
+      "id": "REQ-018",
+      "priority": "MUST",
+      "statement": "Reject duplicate, unknown, and byte-mutated identity vectors; distinguish handoff coordinator Check Run 9002003 from dispatch handoff Check Run 9004003 and keep both observation-only.",
+      "rationale": "This condition preserves a fail-closed release authority boundary and is executable against annex 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+    },
+    {
+      "id": "REQ-019",
+      "priority": "MUST",
+      "statement": "Before v0.6.14 disable permanently and delete all five privileged workflow IDs/paths in the retirement fixture; reject every old output and rerun.",
+      "rationale": "This condition preserves a fail-closed release authority boundary and is executable against annex 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+    },
+    {
+      "id": "REQ-020",
+      "priority": "MUST",
+      "statement": "Revoke the six legacy Nexus/OVH secret authorities plus V068 S3 credentials, both recovery environments, and general runner routing before the claim.",
+      "rationale": "This condition preserves a fail-closed release authority boundary and is executable against annex 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+    },
+    {
+      "id": "REQ-021",
+      "priority": "MUST",
+      "statement": "Create any later v0.6.8 recovery strictly after verified v0.6.14 as a new path and workflow ID with one typed broker target and no contents:write, broad token, reusable secret, or signing key.",
+      "rationale": "This condition preserves a fail-closed release authority boundary and is executable against annex 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+    },
+    {
+      "id": "REQ-022",
+      "priority": "MUST",
+      "statement": "After live candidate discovery, hash/count the exact raw codeload response bytes (never the synthetic byte oracle), bind repository/commit/URL/purpose/key/digest/length/content type through protected-control create, receipt, broker grant and Kata verification, and permit only a 300-second Pod-bound projected one-read token; the separate broker verifier gets only tokenreviews.create plus untrusted-namespace Pod get/list/watch and exact 10.43.0.1/32:443 CA/SAN/audience-verified API egress; deny default/API/proxy tokens and GitHub/registry/public egress, safely scan/extract only in Kata memory volumes, and prove every teardown residue absent.",
+      "rationale": "This condition preserves a fail-closed release authority boundary and is executable against annex 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+    },
+    {
+      "id": "REQ-023",
+      "priority": "MUST",
+      "statement": "Never execute candidate source on trusted release-control runners; authenticate its 8443 proxy access with a 600-second projected Pod-bound codicarium-egress-proxy token, TokenReview, exact namespace/SA/UID/source-Pod binding and nonce replay denial, then allow only the exact GitHub host+method ACL; the separate proxy verifier gets only tokenreviews.create plus Pod get/list/watch RoleBindings in control and broker namespaces, exact authorization inventory, and context-bound 10.43.0.1/32:443 API egress.",
+      "rationale": "This condition preserves a fail-closed release authority boundary and is executable against annex 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+    },
+    {
+      "id": "REQ-024",
+      "priority": "MUST",
+      "statement": "Authenticate broker 8444 proxy access with the same enforceable projected-token/TokenReview Pod binding but a distinct artifact-capability principal and exact S3/OIDC host+method ACL; neither verifier may read Secrets, create TokenRequests, access exec/attach/log, mutate Pods, or hold wildcard/extra bindings; deny listener confusion and direct public/proxy bypass, and reach Vault directly only after exact internal IP/port/SNI/CA verification.",
+      "rationale": "This condition preserves a fail-closed release authority boundary and is executable against annex 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+    },
+    {
+      "id": "REQ-025",
+      "priority": "MUST",
+      "statement": "Allow broker ingress on 8443 only from exact candidate/trusted-control peers, metrics on 9090 only from Prometheus, and PostgreSQL 5432 only from exact broker/migrator peers while preserving only explicit replication/operator/DNS/API flows; default-deny all other clients and expose no ingress or public route.",
+      "rationale": "This condition preserves a fail-closed release authority boundary and is executable against annex 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+    },
+    {
+      "id": "REQ-026",
+      "priority": "MUST",
+      "statement": "Provision two additional generic eligible workers, three Kata-v2-eligible workers, remaining-two-node capacity, kata-clh-runtime-rs, proxy, Vault, and journal TLS before activation; the control node remains NoSchedule.",
+      "rationale": "This condition preserves a fail-closed release authority boundary and is executable against annex 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+    },
+    {
+      "id": "REQ-027",
+      "priority": "MUST",
+      "statement": "Keep runner-config-dev profileRef arc-path-helm immutable and reject duplicate repository 1303372884/environment dev grants; create artifact-capability-path-helm first with existing ARC scopes and exact broker resources/destinations.",
+      "rationale": "This condition preserves a fail-closed release authority boundary and is executable against annex 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+    },
+    {
+      "id": "REQ-028",
+      "priority": "MUST",
+      "statement": "Freeze writers, snapshot UIDs/resourceVersions/spec hashes, delete the old grant with UID/resourceVersion preconditions, prove absent/orphan fail-closed, recreate the same name as a new epoch, and preserve AppProject/Application/workload UIDs/specs.",
+      "rationale": "This condition preserves a fail-closed release authority boundary and is executable against annex 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+    },
+    {
+      "id": "REQ-029",
+      "priority": "MUST",
+      "statement": "Permit rollback only before activation; never reuse an old grant UID, proof, activation, work item, or epoch after recreation.",
+      "rationale": "This condition preserves a fail-closed release authority boundary and is executable against annex 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+    },
+    {
+      "id": "REQ-030",
+      "priority": "MUST",
+      "statement": "Bind every cluster command to the exact kubeconfig, context, API server, CA PEM SHA-256, and kube-system UID in the context fixture; mismatch exits before mutation.",
+      "rationale": "This condition preserves a fail-closed release authority boundary and is executable against annex 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+    },
+    {
+      "id": "REQ-031",
+      "priority": "MUST",
+      "statement": "Keep ownership minimal: postgres-config owns runner-platform-journal-dev and its CNPG-generated bootstrap Secret; runner-config performs one UID/resourceVersion-bound memory-only transfer to create-only Vault v1, owns broker/qualified SQL/migration/runtime roles, and retires bootstrap/migrator login, CONNECT, Vault credentials/auth and workloads; vault-config owns transit/narrow paths/paired denies; infra owns workers/proxy/scoped authorities; app-config remains bootstrap-only.",
+      "rationale": "This condition preserves a fail-closed release authority boundary and is executable against annex 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+    },
+    {
+      "id": "REQ-032",
+      "priority": "MUST",
+      "statement": "Retain exactly test, lint, chart, integration, and supply-chain from GitHub Actions app ID 15368 at one current head; repository-controlled content cannot self-authorize.",
+      "rationale": "This condition preserves a fail-closed release authority boundary and is executable against annex 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+    },
+    {
+      "id": "REQ-033",
+      "priority": "MUST",
+      "statement": "Keep v0.6.13 permanently retired, release only forward v0.6.14, and fail closed without restoring old workflows, credentials, routing, journal state, or grant epoch.",
+      "rationale": "This condition preserves a fail-closed release authority boundary and is executable against annex 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+    },
+    {
+      "id": "REQ-034",
+      "priority": "MUST",
+      "statement": "Follow issue #98 then PR #99 then PR #94 only after verified public v0.6.14 and complete twenty-receipt live evidence, with rebases and all five checks at each exact head.",
+      "rationale": "This condition preserves a fail-closed release authority boundary and is executable against annex 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+    },
+    {
+      "id": "REQ-035",
+      "priority": "MUST",
+      "statement": "Post-merge evidence must first discover the actual corrective merge, candidate source and exact protected workflow identities, then bind their live identity digest and trusted non-fixture Vault key through the exact claim/journal/receipt chain, five protected checks, tag/source, image/chart, fourteen assets, five-workflow retirement, and final non-draft release.",
+      "rationale": "This condition preserves a fail-closed release authority boundary and is executable against annex 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+    },
+    {
+      "id": "REQ-036",
+      "priority": "MUST",
+      "statement": "Ship thirteen closed Draft 2020-12 schemas including release-live-implementation-identity-v1 with no persisted positive live instance, plus positive synthetic fixtures and strict duplicate-key/JCS/Ed25519/journal/raw/archive/manifest/trace checks; negative oracles must reject relabeled fixture authority, live binding drift, candidate substitution/traversal/token/replay/residue, proxy identity/listener/ACL confusion, unauthorized PostgreSQL/bootstrap/role reuse, and temp relation/function shadow attacks with zero side effects.",
+      "rationale": "This condition preserves a fail-closed release authority boundary and is executable against annex 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+    }
+  ],
+  "acceptance_criteria": [
+    {
+      "id": "AC-001",
+      "requirement_ids": [
+        "REQ-001",
+        "REQ-002"
+      ],
+      "scenario": "Given the frozen v2.0 annex and fail-closed prerequisites, When REQ-001 and REQ-002 are evaluated with their positive and negative fixtures, Then both contracts pass exactly or the release remains non-authorizing."
+    },
+    {
+      "id": "AC-002",
+      "requirement_ids": [
+        "REQ-003",
+        "REQ-004"
+      ],
+      "scenario": "Given the frozen v2.0 annex and fail-closed prerequisites, When REQ-003 and REQ-004 are evaluated with their positive and negative fixtures, Then both contracts pass exactly or the release remains non-authorizing."
+    },
+    {
+      "id": "AC-003",
+      "requirement_ids": [
+        "REQ-005",
+        "REQ-006"
+      ],
+      "scenario": "Given the frozen v2.0 annex and fail-closed prerequisites, When REQ-005 and REQ-006 are evaluated with their positive and negative fixtures, Then both contracts pass exactly or the release remains non-authorizing."
+    },
+    {
+      "id": "AC-004",
+      "requirement_ids": [
+        "REQ-007",
+        "REQ-008"
+      ],
+      "scenario": "Given the frozen v2.0 annex and fail-closed prerequisites, When REQ-007 and REQ-008 are evaluated with their positive and negative fixtures, Then both contracts pass exactly or the release remains non-authorizing."
+    },
+    {
+      "id": "AC-005",
+      "requirement_ids": [
+        "REQ-009",
+        "REQ-010"
+      ],
+      "scenario": "Given the frozen v2.0 annex and fail-closed prerequisites, When REQ-009 and REQ-010 are evaluated with their positive and negative fixtures, Then both contracts pass exactly or the release remains non-authorizing."
+    },
+    {
+      "id": "AC-006",
+      "requirement_ids": [
+        "REQ-011",
+        "REQ-012"
+      ],
+      "scenario": "Given the frozen v2.0 annex and fail-closed prerequisites, When REQ-011 and REQ-012 are evaluated with their positive and negative fixtures, Then both contracts pass exactly or the release remains non-authorizing."
+    },
+    {
+      "id": "AC-007",
+      "requirement_ids": [
+        "REQ-013",
+        "REQ-014"
+      ],
+      "scenario": "Given the frozen v2.0 annex and fail-closed prerequisites, When REQ-013 and REQ-014 are evaluated with their positive and negative fixtures, Then both contracts pass exactly or the release remains non-authorizing."
+    },
+    {
+      "id": "AC-008",
+      "requirement_ids": [
+        "REQ-015",
+        "REQ-016"
+      ],
+      "scenario": "Given the frozen v2.0 annex and fail-closed prerequisites, When REQ-015 and REQ-016 are evaluated with their positive and negative fixtures, Then both contracts pass exactly or the release remains non-authorizing."
+    },
+    {
+      "id": "AC-009",
+      "requirement_ids": [
+        "REQ-017",
+        "REQ-018"
+      ],
+      "scenario": "Given the frozen v2.0 annex and fail-closed prerequisites, When REQ-017 and REQ-018 are evaluated with their positive and negative fixtures, Then both contracts pass exactly or the release remains non-authorizing."
+    },
+    {
+      "id": "AC-010",
+      "requirement_ids": [
+        "REQ-019",
+        "REQ-020"
+      ],
+      "scenario": "Given the frozen v2.0 annex and fail-closed prerequisites, When REQ-019 and REQ-020 are evaluated with their positive and negative fixtures, Then both contracts pass exactly or the release remains non-authorizing."
+    },
+    {
+      "id": "AC-011",
+      "requirement_ids": [
+        "REQ-021",
+        "REQ-022"
+      ],
+      "scenario": "Given the frozen v2.0 annex and fail-closed prerequisites, When REQ-021 and REQ-022 are evaluated with their positive and negative fixtures, Then both contracts pass exactly or the release remains non-authorizing."
+    },
+    {
+      "id": "AC-012",
+      "requirement_ids": [
+        "REQ-023",
+        "REQ-024"
+      ],
+      "scenario": "Given the frozen v2.0 annex and fail-closed prerequisites, When REQ-023 and REQ-024 are evaluated with their positive and negative fixtures, Then both contracts pass exactly or the release remains non-authorizing."
+    },
+    {
+      "id": "AC-013",
+      "requirement_ids": [
+        "REQ-025",
+        "REQ-026"
+      ],
+      "scenario": "Given the frozen v2.0 annex and fail-closed prerequisites, When REQ-025 and REQ-026 are evaluated with their positive and negative fixtures, Then both contracts pass exactly or the release remains non-authorizing."
+    },
+    {
+      "id": "AC-014",
+      "requirement_ids": [
+        "REQ-027",
+        "REQ-028"
+      ],
+      "scenario": "Given the frozen v2.0 annex and fail-closed prerequisites, When REQ-027 and REQ-028 are evaluated with their positive and negative fixtures, Then both contracts pass exactly or the release remains non-authorizing."
+    },
+    {
+      "id": "AC-015",
+      "requirement_ids": [
+        "REQ-029",
+        "REQ-030"
+      ],
+      "scenario": "Given the frozen v2.0 annex and fail-closed prerequisites, When REQ-029 and REQ-030 are evaluated with their positive and negative fixtures, Then both contracts pass exactly or the release remains non-authorizing."
+    },
+    {
+      "id": "AC-016",
+      "requirement_ids": [
+        "REQ-031",
+        "REQ-032"
+      ],
+      "scenario": "Given the frozen v2.0 annex and fail-closed prerequisites, When REQ-031 and REQ-032 are evaluated with their positive and negative fixtures, Then both contracts pass exactly or the release remains non-authorizing."
+    },
+    {
+      "id": "AC-017",
+      "requirement_ids": [
+        "REQ-033",
+        "REQ-034"
+      ],
+      "scenario": "Given the frozen v2.0 annex and fail-closed prerequisites, When REQ-033 and REQ-034 are evaluated with their positive and negative fixtures, Then both contracts pass exactly or the release remains non-authorizing."
+    },
+    {
+      "id": "AC-018",
+      "requirement_ids": [
+        "REQ-035",
+        "REQ-036"
+      ],
+      "scenario": "Given the frozen v2.0 annex and fail-closed prerequisites, When REQ-035 and REQ-036 are evaluated with their positive and negative fixtures, Then both contracts pass exactly or the release remains non-authorizing."
+    }
+  ],
+  "test_plan": [
+    {
+      "id": "TST-001",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-001",
+        "REQ-002"
+      ],
+      "approach": "Validate REQ-001 and REQ-002 using the closed annex fixtures, mutate each authority-bearing field, and assert exact failure with zero unauthorized side effects."
+    },
+    {
+      "id": "TST-002",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-003",
+        "REQ-004"
+      ],
+      "approach": "Validate REQ-003 and REQ-004 using the closed annex fixtures, mutate each authority-bearing field, and assert exact failure with zero unauthorized side effects."
+    },
+    {
+      "id": "TST-003",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-005",
+        "REQ-006"
+      ],
+      "approach": "Validate REQ-005 and REQ-006 using the closed annex fixtures, mutate each authority-bearing field, and assert exact failure with zero unauthorized side effects."
+    },
+    {
+      "id": "TST-004",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-007",
+        "REQ-008"
+      ],
+      "approach": "Validate REQ-007 and REQ-008 using the closed annex fixtures, mutate each authority-bearing field, and assert exact failure with zero unauthorized side effects."
+    },
+    {
+      "id": "TST-005",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-009",
+        "REQ-010"
+      ],
+      "approach": "Validate REQ-009 and REQ-010 using the closed annex fixtures, mutate each authority-bearing field, and assert exact failure with zero unauthorized side effects."
+    },
+    {
+      "id": "TST-006",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-011",
+        "REQ-012"
+      ],
+      "approach": "Validate REQ-011 and REQ-012 using the closed annex fixtures, mutate each authority-bearing field, and assert exact failure with zero unauthorized side effects."
+    },
+    {
+      "id": "TST-007",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-013",
+        "REQ-014"
+      ],
+      "approach": "Validate REQ-013 and REQ-014 using the closed annex fixtures, mutate each authority-bearing field, and assert exact failure with zero unauthorized side effects."
+    },
+    {
+      "id": "TST-008",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-015",
+        "REQ-016"
+      ],
+      "approach": "Validate REQ-015 and REQ-016 using the closed annex fixtures, mutate each authority-bearing field, and assert exact failure with zero unauthorized side effects."
+    },
+    {
+      "id": "TST-009",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-017",
+        "REQ-018"
+      ],
+      "approach": "Validate REQ-017 and REQ-018 using the closed annex fixtures, mutate each authority-bearing field, and assert exact failure with zero unauthorized side effects."
+    },
+    {
+      "id": "TST-010",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-019",
+        "REQ-020"
+      ],
+      "approach": "Validate REQ-019 and REQ-020 using the closed annex fixtures, mutate each authority-bearing field, and assert exact failure with zero unauthorized side effects."
+    },
+    {
+      "id": "TST-011",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-021",
+        "REQ-022"
+      ],
+      "approach": "Validate REQ-021 and REQ-022 using the closed annex fixtures, mutate each authority-bearing field, and assert exact failure with zero unauthorized side effects."
+    },
+    {
+      "id": "TST-012",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-023",
+        "REQ-024"
+      ],
+      "approach": "Validate REQ-023 and REQ-024 using the closed annex fixtures, mutate each authority-bearing field, and assert exact failure with zero unauthorized side effects."
+    },
+    {
+      "id": "TST-013",
+      "type": "e2e",
+      "requirement_ids": [
+        "REQ-025",
+        "REQ-026"
+      ],
+      "approach": "Validate REQ-025 and REQ-026 using the closed annex fixtures, mutate each authority-bearing field, and assert exact failure with zero unauthorized side effects."
+    },
+    {
+      "id": "TST-014",
+      "type": "e2e",
+      "requirement_ids": [
+        "REQ-027",
+        "REQ-028"
+      ],
+      "approach": "Validate REQ-027 and REQ-028 using the closed annex fixtures, mutate each authority-bearing field, and assert exact failure with zero unauthorized side effects."
+    },
+    {
+      "id": "TST-015",
+      "type": "e2e",
+      "requirement_ids": [
+        "REQ-029",
+        "REQ-030"
+      ],
+      "approach": "Validate REQ-029 and REQ-030 using the closed annex fixtures, mutate each authority-bearing field, and assert exact failure with zero unauthorized side effects."
+    },
+    {
+      "id": "TST-016",
+      "type": "e2e",
+      "requirement_ids": [
+        "REQ-031",
+        "REQ-032"
+      ],
+      "approach": "Validate REQ-031 and REQ-032 using the closed annex fixtures, mutate each authority-bearing field, and assert exact failure with zero unauthorized side effects."
+    },
+    {
+      "id": "TST-017",
+      "type": "e2e",
+      "requirement_ids": [
+        "REQ-033",
+        "REQ-034"
+      ],
+      "approach": "Validate REQ-033 and REQ-034 using the closed annex fixtures, mutate each authority-bearing field, and assert exact failure with zero unauthorized side effects."
+    },
+    {
+      "id": "TST-018",
+      "type": "manual",
+      "requirement_ids": [
+        "REQ-035",
+        "REQ-036"
+      ],
+      "approach": "Validate REQ-035 and REQ-036 using the closed annex fixtures, mutate each authority-bearing field, and assert exact failure with zero unauthorized side effects."
+    }
+  ],
+  "traceability": [
+    {
+      "requirement_id": "REQ-001",
+      "acceptance_ids": [
+        "AC-001"
+      ],
+      "test_ids": [
+        "TST-001"
+      ],
+      "review_checks": [
+        "Review REQ-001 against exact annex SHA-256 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+      ],
+      "validation_checks": [
+        "Run its mapped acceptance/test oracle; UNKNOWN_MANUAL and every unmet preactivation prerequisite remain non-authorizing."
+      ]
+    },
+    {
+      "requirement_id": "REQ-002",
+      "acceptance_ids": [
+        "AC-001"
+      ],
+      "test_ids": [
+        "TST-001"
+      ],
+      "review_checks": [
+        "Review REQ-002 against exact annex SHA-256 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+      ],
+      "validation_checks": [
+        "Run its mapped acceptance/test oracle; UNKNOWN_MANUAL and every unmet preactivation prerequisite remain non-authorizing."
+      ]
+    },
+    {
+      "requirement_id": "REQ-003",
+      "acceptance_ids": [
+        "AC-002"
+      ],
+      "test_ids": [
+        "TST-002"
+      ],
+      "review_checks": [
+        "Review REQ-003 against exact annex SHA-256 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+      ],
+      "validation_checks": [
+        "Run its mapped acceptance/test oracle; UNKNOWN_MANUAL and every unmet preactivation prerequisite remain non-authorizing."
+      ]
+    },
+    {
+      "requirement_id": "REQ-004",
+      "acceptance_ids": [
+        "AC-002"
+      ],
+      "test_ids": [
+        "TST-002"
+      ],
+      "review_checks": [
+        "Review REQ-004 against exact annex SHA-256 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+      ],
+      "validation_checks": [
+        "Run its mapped acceptance/test oracle; UNKNOWN_MANUAL and every unmet preactivation prerequisite remain non-authorizing."
+      ]
+    },
+    {
+      "requirement_id": "REQ-005",
+      "acceptance_ids": [
+        "AC-003"
+      ],
+      "test_ids": [
+        "TST-003"
+      ],
+      "review_checks": [
+        "Review REQ-005 against exact annex SHA-256 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+      ],
+      "validation_checks": [
+        "Run its mapped acceptance/test oracle; UNKNOWN_MANUAL and every unmet preactivation prerequisite remain non-authorizing."
+      ]
+    },
+    {
+      "requirement_id": "REQ-006",
+      "acceptance_ids": [
+        "AC-003"
+      ],
+      "test_ids": [
+        "TST-003"
+      ],
+      "review_checks": [
+        "Review REQ-006 against exact annex SHA-256 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+      ],
+      "validation_checks": [
+        "Run its mapped acceptance/test oracle; UNKNOWN_MANUAL and every unmet preactivation prerequisite remain non-authorizing."
+      ]
+    },
+    {
+      "requirement_id": "REQ-007",
+      "acceptance_ids": [
+        "AC-004"
+      ],
+      "test_ids": [
+        "TST-004"
+      ],
+      "review_checks": [
+        "Review REQ-007 against exact annex SHA-256 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+      ],
+      "validation_checks": [
+        "Run its mapped acceptance/test oracle; UNKNOWN_MANUAL and every unmet preactivation prerequisite remain non-authorizing."
+      ]
+    },
+    {
+      "requirement_id": "REQ-008",
+      "acceptance_ids": [
+        "AC-004"
+      ],
+      "test_ids": [
+        "TST-004"
+      ],
+      "review_checks": [
+        "Review REQ-008 against exact annex SHA-256 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+      ],
+      "validation_checks": [
+        "Run its mapped acceptance/test oracle; UNKNOWN_MANUAL and every unmet preactivation prerequisite remain non-authorizing."
+      ]
+    },
+    {
+      "requirement_id": "REQ-009",
+      "acceptance_ids": [
+        "AC-005"
+      ],
+      "test_ids": [
+        "TST-005"
+      ],
+      "review_checks": [
+        "Review REQ-009 against exact annex SHA-256 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+      ],
+      "validation_checks": [
+        "Run its mapped acceptance/test oracle; UNKNOWN_MANUAL and every unmet preactivation prerequisite remain non-authorizing."
+      ]
+    },
+    {
+      "requirement_id": "REQ-010",
+      "acceptance_ids": [
+        "AC-005"
+      ],
+      "test_ids": [
+        "TST-005"
+      ],
+      "review_checks": [
+        "Review REQ-010 against exact annex SHA-256 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+      ],
+      "validation_checks": [
+        "Run its mapped acceptance/test oracle; UNKNOWN_MANUAL and every unmet preactivation prerequisite remain non-authorizing."
+      ]
+    },
+    {
+      "requirement_id": "REQ-011",
+      "acceptance_ids": [
+        "AC-006"
+      ],
+      "test_ids": [
+        "TST-006"
+      ],
+      "review_checks": [
+        "Review REQ-011 against exact annex SHA-256 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+      ],
+      "validation_checks": [
+        "Run its mapped acceptance/test oracle; UNKNOWN_MANUAL and every unmet preactivation prerequisite remain non-authorizing."
+      ]
+    },
+    {
+      "requirement_id": "REQ-012",
+      "acceptance_ids": [
+        "AC-006"
+      ],
+      "test_ids": [
+        "TST-006"
+      ],
+      "review_checks": [
+        "Review REQ-012 against exact annex SHA-256 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+      ],
+      "validation_checks": [
+        "Run its mapped acceptance/test oracle; UNKNOWN_MANUAL and every unmet preactivation prerequisite remain non-authorizing."
+      ]
+    },
+    {
+      "requirement_id": "REQ-013",
+      "acceptance_ids": [
+        "AC-007"
+      ],
+      "test_ids": [
+        "TST-007"
+      ],
+      "review_checks": [
+        "Review REQ-013 against exact annex SHA-256 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+      ],
+      "validation_checks": [
+        "Run its mapped acceptance/test oracle; UNKNOWN_MANUAL and every unmet preactivation prerequisite remain non-authorizing."
+      ]
+    },
+    {
+      "requirement_id": "REQ-014",
+      "acceptance_ids": [
+        "AC-007"
+      ],
+      "test_ids": [
+        "TST-007"
+      ],
+      "review_checks": [
+        "Review REQ-014 against exact annex SHA-256 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+      ],
+      "validation_checks": [
+        "Run its mapped acceptance/test oracle; UNKNOWN_MANUAL and every unmet preactivation prerequisite remain non-authorizing."
+      ]
+    },
+    {
+      "requirement_id": "REQ-015",
+      "acceptance_ids": [
+        "AC-008"
+      ],
+      "test_ids": [
+        "TST-008"
+      ],
+      "review_checks": [
+        "Review REQ-015 against exact annex SHA-256 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+      ],
+      "validation_checks": [
+        "Run its mapped acceptance/test oracle; UNKNOWN_MANUAL and every unmet preactivation prerequisite remain non-authorizing."
+      ]
+    },
+    {
+      "requirement_id": "REQ-016",
+      "acceptance_ids": [
+        "AC-008"
+      ],
+      "test_ids": [
+        "TST-008"
+      ],
+      "review_checks": [
+        "Review REQ-016 against exact annex SHA-256 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+      ],
+      "validation_checks": [
+        "Run its mapped acceptance/test oracle; UNKNOWN_MANUAL and every unmet preactivation prerequisite remain non-authorizing."
+      ]
+    },
+    {
+      "requirement_id": "REQ-017",
+      "acceptance_ids": [
+        "AC-009"
+      ],
+      "test_ids": [
+        "TST-009"
+      ],
+      "review_checks": [
+        "Review REQ-017 against exact annex SHA-256 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+      ],
+      "validation_checks": [
+        "Run its mapped acceptance/test oracle; UNKNOWN_MANUAL and every unmet preactivation prerequisite remain non-authorizing."
+      ]
+    },
+    {
+      "requirement_id": "REQ-018",
+      "acceptance_ids": [
+        "AC-009"
+      ],
+      "test_ids": [
+        "TST-009"
+      ],
+      "review_checks": [
+        "Review REQ-018 against exact annex SHA-256 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+      ],
+      "validation_checks": [
+        "Run its mapped acceptance/test oracle; UNKNOWN_MANUAL and every unmet preactivation prerequisite remain non-authorizing."
+      ]
+    },
+    {
+      "requirement_id": "REQ-019",
+      "acceptance_ids": [
+        "AC-010"
+      ],
+      "test_ids": [
+        "TST-010"
+      ],
+      "review_checks": [
+        "Review REQ-019 against exact annex SHA-256 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+      ],
+      "validation_checks": [
+        "Run its mapped acceptance/test oracle; UNKNOWN_MANUAL and every unmet preactivation prerequisite remain non-authorizing."
+      ]
+    },
+    {
+      "requirement_id": "REQ-020",
+      "acceptance_ids": [
+        "AC-010"
+      ],
+      "test_ids": [
+        "TST-010"
+      ],
+      "review_checks": [
+        "Review REQ-020 against exact annex SHA-256 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+      ],
+      "validation_checks": [
+        "Run its mapped acceptance/test oracle; UNKNOWN_MANUAL and every unmet preactivation prerequisite remain non-authorizing."
+      ]
+    },
+    {
+      "requirement_id": "REQ-021",
+      "acceptance_ids": [
+        "AC-011"
+      ],
+      "test_ids": [
+        "TST-011"
+      ],
+      "review_checks": [
+        "Review REQ-021 against exact annex SHA-256 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+      ],
+      "validation_checks": [
+        "Run its mapped acceptance/test oracle; UNKNOWN_MANUAL and every unmet preactivation prerequisite remain non-authorizing."
+      ]
+    },
+    {
+      "requirement_id": "REQ-022",
+      "acceptance_ids": [
+        "AC-011"
+      ],
+      "test_ids": [
+        "TST-011"
+      ],
+      "review_checks": [
+        "Review REQ-022 against exact annex SHA-256 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+      ],
+      "validation_checks": [
+        "Run its mapped acceptance/test oracle; UNKNOWN_MANUAL and every unmet preactivation prerequisite remain non-authorizing."
+      ]
+    },
+    {
+      "requirement_id": "REQ-023",
+      "acceptance_ids": [
+        "AC-012"
+      ],
+      "test_ids": [
+        "TST-012"
+      ],
+      "review_checks": [
+        "Review REQ-023 against exact annex SHA-256 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+      ],
+      "validation_checks": [
+        "Run its mapped acceptance/test oracle; UNKNOWN_MANUAL and every unmet preactivation prerequisite remain non-authorizing."
+      ]
+    },
+    {
+      "requirement_id": "REQ-024",
+      "acceptance_ids": [
+        "AC-012"
+      ],
+      "test_ids": [
+        "TST-012"
+      ],
+      "review_checks": [
+        "Review REQ-024 against exact annex SHA-256 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+      ],
+      "validation_checks": [
+        "Run its mapped acceptance/test oracle; UNKNOWN_MANUAL and every unmet preactivation prerequisite remain non-authorizing."
+      ]
+    },
+    {
+      "requirement_id": "REQ-025",
+      "acceptance_ids": [
+        "AC-013"
+      ],
+      "test_ids": [
+        "TST-013"
+      ],
+      "review_checks": [
+        "Review REQ-025 against exact annex SHA-256 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+      ],
+      "validation_checks": [
+        "Run its mapped acceptance/test oracle; UNKNOWN_MANUAL and every unmet preactivation prerequisite remain non-authorizing."
+      ]
+    },
+    {
+      "requirement_id": "REQ-026",
+      "acceptance_ids": [
+        "AC-013"
+      ],
+      "test_ids": [
+        "TST-013"
+      ],
+      "review_checks": [
+        "Review REQ-026 against exact annex SHA-256 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+      ],
+      "validation_checks": [
+        "Run its mapped acceptance/test oracle; UNKNOWN_MANUAL and every unmet preactivation prerequisite remain non-authorizing."
+      ]
+    },
+    {
+      "requirement_id": "REQ-027",
+      "acceptance_ids": [
+        "AC-014"
+      ],
+      "test_ids": [
+        "TST-014"
+      ],
+      "review_checks": [
+        "Review REQ-027 against exact annex SHA-256 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+      ],
+      "validation_checks": [
+        "Run its mapped acceptance/test oracle; UNKNOWN_MANUAL and every unmet preactivation prerequisite remain non-authorizing."
+      ]
+    },
+    {
+      "requirement_id": "REQ-028",
+      "acceptance_ids": [
+        "AC-014"
+      ],
+      "test_ids": [
+        "TST-014"
+      ],
+      "review_checks": [
+        "Review REQ-028 against exact annex SHA-256 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+      ],
+      "validation_checks": [
+        "Run its mapped acceptance/test oracle; UNKNOWN_MANUAL and every unmet preactivation prerequisite remain non-authorizing."
+      ]
+    },
+    {
+      "requirement_id": "REQ-029",
+      "acceptance_ids": [
+        "AC-015"
+      ],
+      "test_ids": [
+        "TST-015"
+      ],
+      "review_checks": [
+        "Review REQ-029 against exact annex SHA-256 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+      ],
+      "validation_checks": [
+        "Run its mapped acceptance/test oracle; UNKNOWN_MANUAL and every unmet preactivation prerequisite remain non-authorizing."
+      ]
+    },
+    {
+      "requirement_id": "REQ-030",
+      "acceptance_ids": [
+        "AC-015"
+      ],
+      "test_ids": [
+        "TST-015"
+      ],
+      "review_checks": [
+        "Review REQ-030 against exact annex SHA-256 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+      ],
+      "validation_checks": [
+        "Run its mapped acceptance/test oracle; UNKNOWN_MANUAL and every unmet preactivation prerequisite remain non-authorizing."
+      ]
+    },
+    {
+      "requirement_id": "REQ-031",
+      "acceptance_ids": [
+        "AC-016"
+      ],
+      "test_ids": [
+        "TST-016"
+      ],
+      "review_checks": [
+        "Review REQ-031 against exact annex SHA-256 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+      ],
+      "validation_checks": [
+        "Run its mapped acceptance/test oracle; UNKNOWN_MANUAL and every unmet preactivation prerequisite remain non-authorizing."
+      ]
+    },
+    {
+      "requirement_id": "REQ-032",
+      "acceptance_ids": [
+        "AC-016"
+      ],
+      "test_ids": [
+        "TST-016"
+      ],
+      "review_checks": [
+        "Review REQ-032 against exact annex SHA-256 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+      ],
+      "validation_checks": [
+        "Run its mapped acceptance/test oracle; UNKNOWN_MANUAL and every unmet preactivation prerequisite remain non-authorizing."
+      ]
+    },
+    {
+      "requirement_id": "REQ-033",
+      "acceptance_ids": [
+        "AC-017"
+      ],
+      "test_ids": [
+        "TST-017"
+      ],
+      "review_checks": [
+        "Review REQ-033 against exact annex SHA-256 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+      ],
+      "validation_checks": [
+        "Run its mapped acceptance/test oracle; UNKNOWN_MANUAL and every unmet preactivation prerequisite remain non-authorizing."
+      ]
+    },
+    {
+      "requirement_id": "REQ-034",
+      "acceptance_ids": [
+        "AC-017"
+      ],
+      "test_ids": [
+        "TST-017"
+      ],
+      "review_checks": [
+        "Review REQ-034 against exact annex SHA-256 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+      ],
+      "validation_checks": [
+        "Run its mapped acceptance/test oracle; UNKNOWN_MANUAL and every unmet preactivation prerequisite remain non-authorizing."
+      ]
+    },
+    {
+      "requirement_id": "REQ-035",
+      "acceptance_ids": [
+        "AC-018"
+      ],
+      "test_ids": [
+        "TST-018"
+      ],
+      "review_checks": [
+        "Review REQ-035 against exact annex SHA-256 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+      ],
+      "validation_checks": [
+        "Run its mapped acceptance/test oracle; UNKNOWN_MANUAL and every unmet preactivation prerequisite remain non-authorizing."
+      ]
+    },
+    {
+      "requirement_id": "REQ-036",
+      "acceptance_ids": [
+        "AC-018"
+      ],
+      "test_ids": [
+        "TST-018"
+      ],
+      "review_checks": [
+        "Review REQ-036 against exact annex SHA-256 78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0."
+      ],
+      "validation_checks": [
+        "Run its mapped acceptance/test oracle; UNKNOWN_MANUAL and every unmet preactivation prerequisite remain non-authorizing."
+      ]
+    }
+  ],
+  "quality_gates": {
+    "spec_review_required": true,
+    "testability_required": true,
+    "traceability_required": true
+  },
+  "council": {
+    "perspectives": [
+      {
+        "role": "planner",
+        "summary": "Review dependency order, current-main impact, ownership, migration epochs, rollback, and traceability."
+      },
+      {
+        "role": "security",
+        "summary": "Review claim/JCS identity, PostgreSQL RBAC, transit signatures, role separation, network proxy/Vault boundaries, and retirement."
+      },
+      {
+        "role": "tech_lead_qa",
+        "summary": "Recompute schemas, raw bytes, hashes, signatures, journal/receipt chains, counts, manifest, archives, and negative vectors."
+      },
+      {
+        "role": "tech_lead_devops",
+        "summary": "Review explicit kube binding, workers/Kata/proxy/Vault/PostgreSQL blockers, event-driven dev compatibility, GitOps ownership, and N-1 gates."
+      }
+    ],
+    "consensus_summary": "Draft only. Exact-hash council review may authorize ordered implementation; it does not claim the listed preactivation blockers are satisfied.",
+    "open_questions": []
+  }
+}

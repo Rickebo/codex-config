@@ -1,0 +1,16 @@
+{
+  "stage":"spec",
+  "status":"pass",
+  "summary":"Council approved a serialized trusted CI workflow_run coordinator, conventional SemVer planner, atomic immutable tag creation, and explicit dispatch into the existing verifier/publisher chain.",
+  "changed_files":[],
+  "validation":["Workspace Context revision 2c316e1f-3567-409d-8d75-9c2e532f2335 matches Kafka main 989799c.","Kafka exact-SHA CI run 32664550175 passed.","Tag ruleset 19595482 forbids version-tag update/deletion while permitting creation."],
+  "blockers":[],
+  "next_action":"Validate the feature spec and advance through the required spec approval into delegated code implementation.",
+  "spec_file":"/home/rickebo/.codex/pipeline/runs/2026-08-24T06-18-27-365Z/feature-spec.json",
+  "spec_check_file":"/home/rickebo/.codex/pipeline/runs/2026-08-24T06-18-27-365Z/spec-check.json",
+  "council_file":"/home/rickebo/.codex/pipeline/runs/2026-08-24T06-18-27-365Z/council.json",
+  "requires_council":true,
+  "independent_lanes":["trusted workflow and version planner implementation","release security review","release verification and live acceptance"],
+  "route_to":"code",
+  "risk_level":"high"
+}

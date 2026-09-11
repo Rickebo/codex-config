@@ -1,0 +1,19 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Independent Luna review found the CODEOWNERS file is not yet enforced by the live main ruleset and the broad automation App exclusion is not explicit in the release contract. Signed proof and static ownership tests otherwise remain acceptable.",
+  "changed_files": [],
+  "validation": [
+    "Exact reviewed head 229df7bd30f6410b4b057565f398281762ecf134",
+    "Live ruleset still showed required approving reviews 0, code-owner review false, stale dismissal false, last-push approval false, and zero bypass actors",
+    "Broad codicarium-automation-bot installation and private organization secret remain tracked by infra #1187"
+  ],
+  "blockers": [
+    "Enable and verify live code-owner review plus stale-review dismissal without weakening five required checks or adding bypass actors",
+    "Document that codicarium-automation-bot is not a trusted bypass and its broad scope remains an open remediation",
+    "Enable last-push approval immediately after the one-time bootstrap merge"
+  ],
+  "next_action": "Luna adds the narrow trust-boundary documentation, then root tightens and verifies the live ruleset before exact-head re-review.",
+  "route_to": "code",
+  "risk_level": "critical"
+}

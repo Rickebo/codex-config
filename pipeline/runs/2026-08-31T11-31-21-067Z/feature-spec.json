@@ -1,0 +1,75 @@
+{
+  "meta": {
+    "id": "SPEC-infra-1290-authority-runner-rev7",
+    "title": "REV7 privileged inventory and staging closure",
+    "author": "root-manager",
+    "created_at": "2026-08-31T11:32:00Z",
+    "version": "1.0.0"
+  },
+  "feature": {
+    "problem_statement": "The six-loop consolidation pipeline exhausted its review budget after independent review of exact head 0c18d6cc found four remaining gaps: final privileged directory metadata is not enforced, fresh-host admission staging is undocumented, the installed-root fixture masks service digest drift, and unrelated managed-prefix acceptance/race paths lack executable tests.",
+    "goals": [
+      "Close all four independently verified REV7 findings without weakening the canonical authority contract.",
+      "Preserve the REV6 nonblocking FIFO defense, cleanup protocol, deauthorize-first lifecycle, and immutable evidence model.",
+      "Return one exact clean head to fresh independent review and root-capable validation."
+    ],
+    "non_goals": [
+      "Host installation, runner-group policy mutation, workflow dispatch, PR merge, or any live authorization mutation.",
+      "Treating runner group 6 evidence as proof of runner group 7 readiness.",
+      "Changing terraform-plan-codicarium or broadening GitHub workflow authority."
+    ],
+    "scope_in": [
+      "Exact directory uid/gid/mode/nlink enforcement and mutation tests.",
+      "Secure immutable admission staging documentation or a minimal safe helper with explicit --admission-root.",
+      "Contract-preserving installed-root service digest fixtures and agreement tests.",
+      "Executable allowUnrelated/managedPrefixes safe, unsafe, metadata, special-file, and stat-to-fstat race coverage.",
+      "Mechanical synchronization of authoritative manifests, contracts, documentation, and digests."
+    ],
+    "scope_out": [
+      "Pushing, opening or merging a PR before fresh review/test/validation.",
+      "Host rollout or protected workflow authorization."
+    ]
+  },
+  "requirements": [
+    {"id":"REQ-001","priority":"MUST","statement":"Final inventory directories MUST match the canonical descriptor's exact uid, gid, mode, and link count and MUST fail closed on any type or metadata drift.","rationale":"Writable or multiply linked privileged directories can invalidate the installed-root security boundary."},
+    {"id":"REQ-002","priority":"MUST","statement":"Fresh-host documentation MUST define a root-owned immutable admission staging procedure and invoke installation with an explicit admission root, or the package MUST provide an equivalently safe minimal staging mechanism.","rationale":"The documented default currently fails closed because a normal checkout lacks staged admission files and admission.manifest."},
+    {"id":"REQ-003","priority":"MUST","statement":"Installed-root tests MUST preserve the contract-declared service SHA-256 and separately prove fixture bytes agree with the contract rather than overwriting the expected digest.","rationale":"Self-derived fixture expectations cannot detect authoritative contract drift."},
+    {"id":"REQ-004","priority":"MUST","statement":"Executable root-capable tests MUST cover allowed managed-prefix regular entries, unsafe types and metadata, and stat-to-fstat identity mutation returning inventory_unrelated_entry_raced.","rationale":"Security-sensitive acceptance and race branches require behavioral rather than source-string evidence."},
+    {"id":"REQ-005","priority":"MUST","statement":"The change MUST preserve all prior consolidation invariants, especially REV6 O_NONBLOCK source opens, three-line cleanup protocol, deauthorize-first lifecycle, group-7 evidence requirement, bounded parsing, and no live mutation.","rationale":"Closing new gaps must not regress already reviewed privilege-boundary controls."}
+  ],
+  "acceptance_criteria": [
+    {"id":"AC-001","requirement_ids":["REQ-001"],"scenario":"Given a synthetic installed root, when any declared privileged inventory directory has wrong owner, group, mode, link count, or type, then verification fails with a bounded deterministic reason before accepting inventory."},
+    {"id":"AC-002","requirement_ids":["REQ-002"],"scenario":"Given a fresh host and reviewed checkout, when an operator follows the documented staging and install sequence, then the exact immutable admission files and manifest are staged root-owned and install receives an explicit admission root."},
+    {"id":"AC-003","requirement_ids":["REQ-003"],"scenario":"Given installed-root fixtures, when the canonical contract service digest drifts from fixture bytes, then a dedicated agreement test fails and no fixture rewrites the contract expectation."},
+    {"id":"AC-004","requirement_ids":["REQ-004"],"scenario":"Given managed-prefix unrelated entries, when entries are safe, special, metadata-drifted, or changed between stat calls, then safe entries pass and each unsafe or raced case fails with its exact bounded reason."},
+    {"id":"AC-005","requirement_ids":["REQ-005"],"scenario":"Given the REV7 diff, when full contract, package, ownership, root-capable, workflow, syntax, and digest suites run, then all prior invariants still pass and no live-state action appears."}
+  ],
+  "test_plan": [
+    {"id":"TST-001","type":"unit","requirement_ids":["REQ-001"],"approach":"Mutate uid, gid, mode, nlink, and type for every declared inventory directory in generated roots and assert exact fail-closed reasons."},
+    {"id":"TST-002","type":"integration","requirement_ids":["REQ-002"],"approach":"Mechanically validate documented staging commands, exact admission manifest inputs, root ownership/mode requirements, and explicit --admission-root invocation."},
+    {"id":"TST-003","type":"unit","requirement_ids":["REQ-003"],"approach":"Keep contract digest immutable, compare it to fixture bytes, and inject digest drift to prove the agreement test fails."},
+    {"id":"TST-004","type":"integration","requirement_ids":["REQ-004"],"approach":"Use a disposable root-capable environment to create allowed, special, metadata-mutated, and identity-raced managed-prefix entries and verify exact outcomes."},
+    {"id":"TST-005","type":"non_functional","requirement_ids":["REQ-005"],"approach":"Run full consolidation suites, manifest checks, actionlint, Python/shell syntax, diff checks, and independent full-diff review; statically confirm no live mutation and group-7 gates remain."}
+  ],
+  "traceability": [
+    {"requirement_id":"REQ-001","acceptance_ids":["AC-001"],"test_ids":["TST-001"],"review_checks":["Review descriptor metadata comparison before directory acceptance."],"validation_checks":["Directory metadata mutation matrix passes."]},
+    {"requirement_id":"REQ-002","acceptance_ids":["AC-002"],"test_ids":["TST-002"],"review_checks":["Review root-owned immutable staging and explicit admission-root boundary."],"validation_checks":["Documentation/package contract guard and fresh-root staging test pass."]},
+    {"requirement_id":"REQ-003","acceptance_ids":["AC-003"],"test_ids":["TST-003"],"review_checks":["Confirm fixture never mutates canonical service sha256."],"validation_checks":["Fixture-contract digest agreement and negative drift test pass."]},
+    {"requirement_id":"REQ-004","acceptance_ids":["AC-004"],"test_ids":["TST-004"],"review_checks":["Review allowUnrelated/managedPrefixes identity and metadata checks."],"validation_checks":["Root-capable safe/unsafe/race behavioral matrix passes."]},
+    {"requirement_id":"REQ-005","acceptance_ids":["AC-005"],"test_ids":["TST-005"],"review_checks":["Compare REV7 against REV6 invariants and delivery gates."],"validation_checks":["Full suites and independent review pass at exact clean head."]}
+  ],
+  "quality_gates": {
+    "spec_review_required": true,
+    "testability_required": true,
+    "traceability_required": true
+  },
+  "council": {
+    "perspectives": [
+      {"role":"security","summary":"Exact privileged directory metadata and identity-race behavior are release-blocking authority-boundary requirements."},
+      {"role":"operations","summary":"A fresh-host procedure must explicitly stage immutable root-owned admission inputs and cannot rely on an absent default path."},
+      {"role":"quality","summary":"Fixtures must not rewrite authoritative expectations and all security-sensitive branches need executable root-capable tests."}
+    ],
+    "consensus_summary":"Proceed with a narrow REV7 code-only remediation, then repeat independent review/test/validation; keep host and GitHub authorization disabled.",
+    "open_questions":[]
+  }
+}

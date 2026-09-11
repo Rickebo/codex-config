@@ -1,0 +1,34 @@
+{
+  "stage": "validation",
+  "status": "fail",
+  "summary": "Validation failed for candidate 05fae66. Live Automatic Release run 32785641531 proves pending v0.6.13 resume fails before the new verifier handoff: the unchanged coordinator validator rejects the real proof run because its trusted main workflow SHA is 6053f97 while the immutable release source is ad52dfc. The existing fixture incorrectly models those SHAs as equal, so the candidate cannot yet satisfy REQ-001/AC-001.",
+  "changed_files": [],
+  "validation": [
+    "Pipeline state was confirmed at current_stage=validation, done=false; no transition or approval action was executed.",
+    "Live Automatic Release run 32785641531 selected resume for v0.6.13/ad52dfc and failed at Resolve exact successful candidate CI run.",
+    "The live failure was: unpublished tag coordinator run is not exact completed success; no tag creation, verifier dispatch, publisher dispatch, or release mutation followed.",
+    "The real exact Automatic Release proof tuple is run 32768808057 attempt 1, recorded by source check 97564382788 for v0.6.13/ad52dfc.",
+    "Proof run 32768808057 has trusted workflow head SHA 6053f97326157807c4323c44e0d14f3ee65c09bf, while the immutable release source is ad52dfcbc45d71eccad1d49fbd905161af7a44b1.",
+    "Current protected main is ca55729de7a58bef5b49ebdce8c28773bb7e1b2e, one commit beyond candidate parent 6053f97326157807c4323c44e0d14f3ee65c09bf.",
+    "A local call to candidate validateCompletedCoordinatorRun with the real run/proof/source tuple reproduced the exact live error.",
+    "Candidate diff leaves validateCompletedCoordinatorRun and the pre-handoff resume proof gate unchanged; coordinateVerifiedPublish is therefore unreachable for this live tuple.",
+    "hack/test-release-handoff-policy.js models the historical coordinator head_sha as the release source, unlike real run 32768808057, so focused green tests miss the production state.",
+    "Publisher workflow remains byte-identical and the candidate worktree remains clean; local Docker/buildx gaps are separate and still require protected PR supply-chain proof."
+  ],
+  "blockers": [
+    "Unchanged validateCompletedCoordinatorRun requires coordinator run head_sha to equal the tagged source, rejecting real proof 32768808057/1 whose trusted main workflow SHA is 6053f97 and source is ad52dfc.",
+    "The test fixture encodes the same incorrect equality and lacks a failing real-tuple regression, so current review/test passes do not cover the live resume path."
+  ],
+  "next_action": "Route to code: add a failing real-tuple regression, correct coordinator-proof semantics without weakening authentication, rebase onto current main ca55729, then rerun independent review and full test before validation.",
+  "route_to": "code",
+  "risk_level": "high",
+  "issues": [
+    {
+      "id": "GH-93",
+      "title": "Pending v0.6.13 Release Verify to Publish Release handoff",
+      "severity": "high",
+      "details": "Validation found the live historical coordinator-proof tuple is rejected before the candidate handoff executes; issue remains open until secure correction and post-merge publication proof.",
+      "owner_stage": "code"
+    }
+  ]
+}

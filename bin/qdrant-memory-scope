@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+start="${1:-$PWD}"
+start="$(cd "$start" 2>/dev/null && pwd -P)"
+
+slug() {
+  basename "$1" | tr '[:upper:]' '[:lower:]' | sed -E 's/[^a-z0-9]+/-/g; s/^-+//; s/-+$//'
+}
+
+repo_root=""
+if repo_root="$(git -C "$start" rev-parse --show-toplevel 2>/dev/null)"; then
+  repo_root="$(cd "$repo_root" && pwd -P)"
+else
+  repo_root=""
+fi
+
+workspace_root=""
+cursor="$start"
+while [[ "$cursor" != "/" ]]; do
+  count=0
+  while IFS= read -r child; do
+    if child_root="$(git -C "$child" rev-parse --show-toplevel 2>/dev/null)"; then
+      child_root="$(cd "$child_root" && pwd -P)"
+      child_path="$(cd "$child" && pwd -P)"
+      if [[ "$child_root" == "$child_path" ]]; then
+        count=$((count + 1))
+      fi
+    fi
+  done < <(find "$cursor" -mindepth 1 -maxdepth 1 -type d 2>/dev/null)
+
+  if [[ "$count" -ge 2 ]]; then
+    workspace_root="$cursor"
+    break
+  fi
+  cursor="$(dirname "$cursor")"
+done
+
+printf '{\n'
+printf '  "global_collection": "codex-global"'
+if [[ -n "$workspace_root" ]]; then
+  printf ',\n  "workspace_root": "%s",\n  "workspace_collection": "codex-workspace-%s"' "$workspace_root" "$(slug "$workspace_root")"
+fi
+if [[ -n "$repo_root" ]]; then
+  printf ',\n  "repo_root": "%s",\n  "repo_collection": "codex-repo-%s"' "$repo_root" "$(slug "$repo_root")"
+fi
+printf '\n}\n'

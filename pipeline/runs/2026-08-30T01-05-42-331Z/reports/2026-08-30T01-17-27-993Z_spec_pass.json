@@ -1,0 +1,25 @@
+{
+  "stage": "spec",
+  "status": "pass",
+  "summary": "Three-lane council approved a bounded rebase and parser-test hardening of infra PR #1155, with exact-lease concurrency protection and explicit no-merge/no-dispatch/no-deploy gates.",
+  "changed_files": [],
+  "validation": [
+    "Feature spec checker passed all quality gates",
+    "Five MUST requirements trace to five acceptance criteria and three tests",
+    "Planner, reviewer, and QA council perspectives reached consensus",
+    "Authoritative GitHub head confirms production templates already use valid index syntax"
+  ],
+  "blockers": [],
+  "next_action": "Assign a Luna worker to refresh the existing PR branch onto exact canonical main and add exact real-kubectl parser coverage, stopping before merge or live mutation.",
+  "route_to": "code",
+  "risk_level": "critical",
+  "requires_council": true,
+  "independent_lanes": [
+    "rebase and conflict preservation",
+    "kubectl parser regression coverage",
+    "security and exact-head verification"
+  ],
+  "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T01-05-42-331Z/feature-spec.json",
+  "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T01-05-42-331Z/spec-check.json",
+  "council_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T01-05-42-331Z/council.md"
+}

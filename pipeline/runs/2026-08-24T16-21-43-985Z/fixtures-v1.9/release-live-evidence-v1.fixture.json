@@ -1,0 +1,423 @@
+{
+  "schema": "codicarium.release-live-evidence/v1",
+  "captured_at": "2026-01-01T01:00:00Z",
+  "repository": {
+    "full_name": "codicarium/deployment-controller",
+    "id": "1303901324"
+  },
+  "corrective_pr": {
+    "number": "101",
+    "head_sha": "2222222222222222222222222222222222222222",
+    "merge_sha": "2222222222222222222222222222222222222222"
+  },
+  "protected_main_sha": "2222222222222222222222222222222222222222",
+  "protected_checks": [
+    {
+      "name": "chart",
+      "app_id": "15368",
+      "run_id": "9000001",
+      "attempt": "1",
+      "check_id": "9300001",
+      "head_sha": "2222222222222222222222222222222222222222",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "integration",
+      "app_id": "15368",
+      "run_id": "9000001",
+      "attempt": "1",
+      "check_id": "9300002",
+      "head_sha": "2222222222222222222222222222222222222222",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "lint",
+      "app_id": "15368",
+      "run_id": "9000001",
+      "attempt": "1",
+      "check_id": "9300003",
+      "head_sha": "2222222222222222222222222222222222222222",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "supply-chain",
+      "app_id": "15368",
+      "run_id": "9000001",
+      "attempt": "1",
+      "check_id": "9300004",
+      "head_sha": "2222222222222222222222222222222222222222",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "test",
+      "app_id": "15368",
+      "run_id": "9000001",
+      "attempt": "1",
+      "check_id": "9300005",
+      "head_sha": "2222222222222222222222222222222222222222",
+      "status": "completed",
+      "conclusion": "success"
+    }
+  ],
+  "release_identity": {
+    "tag": "v0.6.14",
+    "source_sha": "1111111111111111111111111111111111111111"
+  },
+  "coordinator": {
+    "run_id": "9004001",
+    "attempt": "1",
+    "workflow_path": ".github/workflows/automatic-release-v2.yaml",
+    "workflow_sha": "2222222222222222222222222222222222222222",
+    "check_id": "9004001"
+  },
+  "verifier": {
+    "run_id": "9003001",
+    "attempt": "1",
+    "workflow_path": ".github/workflows/release-verify-v2.yaml",
+    "workflow_sha": "2222222222222222222222222222222222222222",
+    "check_id": "9003001"
+  },
+  "attester": {
+    "run_id": "9003001",
+    "attempt": "1",
+    "workflow_path": ".github/workflows/release-verify-v2.yaml",
+    "workflow_sha": "2222222222222222222222222222222222222222",
+    "check_id": "9003002"
+  },
+  "claim": {
+    "run_id": "9004001",
+    "attempt": "1",
+    "workflow_path": ".github/workflows/automatic-release-v2.yaml",
+    "workflow_sha": "2222222222222222222222222222222222222222",
+    "check_id": "9004002"
+  },
+  "receipt": {
+    "run_id": "9004001",
+    "attempt": "1",
+    "workflow_path": ".github/workflows/automatic-release-v2.yaml",
+    "workflow_sha": "2222222222222222222222222222222222222222",
+    "check_id": "9004003"
+  },
+  "publisher": {
+    "run_id": "9005001",
+    "attempt": "1",
+    "workflow_path": ".github/workflows/publish-release-v2.yaml",
+    "workflow_sha": "2222222222222222222222222222222222222222",
+    "check_id": "9005001"
+  },
+  "candidate_evidence": {
+    "evidence_sha256": "aed6d844aeeda29b5299d37939dfe7d5b4d0a61e70509d92452b9af35b1e7019",
+    "image": {
+      "object_key": "artifacts/v1/orgs/255540067/repos/1303901324/releases/v0.6.14/sources/1111111111111111111111111111111111111111/runs/9003001/attempts/1/deployment-controller-verified-image/0123456789abcdef0123456789abcdef.tar.zst",
+      "archive_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "byte_length": "4096",
+      "nonce": "0123456789abcdef0123456789abcdef"
+    },
+    "chart": {
+      "object_key": "artifacts/v1/orgs/255540067/repos/1303901324/releases/v0.6.14/sources/1111111111111111111111111111111111111111/runs/9003001/attempts/1/deployment-controller-verified-chart/fedcba9876543210fedcba9876543210.tar.zst",
+      "archive_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "byte_length": "2048",
+      "nonce": "fedcba9876543210fedcba9876543210"
+    }
+  },
+  "authorization": {
+    "object_key": "artifacts/v1/orgs/255540067/repos/1303901324/releases/v0.6.14/sources/1111111111111111111111111111111111111111/runs/9003001/attempts/1/deployment-controller-signed-authorization/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.tar.zst",
+    "archive_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+    "predicate_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+    "byte_length": "1024",
+    "nonce": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  "handoff": {
+    "check_id": "9004003",
+    "external_id": "codicarium.release-handoff/v1:8abe528bb32aaa47f8fc496c3571d4b91248f3ebfe4c8be29463a25277bd9e88",
+    "sha256": "8abe528bb32aaa47f8fc496c3571d4b91248f3ebfe4c8be29463a25277bd9e88",
+    "digest_base64url": "ir5Si7Mqqkf4_ElsNXHUuRJI8-v-TIvilGOiUne9nog",
+    "tuple_base64url": "cmVsZWFzZS12ZXJpZnk6OTAwMzAwMS8xOnYwLjYuMTQ6MTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTo5MDAxMDAxLzE6OTAwMjAwMS8xOjkwMDIwMDM6MjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMg"
+  },
+  "dispatch": {
+    "claim_check_id": "9004002",
+    "receipt_check_id": "9004003",
+    "external_id": "codicarium.publisher-receipt/v1:67839591a8190e98fc94ecf6ddff6adc4425f512e29e22150fca1074348f259b",
+    "sha256": "67839591a8190e98fc94ecf6ddff6adc4425f512e29e22150fca1074348f259b",
+    "digest_base64url": "Z4OVkagZDpj8lOz23f9q3EQl9RLiniIVD8oQdDSPJZs",
+    "tuple_base64url": "cHVibGlzaGVyLWRpc3BhdGNoOjkwMDQwMDEvMTo5MDA0MDAzOjhhYmU1MjhiYjMyYWFhNDdmOGZjNDk2YzM1NzFkNGI5MTI0OGYzZWJmZTRjOGJlMjk0NjNhMjUyNzdiZDllODg6MjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjpjb2RpY2FyaXVtL2RlcGxveW1lbnQtY29udHJvbGxlcjp2MC42LjE0OjExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTE"
+  },
+  "release": {
+    "id": "9006001",
+    "tag": "v0.6.14",
+    "target": "1111111111111111111111111111111111111111",
+    "draft": false,
+    "prerelease": false
+  },
+  "registries": {
+    "image": {
+      "registry": "docker-pull.nexus.int.codicarium.com",
+      "repository": "codicarium/deployment-controller",
+      "reference": "v0.6.14",
+      "digest": "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+    },
+    "chart": {
+      "registry": "charts.nexus.int.codicarium.com",
+      "repository": "codicarium/deployment-controller",
+      "version": "0.6.14",
+      "digest": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+    }
+  },
+  "assets": [
+    {
+      "id": "9400001",
+      "name": "deployment-controller-0.6.14.tgz",
+      "size": "1",
+      "sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+    },
+    {
+      "id": "9400002",
+      "name": "deployment-controller-0.6.14.tgz.sigstore.json",
+      "size": "1",
+      "sha256": "2222222222222222222222222222222222222222222222222222222222222222"
+    },
+    {
+      "id": "9400003",
+      "name": "deployment-controller-chart-oci-provenance.sigstore.json",
+      "size": "1",
+      "sha256": "3333333333333333333333333333333333333333333333333333333333333333"
+    },
+    {
+      "id": "9400004",
+      "name": "deployment-controller-chart.sha256",
+      "size": "1",
+      "sha256": "4444444444444444444444444444444444444444444444444444444444444444"
+    },
+    {
+      "id": "9400005",
+      "name": "deployment-controller-chart.sha256.sigstore.json",
+      "size": "1",
+      "sha256": "5555555555555555555555555555555555555555555555555555555555555555"
+    },
+    {
+      "id": "9400006",
+      "name": "deployment-controller-image-provenance.sigstore.json",
+      "size": "1",
+      "sha256": "6666666666666666666666666666666666666666666666666666666666666666"
+    },
+    {
+      "id": "9400007",
+      "name": "deployment-controller-linux-amd64-sbom.sigstore.json",
+      "size": "1",
+      "sha256": "7777777777777777777777777777777777777777777777777777777777777777"
+    },
+    {
+      "id": "9400008",
+      "name": "deployment-controller-linux-arm64-sbom.sigstore.json",
+      "size": "1",
+      "sha256": "8888888888888888888888888888888888888888888888888888888888888888"
+    },
+    {
+      "id": "9400009",
+      "name": "deployment-controller-release-graph.json",
+      "size": "1",
+      "sha256": "9999999999999999999999999999999999999999999999999999999999999999"
+    },
+    {
+      "id": "9400010",
+      "name": "deployment-controller-release-graph.json.sigstore.json",
+      "size": "1",
+      "sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+    },
+    {
+      "id": "9400011",
+      "name": "deployment-controller-release-manifest.json",
+      "size": "1",
+      "sha256": "2222222222222222222222222222222222222222222222222222222222222222"
+    },
+    {
+      "id": "9400012",
+      "name": "deployment-controller-release-manifest.json.sigstore.json",
+      "size": "1",
+      "sha256": "3333333333333333333333333333333333333333333333333333333333333333"
+    },
+    {
+      "id": "9400013",
+      "name": "deployment-controller-publisher-subject-manifest.json",
+      "size": "1",
+      "sha256": "4444444444444444444444444444444444444444444444444444444444444444"
+    },
+    {
+      "id": "9400014",
+      "name": "deployment-controller-publisher-subject-manifest.json.sigstore.json",
+      "size": "1",
+      "sha256": "5555555555555555555555555555555555555555555555555555555555555555"
+    }
+  ],
+  "mutation_receipts": [
+    {
+      "sequence": "1",
+      "mutation": "release-create",
+      "check_id": "9200001",
+      "external_id": "codicarium.publisher-mutation/v1:67839591a8190e98fc94ecf6ddff6adc4425f512e29e22150fca1074348f259b:1:175505006711c5b3541f623eea49bbb8b1116abe3be0a24b771c51040a925ca7",
+      "sha256": "175505006711c5b3541f623eea49bbb8b1116abe3be0a24b771c51040a925ca7",
+      "previous_receipt_sha256": "67839591a8190e98fc94ecf6ddff6adc4425f512e29e22150fca1074348f259b"
+    },
+    {
+      "sequence": "2",
+      "mutation": "image-publish",
+      "check_id": "9200002",
+      "external_id": "codicarium.publisher-mutation/v1:67839591a8190e98fc94ecf6ddff6adc4425f512e29e22150fca1074348f259b:2:bf3ce15233a831401575287cc77909cbf24a85652d667c2c22096fc3ddd4a58c",
+      "sha256": "bf3ce15233a831401575287cc77909cbf24a85652d667c2c22096fc3ddd4a58c",
+      "previous_receipt_sha256": "175505006711c5b3541f623eea49bbb8b1116abe3be0a24b771c51040a925ca7"
+    },
+    {
+      "sequence": "3",
+      "mutation": "chart-publish",
+      "check_id": "9200003",
+      "external_id": "codicarium.publisher-mutation/v1:67839591a8190e98fc94ecf6ddff6adc4425f512e29e22150fca1074348f259b:3:7df4a21ec1c90f49986e514666b41a220cf9ce1bcc3c67c6fd725acc41aab1e1",
+      "sha256": "7df4a21ec1c90f49986e514666b41a220cf9ce1bcc3c67c6fd725acc41aab1e1",
+      "previous_receipt_sha256": "bf3ce15233a831401575287cc77909cbf24a85652d667c2c22096fc3ddd4a58c"
+    },
+    {
+      "sequence": "4",
+      "mutation": "release-asset-create",
+      "check_id": "9200004",
+      "external_id": "codicarium.publisher-mutation/v1:67839591a8190e98fc94ecf6ddff6adc4425f512e29e22150fca1074348f259b:4:8df9619e4dc78bbe5628489d98e0433847588560b4f2732decb9b06043846015",
+      "sha256": "8df9619e4dc78bbe5628489d98e0433847588560b4f2732decb9b06043846015",
+      "previous_receipt_sha256": "7df4a21ec1c90f49986e514666b41a220cf9ce1bcc3c67c6fd725acc41aab1e1"
+    },
+    {
+      "sequence": "5",
+      "mutation": "release-asset-create",
+      "check_id": "9200005",
+      "external_id": "codicarium.publisher-mutation/v1:67839591a8190e98fc94ecf6ddff6adc4425f512e29e22150fca1074348f259b:5:81696e0a7cf3e5003dc0e4f6293ce244eaf87d0fbe36b477192b87ed17b1c72d",
+      "sha256": "81696e0a7cf3e5003dc0e4f6293ce244eaf87d0fbe36b477192b87ed17b1c72d",
+      "previous_receipt_sha256": "8df9619e4dc78bbe5628489d98e0433847588560b4f2732decb9b06043846015"
+    },
+    {
+      "sequence": "6",
+      "mutation": "release-asset-create",
+      "check_id": "9200006",
+      "external_id": "codicarium.publisher-mutation/v1:67839591a8190e98fc94ecf6ddff6adc4425f512e29e22150fca1074348f259b:6:3e923464e2dd23f92bf90406dc7bf8641d121526b92562de460524c6859cfef3",
+      "sha256": "3e923464e2dd23f92bf90406dc7bf8641d121526b92562de460524c6859cfef3",
+      "previous_receipt_sha256": "81696e0a7cf3e5003dc0e4f6293ce244eaf87d0fbe36b477192b87ed17b1c72d"
+    },
+    {
+      "sequence": "7",
+      "mutation": "release-asset-create",
+      "check_id": "9200007",
+      "external_id": "codicarium.publisher-mutation/v1:67839591a8190e98fc94ecf6ddff6adc4425f512e29e22150fca1074348f259b:7:2bbdb949041224e1b9125fcd80ade777578f8291d43d43c945f6791b05375311",
+      "sha256": "2bbdb949041224e1b9125fcd80ade777578f8291d43d43c945f6791b05375311",
+      "previous_receipt_sha256": "3e923464e2dd23f92bf90406dc7bf8641d121526b92562de460524c6859cfef3"
+    },
+    {
+      "sequence": "8",
+      "mutation": "release-asset-create",
+      "check_id": "9200008",
+      "external_id": "codicarium.publisher-mutation/v1:67839591a8190e98fc94ecf6ddff6adc4425f512e29e22150fca1074348f259b:8:6d084744f65a6ee91bf976e681b03876e5035bf3b999c309a0fe072acb1a785a",
+      "sha256": "6d084744f65a6ee91bf976e681b03876e5035bf3b999c309a0fe072acb1a785a",
+      "previous_receipt_sha256": "2bbdb949041224e1b9125fcd80ade777578f8291d43d43c945f6791b05375311"
+    },
+    {
+      "sequence": "9",
+      "mutation": "release-asset-create",
+      "check_id": "9200009",
+      "external_id": "codicarium.publisher-mutation/v1:67839591a8190e98fc94ecf6ddff6adc4425f512e29e22150fca1074348f259b:9:e2ad646806501513286cb8afcd144f632acd36f882d877166dabbb46da2b2914",
+      "sha256": "e2ad646806501513286cb8afcd144f632acd36f882d877166dabbb46da2b2914",
+      "previous_receipt_sha256": "6d084744f65a6ee91bf976e681b03876e5035bf3b999c309a0fe072acb1a785a"
+    },
+    {
+      "sequence": "10",
+      "mutation": "release-asset-create",
+      "check_id": "9200010",
+      "external_id": "codicarium.publisher-mutation/v1:67839591a8190e98fc94ecf6ddff6adc4425f512e29e22150fca1074348f259b:10:2b67f0354fd756bec28a6db460e739d06d79cf81328af0f68fb71eb58d236610",
+      "sha256": "2b67f0354fd756bec28a6db460e739d06d79cf81328af0f68fb71eb58d236610",
+      "previous_receipt_sha256": "e2ad646806501513286cb8afcd144f632acd36f882d877166dabbb46da2b2914"
+    },
+    {
+      "sequence": "11",
+      "mutation": "release-asset-create",
+      "check_id": "9200011",
+      "external_id": "codicarium.publisher-mutation/v1:67839591a8190e98fc94ecf6ddff6adc4425f512e29e22150fca1074348f259b:11:e1ded6b5d692c0c964c54887b549213ad8840f17977b88fd182131b93dd25aff",
+      "sha256": "e1ded6b5d692c0c964c54887b549213ad8840f17977b88fd182131b93dd25aff",
+      "previous_receipt_sha256": "2b67f0354fd756bec28a6db460e739d06d79cf81328af0f68fb71eb58d236610"
+    },
+    {
+      "sequence": "12",
+      "mutation": "release-asset-create",
+      "check_id": "9200012",
+      "external_id": "codicarium.publisher-mutation/v1:67839591a8190e98fc94ecf6ddff6adc4425f512e29e22150fca1074348f259b:12:10e1965ff840ed58992b7beb53a20ad20e3beb0c3da549a8ef56dda672b37dcd",
+      "sha256": "10e1965ff840ed58992b7beb53a20ad20e3beb0c3da549a8ef56dda672b37dcd",
+      "previous_receipt_sha256": "e1ded6b5d692c0c964c54887b549213ad8840f17977b88fd182131b93dd25aff"
+    },
+    {
+      "sequence": "13",
+      "mutation": "release-asset-create",
+      "check_id": "9200013",
+      "external_id": "codicarium.publisher-mutation/v1:67839591a8190e98fc94ecf6ddff6adc4425f512e29e22150fca1074348f259b:13:ab5aaee85b627195ddcf15b70c6c92c7d56062735be6afa758eb4fd29704bbc7",
+      "sha256": "ab5aaee85b627195ddcf15b70c6c92c7d56062735be6afa758eb4fd29704bbc7",
+      "previous_receipt_sha256": "10e1965ff840ed58992b7beb53a20ad20e3beb0c3da549a8ef56dda672b37dcd"
+    },
+    {
+      "sequence": "14",
+      "mutation": "release-asset-create",
+      "check_id": "9200014",
+      "external_id": "codicarium.publisher-mutation/v1:67839591a8190e98fc94ecf6ddff6adc4425f512e29e22150fca1074348f259b:14:9bdf76ab6b0973e27860a40170384a8d5e76bec61dcbd147548eeec5a8fc10a9",
+      "sha256": "9bdf76ab6b0973e27860a40170384a8d5e76bec61dcbd147548eeec5a8fc10a9",
+      "previous_receipt_sha256": "ab5aaee85b627195ddcf15b70c6c92c7d56062735be6afa758eb4fd29704bbc7"
+    },
+    {
+      "sequence": "15",
+      "mutation": "release-asset-create",
+      "check_id": "9200015",
+      "external_id": "codicarium.publisher-mutation/v1:67839591a8190e98fc94ecf6ddff6adc4425f512e29e22150fca1074348f259b:15:20b492db3e105fca9e5ba1269727302f5e932e56ece954b4fc53c57e930cafd7",
+      "sha256": "20b492db3e105fca9e5ba1269727302f5e932e56ece954b4fc53c57e930cafd7",
+      "previous_receipt_sha256": "9bdf76ab6b0973e27860a40170384a8d5e76bec61dcbd147548eeec5a8fc10a9"
+    },
+    {
+      "sequence": "16",
+      "mutation": "release-asset-create",
+      "check_id": "9200016",
+      "external_id": "codicarium.publisher-mutation/v1:67839591a8190e98fc94ecf6ddff6adc4425f512e29e22150fca1074348f259b:16:e8e5c3256d1a7a76f1fe3da7be8a8607e17c178dddf742545bac7e798be4a8ba",
+      "sha256": "e8e5c3256d1a7a76f1fe3da7be8a8607e17c178dddf742545bac7e798be4a8ba",
+      "previous_receipt_sha256": "20b492db3e105fca9e5ba1269727302f5e932e56ece954b4fc53c57e930cafd7"
+    },
+    {
+      "sequence": "17",
+      "mutation": "release-asset-create",
+      "check_id": "9200017",
+      "external_id": "codicarium.publisher-mutation/v1:67839591a8190e98fc94ecf6ddff6adc4425f512e29e22150fca1074348f259b:17:c6991dcc40752d47af4201ea2503cfd7e1dc117599db0b3a0e5087e4a92006fe",
+      "sha256": "c6991dcc40752d47af4201ea2503cfd7e1dc117599db0b3a0e5087e4a92006fe",
+      "previous_receipt_sha256": "e8e5c3256d1a7a76f1fe3da7be8a8607e17c178dddf742545bac7e798be4a8ba"
+    },
+    {
+      "sequence": "18",
+      "mutation": "release-finalize",
+      "check_id": "9200018",
+      "external_id": "codicarium.publisher-mutation/v1:67839591a8190e98fc94ecf6ddff6adc4425f512e29e22150fca1074348f259b:18:8fa65d068b7fe1737ce5fbcb65af66145eefe5dce06d2fcb1f3c05980a3bbde4",
+      "sha256": "8fa65d068b7fe1737ce5fbcb65af66145eefe5dce06d2fcb1f3c05980a3bbde4",
+      "previous_receipt_sha256": "c6991dcc40752d47af4201ea2503cfd7e1dc117599db0b3a0e5087e4a92006fe"
+    }
+  ],
+  "retirement": {
+    "old_workflows": [
+      {
+        "id": "341194538",
+        "path": ".github/workflows/automatic-release.yaml",
+        "state": "disabled_manually"
+      },
+      {
+        "id": "318365668",
+        "path": ".github/workflows/release.yaml",
+        "state": "disabled_manually"
+      },
+      {
+        "id": "318365667",
+        "path": ".github/workflows/publish-release.yaml",
+        "state": "disabled_manually"
+      }
+    ],
+    "legacy_credentials_removed": true,
+    "general_runner_access_removed": true
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "run_dir": "/home/rickebo/.codex/pipeline/runs/2026-08-24T16-21-43-985Z",
+  "generated_at": "2026-08-25T04:56:29Z",
+  "risk_level": "critical",
+  "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T16-21-43-985Z/feature-spec.v1.8.draft.json",
+  "spec_sha256": "63c355d130461a9e54c4b3f49ff29b4ce673378fcaab0d32a4a1bf3ec50b77c5",
+  "reviewed_remote_main": "d3565f534b2f64585c3e15e35d8d645449f4f09d",
+  "prerequisite_heads": {
+    "codicarium/codicarium-actions": "9545b5a66498f67667e57d021507ac060fd016b6",
+    "codicarium/runner-config": "9625e442a12c721e89250812f3d079b09833ccb0"
+  },
+  "evidence": {
+    "administrator_ruleset_bytes": 4024,
+    "administrator_ruleset_sha256": "55dbee3772ce06d0af59df8cb21d6862d4d167470065e2580ff9adb3d28efb58",
+    "live_check_id": "97655710504",
+    "automatic_release_run_id": "32798160604",
+    "release_verify_run_id": "32798188729"
+  },
+  "perspectives": [
+    {
+      "role": "planner",
+      "decision": "NO-GO",
+      "blocking_findings": [
+        "Read capabilities are referenced but have no issuer, token, binding, expiry, or storage contract.",
+        "Two one-object uploads conflict with one top-level capability nonce and expiry in candidate evidence.",
+        "The pre-write dispatch receipt cannot also contain facts created by later public mutations; an append-only mutation receipt chain is undefined.",
+        "Broker, isolated runner, Vault, app wiring, DNS, TLS, network policy, availability, observability, and rollback ownership are not bounded enough to plan.",
+        "Administrator evidence validation is incorrectly combined with a prohibited repository integration-test dependency."
+      ]
+    },
+    {
+      "role": "security",
+      "decision": "NO-GO",
+      "blocking_findings": [
+        "The candidate artifact and isolated-runner boundary has no reviewed implementation or executable protocol.",
+        "Current supply-chain candidate code still receives reusable Nexus credentials.",
+        "A public claim can be raced by a manually dispatched publisher because the exact returned publisher run is not bound by a coordinator-created receipt.",
+        "Publisher receipt binding lacks an exact signed-authorization read capability.",
+        "The immutable v0.6.13 workflow remains runnable with its historical OIDC and registry authority."
+      ]
+    },
+    {
+      "role": "tech_lead_qa",
+      "decision": "NO-GO",
+      "blocking_findings": [
+        "Broker APIs, capability tokens, object-key grammar, candidate evidence schema, and canonical archive fixtures are absent.",
+        "The 1000-suite horizon has no machine-detectable termination fixture.",
+        "The live-evidence schema and byte fixture are absent.",
+        "Tuple base64url expected values, workflow-to-job permission mapping, and total follow-up ordering remain incomplete."
+      ]
+    },
+    {
+      "role": "tech_lead_devops",
+      "decision": "NO-GO",
+      "blocking_findings": [
+        "No broker service, issuer, chart, DNS, TLS, OIDC validation, conditional object-store adapter, or live endpoint exists.",
+        "No destroyed-after-use runner, credentialless prefetch boundary, or singleton broker egress policy exists.",
+        "runner-config profiles are disabled and current egress policy is broader than the specified broker-only boundary.",
+        "Cross-repository GitOps, Vault, organization-runner, rollout, and validation dependencies are not explicit."
+      ]
+    }
+  ],
+  "consensus": {
+    "decision": "rejected_return_to_spec",
+    "summary": "All four exact-hash lanes reject v1.8. Preserve its forward-only and canonical-identity work, but make the broker/read/archive/receipt/old-workflow/platform contracts executable before code.",
+    "implementation_allowed": false
+  }
+}

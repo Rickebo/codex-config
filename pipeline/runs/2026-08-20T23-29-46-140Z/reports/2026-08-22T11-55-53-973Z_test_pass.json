@@ -1,0 +1,23 @@
+{
+  "stage": "test",
+  "status": "pass",
+  "summary": "Exact-head QA passed for PR #177 including the guarded manual release dispatch contract.",
+  "changed_files": [
+    ".github/workflows/release.yml",
+    "tools/test_check_main_protection.py"
+  ],
+  "validation": [
+    "Hosted validate run 32571303676 passed all repository CI targets.",
+    "Protection contract tests passed 17/17; Docker smoke tests passed 11/11.",
+    "Actionlint, workflow parser, shell, OpenAPI, supply-chain, migration, Helm, and diff checks passed.",
+    "Main dispatch emits all release flags; non-main dispatch exits nonzero with no outputs.",
+    "No tracked worktree changes remain."
+  ],
+  "blockers": [
+    "Post-merge validation-only release run and guarded main manual release run remain required.",
+    "No arm64 publication is claimed; release architecture remains linux/amd64."
+  ],
+  "next_action": "Merge PR #177 normally, monitor the push release run, then dispatch release on refs/heads/main and capture immutable artifacts and DEV rollout evidence.",
+  "route_to": "validation",
+  "risk_level": "low"
+}

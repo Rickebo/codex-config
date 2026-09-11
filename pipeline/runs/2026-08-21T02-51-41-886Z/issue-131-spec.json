@@ -1,0 +1,115 @@
+{
+  "meta": {
+    "id": "SPEC-131-disable-service-account-automount",
+    "title": "Disable unused Kubernetes service-account token automount",
+    "author": "Codex manager",
+    "created_at": "2026-08-21T02:55:00+02:00",
+    "version": "1.0"
+  },
+  "feature": {
+    "problem_statement": "The application Deployment uses a Kubernetes ServiceAccount without disabling automatic token projection, although the server has no Kubernetes API integration and does not need an in-cluster credential.",
+    "goals": [
+      "Disable service-account token automount at the application pod boundary.",
+      "Assert the hardening in CI and DEV Helm contract renders.",
+      "Preserve migration-hook, Vault TokenRequest, startup, and probe behavior."
+    ],
+    "non_goals": [
+      "Adding Kubernetes API access, RBAC, or a compatibility fallback.",
+      "Changing the migration Job token contract or Vault SecretStore authentication."
+    ],
+    "scope_in": [
+      "Application Deployment pod spec and optionally chart-created ServiceAccount hardening.",
+      "Helm contract tests and negative missing/true fixtures.",
+      "A concise deployment documentation note."
+    ],
+    "scope_out": ["Production rollout", "New Kubernetes client functionality"]
+  },
+  "requirements": [
+    {
+      "id": "REQ-131-001",
+      "priority": "MUST",
+      "statement": "The application Deployment pod spec must render automountServiceAccountToken: false for both CI/external-database and DEV/CNPG values.",
+      "rationale": "Pod-level enforcement also protects deployments that use an externally managed ServiceAccount."
+    },
+    {
+      "id": "REQ-131-002",
+      "priority": "MUST",
+      "statement": "Helm contract validation must reject a missing or true application automount setting and cover both rendered environments.",
+      "rationale": "A future chart edit must not silently reintroduce an unnecessary credential."
+    },
+    {
+      "id": "REQ-131-003",
+      "priority": "SHOULD",
+      "statement": "When the chart creates the application ServiceAccount, it should also render automountServiceAccountToken: false as defense in depth.",
+      "rationale": "The generated identity should be safe independently of pod-template enforcement."
+    },
+    {
+      "id": "REQ-131-004",
+      "priority": "SHOULD",
+      "statement": "Deployment documentation must state that future Kubernetes API access requires explicit opt-in and narrow RBAC.",
+      "rationale": "The security boundary and future exception path must remain discoverable."
+    }
+  ],
+  "acceptance_criteria": [
+    {
+      "id": "AC-131-001",
+      "requirement_ids": ["REQ-131-001"],
+      "scenario": "Given CI and DEV Helm values, when the chart is rendered, then the application pod spec contains boolean automountServiceAccountToken false."
+    },
+    {
+      "id": "AC-131-002",
+      "requirement_ids": ["REQ-131-002"],
+      "scenario": "Given a rendered Deployment with the field missing or true, when Helm contract validation runs, then validation fails."
+    },
+    {
+      "id": "AC-131-003",
+      "requirement_ids": ["REQ-131-003"],
+      "scenario": "Given chart-created ServiceAccount values, when the chart is rendered, then its automount setting is false."
+    },
+    {
+      "id": "AC-131-004",
+      "requirement_ids": ["REQ-131-004"],
+      "scenario": "Given the deployment runbook, when an operator considers Kubernetes API access, then the explicit opt-in and narrow-RBAC rule is documented."
+    }
+  ],
+  "test_plan": [
+    {
+      "id": "TST-131-001",
+      "type": "contract",
+      "requirement_ids": ["REQ-131-001", "REQ-131-002", "REQ-131-003"],
+      "approach": "Render CI and DEV values, assert Deployment and created ServiceAccount fields, and exercise missing/true negative fixtures."
+    },
+    {
+      "id": "TST-131-002",
+      "type": "regression",
+      "requirement_ids": ["REQ-131-001"],
+      "approach": "Run Helm lint, strict schema/render checks, existing helmcontract tests, Go tests, and Python checker tests."
+    },
+    {
+      "id": "TST-131-003",
+      "type": "deployment",
+      "requirement_ids": ["REQ-131-001", "REQ-131-004"],
+      "approach": "After merge, verify explicit DEV Argo/Deployment readiness, migration completion, health/readiness, and Vault SecretStore/ExternalSecret readiness."
+    }
+  ],
+  "traceability": [
+    {"requirement_id":"REQ-131-001","acceptance_ids":["AC-131-001"],"test_ids":["TST-131-001","TST-131-002"],"review_checks":["Pod-level false is present in both environments"],"validation_checks":["DEV rollout remains healthy"]},
+    {"requirement_id":"REQ-131-002","acceptance_ids":["AC-131-002"],"test_ids":["TST-131-001"],"review_checks":["Negative fixtures fail closed"],"validation_checks":["Hosted validate passes"]},
+    {"requirement_id":"REQ-131-003","acceptance_ids":["AC-131-003"],"test_ids":["TST-131-001"],"review_checks":["Created ServiceAccount is hardened"],"validation_checks":["Rendered manifest matches contract"]},
+    {"requirement_id":"REQ-131-004","acceptance_ids":["AC-131-004"],"test_ids":["TST-131-002","TST-131-003"],"review_checks":["Docs describe explicit opt-in"],"validation_checks":["Runbook remains accurate"]}
+  ],
+  "quality_gates": {
+    "spec_review_required": true,
+    "testability_required": true,
+    "traceability_required": true
+  },
+  "council": {
+    "perspectives": [
+      {"role":"planner_lite","summary":"Keep the change pod-scoped, chart-contract tested, and limited to an unused credential."},
+      {"role":"reviewer_lite","summary":"Require false boolean in rendered Deployment and generated ServiceAccount, with negative fixtures."},
+      {"role":"tech_lead_qa","summary":"Preserve Vault TokenRequest and migration-hook behavior and verify explicit DEV readiness."}
+    ],
+    "consensus_summary":"Implement a fail-closed Helm hardening change with pod-level enforcement, defense-in-depth ServiceAccount metadata, contract negatives, and explicit DEV rollout checks.",
+    "open_questions":[]
+  }
+}

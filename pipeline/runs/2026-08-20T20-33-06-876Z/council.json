@@ -1,0 +1,32 @@
+{
+  "perspectives": [
+    {
+      "role": "homelab_devops",
+      "summary": "Remote homelab main has MetaMCP at latest, no server registry in Git, and existing live kubeconfig default is Unauthorized. The worktree includes OIDC/ExternalSecrets support and a Prometheus MCP deployment, but no authoritative Loki/Tempo/Kubernetes/Argo/GitHub registrations."
+    },
+    {
+      "role": "codicarium_devops",
+      "summary": "Codicarium is Synced/Healthy on MetaMCP 2.4.22 with public API mcp.codicarium.com and internal VPN UI. Its live registry has GitHub-p (44 tools), GitHub-p_Actions (4), Kubernetes (20), ArgoCD (16), and Prometheus (6), but no Loki or Tempo entries."
+    },
+    {
+      "role": "researcher",
+      "summary": "Upstream normal release v2.4.22 is current as of 2026-08-20; MetaMCP supports /mcp Streamable HTTP and OAuth metadata/PKCE. OpenAI requires public HTTPS, protected-resource discovery, authorization-code PKCE S256, and exact ChatGPT redirect handling."
+    },
+    {
+      "role": "reviewer_lite",
+      "summary": "The current homelab desired state contains mutable tags and a historical plaintext Better Auth value; UI OIDC does not prove MCP OAuth. Completion requires secret-safe references, explicit target checks, protocol tool-call evidence, and rollback proof."
+    },
+    {
+      "role": "planner_lite",
+      "summary": "Treat this as a security-gated, multi-lane implementation. Do not copy unknown credentials or substitute absent server definitions; preserve the environment target boundary and record blockers."
+    }
+  ],
+  "consensus_summary": "Proceed with a GitOps-first, secret-safe homelab implementation only after resolving the authoritative Loki/Tempo implementation and restoring authorized homelab Kubernetes/Argo access. The Codicarium database is a sanitized reference for the two GitHub servers and the existing Kubernetes/Argo/Prometheus tool counts, not a source for cross-environment infrastructure targets.",
+  "open_questions": [
+    "Which maintained MCP implementation and exact homelab target does the user intend for Loki and Tempo, since neither exists in the current Codicarium registry?",
+    "Which authorized homelab kubeconfig/context and ArgoCD token source should be used; the current homelab kubeconfig default returns Unauthorized?",
+    "Where should the existing GitHub token be sourced for a secure homelab copy—Bitwarden key, controlled secret transfer, or another approved path?",
+    "Which homelab public DNS hostname and Authentik application/client should be authoritative for ChatGPT; the current configured random hostname does not resolve from this machine?",
+    "Should the server set be attached to an existing MetaMCP namespace/endpoint or a new homelab namespace/endpoint?"
+  ]
+}

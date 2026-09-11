@@ -1,0 +1,21 @@
+{
+  "stage": "test",
+  "status": "pass",
+  "summary": "Full locked Python 3.12 validation passed after adding the systemd user-manager fallback.",
+  "changed_files": [".github/workflows/ci.yml"],
+  "validation": [
+    "uv sync --locked --all-groups with CPython 3.12.13 completed",
+    "84 pytest tests passed in the locked CPython 3.12 environment",
+    "Ruff passed",
+    "mypy src passed",
+    "uv build passed",
+    "Docker build passed",
+    "actionlint, YAML parsing, git diff checks, and exact systemd fallback passed",
+    "Prior PR CI run 32408907118 independently passed 84 tests on CPython 3.12.3"
+  ],
+  "blockers": [],
+  "next_action": "Run the validation-stage PR check after committing and pushing the workflow fallback.",
+  "route_to": "validation",
+  "risk_level": "medium",
+  "independent_lanes": ["Python regression suite", "container build", "workflow and systemd validation"]
+}

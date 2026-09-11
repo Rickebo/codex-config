@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="12307309-17b8-4ff1-bd36-51bc6842058f" name="@RICKEBO 2026-08-25 23:16:08" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2026-08-25T23:16:08.5289973+02:00" queuing="2026-08-25T23:16:08.5289973+02:00" start="2026-08-25T23:16:07.8226373+02:00" finish="2026-08-25T23:16:08.5322569+02:00" />
+  <TestSettings name="default" id="3e73304a-07fd-4409-9cb0-17d1939c75d1">
+    <Deployment runDeploymentRoot="_RICKEBO_2026-08-25_23_16_08" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="59948b4c-2745-43a2-a6c2-2bfd2e5e1800" testId="bc672fe5-c178-ae86-9105-6a273f648566" testName="SourceService.Contract.Tests.CheckedInContractTests.OpenApi_is_parseable_provider_neutral_and_contains_runtime_routes" computerName="RICKEBO" duration="00:00:00.0057237" startTime="2026-08-25T23:16:08.4350889+02:00" endTime="2026-08-25T23:16:08.4408287+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="59948b4c-2745-43a2-a6c2-2bfd2e5e1800" />
+    <UnitTestResult executionId="208dfc0c-63a7-46b9-b521-4107f32e1f91" testId="96e4fd8b-2e18-fa1c-88e1-b6b57f6fa7f6" testName="SourceService.Contract.Tests.CheckedInContractTests.Ref_updated_event_schema_is_provider_neutral_cloud_event_contract" computerName="RICKEBO" duration="00:00:00.0003707" startTime="2026-08-25T23:16:08.4345639+02:00" endTime="2026-08-25T23:16:08.4349484+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="208dfc0c-63a7-46b9-b521-4107f32e1f91" />
+    <UnitTestResult executionId="2340a9c6-a2bd-4c95-b440-a8b8d5c00be6" testId="a7ba3da4-ded1-0f25-4482-8cb72dc7facb" testName="SourceService.Contract.Tests.CheckedInContractTests.Snapshot_event_schema_is_a_bounded_secret_free_cloud_event_contract" computerName="RICKEBO" duration="00:00:00.0146479" startTime="2026-08-25T23:16:08.3878110+02:00" endTime="2026-08-25T23:16:08.4071619+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="2340a9c6-a2bd-4c95-b440-a8b8d5c00be6" />
+    <UnitTestResult executionId="c2c4fd3a-b087-40d0-b2f3-235bf0882e50" testId="23fc5b80-a318-2d93-33b4-948b2e05d990" testName="SourceService.Contract.Tests.CheckedInContractTests.Internal_workload_contract_accepts_only_knowledge_and_insights_identities" computerName="RICKEBO" duration="00:00:00.0238530" startTime="2026-08-25T23:16:08.4105369+02:00" endTime="2026-08-25T23:16:08.4344289+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="c2c4fd3a-b087-40d0-b2f3-235bf0882e50" />
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="SourceService.Contract.Tests.CheckedInContractTests.Snapshot_event_schema_is_a_bounded_secret_free_cloud_event_contract" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/source-service/sourceservice.contract.tests/bin/release/net10.0/sourceservice.contract.tests.dll" id="a7ba3da4-ded1-0f25-4482-8cb72dc7facb">
+      <Execution id="2340a9c6-a2bd-4c95-b440-a8b8d5c00be6" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/source-service/SourceService.Contract.Tests/bin/Release/net10.0/SourceService.Contract.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="SourceService.Contract.Tests.CheckedInContractTests" name="Snapshot_event_schema_is_a_bounded_secret_free_cloud_event_contract" />
+    </UnitTest>
+    <UnitTest name="SourceService.Contract.Tests.CheckedInContractTests.Ref_updated_event_schema_is_provider_neutral_cloud_event_contract" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/source-service/sourceservice.contract.tests/bin/release/net10.0/sourceservice.contract.tests.dll" id="96e4fd8b-2e18-fa1c-88e1-b6b57f6fa7f6">
+      <Execution id="208dfc0c-63a7-46b9-b521-4107f32e1f91" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/source-service/SourceService.Contract.Tests/bin/Release/net10.0/SourceService.Contract.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="SourceService.Contract.Tests.CheckedInContractTests" name="Ref_updated_event_schema_is_provider_neutral_cloud_event_contract" />
+    </UnitTest>
+    <UnitTest name="SourceService.Contract.Tests.CheckedInContractTests.OpenApi_is_parseable_provider_neutral_and_contains_runtime_routes" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/source-service/sourceservice.contract.tests/bin/release/net10.0/sourceservice.contract.tests.dll" id="bc672fe5-c178-ae86-9105-6a273f648566">
+      <Execution id="59948b4c-2745-43a2-a6c2-2bfd2e5e1800" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/source-service/SourceService.Contract.Tests/bin/Release/net10.0/SourceService.Contract.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="SourceService.Contract.Tests.CheckedInContractTests" name="OpenApi_is_parseable_provider_neutral_and_contains_runtime_routes" />
+    </UnitTest>
+    <UnitTest name="SourceService.Contract.Tests.CheckedInContractTests.Internal_workload_contract_accepts_only_knowledge_and_insights_identities" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/source-service/sourceservice.contract.tests/bin/release/net10.0/sourceservice.contract.tests.dll" id="23fc5b80-a318-2d93-33b4-948b2e05d990">
+      <Execution id="c2c4fd3a-b087-40d0-b2f3-235bf0882e50" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/source-service/SourceService.Contract.Tests/bin/Release/net10.0/SourceService.Contract.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="SourceService.Contract.Tests.CheckedInContractTests" name="Internal_workload_contract_accepts_only_knowledge_and_insights_identities" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="bc672fe5-c178-ae86-9105-6a273f648566" executionId="59948b4c-2745-43a2-a6c2-2bfd2e5e1800" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="96e4fd8b-2e18-fa1c-88e1-b6b57f6fa7f6" executionId="208dfc0c-63a7-46b9-b521-4107f32e1f91" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="a7ba3da4-ded1-0f25-4482-8cb72dc7facb" executionId="2340a9c6-a2bd-4c95-b440-a8b8d5c00be6" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="23fc5b80-a318-2d93-33b4-948b2e05d990" executionId="c2c4fd3a-b087-40d0-b2f3-235bf0882e50" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Completed">
+    <Counters total="4" executed="4" passed="4" failed="0" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v3.1.5+1b188a7b0a (64-bit .NET 10.0.11)
+[xUnit.net 00:00:00.10]   Discovering: SourceService.Contract.Tests
+[xUnit.net 00:00:00.21]   Discovered:  SourceService.Contract.Tests
+[xUnit.net 00:00:00.31]   Starting:    SourceService.Contract.Tests
+[xUnit.net 00:00:00.40]   Finished:    SourceService.Contract.Tests (ID = '09fa95d4736c785c902c3f8ec50dc93e99c62455ad2e756c820237e6dca05ae3')
+</StdOut>
+    </Output>
+  </ResultSummary>
+</TestRun>

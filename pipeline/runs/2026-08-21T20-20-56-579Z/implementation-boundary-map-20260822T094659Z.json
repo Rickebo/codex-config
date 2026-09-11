@@ -1,0 +1,40 @@
+{
+  "generated_at": "2026-08-22T09:46:59Z",
+  "stage": "spec",
+  "status": "readiness_map_only",
+  "repository": "Rickebo/pve-infra",
+  "active_worktree": "/home/rickebo/.worktrees/pve-infra-homelab-workspace-context-llm-proxy",
+  "current_gate": "Do not enter code until D-001 source evidence and D-002/D-003 target decisions pass spec.",
+  "ownership": {
+    "retired_proxy": "llm-proxy/; former Argo ownership was argocd/apps/llm-proxy-app.yaml per docs/llm-proxy.md",
+    "active_worker": "apps/llm-proxy-worker.yaml -> llm-proxy-worker/",
+    "workspace_context": "No wrapper or chart exists",
+    "future_target_boundary": "New target-specific chart/application boundary and values/templates after spec approval"
+  },
+  "candidate_reuse_patterns": [
+    "llm-proxy/Chart.yaml",
+    "llm-proxy/values.yaml",
+    "llm-proxy/templates/database-backup.yaml",
+    "llm-proxy/templates/oidc-secret-replication.yaml",
+    "llm-proxy/templates/homelab-egress-compatibility.yaml",
+    "sure/templates/cnpg-cluster.yaml",
+    "sure/templates/externalsecret-app.yaml",
+    "sure/templates/ingress.yaml",
+    "youtarr/templates/backup-*.yaml",
+    "youtarr/templates/restore-job.yaml",
+    "youtarr/templates/networkpolicies.yaml",
+    "authentik/ and observability/ templates"
+  ],
+  "must_remain_untouched": [
+    "llm-proxy-worker/**",
+    "apps/codicarium-service-bridge.yaml",
+    "retained historical PVC and backup history"
+  ],
+  "future_static_validation": [
+    "helm lint ./llm-proxy",
+    "helm template llm-proxy ./llm-proxy --namespace llm-proxy",
+    "repository chart-specific tests",
+    ".github/workflows/helm-ci.yaml Helm render and kubeconform pattern"
+  ],
+  "next_action": "Obtain and record D-001/D-002/D-003 evidence and decisions, then define target chart and Argo ownership before implementation."
+}

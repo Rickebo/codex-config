@@ -1,0 +1,53 @@
+{
+  "stage": "code",
+  "status": "blocked",
+  "summary": "Prepared and validated the homelab MetaMCP image, Tempo embedded MCP, and read-only Kubernetes identity/RBAC. Live in-cluster MetaMCP discovery works for the existing endpoint, but requested server registration and public OAuth cannot safely complete without an authorized token source and public hostname/AuthentiK exposure decision.",
+  "changed_files": [
+    "charts/metamcp/Chart.yaml",
+    "charts/metamcp/README.md",
+    "charts/metamcp/templates/_helpers.tpl",
+    "charts/metamcp/templates/deployment.yaml",
+    "charts/metamcp/templates/rbac.yaml",
+    "charts/metamcp/templates/serviceaccount.yaml",
+    "charts/metamcp/values.yaml",
+    "observability/values.yaml"
+  ],
+  "validation": [
+    "MetaMCP latest stable GitHub release verified as v2.4.22; chart renders its immutable digest.",
+    "helm lint passed for charts/metamcp and observability.",
+    "MetaMCP server-side dry-run passed with explicit homelab kubeconfig/context.",
+    "Rendered Kubernetes ClusterRole contains only get/list/watch and no secrets resource.",
+    "Tempo render contains query_frontend.mcp_server.enabled=true.",
+    "In-cluster OAuth metadata returned 200; temporary DCR registration returned 201 and was removed.",
+    "Streamable HTTP initialize and tools/list succeeded; 65 tools were visible.",
+    "Prometheus__health_check succeeded against http://prometheus.observability.svc.cluster.local:80.",
+    "Existing Grafana__list_loki_label_names failed because its Grafana URL remains the unresolvable Codicarium host."
+  ],
+  "blockers": [
+    "Choose/authorize a canonical public HTTPS MetaMCP hostname and whether to expose a split public ingress; current hosts are VPN/private and workstation DNS currently fails.",
+    "Make Authentik reachable at a public-compatible hostname and register the exact MetaMCP OIDC callback for the chosen APP_URL.",
+    "Provide or identify the authorized Bitwarden/source path for the existing GitHub bearer token; do not extract or duplicate an unidentified secret.",
+    "Provide a fresh least-privilege homelab ArgoCD API token or authorize its creation and secret-store path.",
+    "Choose a verified Loki implementation: homelab Grafana MCP with a homelab Grafana token, or a separately built/published Loki MCP image; no verified direct Loki image is currently available."
+  ],
+  "next_action": "After the hostname/AuthentiK and credential-source decisions are supplied, register the seven MCPs, enable the endpoint OAuth flag, roll out through GitOps, and run per-server discovery/tool/safe-call/target-isolation validation.",
+  "independent_lanes": [
+    "MetaMCP chart/image and read-only Kubernetes identity",
+    "Tempo embedded MCP",
+    "MCP registry and credential provisioning",
+    "Public ingress, AuthentiK, and OAuth",
+    "Per-server live validation"
+  ],
+  "route_to": "code",
+  "risk_level": "critical",
+  "requires_council": true,
+  "issues": [
+    {
+      "id": "#433",
+      "title": "Observability chart dry-run references missing grafana-test ServiceAccount",
+      "severity": "medium",
+      "details": "Server-side dry-run of the existing observability chart is rejected because pod grafana-test references observability/grafana-test, which is absent. Helm lint and the Tempo MCP render still pass.",
+      "owner_stage": "code"
+    }
+  ]
+}

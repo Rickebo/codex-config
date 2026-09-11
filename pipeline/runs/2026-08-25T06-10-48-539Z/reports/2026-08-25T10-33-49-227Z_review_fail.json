@@ -1,0 +1,49 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Repeat review closed all five system findings and most backend findings, but found a lifecycle fence race plus retry-classification and required-Source-field gaps. Backend must return to code; the system lane has no blocking findings.",
+  "changed_files": [],
+  "validation": [
+    "System reviewer verified REV-SYS-001 through REV-SYS-005 closed at df298af",
+    "System reviewer confirmed durable queued build is the issue #28 boundary; provider/publication work belongs later scenarios",
+    "Backend reviewer verified prior replay-ID, OpenAPI, worker, and general retry/DLQ corrections, then inspected remediation race windows and schema completeness"
+  ],
+  "blockers": [
+    "Lifecycle resolution occurs outside the fence transaction and can enqueue stale pre-change inputs after a concurrent newer lifecycle event.",
+    "AmazonServiceException with Retryable=false is treated as transient and consumes retry budget before DLQ.",
+    "Producer-required track_generation, status, created_at, and artifact created_at remain nullable or unenforced in Source-event validation."
+  ],
+  "next_action": "Return to backend code for bounded fence recheck/retry, exact AWS retry classification, complete required-field validation, and focused concurrency/negative tests; optionally add low-cost port ownership branch coverage.",
+  "route_to": "code",
+  "risk_level": "high",
+  "issues": [
+    {
+      "id": "REV2-BE-001",
+      "title": "Lifecycle resolver can enqueue stale generation across fence race",
+      "severity": "high",
+      "details": "InvalidateGenerationAsync resolves active heads outside the transaction, then locks/increments the fence without proving the observed fence/head remained current. Capture and recheck fence and head identity around resolution, retry boundedly on change, and add a concurrent active-head test.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV2-BE-002",
+      "title": "AWS Retryable false is classified as transient",
+      "severity": "medium",
+      "details": "KnowledgeEventRetryPolicy tests AmazonServiceException.Retryable for non-null rather than true. Require Retryable == true and cover true and false values so permanent S3 auth/validation failures do not masquerade as outages.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV2-BE-003",
+      "title": "Required Source snapshot fields remain nullable or unenforced",
+      "severity": "medium",
+      "details": "Enforce producer-owned required track_generation, status, event created_at, and artifact created_at values before persistence/materialization, with missing/invalid negative tests.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV2-SYS-001",
+      "title": "Port collision and foreign version ownership branches lack focused tests",
+      "severity": "low",
+      "details": "The nonce-backed bounded startup implementation is sound but collision retry and foreign /version rejection are exercised only indirectly. Add focused coverage if it remains low-cost; otherwise retain as residual test debt for parent #26.",
+      "owner_stage": "code"
+    }
+  ]
+}

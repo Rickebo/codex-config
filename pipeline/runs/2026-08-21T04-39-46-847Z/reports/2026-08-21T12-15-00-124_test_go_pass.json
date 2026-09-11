@@ -1,0 +1,23 @@
+{
+  "stage": "test",
+  "status": "pass",
+  "summary": "Exact-head QA PASS for 3cb2262094b1165438bc625ba7921f88df8fded9 under Go 1.26.7 with fail-closed local toolchain behavior.",
+  "changed_files": [
+    "go.mod",
+    "Makefile"
+  ],
+  "validation": [
+    "go test ./..., go vet ./..., go mod tidy -diff, and go mod verify passed",
+    "govulncheck v1.1.4 reported zero code vulnerabilities",
+    "make ci passed including web, Docker, migrations, Helm, and workflow parsing",
+    "Supply-chain and release metadata tests passed",
+    "actionlint, docs/OpenAPI/release checks, and git diff --check passed",
+    "Hosted run 32453971906 check 96687591887 passed on exact head"
+  ],
+  "blockers": [
+    "Host ShellCheck and yamllint binaries are unavailable; pinned kubeconform container fallback passed.",
+    "Nexus OCI referrer/signing support and admission enforcement remain external unverified prerequisites."
+  ],
+  "next_action": "Record hosted validation pass and complete the protected-merge readiness assessment.",
+  "route_to": "validation"
+}

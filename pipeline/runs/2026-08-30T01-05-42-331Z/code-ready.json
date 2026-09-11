@@ -1,0 +1,28 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Luna refreshed infra PR #1155 onto canonical main 4096b5da32b4e734e05552a8ede7dc58dd01deaf and added exact real-kubectl parser coverage at clean local head ca9c8fdacfa0f55e23e7bead366dc6f7b8c4bf3e.",
+  "changed_files": [
+    ".github/workflows/legacy-freeze-guard.yml",
+    "tests/test-revoke-legacy-metamcp-argocd-credentials-kubectl.py"
+  ],
+  "validation": [
+    "Canonical main is an ancestor; all six original PR commits preserved plus one parser-test commit",
+    "16 typed-kubeconfig publication tests passed",
+    "2 real-kubectl parser tests passed",
+    "2 transaction, 7 contract, and 12 Argo RBAC tests passed",
+    "RBAC, break-glass, and management topology guards passed",
+    "actionlint, shell syntax, and git diff checks passed",
+    "Worktree clean at ca9c8fdacfa0f55e23e7bead366dc6f7b8c4bf3e"
+  ],
+  "blockers": [],
+  "next_action": "Obtain independent Luna exact-head review of the full refreshed Phase 0 delta before any remote push.",
+  "route_to": "review",
+  "risk_level": "critical",
+  "independent_lanes": [
+    "rebase/current-main preservation",
+    "kubectl parser test correctness",
+    "Phase 0 revocation and RBAC security contract"
+  ],
+  "requires_council": false
+}

@@ -1,0 +1,2850 @@
+{
+  "schema": "codicarium.release-journal-fixture/v1",
+  "evidence_class": "synthetic-conformance-fixture",
+  "publication_authority": false,
+  "fixture_set": "issue93-v2.0",
+  "fixture_identity_jcs_sha256": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+  "claim_key": "rel-v2-sha256:d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+  "storage": {
+    "authority": "dedicated-dev-postgresql-not-s3",
+    "desired_endpoint": "runner-platform-journal-rw.runner-platform-journal-dev.svc.cluster.local:5432",
+    "live_status": "PREACTIVATION_NOT_MATERIALIZED",
+    "transactions": "SERIALIZABLE",
+    "synchronous_commit": "on",
+    "synchronous_replicas": "REQUIRED_PREACTIVATION_NOT_PROVEN",
+    "append_only": true,
+    "constraints": [
+      "PRIMARY KEY entry_id",
+      "UNIQUE claim_key+ordinal",
+      "UNIQUE claim_key+event+publication_sequence",
+      "NOT NULL and CHECK closed enums"
+    ],
+    "runtime_grants": "CONNECT,USAGE,SELECT(read_view),EXECUTE(exact SECURITY DEFINER procedures)",
+    "runtime_revocations": "CREATE,INSERT,UPDATE,DELETE,TRUNCATE,DDL,PUBLIC",
+    "write_api": "stored-procedures-only",
+    "update_endpoint": false,
+    "delete_endpoint": false,
+    "tls_status": "BLOCKED_UNTIL_VERIFY_FULL_CA_CONTRACT_EXISTS"
+  },
+  "procedure_migration": {
+    "schema": "codicarium.release-journal-procedure-migration/v1",
+    "sql_path": "runner-config/release-journal/migrations/001_release_journal_v1.sql",
+    "implementation_status": "BLOCKED_PREACTIVATION_FAIL_CLOSED",
+    "migration_transactional": true,
+    "owner_role": "release_journal_owner",
+    "owner_role_login": false,
+    "runtime_role": "release_journal_runtime",
+    "runtime_is_owner": false,
+    "runtime_inherits_owner": false,
+    "runtime_schema_create_privilege": false,
+    "public_schema_create_privilege": false,
+    "runtime_database_temp_privilege": false,
+    "public_database_temp_privilege": false,
+    "public_database_connect_privilege": false,
+    "runtime_procedure_privileges": [
+      "EXECUTE"
+    ],
+    "runtime_direct_table_privileges": [],
+    "public_procedure_privileges": [],
+    "owner_default_public_execute_revoked": true,
+    "persistent_relation_references_fully_qualified": true,
+    "non_builtin_function_references_fully_qualified": true,
+    "builtin_function_references_pg_catalog_qualified": true,
+    "database_connect_public_revoke_sql": "REVOKE CONNECT ON DATABASE runner_platform_journal FROM PUBLIC;",
+    "database_temp_public_revoke_sql": "REVOKE TEMPORARY ON DATABASE runner_platform_journal FROM PUBLIC;",
+    "database_temp_runtime_revoke_sql": "REVOKE TEMPORARY ON DATABASE runner_platform_journal FROM release_journal_runtime;",
+    "schema_create_public_revoke_sql": "REVOKE CREATE ON SCHEMA release_journal FROM PUBLIC;",
+    "schema_create_runtime_revoke_sql": "REVOKE CREATE ON SCHEMA release_journal FROM release_journal_runtime;",
+    "default_privileges_sql": "ALTER DEFAULT PRIVILEGES FOR ROLE release_journal_owner IN SCHEMA release_journal REVOKE EXECUTE ON FUNCTIONS FROM PUBLIC;",
+    "temp_shadow_attack_vector": {
+      "name": "pg-temp-relation-and-function-shadow",
+      "attacker_role": "release_journal_runtime",
+      "attempted_objects": [
+        "pg_temp.release_claims relation",
+        "pg_temp.digest(jsonb) function"
+      ],
+      "runtime_create_result": "DENY_SQLSTATE_42501",
+      "privileged_test_harness_precreates_shadows": true,
+      "procedure_search_path": [
+        "pg_catalog",
+        "release_journal",
+        "pg_temp"
+      ],
+      "expected_resolution": {
+        "persistent_relations": "explicit release_journal qualification",
+        "non_builtin_functions": "explicit release_journal qualification",
+        "builtin_functions": "explicit pg_catalog qualification",
+        "pg_temp_objects": "never selected"
+      },
+      "unauthorized_writes": 0,
+      "activation_result": "REQUIRED_POSTGRES_INTEGRATION_EVIDENCE"
+    },
+    "migration_sql": "BEGIN;\n\nREVOKE CONNECT ON DATABASE runner_platform_journal FROM PUBLIC;\n\nREVOKE TEMPORARY ON DATABASE runner_platform_journal FROM PUBLIC;\n\nREVOKE TEMPORARY ON DATABASE runner_platform_journal FROM release_journal_runtime;\n\nREVOKE CREATE ON SCHEMA release_journal FROM PUBLIC;\n\nREVOKE CREATE ON SCHEMA release_journal FROM release_journal_runtime;\n\nALTER DEFAULT PRIVILEGES FOR ROLE release_journal_owner IN SCHEMA release_journal REVOKE EXECUTE ON FUNCTIONS FROM PUBLIC;\n\nCREATE OR REPLACE FUNCTION release_journal.claim_cas_v1(request jsonb)\nRETURNS jsonb\nLANGUAGE plpgsql\nSECURITY DEFINER\nSET search_path = pg_catalog, release_journal, pg_temp\nAS $procedure$\nBEGIN\n  RAISE EXCEPTION USING ERRCODE = '0A000', MESSAGE = 'release journal implementation not installed';\nEND;\n$procedure$;\nALTER FUNCTION release_journal.claim_cas_v1(jsonb) OWNER TO release_journal_owner;\nREVOKE ALL ON FUNCTION release_journal.claim_cas_v1(jsonb) FROM PUBLIC;\nGRANT EXECUTE ON FUNCTION release_journal.claim_cas_v1(jsonb) TO release_journal_runtime;\n\nCREATE OR REPLACE FUNCTION release_journal.reserve_v1(request jsonb)\nRETURNS jsonb\nLANGUAGE plpgsql\nSECURITY DEFINER\nSET search_path = pg_catalog, release_journal, pg_temp\nAS $procedure$\nBEGIN\n  RAISE EXCEPTION USING ERRCODE = '0A000', MESSAGE = 'release journal implementation not installed';\nEND;\n$procedure$;\nALTER FUNCTION release_journal.reserve_v1(jsonb) OWNER TO release_journal_owner;\nREVOKE ALL ON FUNCTION release_journal.reserve_v1(jsonb) FROM PUBLIC;\nGRANT EXECUTE ON FUNCTION release_journal.reserve_v1(jsonb) TO release_journal_runtime;\n\nCREATE OR REPLACE FUNCTION release_journal.commit_v1(request jsonb)\nRETURNS jsonb\nLANGUAGE plpgsql\nSECURITY DEFINER\nSET search_path = pg_catalog, release_journal, pg_temp\nAS $procedure$\nBEGIN\n  RAISE EXCEPTION USING ERRCODE = '0A000', MESSAGE = 'release journal implementation not installed';\nEND;\n$procedure$;\nALTER FUNCTION release_journal.commit_v1(jsonb) OWNER TO release_journal_owner;\nREVOKE ALL ON FUNCTION release_journal.commit_v1(jsonb) FROM PUBLIC;\nGRANT EXECUTE ON FUNCTION release_journal.commit_v1(jsonb) TO release_journal_runtime;\n\nCREATE OR REPLACE FUNCTION release_journal.authorize_v1(request jsonb)\nRETURNS jsonb\nLANGUAGE plpgsql\nSECURITY DEFINER\nSET search_path = pg_catalog, release_journal, pg_temp\nAS $procedure$\nBEGIN\n  RAISE EXCEPTION USING ERRCODE = '0A000', MESSAGE = 'release journal implementation not installed';\nEND;\n$procedure$;\nALTER FUNCTION release_journal.authorize_v1(jsonb) OWNER TO release_journal_owner;\nREVOKE ALL ON FUNCTION release_journal.authorize_v1(jsonb) FROM PUBLIC;\nGRANT EXECUTE ON FUNCTION release_journal.authorize_v1(jsonb) TO release_journal_runtime;\n\nCREATE OR REPLACE FUNCTION release_journal.complete_v1(request jsonb)\nRETURNS jsonb\nLANGUAGE plpgsql\nSECURITY DEFINER\nSET search_path = pg_catalog, release_journal, pg_temp\nAS $procedure$\nBEGIN\n  RAISE EXCEPTION USING ERRCODE = '0A000', MESSAGE = 'release journal implementation not installed';\nEND;\n$procedure$;\nALTER FUNCTION release_journal.complete_v1(jsonb) OWNER TO release_journal_owner;\nREVOKE ALL ON FUNCTION release_journal.complete_v1(jsonb) FROM PUBLIC;\nGRANT EXECUTE ON FUNCTION release_journal.complete_v1(jsonb) TO release_journal_runtime;\n\nCOMMIT;",
+    "migration_sha256": "d45f4676dd251ba842cf9cc3ff1a6c9de05b56482eabb6afd1afa0d455d268f0",
+    "procedures": [
+      {
+        "name": "release_journal.claim_cas_v1",
+        "signature": "release_journal.claim_cas_v1(jsonb)",
+        "create_signature": "release_journal.claim_cas_v1(request jsonb)",
+        "implemented": false,
+        "failure_sqlstate": "0A000",
+        "writes_on_call": 0,
+        "security_definer": true,
+        "search_path": [
+          "pg_catalog",
+          "release_journal",
+          "pg_temp"
+        ],
+        "persistent_relation_references": "fully-qualified-release_journal-only",
+        "non_builtin_function_references": "fully-qualified-release_journal-only",
+        "builtin_function_references": "fully-qualified-pg_catalog-only",
+        "owner_role": "release_journal_owner",
+        "runtime_privileges": [
+          "EXECUTE"
+        ],
+        "public_execute_revoked": true,
+        "definition_sql": "CREATE OR REPLACE FUNCTION release_journal.claim_cas_v1(request jsonb)\nRETURNS jsonb\nLANGUAGE plpgsql\nSECURITY DEFINER\nSET search_path = pg_catalog, release_journal, pg_temp\nAS $procedure$\nBEGIN\n  RAISE EXCEPTION USING ERRCODE = '0A000', MESSAGE = 'release journal implementation not installed';\nEND;\n$procedure$;\nALTER FUNCTION release_journal.claim_cas_v1(jsonb) OWNER TO release_journal_owner;\nREVOKE ALL ON FUNCTION release_journal.claim_cas_v1(jsonb) FROM PUBLIC;\nGRANT EXECUTE ON FUNCTION release_journal.claim_cas_v1(jsonb) TO release_journal_runtime;",
+        "definition_sha256": "3b512d7f89ca5b5402cdc2797731f372122024d64446211bc4e67b73caa9b8af"
+      },
+      {
+        "name": "release_journal.reserve_v1",
+        "signature": "release_journal.reserve_v1(jsonb)",
+        "create_signature": "release_journal.reserve_v1(request jsonb)",
+        "implemented": false,
+        "failure_sqlstate": "0A000",
+        "writes_on_call": 0,
+        "security_definer": true,
+        "search_path": [
+          "pg_catalog",
+          "release_journal",
+          "pg_temp"
+        ],
+        "persistent_relation_references": "fully-qualified-release_journal-only",
+        "non_builtin_function_references": "fully-qualified-release_journal-only",
+        "builtin_function_references": "fully-qualified-pg_catalog-only",
+        "owner_role": "release_journal_owner",
+        "runtime_privileges": [
+          "EXECUTE"
+        ],
+        "public_execute_revoked": true,
+        "definition_sql": "CREATE OR REPLACE FUNCTION release_journal.reserve_v1(request jsonb)\nRETURNS jsonb\nLANGUAGE plpgsql\nSECURITY DEFINER\nSET search_path = pg_catalog, release_journal, pg_temp\nAS $procedure$\nBEGIN\n  RAISE EXCEPTION USING ERRCODE = '0A000', MESSAGE = 'release journal implementation not installed';\nEND;\n$procedure$;\nALTER FUNCTION release_journal.reserve_v1(jsonb) OWNER TO release_journal_owner;\nREVOKE ALL ON FUNCTION release_journal.reserve_v1(jsonb) FROM PUBLIC;\nGRANT EXECUTE ON FUNCTION release_journal.reserve_v1(jsonb) TO release_journal_runtime;",
+        "definition_sha256": "570d738a7fa5c70eabcf74e60deedca4164022a67343560d969f5f11aa907ba9"
+      },
+      {
+        "name": "release_journal.commit_v1",
+        "signature": "release_journal.commit_v1(jsonb)",
+        "create_signature": "release_journal.commit_v1(request jsonb)",
+        "implemented": false,
+        "failure_sqlstate": "0A000",
+        "writes_on_call": 0,
+        "security_definer": true,
+        "search_path": [
+          "pg_catalog",
+          "release_journal",
+          "pg_temp"
+        ],
+        "persistent_relation_references": "fully-qualified-release_journal-only",
+        "non_builtin_function_references": "fully-qualified-release_journal-only",
+        "builtin_function_references": "fully-qualified-pg_catalog-only",
+        "owner_role": "release_journal_owner",
+        "runtime_privileges": [
+          "EXECUTE"
+        ],
+        "public_execute_revoked": true,
+        "definition_sql": "CREATE OR REPLACE FUNCTION release_journal.commit_v1(request jsonb)\nRETURNS jsonb\nLANGUAGE plpgsql\nSECURITY DEFINER\nSET search_path = pg_catalog, release_journal, pg_temp\nAS $procedure$\nBEGIN\n  RAISE EXCEPTION USING ERRCODE = '0A000', MESSAGE = 'release journal implementation not installed';\nEND;\n$procedure$;\nALTER FUNCTION release_journal.commit_v1(jsonb) OWNER TO release_journal_owner;\nREVOKE ALL ON FUNCTION release_journal.commit_v1(jsonb) FROM PUBLIC;\nGRANT EXECUTE ON FUNCTION release_journal.commit_v1(jsonb) TO release_journal_runtime;",
+        "definition_sha256": "73a2c4234339a11d138b491e6800dae771fd5aa2c640283939238548ac13fc1f"
+      },
+      {
+        "name": "release_journal.authorize_v1",
+        "signature": "release_journal.authorize_v1(jsonb)",
+        "create_signature": "release_journal.authorize_v1(request jsonb)",
+        "implemented": false,
+        "failure_sqlstate": "0A000",
+        "writes_on_call": 0,
+        "security_definer": true,
+        "search_path": [
+          "pg_catalog",
+          "release_journal",
+          "pg_temp"
+        ],
+        "persistent_relation_references": "fully-qualified-release_journal-only",
+        "non_builtin_function_references": "fully-qualified-release_journal-only",
+        "builtin_function_references": "fully-qualified-pg_catalog-only",
+        "owner_role": "release_journal_owner",
+        "runtime_privileges": [
+          "EXECUTE"
+        ],
+        "public_execute_revoked": true,
+        "definition_sql": "CREATE OR REPLACE FUNCTION release_journal.authorize_v1(request jsonb)\nRETURNS jsonb\nLANGUAGE plpgsql\nSECURITY DEFINER\nSET search_path = pg_catalog, release_journal, pg_temp\nAS $procedure$\nBEGIN\n  RAISE EXCEPTION USING ERRCODE = '0A000', MESSAGE = 'release journal implementation not installed';\nEND;\n$procedure$;\nALTER FUNCTION release_journal.authorize_v1(jsonb) OWNER TO release_journal_owner;\nREVOKE ALL ON FUNCTION release_journal.authorize_v1(jsonb) FROM PUBLIC;\nGRANT EXECUTE ON FUNCTION release_journal.authorize_v1(jsonb) TO release_journal_runtime;",
+        "definition_sha256": "ef54b8490691ffa7169be14655c072c1bf27f29a5a77ceb1322a6115a3772dc7"
+      },
+      {
+        "name": "release_journal.complete_v1",
+        "signature": "release_journal.complete_v1(jsonb)",
+        "create_signature": "release_journal.complete_v1(request jsonb)",
+        "implemented": false,
+        "failure_sqlstate": "0A000",
+        "writes_on_call": 0,
+        "security_definer": true,
+        "search_path": [
+          "pg_catalog",
+          "release_journal",
+          "pg_temp"
+        ],
+        "persistent_relation_references": "fully-qualified-release_journal-only",
+        "non_builtin_function_references": "fully-qualified-release_journal-only",
+        "builtin_function_references": "fully-qualified-pg_catalog-only",
+        "owner_role": "release_journal_owner",
+        "runtime_privileges": [
+          "EXECUTE"
+        ],
+        "public_execute_revoked": true,
+        "definition_sql": "CREATE OR REPLACE FUNCTION release_journal.complete_v1(request jsonb)\nRETURNS jsonb\nLANGUAGE plpgsql\nSECURITY DEFINER\nSET search_path = pg_catalog, release_journal, pg_temp\nAS $procedure$\nBEGIN\n  RAISE EXCEPTION USING ERRCODE = '0A000', MESSAGE = 'release journal implementation not installed';\nEND;\n$procedure$;\nALTER FUNCTION release_journal.complete_v1(jsonb) OWNER TO release_journal_owner;\nREVOKE ALL ON FUNCTION release_journal.complete_v1(jsonb) FROM PUBLIC;\nGRANT EXECUTE ON FUNCTION release_journal.complete_v1(jsonb) TO release_journal_runtime;",
+        "definition_sha256": "6e5c27eb1e13728ccdec166d03e71c86aa17e5e6f08bdfe86d6c3e94368b2f9d"
+      }
+    ]
+  },
+  "github_dispatch_contract": {
+    "schema": "codicarium.github-workflow-dispatch-contract/v1",
+    "request": {
+      "api_version_header": "X-GitHub-Api-Version",
+      "api_version": "2026-03-10",
+      "accept": "application/vnd.github+json",
+      "return_run_details": true
+    },
+    "publisher_request": {
+      "schema": "codicarium.publisher-dispatch-request/v2",
+      "evidence_class": "synthetic-conformance-fixture",
+      "publication_authority": false,
+      "fixture_set": "issue93-v2.0",
+      "fixture_identity_jcs_sha256": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+      "claim_key": "rel-v2-sha256:d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+      "claim_identity_jcs_sha256": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+      "active_source_revision": "2aee9b5ba6ed8be8dc848df482a43f6a3f33b712",
+      "protected_main_revision": "6b82f94bf0c41381bd43f96a04baf909dac7ec52",
+      "publisher_workflow_path": ".github/workflows/publish-release-v2.yaml",
+      "publisher_workflow_sha": "6b82f94bf0c41381bd43f96a04baf909dac7ec52",
+      "legacy_raw_identity": {
+        "authority": false,
+        "handoff_sha256": "8abe528bb32aaa47f8fc496c3571d4b91248f3ebfe4c8be29463a25277bd9e88",
+        "dispatch_sha256": "b150fa8dad70a207fb7a78f6a41ab1bc1430833ba70b86fdc2f08a13c7c11f3b"
+      }
+    },
+    "positive": {
+      "http_status": 200,
+      "response": {
+        "workflow_run_id": "9005001",
+        "workflow_run_url": "https://api.github.com/repos/codicarium/deployment-controller/actions/runs/9005001",
+        "workflow_run_html_url": "https://github.com/codicarium/deployment-controller/actions/runs/9005001"
+      },
+      "identity_source": "direct-response.workflow_run_id",
+      "outcome": "DIRECT_RUN_ID_ACCEPTED",
+      "journal_commit": true,
+      "automatic_retry": false
+    },
+    "no_body": {
+      "http_status": 204,
+      "response": null,
+      "outcome": "UNKNOWN_MANUAL",
+      "journal_commit": false,
+      "automatic_retry": false
+    }
+  },
+  "role_separation": {
+    "target_writer_can_sign_or_commit": false,
+    "signer_can_mutate_or_commit": false,
+    "committer_can_mutate_or_sign": false
+  },
+  "operations": [
+    {
+      "operation": "verifier-dispatch",
+      "sequence": null,
+      "request": {
+        "method": "POST",
+        "endpoint": "/actions/workflows/release-verify-v2.yaml/dispatches",
+        "actor_role": "verifier-target-writer",
+        "github_api": {
+          "api_version_header": "X-GitHub-Api-Version",
+          "api_version": "2026-03-10",
+          "accept": "application/vnd.github+json",
+          "return_run_details": true
+        },
+        "target_jcs": "{\"evidence_class\":\"synthetic-conformance-fixture\",\"fixture_identity_jcs_sha256\":\"d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9\",\"fixture_set\":\"issue93-v2.0\",\"publication_authority\":false,\"ref\":\"refs/heads/main\",\"source_revision\":\"2aee9b5ba6ed8be8dc848df482a43f6a3f33b712\",\"tag\":\"v0.6.14\",\"workflow\":\"codicarium/deployment-controller/.github/workflows/release-verify-v2.yaml\",\"workflow_sha\":\"6b82f94bf0c41381bd43f96a04baf909dac7ec52\"}",
+        "target_sha256": "c4bbdd57d76770b910c8ec7480cd1ad3cda8f9ee962274c06af575f949b33319"
+      },
+      "request_sha256": "42f0b0dce353637854dc37544de7fa1d311008963248cc094df58be5aa1674ef",
+      "readback": {
+        "status": 200,
+        "endpoint": "/actions/workflows/release-verify-v2.yaml/dispatches",
+        "target_sha256": "c4bbdd57d76770b910c8ec7480cd1ad3cda8f9ee962274c06af575f949b33319",
+        "state_jcs": "{\"conclusion\":\"success\",\"run_attempt\":\"1\",\"workflow_run_html_url\":\"https://github.com/codicarium/deployment-controller/actions/runs/9003001\",\"workflow_run_id\":\"9003001\",\"workflow_run_url\":\"https://api.github.com/repos/codicarium/deployment-controller/actions/runs/9003001\",\"workflow_sha\":\"6b82f94bf0c41381bd43f96a04baf909dac7ec52\"}",
+        "state_sha256": "9d31014346e3f922440bec7b17bfc9d090e20fa924b79f31412b1c155d6cac0a"
+      },
+      "readback_sha256": "eb3ad63af023cddcefbc7539140a465139efa2ab98ee911cd68faf2cb8d4297f"
+    },
+    {
+      "operation": "verification-authorization",
+      "sequence": null,
+      "request": {
+        "method": "POST",
+        "endpoint": "/release-journal/verification-authorization",
+        "actor_role": "verifier-target-writer",
+        "github_api": null,
+        "target_jcs": "{\"authorization_sha256\":\"1e2b601571a1ab4d6faf41b19cd22cdafe27e70ee9bbc11ae1d37a7553bbe830\",\"claim_key\":\"rel-v2-sha256:d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9\",\"evidence_class\":\"synthetic-conformance-fixture\",\"evidence_sha256\":\"735487f01e328bdff0f26e9c00c9e76abf4ce2491712ba31c838560f3b04e9c6\",\"fixture_identity_jcs_sha256\":\"d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9\",\"fixture_set\":\"issue93-v2.0\",\"publication_authority\":false,\"schema\":\"codicarium.release-verification-authorization/v1\",\"verifier_run_attempt\":\"1\",\"verifier_run_id\":\"9003001\"}",
+        "target_sha256": "b2fb1f6ad63b38708e27f4da8e314365020ff981d1b51686b3be883964277725"
+      },
+      "request_sha256": "9f38ae7456665aeee979bb094c78f2af082597d6f36fef350fa4f2df99c7421d",
+      "readback": {
+        "status": 201,
+        "endpoint": "/release-journal/verification-authorization",
+        "target_sha256": "b2fb1f6ad63b38708e27f4da8e314365020ff981d1b51686b3be883964277725",
+        "state_jcs": "{\"authorization_sha256\":\"1e2b601571a1ab4d6faf41b19cd22cdafe27e70ee9bbc11ae1d37a7553bbe830\",\"claim_key\":\"rel-v2-sha256:d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9\",\"evidence_class\":\"synthetic-conformance-fixture\",\"evidence_sha256\":\"735487f01e328bdff0f26e9c00c9e76abf4ce2491712ba31c838560f3b04e9c6\",\"fixture_identity_jcs_sha256\":\"d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9\",\"fixture_set\":\"issue93-v2.0\",\"publication_authority\":false,\"schema\":\"codicarium.release-verification-authorization/v1\",\"verifier_run_attempt\":\"1\",\"verifier_run_id\":\"9003001\"}",
+        "state_sha256": "b2fb1f6ad63b38708e27f4da8e314365020ff981d1b51686b3be883964277725"
+      },
+      "readback_sha256": "8f31001d86c910a88840c3530be5f3fb3bd592be8e0ad0e4cde3100168be7a93"
+    },
+    {
+      "operation": "publisher-dispatch",
+      "sequence": "0",
+      "request": {
+        "method": "POST",
+        "endpoint": "/actions/workflows/publish-release-v2.yaml/dispatches",
+        "actor_role": "publisher-target-writer",
+        "github_api": {
+          "api_version_header": "X-GitHub-Api-Version",
+          "api_version": "2026-03-10",
+          "accept": "application/vnd.github+json",
+          "return_run_details": true
+        },
+        "target_jcs": "{\"active_source_revision\":\"2aee9b5ba6ed8be8dc848df482a43f6a3f33b712\",\"claim_identity_jcs_sha256\":\"d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9\",\"claim_key\":\"rel-v2-sha256:d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9\",\"evidence_class\":\"synthetic-conformance-fixture\",\"fixture_identity_jcs_sha256\":\"d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9\",\"fixture_set\":\"issue93-v2.0\",\"legacy_raw_identity\":{\"authority\":false,\"dispatch_sha256\":\"b150fa8dad70a207fb7a78f6a41ab1bc1430833ba70b86fdc2f08a13c7c11f3b\",\"handoff_sha256\":\"8abe528bb32aaa47f8fc496c3571d4b91248f3ebfe4c8be29463a25277bd9e88\"},\"protected_main_revision\":\"6b82f94bf0c41381bd43f96a04baf909dac7ec52\",\"publication_authority\":false,\"publisher_workflow_path\":\".github/workflows/publish-release-v2.yaml\",\"publisher_workflow_sha\":\"6b82f94bf0c41381bd43f96a04baf909dac7ec52\",\"schema\":\"codicarium.publisher-dispatch-request/v2\"}",
+        "target_sha256": "7124c63ff87f1b1073c03848a16909909a79f56ea19ef3006618509367acaedd"
+      },
+      "request_sha256": "f852a4c540eff200c4b3ce0b73455265429a77b522d10a5f686225c76241b62d",
+      "readback": {
+        "status": 200,
+        "endpoint": "/actions/workflows/publish-release-v2.yaml/dispatches",
+        "target_sha256": "7124c63ff87f1b1073c03848a16909909a79f56ea19ef3006618509367acaedd",
+        "state_jcs": "{\"conclusion\":\"queued\",\"run_attempt\":\"1\",\"workflow_run_html_url\":\"https://github.com/codicarium/deployment-controller/actions/runs/9005001\",\"workflow_run_id\":\"9005001\",\"workflow_run_url\":\"https://api.github.com/repos/codicarium/deployment-controller/actions/runs/9005001\",\"workflow_sha\":\"6b82f94bf0c41381bd43f96a04baf909dac7ec52\"}",
+        "state_sha256": "9831602437dc5969021cc899be184898539f17a52804ee98b6f7066425aee21a"
+      },
+      "readback_sha256": "9e3e4fe36588fe36a8f088bdd44934ae93052a37f2ba6044909eaf6da90da30b"
+    },
+    {
+      "operation": "tag-create",
+      "sequence": "1",
+      "request": {
+        "method": "POST",
+        "endpoint": "/git/refs",
+        "actor_role": "publisher-target-writer-01",
+        "github_api": null,
+        "target_jcs": "{\"force\":false,\"object\":\"2aee9b5ba6ed8be8dc848df482a43f6a3f33b712\",\"object_type\":\"commit\",\"ref\":\"refs/tags/v0.6.14\"}",
+        "target_sha256": "55bd89867de6ca96f3877d7994e2773fffa8a6375f53d7ffb6773d182ea9eb44"
+      },
+      "request_sha256": "8c62e181715bb76a4f1eb8de435bfe56cd3772934341b603ad78bbf6992376f0",
+      "readback": {
+        "status": 201,
+        "endpoint": "/git/refs",
+        "target_sha256": "55bd89867de6ca96f3877d7994e2773fffa8a6375f53d7ffb6773d182ea9eb44",
+        "state_jcs": "{\"force\":false,\"object\":\"2aee9b5ba6ed8be8dc848df482a43f6a3f33b712\",\"object_type\":\"commit\",\"ref\":\"refs/tags/v0.6.14\"}",
+        "state_sha256": "55bd89867de6ca96f3877d7994e2773fffa8a6375f53d7ffb6773d182ea9eb44"
+      },
+      "readback_sha256": "46ff10c567f0f46ff3a5515475749ca69777e0de942aebc29f58cfc1eba35673"
+    },
+    {
+      "operation": "draft-release-create",
+      "sequence": "2",
+      "request": {
+        "method": "POST",
+        "endpoint": "/releases",
+        "actor_role": "publisher-target-writer-02",
+        "github_api": null,
+        "target_jcs": "{\"draft\":true,\"prerelease\":false,\"release_id\":\"9006001\",\"tag\":\"v0.6.14\",\"target_commitish\":\"2aee9b5ba6ed8be8dc848df482a43f6a3f33b712\"}",
+        "target_sha256": "f74b9d6c3e113461e1796c0deac82a0ae628feb28c61fcffd5f0cbcecad08792"
+      },
+      "request_sha256": "2cf113aaf8792094cdb9481b56b8fe41c32dd75b60a6993b9f673be6181339a5",
+      "readback": {
+        "status": 201,
+        "endpoint": "/releases",
+        "target_sha256": "f74b9d6c3e113461e1796c0deac82a0ae628feb28c61fcffd5f0cbcecad08792",
+        "state_jcs": "{\"draft\":true,\"prerelease\":false,\"release_id\":\"9006001\",\"tag\":\"v0.6.14\",\"target_commitish\":\"2aee9b5ba6ed8be8dc848df482a43f6a3f33b712\"}",
+        "state_sha256": "f74b9d6c3e113461e1796c0deac82a0ae628feb28c61fcffd5f0cbcecad08792"
+      },
+      "readback_sha256": "2028c7a01aec51b4679a43d872baac8481c4a57033828d6bc2597cd88efec6bf"
+    },
+    {
+      "operation": "image-publish",
+      "sequence": "3",
+      "request": {
+        "method": "PUT",
+        "endpoint": "/v2/codicarium/deployment-controller/manifests/v0.6.14",
+        "actor_role": "publisher-target-writer-03",
+        "github_api": null,
+        "target_jcs": "{\"digest\":\"sha256:c9e6d26fb63b4a8cca8b9eee9efe163f2e88c52c7e58b85b71400597ce2c448f\",\"reference\":\"v0.6.14\",\"registry\":\"docker-push.nexus.int.codicarium.com\",\"repository\":\"codicarium/deployment-controller\"}",
+        "target_sha256": "a94d2ce735b10007a0a337a8616bba90461c388d763cd42ecf7ce66dda2cfbc3"
+      },
+      "request_sha256": "93149a4ae6257bf0c512ebfd0cfbf58f323d6e5eb351355530d652a8d18b75ed",
+      "readback": {
+        "status": 201,
+        "endpoint": "/v2/codicarium/deployment-controller/manifests/v0.6.14",
+        "target_sha256": "a94d2ce735b10007a0a337a8616bba90461c388d763cd42ecf7ce66dda2cfbc3",
+        "state_jcs": "{\"digest\":\"sha256:c9e6d26fb63b4a8cca8b9eee9efe163f2e88c52c7e58b85b71400597ce2c448f\",\"reference\":\"v0.6.14\",\"registry\":\"docker-push.nexus.int.codicarium.com\",\"repository\":\"codicarium/deployment-controller\"}",
+        "state_sha256": "a94d2ce735b10007a0a337a8616bba90461c388d763cd42ecf7ce66dda2cfbc3"
+      },
+      "readback_sha256": "978e8cb9d568b2f72669798b77f361c2b727f2a714dc1705756c20832b74ac6e"
+    },
+    {
+      "operation": "chart-publish",
+      "sequence": "4",
+      "request": {
+        "method": "PUT",
+        "endpoint": "/v2/codicarium/deployment-controller/manifests/0.6.14",
+        "actor_role": "publisher-target-writer-04",
+        "github_api": null,
+        "target_jcs": "{\"digest\":\"sha256:373776ac74423711cbdaa7cd332320c0024516773fa004f74d54e4ffc8abd83e\",\"registry\":\"charts.nexus.int.codicarium.com\",\"repository\":\"codicarium/deployment-controller\",\"version\":\"0.6.14\"}",
+        "target_sha256": "1a5ffa3c92dabf544906ab466ee17b8f948ace766ab01e75b3d48d5fbc520473"
+      },
+      "request_sha256": "5c516e9bf3c5cc65c29bd0861568209e988e32f1db5b620b94ab3159b7f398c5",
+      "readback": {
+        "status": 201,
+        "endpoint": "/v2/codicarium/deployment-controller/manifests/0.6.14",
+        "target_sha256": "1a5ffa3c92dabf544906ab466ee17b8f948ace766ab01e75b3d48d5fbc520473",
+        "state_jcs": "{\"digest\":\"sha256:373776ac74423711cbdaa7cd332320c0024516773fa004f74d54e4ffc8abd83e\",\"registry\":\"charts.nexus.int.codicarium.com\",\"repository\":\"codicarium/deployment-controller\",\"version\":\"0.6.14\"}",
+        "state_sha256": "1a5ffa3c92dabf544906ab466ee17b8f948ace766ab01e75b3d48d5fbc520473"
+      },
+      "readback_sha256": "97183946b0ac255dd01408d75c9cbaa6acbad821d0d0fe1ff8e5b61661ab2a0d"
+    },
+    {
+      "operation": "release-asset-create",
+      "sequence": "5",
+      "request": {
+        "method": "POST",
+        "endpoint": "/releases/9006001/assets",
+        "actor_role": "publisher-target-writer-05",
+        "github_api": null,
+        "target_jcs": "{\"asset_id\":\"9400001\",\"name\":\"deployment-controller-0.6.14.tgz\",\"release_id\":\"9006001\",\"sha256\":\"a7b79d3a6ed582269140e620de834c2910c407e12dc27acdcef838c564c4dee0\",\"size\":\"1\"}",
+        "target_sha256": "755e73376e0f1073c23eb76de66192b64c459e0d19d8cdb9663ef20b3c179283"
+      },
+      "request_sha256": "760e1d8443fbab473aa9620c9880702c67242df5c5cd7ea0f1214e95c489b514",
+      "readback": {
+        "status": 201,
+        "endpoint": "/releases/9006001/assets",
+        "target_sha256": "755e73376e0f1073c23eb76de66192b64c459e0d19d8cdb9663ef20b3c179283",
+        "state_jcs": "{\"asset_id\":\"9400001\",\"name\":\"deployment-controller-0.6.14.tgz\",\"release_id\":\"9006001\",\"sha256\":\"a7b79d3a6ed582269140e620de834c2910c407e12dc27acdcef838c564c4dee0\",\"size\":\"1\"}",
+        "state_sha256": "755e73376e0f1073c23eb76de66192b64c459e0d19d8cdb9663ef20b3c179283"
+      },
+      "readback_sha256": "0597a7d86a223394e299f266b21123bbcd536a282a8f7c0d39df64a3e12927a5"
+    },
+    {
+      "operation": "release-asset-create",
+      "sequence": "6",
+      "request": {
+        "method": "POST",
+        "endpoint": "/releases/9006001/assets",
+        "actor_role": "publisher-target-writer-06",
+        "github_api": null,
+        "target_jcs": "{\"asset_id\":\"9400002\",\"name\":\"deployment-controller-0.6.14.tgz.sigstore.json\",\"release_id\":\"9006001\",\"sha256\":\"1c20fee0bbda686e039e9909459a2797942f918722a840f171ac07667abcfe78\",\"size\":\"2\"}",
+        "target_sha256": "137699bd907a9c85575d764ceaa6f9b1a3a5a856386271e84609043c49901021"
+      },
+      "request_sha256": "1d1f189553c2d7d93cc1e8b64b17bba4cbb786d37dcb430436c1a25948cfaa1d",
+      "readback": {
+        "status": 201,
+        "endpoint": "/releases/9006001/assets",
+        "target_sha256": "137699bd907a9c85575d764ceaa6f9b1a3a5a856386271e84609043c49901021",
+        "state_jcs": "{\"asset_id\":\"9400002\",\"name\":\"deployment-controller-0.6.14.tgz.sigstore.json\",\"release_id\":\"9006001\",\"sha256\":\"1c20fee0bbda686e039e9909459a2797942f918722a840f171ac07667abcfe78\",\"size\":\"2\"}",
+        "state_sha256": "137699bd907a9c85575d764ceaa6f9b1a3a5a856386271e84609043c49901021"
+      },
+      "readback_sha256": "86052d60dfdd8cfc3101b51815cad6e4d0acbe27e32e4325afc1de8ea9f35f25"
+    },
+    {
+      "operation": "release-asset-create",
+      "sequence": "7",
+      "request": {
+        "method": "POST",
+        "endpoint": "/releases/9006001/assets",
+        "actor_role": "publisher-target-writer-07",
+        "github_api": null,
+        "target_jcs": "{\"asset_id\":\"9400003\",\"name\":\"deployment-controller-chart-oci-provenance.sigstore.json\",\"release_id\":\"9006001\",\"sha256\":\"e73de05c86c52706be111a755ba37a92b6576e93e6848f2373db48559a8c3534\",\"size\":\"3\"}",
+        "target_sha256": "08e34858afc88cd381d341e34994760c7f248fa851c0a75a0a1076ca69fc2a29"
+      },
+      "request_sha256": "9d6d7cfdb6626c6434bf9ccfed9d3cc6800ec1b72da4f6449ea36cafad09a13a",
+      "readback": {
+        "status": 201,
+        "endpoint": "/releases/9006001/assets",
+        "target_sha256": "08e34858afc88cd381d341e34994760c7f248fa851c0a75a0a1076ca69fc2a29",
+        "state_jcs": "{\"asset_id\":\"9400003\",\"name\":\"deployment-controller-chart-oci-provenance.sigstore.json\",\"release_id\":\"9006001\",\"sha256\":\"e73de05c86c52706be111a755ba37a92b6576e93e6848f2373db48559a8c3534\",\"size\":\"3\"}",
+        "state_sha256": "08e34858afc88cd381d341e34994760c7f248fa851c0a75a0a1076ca69fc2a29"
+      },
+      "readback_sha256": "07c3ed7ab83b178c6ef043240d891201a2aa1f617988fef15cd98b07c2c2d73b"
+    },
+    {
+      "operation": "release-asset-create",
+      "sequence": "8",
+      "request": {
+        "method": "POST",
+        "endpoint": "/releases/9006001/assets",
+        "actor_role": "publisher-target-writer-08",
+        "github_api": null,
+        "target_jcs": "{\"asset_id\":\"9400004\",\"name\":\"deployment-controller-chart.sha256\",\"release_id\":\"9006001\",\"sha256\":\"a46159056eefe95dfaafea226f1883a361d7891d32af8df7bd32e4198383c516\",\"size\":\"4\"}",
+        "target_sha256": "8ddc50a3645f83bafa1e7dfcfe812cd103d911e8ea9b4f22af22a82febf1d0b3"
+      },
+      "request_sha256": "c67bcd4a7fbc34f1f0a860727e0aaf31a6bb37cb69f11f6d10a8a9b084bd60d3",
+      "readback": {
+        "status": 201,
+        "endpoint": "/releases/9006001/assets",
+        "target_sha256": "8ddc50a3645f83bafa1e7dfcfe812cd103d911e8ea9b4f22af22a82febf1d0b3",
+        "state_jcs": "{\"asset_id\":\"9400004\",\"name\":\"deployment-controller-chart.sha256\",\"release_id\":\"9006001\",\"sha256\":\"a46159056eefe95dfaafea226f1883a361d7891d32af8df7bd32e4198383c516\",\"size\":\"4\"}",
+        "state_sha256": "8ddc50a3645f83bafa1e7dfcfe812cd103d911e8ea9b4f22af22a82febf1d0b3"
+      },
+      "readback_sha256": "7533824b01ff74e1a67388b041c14d5d6b1a49e6a0cfdcd855afeb653de8fe09"
+    },
+    {
+      "operation": "release-asset-create",
+      "sequence": "9",
+      "request": {
+        "method": "POST",
+        "endpoint": "/releases/9006001/assets",
+        "actor_role": "publisher-target-writer-09",
+        "github_api": null,
+        "target_jcs": "{\"asset_id\":\"9400005\",\"name\":\"deployment-controller-chart.sha256.sigstore.json\",\"release_id\":\"9006001\",\"sha256\":\"79e203d2cca8167b7c471fce6a5fd7b3d00673dfd8f6bbea385d133e6e91b747\",\"size\":\"5\"}",
+        "target_sha256": "d07a95da8f82b6f2094090a7e2714d3915eb325f976bdcd3713a413e2b234b97"
+      },
+      "request_sha256": "09d30b70c430905e7d4551da7b2bf6a277e7b69eb5e4a03d37fa47852a9d6b53",
+      "readback": {
+        "status": 201,
+        "endpoint": "/releases/9006001/assets",
+        "target_sha256": "d07a95da8f82b6f2094090a7e2714d3915eb325f976bdcd3713a413e2b234b97",
+        "state_jcs": "{\"asset_id\":\"9400005\",\"name\":\"deployment-controller-chart.sha256.sigstore.json\",\"release_id\":\"9006001\",\"sha256\":\"79e203d2cca8167b7c471fce6a5fd7b3d00673dfd8f6bbea385d133e6e91b747\",\"size\":\"5\"}",
+        "state_sha256": "d07a95da8f82b6f2094090a7e2714d3915eb325f976bdcd3713a413e2b234b97"
+      },
+      "readback_sha256": "c781a0d47115d00588f994e6dab03cb111a1857f32f4d1c448a0f772e8d03e1f"
+    },
+    {
+      "operation": "release-asset-create",
+      "sequence": "10",
+      "request": {
+        "method": "POST",
+        "endpoint": "/releases/9006001/assets",
+        "actor_role": "publisher-target-writer-10",
+        "github_api": null,
+        "target_jcs": "{\"asset_id\":\"9400006\",\"name\":\"deployment-controller-image-provenance.sigstore.json\",\"release_id\":\"9006001\",\"sha256\":\"736e0d20e2fcb11271e63c14ce87ccde398fb806483e880f0b0c5d28b3bb30f2\",\"size\":\"6\"}",
+        "target_sha256": "13a504a1d2c58d697d24a5e62cbed9e97e8ab9b489b961efab8f008bfa263dad"
+      },
+      "request_sha256": "f5272d5c693e8bc5fd910bf3b2e44651b616338a2fab12cda2e4b93c77f3f3e8",
+      "readback": {
+        "status": 201,
+        "endpoint": "/releases/9006001/assets",
+        "target_sha256": "13a504a1d2c58d697d24a5e62cbed9e97e8ab9b489b961efab8f008bfa263dad",
+        "state_jcs": "{\"asset_id\":\"9400006\",\"name\":\"deployment-controller-image-provenance.sigstore.json\",\"release_id\":\"9006001\",\"sha256\":\"736e0d20e2fcb11271e63c14ce87ccde398fb806483e880f0b0c5d28b3bb30f2\",\"size\":\"6\"}",
+        "state_sha256": "13a504a1d2c58d697d24a5e62cbed9e97e8ab9b489b961efab8f008bfa263dad"
+      },
+      "readback_sha256": "95b1abeeb95441e0bdd1eef450ba12616dc44cba510d7b22aa9518c43ae90481"
+    },
+    {
+      "operation": "release-asset-create",
+      "sequence": "11",
+      "request": {
+        "method": "POST",
+        "endpoint": "/releases/9006001/assets",
+        "actor_role": "publisher-target-writer-11",
+        "github_api": null,
+        "target_jcs": "{\"asset_id\":\"9400007\",\"name\":\"deployment-controller-linux-amd64-sbom.sigstore.json\",\"release_id\":\"9006001\",\"sha256\":\"253eb00043ae50ec79acab035be23a020d8c4f1f8a9683d6c230e2fc1e5415ed\",\"size\":\"7\"}",
+        "target_sha256": "6c63b0eebaf3c09aaa07b0442aa642d7d75d7783dd12fb525a5e43a33f9e83a9"
+      },
+      "request_sha256": "921827df8073704d718bf0cae57b6716b5b928448d9f7855901a48029c21016f",
+      "readback": {
+        "status": 201,
+        "endpoint": "/releases/9006001/assets",
+        "target_sha256": "6c63b0eebaf3c09aaa07b0442aa642d7d75d7783dd12fb525a5e43a33f9e83a9",
+        "state_jcs": "{\"asset_id\":\"9400007\",\"name\":\"deployment-controller-linux-amd64-sbom.sigstore.json\",\"release_id\":\"9006001\",\"sha256\":\"253eb00043ae50ec79acab035be23a020d8c4f1f8a9683d6c230e2fc1e5415ed\",\"size\":\"7\"}",
+        "state_sha256": "6c63b0eebaf3c09aaa07b0442aa642d7d75d7783dd12fb525a5e43a33f9e83a9"
+      },
+      "readback_sha256": "08cc032966a0c5123a45da4ac208319a59db1298a066df30b67c34dced560b89"
+    },
+    {
+      "operation": "release-asset-create",
+      "sequence": "12",
+      "request": {
+        "method": "POST",
+        "endpoint": "/releases/9006001/assets",
+        "actor_role": "publisher-target-writer-12",
+        "github_api": null,
+        "target_jcs": "{\"asset_id\":\"9400008\",\"name\":\"deployment-controller-linux-arm64-sbom.sigstore.json\",\"release_id\":\"9006001\",\"sha256\":\"ee0f24c765c5d8061c53e55c4f304afff2eb275c462a755f8400f8e38a1b319c\",\"size\":\"8\"}",
+        "target_sha256": "430105c47bc615c20a2da24f1bd15d5da4ee1355cbe5668fa385bc9bfc354b60"
+      },
+      "request_sha256": "c6e185873d77415598dd7a8f7bcedb530c55363c6d82265364fe7b08d46acea3",
+      "readback": {
+        "status": 201,
+        "endpoint": "/releases/9006001/assets",
+        "target_sha256": "430105c47bc615c20a2da24f1bd15d5da4ee1355cbe5668fa385bc9bfc354b60",
+        "state_jcs": "{\"asset_id\":\"9400008\",\"name\":\"deployment-controller-linux-arm64-sbom.sigstore.json\",\"release_id\":\"9006001\",\"sha256\":\"ee0f24c765c5d8061c53e55c4f304afff2eb275c462a755f8400f8e38a1b319c\",\"size\":\"8\"}",
+        "state_sha256": "430105c47bc615c20a2da24f1bd15d5da4ee1355cbe5668fa385bc9bfc354b60"
+      },
+      "readback_sha256": "536084f424d3bb8e6968b4cd432496edd6af8c38adf63fc1ab36c1584869829c"
+    },
+    {
+      "operation": "release-asset-create",
+      "sequence": "13",
+      "request": {
+        "method": "POST",
+        "endpoint": "/releases/9006001/assets",
+        "actor_role": "publisher-target-writer-13",
+        "github_api": null,
+        "target_jcs": "{\"asset_id\":\"9400009\",\"name\":\"deployment-controller-release-graph.json\",\"release_id\":\"9006001\",\"sha256\":\"c19ff6ae27225f8d8d7f9178b46a7d5d7705252b445bfdf82305de1f8f522c9d\",\"size\":\"9\"}",
+        "target_sha256": "861d7afd7d060898ce62a585f814057b305b5545f52f2683cdbc69f07372448d"
+      },
+      "request_sha256": "4a2928640b1ba4d2c41dca43acd5d10f0e3bd28eb6b2cad1a9fad41fd1e22a7f",
+      "readback": {
+        "status": 201,
+        "endpoint": "/releases/9006001/assets",
+        "target_sha256": "861d7afd7d060898ce62a585f814057b305b5545f52f2683cdbc69f07372448d",
+        "state_jcs": "{\"asset_id\":\"9400009\",\"name\":\"deployment-controller-release-graph.json\",\"release_id\":\"9006001\",\"sha256\":\"c19ff6ae27225f8d8d7f9178b46a7d5d7705252b445bfdf82305de1f8f522c9d\",\"size\":\"9\"}",
+        "state_sha256": "861d7afd7d060898ce62a585f814057b305b5545f52f2683cdbc69f07372448d"
+      },
+      "readback_sha256": "93d89023e2074274a93df64f4c2c38515a7f0335d1fa462136c626c50b444c40"
+    },
+    {
+      "operation": "release-asset-create",
+      "sequence": "14",
+      "request": {
+        "method": "POST",
+        "endpoint": "/releases/9006001/assets",
+        "actor_role": "publisher-target-writer-14",
+        "github_api": null,
+        "target_jcs": "{\"asset_id\":\"9400010\",\"name\":\"deployment-controller-release-graph.json.sigstore.json\",\"release_id\":\"9006001\",\"sha256\":\"d56abc44f863263d6c9dbebf1708891d7b98996cdb62e68ffc0e23ce741d8835\",\"size\":\"10\"}",
+        "target_sha256": "731244dc549aede73d4f9552838e70ab7c4f5a522f95821a1e737b2b2f229ee2"
+      },
+      "request_sha256": "ba7a4d8e6b12bb5a1b0aa04ee422dc2c9f7a5e21f5d67d2aadf1755e03b7a21b",
+      "readback": {
+        "status": 201,
+        "endpoint": "/releases/9006001/assets",
+        "target_sha256": "731244dc549aede73d4f9552838e70ab7c4f5a522f95821a1e737b2b2f229ee2",
+        "state_jcs": "{\"asset_id\":\"9400010\",\"name\":\"deployment-controller-release-graph.json.sigstore.json\",\"release_id\":\"9006001\",\"sha256\":\"d56abc44f863263d6c9dbebf1708891d7b98996cdb62e68ffc0e23ce741d8835\",\"size\":\"10\"}",
+        "state_sha256": "731244dc549aede73d4f9552838e70ab7c4f5a522f95821a1e737b2b2f229ee2"
+      },
+      "readback_sha256": "0ed6cf4ca04c93e10d041bd1b148bd26a4393982311598a43a3592e1cb9f680d"
+    },
+    {
+      "operation": "release-asset-create",
+      "sequence": "15",
+      "request": {
+        "method": "POST",
+        "endpoint": "/releases/9006001/assets",
+        "actor_role": "publisher-target-writer-15",
+        "github_api": null,
+        "target_jcs": "{\"asset_id\":\"9400011\",\"name\":\"deployment-controller-release-manifest.json\",\"release_id\":\"9006001\",\"sha256\":\"1ec074d61265ced6505287f70763848850aa8792caa54ca0f3f99b035f3b60ed\",\"size\":\"11\"}",
+        "target_sha256": "1e5ff341abcc41a70f11158e40fae56e276105ea3355c792513f0750e479e187"
+      },
+      "request_sha256": "d0d1659e457d12000f5f2ab3be85ecbaf23234b967203ff1a3029d0c593cbc95",
+      "readback": {
+        "status": 201,
+        "endpoint": "/releases/9006001/assets",
+        "target_sha256": "1e5ff341abcc41a70f11158e40fae56e276105ea3355c792513f0750e479e187",
+        "state_jcs": "{\"asset_id\":\"9400011\",\"name\":\"deployment-controller-release-manifest.json\",\"release_id\":\"9006001\",\"sha256\":\"1ec074d61265ced6505287f70763848850aa8792caa54ca0f3f99b035f3b60ed\",\"size\":\"11\"}",
+        "state_sha256": "1e5ff341abcc41a70f11158e40fae56e276105ea3355c792513f0750e479e187"
+      },
+      "readback_sha256": "0c293d4e1a31f6516dda823ff8a2312284a0261fa5bb466944a2afe709bf2440"
+    },
+    {
+      "operation": "release-asset-create",
+      "sequence": "16",
+      "request": {
+        "method": "POST",
+        "endpoint": "/releases/9006001/assets",
+        "actor_role": "publisher-target-writer-16",
+        "github_api": null,
+        "target_jcs": "{\"asset_id\":\"9400012\",\"name\":\"deployment-controller-release-manifest.json.sigstore.json\",\"release_id\":\"9006001\",\"sha256\":\"ee6356982c74b217e500d1f41578a24d767e3823042f3b14aaf2e042e06377bb\",\"size\":\"12\"}",
+        "target_sha256": "44d1a4cb3266073e29e4dbf27bd71ac8932c408e523bff1a99c8054903b58bd4"
+      },
+      "request_sha256": "a06d17b56abcb8fdfd48cc360e4918deb55c68b7a71dd92863b3676d64e34728",
+      "readback": {
+        "status": 201,
+        "endpoint": "/releases/9006001/assets",
+        "target_sha256": "44d1a4cb3266073e29e4dbf27bd71ac8932c408e523bff1a99c8054903b58bd4",
+        "state_jcs": "{\"asset_id\":\"9400012\",\"name\":\"deployment-controller-release-manifest.json.sigstore.json\",\"release_id\":\"9006001\",\"sha256\":\"ee6356982c74b217e500d1f41578a24d767e3823042f3b14aaf2e042e06377bb\",\"size\":\"12\"}",
+        "state_sha256": "44d1a4cb3266073e29e4dbf27bd71ac8932c408e523bff1a99c8054903b58bd4"
+      },
+      "readback_sha256": "14769b12cd585bd72b054d7840d2b615c1b67435fe642c5b2266b29120126bc0"
+    },
+    {
+      "operation": "release-asset-create",
+      "sequence": "17",
+      "request": {
+        "method": "POST",
+        "endpoint": "/releases/9006001/assets",
+        "actor_role": "publisher-target-writer-17",
+        "github_api": null,
+        "target_jcs": "{\"asset_id\":\"9400013\",\"name\":\"deployment-controller-publisher-subject-manifest.json\",\"release_id\":\"9006001\",\"sha256\":\"adca03b3d06c977a6a9e9f73c7b07fc361d0296aeada49d5f2da541443ed4a1e\",\"size\":\"13\"}",
+        "target_sha256": "e9c0600fe91535c0f41b60f98fc53ee11ebc9c3b9fdccd72933b1a4862742b1c"
+      },
+      "request_sha256": "20f79f0c25bfc0f125d5e2310afe38e2b08242c1fec297d0d07249562d2207b9",
+      "readback": {
+        "status": 201,
+        "endpoint": "/releases/9006001/assets",
+        "target_sha256": "e9c0600fe91535c0f41b60f98fc53ee11ebc9c3b9fdccd72933b1a4862742b1c",
+        "state_jcs": "{\"asset_id\":\"9400013\",\"name\":\"deployment-controller-publisher-subject-manifest.json\",\"release_id\":\"9006001\",\"sha256\":\"adca03b3d06c977a6a9e9f73c7b07fc361d0296aeada49d5f2da541443ed4a1e\",\"size\":\"13\"}",
+        "state_sha256": "e9c0600fe91535c0f41b60f98fc53ee11ebc9c3b9fdccd72933b1a4862742b1c"
+      },
+      "readback_sha256": "34a6ab333dec5a8f93927f39574d7eb3a3ed52e159c4934899ab687aa647bb61"
+    },
+    {
+      "operation": "release-asset-create",
+      "sequence": "18",
+      "request": {
+        "method": "POST",
+        "endpoint": "/releases/9006001/assets",
+        "actor_role": "publisher-target-writer-18",
+        "github_api": null,
+        "target_jcs": "{\"asset_id\":\"9400014\",\"name\":\"deployment-controller-publisher-subject-manifest.json.sigstore.json\",\"release_id\":\"9006001\",\"sha256\":\"6a0a9e610c21e35285be0ec693c1985a3b250a7e946694f47bf66f52e9fd1bc1\",\"size\":\"14\"}",
+        "target_sha256": "6ee2e01bfdbc4acf5ef405b75025ce7d2994e88de68930e175f71268ef452ca3"
+      },
+      "request_sha256": "c2f5a57c772b0142c2096e49b4d69e950f333f6e537c440b7e7d2570f7f1521b",
+      "readback": {
+        "status": 201,
+        "endpoint": "/releases/9006001/assets",
+        "target_sha256": "6ee2e01bfdbc4acf5ef405b75025ce7d2994e88de68930e175f71268ef452ca3",
+        "state_jcs": "{\"asset_id\":\"9400014\",\"name\":\"deployment-controller-publisher-subject-manifest.json.sigstore.json\",\"release_id\":\"9006001\",\"sha256\":\"6a0a9e610c21e35285be0ec693c1985a3b250a7e946694f47bf66f52e9fd1bc1\",\"size\":\"14\"}",
+        "state_sha256": "6ee2e01bfdbc4acf5ef405b75025ce7d2994e88de68930e175f71268ef452ca3"
+      },
+      "readback_sha256": "a527bdd1c41a451ceb87054c243bbb32cd330ae6c046748adad63a44265c0178"
+    },
+    {
+      "operation": "release-finalize",
+      "sequence": "19",
+      "request": {
+        "method": "PATCH",
+        "endpoint": "/releases/9006001",
+        "actor_role": "publisher-target-writer-19",
+        "github_api": null,
+        "target_jcs": "{\"draft\":false,\"prerelease\":false,\"release_id\":\"9006001\",\"tag\":\"v0.6.14\",\"target_commitish\":\"2aee9b5ba6ed8be8dc848df482a43f6a3f33b712\"}",
+        "target_sha256": "f317cefc4cbc8c732d77b2a6436affe4139f7376083f182fefe34884284d79f4"
+      },
+      "request_sha256": "ae89d646891527b0890232a3ce396ab3e65d7c02bbe21557e64369784c3abc9b",
+      "readback": {
+        "status": 200,
+        "endpoint": "/releases/9006001",
+        "target_sha256": "f317cefc4cbc8c732d77b2a6436affe4139f7376083f182fefe34884284d79f4",
+        "state_jcs": "{\"draft\":false,\"prerelease\":false,\"release_id\":\"9006001\",\"tag\":\"v0.6.14\",\"target_commitish\":\"2aee9b5ba6ed8be8dc848df482a43f6a3f33b712\"}",
+        "state_sha256": "f317cefc4cbc8c732d77b2a6436affe4139f7376083f182fefe34884284d79f4"
+      },
+      "readback_sha256": "5bd2f0c71fe8ca9279d10eba377e874d117c289345b234c8fda18a49dbb9cfbd"
+    }
+  ],
+  "entries": [
+    {
+      "entry": {
+        "body": {
+          "schema": "codicarium.release-journal-entry/v1",
+          "evidence_class": "synthetic-conformance-fixture",
+          "publication_authority": false,
+          "fixture_set": "issue93-v2.0",
+          "fixture_identity_jcs_sha256": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "journal_id": "jrnl-v1-d2c3d86640cd2b8125b35fc472c3b8cb",
+          "ordinal": "1",
+          "event": "claim",
+          "claim_key": "rel-v2-sha256:d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "publication_sequence": null,
+          "previous_entry_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+          "payload": {
+            "operation": "release-claim",
+            "phase": "claim",
+            "request_sha256": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+            "result_sha256": "8d2be0cd35e799a470c12a5d75f4b926b1c4ed0e13cb933ec8cfd72500a795ed",
+            "reservation_entry_sha256": null,
+            "publication_receipt_sha256": null,
+            "workflow_run_id": "9004001",
+            "outcome": "CLAIMED"
+          },
+          "actor": {
+            "principal": "release-control-claimer",
+            "role": "claimer",
+            "capabilities": [
+              "journal:claim"
+            ],
+            "can_mutate_targets": false,
+            "can_sign": false,
+            "can_commit": false
+          },
+          "created_at": "2026-01-01T00:00:00Z"
+        },
+        "signature": {
+          "format": "vault-transit-ed25519-jcs/v1",
+          "transit_key": "release-journal-v1",
+          "transit_key_version": "1",
+          "kid": "kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+          "payload_sha256": "c4da2cec0159d479d09b3bc99af5f64879e0596e1e392beeaf551913b3ea0ac2",
+          "signature_base64url": "1hoGUKfiD1B_SvUXCRSI2i9dJ6P3jqd1EoxvYzrgtJGgXbRIKp6pzjNUKLeHD9JDt-_eN4saHdCYn9wNczM_BQ"
+        }
+      },
+      "entry_sha256": "067e9392e983e24dc84a5f835f2cdec0d5474c4f2bd35f724f0e5f06ec1d0f04"
+    },
+    {
+      "entry": {
+        "body": {
+          "schema": "codicarium.release-journal-entry/v1",
+          "evidence_class": "synthetic-conformance-fixture",
+          "publication_authority": false,
+          "fixture_set": "issue93-v2.0",
+          "fixture_identity_jcs_sha256": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "journal_id": "jrnl-v1-d2c3d86640cd2b8125b35fc472c3b8cb",
+          "ordinal": "2",
+          "event": "verifier-dispatch-reserve",
+          "claim_key": "rel-v2-sha256:d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "publication_sequence": null,
+          "previous_entry_sha256": "067e9392e983e24dc84a5f835f2cdec0d5474c4f2bd35f724f0e5f06ec1d0f04",
+          "payload": {
+            "operation": "verifier-dispatch",
+            "phase": "reserve",
+            "request_sha256": "42f0b0dce353637854dc37544de7fa1d311008963248cc094df58be5aa1674ef",
+            "result_sha256": null,
+            "reservation_entry_sha256": null,
+            "publication_receipt_sha256": null,
+            "workflow_run_id": null,
+            "outcome": "RESERVED"
+          },
+          "actor": {
+            "principal": "release-control-reserver",
+            "role": "reserver",
+            "capabilities": [
+              "journal:reserve"
+            ],
+            "can_mutate_targets": false,
+            "can_sign": false,
+            "can_commit": false
+          },
+          "created_at": "2026-01-01T00:00:01Z"
+        },
+        "signature": {
+          "format": "vault-transit-ed25519-jcs/v1",
+          "transit_key": "release-journal-v1",
+          "transit_key_version": "1",
+          "kid": "kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+          "payload_sha256": "65146dc3a2e993192f842ddcd7024dd7225ded093eecc44bec50189df0d733ee",
+          "signature_base64url": "KXDDW9z8rteGmz_U37TC0dC1BJ9Qs6G85p63JLVWFPgVn3zN0YeGPWXv6yT8xylhPf8lNqM2p393XQghrA30CQ"
+        }
+      },
+      "entry_sha256": "90cd1d71be4d486c5a912c3b2a81dcaba87ffa5ce742ae12632f5cadedf5fb3b"
+    },
+    {
+      "entry": {
+        "body": {
+          "schema": "codicarium.release-journal-entry/v1",
+          "evidence_class": "synthetic-conformance-fixture",
+          "publication_authority": false,
+          "fixture_set": "issue93-v2.0",
+          "fixture_identity_jcs_sha256": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "journal_id": "jrnl-v1-d2c3d86640cd2b8125b35fc472c3b8cb",
+          "ordinal": "3",
+          "event": "verifier-dispatch-commit",
+          "claim_key": "rel-v2-sha256:d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "publication_sequence": null,
+          "previous_entry_sha256": "90cd1d71be4d486c5a912c3b2a81dcaba87ffa5ce742ae12632f5cadedf5fb3b",
+          "payload": {
+            "operation": "verifier-dispatch",
+            "phase": "commit",
+            "request_sha256": "42f0b0dce353637854dc37544de7fa1d311008963248cc094df58be5aa1674ef",
+            "result_sha256": "eb3ad63af023cddcefbc7539140a465139efa2ab98ee911cd68faf2cb8d4297f",
+            "reservation_entry_sha256": "90cd1d71be4d486c5a912c3b2a81dcaba87ffa5ce742ae12632f5cadedf5fb3b",
+            "publication_receipt_sha256": null,
+            "workflow_run_id": "9003001",
+            "outcome": "COMMITTED"
+          },
+          "actor": {
+            "principal": "release-control-committer",
+            "role": "committer",
+            "capabilities": [
+              "journal:commit"
+            ],
+            "can_mutate_targets": false,
+            "can_sign": false,
+            "can_commit": true
+          },
+          "created_at": "2026-01-01T00:00:02Z"
+        },
+        "signature": {
+          "format": "vault-transit-ed25519-jcs/v1",
+          "transit_key": "release-journal-v1",
+          "transit_key_version": "1",
+          "kid": "kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+          "payload_sha256": "a30cad6f3d92884ec03f011aa59ecc12896720640089518a33e8f046d78e5495",
+          "signature_base64url": "Ks_Ohbm5hwcKINdcFB-7qzXDUIGiEQwnjMCHCuIVIMFriygyIwCNmUbxU5k3uvbFmjzx6bAYtRdPG2ke7RCWDg"
+        }
+      },
+      "entry_sha256": "6d6e674d9d0a6cb20ab64eb35187f6135e642481addbf9e00058796be2d1ebb0"
+    },
+    {
+      "entry": {
+        "body": {
+          "schema": "codicarium.release-journal-entry/v1",
+          "evidence_class": "synthetic-conformance-fixture",
+          "publication_authority": false,
+          "fixture_set": "issue93-v2.0",
+          "fixture_identity_jcs_sha256": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "journal_id": "jrnl-v1-d2c3d86640cd2b8125b35fc472c3b8cb",
+          "ordinal": "4",
+          "event": "verification-authorization",
+          "claim_key": "rel-v2-sha256:d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "publication_sequence": null,
+          "previous_entry_sha256": "6d6e674d9d0a6cb20ab64eb35187f6135e642481addbf9e00058796be2d1ebb0",
+          "payload": {
+            "operation": "verification-authorization",
+            "phase": "authorize",
+            "request_sha256": "9f38ae7456665aeee979bb094c78f2af082597d6f36fef350fa4f2df99c7421d",
+            "result_sha256": "8f31001d86c910a88840c3530be5f3fb3bd592be8e0ad0e4cde3100168be7a93",
+            "reservation_entry_sha256": null,
+            "publication_receipt_sha256": null,
+            "workflow_run_id": "9003001",
+            "outcome": "AUTHORIZED"
+          },
+          "actor": {
+            "principal": "release-control-authorizer",
+            "role": "authorizer",
+            "capabilities": [
+              "journal:authorize"
+            ],
+            "can_mutate_targets": false,
+            "can_sign": false,
+            "can_commit": false
+          },
+          "created_at": "2026-01-01T00:00:03Z"
+        },
+        "signature": {
+          "format": "vault-transit-ed25519-jcs/v1",
+          "transit_key": "release-journal-v1",
+          "transit_key_version": "1",
+          "kid": "kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+          "payload_sha256": "33d27cecf915f55742e0f3f8ed05aa0d2fcad404b0fc458d246d1a6d3a64a194",
+          "signature_base64url": "8_LAumut3sUMsKJ9eMG_fq9_jWsMHDhsaoZYHNpIV60qZpzlFqdzU2vVfxuxFMhmBnQbGPPk-M15iC-HQkb5Cw"
+        }
+      },
+      "entry_sha256": "59fbe9cb84fe331df677a31b5cb32d010541c5374014c0e4489f6a72ea148818"
+    },
+    {
+      "entry": {
+        "body": {
+          "schema": "codicarium.release-journal-entry/v1",
+          "evidence_class": "synthetic-conformance-fixture",
+          "publication_authority": false,
+          "fixture_set": "issue93-v2.0",
+          "fixture_identity_jcs_sha256": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "journal_id": "jrnl-v1-d2c3d86640cd2b8125b35fc472c3b8cb",
+          "ordinal": "5",
+          "event": "publisher-dispatch-reserve",
+          "claim_key": "rel-v2-sha256:d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "publication_sequence": "0",
+          "previous_entry_sha256": "59fbe9cb84fe331df677a31b5cb32d010541c5374014c0e4489f6a72ea148818",
+          "payload": {
+            "operation": "publisher-dispatch",
+            "phase": "reserve",
+            "request_sha256": "f852a4c540eff200c4b3ce0b73455265429a77b522d10a5f686225c76241b62d",
+            "result_sha256": null,
+            "reservation_entry_sha256": null,
+            "publication_receipt_sha256": null,
+            "workflow_run_id": null,
+            "outcome": "RESERVED"
+          },
+          "actor": {
+            "principal": "release-control-reserver",
+            "role": "reserver",
+            "capabilities": [
+              "journal:reserve"
+            ],
+            "can_mutate_targets": false,
+            "can_sign": false,
+            "can_commit": false
+          },
+          "created_at": "2026-01-01T00:00:04Z"
+        },
+        "signature": {
+          "format": "vault-transit-ed25519-jcs/v1",
+          "transit_key": "release-journal-v1",
+          "transit_key_version": "1",
+          "kid": "kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+          "payload_sha256": "da6579cac36e7e2f21b71df10cfbf037e39c35ff0294faa18e9d96afb47e40cc",
+          "signature_base64url": "28_QI2il07zDW-XWFbVwM8Bl--oHYsReSR_icfHSlWvNRp2PcS9q1lW658wpoKjbIJZUNBwNwxYB1XVfUNpqDA"
+        }
+      },
+      "entry_sha256": "86197e909034425de778d76880363eea82fe38715a1917056e54ea4f73a277c2"
+    },
+    {
+      "entry": {
+        "body": {
+          "schema": "codicarium.release-journal-entry/v1",
+          "evidence_class": "synthetic-conformance-fixture",
+          "publication_authority": false,
+          "fixture_set": "issue93-v2.0",
+          "fixture_identity_jcs_sha256": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "journal_id": "jrnl-v1-d2c3d86640cd2b8125b35fc472c3b8cb",
+          "ordinal": "6",
+          "event": "publisher-dispatch-commit",
+          "claim_key": "rel-v2-sha256:d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "publication_sequence": "0",
+          "previous_entry_sha256": "86197e909034425de778d76880363eea82fe38715a1917056e54ea4f73a277c2",
+          "payload": {
+            "operation": "publisher-dispatch",
+            "phase": "commit",
+            "request_sha256": "f852a4c540eff200c4b3ce0b73455265429a77b522d10a5f686225c76241b62d",
+            "result_sha256": "9e3e4fe36588fe36a8f088bdd44934ae93052a37f2ba6044909eaf6da90da30b",
+            "reservation_entry_sha256": "86197e909034425de778d76880363eea82fe38715a1917056e54ea4f73a277c2",
+            "publication_receipt_sha256": "b92d31322557a61aff16e11f7f152184508d1989231d5e282a82c2f061c57668",
+            "workflow_run_id": "9005001",
+            "outcome": "COMMITTED"
+          },
+          "actor": {
+            "principal": "release-control-committer",
+            "role": "committer",
+            "capabilities": [
+              "journal:commit"
+            ],
+            "can_mutate_targets": false,
+            "can_sign": false,
+            "can_commit": true
+          },
+          "created_at": "2026-01-01T00:00:05Z"
+        },
+        "signature": {
+          "format": "vault-transit-ed25519-jcs/v1",
+          "transit_key": "release-journal-v1",
+          "transit_key_version": "1",
+          "kid": "kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+          "payload_sha256": "4dec6eca3a85d2dfa87427356b6e4994cd39a66e68a4e7aa528a2adb7d10644b",
+          "signature_base64url": "zLFa9bgwb4mC4Y0dLJrVwTx_QNlADtvDy9XrO0Lmk2MjLRZhrXGYG0bxC2yMOqd_9gA008MVT177M4eWnF83BA"
+        }
+      },
+      "entry_sha256": "ff380714a046719289bde9abfa069a5629650b7c042b1855f1d6c47fba3877f2"
+    },
+    {
+      "entry": {
+        "body": {
+          "schema": "codicarium.release-journal-entry/v1",
+          "evidence_class": "synthetic-conformance-fixture",
+          "publication_authority": false,
+          "fixture_set": "issue93-v2.0",
+          "fixture_identity_jcs_sha256": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "journal_id": "jrnl-v1-d2c3d86640cd2b8125b35fc472c3b8cb",
+          "ordinal": "7",
+          "event": "mutation-reserve",
+          "claim_key": "rel-v2-sha256:d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "publication_sequence": "1",
+          "previous_entry_sha256": "ff380714a046719289bde9abfa069a5629650b7c042b1855f1d6c47fba3877f2",
+          "payload": {
+            "operation": "tag-create",
+            "phase": "reserve",
+            "request_sha256": "8c62e181715bb76a4f1eb8de435bfe56cd3772934341b603ad78bbf6992376f0",
+            "result_sha256": null,
+            "reservation_entry_sha256": null,
+            "publication_receipt_sha256": null,
+            "workflow_run_id": null,
+            "outcome": "RESERVED"
+          },
+          "actor": {
+            "principal": "release-control-reserver",
+            "role": "reserver",
+            "capabilities": [
+              "journal:reserve"
+            ],
+            "can_mutate_targets": false,
+            "can_sign": false,
+            "can_commit": false
+          },
+          "created_at": "2026-01-01T00:00:06Z"
+        },
+        "signature": {
+          "format": "vault-transit-ed25519-jcs/v1",
+          "transit_key": "release-journal-v1",
+          "transit_key_version": "1",
+          "kid": "kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+          "payload_sha256": "114bb50fbc4401fc10ed95c70e475db3e79857ccbfb8b7589193222b40ce7f49",
+          "signature_base64url": "wDOv4bCc5RZkZPvZ_TlNiIt5WXQT5y_WhzlIswpI6zwybgBbDpYyaj4kmaizcityWpZ1sKOaV-Wpu9vWQ7OYAw"
+        }
+      },
+      "entry_sha256": "e08fecb12ef9348977ae75e0232f49edbf8b1212697d8abe2bc96524928219ff"
+    },
+    {
+      "entry": {
+        "body": {
+          "schema": "codicarium.release-journal-entry/v1",
+          "evidence_class": "synthetic-conformance-fixture",
+          "publication_authority": false,
+          "fixture_set": "issue93-v2.0",
+          "fixture_identity_jcs_sha256": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "journal_id": "jrnl-v1-d2c3d86640cd2b8125b35fc472c3b8cb",
+          "ordinal": "8",
+          "event": "mutation-commit",
+          "claim_key": "rel-v2-sha256:d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "publication_sequence": "1",
+          "previous_entry_sha256": "e08fecb12ef9348977ae75e0232f49edbf8b1212697d8abe2bc96524928219ff",
+          "payload": {
+            "operation": "tag-create",
+            "phase": "commit",
+            "request_sha256": "8c62e181715bb76a4f1eb8de435bfe56cd3772934341b603ad78bbf6992376f0",
+            "result_sha256": "46ff10c567f0f46ff3a5515475749ca69777e0de942aebc29f58cfc1eba35673",
+            "reservation_entry_sha256": "e08fecb12ef9348977ae75e0232f49edbf8b1212697d8abe2bc96524928219ff",
+            "publication_receipt_sha256": "533ed81811ecea57bac2934196c8df85b613b0b54bdd715a86307e5de04f0c7a",
+            "workflow_run_id": "9005001",
+            "outcome": "COMMITTED"
+          },
+          "actor": {
+            "principal": "release-control-committer",
+            "role": "committer",
+            "capabilities": [
+              "journal:commit"
+            ],
+            "can_mutate_targets": false,
+            "can_sign": false,
+            "can_commit": true
+          },
+          "created_at": "2026-01-01T00:00:07Z"
+        },
+        "signature": {
+          "format": "vault-transit-ed25519-jcs/v1",
+          "transit_key": "release-journal-v1",
+          "transit_key_version": "1",
+          "kid": "kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+          "payload_sha256": "3322748ad217fd2783e1cec033434ed54f177cbd70593a247afa241c6966cbcf",
+          "signature_base64url": "HJRcHcKxEs0un5BCiPZlxrI6A7XPk66z7DvBxQtkdEi_XBKUr7a78GKiMz0uScOF5B7ULuS8urDqg35yf7kuAA"
+        }
+      },
+      "entry_sha256": "dc8b290780fcbcd309907aeee7cfc901d53c51e6c85e9fc32393c0a8092ccf22"
+    },
+    {
+      "entry": {
+        "body": {
+          "schema": "codicarium.release-journal-entry/v1",
+          "evidence_class": "synthetic-conformance-fixture",
+          "publication_authority": false,
+          "fixture_set": "issue93-v2.0",
+          "fixture_identity_jcs_sha256": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "journal_id": "jrnl-v1-d2c3d86640cd2b8125b35fc472c3b8cb",
+          "ordinal": "9",
+          "event": "mutation-reserve",
+          "claim_key": "rel-v2-sha256:d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "publication_sequence": "2",
+          "previous_entry_sha256": "dc8b290780fcbcd309907aeee7cfc901d53c51e6c85e9fc32393c0a8092ccf22",
+          "payload": {
+            "operation": "draft-release-create",
+            "phase": "reserve",
+            "request_sha256": "2cf113aaf8792094cdb9481b56b8fe41c32dd75b60a6993b9f673be6181339a5",
+            "result_sha256": null,
+            "reservation_entry_sha256": null,
+            "publication_receipt_sha256": null,
+            "workflow_run_id": null,
+            "outcome": "RESERVED"
+          },
+          "actor": {
+            "principal": "release-control-reserver",
+            "role": "reserver",
+            "capabilities": [
+              "journal:reserve"
+            ],
+            "can_mutate_targets": false,
+            "can_sign": false,
+            "can_commit": false
+          },
+          "created_at": "2026-01-01T00:00:08Z"
+        },
+        "signature": {
+          "format": "vault-transit-ed25519-jcs/v1",
+          "transit_key": "release-journal-v1",
+          "transit_key_version": "1",
+          "kid": "kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+          "payload_sha256": "9f208ef545f7206b6e2f871e099681c5a5797f6c857468ff8e10113deb85524e",
+          "signature_base64url": "Ug2tTPzIxgIcxn5YzMoWUbg2e8n7x5y_WhrXlyOriOMmRIC82zg9Tr4WMEBgIApiktpWuimAk1aCONPwVdBCBw"
+        }
+      },
+      "entry_sha256": "6bddb0268bac69a76b757f099d856683bd24c76d266eed025eae27a12edf7928"
+    },
+    {
+      "entry": {
+        "body": {
+          "schema": "codicarium.release-journal-entry/v1",
+          "evidence_class": "synthetic-conformance-fixture",
+          "publication_authority": false,
+          "fixture_set": "issue93-v2.0",
+          "fixture_identity_jcs_sha256": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "journal_id": "jrnl-v1-d2c3d86640cd2b8125b35fc472c3b8cb",
+          "ordinal": "10",
+          "event": "mutation-commit",
+          "claim_key": "rel-v2-sha256:d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "publication_sequence": "2",
+          "previous_entry_sha256": "6bddb0268bac69a76b757f099d856683bd24c76d266eed025eae27a12edf7928",
+          "payload": {
+            "operation": "draft-release-create",
+            "phase": "commit",
+            "request_sha256": "2cf113aaf8792094cdb9481b56b8fe41c32dd75b60a6993b9f673be6181339a5",
+            "result_sha256": "2028c7a01aec51b4679a43d872baac8481c4a57033828d6bc2597cd88efec6bf",
+            "reservation_entry_sha256": "6bddb0268bac69a76b757f099d856683bd24c76d266eed025eae27a12edf7928",
+            "publication_receipt_sha256": "51594fd4d9ffe9fc6f948393be02d52a30af101a5e6b041861148bb8400dc557",
+            "workflow_run_id": "9005001",
+            "outcome": "COMMITTED"
+          },
+          "actor": {
+            "principal": "release-control-committer",
+            "role": "committer",
+            "capabilities": [
+              "journal:commit"
+            ],
+            "can_mutate_targets": false,
+            "can_sign": false,
+            "can_commit": true
+          },
+          "created_at": "2026-01-01T00:00:09Z"
+        },
+        "signature": {
+          "format": "vault-transit-ed25519-jcs/v1",
+          "transit_key": "release-journal-v1",
+          "transit_key_version": "1",
+          "kid": "kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+          "payload_sha256": "4c6aeb8936032e5f7f88f848f80b0d20666c38001e5c6a429f66c8254f98f5f5",
+          "signature_base64url": "7-Kxwylu7OwgBA12rlFAw3Sad_VkLzufTjEbn_nnNH4MCrN1z3H8mHmhrv47mhcUKxCkW1AJ9TUyOyGejwJyCA"
+        }
+      },
+      "entry_sha256": "c1308243efb203f74a4e0535faa9f043b54da02bbd716f263270840af7c2d601"
+    },
+    {
+      "entry": {
+        "body": {
+          "schema": "codicarium.release-journal-entry/v1",
+          "evidence_class": "synthetic-conformance-fixture",
+          "publication_authority": false,
+          "fixture_set": "issue93-v2.0",
+          "fixture_identity_jcs_sha256": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "journal_id": "jrnl-v1-d2c3d86640cd2b8125b35fc472c3b8cb",
+          "ordinal": "11",
+          "event": "mutation-reserve",
+          "claim_key": "rel-v2-sha256:d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "publication_sequence": "3",
+          "previous_entry_sha256": "c1308243efb203f74a4e0535faa9f043b54da02bbd716f263270840af7c2d601",
+          "payload": {
+            "operation": "image-publish",
+            "phase": "reserve",
+            "request_sha256": "93149a4ae6257bf0c512ebfd0cfbf58f323d6e5eb351355530d652a8d18b75ed",
+            "result_sha256": null,
+            "reservation_entry_sha256": null,
+            "publication_receipt_sha256": null,
+            "workflow_run_id": null,
+            "outcome": "RESERVED"
+          },
+          "actor": {
+            "principal": "release-control-reserver",
+            "role": "reserver",
+            "capabilities": [
+              "journal:reserve"
+            ],
+            "can_mutate_targets": false,
+            "can_sign": false,
+            "can_commit": false
+          },
+          "created_at": "2026-01-01T00:00:10Z"
+        },
+        "signature": {
+          "format": "vault-transit-ed25519-jcs/v1",
+          "transit_key": "release-journal-v1",
+          "transit_key_version": "1",
+          "kid": "kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+          "payload_sha256": "28a66d7a4543748d5db6b697bcb9216864c857b3ca0ea1d945b6756e6a9a1741",
+          "signature_base64url": "hLFzUSJvB25UtxdOzjHvLaKRj0EioxDuqqbLZcRRSPFcCY_UthyKSg3vReGcYHnGK1lGwvT4Jpe-SIx0tBoMAA"
+        }
+      },
+      "entry_sha256": "e2999a64cc48d4ff9802fc1ab6d0ec7c47659128307e1c79b83d98e4f928d4e1"
+    },
+    {
+      "entry": {
+        "body": {
+          "schema": "codicarium.release-journal-entry/v1",
+          "evidence_class": "synthetic-conformance-fixture",
+          "publication_authority": false,
+          "fixture_set": "issue93-v2.0",
+          "fixture_identity_jcs_sha256": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "journal_id": "jrnl-v1-d2c3d86640cd2b8125b35fc472c3b8cb",
+          "ordinal": "12",
+          "event": "mutation-commit",
+          "claim_key": "rel-v2-sha256:d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "publication_sequence": "3",
+          "previous_entry_sha256": "e2999a64cc48d4ff9802fc1ab6d0ec7c47659128307e1c79b83d98e4f928d4e1",
+          "payload": {
+            "operation": "image-publish",
+            "phase": "commit",
+            "request_sha256": "93149a4ae6257bf0c512ebfd0cfbf58f323d6e5eb351355530d652a8d18b75ed",
+            "result_sha256": "978e8cb9d568b2f72669798b77f361c2b727f2a714dc1705756c20832b74ac6e",
+            "reservation_entry_sha256": "e2999a64cc48d4ff9802fc1ab6d0ec7c47659128307e1c79b83d98e4f928d4e1",
+            "publication_receipt_sha256": "78a576b7a6e0f49f94be44884940b6a2fca82eb3178f2d18f85d96d8fa31127f",
+            "workflow_run_id": "9005001",
+            "outcome": "COMMITTED"
+          },
+          "actor": {
+            "principal": "release-control-committer",
+            "role": "committer",
+            "capabilities": [
+              "journal:commit"
+            ],
+            "can_mutate_targets": false,
+            "can_sign": false,
+            "can_commit": true
+          },
+          "created_at": "2026-01-01T00:00:11Z"
+        },
+        "signature": {
+          "format": "vault-transit-ed25519-jcs/v1",
+          "transit_key": "release-journal-v1",
+          "transit_key_version": "1",
+          "kid": "kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+          "payload_sha256": "3661e49fbb1cbd6384b6d265ddb7e46acd80d55ae19395709561cd1bab117c1b",
+          "signature_base64url": "8CaFRAN3BsxhTbIDHKsURdmh8KcpntiRQWriTGTu6ip1s5NJYkpHvdsyB0CvBgrfSXxz2LExj42XdOmwFKKeBw"
+        }
+      },
+      "entry_sha256": "8f07a891e57db7b4bb43b3d8e2ac8f670edc93f03c81d0023cf33b51a519feb4"
+    },
+    {
+      "entry": {
+        "body": {
+          "schema": "codicarium.release-journal-entry/v1",
+          "evidence_class": "synthetic-conformance-fixture",
+          "publication_authority": false,
+          "fixture_set": "issue93-v2.0",
+          "fixture_identity_jcs_sha256": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "journal_id": "jrnl-v1-d2c3d86640cd2b8125b35fc472c3b8cb",
+          "ordinal": "13",
+          "event": "mutation-reserve",
+          "claim_key": "rel-v2-sha256:d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "publication_sequence": "4",
+          "previous_entry_sha256": "8f07a891e57db7b4bb43b3d8e2ac8f670edc93f03c81d0023cf33b51a519feb4",
+          "payload": {
+            "operation": "chart-publish",
+            "phase": "reserve",
+            "request_sha256": "5c516e9bf3c5cc65c29bd0861568209e988e32f1db5b620b94ab3159b7f398c5",
+            "result_sha256": null,
+            "reservation_entry_sha256": null,
+            "publication_receipt_sha256": null,
+            "workflow_run_id": null,
+            "outcome": "RESERVED"
+          },
+          "actor": {
+            "principal": "release-control-reserver",
+            "role": "reserver",
+            "capabilities": [
+              "journal:reserve"
+            ],
+            "can_mutate_targets": false,
+            "can_sign": false,
+            "can_commit": false
+          },
+          "created_at": "2026-01-01T00:00:12Z"
+        },
+        "signature": {
+          "format": "vault-transit-ed25519-jcs/v1",
+          "transit_key": "release-journal-v1",
+          "transit_key_version": "1",
+          "kid": "kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+          "payload_sha256": "f39eee63def2a1397ff82b3ed746a490631cf2c6981df0d7db79dff347498709",
+          "signature_base64url": "FD393XUiuObWYRpk6UP8CCuCiLvgzUzIJQ_-RxvNasn2LgEWrLdnUjGEaC7o80Byt5o-_vhFd918aSzo5JCHDg"
+        }
+      },
+      "entry_sha256": "de7b7dccc620179620ebaf62927f61e5e8c8bbf1d2ccb6023cd66352c60cad99"
+    },
+    {
+      "entry": {
+        "body": {
+          "schema": "codicarium.release-journal-entry/v1",
+          "evidence_class": "synthetic-conformance-fixture",
+          "publication_authority": false,
+          "fixture_set": "issue93-v2.0",
+          "fixture_identity_jcs_sha256": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "journal_id": "jrnl-v1-d2c3d86640cd2b8125b35fc472c3b8cb",
+          "ordinal": "14",
+          "event": "mutation-commit",
+          "claim_key": "rel-v2-sha256:d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "publication_sequence": "4",
+          "previous_entry_sha256": "de7b7dccc620179620ebaf62927f61e5e8c8bbf1d2ccb6023cd66352c60cad99",
+          "payload": {
+            "operation": "chart-publish",
+            "phase": "commit",
+            "request_sha256": "5c516e9bf3c5cc65c29bd0861568209e988e32f1db5b620b94ab3159b7f398c5",
+            "result_sha256": "97183946b0ac255dd01408d75c9cbaa6acbad821d0d0fe1ff8e5b61661ab2a0d",
+            "reservation_entry_sha256": "de7b7dccc620179620ebaf62927f61e5e8c8bbf1d2ccb6023cd66352c60cad99",
+            "publication_receipt_sha256": "ad0ea17afe7b18784fff82efd0fe78222ec61b9e8a1272ea3c6d5d27da1b2a70",
+            "workflow_run_id": "9005001",
+            "outcome": "COMMITTED"
+          },
+          "actor": {
+            "principal": "release-control-committer",
+            "role": "committer",
+            "capabilities": [
+              "journal:commit"
+            ],
+            "can_mutate_targets": false,
+            "can_sign": false,
+            "can_commit": true
+          },
+          "created_at": "2026-01-01T00:00:13Z"
+        },
+        "signature": {
+          "format": "vault-transit-ed25519-jcs/v1",
+          "transit_key": "release-journal-v1",
+          "transit_key_version": "1",
+          "kid": "kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+          "payload_sha256": "b4a130734976e9dfe7b54bc0d7db36fa35af2e32966aa7783337384aec502c28",
+          "signature_base64url": "MXuh-JxNtv7YvutWBvurYmCfIsxuBP59c4j4DYYxcTwjtoKfZ13HHvXO90y9FM2FAiSXdd1QnWHOeUZ0RURaBA"
+        }
+      },
+      "entry_sha256": "fef537462b364935e5b927fe41383cc2dbeb338331181f32c6e8b0a412a33472"
+    },
+    {
+      "entry": {
+        "body": {
+          "schema": "codicarium.release-journal-entry/v1",
+          "evidence_class": "synthetic-conformance-fixture",
+          "publication_authority": false,
+          "fixture_set": "issue93-v2.0",
+          "fixture_identity_jcs_sha256": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "journal_id": "jrnl-v1-d2c3d86640cd2b8125b35fc472c3b8cb",
+          "ordinal": "15",
+          "event": "mutation-reserve",
+          "claim_key": "rel-v2-sha256:d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "publication_sequence": "5",
+          "previous_entry_sha256": "fef537462b364935e5b927fe41383cc2dbeb338331181f32c6e8b0a412a33472",
+          "payload": {
+            "operation": "release-asset-create",
+            "phase": "reserve",
+            "request_sha256": "760e1d8443fbab473aa9620c9880702c67242df5c5cd7ea0f1214e95c489b514",
+            "result_sha256": null,
+            "reservation_entry_sha256": null,
+            "publication_receipt_sha256": null,
+            "workflow_run_id": null,
+            "outcome": "RESERVED"
+          },
+          "actor": {
+            "principal": "release-control-reserver",
+            "role": "reserver",
+            "capabilities": [
+              "journal:reserve"
+            ],
+            "can_mutate_targets": false,
+            "can_sign": false,
+            "can_commit": false
+          },
+          "created_at": "2026-01-01T00:00:14Z"
+        },
+        "signature": {
+          "format": "vault-transit-ed25519-jcs/v1",
+          "transit_key": "release-journal-v1",
+          "transit_key_version": "1",
+          "kid": "kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+          "payload_sha256": "b67f46a44b06e1b26a3ec466d1d388779e57dbe83285db18d5e46e5dd3e9887e",
+          "signature_base64url": "6wef7R-Xo36HzUekRzI2-q4kxbJvmRKooum6vMNFvCcK3hDYXKNv3uV6B01-ltd8R69Aa-BUItEETTYuFuqCAQ"
+        }
+      },
+      "entry_sha256": "98a68cee0e4c16afbb1963b9b797d1498abc56b910c78cb37bb91b479751534a"
+    },
+    {
+      "entry": {
+        "body": {
+          "schema": "codicarium.release-journal-entry/v1",
+          "evidence_class": "synthetic-conformance-fixture",
+          "publication_authority": false,
+          "fixture_set": "issue93-v2.0",
+          "fixture_identity_jcs_sha256": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "journal_id": "jrnl-v1-d2c3d86640cd2b8125b35fc472c3b8cb",
+          "ordinal": "16",
+          "event": "mutation-commit",
+          "claim_key": "rel-v2-sha256:d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "publication_sequence": "5",
+          "previous_entry_sha256": "98a68cee0e4c16afbb1963b9b797d1498abc56b910c78cb37bb91b479751534a",
+          "payload": {
+            "operation": "release-asset-create",
+            "phase": "commit",
+            "request_sha256": "760e1d8443fbab473aa9620c9880702c67242df5c5cd7ea0f1214e95c489b514",
+            "result_sha256": "0597a7d86a223394e299f266b21123bbcd536a282a8f7c0d39df64a3e12927a5",
+            "reservation_entry_sha256": "98a68cee0e4c16afbb1963b9b797d1498abc56b910c78cb37bb91b479751534a",
+            "publication_receipt_sha256": "461b315d1c0212baee26ee67f7fa8f479886fb9e0b476e568312248325a34074",
+            "workflow_run_id": "9005001",
+            "outcome": "COMMITTED"
+          },
+          "actor": {
+            "principal": "release-control-committer",
+            "role": "committer",
+            "capabilities": [
+              "journal:commit"
+            ],
+            "can_mutate_targets": false,
+            "can_sign": false,
+            "can_commit": true
+          },
+          "created_at": "2026-01-01T00:00:15Z"
+        },
+        "signature": {
+          "format": "vault-transit-ed25519-jcs/v1",
+          "transit_key": "release-journal-v1",
+          "transit_key_version": "1",
+          "kid": "kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+          "payload_sha256": "127cc3b8cd00283a26d0893953932c2349e1481966d31dc80ca25ba07cb57ca6",
+          "signature_base64url": "iwZ3sW-8SEYgpTx_srm5ooDzk3EASxNtgweKFnbm0_ASLd919ZL-vi25_XEh58aaW1tsU7gtGqeRSs3TiFmXDw"
+        }
+      },
+      "entry_sha256": "7e083e19ba6702e9080ac44657fb1680b5642215600e5ebf93da368f59d703df"
+    },
+    {
+      "entry": {
+        "body": {
+          "schema": "codicarium.release-journal-entry/v1",
+          "evidence_class": "synthetic-conformance-fixture",
+          "publication_authority": false,
+          "fixture_set": "issue93-v2.0",
+          "fixture_identity_jcs_sha256": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "journal_id": "jrnl-v1-d2c3d86640cd2b8125b35fc472c3b8cb",
+          "ordinal": "17",
+          "event": "mutation-reserve",
+          "claim_key": "rel-v2-sha256:d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "publication_sequence": "6",
+          "previous_entry_sha256": "7e083e19ba6702e9080ac44657fb1680b5642215600e5ebf93da368f59d703df",
+          "payload": {
+            "operation": "release-asset-create",
+            "phase": "reserve",
+            "request_sha256": "1d1f189553c2d7d93cc1e8b64b17bba4cbb786d37dcb430436c1a25948cfaa1d",
+            "result_sha256": null,
+            "reservation_entry_sha256": null,
+            "publication_receipt_sha256": null,
+            "workflow_run_id": null,
+            "outcome": "RESERVED"
+          },
+          "actor": {
+            "principal": "release-control-reserver",
+            "role": "reserver",
+            "capabilities": [
+              "journal:reserve"
+            ],
+            "can_mutate_targets": false,
+            "can_sign": false,
+            "can_commit": false
+          },
+          "created_at": "2026-01-01T00:00:16Z"
+        },
+        "signature": {
+          "format": "vault-transit-ed25519-jcs/v1",
+          "transit_key": "release-journal-v1",
+          "transit_key_version": "1",
+          "kid": "kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+          "payload_sha256": "e22c2ba85a31de072da2bbd6c00c45518df1d2621cbbc7029a026e5b7d061b9d",
+          "signature_base64url": "RGgZmZvUMuAqHEjh6wsMu6oaEM4wd5fMVKiwz3hnonNX53FF5EDt2G0YRi5sjyJt7Cl1l9-h9JlV_NtzQVoWDw"
+        }
+      },
+      "entry_sha256": "91637ed57f2b89db0f82b972c97adae98f4c606636f7f5f0e4ecd91a2af77499"
+    },
+    {
+      "entry": {
+        "body": {
+          "schema": "codicarium.release-journal-entry/v1",
+          "evidence_class": "synthetic-conformance-fixture",
+          "publication_authority": false,
+          "fixture_set": "issue93-v2.0",
+          "fixture_identity_jcs_sha256": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "journal_id": "jrnl-v1-d2c3d86640cd2b8125b35fc472c3b8cb",
+          "ordinal": "18",
+          "event": "mutation-commit",
+          "claim_key": "rel-v2-sha256:d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "publication_sequence": "6",
+          "previous_entry_sha256": "91637ed57f2b89db0f82b972c97adae98f4c606636f7f5f0e4ecd91a2af77499",
+          "payload": {
+            "operation": "release-asset-create",
+            "phase": "commit",
+            "request_sha256": "1d1f189553c2d7d93cc1e8b64b17bba4cbb786d37dcb430436c1a25948cfaa1d",
+            "result_sha256": "86052d60dfdd8cfc3101b51815cad6e4d0acbe27e32e4325afc1de8ea9f35f25",
+            "reservation_entry_sha256": "91637ed57f2b89db0f82b972c97adae98f4c606636f7f5f0e4ecd91a2af77499",
+            "publication_receipt_sha256": "e88963f22973bb22b228921daba48280c7f9e107b1d635ff6831d4f8d73e3b08",
+            "workflow_run_id": "9005001",
+            "outcome": "COMMITTED"
+          },
+          "actor": {
+            "principal": "release-control-committer",
+            "role": "committer",
+            "capabilities": [
+              "journal:commit"
+            ],
+            "can_mutate_targets": false,
+            "can_sign": false,
+            "can_commit": true
+          },
+          "created_at": "2026-01-01T00:00:17Z"
+        },
+        "signature": {
+          "format": "vault-transit-ed25519-jcs/v1",
+          "transit_key": "release-journal-v1",
+          "transit_key_version": "1",
+          "kid": "kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+          "payload_sha256": "a8b4c63c958538c24a35c85faefbc3dd66302d2c69631f145875f831b577cbbd",
+          "signature_base64url": "LXpJUxT8pDff1Nm5PnqmH5qP3vVn-hJ1p9DLx53lKAKMO4YyJf9oTkSUS0Nph7Bq7xHz2gjGuXwZBdAIzxrlAw"
+        }
+      },
+      "entry_sha256": "31c1ce0f26edc74e8452b1852661013388da1c274a04fe301fe408de5cb346ea"
+    },
+    {
+      "entry": {
+        "body": {
+          "schema": "codicarium.release-journal-entry/v1",
+          "evidence_class": "synthetic-conformance-fixture",
+          "publication_authority": false,
+          "fixture_set": "issue93-v2.0",
+          "fixture_identity_jcs_sha256": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "journal_id": "jrnl-v1-d2c3d86640cd2b8125b35fc472c3b8cb",
+          "ordinal": "19",
+          "event": "mutation-reserve",
+          "claim_key": "rel-v2-sha256:d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "publication_sequence": "7",
+          "previous_entry_sha256": "31c1ce0f26edc74e8452b1852661013388da1c274a04fe301fe408de5cb346ea",
+          "payload": {
+            "operation": "release-asset-create",
+            "phase": "reserve",
+            "request_sha256": "9d6d7cfdb6626c6434bf9ccfed9d3cc6800ec1b72da4f6449ea36cafad09a13a",
+            "result_sha256": null,
+            "reservation_entry_sha256": null,
+            "publication_receipt_sha256": null,
+            "workflow_run_id": null,
+            "outcome": "RESERVED"
+          },
+          "actor": {
+            "principal": "release-control-reserver",
+            "role": "reserver",
+            "capabilities": [
+              "journal:reserve"
+            ],
+            "can_mutate_targets": false,
+            "can_sign": false,
+            "can_commit": false
+          },
+          "created_at": "2026-01-01T00:00:18Z"
+        },
+        "signature": {
+          "format": "vault-transit-ed25519-jcs/v1",
+          "transit_key": "release-journal-v1",
+          "transit_key_version": "1",
+          "kid": "kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+          "payload_sha256": "385514e804a37f23af088d4d15adf0c4e7a8e5c63049539f349c71454aeeaed0",
+          "signature_base64url": "pwkfxT3eHIGuGqH8F8J8jLR8Ho6hqfuEYBNzV5wULUme_FKLoATTHNz3Mkg13YQLsG_bR8Qhrz-HPqj2ageJAA"
+        }
+      },
+      "entry_sha256": "b66ab773f7d0a908178caac72582701ace8b88c5bc8a2a7672df68164ea2cfd4"
+    },
+    {
+      "entry": {
+        "body": {
+          "schema": "codicarium.release-journal-entry/v1",
+          "evidence_class": "synthetic-conformance-fixture",
+          "publication_authority": false,
+          "fixture_set": "issue93-v2.0",
+          "fixture_identity_jcs_sha256": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "journal_id": "jrnl-v1-d2c3d86640cd2b8125b35fc472c3b8cb",
+          "ordinal": "20",
+          "event": "mutation-commit",
+          "claim_key": "rel-v2-sha256:d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "publication_sequence": "7",
+          "previous_entry_sha256": "b66ab773f7d0a908178caac72582701ace8b88c5bc8a2a7672df68164ea2cfd4",
+          "payload": {
+            "operation": "release-asset-create",
+            "phase": "commit",
+            "request_sha256": "9d6d7cfdb6626c6434bf9ccfed9d3cc6800ec1b72da4f6449ea36cafad09a13a",
+            "result_sha256": "07c3ed7ab83b178c6ef043240d891201a2aa1f617988fef15cd98b07c2c2d73b",
+            "reservation_entry_sha256": "b66ab773f7d0a908178caac72582701ace8b88c5bc8a2a7672df68164ea2cfd4",
+            "publication_receipt_sha256": "b547d341b353dbfc471d3dd6d9afb6d6a9ca644eafe4d816fe5b4a6fdd5be89f",
+            "workflow_run_id": "9005001",
+            "outcome": "COMMITTED"
+          },
+          "actor": {
+            "principal": "release-control-committer",
+            "role": "committer",
+            "capabilities": [
+              "journal:commit"
+            ],
+            "can_mutate_targets": false,
+            "can_sign": false,
+            "can_commit": true
+          },
+          "created_at": "2026-01-01T00:00:19Z"
+        },
+        "signature": {
+          "format": "vault-transit-ed25519-jcs/v1",
+          "transit_key": "release-journal-v1",
+          "transit_key_version": "1",
+          "kid": "kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+          "payload_sha256": "971e31f10a36c952af2bdda79fc1891f91862dc709aabcacff6a8646b38eed3f",
+          "signature_base64url": "NGi9gh0t9hIc7OPU1NXATp_HYEu-Iiw4-G4q93h0-lPoh0_XQZIvDMpzHYAcEnY_CKUDaX-Dg8nPbY5YqNCDAA"
+        }
+      },
+      "entry_sha256": "297b98625cae7713cb4c4f6bc3b6132c27326db34dac6ccebe58b486caedbfcf"
+    },
+    {
+      "entry": {
+        "body": {
+          "schema": "codicarium.release-journal-entry/v1",
+          "evidence_class": "synthetic-conformance-fixture",
+          "publication_authority": false,
+          "fixture_set": "issue93-v2.0",
+          "fixture_identity_jcs_sha256": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "journal_id": "jrnl-v1-d2c3d86640cd2b8125b35fc472c3b8cb",
+          "ordinal": "21",
+          "event": "mutation-reserve",
+          "claim_key": "rel-v2-sha256:d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "publication_sequence": "8",
+          "previous_entry_sha256": "297b98625cae7713cb4c4f6bc3b6132c27326db34dac6ccebe58b486caedbfcf",
+          "payload": {
+            "operation": "release-asset-create",
+            "phase": "reserve",
+            "request_sha256": "c67bcd4a7fbc34f1f0a860727e0aaf31a6bb37cb69f11f6d10a8a9b084bd60d3",
+            "result_sha256": null,
+            "reservation_entry_sha256": null,
+            "publication_receipt_sha256": null,
+            "workflow_run_id": null,
+            "outcome": "RESERVED"
+          },
+          "actor": {
+            "principal": "release-control-reserver",
+            "role": "reserver",
+            "capabilities": [
+              "journal:reserve"
+            ],
+            "can_mutate_targets": false,
+            "can_sign": false,
+            "can_commit": false
+          },
+          "created_at": "2026-01-01T00:00:20Z"
+        },
+        "signature": {
+          "format": "vault-transit-ed25519-jcs/v1",
+          "transit_key": "release-journal-v1",
+          "transit_key_version": "1",
+          "kid": "kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+          "payload_sha256": "8f33a42d31b0a9cd28c0586c8286e7de9d414c333fa9bbb6b8ce004035055ea4",
+          "signature_base64url": "hRcApI8ekMTi5apX5XTL0R14cG3GhpfQFWzzfZ05LYgkM3ivkYOUJrQNaMMRK132T6TJibgUjVOVNxOuR4EtAQ"
+        }
+      },
+      "entry_sha256": "1145d1e9fda99865df0026bc0d6e4d11f68b0e70c80651610f9a2fb93eda1e87"
+    },
+    {
+      "entry": {
+        "body": {
+          "schema": "codicarium.release-journal-entry/v1",
+          "evidence_class": "synthetic-conformance-fixture",
+          "publication_authority": false,
+          "fixture_set": "issue93-v2.0",
+          "fixture_identity_jcs_sha256": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "journal_id": "jrnl-v1-d2c3d86640cd2b8125b35fc472c3b8cb",
+          "ordinal": "22",
+          "event": "mutation-commit",
+          "claim_key": "rel-v2-sha256:d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "publication_sequence": "8",
+          "previous_entry_sha256": "1145d1e9fda99865df0026bc0d6e4d11f68b0e70c80651610f9a2fb93eda1e87",
+          "payload": {
+            "operation": "release-asset-create",
+            "phase": "commit",
+            "request_sha256": "c67bcd4a7fbc34f1f0a860727e0aaf31a6bb37cb69f11f6d10a8a9b084bd60d3",
+            "result_sha256": "7533824b01ff74e1a67388b041c14d5d6b1a49e6a0cfdcd855afeb653de8fe09",
+            "reservation_entry_sha256": "1145d1e9fda99865df0026bc0d6e4d11f68b0e70c80651610f9a2fb93eda1e87",
+            "publication_receipt_sha256": "70889b278910148ff094ece6e90628407246260db2fd028ea28c6641e806ee10",
+            "workflow_run_id": "9005001",
+            "outcome": "COMMITTED"
+          },
+          "actor": {
+            "principal": "release-control-committer",
+            "role": "committer",
+            "capabilities": [
+              "journal:commit"
+            ],
+            "can_mutate_targets": false,
+            "can_sign": false,
+            "can_commit": true
+          },
+          "created_at": "2026-01-01T00:00:21Z"
+        },
+        "signature": {
+          "format": "vault-transit-ed25519-jcs/v1",
+          "transit_key": "release-journal-v1",
+          "transit_key_version": "1",
+          "kid": "kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+          "payload_sha256": "7853f715e5983cfc80dc43b74b873d9743753eab2e1aad24293c5aca37c5a80e",
+          "signature_base64url": "DaRVYsmtOn_B07rPUpB4yBE8symUU2zsG3tcw-l62Jjgs4Gz2HefpO4DSpdtcWuOI02oDriyVnFcR41f40SFCg"
+        }
+      },
+      "entry_sha256": "4d11a1be9996690946a63722ddc4a347a390210dd9f70bd5690f818550624ad4"
+    },
+    {
+      "entry": {
+        "body": {
+          "schema": "codicarium.release-journal-entry/v1",
+          "evidence_class": "synthetic-conformance-fixture",
+          "publication_authority": false,
+          "fixture_set": "issue93-v2.0",
+          "fixture_identity_jcs_sha256": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "journal_id": "jrnl-v1-d2c3d86640cd2b8125b35fc472c3b8cb",
+          "ordinal": "23",
+          "event": "mutation-reserve",
+          "claim_key": "rel-v2-sha256:d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "publication_sequence": "9",
+          "previous_entry_sha256": "4d11a1be9996690946a63722ddc4a347a390210dd9f70bd5690f818550624ad4",
+          "payload": {
+            "operation": "release-asset-create",
+            "phase": "reserve",
+            "request_sha256": "09d30b70c430905e7d4551da7b2bf6a277e7b69eb5e4a03d37fa47852a9d6b53",
+            "result_sha256": null,
+            "reservation_entry_sha256": null,
+            "publication_receipt_sha256": null,
+            "workflow_run_id": null,
+            "outcome": "RESERVED"
+          },
+          "actor": {
+            "principal": "release-control-reserver",
+            "role": "reserver",
+            "capabilities": [
+              "journal:reserve"
+            ],
+            "can_mutate_targets": false,
+            "can_sign": false,
+            "can_commit": false
+          },
+          "created_at": "2026-01-01T00:00:22Z"
+        },
+        "signature": {
+          "format": "vault-transit-ed25519-jcs/v1",
+          "transit_key": "release-journal-v1",
+          "transit_key_version": "1",
+          "kid": "kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+          "payload_sha256": "adab31b61dcbf560e932c27de650c0bce3dafa843041420b43cdb53800440608",
+          "signature_base64url": "x-BIopWMPVb-lOd_7e7XN_n4rfNbfqhMJ-iGvbp_Hd_x26C8kOh0xWdvLxS1oNFVC2YtxSW_UMdONFpUqYrdAQ"
+        }
+      },
+      "entry_sha256": "b7a555604649d707e84637aebac00d7c54631c386a04ee9aab14146ef1ed7e85"
+    },
+    {
+      "entry": {
+        "body": {
+          "schema": "codicarium.release-journal-entry/v1",
+          "evidence_class": "synthetic-conformance-fixture",
+          "publication_authority": false,
+          "fixture_set": "issue93-v2.0",
+          "fixture_identity_jcs_sha256": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "journal_id": "jrnl-v1-d2c3d86640cd2b8125b35fc472c3b8cb",
+          "ordinal": "24",
+          "event": "mutation-commit",
+          "claim_key": "rel-v2-sha256:d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "publication_sequence": "9",
+          "previous_entry_sha256": "b7a555604649d707e84637aebac00d7c54631c386a04ee9aab14146ef1ed7e85",
+          "payload": {
+            "operation": "release-asset-create",
+            "phase": "commit",
+            "request_sha256": "09d30b70c430905e7d4551da7b2bf6a277e7b69eb5e4a03d37fa47852a9d6b53",
+            "result_sha256": "c781a0d47115d00588f994e6dab03cb111a1857f32f4d1c448a0f772e8d03e1f",
+            "reservation_entry_sha256": "b7a555604649d707e84637aebac00d7c54631c386a04ee9aab14146ef1ed7e85",
+            "publication_receipt_sha256": "65781fd67b196d846b0e723be3a976d109336de95082b2197517742a9c78d66d",
+            "workflow_run_id": "9005001",
+            "outcome": "COMMITTED"
+          },
+          "actor": {
+            "principal": "release-control-committer",
+            "role": "committer",
+            "capabilities": [
+              "journal:commit"
+            ],
+            "can_mutate_targets": false,
+            "can_sign": false,
+            "can_commit": true
+          },
+          "created_at": "2026-01-01T00:00:23Z"
+        },
+        "signature": {
+          "format": "vault-transit-ed25519-jcs/v1",
+          "transit_key": "release-journal-v1",
+          "transit_key_version": "1",
+          "kid": "kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+          "payload_sha256": "f87e044634ae93c1c9669806138e83e191df31a71bb8eee4afee0c1eee5b853f",
+          "signature_base64url": "PvS3u7hiMlrMnQv_D91oGNtj4005joSf7wxBogX29spXG5TcckyOe6RzHg3aJcmFdK0BJbv0He2G1hVrOOOZCg"
+        }
+      },
+      "entry_sha256": "ce049790d1283fce4362abb023209daee22de0a579aed0f492af16605edf73c2"
+    },
+    {
+      "entry": {
+        "body": {
+          "schema": "codicarium.release-journal-entry/v1",
+          "evidence_class": "synthetic-conformance-fixture",
+          "publication_authority": false,
+          "fixture_set": "issue93-v2.0",
+          "fixture_identity_jcs_sha256": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "journal_id": "jrnl-v1-d2c3d86640cd2b8125b35fc472c3b8cb",
+          "ordinal": "25",
+          "event": "mutation-reserve",
+          "claim_key": "rel-v2-sha256:d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "publication_sequence": "10",
+          "previous_entry_sha256": "ce049790d1283fce4362abb023209daee22de0a579aed0f492af16605edf73c2",
+          "payload": {
+            "operation": "release-asset-create",
+            "phase": "reserve",
+            "request_sha256": "f5272d5c693e8bc5fd910bf3b2e44651b616338a2fab12cda2e4b93c77f3f3e8",
+            "result_sha256": null,
+            "reservation_entry_sha256": null,
+            "publication_receipt_sha256": null,
+            "workflow_run_id": null,
+            "outcome": "RESERVED"
+          },
+          "actor": {
+            "principal": "release-control-reserver",
+            "role": "reserver",
+            "capabilities": [
+              "journal:reserve"
+            ],
+            "can_mutate_targets": false,
+            "can_sign": false,
+            "can_commit": false
+          },
+          "created_at": "2026-01-01T00:00:24Z"
+        },
+        "signature": {
+          "format": "vault-transit-ed25519-jcs/v1",
+          "transit_key": "release-journal-v1",
+          "transit_key_version": "1",
+          "kid": "kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+          "payload_sha256": "1346e7c90f86d68cb7b36956df3430bc1ccf61295ea309c9bb1a0b45a6d9acc9",
+          "signature_base64url": "KtGvaOxMzhxFerwZiQY-Uhti9s_8xp-JviocTdLKO3WqFxCDo-Drn3Utd2BtKqkEBTL1Xfvfbj6I5EVldLYUAA"
+        }
+      },
+      "entry_sha256": "32bdb67ea1558d05d5fa4b2b83ab020ac84b4eed07cc2f60600a13a154e44245"
+    },
+    {
+      "entry": {
+        "body": {
+          "schema": "codicarium.release-journal-entry/v1",
+          "evidence_class": "synthetic-conformance-fixture",
+          "publication_authority": false,
+          "fixture_set": "issue93-v2.0",
+          "fixture_identity_jcs_sha256": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "journal_id": "jrnl-v1-d2c3d86640cd2b8125b35fc472c3b8cb",
+          "ordinal": "26",
+          "event": "mutation-commit",
+          "claim_key": "rel-v2-sha256:d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "publication_sequence": "10",
+          "previous_entry_sha256": "32bdb67ea1558d05d5fa4b2b83ab020ac84b4eed07cc2f60600a13a154e44245",
+          "payload": {
+            "operation": "release-asset-create",
+            "phase": "commit",
+            "request_sha256": "f5272d5c693e8bc5fd910bf3b2e44651b616338a2fab12cda2e4b93c77f3f3e8",
+            "result_sha256": "95b1abeeb95441e0bdd1eef450ba12616dc44cba510d7b22aa9518c43ae90481",
+            "reservation_entry_sha256": "32bdb67ea1558d05d5fa4b2b83ab020ac84b4eed07cc2f60600a13a154e44245",
+            "publication_receipt_sha256": "45d0c562ee749f7c6eef0f2ef73f13cee3abbc227b8b931dcb6601060f2ac200",
+            "workflow_run_id": "9005001",
+            "outcome": "COMMITTED"
+          },
+          "actor": {
+            "principal": "release-control-committer",
+            "role": "committer",
+            "capabilities": [
+              "journal:commit"
+            ],
+            "can_mutate_targets": false,
+            "can_sign": false,
+            "can_commit": true
+          },
+          "created_at": "2026-01-01T00:00:25Z"
+        },
+        "signature": {
+          "format": "vault-transit-ed25519-jcs/v1",
+          "transit_key": "release-journal-v1",
+          "transit_key_version": "1",
+          "kid": "kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+          "payload_sha256": "2a14194ae8665b12130a327f6ad8adcfe052ca0c201e9d8a76017b0dc7479f41",
+          "signature_base64url": "dH1pnDEqHUp719fUvIiWoke8aGpkxq6X4i5HFAVsYhp0gNLkRiq0jja0E0Ts10IftzT9_MOqLCn_7Y1m0qq_DA"
+        }
+      },
+      "entry_sha256": "63bae7df796a303fc85cd79b9c98bfea412c1945cd639eee852694230af33026"
+    },
+    {
+      "entry": {
+        "body": {
+          "schema": "codicarium.release-journal-entry/v1",
+          "evidence_class": "synthetic-conformance-fixture",
+          "publication_authority": false,
+          "fixture_set": "issue93-v2.0",
+          "fixture_identity_jcs_sha256": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "journal_id": "jrnl-v1-d2c3d86640cd2b8125b35fc472c3b8cb",
+          "ordinal": "27",
+          "event": "mutation-reserve",
+          "claim_key": "rel-v2-sha256:d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "publication_sequence": "11",
+          "previous_entry_sha256": "63bae7df796a303fc85cd79b9c98bfea412c1945cd639eee852694230af33026",
+          "payload": {
+            "operation": "release-asset-create",
+            "phase": "reserve",
+            "request_sha256": "921827df8073704d718bf0cae57b6716b5b928448d9f7855901a48029c21016f",
+            "result_sha256": null,
+            "reservation_entry_sha256": null,
+            "publication_receipt_sha256": null,
+            "workflow_run_id": null,
+            "outcome": "RESERVED"
+          },
+          "actor": {
+            "principal": "release-control-reserver",
+            "role": "reserver",
+            "capabilities": [
+              "journal:reserve"
+            ],
+            "can_mutate_targets": false,
+            "can_sign": false,
+            "can_commit": false
+          },
+          "created_at": "2026-01-01T00:00:26Z"
+        },
+        "signature": {
+          "format": "vault-transit-ed25519-jcs/v1",
+          "transit_key": "release-journal-v1",
+          "transit_key_version": "1",
+          "kid": "kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+          "payload_sha256": "4be6e2ab1b799a18d4dac2931686fc0c1711c617b6f1b9c37c1b075a4ed5ba9d",
+          "signature_base64url": "4xTKTwl9vPQWm1O8kslaBRe36OL5fwhKokHHLkKIxBg10DbXruGm11RgFFj0Z7tRIMe51hruLTke1LvKcJ0hDA"
+        }
+      },
+      "entry_sha256": "8c67469577e691b5ed5644e737ebdf8cc280912bc417417f3045a5709efe4491"
+    },
+    {
+      "entry": {
+        "body": {
+          "schema": "codicarium.release-journal-entry/v1",
+          "evidence_class": "synthetic-conformance-fixture",
+          "publication_authority": false,
+          "fixture_set": "issue93-v2.0",
+          "fixture_identity_jcs_sha256": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "journal_id": "jrnl-v1-d2c3d86640cd2b8125b35fc472c3b8cb",
+          "ordinal": "28",
+          "event": "mutation-commit",
+          "claim_key": "rel-v2-sha256:d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "publication_sequence": "11",
+          "previous_entry_sha256": "8c67469577e691b5ed5644e737ebdf8cc280912bc417417f3045a5709efe4491",
+          "payload": {
+            "operation": "release-asset-create",
+            "phase": "commit",
+            "request_sha256": "921827df8073704d718bf0cae57b6716b5b928448d9f7855901a48029c21016f",
+            "result_sha256": "08cc032966a0c5123a45da4ac208319a59db1298a066df30b67c34dced560b89",
+            "reservation_entry_sha256": "8c67469577e691b5ed5644e737ebdf8cc280912bc417417f3045a5709efe4491",
+            "publication_receipt_sha256": "9a40f6c6b32c2a5e5d9d644b92f1f41d109bedbff74192ff44d4c83425d17b1c",
+            "workflow_run_id": "9005001",
+            "outcome": "COMMITTED"
+          },
+          "actor": {
+            "principal": "release-control-committer",
+            "role": "committer",
+            "capabilities": [
+              "journal:commit"
+            ],
+            "can_mutate_targets": false,
+            "can_sign": false,
+            "can_commit": true
+          },
+          "created_at": "2026-01-01T00:00:27Z"
+        },
+        "signature": {
+          "format": "vault-transit-ed25519-jcs/v1",
+          "transit_key": "release-journal-v1",
+          "transit_key_version": "1",
+          "kid": "kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+          "payload_sha256": "31b6a2ddcbaf3d9d2454981d77b1f01afaed2fd499f2fed00aa56fc4354e6181",
+          "signature_base64url": "x8wB5b1oDRiX1joKa_q8nYPyFiooZkwRnFF_U9ApzG0AWMFOJAvFxLCN_caGi1HkwCp5TBy0K1Oei2Z1tV-wDQ"
+        }
+      },
+      "entry_sha256": "c5e23136eefa29d23d09672da079566815b1e0deebe1ce23dab8cf924e8a7c24"
+    },
+    {
+      "entry": {
+        "body": {
+          "schema": "codicarium.release-journal-entry/v1",
+          "evidence_class": "synthetic-conformance-fixture",
+          "publication_authority": false,
+          "fixture_set": "issue93-v2.0",
+          "fixture_identity_jcs_sha256": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "journal_id": "jrnl-v1-d2c3d86640cd2b8125b35fc472c3b8cb",
+          "ordinal": "29",
+          "event": "mutation-reserve",
+          "claim_key": "rel-v2-sha256:d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "publication_sequence": "12",
+          "previous_entry_sha256": "c5e23136eefa29d23d09672da079566815b1e0deebe1ce23dab8cf924e8a7c24",
+          "payload": {
+            "operation": "release-asset-create",
+            "phase": "reserve",
+            "request_sha256": "c6e185873d77415598dd7a8f7bcedb530c55363c6d82265364fe7b08d46acea3",
+            "result_sha256": null,
+            "reservation_entry_sha256": null,
+            "publication_receipt_sha256": null,
+            "workflow_run_id": null,
+            "outcome": "RESERVED"
+          },
+          "actor": {
+            "principal": "release-control-reserver",
+            "role": "reserver",
+            "capabilities": [
+              "journal:reserve"
+            ],
+            "can_mutate_targets": false,
+            "can_sign": false,
+            "can_commit": false
+          },
+          "created_at": "2026-01-01T00:00:28Z"
+        },
+        "signature": {
+          "format": "vault-transit-ed25519-jcs/v1",
+          "transit_key": "release-journal-v1",
+          "transit_key_version": "1",
+          "kid": "kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+          "payload_sha256": "b19c66069c51ab53aded368c2baaf8842a818e14b66f40da4dfc7929e3dc7eb8",
+          "signature_base64url": "GqvssfV6zk6CYG5LOCpjmBhSajW4q0Jt_AgSewfLfDYIP7szfs1CQnO8Vuh276I-CU1g-3I3L-oNBbsHN4yrCw"
+        }
+      },
+      "entry_sha256": "e1f467975d248f3fe55c1355b316e79be1dd269e96c82d895477af90863bc71c"
+    },
+    {
+      "entry": {
+        "body": {
+          "schema": "codicarium.release-journal-entry/v1",
+          "evidence_class": "synthetic-conformance-fixture",
+          "publication_authority": false,
+          "fixture_set": "issue93-v2.0",
+          "fixture_identity_jcs_sha256": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "journal_id": "jrnl-v1-d2c3d86640cd2b8125b35fc472c3b8cb",
+          "ordinal": "30",
+          "event": "mutation-commit",
+          "claim_key": "rel-v2-sha256:d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "publication_sequence": "12",
+          "previous_entry_sha256": "e1f467975d248f3fe55c1355b316e79be1dd269e96c82d895477af90863bc71c",
+          "payload": {
+            "operation": "release-asset-create",
+            "phase": "commit",
+            "request_sha256": "c6e185873d77415598dd7a8f7bcedb530c55363c6d82265364fe7b08d46acea3",
+            "result_sha256": "536084f424d3bb8e6968b4cd432496edd6af8c38adf63fc1ab36c1584869829c",
+            "reservation_entry_sha256": "e1f467975d248f3fe55c1355b316e79be1dd269e96c82d895477af90863bc71c",
+            "publication_receipt_sha256": "a43eee3f5c07765880c82a0be3bc6c950926a7ea6e10af33483977e3a83c8756",
+            "workflow_run_id": "9005001",
+            "outcome": "COMMITTED"
+          },
+          "actor": {
+            "principal": "release-control-committer",
+            "role": "committer",
+            "capabilities": [
+              "journal:commit"
+            ],
+            "can_mutate_targets": false,
+            "can_sign": false,
+            "can_commit": true
+          },
+          "created_at": "2026-01-01T00:00:29Z"
+        },
+        "signature": {
+          "format": "vault-transit-ed25519-jcs/v1",
+          "transit_key": "release-journal-v1",
+          "transit_key_version": "1",
+          "kid": "kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+          "payload_sha256": "bf3bc26b7c66eaae1262f1f7d9f42c42a9e5230c48153240ec546f5c7232cd2e",
+          "signature_base64url": "VciTmO26td__e-plFVc_U_7htY33sbQ81D67VBvdy39Cr9dXJ-gXV4oEyuGZuZLFnBOkuRML6Y7G9xUaUKYEDQ"
+        }
+      },
+      "entry_sha256": "96614b965f31b01fa643d051b4ae896f15e6ea69ea8b3295b34675c6060fff00"
+    },
+    {
+      "entry": {
+        "body": {
+          "schema": "codicarium.release-journal-entry/v1",
+          "evidence_class": "synthetic-conformance-fixture",
+          "publication_authority": false,
+          "fixture_set": "issue93-v2.0",
+          "fixture_identity_jcs_sha256": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "journal_id": "jrnl-v1-d2c3d86640cd2b8125b35fc472c3b8cb",
+          "ordinal": "31",
+          "event": "mutation-reserve",
+          "claim_key": "rel-v2-sha256:d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "publication_sequence": "13",
+          "previous_entry_sha256": "96614b965f31b01fa643d051b4ae896f15e6ea69ea8b3295b34675c6060fff00",
+          "payload": {
+            "operation": "release-asset-create",
+            "phase": "reserve",
+            "request_sha256": "4a2928640b1ba4d2c41dca43acd5d10f0e3bd28eb6b2cad1a9fad41fd1e22a7f",
+            "result_sha256": null,
+            "reservation_entry_sha256": null,
+            "publication_receipt_sha256": null,
+            "workflow_run_id": null,
+            "outcome": "RESERVED"
+          },
+          "actor": {
+            "principal": "release-control-reserver",
+            "role": "reserver",
+            "capabilities": [
+              "journal:reserve"
+            ],
+            "can_mutate_targets": false,
+            "can_sign": false,
+            "can_commit": false
+          },
+          "created_at": "2026-01-01T00:00:30Z"
+        },
+        "signature": {
+          "format": "vault-transit-ed25519-jcs/v1",
+          "transit_key": "release-journal-v1",
+          "transit_key_version": "1",
+          "kid": "kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+          "payload_sha256": "4d48f8c746437bbac03ecbbd475cb5e9a30e09ea97943523334568a2bf907e48",
+          "signature_base64url": "OXg1PyyWkSB2GwukGyKLxPrMGJ7C3xdj7UIl1d000mgNt-mbt6C14CCvERacjk7U81w_5iRXes5k4-gCgXcQAQ"
+        }
+      },
+      "entry_sha256": "485d2cc33f84f657c10a90a86322aa96f7d46f9eb7a3fd91dc1e6518cc0c02e5"
+    },
+    {
+      "entry": {
+        "body": {
+          "schema": "codicarium.release-journal-entry/v1",
+          "evidence_class": "synthetic-conformance-fixture",
+          "publication_authority": false,
+          "fixture_set": "issue93-v2.0",
+          "fixture_identity_jcs_sha256": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "journal_id": "jrnl-v1-d2c3d86640cd2b8125b35fc472c3b8cb",
+          "ordinal": "32",
+          "event": "mutation-commit",
+          "claim_key": "rel-v2-sha256:d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "publication_sequence": "13",
+          "previous_entry_sha256": "485d2cc33f84f657c10a90a86322aa96f7d46f9eb7a3fd91dc1e6518cc0c02e5",
+          "payload": {
+            "operation": "release-asset-create",
+            "phase": "commit",
+            "request_sha256": "4a2928640b1ba4d2c41dca43acd5d10f0e3bd28eb6b2cad1a9fad41fd1e22a7f",
+            "result_sha256": "93d89023e2074274a93df64f4c2c38515a7f0335d1fa462136c626c50b444c40",
+            "reservation_entry_sha256": "485d2cc33f84f657c10a90a86322aa96f7d46f9eb7a3fd91dc1e6518cc0c02e5",
+            "publication_receipt_sha256": "689c5bf958d1270198844fe077e00a18a8474fb4297f5b2abec7ffe6ee2de54d",
+            "workflow_run_id": "9005001",
+            "outcome": "COMMITTED"
+          },
+          "actor": {
+            "principal": "release-control-committer",
+            "role": "committer",
+            "capabilities": [
+              "journal:commit"
+            ],
+            "can_mutate_targets": false,
+            "can_sign": false,
+            "can_commit": true
+          },
+          "created_at": "2026-01-01T00:00:31Z"
+        },
+        "signature": {
+          "format": "vault-transit-ed25519-jcs/v1",
+          "transit_key": "release-journal-v1",
+          "transit_key_version": "1",
+          "kid": "kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+          "payload_sha256": "f6b5933c26d194fa37f1bed1dbc4e931b8b0cdaca0bb8c23089b78c65130f017",
+          "signature_base64url": "8GPYW81G4u8HlpGZ5N0OaoUrM5Pi4psGJcoF7O3B6yWUyF5H1OtglpxfYI78UcMVhxwXb2Gi_XloscinzdUZCA"
+        }
+      },
+      "entry_sha256": "689cdffc18fea725ac675fd29355f54ae17ba2f4ec440c692f0e5f743354540a"
+    },
+    {
+      "entry": {
+        "body": {
+          "schema": "codicarium.release-journal-entry/v1",
+          "evidence_class": "synthetic-conformance-fixture",
+          "publication_authority": false,
+          "fixture_set": "issue93-v2.0",
+          "fixture_identity_jcs_sha256": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "journal_id": "jrnl-v1-d2c3d86640cd2b8125b35fc472c3b8cb",
+          "ordinal": "33",
+          "event": "mutation-reserve",
+          "claim_key": "rel-v2-sha256:d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "publication_sequence": "14",
+          "previous_entry_sha256": "689cdffc18fea725ac675fd29355f54ae17ba2f4ec440c692f0e5f743354540a",
+          "payload": {
+            "operation": "release-asset-create",
+            "phase": "reserve",
+            "request_sha256": "ba7a4d8e6b12bb5a1b0aa04ee422dc2c9f7a5e21f5d67d2aadf1755e03b7a21b",
+            "result_sha256": null,
+            "reservation_entry_sha256": null,
+            "publication_receipt_sha256": null,
+            "workflow_run_id": null,
+            "outcome": "RESERVED"
+          },
+          "actor": {
+            "principal": "release-control-reserver",
+            "role": "reserver",
+            "capabilities": [
+              "journal:reserve"
+            ],
+            "can_mutate_targets": false,
+            "can_sign": false,
+            "can_commit": false
+          },
+          "created_at": "2026-01-01T00:00:32Z"
+        },
+        "signature": {
+          "format": "vault-transit-ed25519-jcs/v1",
+          "transit_key": "release-journal-v1",
+          "transit_key_version": "1",
+          "kid": "kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+          "payload_sha256": "347ac20e19093568d7f6c78b5e36689a140c7942f92c5d0197fd0ce3ee1b650f",
+          "signature_base64url": "aKiUEdpfTr-Hm5qI8xa2NSRHbAFfb1Y62P3T2u8NziMpTIvzMV9VCXW8QIpWG0fy8bKac7QY_O8I_99mFgAmDA"
+        }
+      },
+      "entry_sha256": "c187e9f71a0970a099b58c8f724d4e03e9a9c3acb5cb9993eb0abc1c8d99c016"
+    },
+    {
+      "entry": {
+        "body": {
+          "schema": "codicarium.release-journal-entry/v1",
+          "evidence_class": "synthetic-conformance-fixture",
+          "publication_authority": false,
+          "fixture_set": "issue93-v2.0",
+          "fixture_identity_jcs_sha256": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "journal_id": "jrnl-v1-d2c3d86640cd2b8125b35fc472c3b8cb",
+          "ordinal": "34",
+          "event": "mutation-commit",
+          "claim_key": "rel-v2-sha256:d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "publication_sequence": "14",
+          "previous_entry_sha256": "c187e9f71a0970a099b58c8f724d4e03e9a9c3acb5cb9993eb0abc1c8d99c016",
+          "payload": {
+            "operation": "release-asset-create",
+            "phase": "commit",
+            "request_sha256": "ba7a4d8e6b12bb5a1b0aa04ee422dc2c9f7a5e21f5d67d2aadf1755e03b7a21b",
+            "result_sha256": "0ed6cf4ca04c93e10d041bd1b148bd26a4393982311598a43a3592e1cb9f680d",
+            "reservation_entry_sha256": "c187e9f71a0970a099b58c8f724d4e03e9a9c3acb5cb9993eb0abc1c8d99c016",
+            "publication_receipt_sha256": "e6d5227ed63178728d73834638ed45cc25ae8d0ec77551be6cbd5abb07472922",
+            "workflow_run_id": "9005001",
+            "outcome": "COMMITTED"
+          },
+          "actor": {
+            "principal": "release-control-committer",
+            "role": "committer",
+            "capabilities": [
+              "journal:commit"
+            ],
+            "can_mutate_targets": false,
+            "can_sign": false,
+            "can_commit": true
+          },
+          "created_at": "2026-01-01T00:00:33Z"
+        },
+        "signature": {
+          "format": "vault-transit-ed25519-jcs/v1",
+          "transit_key": "release-journal-v1",
+          "transit_key_version": "1",
+          "kid": "kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+          "payload_sha256": "bd7736b44aebc8d426799dfb60d987ef513381db2c7faa2d49571031de0a82fb",
+          "signature_base64url": "CrBo0U-09QWB9APWI53D6E8KIJye3iEWju-Ossm9A352j1BC1h3jzOaj-pPOyi-XLBjl2Rlb-2GUPpiZFXHuCQ"
+        }
+      },
+      "entry_sha256": "de81cd0d2ac61e7594b2ac699dfd1646a81b1bff13207bc8a0368940f5dae8c6"
+    },
+    {
+      "entry": {
+        "body": {
+          "schema": "codicarium.release-journal-entry/v1",
+          "evidence_class": "synthetic-conformance-fixture",
+          "publication_authority": false,
+          "fixture_set": "issue93-v2.0",
+          "fixture_identity_jcs_sha256": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "journal_id": "jrnl-v1-d2c3d86640cd2b8125b35fc472c3b8cb",
+          "ordinal": "35",
+          "event": "mutation-reserve",
+          "claim_key": "rel-v2-sha256:d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "publication_sequence": "15",
+          "previous_entry_sha256": "de81cd0d2ac61e7594b2ac699dfd1646a81b1bff13207bc8a0368940f5dae8c6",
+          "payload": {
+            "operation": "release-asset-create",
+            "phase": "reserve",
+            "request_sha256": "d0d1659e457d12000f5f2ab3be85ecbaf23234b967203ff1a3029d0c593cbc95",
+            "result_sha256": null,
+            "reservation_entry_sha256": null,
+            "publication_receipt_sha256": null,
+            "workflow_run_id": null,
+            "outcome": "RESERVED"
+          },
+          "actor": {
+            "principal": "release-control-reserver",
+            "role": "reserver",
+            "capabilities": [
+              "journal:reserve"
+            ],
+            "can_mutate_targets": false,
+            "can_sign": false,
+            "can_commit": false
+          },
+          "created_at": "2026-01-01T00:00:34Z"
+        },
+        "signature": {
+          "format": "vault-transit-ed25519-jcs/v1",
+          "transit_key": "release-journal-v1",
+          "transit_key_version": "1",
+          "kid": "kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+          "payload_sha256": "d3665a8e94ba3864dd807311f211a62f5e44d5da7eca46c4907b869747e8226c",
+          "signature_base64url": "yOCS64QjJglzaNiyQqUOjN3emYZh-HJFHnig92dXC-IwwTRUPtFy6sgYCtZCYRUVNpcwVe60X3bFUJyfjqzsAQ"
+        }
+      },
+      "entry_sha256": "c3db5c586bf7c9666ed8a41ce648daf77d0dfe6286cce42b7c5b0a2aa18a676a"
+    },
+    {
+      "entry": {
+        "body": {
+          "schema": "codicarium.release-journal-entry/v1",
+          "evidence_class": "synthetic-conformance-fixture",
+          "publication_authority": false,
+          "fixture_set": "issue93-v2.0",
+          "fixture_identity_jcs_sha256": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "journal_id": "jrnl-v1-d2c3d86640cd2b8125b35fc472c3b8cb",
+          "ordinal": "36",
+          "event": "mutation-commit",
+          "claim_key": "rel-v2-sha256:d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "publication_sequence": "15",
+          "previous_entry_sha256": "c3db5c586bf7c9666ed8a41ce648daf77d0dfe6286cce42b7c5b0a2aa18a676a",
+          "payload": {
+            "operation": "release-asset-create",
+            "phase": "commit",
+            "request_sha256": "d0d1659e457d12000f5f2ab3be85ecbaf23234b967203ff1a3029d0c593cbc95",
+            "result_sha256": "0c293d4e1a31f6516dda823ff8a2312284a0261fa5bb466944a2afe709bf2440",
+            "reservation_entry_sha256": "c3db5c586bf7c9666ed8a41ce648daf77d0dfe6286cce42b7c5b0a2aa18a676a",
+            "publication_receipt_sha256": "10b791a3505861684e1ce21a8712c5e3c9ef024f61c42eb5f0f0ee9a762ca0aa",
+            "workflow_run_id": "9005001",
+            "outcome": "COMMITTED"
+          },
+          "actor": {
+            "principal": "release-control-committer",
+            "role": "committer",
+            "capabilities": [
+              "journal:commit"
+            ],
+            "can_mutate_targets": false,
+            "can_sign": false,
+            "can_commit": true
+          },
+          "created_at": "2026-01-01T00:00:35Z"
+        },
+        "signature": {
+          "format": "vault-transit-ed25519-jcs/v1",
+          "transit_key": "release-journal-v1",
+          "transit_key_version": "1",
+          "kid": "kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+          "payload_sha256": "192f45fe76192445caa0864162827bfe2ac6a01bc15e3fbb1b9828605022c5a9",
+          "signature_base64url": "fUzYkRLRkJViPvQbbCJQEK4AmRFqf6PX_UlxSzy7Vm0So1qz1jhGseEuygtXayBAtIi2Jaeb23AjC2QgDhpkCw"
+        }
+      },
+      "entry_sha256": "86661678627bc22a3f5bcff0e0b6990f26f95fe6b19ec0727b9e4926e1eb7eee"
+    },
+    {
+      "entry": {
+        "body": {
+          "schema": "codicarium.release-journal-entry/v1",
+          "evidence_class": "synthetic-conformance-fixture",
+          "publication_authority": false,
+          "fixture_set": "issue93-v2.0",
+          "fixture_identity_jcs_sha256": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "journal_id": "jrnl-v1-d2c3d86640cd2b8125b35fc472c3b8cb",
+          "ordinal": "37",
+          "event": "mutation-reserve",
+          "claim_key": "rel-v2-sha256:d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "publication_sequence": "16",
+          "previous_entry_sha256": "86661678627bc22a3f5bcff0e0b6990f26f95fe6b19ec0727b9e4926e1eb7eee",
+          "payload": {
+            "operation": "release-asset-create",
+            "phase": "reserve",
+            "request_sha256": "a06d17b56abcb8fdfd48cc360e4918deb55c68b7a71dd92863b3676d64e34728",
+            "result_sha256": null,
+            "reservation_entry_sha256": null,
+            "publication_receipt_sha256": null,
+            "workflow_run_id": null,
+            "outcome": "RESERVED"
+          },
+          "actor": {
+            "principal": "release-control-reserver",
+            "role": "reserver",
+            "capabilities": [
+              "journal:reserve"
+            ],
+            "can_mutate_targets": false,
+            "can_sign": false,
+            "can_commit": false
+          },
+          "created_at": "2026-01-01T00:00:36Z"
+        },
+        "signature": {
+          "format": "vault-transit-ed25519-jcs/v1",
+          "transit_key": "release-journal-v1",
+          "transit_key_version": "1",
+          "kid": "kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+          "payload_sha256": "c8390141768903568d799eb532a1bae1af5f1c62cef37660ae37d5c3ab51f4e0",
+          "signature_base64url": "zynCd1rfNysajiHALobkVL6wp_XSZmiFZohVzCkvbpicfpc_7Hc3u5qAQ_QhvEKzwIBu0Jcna6jlXBaxgQRXCg"
+        }
+      },
+      "entry_sha256": "4a3cbf4079c0182cba9dc2101ee80c4c09b7b55832ad7953408a45124ae90601"
+    },
+    {
+      "entry": {
+        "body": {
+          "schema": "codicarium.release-journal-entry/v1",
+          "evidence_class": "synthetic-conformance-fixture",
+          "publication_authority": false,
+          "fixture_set": "issue93-v2.0",
+          "fixture_identity_jcs_sha256": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "journal_id": "jrnl-v1-d2c3d86640cd2b8125b35fc472c3b8cb",
+          "ordinal": "38",
+          "event": "mutation-commit",
+          "claim_key": "rel-v2-sha256:d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "publication_sequence": "16",
+          "previous_entry_sha256": "4a3cbf4079c0182cba9dc2101ee80c4c09b7b55832ad7953408a45124ae90601",
+          "payload": {
+            "operation": "release-asset-create",
+            "phase": "commit",
+            "request_sha256": "a06d17b56abcb8fdfd48cc360e4918deb55c68b7a71dd92863b3676d64e34728",
+            "result_sha256": "14769b12cd585bd72b054d7840d2b615c1b67435fe642c5b2266b29120126bc0",
+            "reservation_entry_sha256": "4a3cbf4079c0182cba9dc2101ee80c4c09b7b55832ad7953408a45124ae90601",
+            "publication_receipt_sha256": "8c63a61309c435b6da967bbb0402b5c92c6e3ccf28b937edd9164fc8de1bc059",
+            "workflow_run_id": "9005001",
+            "outcome": "COMMITTED"
+          },
+          "actor": {
+            "principal": "release-control-committer",
+            "role": "committer",
+            "capabilities": [
+              "journal:commit"
+            ],
+            "can_mutate_targets": false,
+            "can_sign": false,
+            "can_commit": true
+          },
+          "created_at": "2026-01-01T00:00:37Z"
+        },
+        "signature": {
+          "format": "vault-transit-ed25519-jcs/v1",
+          "transit_key": "release-journal-v1",
+          "transit_key_version": "1",
+          "kid": "kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+          "payload_sha256": "0f14e7e12a0992edc1a0c4cad92034db831a24e4acdc4d0f20f062c7d9344fd1",
+          "signature_base64url": "374-2Pyn46DgAPaJaagoI-ajR6pHVJ5WR0OTzdQUh0p9RdkyZCnW0v4Oe76W8aMacSKp5pg1hHRsblfK_d1cBQ"
+        }
+      },
+      "entry_sha256": "a40b0c2fe3fde4949846edc3db22eca4c5309023360bb8da056db6591657aa52"
+    },
+    {
+      "entry": {
+        "body": {
+          "schema": "codicarium.release-journal-entry/v1",
+          "evidence_class": "synthetic-conformance-fixture",
+          "publication_authority": false,
+          "fixture_set": "issue93-v2.0",
+          "fixture_identity_jcs_sha256": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "journal_id": "jrnl-v1-d2c3d86640cd2b8125b35fc472c3b8cb",
+          "ordinal": "39",
+          "event": "mutation-reserve",
+          "claim_key": "rel-v2-sha256:d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "publication_sequence": "17",
+          "previous_entry_sha256": "a40b0c2fe3fde4949846edc3db22eca4c5309023360bb8da056db6591657aa52",
+          "payload": {
+            "operation": "release-asset-create",
+            "phase": "reserve",
+            "request_sha256": "20f79f0c25bfc0f125d5e2310afe38e2b08242c1fec297d0d07249562d2207b9",
+            "result_sha256": null,
+            "reservation_entry_sha256": null,
+            "publication_receipt_sha256": null,
+            "workflow_run_id": null,
+            "outcome": "RESERVED"
+          },
+          "actor": {
+            "principal": "release-control-reserver",
+            "role": "reserver",
+            "capabilities": [
+              "journal:reserve"
+            ],
+            "can_mutate_targets": false,
+            "can_sign": false,
+            "can_commit": false
+          },
+          "created_at": "2026-01-01T00:00:38Z"
+        },
+        "signature": {
+          "format": "vault-transit-ed25519-jcs/v1",
+          "transit_key": "release-journal-v1",
+          "transit_key_version": "1",
+          "kid": "kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+          "payload_sha256": "b7491040880301874f4981d6718e49a86124aa03dd79493630ae187772468cbf",
+          "signature_base64url": "CuhaVj6A8hOtVm0BFNFJ-ZHBij8YN_3tUBvnSUGew4iCTlzOEE3ESWMe90eXcB0ttGEjR8gtxI_rJgw8iKLACA"
+        }
+      },
+      "entry_sha256": "c788868bf233d1c80dddded64a11b955e14e469410a0a06803dfb6a143874a1f"
+    },
+    {
+      "entry": {
+        "body": {
+          "schema": "codicarium.release-journal-entry/v1",
+          "evidence_class": "synthetic-conformance-fixture",
+          "publication_authority": false,
+          "fixture_set": "issue93-v2.0",
+          "fixture_identity_jcs_sha256": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "journal_id": "jrnl-v1-d2c3d86640cd2b8125b35fc472c3b8cb",
+          "ordinal": "40",
+          "event": "mutation-commit",
+          "claim_key": "rel-v2-sha256:d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "publication_sequence": "17",
+          "previous_entry_sha256": "c788868bf233d1c80dddded64a11b955e14e469410a0a06803dfb6a143874a1f",
+          "payload": {
+            "operation": "release-asset-create",
+            "phase": "commit",
+            "request_sha256": "20f79f0c25bfc0f125d5e2310afe38e2b08242c1fec297d0d07249562d2207b9",
+            "result_sha256": "34a6ab333dec5a8f93927f39574d7eb3a3ed52e159c4934899ab687aa647bb61",
+            "reservation_entry_sha256": "c788868bf233d1c80dddded64a11b955e14e469410a0a06803dfb6a143874a1f",
+            "publication_receipt_sha256": "63c625dc3acc6484d3665587ab811f8d0e1881a586b563031f6c82f46fe20774",
+            "workflow_run_id": "9005001",
+            "outcome": "COMMITTED"
+          },
+          "actor": {
+            "principal": "release-control-committer",
+            "role": "committer",
+            "capabilities": [
+              "journal:commit"
+            ],
+            "can_mutate_targets": false,
+            "can_sign": false,
+            "can_commit": true
+          },
+          "created_at": "2026-01-01T00:00:39Z"
+        },
+        "signature": {
+          "format": "vault-transit-ed25519-jcs/v1",
+          "transit_key": "release-journal-v1",
+          "transit_key_version": "1",
+          "kid": "kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+          "payload_sha256": "7d2a1deeafb6d5b39b7acff7f04474a5f225764a5171c80bad9e4ab0422fa65f",
+          "signature_base64url": "jhSqa-dD7C5s7FAKBb1DXPG71Bpspgg5qkU2Hrn1rtqO0KvF1PlS_L-YuJi7HXVqqNq3CLILpxA6B0cR2oQrBg"
+        }
+      },
+      "entry_sha256": "a26790c276e706f3bd0b1838d0c26ccd1ec6196bea905d12005d5f3a933b26cb"
+    },
+    {
+      "entry": {
+        "body": {
+          "schema": "codicarium.release-journal-entry/v1",
+          "evidence_class": "synthetic-conformance-fixture",
+          "publication_authority": false,
+          "fixture_set": "issue93-v2.0",
+          "fixture_identity_jcs_sha256": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "journal_id": "jrnl-v1-d2c3d86640cd2b8125b35fc472c3b8cb",
+          "ordinal": "41",
+          "event": "mutation-reserve",
+          "claim_key": "rel-v2-sha256:d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "publication_sequence": "18",
+          "previous_entry_sha256": "a26790c276e706f3bd0b1838d0c26ccd1ec6196bea905d12005d5f3a933b26cb",
+          "payload": {
+            "operation": "release-asset-create",
+            "phase": "reserve",
+            "request_sha256": "c2f5a57c772b0142c2096e49b4d69e950f333f6e537c440b7e7d2570f7f1521b",
+            "result_sha256": null,
+            "reservation_entry_sha256": null,
+            "publication_receipt_sha256": null,
+            "workflow_run_id": null,
+            "outcome": "RESERVED"
+          },
+          "actor": {
+            "principal": "release-control-reserver",
+            "role": "reserver",
+            "capabilities": [
+              "journal:reserve"
+            ],
+            "can_mutate_targets": false,
+            "can_sign": false,
+            "can_commit": false
+          },
+          "created_at": "2026-01-01T00:00:40Z"
+        },
+        "signature": {
+          "format": "vault-transit-ed25519-jcs/v1",
+          "transit_key": "release-journal-v1",
+          "transit_key_version": "1",
+          "kid": "kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+          "payload_sha256": "9ef6f47c8343cc4053bc49e7abe2a5e63e167e60d18c687baae0b0340faf9ffd",
+          "signature_base64url": "nheoipDy6gIZwHlA_8dI1w3mvtoMtB8QaFIlSw1UoOxUub4xRGPbCeQccVLbUdc9RxNPM1gRmk_tq5-xqSJ2DA"
+        }
+      },
+      "entry_sha256": "c0e1d7806269197c998880950b5173af1b8d2dcb7bda0c632a89d3100ec7cd68"
+    },
+    {
+      "entry": {
+        "body": {
+          "schema": "codicarium.release-journal-entry/v1",
+          "evidence_class": "synthetic-conformance-fixture",
+          "publication_authority": false,
+          "fixture_set": "issue93-v2.0",
+          "fixture_identity_jcs_sha256": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "journal_id": "jrnl-v1-d2c3d86640cd2b8125b35fc472c3b8cb",
+          "ordinal": "42",
+          "event": "mutation-commit",
+          "claim_key": "rel-v2-sha256:d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "publication_sequence": "18",
+          "previous_entry_sha256": "c0e1d7806269197c998880950b5173af1b8d2dcb7bda0c632a89d3100ec7cd68",
+          "payload": {
+            "operation": "release-asset-create",
+            "phase": "commit",
+            "request_sha256": "c2f5a57c772b0142c2096e49b4d69e950f333f6e537c440b7e7d2570f7f1521b",
+            "result_sha256": "a527bdd1c41a451ceb87054c243bbb32cd330ae6c046748adad63a44265c0178",
+            "reservation_entry_sha256": "c0e1d7806269197c998880950b5173af1b8d2dcb7bda0c632a89d3100ec7cd68",
+            "publication_receipt_sha256": "914f539aa1a2d35c9de36855d6c9120e15c45941eae2966d2bab5d3031f17816",
+            "workflow_run_id": "9005001",
+            "outcome": "COMMITTED"
+          },
+          "actor": {
+            "principal": "release-control-committer",
+            "role": "committer",
+            "capabilities": [
+              "journal:commit"
+            ],
+            "can_mutate_targets": false,
+            "can_sign": false,
+            "can_commit": true
+          },
+          "created_at": "2026-01-01T00:00:41Z"
+        },
+        "signature": {
+          "format": "vault-transit-ed25519-jcs/v1",
+          "transit_key": "release-journal-v1",
+          "transit_key_version": "1",
+          "kid": "kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+          "payload_sha256": "81f2a43caeb4c7958741f8657e8c1270fe1dd8274584a5471a4056e96d8e8bb2",
+          "signature_base64url": "-bg7p-nWbl_XxtBmJ0k_ReMFAocQFdJ2HgDpFAJCDP5WbiFOjypuQZpVMo-_xrZoOIm_D_0tj1C_dHb-zHx3BA"
+        }
+      },
+      "entry_sha256": "69bf7279b60412f42a97fa41aef78de3141d3bb75e6423b67e40957a473f02ac"
+    },
+    {
+      "entry": {
+        "body": {
+          "schema": "codicarium.release-journal-entry/v1",
+          "evidence_class": "synthetic-conformance-fixture",
+          "publication_authority": false,
+          "fixture_set": "issue93-v2.0",
+          "fixture_identity_jcs_sha256": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "journal_id": "jrnl-v1-d2c3d86640cd2b8125b35fc472c3b8cb",
+          "ordinal": "43",
+          "event": "mutation-reserve",
+          "claim_key": "rel-v2-sha256:d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "publication_sequence": "19",
+          "previous_entry_sha256": "69bf7279b60412f42a97fa41aef78de3141d3bb75e6423b67e40957a473f02ac",
+          "payload": {
+            "operation": "release-finalize",
+            "phase": "reserve",
+            "request_sha256": "ae89d646891527b0890232a3ce396ab3e65d7c02bbe21557e64369784c3abc9b",
+            "result_sha256": null,
+            "reservation_entry_sha256": null,
+            "publication_receipt_sha256": null,
+            "workflow_run_id": null,
+            "outcome": "RESERVED"
+          },
+          "actor": {
+            "principal": "release-control-reserver",
+            "role": "reserver",
+            "capabilities": [
+              "journal:reserve"
+            ],
+            "can_mutate_targets": false,
+            "can_sign": false,
+            "can_commit": false
+          },
+          "created_at": "2026-01-01T00:00:42Z"
+        },
+        "signature": {
+          "format": "vault-transit-ed25519-jcs/v1",
+          "transit_key": "release-journal-v1",
+          "transit_key_version": "1",
+          "kid": "kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+          "payload_sha256": "1edce0405739d8df77dbd3434e77d097b3b4401282ced74ae3f6f484edc4d549",
+          "signature_base64url": "MPyUI2v-xFABeeNq6UFJ9c8qIYKRas0WuO9uCItg3WqpNig3qsxk4zOPwZYc1JIiH5rJyMIQ6I8we6vWhBmxDQ"
+        }
+      },
+      "entry_sha256": "9875134a8c292d51c393ba8bad2906a706e9fc6aaaed0c9beabdfc1165bac235"
+    },
+    {
+      "entry": {
+        "body": {
+          "schema": "codicarium.release-journal-entry/v1",
+          "evidence_class": "synthetic-conformance-fixture",
+          "publication_authority": false,
+          "fixture_set": "issue93-v2.0",
+          "fixture_identity_jcs_sha256": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "journal_id": "jrnl-v1-d2c3d86640cd2b8125b35fc472c3b8cb",
+          "ordinal": "44",
+          "event": "mutation-commit",
+          "claim_key": "rel-v2-sha256:d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "publication_sequence": "19",
+          "previous_entry_sha256": "9875134a8c292d51c393ba8bad2906a706e9fc6aaaed0c9beabdfc1165bac235",
+          "payload": {
+            "operation": "release-finalize",
+            "phase": "commit",
+            "request_sha256": "ae89d646891527b0890232a3ce396ab3e65d7c02bbe21557e64369784c3abc9b",
+            "result_sha256": "5bd2f0c71fe8ca9279d10eba377e874d117c289345b234c8fda18a49dbb9cfbd",
+            "reservation_entry_sha256": "9875134a8c292d51c393ba8bad2906a706e9fc6aaaed0c9beabdfc1165bac235",
+            "publication_receipt_sha256": "a3a8624624aa2d2147ed3f297d869a5a13e3e62b869c0134fc32bc08cd55079f",
+            "workflow_run_id": "9005001",
+            "outcome": "COMMITTED"
+          },
+          "actor": {
+            "principal": "release-control-committer",
+            "role": "committer",
+            "capabilities": [
+              "journal:commit"
+            ],
+            "can_mutate_targets": false,
+            "can_sign": false,
+            "can_commit": true
+          },
+          "created_at": "2026-01-01T00:00:43Z"
+        },
+        "signature": {
+          "format": "vault-transit-ed25519-jcs/v1",
+          "transit_key": "release-journal-v1",
+          "transit_key_version": "1",
+          "kid": "kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+          "payload_sha256": "60a753a7bfec52001a0c16f12d43f2d8cbb5aaf0c58032e35567ae9eefa3e9a7",
+          "signature_base64url": "Smu_f38T2EalQ1EoRs5p3s6MlvTseyk1GeT9SXUFg1FSc8bHBwDhPY8X6iXFi_8RNPxyIuuIUbk7Fe2wE8vtBQ"
+        }
+      },
+      "entry_sha256": "093707a86b3338d2371ca9990e8363825cb128fd831a6f1717a18e563eaff33d"
+    },
+    {
+      "entry": {
+        "body": {
+          "schema": "codicarium.release-journal-entry/v1",
+          "evidence_class": "synthetic-conformance-fixture",
+          "publication_authority": false,
+          "fixture_set": "issue93-v2.0",
+          "fixture_identity_jcs_sha256": "d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "journal_id": "jrnl-v1-d2c3d86640cd2b8125b35fc472c3b8cb",
+          "ordinal": "45",
+          "event": "complete",
+          "claim_key": "rel-v2-sha256:d2c3d86640cd2b8125b35fc472c3b8cb89ae11f374994bebb1c82193b77f41e9",
+          "publication_sequence": null,
+          "previous_entry_sha256": "093707a86b3338d2371ca9990e8363825cb128fd831a6f1717a18e563eaff33d",
+          "payload": {
+            "operation": "release",
+            "phase": "complete",
+            "request_sha256": null,
+            "result_sha256": "a3a8624624aa2d2147ed3f297d869a5a13e3e62b869c0134fc32bc08cd55079f",
+            "reservation_entry_sha256": null,
+            "publication_receipt_sha256": null,
+            "workflow_run_id": "9005001",
+            "outcome": "COMPLETE"
+          },
+          "actor": {
+            "principal": "release-control-committer",
+            "role": "committer",
+            "capabilities": [
+              "journal:complete"
+            ],
+            "can_mutate_targets": false,
+            "can_sign": false,
+            "can_commit": true
+          },
+          "created_at": "2026-01-01T00:00:44Z"
+        },
+        "signature": {
+          "format": "vault-transit-ed25519-jcs/v1",
+          "transit_key": "release-journal-v1",
+          "transit_key_version": "1",
+          "kid": "kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+          "payload_sha256": "9c42d98a3e729e7efd1bb2b32352758a9b096bbe31cb484ffbd2514478ba98d1",
+          "signature_base64url": "0agfptlXZ03aMNotU8ja1SXjhM3vCM0RxvnKGdRd9c0uJ2COGcoyMPdfYMjk-vRp_F2obkwj9BWTcftIvYAFCw"
+        }
+      },
+      "entry_sha256": "4b95ec48b0a3f97b0851bc09c5e5b00c6fc98420af3576e858bdec0eaa9b1d36"
+    }
+  ],
+  "terminal_state": "complete"
+}

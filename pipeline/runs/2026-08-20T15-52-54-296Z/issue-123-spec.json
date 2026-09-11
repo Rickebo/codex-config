@@ -1,0 +1,66 @@
+{
+  "meta": {
+    "id": "SPEC-123-pr-release-isolation",
+    "title": "Isolate pull-request validation from trusted release infrastructure",
+    "author": "Codex manager",
+    "created_at": "2026-08-20T16:05:00+02:00",
+    "version": "1.0"
+  },
+  "feature": {
+    "problem_statement": "Pull-request validation currently executes repository-controlled code on the same configurable self-hosted runner family used for release publication, with Docker and sudo-capable operations that can persist or reach trusted infrastructure.",
+    "goals": [
+      "Run untrusted pull-request validation on an ephemeral, non-release runner class with read-only permissions and no persisted checkout credentials.",
+      "Make release publication use a distinct trusted runner class and protected-main-only trigger with narrowly scoped permissions.",
+      "Add fail-closed workflow contract checks and operator documentation that distinguish repository controls from external runner, network, and teardown evidence.",
+      "Preserve the existing validate status-check contract while making trust-boundary violations visible before merge."
+    ],
+    "non_goals": [
+      "Provisioning or changing Codicarium runner pools, autoscaling, VM wipe, Docker isolation, firewall egress, or GitHub organization policy from this repository PR.",
+      "Publishing secrets, tokens, credentials, or raw runner telemetry.",
+      "Replacing the existing comprehensive make ci validation with an untested partial suite."
+    ],
+    "scope_in": [
+      ".github/workflows/ci.yml PR runner, permissions, checkout credential, and trust-contract changes",
+      ".github/workflows/release.yml trusted runner selector, protected-main trigger/guard, permissions, and checkout credential changes",
+      "Static workflow trust checker/tests and Makefile integration",
+      "Operator trust-model and external-evidence documentation"
+    ],
+    "scope_out": [
+      "External runner infrastructure and live fork/teardown canaries",
+      "Supply-chain action SHA pinning tracked by issue #124",
+      "Changing application or Helm runtime behavior"
+    ]
+  },
+  "requirements": [
+    {"id":"REQ-001","priority":"MUST","statement":"PR validation must resolve to an ephemeral GitHub-hosted runner or an explicitly dedicated single-use PR pool and must never fall back to the shared release self-hosted label.","rationale":"Repository-controlled PR code is untrusted and must not share mutable release capacity."},
+    {"id":"REQ-002","priority":"MUST","statement":"PR validation must have read-only job permissions, no repository secrets, and checkout must not persist credentials.","rationale":"A validation job must not expose write authority or reusable credentials to arbitrary PR code."},
+    {"id":"REQ-003","priority":"MUST","statement":"Release publication must run only from protected main pushes on a distinct trusted release runner selector with publication permissions scoped to the release job.","rationale":"Publication credentials and deployment automation must never be available to arbitrary branch execution."},
+    {"id":"REQ-004","priority":"MUST","statement":"A fail-closed static workflow contract checker and focused tests must reject shared PR/release runner selectors, unsafe PR triggers or permissions, persisted checkout credentials, and unrestricted release refs.","rationale":"The trust boundary must be reviewable and regression-tested in the repository."},
+    {"id":"REQ-005","priority":"MUST","statement":"Operator documentation must describe fork, agent-generated, human-authored, protected-main, PR-runner, and release-runner trust classes plus the external evidence required for teardown, network, Docker, cache, and cleanup attestation.","rationale":"Static workflow changes cannot prove platform isolation; operators need an explicit evidence contract."},
+    {"id":"REQ-006","priority":"MUST","statement":"The implementation must retain the existing validate check and comprehensive validation coverage, and must not claim issue completion until external runner and cleanup evidence is verified.","rationale":"The merge gate and honest completion state are required for safe rollout."}
+  ],
+  "acceptance_criteria": [
+    {"id":"AC-001","requirement_ids":["REQ-001","REQ-004"],"scenario":"Given the repository workflows, when the workflow contract checker evaluates the PR job, then it fails for self-hosted/Linux/codicarium or release labels and passes only for the approved ephemeral PR runner policy."},
+    {"id":"AC-002","requirement_ids":["REQ-002","REQ-004"],"scenario":"Given the CI workflow, when the checker evaluates permissions, secrets, and checkout, then it proves read-only permissions, no secrets, and persist-credentials=false."},
+    {"id":"AC-003","requirement_ids":["REQ-003","REQ-004"],"scenario":"Given the release workflow, when the checker evaluates triggers, runner selection, and permissions, then it proves push-only protected-main execution on the distinct trusted selector with publication permissions absent from PR jobs."},
+    {"id":"AC-004","requirement_ids":["REQ-005","REQ-006"],"scenario":"Given the operator runbook and issue evidence, when an operator reviews the trust model, then repository-verifiable controls are separated from platform-admin fork, runner-destruction, egress, Docker, and cleanup-attestation evidence."},
+    {"id":"AC-005","requirement_ids":["REQ-006"],"scenario":"Given the candidate commit, when focused tests, actionlint, workflow parsing, full repository CI, and hosted validation run, then all pass and the issue remains open/blocked if external evidence is absent."}
+  ],
+  "test_plan": [
+    {"id":"TST-001","type":"unit","requirement_ids":["REQ-001","REQ-002","REQ-003","REQ-004"],"approach":"Run focused Python workflow-contract tests with fixtures for safe and unsafe runner, trigger, permission, checkout, and release-ref configurations."},
+    {"id":"TST-002","type":"integration","requirement_ids":["REQ-004"],"approach":"Run make workflow-parse, actionlint, YAML parsing, and the Makefile trust-check target against the repository workflows."},
+    {"id":"TST-003","type":"non_functional","requirement_ids":["REQ-001","REQ-003","REQ-005"],"approach":"Inspect hosted PR/release job metadata and platform runner inventory; require distinct labels/groups and teardown/egress evidence, treating missing evidence as a blocker."},
+    {"id":"TST-004","type":"integration","requirement_ids":["REQ-006"],"approach":"Run make ci and verify exact-head GitHub validate success with no test-owned containers, networks, or generated tracked changes left behind."},
+    {"id":"TST-005","type":"manual","requirement_ids":["REQ-005","REQ-006"],"approach":"Platform-admin fork canary and disposable-runner cleanup attestation review before issue closure."}
+  ],
+  "traceability": [
+    {"requirement_id":"REQ-001","acceptance_ids":["AC-001"],"test_ids":["TST-001","TST-003"],"review_checks":["No shared self-hosted label or mutable fallback in PR path"],"validation_checks":["Hosted PR runner metadata and platform teardown evidence"]},
+    {"requirement_id":"REQ-002","acceptance_ids":["AC-002"],"test_ids":["TST-001","TST-002"],"review_checks":["Read-only permissions; no secrets; checkout credentials disabled"],"validation_checks":["Actionlint and exact hosted job permissions"]},
+    {"requirement_id":"REQ-003","acceptance_ids":["AC-003"],"test_ids":["TST-001","TST-003"],"review_checks":["Push-only protected main and distinct trusted selector"],"validation_checks":["Hosted release metadata and protected-main evidence"]},
+    {"requirement_id":"REQ-004","acceptance_ids":["AC-001","AC-002","AC-003"],"test_ids":["TST-001","TST-002"],"review_checks":["Fail-closed contract tests cover unsafe mutations"],"validation_checks":["make workflow-parse and actionlint"]},
+    {"requirement_id":"REQ-005","acceptance_ids":["AC-004"],"test_ids":["TST-003","TST-005"],"review_checks":["Documentation does not overclaim external isolation"],"validation_checks":["Docs checker and platform evidence checklist"]},
+    {"requirement_id":"REQ-006","acceptance_ids":["AC-005"],"test_ids":["TST-004","TST-005"],"review_checks":["validate contract retained; issue closure gated on evidence"],"validation_checks":["make ci; exact-head hosted validate; clean resources"]}
+  ],
+  "quality_gates":{"spec_review_required":true,"testability_required":true,"traceability_required":true},
+  "council":{"perspectives":[{"role":"planner_lite","summary":"Use GitHub-hosted ubuntu-24.04 for PR validation, a distinct codicarium-release pool for publication, read-only PR permissions, persist-credentials=false, and document external runner/firewall/attestation prerequisites."},{"role":"tech_lead_devops","summary":"Current CI and release share self-hosted Linux/codicarium capacity; repository changes can separate labels and permissions, but runner ephemerality, Docker isolation, egress policy, and teardown attestations require platform evidence."},{"role":"reviewer","summary":"Untrusted PR code has shell, Docker, sudo, cache, and network execution on mutable runners; fail closed against shared labels, unsafe triggers, secrets/write permissions, persisted checkout credentials, and arbitrary release refs."},{"role":"tech_lead_qa","summary":"Static contracts, actionlint, workflow parsing, and hosted metadata can verify repository policy; fork canaries, runner destruction, network isolation, and cleanup attestation require platform-admin evidence."}],"consensus_summary":"Implement repository-enforceable trust-boundary hardening and fail-closed workflow contract tests now; track dedicated runner pools, egress/Docker isolation, and cleanup attestation as explicit external validation prerequisites.","open_questions":["Can platform provision and attest dedicated PR and release runner pools before the PR is merged?","Which exact Codicarium runner labels/groups and release environment reviewers will be available?","Can a fork canary be run for this private repository or an approved test repository?"]}
+}

@@ -1,0 +1,42 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Closed the target-only GitOps code blockers: Argo inline values now target real wrapper/dependency paths; gate-off renders no target workloads, Services, CNPG, Ingress, ExternalSecret, Jobs, restores, or PVCs; enabled-only renders prove storage, consistency backup, restore/migration, RBAC, and network-policy contracts.",
+  "changed_files": [
+    "apps/llm-proxy.yaml",
+    "apps/workspace-context.yaml",
+    "llm-proxy/charts/llm-proxy-0.3.19-r.1.homelab.1.tgz",
+    "llm-proxy/templates/alerts.yaml",
+    "llm-proxy/templates/database-backup.yaml",
+    "llm-proxy/templates/homelab-egress-compatibility.yaml",
+    "llm-proxy/templates/restore.yaml",
+    "llm-proxy/values.yaml",
+    "llm-proxy/vendor/llm-proxy/templates/services.yaml",
+    "tests/test_workspace_context_llm_proxy_gitops.py",
+    "workspace-context/templates/_helpers.tpl",
+    "workspace-context/templates/alerts.yaml",
+    "workspace-context/templates/backup.yaml",
+    "workspace-context/templates/database.yaml",
+    "workspace-context/templates/gated.yaml",
+    "workspace-context/templates/networkpolicy.yaml",
+    "workspace-context/templates/storage.yaml",
+    "workspace-context/templates/workload.yaml",
+    "workspace-context/tests/static.sh",
+    "workspace-context/values.yaml"
+  ],
+  "validation": [
+    "helm dependency build and helm lint passed for llm-proxy and workspace-context.",
+    "Actual Argo Application inline-value renders passed with no forbidden target kinds.",
+    "Focused pytest passed: 5 tests.",
+    "workspace-context/tests/static.sh and bash -n passed.",
+    "Enabled-only renders proved 5Gi local-path CNPG, 20Gi NFS graph, 5Gi NFS scratch, mounts, backup hooks, and disposable Jobs.",
+    "git diff --check passed; protected worker, bridge, and historical paths were not changed.",
+    "Commit f8bef3f created with coherent conventional message; graphify-out edits remain unstaged."
+  ],
+  "blockers": [
+    "kubeconform and kubeval are unavailable locally; Helm YAML rendering, lint, and focused static checks passed instead."
+  ],
+  "next_action": "Route to REVIEW; do not deploy, sync Argo, mutate a cluster, or approve the next pipeline transition.",
+  "route_to": "review",
+  "risk_level": "high"
+}

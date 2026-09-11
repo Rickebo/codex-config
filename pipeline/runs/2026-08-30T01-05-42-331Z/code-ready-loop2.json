@@ -1,0 +1,34 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Luna rebased all seven previously reviewed Phase 0 commits onto exact canonical infra main 09e6e540 without conflicts. The worktree is clean, range-diff preserves commit content, and the full targeted local suite passes at new head e1ede4d3.",
+  "changed_files": [
+    ".github/workflows/legacy-freeze-guard.yml",
+    ".github/workflows/revoke-legacy-metamcp-argocd-credentials.yml",
+    "scripts/bootstrap-codicarium-local-argo.sh",
+    "scripts/check-argocd-rbac-contract.py",
+    "scripts/check-break-glass-workflows.sh",
+    "scripts/check-mgmt-topology.sh",
+    "scripts/revoke-legacy-metamcp-argocd-credentials.sh",
+    "terraform/stacks/prod/main.tf",
+    "tests/test-argocd-rbac-contract.py",
+    "tests/test-revoke-legacy-metamcp-argocd-credentials-kubectl.py",
+    "tests/test-revoke-legacy-metamcp-argocd-credentials-transaction.py",
+    "tests/test-revoke-legacy-metamcp-argocd-credentials.py"
+  ],
+  "validation": [
+    "Canonical main verified as 09e6e5405d799446354d531ae76c314374576e74 before rebase",
+    "Rebase completed without conflicts and worktree is clean",
+    "Range-diff preserves all seven reviewed commit patches",
+    "2 explicit-kubectl parser tests passed",
+    "7 contract tests, 2 transaction tests, 12 Argo RBAC tests, and 16 typed-kubeconfig publication tests passed",
+    "Argo RBAC, break-glass, management-topology, actionlint, shell, Python, and diff checks passed"
+  ],
+  "blockers": [
+    "New rebased head requires independent exact-head review before any push",
+    "Protected ARC producer runner and live identity/break-glass gates remain external blockers"
+  ],
+  "next_action": "Route to independent Luna review of exact local head e1ede4d3; do not push until review passes.",
+  "route_to": "review",
+  "risk_level": "critical"
+}

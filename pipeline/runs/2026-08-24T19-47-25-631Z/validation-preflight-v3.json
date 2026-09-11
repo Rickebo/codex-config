@@ -1,0 +1,341 @@
+{
+  "schema": "codicarium.pipeline.validation-preflight/v3",
+  "generated_at": "2026-08-25T06:15:03Z",
+  "pipeline_run": "/home/rickebo/.codex/pipeline/runs/2026-08-24T19-47-25-631Z",
+  "pipeline": {
+    "current_stage": "validation",
+    "loop_count": 3,
+    "done": false,
+    "awaiting_approval": null,
+    "advanced_by_preflight": false
+  },
+  "decision": {
+    "result": "GO",
+    "scope": "push_branch_and_open_issue_linked_pull_request",
+    "merge_authorized": false,
+    "rebase_required": false,
+    "reason": "Fresh origin/main, live GitHub main, and the candidate merge base are the same exact commit d3565f5. Exact loop-3 tests replay the live newest-failed and older-successful coordinator proofs, recover only the older successful proof, ignore the stale handoff tuple, accept GitHub's canonical check URL only for an exact fresh tuple, and reject duplicate exact proofs before run lookup. Current review and test reports have no blockers.",
+    "merge_guard": "Do not merge unless the issue-linked PR is current with protected main and strict required checks test, lint, chart, integration, and supply-chain all pass from GitHub Actions app 15368. Post-merge public v0.6.13 proof remains mandatory before final validation completion."
+  },
+  "workspace_context": {
+    "publication_state": "current",
+    "published_revision_id": "edf40cd3-4be5-4dcc-88ee-c24af24e8fc5",
+    "input_fingerprint": null,
+    "input_fingerprint_note": "The current get_workspace_context response did not return an input fingerprint; no value is inferred.",
+    "published_deployment_controller_sha": "d3565f534b2f64585c3e15e35d8d645449f4f09d"
+  },
+  "git": {
+    "worktree": "/mnt/rickebo-p/deployment-controller/.worktrees/deployment-controller-codex_issue-93-handoff-recovery",
+    "branch": "codex/issue-93-handoff-recovery",
+    "head": "51ddb1a4e2b7142bc356f39bc600ac4c9166dca0",
+    "origin_main_after_explicit_fetch": "d3565f534b2f64585c3e15e35d8d645449f4f09d",
+    "live_github_main": "d3565f534b2f64585c3e15e35d8d645449f4f09d",
+    "merge_base": "d3565f534b2f64585c3e15e35d8d645449f4f09d",
+    "main_advanced_after_candidate_base": false,
+    "clean": true,
+    "ahead_by_commits": 2,
+    "commits": [
+      {
+        "sha": "0484456be92a7725b41bf3c862825cd7b9c5691a",
+        "subject": "fix(release): recover failed handoff retries",
+        "conventional_commit": true
+      },
+      {
+        "sha": "51ddb1a4e2b7142bc356f39bc600ac4c9166dca0",
+        "subject": "fix(release): reject duplicate coordinator proofs",
+        "conventional_commit": true
+      }
+    ],
+    "changed_files": [
+      ".github/workflows/automatic-release.yaml",
+      "hack/release-handoff-policy.js",
+      "hack/test-release-graph.py",
+      "hack/test-release-handoff-policy.js"
+    ],
+    "diff_check": "pass",
+    "release_verify_workflow_unchanged": true,
+    "publish_release_workflow_unchanged": true
+  },
+  "repository_protection": {
+    "branch_ruleset": {
+      "id": 21317510,
+      "name": "Protect deployment-controller main",
+      "active": true,
+      "ref": "refs/heads/main",
+      "bypass_actors": [],
+      "blocks_deletion_and_non_fast_forward": true,
+      "requires_pull_request": true,
+      "required_approvals": 0,
+      "required_review_thread_resolution": true,
+      "strict_up_to_date_checks": true,
+      "required_checks": [
+        {"context": "test", "integration_id": 15368, "status": "pending_pr"},
+        {"context": "lint", "integration_id": 15368, "status": "pending_pr"},
+        {"context": "chart", "integration_id": 15368, "status": "pending_pr"},
+        {"context": "integration", "integration_id": 15368, "status": "pending_pr"},
+        {"context": "supply-chain", "integration_id": 15368, "status": "pending_pr"}
+      ]
+    },
+    "tag_ruleset": {
+      "id": 19595482,
+      "name": "Lock version tags",
+      "active": true,
+      "ref": "refs/tags/v*",
+      "bypass_actors": [],
+      "blocks_update_and_deletion": true
+    }
+  },
+  "tracking_and_release_state": {
+    "issue_93": {
+      "state": "open",
+      "labels": ["codex-tracked", "priority:p0"],
+      "url": "https://github.com/codicarium/deployment-controller/issues/93"
+    },
+    "candidate_pr_exists": false,
+    "v0_6_13": {
+      "tag_ref": "refs/tags/v0.6.13",
+      "tag_type": "commit",
+      "source_sha": "ad52dfcbc45d71eccad1d49fbd905161af7a44b1",
+      "immutable_by_active_ruleset": true,
+      "public_release_exists": false,
+      "matching_publish_release_run_after_failed_live_attempt": false
+    },
+    "v0_6_14": {
+      "tag_exists": false,
+      "public_release_exists": false
+    }
+  },
+  "coordinator_proof_recovery": {
+    "query_contract": {
+      "check_filter": "all",
+      "workflow_check_listings_with_filter_all": 3,
+      "ordering": "descending immutable check id",
+      "bound_tuple": {
+        "tag": "v0.6.13",
+        "source": "ad52dfcbc45d71eccad1d49fbd905161af7a44b1",
+        "ci_run_id": 32724242226,
+        "ci_run_attempt": 1
+      }
+    },
+    "newest_bound_proof": {
+      "check_id": 97653694505,
+      "external_id": "automatic-release:32798160604/1:v0.6.13:ad52dfcbc45d71eccad1d49fbd905161af7a44b1:32724242226/1",
+      "run_id": 32798160604,
+      "run_attempt": 1,
+      "run_head_sha": "d3565f534b2f64585c3e15e35d8d645449f4f09d",
+      "run_status": "completed",
+      "run_conclusion": "failure",
+      "classification": "recognized_completed_failure_skipped"
+    },
+    "older_successful_proof": {
+      "check_id": 97564382788,
+      "external_id": "automatic-release:32768808057/1:v0.6.13:ad52dfcbc45d71eccad1d49fbd905161af7a44b1:32724242226/1",
+      "run_id": 32768808057,
+      "run_attempt": 1,
+      "run_head_sha": "6053f97326157807c4323c44e0d14f3ee65c09bf",
+      "run_status": "completed",
+      "run_conclusion": "success",
+      "classification": "selected_exact_success"
+    },
+    "direct_local_live_replay": {
+      "result": "pass",
+      "run_lookup_order": [32798160604, 32768808057],
+      "selected_check_id": 97564382788,
+      "selected_run_id": 32768808057,
+      "selected_workflow_sha": "6053f97326157807c4323c44e0d14f3ee65c09bf"
+    },
+    "fail_closed_controls": [
+      "Duplicate exact Automatic Release external_id values reject before any run lookup.",
+      "A bound check with malformed app/status/conclusion/head/external identity rejects rather than falling through.",
+      "Non-completed or unsupported lifecycle rejects.",
+      "Only a fixed allowlist of completed failure conclusions may be skipped while searching older distinct proofs.",
+      "API errors propagate and stop recovery."
+    ]
+  },
+  "handoff_recovery": {
+    "stale_live_handoff": {
+      "check_id": 97655710504,
+      "name": "Release Verify Publish Handoff",
+      "status": "completed",
+      "conclusion": "success",
+      "app": "github-actions",
+      "details_url": "https://github.com/codicarium/deployment-controller/runs/97655710504",
+      "external_id": "release-verify:32798188729/1:v0.6.13:ad52dfcbc45d71eccad1d49fbd905161af7a44b1:32724242226/1:32798160604/1:97653694505:d3565f534b2f64585c3e15e35d8d645449f4f09d",
+      "behavior_for_fresh_tuple": "ignored because external_id does not equal the fresh authenticated tuple"
+    },
+    "canonical_exact_handoff_contract": {
+      "candidate_selection": "external_id exact match only",
+      "accepted_returned_details_url": "https://github.com/codicarium/deployment-controller/runs/{check_id}",
+      "wrong_attempt_style_returned_url": "rejected for an existing check",
+      "duplicates": "multiple exact external_id matches reject",
+      "fresh_create": "request carries the verifier attempt URL; the returned and settled GitHub check must use canonical /runs/{check_id} and preserve every other exact identity field"
+    },
+    "direct_local_probe": {
+      "stale_live_check_for_fresh_tuple": null,
+      "canonical_exact_fresh_check_id": 40000000004,
+      "result": "pass"
+    }
+  },
+  "ancestry": {
+    "kafka_fix": "989799cc99a4e9577bfd100dde320a71f7e7fb9f",
+    "release_source": "ad52dfcbc45d71eccad1d49fbd905161af7a44b1",
+    "github_compare_status": "ahead",
+    "ahead_by": 1,
+    "behind_by": 0,
+    "merge_base": "989799cc99a4e9577bfd100dde320a71f7e7fb9f",
+    "proven": true
+  },
+  "reports_read": [
+    {
+      "path": "review-report.json",
+      "status": "pass",
+      "role": "initial independent trust-boundary review"
+    },
+    {
+      "path": "test-report.json",
+      "status": "pass",
+      "role": "initial full local test"
+    },
+    {
+      "path": "review-report-v2.json",
+      "status": "pass",
+      "role": "real-tuple ancestry re-review"
+    },
+    {
+      "path": "test-report-v2.json",
+      "status": "pass",
+      "role": "real-tuple ancestry retest"
+    },
+    {
+      "path": "review-report-v3-fail.json",
+      "status": "fail",
+      "role": "found duplicate exact coordinator proof acceptance",
+      "resolved_by": "51ddb1a duplicate rejection before run lookup"
+    },
+    {
+      "path": "review-report-v4.json",
+      "status": "pass",
+      "role": "loop-3 re-review of exact 51ddb1a"
+    },
+    {
+      "path": "test-report-v3.json",
+      "status": "pass",
+      "role": "loop-3 independent test at exact 51ddb1a"
+    }
+  ],
+  "fresh_preflight_validation": {
+    "commands": [
+      {
+        "command": "git fetch --no-tags origin refs/heads/main:refs/remotes/origin/main",
+        "result": "pass; origin/main remained d3565f5"
+      },
+      {
+        "command": "node hack/test-release-handoff-policy.js",
+        "result": "pass"
+      },
+      {
+        "command": "PYTHONDONTWRITEBYTECODE=1 python3 hack/test-release-graph.py",
+        "result": "pass, 46 tests"
+      },
+      {
+        "command": "direct live proof and stale/canonical handoff Node probe",
+        "result": "newest failure skipped, older success selected, stale handoff ignored, canonical exact handoff accepted"
+      },
+      {
+        "command": "git diff --check origin/main..HEAD and protected workflow comparisons",
+        "result": "pass; release.yaml and publish-release.yaml unchanged"
+      }
+    ],
+    "current_loop_full_test_evidence": [
+      "make test-release-flow: 111/111 Python tests and 2/2 JavaScript suites passed",
+      "make test: 23/23 Go packages passed",
+      "CI lint mapping, repository policy, actionlint, and govulncheck passed with zero vulnerabilities",
+      "chart checks passed 4/4 Python tests, 3/3 Helm lints, and 26+19 rendered objects",
+      "integration passed 18/18 top-level tests and 10/10 subtests",
+      "all 6 workflows passed actionlint and YAML parsing; changed JavaScript syntax checks passed"
+    ],
+    "local_environment_limits": [
+      "Kubeconform live container probe cannot bind the NFS-backed worktree path and stops before a code assertion.",
+      "The local Docker host lacks buildx and stops image verification before a code assertion."
+    ],
+    "protected_supply_chain_required": true
+  },
+  "acceptance_trace": [
+    {
+      "acceptance": "AC-001",
+      "classification": "requires_postmerge_live_proof",
+      "premerge_status": "resume_and_recovery_logic_satisfied",
+      "pending": "The corrected merge's exact-main CI must automatically resume v0.6.13 and create no v0.6.14."
+    },
+    {
+      "acceptance": "AC-002",
+      "classification": "satisfied_premerge",
+      "premerge_status": "direct verifier dispatch and immediate exact-ID GET remain covered"
+    },
+    {
+      "acceptance": "AC-003",
+      "classification": "satisfied_premerge",
+      "premerge_status": "fixed ID/attempt polling, identity checks, and bounded failure behavior remain covered"
+    },
+    {
+      "acceptance": "AC-004",
+      "classification": "satisfied_premerge",
+      "premerge_status": "canonical exact handoff create/reuse and stale/duplicate rejection covered"
+    },
+    {
+      "acceptance": "AC-005",
+      "classification": "satisfied_premerge",
+      "premerge_status": "publisher dispatch ordering and full tuple remain covered; publisher workflow unchanged"
+    },
+    {
+      "acceptance": "AC-006",
+      "classification": "satisfied_premerge",
+      "premerge_status": "release verifier remains unchanged without publication authority"
+    },
+    {
+      "acceptance": "AC-007",
+      "classification": "requires_postmerge_live_proof",
+      "premerge_status": "static verifier and publisher contracts unchanged",
+      "pending": "Public release, chart, image, manifest, provenance, and attestations must bind ad52dfc."
+    },
+    {
+      "acceptance": "AC-008",
+      "classification": "satisfied_premerge",
+      "premerge_status": "failed-newest fallback, exact stale isolation, duplicate proof rejection, immutable tags, and serialized retry behavior covered"
+    },
+    {
+      "acceptance": "AC-009",
+      "classification": "requires_protected_pr_check",
+      "premerge_status": "all feasible local suites and adversarial fixtures passed",
+      "pending": "All five protected checks must pass, especially supply-chain for Buildx/image and kubeconform."
+    },
+    {
+      "acceptance": "AC-010",
+      "classification": "requires_postmerge_live_proof",
+      "premerge_status": "ready_for_issue_93_linked_pr",
+      "pending": "After checked merge, record automatic run/release/artifact URLs and digests, close #93, and clean branch/worktree."
+    }
+  ],
+  "pending_pr_evidence": [
+    "Issue #93-linked PR with exact head 51ddb1a or a reviewed descendant rebased on unchanged main.",
+    "Successful strict required checks: test, lint, chart, integration, and supply-chain.",
+    "No unresolved review threads and exact current-main mergeability."
+  ],
+  "pending_postmerge_evidence": [
+    "Successful exact-main CI automatically triggers Automatic Release without manual dispatch or rerun.",
+    "Automatic Release uses the older exact successful coordinator proof after skipping the known completed-failure proof.",
+    "Fresh verifier succeeds; stale handoff is ignored; a fresh canonical exact handoff is accepted; Publish Release succeeds.",
+    "No v0.6.14 tag or release is created while v0.6.13 recovery completes.",
+    "Public GitHub Release, Helm OCI, multi-architecture image, manifest source_revision, provenance, and attestations bind ad52dfc with recorded URLs and digests.",
+    "Issue #93 closes only after evidence; merged remote branch and local worktree are cleaned."
+  ],
+  "explicit_non_actions": [
+    "No repository file was edited by this preflight.",
+    "No branch was pushed.",
+    "No pull request was opened or merged.",
+    "No workflow was dispatched or rerun.",
+    "No tag, GitHub Release, package, deployment, or GitHub issue state was mutated.",
+    "No pipeline transition was executed.",
+    "No final validation stage report was written."
+  ]
+}

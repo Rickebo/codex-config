@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "created_at": "2026-08-15T08:41:11.988Z",
+  "updated_at": "2026-08-15T09:24:15.014Z",
+  "task": "Redesign infra PR 1070 and runner-config PR 27 validation into protected-main trusted preparation and secretless PR consumption, preserve fail-closed activation and bootstrap locks",
+  "policy_path": "/home/rickebo/.codex/pipeline/transitions.json",
+  "approval_rules_path": "/home/rickebo/.codex/pipeline/approval-rules.json",
+  "initial_stage": "spec",
+  "current_stage": "code",
+  "pipeline_profile": "full",
+  "done": false,
+  "max_loops": 6,
+  "loop_count": 0,
+  "approval_required_count": 2,
+  "approvals": [
+    {
+      "at": "2026-08-15T08:45:33.024Z",
+      "approver": "Codex manager",
+      "note": "User supplied explicit acceptance criteria; spec preserves all constraints.",
+      "gate": "spec_to_code",
+      "reason": "Spec pass requires explicit approval before implementation starts.",
+      "risk_level": "critical",
+      "from_stage": "spec",
+      "next_stage": "code",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-15T08-41-11-987Z/reports/2026-08-15T08-45-11-279Z_spec_pass.json"
+    }
+  ],
+  "awaiting_approval": {
+    "created_at": "2026-08-15T09:24:15.014Z",
+    "stage": "code",
+    "status": "blocked",
+    "requested_next_stage": "code",
+    "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-15T08-41-11-987Z/reports/2026-08-15T09-24-15-008Z_code_blocked.json",
+    "reason": "Risk level critical meets or exceeds threshold high.",
+    "gate": "risk_threshold",
+    "risk_level": "critical",
+    "spec_gate": null
+  },
+  "spec_gate": {
+    "passed": true,
+    "passed_at": "2026-08-15T08:45:33.024Z",
+    "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-15T08-41-11-987Z/spec.json",
+    "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-08-15T08-41-11-987Z/spec-check.json",
+    "council_file": "/home/rickebo/.codex/pipeline/runs/2026-08-15T08-41-11-987Z/council.json"
+  },
+  "council_policy": {
+    "required": "always"
+  },
+  "history": [
+    {
+      "at": "2026-08-15T08:45:11.280Z",
+      "event": "approval_required",
+      "stage": "spec",
+      "status": "pass",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-15T08-41-11-987Z/reports/2026-08-15T08-45-11-279Z_spec_pass.json",
+      "requested_next_stage": "code",
+      "gate": "spec_to_code",
+      "reason": "Spec pass requires explicit approval before implementation starts.",
+      "risk_level": "critical",
+      "spec_gate": {
+        "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-15T08-41-11-987Z/spec.json",
+        "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-08-15T08-41-11-987Z/spec-check.json",
+        "council_file": "/home/rickebo/.codex/pipeline/runs/2026-08-15T08-41-11-987Z/council.json",
+        "checked_at": "2026-08-15T08:44:53.288Z"
+      }
+    },
+    {
+      "at": "2026-08-15T08:45:33.024Z",
+      "event": "approved_transition",
+      "stage": "spec",
+      "status": "pass",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-15T08-41-11-987Z/reports/2026-08-15T08-45-11-279Z_spec_pass.json",
+      "approver": "Codex manager",
+      "note": "User supplied explicit acceptance criteria; spec preserves all constraints.",
+      "next_stage": "code"
+    },
+    {
+      "at": "2026-08-15T09:24:15.014Z",
+      "event": "approval_required",
+      "stage": "code",
+      "status": "blocked",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-15T08-41-11-987Z/reports/2026-08-15T09-24-15-008Z_code_blocked.json",
+      "requested_next_stage": "code",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "spec_gate": null
+    }
+  ]
+}

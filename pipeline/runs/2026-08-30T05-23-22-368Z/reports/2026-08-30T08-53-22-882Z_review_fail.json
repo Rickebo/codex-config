@@ -1,0 +1,43 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Final-loop independent Luna review of PR #1293 head 4a840233 remains NO-GO: systemd directory enumeration is unbounded, and ancestor checks can race before fd-relative final opens. Direct tests pass, but generic discovery misses the hyphenated test file.",
+  "changed_files": [],
+  "validation": [
+    "Exact head 4a840233d2497b15a00a9a1872c797c64b862de5 reviewed against base efb9faac0606e02b7cac8e36e716f1ede9a50fb6.",
+    "All 20 direct tests passed under a 45-second timeout and no fixture scripts were executed.",
+    "unittest discover found zero tests because the test filename contains hyphens.",
+    "Exact-head Validate, guard, and ARC classifier pass; protected ARC producer remains queued."
+  ],
+  "blockers": [
+    "Iterate systemd directory entries with explicit entry-count and name-length bounds, avoiding list materialization and emitting sanitized deterministic overflow evidence.",
+    "Anchor the complete root-to-target ancestor chain with held directory descriptors or equivalent no-symlink resolution so ancestors cannot be swapped between trust checks and content opens.",
+    "Rename or wrap the test module so standard unittest discovery executes the verifier tests, while preserving explicit direct invocation."
+  ],
+  "next_action": "Use pipeline loop 6 for bounded inventory iteration, descriptor-anchored ancestor traversal, race tests, and discoverable test naming, then perform final independent review without exceeding the enforced loop budget.",
+  "route_to": "code",
+  "risk_level": "high",
+  "issues": [
+    {
+      "id": "REV-1290-020",
+      "title": "Systemd inventory enumeration is unbounded",
+      "severity": "high",
+      "details": "list(os.scandir()) allows large unrelated directories or names to consume unbounded memory/time before verification can produce evidence.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV-1290-021",
+      "title": "Ancestor trust checks can race before fd-relative opens",
+      "severity": "high",
+      "details": "Path-based lstat checks and later opens do not hold the validated ancestor chain; O_NOFOLLOW protects only the final component.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV-1290-022",
+      "title": "Verifier tests are not discoverable by standard unittest discovery",
+      "severity": "medium",
+      "details": "The hyphenated test filename yields zero discovered tests, risking CI configurations that silently skip coverage.",
+      "owner_stage": "code"
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+Issue #128: strengthen container smoke tests to reject placeholder artifacts and stale schemas in codicarium/agent-orchestrator

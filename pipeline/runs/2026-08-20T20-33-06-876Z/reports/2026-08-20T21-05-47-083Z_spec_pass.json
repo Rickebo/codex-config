@@ -1,0 +1,57 @@
+{
+  "stage": "spec",
+  "status": "pass",
+  "summary": "Spec and council pass completed for a security-gated homelab MetaMCP rollout with explicit environment isolation, secret handling, MCP discovery/tool-call proof, and ChatGPT OAuth readiness.",
+  "changed_files": [
+    "/home/rickebo/.codex/pipeline/runs/2026-08-20T20-33-06-876Z/spec.json",
+    "/home/rickebo/.codex/pipeline/runs/2026-08-20T20-33-06-876Z/council.json",
+    "/home/rickebo/.codex/pipeline/runs/2026-08-20T20-33-06-876Z/spec-check.json"
+  ],
+  "validation": [
+    "pipeline-spec-check returned ok=true with all quality gates true.",
+    "Council includes five independent perspectives.",
+    "Codicarium live reference verified on explicit codicarium-dev context: MetaMCP 2.4.22 and sanitized tool counts.",
+    "OpenAI documentation fetched for remote MCP HTTPS, OAuth discovery, PKCE S256, and ChatGPT connection requirements."
+  ],
+  "blockers": [
+    "Homelab kubeconfig default currently returns Unauthorized.",
+    "Codicarium live registry has no Loki or Tempo entries; authoritative implementations and targets are unresolved.",
+    "Homelab public MetaMCP hostname/DNS and Authentik client authority are unresolved.",
+    "Secure source for reusing the existing GitHub token is unresolved."
+  ],
+  "next_action": "Enter code stage only after resolving the target matrix and secret/cluster access prerequisites; keep changes isolated to a dedicated homelab worktree.",
+  "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T20-33-06-876Z/spec.json",
+  "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T20-33-06-876Z/spec-check.json",
+  "council_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T20-33-06-876Z/council.json",
+  "requires_council": true,
+  "independent_lanes": [
+    "Homelab GitOps release and secret-safe chart/ingress wiring",
+    "MetaMCP server registry and environment-target matrix",
+    "OAuth/ChatGPT protocol and end-to-end validation"
+  ],
+  "route_to": "code",
+  "risk_level": "critical",
+  "issues": [
+    {
+      "id": "BLOCK-HOMELAB-KUBE-AUTH",
+      "title": "Homelab Kubernetes credential unauthorized",
+      "severity": "critical",
+      "details": "Explicit default context reaches 192.168.1.89 but API requests return Unauthorized.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "BLOCK-OBSERVABILITY-SOURCE",
+      "title": "Loki and Tempo source definitions absent",
+      "severity": "high",
+      "details": "Current Codicarium MetaMCP DB contains Prometheus but no Loki or Tempo entries.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "BLOCK-HOMELAB-PUBLIC-OAUTH",
+      "title": "Homelab public hostname unresolved",
+      "severity": "high",
+      "details": "Configured random host does not resolve from this machine; ChatGPT requires stable HTTPS reachability.",
+      "owner_stage": "code"
+    }
+  ]
+}

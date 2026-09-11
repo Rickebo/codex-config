@@ -1,0 +1,25 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Independent exact-head review of #128 is NO-GO: migration completeness is self-derived, the resolved migration digest is ignored, interrupted Docker creation can leak resources, and OpenAPI parity can skip runtime source/errors.",
+  "changed_files": [],
+  "validation": [
+    "Review completed against 399e6f2b87adaf842bdc27f6e3afbb3e84870999",
+    "Exact-head QA passed local and Docker checks but confirmed hosted/final-image evidence is still pending"
+  ],
+  "blockers": [
+    "Smoke derives expected migrations from supplied files, so stale root/chart bundles can agree and pass.",
+    "Release resolves a migration image digest but final smoke runs a mutable/default database image instead.",
+    "SIGTERM during Docker network/container creation can occur before IDs are captured, defeating cleanup.",
+    "OpenAPI route parity recognizes only a narrow literal form and silently skips missing runtime source."
+  ],
+  "next_action": "Return to code for authoritative migration manifest, migration-image digest wiring, label-based interrupted-create cleanup, and fail-closed complete route parity; then repeat review and hosted QA.",
+  "route_to": "code",
+  "risk_level": "high",
+  "issues": [
+    {"id":"REV-128-1","title":"Authoritative complete migration manifest","severity":"high","details":"Dynamic file count/latest checks accept stale root and chart bundles when both omit the same migration.","owner_stage":"code"},
+    {"id":"REV-128-2","title":"Exercise resolved migration image digest","severity":"high","details":"Release smoke ignores the immutable migration image resolution and uses a mutable/default database image.","owner_stage":"code"},
+    {"id":"REV-128-3","title":"Recover resources interrupted during create","severity":"high","details":"SIGTERM before network/container IDs are assigned can leak resources; owner-label cleanup must recover them.","owner_stage":"code"},
+    {"id":"REV-128-4","title":"Fail-closed complete OpenAPI route parity","severity":"medium","details":"Narrow literal parsing and silent source-read skip allow routes/specs to drift.","owner_stage":"code"}
+  ]
+}

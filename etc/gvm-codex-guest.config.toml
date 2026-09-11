@@ -1,0 +1,11 @@
+model = "gpt-5.6-sol"
+model_reasoning_effort = "medium"
+model_verbosity = "low"
+approval_policy = "never"
+sandbox_mode = "danger-full-access"
+
+[projects."C:\\Users\\Rickebo"]
+trust_level = "trusted"
+
+[projects."C:\\"]
+trust_level = "trusted"

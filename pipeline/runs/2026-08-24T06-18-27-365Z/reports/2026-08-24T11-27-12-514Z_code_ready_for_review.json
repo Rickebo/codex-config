@@ -1,0 +1,16 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Added the required explicit root-cause documentation for the former tag-first flow. Also corrected snapshot accounting so the final review fingerprint includes all modified and untracked implementation files.",
+  "changed_files": [
+    "docs/releasing.md"
+  ],
+  "validation": [
+    "git diff --check: passed",
+    "planner tests: 10 passed",
+    "coordinator policy fixtures: passed",
+    "full changed/untracked content hash: 4cf8b48c0c96a35b8c43873193bfc3f2a4f6e58d40476d9f9c53e8c05269435d"
+  ],
+  "blockers": [],
+  "next_action": "Review the complete 16-file working snapshot, including new untracked workflow/planner/policy/docs files, then repeat tests and validation."
+}

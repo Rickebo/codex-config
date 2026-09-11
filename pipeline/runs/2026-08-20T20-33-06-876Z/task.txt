@@ -1,0 +1,1 @@
+Update homelab MetaMCP to the latest supported version, replicate the requested MCP servers with environment-correct targets and GitHub token handling, validate discovery/tool calls, and prepare OAuth for ChatGPT connectivity.

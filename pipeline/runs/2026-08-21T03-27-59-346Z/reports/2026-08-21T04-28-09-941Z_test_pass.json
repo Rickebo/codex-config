@@ -1,0 +1,23 @@
+{
+  "stage": "test",
+  "status": "pass",
+  "summary": "Fresh exact-head QA PASS for issue #132 with documentation checks, full CI, Helm, web, Docker, migration, and cleanup evidence.",
+  "changed_files": [],
+  "validation": [
+    "Exact SHA eecf1df77283b961733884dad6b8c13a3db5ae75",
+    "Documentation consistency tests 5/5",
+    "Operator quickstart tests 67/67",
+    "make docs-check",
+    "DOCKER_CONTEXT=default make ci IMAGE_TAG=issue-132-eecf",
+    "All four docs explicitly declare chart 0.1.29 matching deploy.yaml",
+    "Relative Markdown links 27 checked, 0 broken",
+    "No containers or owned migration resources remain",
+    "git diff --check"
+  ],
+  "blockers": ["No live DEV rollout/readback was performed; #4 acceptance and #28 DeploymentGrant evidence remain external."],
+  "next_action": "Advance to validation, publish exact head, run hosted checks, and retain honest live-rollout boundaries.",
+  "route_to": "validation",
+  "risk_level": "low",
+  "commit": "eecf1df77283b961733884dad6b8c13a3db5ae75",
+  "qa": "PASS"
+}

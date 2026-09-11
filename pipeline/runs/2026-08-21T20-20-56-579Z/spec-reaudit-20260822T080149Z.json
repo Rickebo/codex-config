@@ -1,0 +1,51 @@
+{
+  "generated_at": "2026-08-22T08:01:49Z",
+  "stage": "spec/preflight-reaudit",
+  "status": "blocked",
+  "source": {
+    "kubeconfig": "/home/rickebo/.kube/codicarium-dev.yaml",
+    "context": "codicarium-dev",
+    "backup_endpoints": {
+      "workspace_context": "2026-08-22T02:17:15Z",
+      "llm_proxy": "2026-08-22T02:47:13Z"
+    },
+    "wal_status": "ObjectStore/Barman status healthy, but no shared logical/WAL cutoff across distinct clusters is proven",
+    "artifact_status": "No current sanitized manifest proves object existence and SHA for referenced graph artifacts",
+    "mutation_status": "No Secret data, payloads, jobs, exec, export, restore, apply, patch, or restart used"
+  },
+  "target": {
+    "kubeconfig": "/home/rickebo/.kube/homelab.yaml",
+    "context": "default",
+    "longhorn": {
+      "default_disk_free_gib_approx": 74,
+      "scheduled_gib_approx": 180,
+      "data_disk": "NotReady with zero usable capacity",
+      "backup_target": "25 completed backups at 100%; no target-only restore evidence"
+    },
+    "rwx": {
+      "available_pv": "none at or above 100Gi",
+      "large_bound_pvs": "1Ti and 900Gi, RWX, Retain, static NFS nfs-servarr, bound to existing Kopia/shared-media workloads",
+      "dynamic_class": "longhorn-rwx exists but current capacity is unsafe",
+      "disposition": "do not attach, mount, reuse, or alter existing volumes"
+    },
+    "identity": {
+      "bitwarden": "ClusterSecretStore Ready",
+      "oidc_secret_store": "Ready=False; llm-proxy-oidc-reader ServiceAccount missing despite Role/RoleBinding metadata",
+      "worker": "pods Ready; one pod has 39 restarts",
+      "other_health": "servarr OutOfSync; sure Progressing"
+    },
+    "mutation_status": "No target mutation performed"
+  },
+  "hard_gates": [
+    "provider-side read-only Barman/S3 metadata needed for shared cutoff and artifact SHA closure",
+    "dedicated target-owned artifact storage with capacity, retention, off-node backup, and restore proof",
+    "target-only OIDC/secret/RBAC decision and remediation through GitOps",
+    "separate review of two incidental secret-adjacent output incidents; no values are included here"
+  ],
+  "issues": [
+    "https://github.com/Rickebo/pve-infra/issues/482",
+    "https://github.com/Rickebo/pve-infra/issues/483",
+    "https://github.com/Rickebo/pve-infra/issues/489"
+  ],
+  "pipeline": "Remain at spec; no code, restore, deployment, Argo sync, or local Codex switch authorized."
+}

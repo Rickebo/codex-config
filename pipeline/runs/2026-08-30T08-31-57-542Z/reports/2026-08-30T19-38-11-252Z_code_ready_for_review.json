@@ -1,0 +1,86 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "PR #310 head 3e6ebed remediates all second-review findings: production database/init safety, workload hardening, Nexus pulls, exact image admission, proxy DNS/monitoring ownership, and exact-SHA cutover controls are now tested and pushed.",
+  "changed_files": [
+    "charts/lc-prod-workload-runtime/templates/**",
+    "charts/lobby/templates/**",
+    "charts/lobby/values.yaml",
+    "charts/luckperms-postgres/.helmignore",
+    "charts/luckperms-postgres/resources/postgres-auth.yaml",
+    "charts/luckperms-postgres/templates/**",
+    "charts/luckperms-postgres/tests/**",
+    "charts/luckperms-postgres/values.yaml",
+    "charts/orchestrator-api-prod/.helmignore",
+    "charts/orchestrator-api-prod/resources/**",
+    "charts/orchestrator-api-prod/templates/database-initializer-job.yaml",
+    "charts/orchestrator-api-prod/tests/**",
+    "charts/orchestrator-api-prod/values.yaml",
+    "charts/proxy/**",
+    "docs/deployment-controller-prod.md",
+    "docs/secrets.yaml",
+    "scripts/tests/test-deployment-controller-prod.sh",
+    "scripts/validate-deployment-controller-prod.py"
+  ],
+  "validation": [
+    "Focused TDD assertions failed on the original PDB/readiness, security, registry, admission, DNS, monitoring, and token-mount gaps, then passed after remediation.",
+    "Full deployment-controller positive/negative suite and direct validator passed for all eight controller mappings.",
+    "PostgreSQL and API chart-local render-contract suites passed 3/3 each and are invoked by the shared full gate.",
+    "Strict Helm lint and render passed for all eight production/offline mappings.",
+    "Cleanup, Docker cleanup tracking, zero-trust, dev/prod model, release, retirement, namespace, and explicit-bridge checks passed.",
+    "Actionlint, Ruff, Python/Bash syntax, YAML parsing, immutable-image/plaintext-secret audit, and git diff checks passed.",
+    "Graphify refreshed from the worktree root to 385 nodes, 528 edges, and 84 communities.",
+    "Commit 3e6ebed709bc0dc1e60fda968b7dbf9ef7526073 was pushed normally; local and remote heads match and the worktree is clean.",
+    "Both new GitHub checks again ran zero steps and carry the exact billing/spending annotation tracked by platform#177."
+  ],
+  "blockers": [
+    "GitHub Actions cannot start because of the external account billing/spending block in codicarium/platform#177; genuine required-check evidence is unavailable."
+  ],
+  "next_action": "Independently review exact PR head 3e6ebed for complete remediation, controller materialization, runtime security, database safety, and test adequacy before advancing to QA.",
+  "requires_council": false,
+  "independent_lanes": [
+    "controller materialization and cutover ownership",
+    "runtime, registry, admission, and service-account security",
+    "PostgreSQL/API initialization and credential safety",
+    "test and production-operations adequacy"
+  ],
+  "risk_level": "critical",
+  "issues": [
+    {
+      "id": "EXT-INFRA-1296",
+      "title": "Dedicated Kata-capable LC production nodes are external",
+      "severity": "critical",
+      "details": "Tracked in codicarium/infra#1296; no infrastructure implementation is authorized here.",
+      "owner_stage": "validation"
+    },
+    {
+      "id": "EXT-INFRA-1298",
+      "title": "Explicit codicarium-prod kube context is external",
+      "severity": "critical",
+      "details": "Tracked in codicarium/infra#1298; no live validation may use an ambiguous default context.",
+      "owner_stage": "validation"
+    },
+    {
+      "id": "EXT-PLATFORM-169",
+      "title": "Controller grant, RuntimeClass, certificates, and resource allowlist are external",
+      "severity": "critical",
+      "details": "Tracked in codicarium/platform#169, including DNSEndpoint and PodMonitor allowlisting; no platform implementation is authorized here.",
+      "owner_stage": "validation"
+    },
+    {
+      "id": "EXT-APPCONFIG-728",
+      "title": "Legacy LC Argo owner retirement is external",
+      "severity": "high",
+      "details": "Tracked in codicarium/app-config#728; controller activation must not overlap legacy ownership.",
+      "owner_stage": "validation"
+    },
+    {
+      "id": "EXT-PLATFORM-177",
+      "title": "GitHub Actions billing prevents required checks from starting",
+      "severity": "high",
+      "details": "Tracked in codicarium/platform#177; both current PR jobs contain no steps and the account billing annotation.",
+      "owner_stage": "test"
+    }
+  ],
+  "route_to": "review"
+}

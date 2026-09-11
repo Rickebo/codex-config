@@ -1,0 +1,18 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Independent review found a critical workflow-trigger mismatch in retained evidence, a legacy recovery regression, an unauthenticated manual-dispatch bypass of the allocator, and missing per-tag publisher serialization.",
+  "changed_files": [],
+  "validation": [
+    "Reviewed HEAD 989799cc99a4e9577bfd100dde320a71f7e7fb9f",
+    "Reviewed diff SHA-256 68a9ce122038db59f6e6b1f9f3c6ef9c8bd2483e630e2570c90a600b84d5199c"
+  ],
+  "blockers": [
+    "publisher-subject-evidence.py still requires push and rejects workflow_dispatch provenance",
+    "global provenance trigger change breaks historical recovery verification",
+    "manual Release Verify dispatch is not cryptographically/API-bound to Automatic Release allocation",
+    "Publish Release lacks non-canceling per-tag concurrency"
+  ],
+  "next_action": "Return to code to authenticate coordinator requests, preserve legacy recovery policy, align retained evidence, and serialize publication.",
+  "route_to": "code"
+}

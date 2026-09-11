@@ -1,0 +1,59 @@
+{
+  "generated_at": "2026-08-21T21:41:26Z",
+  "run_dir": "/home/rickebo/.codex/pipeline/runs/2026-08-21T20-20-56-579Z",
+  "stage": "spec/preflight-reaudit",
+  "status": "blocked",
+  "source_backup": {
+    "workspace_context": {
+      "backup_id": "20260821T021700",
+      "end": "2026-08-21T02:17:14Z",
+      "end_lsn": "26/2000158"
+    },
+    "llm_proxy": {
+      "backup_id": "20260821T024700",
+      "end": "2026-08-21T02:47:22Z",
+      "end_lsn": "2D/35098100"
+    },
+    "candidate_cutoff": "2026-08-21T02:47:22Z",
+    "database_revision_closure": "1,353 Workspace Context revisions; valid SHA-256 formatting and no missing joins/duplicate keys observed",
+    "wal_status": "blocked: Kubernetes metadata does not prove every WAL object between the two backups; historical proxy archive failure requires cloud-side read-only listing"
+  },
+  "published_source_contract": {
+    "config_repository": "codicarium/workspace-context-config@984c2d911920fdad1d7db674a2411cbef55ccf78",
+    "application_repository": "codicarium/workspace-context@399fb2a8039436ca5097933583c94c374b5f9984",
+    "artifact_backend": "S3 is supported by the published chart and runtime",
+    "source_artifact_endpoint": "https://s3.sbg.io.cloud.ovh.net",
+    "source_artifact_bucket": "codicarium-dev-workspace-context-artifacts",
+    "source_artifact_region": "sbg",
+    "target_requirement": "Use a distinct homelab-owned bucket/credentials or a proven target filesystem backend; never reuse source bucket credentials",
+    "credential_contract": "separate builder, reader, and GC S3 credentials are supported through ExternalSecrets",
+    "filesystem_fallback": "published chart requires a 100Gi RWX filesystem claim when backend=filesystem",
+    "application_code_change": "not indicated by the published chart contract"
+  },
+  "target_storage": {
+    "kubeconfig": "/home/rickebo/.kube/homelab.yaml",
+    "context": "default",
+    "longhorn_free_gib_approx": 75.7,
+    "longhorn_scheduled_gib_approx": 180,
+    "additional_disk": "NotReady due filesystem/UUID mismatch",
+    "rwx_proven": "only 10Gi; no healthy >=100Gi target-owned RWX path",
+    "nfs": "all existing NFS RWX PVs are bound; no Available PV for this clone",
+    "object_store": "no target-owned artifact bucket/path or restore drill evidenced",
+    "backup_target": "available=true/Unavailable=False; recent backups exist but none cover retained llm-proxy volumes"
+  },
+  "target_identity": {
+    "bitwarden_cluster_store": "Ready",
+    "authentik_oidc_secret_store": "Ready=False; required ServiceAccount/Role/RoleBinding absent",
+    "oidc_discovery": "works for target client llm-proxy-homelab with strict /auth/callback and openid email profile groups",
+    "current_mapping": "includes codicarium-users; target-only restriction/approval required",
+    "safe_default": "fresh target Data Protection material, backend credential recreation, fresh ChatGPT authentication, and new MCP/gateway keys"
+  },
+  "hard_gates": [
+    "obtain ephemeral read-only Barman/S3 metadata access or equivalent sanitized WAL/object evidence",
+    "choose and prove target-owned artifact storage with >=100Gi recoverability, retention, off-node backup, and restore test",
+    "approve target-only OIDC mapping and secret/RBAC path",
+    "choose fresh target-only Data Protection/backend/runtime/key recreation or explicitly approve secret-to-secret preservation",
+    "document retained ownerless PVCs as preserve/ignore until provenance and backup evidence exists"
+  ],
+  "no_mutation": "No Codicarium mutation, source export, restore, apply, restart, Argo sync, target clone resource creation, or local Codex switch occurred."
+}

@@ -1,0 +1,244 @@
+[
+  {
+    "schema": "codicarium.gate-001-evidence/v1",
+    "gate_id": "GATE-001",
+    "evidence_class": "synthetic",
+    "publication_authority": false,
+    "observed_at": "2026-08-25T22:30:00Z",
+    "result": "PASS",
+    "command_outputs": [
+      {
+        "command_id": "CMD-001-REPOSITORY-READ",
+        "sha256": "6f2ae3859d39d08bc071bb712273a6850aa6de7254d53b6805e4c8337f80527c"
+      }
+    ]
+  },
+  {
+    "schema": "codicarium.gate-002-evidence/v1",
+    "gate_id": "GATE-002",
+    "evidence_class": "synthetic",
+    "publication_authority": false,
+    "observed_at": "2026-08-25T22:30:00Z",
+    "result": "PASS",
+    "command_outputs": [
+      {
+        "command_id": "CMD-002-BASELINE-READ",
+        "sha256": "c2047c336a79ead1d48c81a4b4424901f9d557e6c7893a1f454c9926216be65a"
+      }
+    ]
+  },
+  {
+    "schema": "codicarium.gate-003-evidence/v1",
+    "gate_id": "GATE-003",
+    "evidence_class": "synthetic",
+    "publication_authority": false,
+    "observed_at": "2026-08-25T22:30:00Z",
+    "result": "PASS",
+    "command_outputs": [
+      {
+        "command_id": "CMD-003-NAMESPACE-READ",
+        "sha256": "5a758525dca4fb218a5adc9ada354f53e414ba97edade2a9e1143ece0fa2d484"
+      },
+      {
+        "command_id": "CMD-004-ADMISSION-READ",
+        "sha256": "75b91806b33f80dac7b07f4de49e9d84a86fdda88960aaccbfe79efef1558f48"
+      }
+    ]
+  },
+  {
+    "schema": "codicarium.gate-004-evidence/v1",
+    "gate_id": "GATE-004",
+    "evidence_class": "synthetic",
+    "publication_authority": false,
+    "observed_at": "2026-08-25T22:30:00Z",
+    "result": "PASS",
+    "command_outputs": [
+      {
+        "command_id": "CMD-005-VAULT-READ",
+        "sha256": "2bb7b4c01d4b916a08ca9bc950a58169c32a677d69b3ee0db23a55a2fb08c3ad"
+      }
+    ]
+  },
+  {
+    "schema": "codicarium.gate-005-evidence/v1",
+    "gate_id": "GATE-005",
+    "evidence_class": "synthetic",
+    "publication_authority": false,
+    "observed_at": "2026-08-25T22:30:00Z",
+    "result": "PASS",
+    "command_outputs": [
+      {
+        "command_id": "CMD-006-CNPG-READ",
+        "sha256": "7f90080825ee90b36ce3e4e4712e3cf20475bba94e4c04fcacc7ef3f4e2cc15b"
+      },
+      {
+        "command_id": "CMD-007-SECRET-METADATA-READ",
+        "sha256": "7c4ffbdc69d72317191fad95cadc0abbde109720667d31c94d3f5c42db435ad4"
+      },
+      {
+        "command_id": "CMD-008-POSTGRES-TLS-RBAC",
+        "sha256": "b40f62b60eef81a8559aba5de9907f4420885f51062c74ce019f877a0cbf7612"
+      }
+    ]
+  },
+  {
+    "schema": "codicarium.gate-006-evidence/v1",
+    "gate_id": "GATE-006",
+    "evidence_class": "synthetic",
+    "publication_authority": false,
+    "observed_at": "2026-08-25T22:30:00Z",
+    "result": "PASS",
+    "command_outputs": [
+      {
+        "command_id": "CMD-009-NODE-LOSS",
+        "sha256": "a33b8d2111218bee1fb6e429f36a4ca694dfbb7768c95969a35b27f2ea17a235"
+      }
+    ]
+  },
+  {
+    "schema": "codicarium.gate-007-evidence/v1",
+    "gate_id": "GATE-007",
+    "evidence_class": "synthetic",
+    "publication_authority": false,
+    "observed_at": "2026-08-25T22:30:00Z",
+    "result": "PASS",
+    "command_outputs": [
+      {
+        "command_id": "CMD-010-NETWORK-VERIFY",
+        "sha256": "6045cc5a9ba3736cbcd49595e0ed13c1829f0fc9a5e4a7dc1c843c51346968d1"
+      }
+    ]
+  },
+  {
+    "schema": "codicarium.gate-008-evidence/v1",
+    "gate_id": "GATE-008",
+    "evidence_class": "synthetic",
+    "publication_authority": false,
+    "observed_at": "2026-08-25T22:30:00Z",
+    "result": "PASS",
+    "command_outputs": [
+      {
+        "command_id": "CMD-011-INDEPENDENT-READBACK",
+        "sha256": "b7b185a55feda8c6831a126fa1f78c92237ee15f9179469fcada57f27c2e8dc6"
+      }
+    ]
+  },
+  {
+    "schema": "codicarium.gate-009-evidence/v1",
+    "gate_id": "GATE-009",
+    "evidence_class": "synthetic",
+    "publication_authority": false,
+    "observed_at": "2026-08-25T22:30:00Z",
+    "result": "PASS",
+    "command_outputs": [
+      {
+        "command_id": "CMD-012-EPOCH-CAS",
+        "sha256": "7832f2e04c45bf284ad64d533eb0e2b8a44c91062ff64c27f60872016b8229aa"
+      }
+    ]
+  },
+  {
+    "schema": "codicarium.gate-010-evidence/v1",
+    "gate_id": "GATE-010",
+    "evidence_class": "synthetic",
+    "publication_authority": false,
+    "observed_at": "2026-08-25T22:30:00Z",
+    "result": "PASS",
+    "command_outputs": [
+      {
+        "command_id": "CMD-002-BASELINE-READ",
+        "sha256": "c2047c336a79ead1d48c81a4b4424901f9d557e6c7893a1f454c9926216be65a"
+      },
+      {
+        "command_id": "CMD-003-NAMESPACE-READ",
+        "sha256": "5a758525dca4fb218a5adc9ada354f53e414ba97edade2a9e1143ece0fa2d484"
+      }
+    ]
+  },
+  {
+    "schema": "codicarium.gate-011-evidence/v1",
+    "gate_id": "GATE-011",
+    "evidence_class": "synthetic",
+    "publication_authority": false,
+    "observed_at": "2026-08-25T22:30:00Z",
+    "result": "PASS",
+    "command_outputs": [
+      {
+        "command_id": "CMD-013-LEGACY-RUNS-READ",
+        "sha256": "0f3c2ee8e1b82b6c401d65c0bad0f2bd72c1af47a5d16e746dd684b36b3b41eb"
+      },
+      {
+        "command_id": "CMD-014-LEGACY-RUN-CANCEL",
+        "sha256": "09423f59b15808e728eba0c1e872b80409d4de98a5a5ec80cca4bfbb665dc0e0"
+      },
+      {
+        "command_id": "CMD-015-QUIESCENCE-READ",
+        "sha256": "27161661aee878147276f86098e88c708b229bd975311c13fb8a61ccdfed4aed"
+      }
+    ]
+  },
+  {
+    "schema": "codicarium.gate-012-evidence/v1",
+    "gate_id": "GATE-012",
+    "evidence_class": "synthetic",
+    "publication_authority": false,
+    "observed_at": "2026-08-25T22:30:00Z",
+    "result": "PASS",
+    "command_outputs": [
+      {
+        "command_id": "CMD-016-ARCHIVE-VERIFY",
+        "sha256": "ebb1d9a09a1a681d86316f3a3cd55a0900456a5933135d5363078dfdff3f55da"
+      },
+      {
+        "command_id": "CMD-017-REPLAY-VERIFY",
+        "sha256": "ecdfa15af7fecc9f710a6534a7b8c8ab0919424edef72a44e394ed37c3ca478b"
+      }
+    ]
+  },
+  {
+    "schema": "codicarium.gate-013-evidence/v1",
+    "gate_id": "GATE-013",
+    "evidence_class": "synthetic",
+    "publication_authority": false,
+    "observed_at": "2026-08-25T22:30:00Z",
+    "result": "PASS",
+    "command_outputs": [
+      {
+        "command_id": "CMD-018-CHECKS-READ",
+        "sha256": "61c41a59a71707154a31427cf61c67d8b7c70b991b7d271ab3da73b234792134"
+      }
+    ]
+  },
+  {
+    "schema": "codicarium.gate-014-evidence/v1",
+    "gate_id": "GATE-014",
+    "evidence_class": "synthetic",
+    "publication_authority": false,
+    "observed_at": "2026-08-25T22:30:00Z",
+    "result": "PASS",
+    "command_outputs": [
+      {
+        "command_id": "CMD-019-RELEASE-READBACK",
+        "sha256": "f54322de313479c83452b6d0f7c4515d9816ffa06d3c1f594165d8e01f24a701"
+      },
+      {
+        "command_id": "CMD-011-INDEPENDENT-READBACK",
+        "sha256": "b7b185a55feda8c6831a126fa1f78c92237ee15f9179469fcada57f27c2e8dc6"
+      }
+    ]
+  },
+  {
+    "schema": "codicarium.gate-015-evidence/v1",
+    "gate_id": "GATE-015",
+    "evidence_class": "synthetic",
+    "publication_authority": false,
+    "observed_at": "2026-08-25T22:30:00Z",
+    "result": "PASS",
+    "command_outputs": [
+      {
+        "command_id": "CMD-020-GATE-AGGREGATE",
+        "sha256": "7918e8cb91c6805335298326c727c6bc6e8657f654d84fff6264d5d1c6c830aa"
+      }
+    ]
+  }
+]

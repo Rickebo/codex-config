@@ -1,0 +1,42 @@
+{
+  "schema": "codicarium.base-command/v2.4",
+  "target_before": {
+    "repository_id": "repo-deployment-controller",
+    "repository": "codicarium/deployment-controller",
+    "ref": "refs/tags/NEXT_SEMVER",
+    "target_uid": "release-target-v2.4"
+  },
+  "payload": {
+    "command_id": "cmd.publish.tag",
+    "signer_kind": "offline_fixture",
+    "authority": false,
+    "nonce": "nonce-positive-v2.4",
+    "issued_at": "2026-08-26T12:00:00Z",
+    "schema_id": "payload.v2.4",
+    "target_digest": "79f2022b31c75535fdc0d915fa59cca54b185e597e88f9670d82b329d349e232",
+    "argv": [
+      "codex-v2.4",
+      "publish",
+      "tag"
+    ],
+    "signature": "RKZ2X47gJUEzY0g5YHy+WguP05Q3OAbMmqV/65p+IsKlK4aoQXgf/+NUyV1QJQS4h8VEgFfdM6Qm4+Z/G+l1DQ==",
+    "record_hash": "fa9cce3e4878068b9d64d59e64673ee1804b56b394abc80e977a70a8f9e63c2d",
+    "sequence": 1,
+    "previous_hash": "GENESIS-v2.4",
+    "identity": "offline.fixture.writer",
+    "approval_ttl_seconds": 600,
+    "credential_use": false,
+    "fsm_transition": "X41->M01",
+    "app_config_scope": "bootstrap-wiring-only",
+    "release_version": "NEXT_SEMVER",
+    "asset_media_type": "application/json",
+    "asset_source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "destination_binding": "github://codicarium/deployment-controller/releases/NEXT_SEMVER",
+    "revoked": false,
+    "live_evidence": false,
+    "allowed_transitions": [
+      "X41->M01"
+    ]
+  },
+  "public_key": "MCowBQYDK2VwAyEAA6EHv/POEL4dcN0Y50vAmWfk1jCbpQ1fHdyGZBJVMbg="
+}

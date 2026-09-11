@@ -1,0 +1,1 @@
+Move the Codex Stats Grafana dashboard into its published Helm chart, add selected-range hourly 5h/1w quota burn visualization beside daily burn, release, promote through pve-infra, and verify live

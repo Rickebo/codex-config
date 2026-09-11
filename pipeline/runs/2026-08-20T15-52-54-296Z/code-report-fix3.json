@@ -1,0 +1,25 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Final checker hardening is pushed at 4b1a448: release jobs are exact and quoted/indirect make targets fail closed.",
+  "changed_files": [
+    "tools/workflowtrust/main.go",
+    "tools/workflowtrust/main_test.go"
+  ],
+  "validation": [
+    "commit 4b1a448 pushed and worktree clean",
+    "make ci-pr and make ci passed",
+    "Go tests/vet, actionlint, workflow parser, trust checker, and git diff --check passed"
+  ],
+  "blockers": [
+    "External dedicated release runner provisioning, fork canary, VM teardown, cleanup, Docker isolation, and egress evidence remain required before issue closure."
+  ],
+  "next_action": "Complete exact-head review, then advance to independent QA.",
+  "route_to": "review",
+  "risk_level": "critical",
+  "independent_lanes": [
+    "Quoted/indirect command rejection",
+    "Exact release job set"
+  ],
+  "requires_council": true
+}

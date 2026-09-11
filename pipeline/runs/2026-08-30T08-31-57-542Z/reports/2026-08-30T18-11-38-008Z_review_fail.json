@@ -1,0 +1,127 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Independent review of PR #310 at 0d4e2ea found application-owned production gaps in database availability and initialization, workload hardening, private-registry pulls, image admission, DNS/monitoring ownership, and cutover documentation.",
+  "changed_files": [],
+  "validation": [
+    "Controller-materialization review checked all eight PathHelm mappings and rendered companion-resource ownership.",
+    "Runtime-security review checked Kata workload paths, admission expressions, registry authentication, and service-account token exposure.",
+    "PostgreSQL/operations review checked persistence, disruption behavior, initialization readiness, credentials, and rollback documentation.",
+    "Production-operations review checked sync ordering, legacy-owner retirement, DNS continuity, exact-SHA activation, and image immutability.",
+    "All reviews targeted exact PR head 0d4e2ea3fac6dc6aba7dce368b49a4134f7a3f58 without cluster access or repository mutation.",
+    "Production images were confirmed digest-pinned; no tag-only or dev image was found."
+  ],
+  "blockers": [
+    "Single-replica PostgreSQL can be voluntarily evicted, and its readiness probe never checks the initialization marker.",
+    "API and initializer security contexts are unenforced; the initializer also receives an unrelated token and can run before prerequisites.",
+    "Cleanup and lobby workloads use private Nexus images without rendered image-pull-secret wiring.",
+    "Generated-server admission accepts malformed or non-Nexus image references containing only the sha256 substring.",
+    "Proxy service accounts unnecessarily automount Kubernetes API tokens.",
+    "Public minecraft.codicarium.com DNS is omitted from controller materialization and would be lost when the legacy owner retires.",
+    "Proxy metrics sidecar remains enabled while its PodMonitor is explicitly excluded from controller materialization.",
+    "Cutover docs omit exact-SHA activation checks and complete PostgreSQL secret lifecycle contracts."
+  ],
+  "next_action": "Return to code; remediate all application-owned findings in lc-config, extend negative and render tests, then rerun the full validation matrix before a new independent review.",
+  "requires_council": false,
+  "independent_lanes": [
+    "controller resource materialization and ownership continuity",
+    "runtime security, registry authentication, and admission",
+    "PostgreSQL availability, initialization, and credential scope",
+    "production cutover ordering, observability, and documentation"
+  ],
+  "risk_level": "critical",
+  "issues": [
+    {
+      "id": "REV2-P1-PG-PDB",
+      "title": "Single-replica PostgreSQL PDB permits total voluntary disruption",
+      "severity": "critical",
+      "details": "replicaCount 1 with maxUnavailable 1 permits eviction of the only LuckPerms PostgreSQL pod.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV2-P1-API-SECURITY",
+      "title": "API and initializer lack enforced pod/container security contexts",
+      "severity": "critical",
+      "details": "Empty contexts allow image-default root execution, privilege escalation, capabilities, and non-default seccomp behavior.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV2-P1-PG-READY",
+      "title": "PostgreSQL readiness never evaluates its initialization marker",
+      "severity": "high",
+      "details": "exec pg_isready replaces the shell before the marker test and can expose an incompletely initialized database as Ready.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV2-P2-INIT-SECRETS",
+      "title": "Database initializer receives unrelated API token secret",
+      "severity": "high",
+      "details": "Shared envFrom exposes orchestrator-api-internal-token to a database-only Job.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV2-P1-INIT-ORDER",
+      "title": "Initializer hook can run before its service account and secrets",
+      "severity": "critical",
+      "details": "The hook runs at wave -5 while embedded prerequisites default to wave 0, so a fresh sync can fail before the Job starts.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV2-P1-CLEANUP-PULL",
+      "title": "Cleanup CronJob lacks Nexus image-pull credentials",
+      "severity": "critical",
+      "details": "The controller-rendered cleanup Job pulls a private Nexus kubectl image without referencing regcred.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV2-P1-LOBBY-PULL",
+      "title": "Lobby and admin bootstrap lack Nexus image-pull credentials",
+      "severity": "critical",
+      "details": "Production and offline lobby workloads render private Nexus images without an ExternalSecret or imagePullSecrets reference.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV2-P1-IMAGE-ADMISSION",
+      "title": "Generated-server image admission accepts malformed references",
+      "severity": "critical",
+      "details": "A contains(@sha256:) check does not enforce Nexus repository, tag, or a 64-character lowercase digest for regular, init, and ephemeral containers.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV2-P2-PROXY-TOKEN",
+      "title": "Proxy service accounts automount unused Kubernetes API tokens",
+      "severity": "medium",
+      "details": "Public and offline proxy pods need no Kubernetes API access but receive default service-account tokens.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV2-P1-DNS-OWNER",
+      "title": "Controller materialization omits public Minecraft DNS ownership",
+      "severity": "critical",
+      "details": "The public DNSEndpoint remains legacy-owned and can disappear when that owner is retired.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV2-P2-PODMONITOR",
+      "title": "Controller materialization omits proxy metrics scraping",
+      "severity": "medium",
+      "details": "The mc-monitor sidecar remains enabled while PodMonitor is explicitly forbidden from the rendered production profile.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV2-P2-SECRET-DOCS",
+      "title": "PostgreSQL secret lifecycle contracts are undocumented",
+      "severity": "medium",
+      "details": "docs/secrets.yaml omits owners, sources, target keys, rotation, and retention behavior for both newly introduced PostgreSQL secret contracts.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV2-P2-SHA-CUTOVER",
+      "title": "Controller activation procedure does not enforce the exact reviewed SHA",
+      "severity": "high",
+      "details": "The prepare/activate runbook must verify the grant and descriptor against the exact reviewed commit before legacy-owner retirement.",
+      "owner_stage": "code"
+    }
+  ],
+  "route_to": "code"
+}

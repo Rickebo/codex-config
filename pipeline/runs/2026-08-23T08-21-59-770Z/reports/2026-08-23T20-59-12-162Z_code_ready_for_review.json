@@ -1,0 +1,30 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Implemented the approved producer-only runner source and current-topology activation contract. runner-config PR #78 merged at verified protected-main SHA 70f6508b. Infra commit b25cf66 pins that SHA and adds a guarded v0.6.8-only PrepareActivation/Activate workflow without dispatching it.",
+  "changed_files": [
+    ".github/workflows/runner-config-producer-activation.yml",
+    "platform/deployment-controller/README.md",
+    "platform/deployment-controller/runner-config-producer-activation.json",
+    "platform/deployment-controller/scripts/runner-config-producer-activation.py",
+    "tests/test-deployment-controller-runner-producer-activation.py"
+  ],
+  "validation": [
+    "runner-config PR #78 exact head f39b893 passed four GitHub checks and merged as verified protected-main 70f6508",
+    "infra focused activation suite passed 15 tests",
+    "infra Python bytecode compilation passed",
+    "Ruff passed",
+    "Actionlint passed",
+    "git diff --check passed; infra worktree is clean at b25cf66"
+  ],
+  "blockers": [],
+  "next_action": "Independently review infra b25cf66 for authority, replay, TOCTOU, credential, exact-version, and dry-run safety before any push or workflow dispatch.",
+  "route_to": "review",
+  "risk_level": "critical",
+  "independent_lanes": [
+    "runner-config producer-only source contract",
+    "infra protected activation workflow",
+    "deployment-controller v0.6.8 predecessor migration contract"
+  ],
+  "requires_council": true
+}

@@ -1,0 +1,1 @@
+Create Rickebo-owned kafka-config and kafka-acls repositories; deploy Redpanda/Kafka on the explicitly selected homelab cluster; integrate local Kafka topics, TLS, and ACLs with the Rickebo-owned Deployment Controller; eliminate cross-organization Kafka repository dependencies; validate the Deployment Controller and runner-config path.

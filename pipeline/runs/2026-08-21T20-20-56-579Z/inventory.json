@@ -1,0 +1,148 @@
+{
+  "generated_at": "2026-08-21T20:20:56.579Z",
+  "stage": "spec/preflight",
+  "status": "blocked",
+  "worktree": {
+    "repository": "Rickebo/pve-infra",
+    "path": "/home/rickebo/.worktrees/pve-infra-homelab-workspace-context-llm-proxy",
+    "branch": "codex/homelab-workspace-context-llm-proxy",
+    "base_commit": "f039009a3cb700b814b4f3d5e942256bc7ec1e60",
+    "base_source": "explicit fetch origin main and ls-remote matched",
+    "dirty_base_preserved": true,
+    "generated_checkout_changes": [
+      "graphify-out/GRAPH_REPORT.md",
+      "graphify-out/graph.html",
+      "graphify-out/graph.json"
+    ]
+  },
+  "github": {
+    "authenticated_account": "Rickebo",
+    "repository": "Rickebo/pve-infra",
+    "default_branch": "main",
+    "remote_head": "f039009a3cb700b814b4f3d5e942256bc7ec1e60",
+    "issues": [
+      {
+        "number": 482,
+        "role": "parent",
+        "url": "https://github.com/Rickebo/pve-infra/issues/482"
+      },
+      {
+        "number": 483,
+        "role": "source-target-inventory",
+        "url": "https://github.com/Rickebo/pve-infra/issues/483"
+      }
+    ]
+  },
+  "source": {
+    "kubeconfig": "/home/rickebo/.kube/codicarium-dev.yaml",
+    "context": "codicarium-dev",
+    "api_server": "https://10.99.0.21:6443",
+    "version": "v1.31.14+k3s1",
+    "applications": [
+      {
+        "name": "dev-workspace-context",
+        "sync": "Synced",
+        "health": "Healthy"
+      },
+      {
+        "name": "dev-llm-proxy",
+        "sync": "Synced",
+        "health": "Healthy"
+      }
+    ],
+    "workspace_context": {
+      "chart": "workspace-context-0.1.172-r.1",
+      "image_revision": "sha-399fb2a8039436ca5097933583c94c374b5f9984",
+      "postgres": "CNPG 18.4, 10Gi, backups completed through 2026-08-21",
+      "artifact_pvc": "workspace-context-artifacts, cephfs, RWX, 100Gi, not independently backed up"
+    },
+    "llm_proxy": {
+      "chart": "llm-proxy-0.5.108-r.1",
+      "image_revision": "sha-96f1f461d3275c1df0f796e29cfa70f4551e53e1",
+      "postgres": "CNPG 18.4, 10Gi, backups completed through 2026-08-21",
+      "runtime_pvcs": [
+        "llm-proxy-chatmock-397f6092327a493fa9ec7293",
+        "llm-proxy-chatmock-436f059eec9f4bd1a4f99a25"
+      ]
+    },
+    "source_mutation_status": "No source mutation commands issued by this run."
+  },
+  "target": {
+    "kubeconfig": "/home/rickebo/.kube/homelab.yaml",
+    "context": "default",
+    "api_server": "https://192.168.1.89:6443",
+    "version": "v1.36.3+k3s1",
+    "nodes": [
+      {
+        "name": "node1",
+        "ready": true,
+        "cpu": "12",
+        "memory": "32871476Ki"
+      },
+      {
+        "name": "rickebo",
+        "ready": true,
+        "cpu": "16",
+        "memory": "63417864Ki"
+      }
+    ],
+    "storage_classes": [
+      {
+        "name": "longhorn",
+        "reclaim": "Delete"
+      },
+      {
+        "name": "longhorn-rwx",
+        "reclaim": "Delete"
+      },
+      {
+        "name": "longhorn-backup",
+        "reclaim": "Retain"
+      },
+      {
+        "name": "nfs-cluster-backup",
+        "reclaim": "Retain"
+      }
+    ],
+    "retained_llm_proxy_pvcs": [
+      {
+        "name": "llm-proxy-database-backups",
+        "capacity": "5Gi",
+        "class": "longhorn",
+        "status": "Bound"
+      },
+      {
+        "name": "llm-proxy-postgres-1",
+        "capacity": "10Gi",
+        "class": "longhorn",
+        "status": "Bound"
+      }
+    ],
+    "existing_worker": {
+      "namespace": "llm-proxy-worker",
+      "daemonset": "llm-proxy-worker",
+      "desired": 2,
+      "ready": 2,
+      "central_connected": true
+    },
+    "longhorn": {
+      "default_disk_ready": true,
+      "additional_data_disk_ready": false,
+      "storage_available_bytes": 83361792000,
+      "storage_scheduled_bytes": 193273528320,
+      "storage_maximum_bytes": 211187859456,
+      "backup_target": "configured off-node target, current state Unavailable",
+      "image_filesystem_pressure": "reported at 94%"
+    },
+    "target_apps": "dev-workspace-context and dev-llm-proxy absent as expected"
+  },
+  "decisions": {
+    "capacity": "BLOCKED: available Longhorn space is below scheduled space; no PVC sizing is safe.",
+    "backups": "BLOCKED: off-node backup target Unavailable; restore capability unproven.",
+    "artifacts": "BLOCKED: atomic source artifact capture and DB reference closure unproven.",
+    "retained_pvcs": "BLOCKED: provenance/content undocumented; do not attach, mutate, reuse, or delete.",
+    "identity_and_secrets": "BLOCKED: target paths, OIDC mapping, Data Protection overlap, and backend set unresolved.",
+    "plan_text": "BLOCKED: malformed Stage 1–3 procedure requires canonical correction."
+  },
+  "hard_stop": "Do not enter code, restore, or deployment until storage/backup/artifact/identity gates have evidence-backed resolution."
+}

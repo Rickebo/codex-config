@@ -1,0 +1,200 @@
+{
+  "version": 1,
+  "created_at": "2026-08-22T13:53:04.447Z",
+  "updated_at": "2026-08-22T14:22:35.228Z",
+  "task": "Create rickebo-com/kafka-config as a private self-contained Redpanda v25.1.2 Helm chart configuration repository with chart 5.10.2, explicit Argo ownership, values/schema/render validation, migration notes, CI, and a feature PR.",
+  "policy_path": "/home/rickebo/.codex/pipeline/transitions.json",
+  "approval_rules_path": "/home/rickebo/.codex/pipeline/approval-rules.json",
+  "initial_stage": "spec",
+  "current_stage": "done",
+  "pipeline_profile": "full",
+  "done": true,
+  "max_loops": 6,
+  "loop_count": 0,
+  "approval_required_count": 5,
+  "approvals": [
+    {
+      "at": "2026-08-22T13:55:45.636Z",
+      "approver": "Codex (standing autonomous authorization)",
+      "note": "Approved: specification passed; implementation is scoped to the requested private repository and zero-cost local/GitHub actions.",
+      "gate": "spec_to_code",
+      "reason": "Spec pass requires explicit approval before implementation starts.",
+      "risk_level": "high",
+      "from_stage": "spec",
+      "next_stage": "code",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-22T13-53-04-446Z/reports/2026-08-22T13-55-34-258Z_spec_pass.json"
+    },
+    {
+      "at": "2026-08-22T14:10:49.694Z",
+      "approver": "Codex (standing autonomous authorization)",
+      "note": "Approved: automated review is zero-cost and required to validate the stateful Helm change before test/PR handoff.",
+      "gate": "risk_threshold",
+      "reason": "Risk level high meets or exceeds threshold high.",
+      "risk_level": "high",
+      "from_stage": "code",
+      "next_stage": "review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-22T13-53-04-446Z/reports/2026-08-22T14-10-37-119Z_code_ready_for_review.json"
+    },
+    {
+      "at": "2026-08-22T14:16:25.751Z",
+      "approver": "Codex (standing autonomous authorization)",
+      "note": "Approved: review passed with no blocking findings; zero-cost test execution is authorized.",
+      "gate": "risk_threshold",
+      "reason": "Risk level high meets or exceeds threshold high.",
+      "risk_level": "high",
+      "from_stage": "review",
+      "next_stage": "test",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-22T13-53-04-446Z/reports/2026-08-22T14-16-16-000Z_review_pass.json"
+    },
+    {
+      "at": "2026-08-22T14:18:02.979Z",
+      "approver": "Codex (standing autonomous authorization)",
+      "note": "Approved: local test suite passed; zero-cost repository publication and CI validation are authorized.",
+      "gate": "risk_threshold",
+      "reason": "Risk level high meets or exceeds threshold high.",
+      "risk_level": "high",
+      "from_stage": "test",
+      "next_stage": "validation",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-22T13-53-04-446Z/reports/2026-08-22T14-17-52-360Z_test_pass.json"
+    },
+    {
+      "at": "2026-08-22T14:22:35.228Z",
+      "approver": "Codex (standing autonomous authorization)",
+      "note": "Approved: final validation passed, feature branch and PR are published, and the requested handoff is complete.",
+      "gate": "validation_to_done",
+      "reason": "Validation pass requires explicit approval before done.",
+      "risk_level": "high",
+      "from_stage": "validation",
+      "next_stage": "done",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-22T13-53-04-446Z/reports/2026-08-22T14-22-04-539Z_validation_pass.json"
+    }
+  ],
+  "awaiting_approval": null,
+  "spec_gate": {
+    "passed": true,
+    "passed_at": "2026-08-22T13:55:45.636Z",
+    "spec_file": "/tmp/kafka-config-feature-spec.json",
+    "spec_check_file": "/tmp/kafka-config-feature-spec-check.json",
+    "council_file": "/tmp/kafka-config-council.json"
+  },
+  "council_policy": {
+    "required": "always"
+  },
+  "history": [
+    {
+      "at": "2026-08-22T13:55:34.258Z",
+      "event": "approval_required",
+      "stage": "spec",
+      "status": "pass",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-22T13-53-04-446Z/reports/2026-08-22T13-55-34-258Z_spec_pass.json",
+      "requested_next_stage": "code",
+      "gate": "spec_to_code",
+      "reason": "Spec pass requires explicit approval before implementation starts.",
+      "risk_level": "high",
+      "spec_gate": {
+        "spec_file": "/tmp/kafka-config-feature-spec.json",
+        "spec_check_file": "/tmp/kafka-config-feature-spec-check.json",
+        "council_file": "/tmp/kafka-config-council.json",
+        "checked_at": "2026-08-22T13:54:44.583Z"
+      }
+    },
+    {
+      "at": "2026-08-22T13:55:45.636Z",
+      "event": "approved_transition",
+      "stage": "spec",
+      "status": "pass",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-22T13-53-04-446Z/reports/2026-08-22T13-55-34-258Z_spec_pass.json",
+      "approver": "Codex (standing autonomous authorization)",
+      "note": "Approved: specification passed; implementation is scoped to the requested private repository and zero-cost local/GitHub actions.",
+      "next_stage": "code"
+    },
+    {
+      "at": "2026-08-22T14:10:37.120Z",
+      "event": "approval_required",
+      "stage": "code",
+      "status": "ready_for_review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-22T13-53-04-446Z/reports/2026-08-22T14-10-37-119Z_code_ready_for_review.json",
+      "requested_next_stage": "review",
+      "gate": "risk_threshold",
+      "reason": "Risk level high meets or exceeds threshold high.",
+      "risk_level": "high",
+      "spec_gate": null
+    },
+    {
+      "at": "2026-08-22T14:10:49.694Z",
+      "event": "approved_transition",
+      "stage": "code",
+      "status": "ready_for_review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-22T13-53-04-446Z/reports/2026-08-22T14-10-37-119Z_code_ready_for_review.json",
+      "approver": "Codex (standing autonomous authorization)",
+      "note": "Approved: automated review is zero-cost and required to validate the stateful Helm change before test/PR handoff.",
+      "next_stage": "review"
+    },
+    {
+      "at": "2026-08-22T14:16:16.001Z",
+      "event": "approval_required",
+      "stage": "review",
+      "status": "pass",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-22T13-53-04-446Z/reports/2026-08-22T14-16-16-000Z_review_pass.json",
+      "requested_next_stage": "test",
+      "gate": "risk_threshold",
+      "reason": "Risk level high meets or exceeds threshold high.",
+      "risk_level": "high",
+      "spec_gate": null
+    },
+    {
+      "at": "2026-08-22T14:16:25.751Z",
+      "event": "approved_transition",
+      "stage": "review",
+      "status": "pass",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-22T13-53-04-446Z/reports/2026-08-22T14-16-16-000Z_review_pass.json",
+      "approver": "Codex (standing autonomous authorization)",
+      "note": "Approved: review passed with no blocking findings; zero-cost test execution is authorized.",
+      "next_stage": "test"
+    },
+    {
+      "at": "2026-08-22T14:17:52.361Z",
+      "event": "approval_required",
+      "stage": "test",
+      "status": "pass",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-22T13-53-04-446Z/reports/2026-08-22T14-17-52-360Z_test_pass.json",
+      "requested_next_stage": "validation",
+      "gate": "risk_threshold",
+      "reason": "Risk level high meets or exceeds threshold high.",
+      "risk_level": "high",
+      "spec_gate": null
+    },
+    {
+      "at": "2026-08-22T14:18:02.980Z",
+      "event": "approved_transition",
+      "stage": "test",
+      "status": "pass",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-22T13-53-04-446Z/reports/2026-08-22T14-17-52-360Z_test_pass.json",
+      "approver": "Codex (standing autonomous authorization)",
+      "note": "Approved: local test suite passed; zero-cost repository publication and CI validation are authorized.",
+      "next_stage": "validation"
+    },
+    {
+      "at": "2026-08-22T14:22:04.539Z",
+      "event": "approval_required",
+      "stage": "validation",
+      "status": "pass",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-22T13-53-04-446Z/reports/2026-08-22T14-22-04-539Z_validation_pass.json",
+      "requested_next_stage": "done",
+      "gate": "validation_to_done",
+      "reason": "Validation pass requires explicit approval before done.",
+      "risk_level": "high",
+      "spec_gate": null
+    },
+    {
+      "at": "2026-08-22T14:22:35.228Z",
+      "event": "approved_transition",
+      "stage": "validation",
+      "status": "pass",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-22T13-53-04-446Z/reports/2026-08-22T14-22-04-539Z_validation_pass.json",
+      "approver": "Codex (standing autonomous authorization)",
+      "note": "Approved: final validation passed, feature branch and PR are published, and the requested handoff is complete.",
+      "next_stage": "done"
+    }
+  ]
+}

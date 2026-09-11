@@ -1,0 +1,27 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "PR #151 review cycle failed because protected supply-chain validation detected that the new rolebinding-admission binary is a fifth SBOM application while the trusted inventory still asserts four. Independent review was stopped because the head must change.",
+  "changed_files": [],
+  "validation": [
+    "Protected integration and chart checks passed at c717aee83385a4d5f05b7d7a90802a4aea11145f",
+    "Protected supply-chain check failed on trusted SBOM application inventory",
+    "Independent Luna review interrupted before conclusion to avoid stale-head evidence"
+  ],
+  "blockers": [
+    "Trusted SBOM identity/fixture coverage must include the distinct rolebinding-admission application",
+    "All protected checks and independent review must rerun on the corrected exact head"
+  ],
+  "next_action": "Route to Luna code owner for the minimal SBOM inventory/fixture correction and rerun all exact-head gates.",
+  "route_to": "code",
+  "risk_level": "critical",
+  "issues": [
+    {
+      "id": "REV-001",
+      "severity": "high",
+      "title": "Trusted SBOM inventory omits the new admission binary",
+      "details": "PR #151 protected supply-chain check reports five Trivy applications while the trusted fixture expects four.",
+      "owner_stage": "code"
+    }
+  ]
+}

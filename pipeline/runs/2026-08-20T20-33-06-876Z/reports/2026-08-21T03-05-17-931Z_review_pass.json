@@ -1,0 +1,28 @@
+{
+  "stage": "review",
+  "status": "pass",
+  "summary": "Focused review passed PRs #446 and #447 with no blocking correctness, security, or maintainability findings.",
+  "changed_files": [
+    "charts/grafana-mcp/values.yaml",
+    "scripts/metamcp/bootstrap.sql"
+  ],
+  "validation": [
+    "PR #446 preserves --disable-write and restricts Host validation to the exact in-cluster service hostname and port.",
+    "PR #447 uses the correct shell $0 placeholder and \"$@\" forwarding, so all Kubernetes MCP arguments reach npx unchanged.",
+    "PR #447 uses an exclusive flock to prevent concurrent npm optional-binary installation races and retains the existing read-only/in-cluster flags.",
+    "The two PRs are single-file, non-overlapping, secret-free diffs and their focused validation passed."
+  ],
+  "blockers": [],
+  "next_action": "Merge PRs #446 and #447, then proceed through test and live validation.",
+  "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T20-33-06-876Z/spec.json",
+  "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T20-33-06-876Z/spec-check.json",
+  "council_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T20-33-06-876Z/council.json",
+  "requires_council": true,
+  "independent_lanes": [
+    "Grafana MCP configuration review",
+    "Kubernetes child command review"
+  ],
+  "route_to": "test",
+  "risk_level": "critical",
+  "issues": []
+}

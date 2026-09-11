@@ -1,0 +1,64 @@
+{
+  "stage": "review",
+  "status": "pass",
+  "summary": "Review found no blocking correctness, secret-handling, Helm, Argo, or target-isolation defects in the committed MetaMCP change. The psql guard portability issue found during review was fixed and retested.",
+  "changed_files": [
+    "charts/metamcp/values.yaml",
+    "charts/metamcp/templates/networkpolicy.yaml",
+    "argocd/apps/metamcp-app.yaml",
+    "argocd/apps/grafana-mcp-app.yaml",
+    "charts/grafana-mcp/values.yaml",
+    "observability/values.yaml",
+    "scripts/metamcp/bootstrap.sql",
+    "scripts/metamcp/README.md"
+  ],
+  "validation": [
+    "Compact review of commits b8460fd, 3c773dd, and 20a13f0 found no blocking findings.",
+    "MetaMCP Helm lint and server-side dry-run passed with the explicit homelab kubeconfig/context.",
+    "Observability Helm lint/render passed with the corrected homelab Tempo datasource and embedded MCP setting.",
+    "Grafana MCP 0.20.0 render uses the expected 1.1.0 image, token Secret reference, and --disable-write.",
+    "Bootstrap missing-input test now fails with exit code 3 on PostgreSQL 16.",
+    "Bootstrap positive path passed twice after the guard fix and reports seven ACTIVE mappings.",
+    "Scoped secret-pattern scan and git diff checks passed; graphify-out remains unstaged."
+  ],
+  "blockers": [
+    "No blocking findings. Runtime credentials, merge/reconcile, OAuth redirect registration, and live MCP calls remain test-stage/validation work.",
+    "The pre-existing observability grafana-test ServiceAccount issue remains tracked separately as #433."
+  ],
+  "next_action": "Proceed to the test stage, then provision protected runtime credentials and reconcile the merged PR through the explicit homelab Argo target.",
+  "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T20-33-06-876Z/spec.json",
+  "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T20-33-06-876Z/spec-check.json",
+  "council_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T20-33-06-876Z/council.json",
+  "requires_council": true,
+  "independent_lanes": [
+    "GitOps and immutable workload review",
+    "Secret-safe registry transaction review",
+    "Public OAuth boundary review",
+    "Live observability target review"
+  ],
+  "route_to": "test",
+  "risk_level": "critical",
+  "issues": [
+    {
+      "id": "RUNTIME-SECRETS-001",
+      "title": "Runtime credential provisioning remains validation work",
+      "severity": "high",
+      "details": "No bearer value is in Git; protected Grafana, ArgoCD, and GitHub values still need to be supplied during live validation.",
+      "owner_stage": "validation"
+    },
+    {
+      "id": "RUNTIME-OAUTH-001",
+      "title": "Public MCP OAuth remains unproven",
+      "severity": "high",
+      "details": "Callback registration, public DNS, protected-resource metadata, PKCE, and the ChatGPT connection need live test evidence.",
+      "owner_stage": "validation"
+    },
+    {
+      "id": "#433",
+      "title": "Existing observability dry-run references grafana-test ServiceAccount",
+      "severity": "medium",
+      "details": "Unrelated pre-existing issue; MetaMCP and Tempo renders are valid.",
+      "owner_stage": "test"
+    }
+  ]
+}

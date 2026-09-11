@@ -1,0 +1,20 @@
+{
+  "stage": "validation",
+  "status": "fail",
+  "summary": "Repository, hosted, and independent review gates pass at b1b85c624c28b7a1616350cdcfeba14673bfcc7c, but closure is blocked by branch protection and missing live DEV evidence.",
+  "changed_files": [],
+  "validation": [
+    "PR #150 is ready/open at exact head b1b85c624c28b7a1616350cdcfeba14673bfcc7c",
+    "Independent security review is GO",
+    "Hosted validate 32424891740/check 96604683734 passed",
+    "Local full/race/vet/Helm/docs/static validation passed"
+  ],
+  "blockers": [
+    "Protect main requires one approving review; distinct App installation 153488919 currently has pull_requests: read, not write.",
+    "DEV still runs the prior chart/image; no b1 App-only projection/readback evidence has been performed.",
+    "Effective App permissions cannot be queried through the available user OAuth identity beyond the read-only result."
+  ],
+  "next_action": "Grant and refresh installation 153488919 with pull_requests:write or provide an independent reviewer; then approve/merge through normal protection and perform DEV rollout plus sanitized projection/readback.",
+  "route_to": "review",
+  "risk_level": "high"
+}

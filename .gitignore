@@ -1,0 +1,76 @@
+# Sensitive authentication & keys
+auth.json*
+openhands-auth.json*
+api-keys/
+mcp-oauth-locks/
+
+# Databases & runtime state
+*.sqlite*
+*.wal
+*.shm
+*.db
+sqlite/
+qdrant-memory/
+.qdrant-initialized
+.codex-global-state.json*
+models_cache.json
+usage_limits.json
+version.json
+installation_id
+.personality_migration
+.sandbox_migration
+.app-server-state-reconciled-v1
+
+# Sessions, logs & history
+sessions/
+archived_sessions/
+log/
+*.jsonl
+shell_snapshots/
+dictation-history/
+transcription-history.jsonl
+
+# Working trees, artifacts & attachments
+worktrees/
+artifacts/
+attachments/
+snapshots/
+backups/
+backups_pre_cleanup/
+handoffs/
+lanes/
+data/
+visualizations/
+
+# Locks & IPC
+thread-writer-locks/
+tui-thread-reference-capabilities/
+ipc/
+process_manager/
+app-server-control/
+app-server-daemon/
+node_repl/
+browser/
+computer-use/
+
+# Virtualenvs, caches & temporary directories
+.uv/
+.venvs/
+.tmp/
+tmp/
+cache/
+packages/
+plugins/
+vendor_imports/
+rollout-migrations/
+runtime/
+pets/
+
+# Sub-git repositories / nested .codex
+.codex/
+*codex-global-state*
+*.bak*
+*.old
+*copy*
+*.backup*
+*.tmp*

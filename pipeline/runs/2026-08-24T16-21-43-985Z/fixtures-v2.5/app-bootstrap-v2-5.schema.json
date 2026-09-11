@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://codicarium.local/v2.5/app-bootstrap.v2.5",
+  "title": "app-bootstrap.v2.5",
+  "type": "object",
+  "required": [
+    "id",
+    "repository",
+    "path",
+    "argo_kind",
+    "application_name",
+    "artifact_sha256",
+    "bootstrap_only"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "repository": {
+      "type": "string",
+      "minLength": 1
+    },
+    "path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "argo_kind": {
+      "type": "string",
+      "minLength": 1
+    },
+    "application_name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "artifact_sha256": {
+      "type": "string",
+      "minLength": 1
+    },
+    "bootstrap_only": {
+      "type": "boolean"
+    }
+  },
+  "additionalProperties": false
+}

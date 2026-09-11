@@ -1,0 +1,40 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Luna completed review-loop-2 remediation and committed exact head 45335a1057808741e6db2956767c22cef3225115 on current base e3ff966271dc76af47387e906a68dcd6cdc90360. The root-owned admission package, external GitHub evidence verification, full installed-root verifier, capability-ledger no-follow handling, immutable UID fixture, and aggregate package gate now pass all bounded local checks without host or live mutation.",
+  "changed_files": [
+    "contracts/authority-runner-ownership.json",
+    "docs/codicarium-artifact-seal-host-prerequisite.md",
+    "platform/authority-runner/artifact-seal-v1/entrypoint.sh",
+    "platform/authority-runner/artifact-seal-v1/install.sh",
+    "platform/authority-runner/artifact-seal-v1/manifest.sha256",
+    "platform/authority-runner/artifact-seal-v1/preflight.sh",
+    "scripts/check-installed-codicarium-artifact-seal.sh",
+    "scripts/verify-authority-runner-contract.py",
+    "tests/test-codicarium-artifact-ownership.py",
+    "tests/test-codicarium-artifact-ownership.sh",
+    "tests/test-codicarium-artifact-seal-install.sh",
+    "tests/test-deployment-controller-bootstrap.sh"
+  ],
+  "validation": [
+    "Exact-head full tests/test-deployment-controller-bootstrap.sh aggregate passed after clean rebase.",
+    "Package manifest and sudoers contract passed with exact eight-file libexec inventory and one sudoers file.",
+    "Docker install, preflight, reinstall, uninstall, ownership handoff, and safety/adversarial tests passed.",
+    "Authority contract 5/5, GitHub evidence 3/3, ownership 8/8, and root installed-root verifier 4/4 passed.",
+    "Shell syntax, actionlint, JSON parsing, manifest lock, workflow byte-identity, and git diff --check passed.",
+    "Caller-supplied runner UID test bypasses were removed; fixtures now use the installed root-owned manifest boundary.",
+    "Worktree is clean with no __pycache__ or .codicarium-artifact-seal-install.* debris.",
+    "Workspace Context revision 4dd4811f-2dc1-4d98-85b4-4db8d38eeba9 does not index codicarium/infra; no graph-impact claim is made.",
+    "No host install, runner-group policy change, workflow dispatch, deployment, merge, or live mutation occurred."
+  ],
+  "blockers": [],
+  "next_action": "Perform a fresh independent Luna security review of the complete e3ff9662..45335a10 diff against REQ-001..REQ-012 and prior REV2 findings.",
+  "route_to": "review",
+  "risk_level": "critical",
+  "independent_lanes": [
+    "root-owned transactional installer and admission boundary",
+    "external GitHub REST evidence producer/verifier",
+    "installed-root and filesystem adversarial verification",
+    "canonical package and aggregate fidelity"
+  ]
+}

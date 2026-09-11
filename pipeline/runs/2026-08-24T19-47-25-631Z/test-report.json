@@ -1,0 +1,25 @@
+{
+  "stage": "test",
+  "status": "pass",
+  "summary": "All material code and release checks passed at exact clean HEAD 05fae66d9344fc407494cfe7c093e8597affbc2c. Focused policy, release-flow, Go, lint, chart, integration, workflow syntax, and immutable publisher checks are green. Local supply-chain execution remains environment-limited by Docker bind mounts on this NFS worktree and absent buildx; protected PR supply-chain proof is still required.",
+  "changed_files": [],
+  "validation": [
+    "Pinned worktree stayed clean at exact HEAD 05fae66d9344fc407494cfe7c093e8597affbc2c before and after; pipeline state remained current_stage=test and was not advanced.",
+    "Focused Node policy fixtures passed 2/2 suites (handoff and coordinator); python3 hack/test-release-graph.py passed 46/46 tests.",
+    "make test-release-flow passed 111/111 Python tests plus 2/2 JavaScript fixture suites.",
+    "make test passed 23/23 Go packages.",
+    "Missing make lint mapped to CI-equivalent fmt-check, tidy-check, vet, govulncheck, validate-repository, and separately ordered actionlint; all passed, with 0 vulnerabilities.",
+    "Missing make chart mapped to ./hack/verify-chart-crds.sh plus make verify-chart: 4/4 Python tests, 3/3 Helm lints, and 26+19 rendered objects passed.",
+    "make integration was an undeclared no-op because integration/ exists; mapped to make test-integration, which passed 18/18 top-level tests and 10/10 subtests.",
+    "actionlint passed 6/6 workflow files; Ruby YAML safe-load parsed 6/6; node --check passed 1/1 helper.",
+    "git diff --check 6053f973..HEAD passed; publish-release.yaml diff was empty (1/1 protected-file invariant).",
+    "make verify-supply-chain re-passed 111 Python and 2 JavaScript release suites plus chart validation, then hit the known Docker/NFS bind-mount permission error before kubeconform.",
+    "The remaining image verifier was probed separately and stopped at local prerequisite 'docker buildx is required'; no code assertion failed. Protected PR supply-chain must close both local gaps.",
+    "No material release-policy, workflow, Go, chart, integration, lint, syntax, or diff assertion failed."
+  ],
+  "blockers": [],
+  "next_action": "Proceed to validation and require the protected PR supply-chain job to pass kubeconform and image/buildx checks before merge or release; preserve the exact SHA and unchanged publisher workflow.",
+  "route_to": "validation",
+  "risk_level": "high",
+  "issues": []
+}

@@ -1,0 +1,56 @@
+[
+  {
+    "id": "AP20",
+    "repository": "codicarium/app-config",
+    "path": ".codicarium/dev/bootstrap-release-20.yaml",
+    "argo_kind": "Application",
+    "application_name": "deployment-controller-bootstrap-20",
+    "artifact_sha256": "508c90cdb188137ccbad9fadd24c52a726b0e95d2c51b15ca80b130332333928",
+    "bootstrap_only": true
+  },
+  {
+    "id": "AP21",
+    "repository": "codicarium/app-config",
+    "path": ".codicarium/dev/bootstrap-release-21.yaml",
+    "argo_kind": "Application",
+    "application_name": "deployment-controller-bootstrap-21",
+    "artifact_sha256": "00382d376c7859a7f82a640ad90301a79acfe473872cf5d2cdc2ddfdd3b8e709",
+    "bootstrap_only": true
+  },
+  {
+    "id": "AP22",
+    "repository": "codicarium/app-config",
+    "path": ".codicarium/dev/bootstrap-release-22.yaml",
+    "argo_kind": "Application",
+    "application_name": "deployment-controller-bootstrap-22",
+    "artifact_sha256": "c0bc68df4729c8bb6bad6c179fb33130475e49b66de9d498f442638fa4612469",
+    "bootstrap_only": true
+  },
+  {
+    "id": "AP23",
+    "repository": "codicarium/app-config",
+    "path": ".codicarium/dev/bootstrap-release-23.yaml",
+    "argo_kind": "Application",
+    "application_name": "deployment-controller-bootstrap-23",
+    "artifact_sha256": "c79eed3d6a3998a5b7205ef40938b0da05937207bb0f25c18e03ba432fb63099",
+    "bootstrap_only": true
+  },
+  {
+    "id": "AP24",
+    "repository": "codicarium/app-config",
+    "path": ".codicarium/dev/bootstrap-release-24.yaml",
+    "argo_kind": "Application",
+    "application_name": "deployment-controller-bootstrap-24",
+    "artifact_sha256": "2df1d0bfaa45f051aad8daf108141a93ad466fb91f877be1b35dfb617a074e61",
+    "bootstrap_only": true
+  },
+  {
+    "id": "AP25",
+    "repository": "codicarium/app-config",
+    "path": ".codicarium/dev/bootstrap-release-25.yaml",
+    "argo_kind": "Application",
+    "application_name": "deployment-controller-bootstrap-25",
+    "artifact_sha256": "15732488598695cd89a78e41decc25f46b3a879c24e24a82d244a0d8339861a4",
+    "bootstrap_only": true
+  }
+]

@@ -1,0 +1,35 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Luna remediated all four loop-1 findings and committed exact head 01d104cc. The installer now publishes only captured verified bytes, the verifier rejects special files through nonblocking no-follow descriptors, stale copied fixtures were removed, and the protected workflow consumes canonical external GitHub API evidence plus job-visible identity. The worktree is clean and Terraform plan remains unchanged.",
+  "changed_files": [
+    ".github/workflows/verify-codicarium-artifact-seal-boundary.yml",
+    "contracts/authority-runner-ownership.json",
+    "platform/authority-runner/artifact-seal-v1/install.sh",
+    "platform/authority-runner/artifact-seal-v1/manifest.sha256",
+    "scripts/verify-authority-runner-contract.py",
+    "tests/fixtures/authority-runner/",
+    "tests/test-authority-runner-contract.py",
+    "tests/test-deployment-controller-bootstrap.sh"
+  ],
+  "validation": [
+    "Exact head 01d104cc954e8e44c9900af489a162a9ea903e3e; remediation commits f2a08e40 and 01d104cc are conventional.",
+    "Package manifest and canonical package contract tests: PASS.",
+    "Authority contract tests: 4 passed; sudo adversarial tests: 2 passed.",
+    "Focused aggregate bootstrap contract validation: PASS.",
+    "actionlint, shell syntax, Python compilation, contract JSON, and git diff --check: PASS.",
+    "terraform-plan-codicarium.yml is byte-identical to exact base efb9faac: PASS.",
+    "Worktree status clean: PASS.",
+    "Full unrelated aggregate sections exceeded the bounded execution window; no pass claim recorded.",
+    "Root-capable lifecycle/fault-injection and live external GitHub API evidence remain assigned to later stages."
+  ],
+  "blockers": [],
+  "next_action": "Perform a fresh independent Luna security/correctness review of exact head 01d104cc against every feature-spec requirement and the prior four findings; fail closed on any incomplete external-evidence or race guarantee.",
+  "independent_lanes": [
+    "transactional captured-byte installer",
+    "descriptor-safe verifier",
+    "external runner-policy evidence contract",
+    "canonical package fidelity tests"
+  ],
+  "risk_level": "critical"
+}

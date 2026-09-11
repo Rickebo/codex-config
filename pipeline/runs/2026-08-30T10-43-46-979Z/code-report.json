@@ -1,0 +1,41 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Luna implemented and committed one clean consolidation from exact main at 8f037dae. The change unifies contract, package, verifier, bounded capability protocol, transactional sudo publication, protected verification, apply workflow, docs, and focused tests. The worktree is clean and terraform-plan is unchanged. Root-capable lifecycle fault injection is deferred to the test stage.",
+  "changed_files": [
+    ".github/workflows/terraform-apply-codicarium.yml",
+    ".github/workflows/verify-codicarium-artifact-seal-boundary.yml",
+    "contracts/authority-runner-ownership.json",
+    "docs/authority-runner-ownership-runbook.md",
+    "docs/codicarium-artifact-seal-host-prerequisite.md",
+    "platform/authority-runner/artifact-seal-v1/",
+    "scripts/check-installed-codicarium-artifact-seal.sh",
+    "scripts/harden-codicarium-artifact-ownership.py",
+    "scripts/verify-authority-runner-contract.py",
+    "tests/fixtures/authority-runner/",
+    "tests/test-authority-runner-contract.py",
+    "tests/test-codicarium-artifact-seal-install.sh",
+    "tests/test-codicarium-artifact-seal-package.sh",
+    "tests/test-codicarium-artifact-seal-sudoers.py",
+    "tests/test-deployment-controller-bootstrap.sh"
+  ],
+  "validation": [
+    "Commit: 8f037dae9eb731d012ef4e038842707f78feaf34 on security/1290-authority-runner-consolidation.",
+    "Package consistency and digest test: PASS.",
+    "Contract unit tests: 3 passed.",
+    "Sudo adversarial tests: 2 passed.",
+    "Python compilation, shell syntax, JSON validation, actionlint, and git diff --check: PASS.",
+    "terraform-plan-codicarium.yml has an empty diff versus exact base efb9faac: PASS.",
+    "Worktree status clean: PASS.",
+    "Root-capable install/upgrade/uninstall fault-injection matrix: NOT RUN; assigned to test stage."
+  ],
+  "blockers": [],
+  "next_action": "Run independent Luna security/correctness review against the feature spec and exact commit; route every blocking finding back to code.",
+  "independent_lanes": [
+    "canonical contract and verifier",
+    "privileged package and sudo transaction",
+    "workflow identity and protocol",
+    "tests and documentation"
+  ],
+  "risk_level": "critical"
+}

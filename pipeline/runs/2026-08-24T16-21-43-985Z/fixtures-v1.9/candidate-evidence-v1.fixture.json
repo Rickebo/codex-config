@@ -1,0 +1,64 @@
+{
+  "schema": "codicarium.release-candidate-evidence/v1",
+  "repository": "codicarium/deployment-controller",
+  "tag": "v0.6.14",
+  "source_revision": "1111111111111111111111111111111111111111",
+  "ci": {
+    "run_id": "9001001",
+    "run_attempt": "1"
+  },
+  "verifier": {
+    "run_id": "9003001",
+    "run_attempt": "1"
+  },
+  "archives": {
+    "deployment-controller-verified-image": {
+      "object_key": "artifacts/v1/orgs/255540067/repos/1303901324/releases/v0.6.14/sources/1111111111111111111111111111111111111111/runs/9003001/attempts/1/deployment-controller-verified-image/0123456789abcdef0123456789abcdef.tar.zst",
+      "archive_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "byte_length": "4096",
+      "capability_nonce": "0123456789abcdef0123456789abcdef",
+      "capability_expires_at": "2026-01-01T00:30:00Z",
+      "files": [
+        {
+          "path": "deployment-controller-linux-amd64.spdx.json",
+          "size": "1",
+          "sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+        },
+        {
+          "path": "deployment-controller-linux-arm64.spdx.json",
+          "size": "1",
+          "sha256": "2222222222222222222222222222222222222222222222222222222222222222"
+        },
+        {
+          "path": "deployment-controller.env",
+          "size": "1",
+          "sha256": "3333333333333333333333333333333333333333333333333333333333333333"
+        },
+        {
+          "path": "deployment-controller.oci.tar",
+          "size": "1",
+          "sha256": "4444444444444444444444444444444444444444444444444444444444444444"
+        }
+      ]
+    },
+    "deployment-controller-verified-chart": {
+      "object_key": "artifacts/v1/orgs/255540067/repos/1303901324/releases/v0.6.14/sources/1111111111111111111111111111111111111111/runs/9003001/attempts/1/deployment-controller-verified-chart/fedcba9876543210fedcba9876543210.tar.zst",
+      "archive_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "byte_length": "2048",
+      "capability_nonce": "fedcba9876543210fedcba9876543210",
+      "capability_expires_at": "2026-01-01T00:30:00Z",
+      "files": [
+        {
+          "path": "deployment-controller-0.6.14.tgz",
+          "size": "1",
+          "sha256": "5555555555555555555555555555555555555555555555555555555555555555"
+        },
+        {
+          "path": "deployment-controller-chart.sha256",
+          "size": "1",
+          "sha256": "6666666666666666666666666666666666666666666666666666666666666666"
+        }
+      ]
+    }
+  }
+}

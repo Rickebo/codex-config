@@ -1,0 +1,114 @@
+{
+  "schema": "codicarium.release-admin-ruleset-evidence/v2",
+  "captured_at": "2026-08-25T02:42:23Z",
+  "capture_mode": "administrator_review_only",
+  "runtime_input_prohibited": true,
+  "api_version": "2022-11-28",
+  "repository": {
+    "id": 1303901324,
+    "full_name": "codicarium/deployment-controller",
+    "html_url": "https://github.com/codicarium/deployment-controller",
+    "default_branch": "main",
+    "main_sha": "d3565f534b2f64585c3e15e35d8d645449f4f09d",
+    "main_commit_url": "https://api.github.com/repos/codicarium/deployment-controller/commits/d3565f534b2f64585c3e15e35d8d645449f4f09d"
+  },
+  "branch_ruleset": {
+    "id": 21317510,
+    "name": "Protect deployment-controller main",
+    "target": "branch",
+    "enforcement": "active",
+    "source": "codicarium/deployment-controller",
+    "source_type": "Repository",
+    "created_at": "2026-08-24T20:43:58.810+02:00",
+    "updated_at": "2026-08-24T20:43:58.886+02:00",
+    "conditions": {
+      "ref_name": {
+        "exclude": [],
+        "include": ["refs/heads/main"]
+      }
+    },
+    "bypass_actors": [],
+    "rules": [
+      {"type": "deletion"},
+      {"type": "non_fast_forward"},
+      {
+        "type": "pull_request",
+        "parameters": {
+          "allowed_merge_methods": ["merge", "squash", "rebase"],
+          "dismiss_stale_reviews_on_push": false,
+          "dismissal_restriction": {"allowed_actors": [], "enabled": false},
+          "require_code_owner_review": false,
+          "require_extra_approval_for_unattributed_changes": true,
+          "require_last_push_approval": false,
+          "required_approving_review_count": 0,
+          "required_review_thread_resolution": true,
+          "required_reviewers": []
+        }
+      },
+      {
+        "type": "required_status_checks",
+        "parameters": {
+          "do_not_enforce_on_create": false,
+          "required_status_checks": [
+            {"context": "test", "integration_id": 15368},
+            {"context": "lint", "integration_id": 15368},
+            {"context": "chart", "integration_id": 15368},
+            {"context": "integration", "integration_id": 15368},
+            {"context": "supply-chain", "integration_id": 15368}
+          ],
+          "strict_required_status_checks_policy": true
+        }
+      }
+    ]
+  },
+  "tag_ruleset": {
+    "id": 19595482,
+    "name": "Lock version tags",
+    "target": "tag",
+    "enforcement": "active",
+    "source": "codicarium/deployment-controller",
+    "source_type": "Repository",
+    "created_at": "2026-07-23T04:27:57.042+02:00",
+    "updated_at": "2026-07-23T04:27:57.062+02:00",
+    "conditions": {
+      "ref_name": {
+        "exclude": [],
+        "include": ["refs/tags/v*"]
+      }
+    },
+    "bypass_actors": [],
+    "rules": [
+      {"type": "update"},
+      {"type": "deletion"}
+    ]
+  },
+  "legacy_branch_protection": {
+    "required_status_checks": {
+      "strict": true,
+      "contexts": ["test", "lint", "chart"],
+      "checks": [
+        {"context": "test", "app_id": 15368},
+        {"context": "lint", "app_id": 15368},
+        {"context": "chart", "app_id": 15368}
+      ]
+    },
+    "required_pull_request_reviews": {
+      "dismiss_stale_reviews": false,
+      "require_code_owner_reviews": false,
+      "require_last_push_approval": false,
+      "required_approving_review_count": 0
+    },
+    "enforce_admins": {"enabled": true},
+    "restrictions": null,
+    "required_linear_history": {"enabled": false},
+    "allow_force_pushes": {"enabled": false},
+    "allow_deletions": {"enabled": false},
+    "required_conversation_resolution": {"enabled": true}
+  },
+  "required_checks_discrepancy": {
+    "ruleset_contexts": ["test", "lint", "chart", "integration", "supply-chain"],
+    "legacy_branch_protection_contexts": ["test", "lint", "chart"],
+    "status": "observed_discrepancy",
+    "interpretation": "Preserve both administrator-visible API results; do not collapse them into one effective policy or treat the legacy result as proof that the active ruleset is absent."
+  }
+}

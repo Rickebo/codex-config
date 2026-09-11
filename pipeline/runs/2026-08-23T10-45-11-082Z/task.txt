@@ -1,0 +1,1 @@
+Activate Youtarr Google OAuth on VPN-only youtarr.arr.rickebo.com using the three existing Bitwarden secrets, PR-based GitOps, explicit Argo sync, and end-to-end validation

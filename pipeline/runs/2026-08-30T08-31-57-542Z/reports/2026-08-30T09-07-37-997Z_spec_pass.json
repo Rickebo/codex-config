@@ -1,0 +1,25 @@
+{
+  "stage": "spec",
+  "status": "pass",
+  "summary": "Council approved a single-cluster deployment-controller migration with lc-config direct ownership and dedicated kata-clh isolation. Desired-state coding may proceed; live activation remains gated.",
+  "changed_files": [],
+  "validation": [
+    "Current lc-config prod delivery mapped from origin/main and legacy split-cluster ownership identified.",
+    "deployment-controller v0.13.0 descriptor, grant, exposureClass, one-profile destination, and activation contracts inspected.",
+    "Current prod infrastructure has no declared dedicated LC Kata node pool.",
+    "Current kubeconfig preflight exposes only context default, so live prod commands were not run."
+  ],
+  "blockers": [],
+  "next_action": "Create isolated worktrees and implement dependency-ordered infra, platform policy, lc-config descriptor/charts, and legacy-owner retirement PRs.",
+  "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T08-31-57-542Z/feature-spec.json",
+  "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T08-31-57-542Z/spec-check.json",
+  "council_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T08-31-57-542Z/council.json",
+  "requires_council": true,
+  "independent_lanes": ["infra Kata LC nodes","platform controller policy","lc-config direct charts and descriptor","app-config legacy owner retirement"],
+  "risk_level": "critical",
+  "issues": [
+    {"id":"LIVE-CONTEXT","title":"Explicit codicarium-prod kube context unavailable","severity":"critical","details":"Current /home/rickebo/.kube/codicarium.yaml lists only default; live validation and activation are prohibited.","owner_stage":"validation"},
+    {"id":"KATA-CAPACITY","title":"Dedicated LC Kata node pool not declared","severity":"critical","details":"Current prod infrastructure has generic agents only; LC must not schedule on ARC runner nodes.","owner_stage":"code"}
+  ],
+  "route_to": "code"
+}

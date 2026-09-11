@@ -1,0 +1,40 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Luna DevOps implementation opened infra PR #1292 at d83784f5. Active guarded controller, activation, producer, retirement, and checker contracts now use the typed stable API VIP; historical recovery endpoints remain explicit.",
+  "changed_files": [
+    "platform/deployment-controller/agent-orchestrator-dev.json",
+    "platform/deployment-controller/arc-producer-bootstrap.json",
+    "platform/deployment-controller/artifact-lock.env",
+    "platform/deployment-controller/carcost-dev.json",
+    "platform/deployment-controller/metamcp-dev.json",
+    "platform/deployment-controller/scripts/arc-producer-bootstrap.py",
+    "platform/deployment-controller/scripts/carcost-retirement-transaction.py",
+    "platform/deployment-controller/scripts/install.sh",
+    "platform/deployment-controller/scripts/metamcp-dev-activation.py",
+    "platform/deployment-controller/scripts/preflight.sh",
+    "platform/deployment-controller/scripts/reviewed-dev-activation.py",
+    "platform/deployment-controller/scripts/server-finder-post-retirement.py",
+    "platform/deployment-controller/scripts/upgrade.py",
+    "scripts/check-deployment-controller-bootstrap.py",
+    "tests/test-deployment-controller-bootstrap.py",
+    "tests/test-deployment-controller-rollback.py",
+    "tests/test-deployment-controller-server-finder-activation.py",
+    "tests/test-deployment-controller-upgrade.py"
+  ],
+  "validation": [
+    "32 deployment-controller bootstrap tests passed.",
+    "36 server-finder activation tests passed.",
+    "94 rollback, upgrade, and ARC producer bootstrap tests passed.",
+    "Static deployment-controller bootstrap checker passed.",
+    "Python compilation, Bash syntax, and git diff checks passed.",
+    "PR #1292 is non-draft and mergeable at exact head d83784f5a3f1dc5fb106d7fb2c61db0799cec0d0.",
+    "No live workflow dispatch or Kubernetes, Argo, Authentik, or Rancher mutation occurred.",
+    "Workspace Context change-set analysis skipped because codicarium/infra is not an indexed source at revision 243eb8fe-7385-40fc-9d02-55dc47a6431a."
+  ],
+  "blockers": [],
+  "next_action": "Perform an independent Luna security/correctness review of the exact PR head and classify every retained 10.99.0.21 reference before advancing to tests.",
+  "route_to": "review",
+  "risk_level": "high",
+  "independent_lanes": ["active endpoint contract implementation and regression coverage"]
+}

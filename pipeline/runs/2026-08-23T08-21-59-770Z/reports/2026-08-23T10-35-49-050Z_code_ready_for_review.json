@@ -1,0 +1,19 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Phase 0 rebased conflict-free onto origin/main 87eb61d. New head 1d91033 has a byte-identical source diff and passed Phase 0 plus newly introduced deployment-controller tests.",
+  "changed_files": [".github/workflows/legacy-freeze-guard.yml","scripts/bootstrap-codicarium-local-argo.sh","scripts/check-argocd-rbac-contract.py","scripts/check-mgmt-topology.sh","terraform/stacks/prod/main.tf","tests/test-argocd-rbac-contract.py"],
+  "validation": [
+    "Rebase completed without conflicts; merge-base equals current origin/main 87eb61d.",
+    "Old/new binary source diff SHA-256 identical: 2d67b5ebf2ef0075d2590ae3f6bf1a68b234bd45b8b8a212bdd1f5e9025dc0b0.",
+    "Phase 0 contract 11/11, checker, topology, bootstrap, bash, ruff, actionlint, YAML, and diff checks passed.",
+    "New upstream deployment-controller release-import 10/10 and upgrade-state 6/6 tests passed; worktree clean."
+  ],
+  "blockers": ["Final SHA-specific review/test confirmation required before push.","Live identity and MetaMCP gates remain deployment blockers."],
+  "next_action": "Perform a narrow rebase-equivalence review, then rerun exact-version semantic evidence on head 1d91033 before PR creation.",
+  "requires_council": false,
+  "independent_lanes": ["clean rebase","diff-equivalence proof","upstream regression tests"],
+  "route_to": "review",
+  "risk_level": "critical",
+  "issues": [{"id":"validation-base-drift","title":"Reviewed branch base is stale","severity":"high","details":"Remediated by conflict-free byte-identical rebase onto current main.","owner_stage":"review"}]
+}

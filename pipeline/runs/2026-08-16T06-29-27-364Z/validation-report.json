@@ -1,0 +1,43 @@
+{
+  "stage": "validation",
+  "status": "pass",
+  "summary": "Lane validation is complete: owned PR heads are exact and unmerged, local evidence is green, and remaining failures are external protected-base/Nexus gates explicitly preserved.",
+  "changed_files": [
+    "codicarium/infra PR #1078: 4c6bafb3eacabbea5844ed9bb4e44a9834daac88",
+    "codicarium/runner-config PR #44: 7f528311ed36423e2f95990f37cb0b5ea9c4cb12",
+    "codicarium/infra prerequisite PR #1085: 8c2259a983e9361738296e899e7dd33fff4c9007",
+    "codicarium/infra issue #1084: open tracking record"
+  ],
+  "validation": [
+    "All requested local cross-repo test, actionlint, policy, digest, and isolation checks pass.",
+    "infra #1078 and prerequisite #1085 exact-head GitHub checks classify successfully; their trusted preparation jobs fail before candidate validation at Nexus HTTP 403.",
+    "runner-config #44 is pushed at the exact verifier/schema contract head; GitHub reports no checks on its branch.",
+    "No PR is merged; no dispatch, deployment, Nexus bypass, secret mutation, or cluster mutation was performed.",
+    "All three PRs remain OPEN with mergedAt null under explicit repo-scoped GitHub inspection."
+  ],
+  "blockers": [
+    "External: merge infra #1085 after its protected checks/Nexus access are resolved; only then can #1078 observe the repaired pull_request_target workflow.",
+    "External: resolve the existing Nexus HTTP 403 for protected read-only artifact preparation; bypass is prohibited.",
+    "External: rebase/update #1078 onto the merged #1085 base and rerun its exact-head trusted validation.",
+    "External: runner-config #44 has no reported GitHub checks yet.",
+    "Local environment: Terraform/OpenTofu fmt/validate was not available."
+  ],
+  "next_action": "Await external protected-base/Nexus gates; after #1085 merges, rebase #1078, rerun exact-head validation, and keep #44 bound to its published verifier head.",
+  "route_to": "done",
+  "risk_level": "high",
+  "requires_council": false,
+  "independent_lanes": [
+    "infra PR #1078 exact head and local validation",
+    "runner-config PR #44 exact head and local validation",
+    "infra #1085 protected-base prerequisite and issue #1084 tracking"
+  ],
+  "issues": [
+    {
+      "id": "codicarium/infra#1084",
+      "title": "Land protected ARC validation handoff before contract repair",
+      "severity": "high",
+      "details": "Open prerequisite issue with PR #1085 at 8c2259a; external merge/check/Nexus gates remain.",
+      "owner_stage": "validation"
+    }
+  ]
+}

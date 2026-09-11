@@ -1,0 +1,23 @@
+{
+  "task": "Issue #125: use GitHub App installation tokens for projection writes",
+  "risk_level": "high",
+  "perspectives": [
+    {
+      "role": "tech_lead_backend",
+      "summary": "Replace the static client token with the existing per-installation provider, resolve the persisted board-owner installation for ProjectV2 writes, retain source installations for observer enrichment, and add forced refresh plus bounded retry semantics."
+    },
+    {
+      "role": "reviewer",
+      "summary": "Fail closed on unknown/duplicate installation ownership, request and validate a minimum permission map, remove every static token/env/Secret path, and prove 401/429/GraphQL rate-limit handling without leaking credentials."
+    },
+    {
+      "role": "tech_lead_qa",
+      "summary": "Use httptest fixtures for provider refresh, permission request, 401 rotation, rate limits, mixed-owner selection, and replay durability; require a sanitized DEV/App write verification before issue closure."
+    },
+    {
+      "role": "planner_lite",
+      "summary": "Keep the change bounded to token-aware client/server wiring, static credential contract removal, and documentation; do not redesign observer data or durable outbox semantics. Board-owner is the sole ProjectV2 writer."
+    }
+  ],
+  "consensus": "Implement a board-owner installation-token projection path with no static fallback, explicit minimum permissions, bounded refresh/retry, and durable receipt replay tests. Treat real App permissions, DEV rollout, and protected write readback as external validation gates."
+}

@@ -1,0 +1,25 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Loop 5 review of PR #522 commit 4b5e3b1 found three high-severity restore/fixture blockers; the requested contract is not proven and focused pytest fails.",
+  "changed_files": [],
+  "validation": [
+    "PR #522 head matches 4b5e3b1da62ea02d24d37c943683f9d865e22f92; diff and commit checks inspected.",
+    "workspace_context_restore/run.sh is executable (0755) and Bash syntax passes.",
+    "Focused pytest: 12 passed, 1 failed because the fixture's Docker fallback runs initdb as root.",
+    "The same fixture passes only when externally overridden with --user postgres; that is not what the committed script does.",
+    "workspace-context/tests/static.sh passes; Helm lint and enabled Helm render pass.",
+    "Current-run pipeline CI passes for this run; GitHub reports no checks for the PR branch.",
+    "Rendered positive checks: read-only graph PVC, repository Secret/mount/connect, distinct restore IDs, restored DB pg_restore path, exact cleanup names."
+  ],
+  "blockers": [
+    "HIGH: fixture Docker fallback invokes postgres:18-bookworm without --user postgres; pytest fails with initdb cannot be run as root. Set the container user or make the documented skip path apply.",
+    "HIGH: backup.yaml writes graph-manifest.sha256 (path/size/SHA) but never copies it into the DB snapshot; gated.yaml parses the unrelated checksum manifest as graph metadata, so graph restore verification fails. Bundle and consume the actual manifest.",
+    "HIGH: gated.yaml only mkdir -p's /restore/db and /restore/graph-artifacts; stale files survive on the retained PVC, so paths are not fresh and verification can be contaminated. Remove/recreate both before Kopia restore."
+  ],
+  "next_action": "Route to code to fix the fixture runtime user, bundle/restore the actual graph manifest, and recreate fresh restore paths; rerun focused pytest, static/Helm checks, and loop-6 review. Do not approve or deploy.",
+  "route_to": "code",
+  "risk_level": "high",
+  "independent_lanes": ["fixture-and-restore-contract"],
+  "requires_council": false
+}

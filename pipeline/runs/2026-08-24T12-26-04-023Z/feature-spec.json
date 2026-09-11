@@ -1,0 +1,179 @@
+{
+  "meta": {
+    "id": "SPEC-deployment-controller-release-handoff-91",
+    "title": "Authenticated verifier-to-publisher release recovery",
+    "author": "manager council",
+    "created_at": "2026-08-24T13:30:00Z",
+    "version": "1.0.0"
+  },
+  "feature": {
+    "problem_statement": "Automatic Release dispatched Release Verify with GITHUB_TOKEN, but Publish Release depended on the suppressed downstream workflow_run event; v0.6.13 is therefore tagged and verified but unpublished.",
+    "goals": [
+      "Explicitly authenticate and dispatch Publish Release only after exact-source verification succeeds.",
+      "Automatically resume the immutable unpublished v0.6.13 candidate without allocating v0.6.14.",
+      "Preserve verified artifacts, attestations, provenance, serialization, and create-only publication semantics."
+    ],
+    "non_goals": [
+      "Manually tag, dispatch, recreate, move, or publish v0.6.13.",
+      "Change Codicarium infrastructure consumers in this repository.",
+      "Retain the old workflow_run publisher trigger on the normal release path."
+    ],
+    "scope_in": [
+      "Automatic Release planning and exact-CI recovery.",
+      "Release Verify privileged source-free handoff.",
+      "Publish Release authenticated workflow_dispatch validation.",
+      "Publisher provenance and subject-evidence trigger migration with explicit historical opt-in.",
+      "Focused workflow, planner, provenance, security, idempotence, and live acceptance tests."
+    ],
+    "scope_out": [
+      "Kubernetes, Argo CD, or live deployment changes.",
+      "The codicarium/infra attestation verifier tracked separately by infra issue #1184."
+    ]
+  },
+  "requirements": [
+    {
+      "id": "REQ-001",
+      "priority": "MUST",
+      "statement": "Release Verify MUST explicitly dispatch Publish Release only after its exact verification job succeeds and MUST NOT depend on token-generated workflow recursion.",
+      "rationale": "GitHub suppresses downstream events produced by the default GITHUB_TOKEN."
+    },
+    {
+      "id": "REQ-002",
+      "priority": "MUST",
+      "statement": "The handoff MUST run without checkout, shell, or repository source execution and alone receive actions:write and checks:write; tag, release, package, and OIDC writes remain confined to existing trusted stages.",
+      "rationale": "The new privileged boundary must be minimal and unavailable to PR or untrusted code."
+    },
+    {
+      "id": "REQ-003",
+      "priority": "MUST",
+      "statement": "Before any write, Publish Release MUST validate its trusted main revision and exact verifier, handoff check, coordinator, coordinator check, CI, tag, source SHA, run, attempt, workflow path, event, repository, ref, status, conclusion, and external-ID bindings.",
+      "rationale": "workflow_dispatch inputs alone are forgeable and must fail closed."
+    },
+    {
+      "id": "REQ-004",
+      "priority": "MUST",
+      "statement": "The release planner MUST prioritize the highest protected-main-reachable stable tag that lacks a public release or has its exact draft, preserve that tag's source SHA, and resume it before planning any later version.",
+      "rationale": "The existing immutable v0.6.13 must be published rather than skipped or superseded."
+    },
+    {
+      "id": "REQ-005",
+      "priority": "MUST",
+      "statement": "When a resumed source differs from the triggering main CI SHA, Automatic Release MUST discover and validate the exact successful CI push run and attempt for the resumed source before dispatching verification.",
+      "rationale": "Every release remains bound to CI success for its exact source revision."
+    },
+    {
+      "id": "REQ-006",
+      "priority": "MUST",
+      "statement": "Tag selection and publication MUST remain non-canceling and serialized by candidate or tag, create-only, and idempotent; existing matching public state is a no-op and any conflicting or duplicate identity fails closed.",
+      "rationale": "Concurrent merges and reruns must never move tags, allocate the same version, or recreate releases."
+    },
+    {
+      "id": "REQ-007",
+      "priority": "MUST",
+      "statement": "Publisher artifacts, attestations, release graph, manifest, chart, and image promotion MUST remain bound to the validated verifier run, attempt, tag, and source SHA.",
+      "rationale": "The existing verified artifact and provenance stages must be preserved rather than bypassed."
+    },
+    {
+      "id": "REQ-008",
+      "priority": "MUST",
+      "statement": "Normal publisher provenance MUST require workflow_dispatch at refs/heads/main, while historical workflow_run claims MAY be accepted only through an explicit legacy opt-in.",
+      "rationale": "Provenance must describe the new supported trigger truthfully without silently weakening verification."
+    },
+    {
+      "id": "REQ-009",
+      "priority": "MUST",
+      "statement": "Focused tests MUST cover resumed v0.6.13 for both releasable and non-releasable follow-up commits, exact CI lookup, invalid identities, failed verifier states, reruns, concurrent candidates, permissions, provenance, artifact binding, and absence of workflow_run recursion.",
+      "rationale": "The release state machine and trust boundary require deterministic regression evidence."
+    },
+    {
+      "id": "REQ-010",
+      "priority": "MUST",
+      "statement": "Merging the recovery PR MUST automatically publish v0.6.13 at ad52dfcbc45d71eccad1d49fbd905161af7a44b1 through successful Release Verify and Publish Release runs, with no v0.6.14 tag or release and no manual release action.",
+      "rationale": "This is the live acceptance proof and safely completes the interrupted release."
+    }
+  ],
+  "acceptance_criteria": [
+    {
+      "id": "AC-001",
+      "requirement_ids": ["REQ-001", "REQ-002", "REQ-003"],
+      "scenario": "Given exact Release Verify succeeds, when its source-free handoff runs, then a bound successful check is created or reused and Publish Release is explicitly dispatched at trusted main; fabricated or failed identities cannot reach a write."
+    },
+    {
+      "id": "AC-002",
+      "requirement_ids": ["REQ-004", "REQ-005"],
+      "scenario": "Given unpublished v0.6.13 at source A and a descendant chore or fix merge B, when Automatic Release plans, then it resumes v0.6.13 at A using A's exact successful CI run and never plans v0.6.14."
+    },
+    {
+      "id": "AC-003",
+      "requirement_ids": ["REQ-006", "REQ-007"],
+      "scenario": "Given concurrent or repeated recovery attempts, when state is re-read under concurrency, then one immutable publication proceeds, exact public state is a no-op, and all artifacts remain bound to the validated verifier identity."
+    },
+    {
+      "id": "AC-004",
+      "requirement_ids": ["REQ-008"],
+      "scenario": "Given new and historical publisher evidence, when provenance is verified, then workflow_dispatch is required normally and workflow_run succeeds only with explicit legacy opt-in."
+    },
+    {
+      "id": "AC-005",
+      "requirement_ids": ["REQ-009"],
+      "scenario": "Given the implementation head, when focused release-flow, policy, provenance, actionlint, repository validation, and diff checks run, then all positive and negative cases pass."
+    },
+    {
+      "id": "AC-006",
+      "requirement_ids": ["REQ-010"],
+      "scenario": "Given the recovery PR merges after protected checks, when its exact-main CI succeeds, then Automatic Release resumes v0.6.13, Release Verify and Publish Release succeed, the public manifest source is ad52dfc and descends from Kafka fix 989799c, requested OCI digests are reported, and v0.6.14 does not exist."
+    }
+  ],
+  "test_plan": [
+    {
+      "id": "TST-001",
+      "type": "unit",
+      "requirement_ids": ["REQ-004", "REQ-005", "REQ-006"],
+      "approach": "Use temporary Git histories and mocked GitHub state to test pending stable-tag priority, source preservation, exact CI recovery, conflict handling, reruns, and concurrent candidates."
+    },
+    {
+      "id": "TST-002",
+      "type": "unit",
+      "requirement_ids": ["REQ-001", "REQ-002", "REQ-003", "REQ-009"],
+      "approach": "Assert workflow triggers, least privileges, source-free handoff, deterministic external IDs, explicit dispatch, trusted-main revision, and rejection of every mismatched run/check/input identity and failed verifier state."
+    },
+    {
+      "id": "TST-003",
+      "type": "integration",
+      "requirement_ids": ["REQ-007", "REQ-008", "REQ-009"],
+      "approach": "Run release-flow, release-graph, provenance, publisher subject-evidence, artifact download, repository validation, actionlint, and diff checks for normal and explicit legacy trigger policies."
+    },
+    {
+      "id": "TST-004",
+      "type": "e2e",
+      "requirement_ids": ["REQ-010"],
+      "approach": "Merge the PR after checks; observe automatic CI, coordinator, verifier, and publisher runs; verify the immutable tag, public release, manifest source/ancestry, OCI digests, and absence of v0.6.14 without manual actions."
+    }
+  ],
+  "traceability": [
+    {"requirement_id":"REQ-001","acceptance_ids":["AC-001"],"test_ids":["TST-002"],"review_checks":["Publisher has no workflow_run trigger and verifier dispatch follows successful verification."],"validation_checks":["Workflow policy tests and actionlint pass."]},
+    {"requirement_id":"REQ-002","acceptance_ids":["AC-001"],"test_ids":["TST-002"],"review_checks":["Audit every workflow permission and checkout boundary."],"validation_checks":["Only the handoff owns actions/checks write and only trusted publisher jobs own publication writes."]},
+    {"requirement_id":"REQ-003","acceptance_ids":["AC-001"],"test_ids":["TST-002"],"review_checks":["Review all API-derived identities and fail-closed branches before writes."],"validation_checks":["All fabricated run, attempt, check, workflow, ref, SHA, repository, and revision fixtures fail."]},
+    {"requirement_id":"REQ-004","acceptance_ids":["AC-002"],"test_ids":["TST-001"],"review_checks":["Review protected-main reachability and pending-release priority."],"validation_checks":["Chore and fix follow-ups both resume v0.6.13 at A and never output v0.6.14."]},
+    {"requirement_id":"REQ-005","acceptance_ids":["AC-002"],"test_ids":["TST-001"],"review_checks":["Review CI listing filters and duplicate selection."],"validation_checks":["Only the exact successful CI push run on main for source A is accepted."]},
+    {"requirement_id":"REQ-006","acceptance_ids":["AC-003"],"test_ids":["TST-001"],"review_checks":["Audit concurrency and create-only mutations."],"validation_checks":["Rerun, draft, public no-op, conflict, and concurrent-candidate fixtures pass."]},
+    {"requirement_id":"REQ-007","acceptance_ids":["AC-003"],"test_ids":["TST-003"],"review_checks":["Trace verifier identity through every artifact and manifest input."],"validation_checks":["Release graph and artifact-binding suites pass."]},
+    {"requirement_id":"REQ-008","acceptance_ids":["AC-004"],"test_ids":["TST-003"],"review_checks":["Review normal and legacy provenance branches separately."],"validation_checks":["workflow_run fails without and succeeds only with the legacy flag."]},
+    {"requirement_id":"REQ-009","acceptance_ids":["AC-005"],"test_ids":["TST-001","TST-002","TST-003"],"review_checks":["Map each council risk to a focused positive and negative test."],"validation_checks":["All focused and repository validation commands pass at PR head."]},
+    {"requirement_id":"REQ-010","acceptance_ids":["AC-006"],"test_ids":["TST-004"],"review_checks":["No manual tag, dispatch, or release action is used."],"validation_checks":["Public v0.6.13 source, ancestry, runs, manifest, digests, and no-v0.6.14 state are verified and recorded on issue #91."]}
+  ],
+  "quality_gates": {
+    "spec_review_required": true,
+    "testability_required": true,
+    "traceability_required": true
+  },
+  "council": {
+    "perspectives": [
+      {"role":"planner","summary":"Resume the highest unpublished stable tag before SemVer planning and recover exact CI for its preserved source."},
+      {"role":"security","summary":"Use a source-free least-privilege verifier handoff and validate the complete run/check/source chain before publisher writes."},
+      {"role":"QA","summary":"Cover pending-candidate priority, recursion suppression, invalid identities, reruns, concurrency, provenance, and live v0.6.13 acceptance."}
+    ],
+    "consensus_summary": "Explicit trusted dispatch is the smallest supported repair; v0.6.13 recovery takes precedence over new version planning, and every stage remains exact-source-bound, serialized, create-only, and fail closed.",
+    "open_questions": []
+  }
+}

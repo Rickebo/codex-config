@@ -1,0 +1,27 @@
+{
+  "stage": "spec",
+  "status": "pass",
+  "summary": "Council and traceable specification define fail-closed real-artifact builds, complete current-schema smoke, current UI/API assertions, immutable final-image identity, and failure cleanup for issue #128.",
+  "changed_files": [],
+  "validation": [
+    "pipeline-spec-check: ok",
+    "Three independent perspectives synthesized",
+    "Six requirements trace to six acceptance criteria and six test plans"
+  ],
+  "blockers": [
+    "Stable existing UI marker/current API route and release digest wiring must be selected during implementation without inventing application behavior."
+  ],
+  "next_action": "Delegate disjoint artifact, migration, smoke/release, and QA implementation lanes in a dedicated issue-128 worktree.",
+  "route_to": "code",
+  "risk_level": "high",
+  "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T23-29-46-140Z/issue-128-spec.json",
+  "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T23-29-46-140Z/issue-128-spec-check.json",
+  "council_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T23-29-46-140Z/issue-128-council.json",
+  "requires_council": true,
+  "independent_lanes": [
+    "Docker artifact strictness and placeholder removal",
+    "Canonical migration/parity smoke mechanism",
+    "Current API/UI and immutable final-image release wiring",
+    "Independent exact-head review and QA"
+  ]
+}

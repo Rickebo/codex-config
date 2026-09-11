@@ -1,0 +1,39 @@
+{
+  "body": {
+    "schema": "codicarium.publisher-mutation-receipt/v1",
+    "kind": "publisher-mutation-receipt",
+    "dispatch_receipt_sha256": "67839591a8190e98fc94ecf6ddff6adc4425f512e29e22150fca1074348f259b",
+    "sequence": "1",
+    "previous_receipt_sha256": "67839591a8190e98fc94ecf6ddff6adc4425f512e29e22150fca1074348f259b",
+    "mutation": "release-create",
+    "request_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+    "readback_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+    "publisher_ref": "refs/heads/main",
+    "publisher_revision": "2222222222222222222222222222222222222222",
+    "publisher_run_id": "9005001",
+    "publisher_run_attempt": "1",
+    "issued_at": "2026-01-01T00:01:00Z",
+    "issuer": {
+      "kind": "github-actions",
+      "repository_id": "1303901324",
+      "workflow": "codicarium/deployment-controller/.github/workflows/publish-release-v2.yaml",
+      "ref": "refs/heads/main",
+      "workflow_sha": "2222222222222222222222222222222222222222",
+      "run_id": "9005001",
+      "run_attempt": "1"
+    },
+    "target": {
+      "release_id": "9006001",
+      "tag": "v0.6.14",
+      "target_commitish": "1111111111111111111111111111111111111111",
+      "draft": true,
+      "prerelease": false
+    }
+  },
+  "signature": {
+    "format": "ed25519-jcs/v1",
+    "kid": "kPrK_qmxVWaYVA9wwBF6Iuo3vVzz7TxHCTwXBygrS4k",
+    "payload_sha256": "64bcb7393ddb73fdf0f0483e14908c506d5c47a642e25566a113185fb1cb945c",
+    "signature_base64url": "WBDueh_jpLD4fm1Bq9LHbD2dYz-amxaEYFSIz-5txS0yAZVRiNZk0IoQ888EAZ-qw8xksAQRl-5n0zOe8DNEDA"
+  }
+}

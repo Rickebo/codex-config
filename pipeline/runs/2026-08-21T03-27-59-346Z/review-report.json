@@ -1,0 +1,13 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Independent review found a P2 documentation-checker weakness: maintained docs only require an incidental 0.1.29 token, not that their actual declared desired version matches the authoritative descriptor.",
+  "changed_files": [],
+  "validation": ["Exact-head review at fa4a93c2e1992c96c42ad5192c753d9aad337d78"],
+  "blockers": ["Parse each maintained document's actual desired chart version declaration and compare it to .codicarium/dev/deploy.yaml; add a stale-declaration regression fixture."],
+  "next_action": "Remediate the checker, rerun docs/full CI, and obtain a fresh exact-head review.",
+  "route_to": "code",
+  "risk_level": "low",
+  "commit": "fa4a93c2e1992c96c42ad5192c753d9aad337d78",
+  "findings": [{"severity":"P2","file":"tools/check_docs_consistency.py","summary":"Incidental version token can mask stale declaration."}]
+}

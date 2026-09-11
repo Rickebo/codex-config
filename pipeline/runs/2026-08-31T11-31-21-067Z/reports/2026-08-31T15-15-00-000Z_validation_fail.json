@@ -1,0 +1,29 @@
+{
+  "stage": "validation",
+  "status": "fail",
+  "summary": "Delivery validation rejected exact head 0f4769b0 because current remote infra main e56e0e95 is not its ancestor; the branch diverges at e3ff9662. The clean review against stale local main ade8e7d0 does not cover current upstream integration.",
+  "changed_files": [],
+  "validation": [
+    "Remote codicarium/infra main: e56e0e9513a647fabe973cc1fc53b756453d1529",
+    "Candidate head: 0f4769b0b5d7aa12a72cc194c9269186fc3f9e61",
+    "Merge base: e3ff966271dc76af47387e906a68dcd6cdc90360",
+    "git merge-base --is-ancestor remote-main candidate: exit 1",
+    "Remote candidate branch does not exist; no push occurred"
+  ],
+  "blockers": [
+    "Current upstream main is not integrated into the candidate branch",
+    "Fresh review and tests are required after integration"
+  ],
+  "next_action": "Route to Luna code owner to merge current infra main, resolve conflicts, and rerun exact-head review/test/validation.",
+  "route_to": "code",
+  "risk_level": "critical",
+  "issues": [
+    {
+      "id": "VAL-REV8-001",
+      "title": "Candidate does not contain current infra main",
+      "severity": "high",
+      "details": "Remote main e56e0e95 is not an ancestor of candidate 0f4769b0; review used stale local main ade8e7d0.",
+      "owner_stage": "code"
+    }
+  ]
+}

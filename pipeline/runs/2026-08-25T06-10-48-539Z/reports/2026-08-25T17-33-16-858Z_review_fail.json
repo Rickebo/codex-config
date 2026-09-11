@@ -1,0 +1,39 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Fresh full-branch backend and QA/system review at clean HEAD 9f4102e found two in-scope blockers: null/non-object Kafka payloads can escape poison-event DLQ handling and terminate the Knowledge consumer, and generated workspace-web fixture/report digests are stale after Workspace, Source, and Model OpenAPI changes. Focused backend tests passed; FastSystem passed 71 tests but failed its two compatibility gates.",
+  "changed_files": [],
+  "validation": [
+    "Backend reviewer inspected the complete origin/main...9f4102e candidate and re-evaluated both prior loop-4 blockers",
+    "Resolver, composition, and generation tests passed 30/30; lifecycle tests passed 25/25; Kafka tests passed 7/7",
+    "Knowledge Worker Release build passed with 0 warnings and 0 errors; validate-specs.py passed",
+    "QA reviewer traced REQ-001 through REQ-008 across the complete 64-path candidate diff",
+    "HTTP resolver tests passed 18/18; focused lifecycle/fence/deletion tests passed 4/4; focused Kafka tests passed 4/4",
+    "Model workload-generation tests passed 2/2 and Source workload-proof test passed 1/1",
+    "FastSystem ran 73 tests: 71 passed and two generated compatibility gates failed",
+    "Candidate remained clean at exact HEAD 9f4102ec5ce93111e876f0c4d2d9abd4bf5842f9"
+  ],
+  "blockers": [
+    "KnowledgeEventConsumer and DeadLetterRedactor do not safely classify Kafka null payloads or valid non-object JSON; ArgumentNullException/InvalidOperationException can bypass DLQ handling, terminate the worker, and leave REQ-004 unmet.",
+    "contracts/workspace-web/v1/fixture-manifest.json and the checked-in compatibility report retain stale hashes for changed Workspace, Source, and Model OpenAPI files, failing both FastSystem compatibility gates and REQ-008."
+  ],
+  "next_action": "Return to code for null/non-object poison-event classification and regressions plus deterministic fixture/report regeneration, then rerun focused and FastSystem compatibility gates before another full review.",
+  "route_to": "code",
+  "risk_level": "high",
+  "issues": [
+    {
+      "id": "REV5-BE-001",
+      "title": "Null and non-object Kafka payloads bypass poison-event handling",
+      "severity": "high",
+      "details": "Workers.cs ProcessEventAsync and DeadLetterRedactor assume non-null object JSON. Guard tombstones and non-object roots, keep redaction null/root-kind safe, and prove DLQ publication plus continued next-offset processing.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV5-QA-001",
+      "title": "Generated contract compatibility artifacts are stale",
+      "severity": "high",
+      "details": "Regenerate the workspace-web fixture manifest and compatibility report after Workspace, Source, and Model OpenAPI changes, then rerun both FastSystem compatibility gates and byte-for-byte generator checks.",
+      "owner_stage": "code"
+    }
+  ]
+}

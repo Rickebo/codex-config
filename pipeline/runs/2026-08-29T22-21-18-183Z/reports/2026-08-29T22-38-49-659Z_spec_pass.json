@@ -1,0 +1,29 @@
+{
+  "stage": "spec",
+  "status": "pass",
+  "summary": "Three-perspective Luna council and spec checker approved a narrow documentation correction plus exact-head merge and immutable workflow recovery, with a live trusted-main GitHub evidence gate and no deployment or authorization activation.",
+  "changed_files": [
+    "/home/rickebo/.codex/pipeline/runs/2026-08-29T22-21-18-183Z/feature-spec.json",
+    "/home/rickebo/.codex/pipeline/runs/2026-08-29T22-21-18-183Z/spec-check.json",
+    "/home/rickebo/.codex/pipeline/runs/2026-08-29T22-21-18-183Z/council.md"
+  ],
+  "validation": [
+    "pipeline-spec-check ok=true with all five quality gates true and no warnings",
+    "Independent Luna planner, security reviewer, and QA lead council inputs incorporated",
+    "Current effective GitHub evidence shows one trusted org owner/admin/infra maintainer, strict five-check main rules, no bypass actors, and immutable v* tags",
+    "No repository, tag, release, deployment, or live authorization mutation occurred during spec"
+  ],
+  "blockers": [],
+  "next_action": "Delegate the documentation-only correction to Luna, validate it locally, then require independent exact-head review and fresh protected CI.",
+  "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-29T22-21-18-183Z/feature-spec.json",
+  "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-08-29T22-21-18-183Z/spec-check.json",
+  "council_file": "/home/rickebo/.codex/pipeline/runs/2026-08-29T22-21-18-183Z/council.md",
+  "requires_council": true,
+  "route_to": "code",
+  "independent_lanes": [
+    "Luna release planner",
+    "Luna security reviewer",
+    "Luna QA lead"
+  ],
+  "risk_level": "critical"
+}

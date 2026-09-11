@@ -1,0 +1,1 @@
+Advance Codicarium authorization hardening from merged access-controller repository identity checks through merge-inert Kafka staging and deployment-controller external RoleBinding admission enforcement, with Luna implementation, independent review, exact-head CI, and no unsafe live activation

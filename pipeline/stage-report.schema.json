@@ -1,0 +1,241 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rickebo.local/codex/pipeline/stage-report.schema.json",
+  "title": "Codex Pipeline Stage Report",
+  "type": "object",
+  "required": [
+    "stage",
+    "status",
+    "summary",
+    "changed_files",
+    "validation",
+    "blockers",
+    "next_action"
+  ],
+  "properties": {
+    "stage": {
+      "type": "string",
+      "enum": ["spec", "code", "review", "test", "validation"]
+    },
+    "status": {
+      "type": "string",
+      "enum": ["ready_for_review", "blocked", "pass", "fail"]
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 600
+    },
+    "changed_files": {
+      "type": "array",
+      "maxItems": 20,
+      "items": {
+        "type": "string",
+        "maxLength": 240
+      }
+    },
+    "validation": {
+      "type": "array",
+      "maxItems": 12,
+      "items": {
+        "type": "string",
+        "maxLength": 280
+      }
+    },
+    "blockers": {
+      "type": "array",
+      "maxItems": 8,
+      "items": {
+        "type": "string",
+        "maxLength": 280
+      }
+    },
+    "next_action": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 300
+    },
+    "spec_file": {
+      "type": "string",
+      "minLength": 1
+    },
+    "spec_check_file": {
+      "type": "string",
+      "minLength": 1
+    },
+    "council_file": {
+      "type": "string",
+      "minLength": 1
+    },
+    "requires_council": {
+      "type": "boolean"
+    },
+    "independent_lanes": {
+      "type": "array",
+      "maxItems": 12,
+      "items": {
+        "type": "string",
+        "maxLength": 160
+      }
+    },
+    "route_to": {
+      "type": "string",
+      "enum": ["spec", "code", "review", "test", "validation", "done"]
+    },
+    "risk_level": {
+      "type": "string",
+      "enum": ["low", "medium", "high", "critical"]
+    },
+    "issues": {
+      "type": "array",
+      "maxItems": 15,
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "severity"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 180
+          },
+          "severity": {
+            "type": "string",
+            "enum": ["low", "medium", "high", "critical"]
+          },
+          "details": {
+            "type": "string",
+            "maxLength": 800
+          },
+          "owner_stage": {
+            "type": "string",
+            "enum": ["code", "review", "test", "validation"]
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": { "stage": { "const": "spec" } }
+      },
+      "then": {
+        "properties": {
+          "status": { "enum": ["pass", "fail"] }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "stage": { "const": "code" } }
+      },
+      "then": {
+        "properties": {
+          "status": { "enum": ["ready_for_review", "blocked"] }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "stage": { "enum": ["review", "test", "validation"] } }
+      },
+      "then": {
+        "properties": {
+          "status": { "enum": ["pass", "fail"] }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "stage": { "const": "spec" },
+          "status": { "const": "pass" }
+        }
+      },
+      "then": {
+        "properties": {
+          "route_to": { "const": "code" }
+        },
+        "required": ["route_to", "spec_file", "spec_check_file"]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "stage": { "const": "spec" },
+          "status": { "const": "fail" }
+        }
+      },
+      "then": {
+        "properties": {
+          "route_to": { "const": "spec" }
+        },
+        "required": ["route_to"]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "stage": { "const": "review" },
+          "status": { "const": "fail" }
+        }
+      },
+      "then": {
+        "properties": {
+          "route_to": { "const": "code" }
+        },
+        "required": ["route_to"]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "stage": { "const": "test" },
+          "status": { "const": "fail" }
+        }
+      },
+      "then": {
+        "properties": {
+          "route_to": { "const": "code" }
+        },
+        "required": ["route_to"]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "stage": { "const": "validation" },
+          "status": { "const": "fail" }
+        }
+      },
+      "then": {
+        "properties": {
+          "route_to": {
+            "enum": ["code", "review", "test"]
+          }
+        },
+        "required": ["route_to"]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "stage": { "const": "validation" },
+          "status": { "const": "pass" }
+        }
+      },
+      "then": {
+        "properties": {
+          "route_to": { "const": "done" }
+        }
+      }
+    }
+  ],
+  "additionalProperties": false
+}

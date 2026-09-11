@@ -1,0 +1,21 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Luna fixed REV-001 on PR #1292 at new exact head 9dbb5de9 by exporting and asserting the retained historical v0.6.12 .21 endpoint only inside its isolated fixture; production .10 contracts are unchanged.",
+  "changed_files": [
+    "tests/test-deployment-controller-v0612-upgrade-state.py"
+  ],
+  "validation": [
+    "Historical v0.6.12 isolated suite passed 7/7.",
+    "Prior bootstrap 32, server-finder 36, and rollback/upgrade/ARC 94 focused tests passed.",
+    "Python compile, Bash syntax, static checker, and git diff checks passed.",
+    "Branch and PR exact head verified as 9dbb5de971c54fedd664e5bab0484a299ce71376.",
+    "Push created new CI run 33293299332; no failed-run retry was requested.",
+    "No live workflow dispatch or cluster mutation occurred."
+  ],
+  "blockers": [],
+  "next_action": "Independently review the two-line historical fixture correction and re-evaluate the exact PR head before entering test stage.",
+  "route_to": "review",
+  "risk_level": "high",
+  "independent_lanes": ["historical v0.6.12 fixture correction"]
+}

@@ -1,0 +1,35 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Issue #128 implementation is committed at 399e6f2b87adaf842bdc27f6e3afbb3e84870999: release builds are fail-closed, smoke uses complete current schema and runtime checks, and final-image digest/platform plus negative cleanup fixtures are covered.",
+  "changed_files": [
+    ".github/workflows/release.yml",
+    "Dockerfile",
+    "Makefile",
+    "apps/web/index.html",
+    "docs/deployment.md",
+    "tools/check_openapi/main.go",
+    "tools/check_openapi/main_test.go",
+    "tools/docker_smoke.sh",
+    "tools/test_docker_smoke.py"
+  ],
+  "validation": [
+    "make ci IMAGE_TAG=issue-128 passed",
+    "Docker build and real Docker/PostgreSQL smoke passed",
+    "tools/test_docker_smoke.py passed 7 tests",
+    "go test ./tools/check_openapi, make openapi-check, migration asset check, and git diff check passed"
+  ],
+  "blockers": [
+    "Independent exact-head review must confirm smoke script, release wiring, and OpenAPI parity correctness.",
+    "Hosted validate and final release-image evidence remain required before merge/closure."
+  ],
+  "next_action": "Run independent review and exact-head QA against 399e6f2, then advance through test and validation gates.",
+  "route_to": "review",
+  "risk_level": "high",
+  "independent_lanes": [
+    "Docker/smoke/migration correctness review",
+    "Release workflow and immutable artifact QA",
+    "OpenAPI/static/cleanup regression validation"
+  ],
+  "requires_council": true
+}

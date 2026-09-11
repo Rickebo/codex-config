@@ -1,0 +1,51 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Clean HEAD 447dee9 closes the final Source sequence-gap and Insights crash-recovery blockers. Source now returns the original persisted exact-sequence event under workload HMAC; Knowledge durably claims, retries, blocks, requeues, and re-ingests only the minimum missing sequence; Insights retains an in-progress Kafka offset until its durable lease can be reclaimed. Focused and complete affected suites, static gates, formatting, cleanup audits, independent reviews, and published-baseline impact analysis are green.",
+  "changed_files": [
+    "contracts/source-service/v1/openapi.yaml",
+    "contracts/workspace-web/v1/fixture-manifest.json",
+    "services/insights-service/src/InsightsService.Infrastructure/Migrations/002_durable_snapshot_processing.sql",
+    "services/insights-service/src/InsightsService.Infrastructure/PostgresInsightsStore.cs",
+    "services/insights-service/src/InsightsService.Infrastructure/SourceSnapshotProcessor.cs",
+    "services/insights-service/src/InsightsService.Worker/SourceEventOffsetPolicy.cs",
+    "services/insights-service/src/InsightsService.Worker/Workers.cs",
+    "tests/insights-service/InsightsService.IntegrationTests/PostgresInsightsStoreTests.cs",
+    "services/knowledge-service/src/KnowledgeService.Infrastructure/Migrations/001_initial.sql",
+    "services/knowledge-service/src/KnowledgeService.Infrastructure/NpgsqlKnowledgeRepository.cs",
+    "services/knowledge-service/src/KnowledgeService.Infrastructure/SourceSnapshotGapClient.cs",
+    "services/knowledge-service/src/KnowledgeService.Worker/SourceGapReconciliationWorker.cs",
+    "services/knowledge-service/src/KnowledgeService.Worker/Workers.cs",
+    "tests/knowledge-service/KnowledgeService.IntegrationTests/SourceGapRepositoryTests.cs",
+    "tests/knowledge-service/KnowledgeService.IntegrationTests/SourceSnapshotGapClientTests.cs",
+    "tests/knowledge-service/KnowledgeService.IntegrationTests/KafkaIntegrationTests.cs",
+    "services/source-service/src/SourceService.Api/Program.cs",
+    "services/source-service/src/SourceService.Infrastructure/SourceDatabase.ReadModels.cs",
+    "tests/source-service/SourceService.Integration.Tests/ApiSmokeTests.cs",
+    "tests/system/WorkspaceManager.SystemTests/Infrastructure/SystemContainerResources.cs"
+  ],
+  "validation": [
+    "Clean committed candidate HEAD is 447dee9ae7c0ee45d637f53cb6ff3e0cab61d89a; merge base is published main 72728d1366f34fc22e0852245ea61787e54ead7d",
+    "Source complete solution passed 35/35: contract 5, domain 12, provider 12, integration 6; Release build passed with 0 warnings and 0 errors",
+    "Knowledge complete integration passed 111/111 and domain 19/19; runtime passed 3/3; after mechanical formatting the Release build and final Source-gap/client/race subset passed 8/8",
+    "Insights post-fix unit passed 12/12 and complete integration passed 17/17; Release build and formatting passed with 0 warnings and 0 errors",
+    "Permanent-gap proof starts from real repository ingestion of sequence 1 then 3, fetches authoritative sequence 2 through the worker contract, drains 3, reaches checkpoint 3, leaves no pending row, and creates exactly three builds",
+    "Gap claims serialize the absolute lowest pending trigger per track generation; blocked, delayed, or leased lower triggers cannot be bypassed; terminal failures require explicit requeue and transient failures use capped persisted backoff",
+    "Source exact-sequence API proves workspace/track/generation/sequence scoping, HMAC replay rejection, retained-invalid 410 behavior, and independent same-sequence events across recreated generations",
+    "Insights crash/restart regression proves active-lease redelivery retains and seeks the same Kafka offset, reclaims after expiry, activates exactly once, and does not permit later partition offsets to overtake",
+    "Independent backend review withdrew its drain-fence race after the deterministic overlap test and current lock trace; independent cross-service review withdrew stale null-causation finding; Insights fix received an independent no-blocker review",
+    "python3 scripts/validate-specs.py, fixture generator --check, fixture generator test, git diff checks, Source container configuration, and Knowledge/Insights formatter verification passed",
+    "Explicit Docker context default resolved unix:///var/run/docker.sock; post-suite audits found no Testcontainers-labeled containers, networks, volumes, testhost, or dotnet test processes",
+    "Workspace Context revision dba39f36-734e-4cfd-b68a-40e2fd5961ab analyzed 94 paths against verified baseline 72728d, change-set digest 106182f6b366931abef61567b34442c49557eb471c8119d9a8da7bb379cb7246"
+  ],
+  "blockers": [],
+  "next_action": "Advance to formal review at clean HEAD 447dee9. Reconfirm the settled 94-path branch from backend, cross-service, and QA perspectives; waive no new blocker and do not enter test unless review remains clean.",
+  "route_to": "review",
+  "risk_level": "high",
+  "independent_lanes": [
+    "backend transactional ordering, generation fences, gap leases, idempotency, and crash recovery",
+    "cross-service Source/Knowledge/Insights contract and workload-authentication compatibility",
+    "QA acceptance trace, negative paths, cleanup, and test coverage"
+  ],
+  "requires_council": false
+}

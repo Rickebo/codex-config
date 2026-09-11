@@ -1,0 +1,21 @@
+{
+  "stage": "spec",
+  "status": "pass",
+  "summary": "Council approved a PR-only correction from the stale control-node upgrade identity to the typed stable single-host kube-vip frontend, with exact fail-closed validation and classified preservation of legitimate node, post-DNAT, and historical references.",
+  "changed_files": [],
+  "validation": [
+    "Spec checker passed with 5 traced requirements, 4 acceptance scenarios, 4 tests, and zero warnings.",
+    "Planner, security reviewer, and QA perspectives recorded in council.json.",
+    "Live endpoint evidence confirms typed VIP 10.99.0.10 and backend control node 10.99.0.21 serve the same K3s API certificate.",
+    "Live dispatch remains separately gated by infra #1259 and #1289."
+  ],
+  "blockers": [],
+  "next_action": "Assign the code stage to a Luna DevOps implementation agent in a workspace-root worktree, with no workflow dispatch or live mutation.",
+  "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T03-44-06-062Z/feature-spec.json",
+  "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T03-44-06-062Z/spec-check.json",
+  "council_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T03-44-06-062Z/council.json",
+  "requires_council": true,
+  "independent_lanes": ["active guarded upgrade endpoint contract and regression coverage"],
+  "route_to": "code",
+  "risk_level": "high"
+}

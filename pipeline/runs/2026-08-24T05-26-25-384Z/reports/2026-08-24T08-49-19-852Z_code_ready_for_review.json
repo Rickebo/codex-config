@@ -1,0 +1,38 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Implemented the council-approved legacy quarantine compatibility at exact commit 9c4f74120f47a90fb3041edb90f03cacedbd1adb, including modern-path preservation, terminal no-ops, exact classifier/audit semantics, optionalOldSelf CEL, and real v0.6.4 CRD migration envtest.",
+  "changed_files": [
+    "Makefile",
+    "hack/run-checks.sh",
+    "api/v1alpha1/reconciliationrequest_types.go",
+    "internal/controller/activation/legacy_preapproval.go",
+    "internal/controller/activation/legacy_preapproval_test.go",
+    "integration/suite_test.go",
+    "integration/legacy_preapproval_runtime_test.go",
+    "integration/testdata/v0.6.4/crds/README.md",
+    "integration/testdata/v0.6.4/crds/deployments.codicarium.com_reconciliationrequests.yaml",
+    "integration/testdata/v0.6.4/crds/deployments.codicarium.com_deploymentactivations.yaml",
+    "integration/testdata/v0.6.4/crds/deployments.codicarium.com_deploymentactivationproofs.yaml",
+    "integration/testdata/v0.6.4/crds/deployments.codicarium.com_repositorydeployments.yaml",
+    "config/crd/bases/deployments.codicarium.com_reconciliationrequests.yaml",
+    "charts/deployment-controller/crds/deployments.codicarium.com_reconciliationrequests.yaml"
+  ],
+  "validation": [
+    "Focused unit red/green activation tests: pass",
+    "Focused v0.6.4 CRD migration envtest: pass",
+    "Full go test ./...: pass",
+    "Full integration suite: pass",
+    "Full race suite: pass",
+    "go vet ./...: pass",
+    "Repository, chart CRD, docs-link, and diff checks: pass",
+    "make verify-generated after commit: pass",
+    "Controller-gen v0.17.3 source/chart generated parity: pass",
+    "Modern Prepare and Activate missing-approval API creates remain Invalid",
+    "Worktree clean at 9c4f74120f47a90fb3041edb90f03cacedbd1adb"
+  ],
+  "blockers": [],
+  "next_action": "Independently review exact SHA 9c4f7412 against base 989799c, including CEL creation/update semantics, generator bump, fixture fidelity, zero-write behavior, and all council acceptance criteria.",
+  "route_to": "review",
+  "risk_level": "critical"
+}

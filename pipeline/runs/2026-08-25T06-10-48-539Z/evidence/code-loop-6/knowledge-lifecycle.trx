@@ -1,0 +1,494 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="6700d9cf-c3f0-4dd9-aa14-2e1f4b0a4ccf" name="@RICKEBO 2026-08-25 23:12:46" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2026-08-25T23:12:46.0389560+02:00" queuing="2026-08-25T23:12:46.0389560+02:00" start="2026-08-25T23:12:39.4359895+02:00" finish="2026-08-25T23:15:39.6753984+02:00" />
+  <TestSettings name="default" id="854526e9-60fe-4cb6-abe4-1df5a9db05d0">
+    <Deployment runDeploymentRoot="_RICKEBO_2026-08-25_23_12_46" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="748f64b5-d16c-4f93-a138-1c24992b2759" testId="d98fea8e-273d-ce90-fe83-81b22ac081ec" testName="KnowledgeService.IntegrationTests.PostgresLifecycleTests.Produced_events_include_the_complete_required_envelope" computerName="RICKEBO" duration="00:00:00.0075620" startTime="2026-08-25T23:15:22.3620215+02:00" endTime="2026-08-25T23:15:26.7390419+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="748f64b5-d16c-4f93-a138-1c24992b2759" />
+    <UnitTestResult executionId="8753f5ba-bd60-43a6-92dc-552fc47ae26c" testId="91366935-19b2-3c84-72bd-cf86cf4332c9" testName="KnowledgeService.IntegrationTests.PostgresLifecycleTests.Duplicate_source_event_creates_one_desired_state_build_and_outbox_fact" computerName="RICKEBO" duration="00:00:00.0090265" startTime="2026-08-25T23:13:33.7906360+02:00" endTime="2026-08-25T23:13:42.6650947+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="8753f5ba-bd60-43a6-92dc-552fc47ae26c" />
+    <UnitTestResult executionId="81a819b5-6ca8-444e-8120-f0786c861853" testId="b4c39dc4-086d-6a85-9242-861a30bd9512" testName="KnowledgeService.IntegrationTests.PostgresLifecycleTests.Same_track_builds_are_serialized_and_head_moves_by_sequence" computerName="RICKEBO" duration="00:00:00.0531115" startTime="2026-08-25T23:14:24.7421922+02:00" endTime="2026-08-25T23:14:33.1824260+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="81a819b5-6ca8-444e-8120-f0786c861853" />
+    <UnitTestResult executionId="44dcdda5-3aaa-4e1e-8d74-7d4e2ca5b6de" testId="e72e7714-03e1-9a71-1c63-6ba1fbc35dbe" testName="KnowledgeService.IntegrationTests.PostgresLifecycleTests.Expired_processing_lease_is_recovered_and_fences_the_previous_owner" computerName="RICKEBO" duration="00:00:00.0182096" startTime="2026-08-25T23:14:33.1828371+02:00" endTime="2026-08-25T23:14:44.1043849+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="44dcdda5-3aaa-4e1e-8d74-7d4e2ca5b6de" />
+    <UnitTestResult executionId="303abda7-baee-4095-97e6-e0bff93da812" testId="6e90f157-45c0-68f6-c3c7-4636a39bcc51" testName="KnowledgeService.IntegrationTests.PostgresLifecycleTests.Source_event_rejects_invalid_non_null_causation(causationId: &quot;&quot;)" computerName="RICKEBO" duration="00:00:00.0005582" startTime="2026-08-25T23:12:50.0002383+02:00" endTime="2026-08-25T23:12:56.1783621+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="303abda7-baee-4095-97e6-e0bff93da812" />
+    <UnitTestResult executionId="5cb9c9ab-fdd0-4011-8e14-2660de16c250" testId="5baf328b-c91e-4408-ae4e-674d486fd47c" testName="KnowledgeService.IntegrationTests.PostgresLifecycleTests.Source_event_accepts_null_causation_from_producer_contract" computerName="RICKEBO" duration="00:00:00.0002859" startTime="2026-08-25T23:14:16.7121727+02:00" endTime="2026-08-25T23:14:24.7418393+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="5cb9c9ab-fdd0-4011-8e14-2660de16c250" />
+    <UnitTestResult executionId="171294f8-10d3-45f8-a600-d4650c3ba6e8" testId="e6e1c432-418d-27ff-ee28-b53bd6acd527" testName="KnowledgeService.IntegrationTests.PostgresLifecycleTests.Failed_next_build_preserves_last_known_good_head" computerName="RICKEBO" duration="00:00:00.0181710" startTime="2026-08-25T23:15:09.0927351+02:00" endTime="2026-08-25T23:15:12.8844920+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="171294f8-10d3-45f8-a600-d4650c3ba6e8" />
+    <UnitTestResult executionId="9602b06f-d011-4eb1-b39a-67fe09edfdf0" testId="82dc851f-c7ba-ed39-dc08-a9684570a788" testName="KnowledgeService.IntegrationTests.PostgresLifecycleTests.Stale_snapshot_replay_is_acknowledged_before_generation_resolution" computerName="RICKEBO" duration="00:00:00.0780739" startTime="2026-08-25T23:13:10.7691501+02:00" endTime="2026-08-25T23:13:17.3623814+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="9602b06f-d011-4eb1-b39a-67fe09edfdf0" />
+    <UnitTestResult executionId="a661f7bf-a871-46ea-956a-1475608ef0a2" testId="ebcc1ac2-7737-4141-0a4c-013ac620d096" testName="KnowledgeService.IntegrationTests.PostgresLifecycleTests.Generation_invalidation_and_publish_use_a_consistent_lock_order" computerName="RICKEBO" duration="00:00:00.0576628" startTime="2026-08-25T23:15:26.7393418+02:00" endTime="2026-08-25T23:15:31.1660560+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a661f7bf-a871-46ea-956a-1475608ef0a2" />
+    <UnitTestResult executionId="3ce360d9-39b9-4478-bba3-c98700b5a3dd" testId="eead5db7-ce4b-be3c-136d-26365abbcb9f" testName="KnowledgeService.IntegrationTests.PostgresLifecycleTests.Failed_build_event_reuses_the_persisted_build_context" computerName="RICKEBO" duration="00:00:00.0112706" startTime="2026-08-25T23:15:31.1663291+02:00" endTime="2026-08-25T23:15:34.8133301+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="3ce360d9-39b9-4478-bba3-c98700b5a3dd" />
+    <UnitTestResult executionId="7faab1b0-8e18-4130-91be-17509eba9d41" testId="94c20d68-2ad7-b765-0626-64f412ae0c38" testName="KnowledgeService.IntegrationTests.PostgresLifecycleTests.Source_event_requires_complete_cloud_event_envelope_before_resolution" computerName="RICKEBO" duration="00:00:00.0006947" startTime="2026-08-25T23:15:19.6196123+02:00" endTime="2026-08-25T23:15:22.3617569+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="7faab1b0-8e18-4130-91be-17509eba9d41" />
+    <UnitTestResult executionId="59e2c6f1-02ac-4426-8207-4dc554005f25" testId="47d544af-fd98-d6fd-6133-f7d396b8f50c" testName="KnowledgeService.IntegrationTests.PostgresLifecycleTests.Recreated_track_generation_starts_a_distinct_sequence_checkpoint" computerName="RICKEBO" duration="00:00:00.0204092" startTime="2026-08-25T23:13:58.4138233+02:00" endTime="2026-08-25T23:14:06.5106671+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="59e2c6f1-02ac-4426-8207-4dc554005f25" />
+    <UnitTestResult executionId="40376398-0535-43fd-b3dd-886f1e53010c" testId="ab3f779b-287f-c370-20dd-354fbf2379c0" testName="KnowledgeService.IntegrationTests.PostgresLifecycleTests.Publication_events_reuse_the_persisted_build_context" computerName="RICKEBO" duration="00:00:00.0132724" startTime="2026-08-25T23:14:44.1047714+02:00" endTime="2026-08-25T23:14:51.6239808+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="40376398-0535-43fd-b3dd-886f1e53010c" />
+    <UnitTestResult executionId="69fb1299-3f0e-4223-983c-8d07e369e9dd" testId="5916550e-5ab6-7157-25ca-4fde5663e5f7" testName="KnowledgeService.IntegrationTests.PostgresLifecycleTests.Source_event_requires_producer_owned_snapshot_and_artifact_fields" computerName="RICKEBO" duration="00:00:00.0026631" startTime="2026-08-25T23:13:03.1736629+02:00" endTime="2026-08-25T23:13:10.7676817+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="69fb1299-3f0e-4223-983c-8d07e369e9dd" />
+    <UnitTestResult executionId="0344bf37-ddb7-44b6-b70b-49ee6b6c1fab" testId="0e73374e-aa13-474a-761d-6fdc3e900b01" testName="KnowledgeService.IntegrationTests.PostgresLifecycleTests.Source_event_rejects_invalid_non_null_causation(causationId: &quot;00000000-0000-0000-0000-000000000000&quot;)" computerName="RICKEBO" duration="00:00:00.0002552" startTime="2026-08-25T23:12:56.1789165+02:00" endTime="2026-08-25T23:13:03.1730027+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="0344bf37-ddb7-44b6-b70b-49ee6b6c1fab" />
+    <UnitTestResult executionId="36b36f03-ca25-4785-9570-518f08defbea" testId="06d7788d-f43e-08c1-ca11-a903d21afd20" testName="KnowledgeService.IntegrationTests.PostgresLifecycleTests.Source_event_rejects_invalid_non_null_causation(causationId: &quot;not-a-guid&quot;)" computerName="RICKEBO" duration="00:00:00.0005093" startTime="2026-08-25T23:12:46.0278977+02:00" endTime="2026-08-25T23:12:49.9994627+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="36b36f03-ca25-4785-9570-518f08defbea" />
+    <UnitTestResult executionId="58d47c1d-520c-4e8b-86e8-6823188afe23" testId="460d2cde-92c5-5bfe-528d-84e01a8263fa" testName="KnowledgeService.IntegrationTests.PostgresLifecycleTests.Generation_fence_rejects_resolution_that_started_before_lifecycle_invalidation" computerName="RICKEBO" duration="00:00:00.0284297" startTime="2026-08-25T23:13:49.5744214+02:00" endTime="2026-08-25T23:13:58.4135022+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="58d47c1d-520c-4e8b-86e8-6823188afe23" />
+    <UnitTestResult executionId="51e3bc27-8dd1-40a1-b20f-0a0af230c85e" testId="fa923504-8436-d865-4802-2bf8ddd4afdc" testName="KnowledgeService.IntegrationTests.PostgresLifecycleTests.Lifecycle_version_replay_is_acknowledged_without_advancing_the_fence" computerName="RICKEBO" duration="00:00:00.0235258" startTime="2026-08-25T23:13:42.6654010+02:00" endTime="2026-08-25T23:13:49.5740789+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="51e3bc27-8dd1-40a1-b20f-0a0af230c85e" />
+    <UnitTestResult executionId="b55d7b1b-ddda-4edb-9a7c-db589a3cb9a1" testId="e45b7405-f64e-f3fc-9ee0-b9d042c81681" testName="KnowledgeService.IntegrationTests.PostgresLifecycleTests.Out_of_order_snapshot_is_held_until_the_missing_sequence_is_replayed" computerName="RICKEBO" duration="00:00:00.0475055" startTime="2026-08-25T23:13:17.3627590+02:00" endTime="2026-08-25T23:13:26.5040885+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="b55d7b1b-ddda-4edb-9a7c-db589a3cb9a1" />
+    <UnitTestResult executionId="255bd990-a1a1-4b04-b368-f448afd7bc9f" testId="c2ef8144-123f-7c42-4d0e-fe74f04c6698" testName="KnowledgeService.IntegrationTests.PostgresLifecycleTests.Workspace_deletion_waits_for_ingestion_after_the_tombstone_check" computerName="RICKEBO" duration="00:00:00.0488052" startTime="2026-08-25T23:14:55.7641723+02:00" endTime="2026-08-25T23:15:05.0142323+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="255bd990-a1a1-4b04-b368-f448afd7bc9f" />
+    <UnitTestResult executionId="72aea89f-7808-4fba-af0c-829b0591ccb2" testId="02e790dc-6391-5aa0-194b-9017ed5dd201" testName="KnowledgeService.IntegrationTests.PostgresLifecycleTests.Missing_object_id_algorithm_is_rejected_before_inbox_persistence" computerName="RICKEBO" duration="00:00:00.1745027" startTime="2026-08-25T23:12:40.1614543+02:00" endTime="2026-08-25T23:12:46.0196070+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="72aea89f-7808-4fba-af0c-829b0591ccb2" />
+    <UnitTestResult executionId="1bb8fc2a-434c-4011-b0fc-31a70ea25528" testId="a1a79737-71b4-9e2a-8c97-afb50bfc717e" testName="KnowledgeService.IntegrationTests.PostgresLifecycleTests.Distinct_cloud_event_replay_reuses_the_persisted_desired_state" computerName="RICKEBO" duration="00:00:00.0088373" startTime="2026-08-25T23:15:05.0145307+02:00" endTime="2026-08-25T23:15:09.0924381+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="1bb8fc2a-434c-4011-b0fc-31a70ea25528" />
+    <UnitTestResult executionId="328036bd-cd7f-4975-b7fe-ed3e72223cd1" testId="9ef3326d-db0b-3a92-2311-8e22332ab299" testName="KnowledgeService.IntegrationTests.PostgresLifecycleTests.Existing_workspace_deletion_tombstone_skips_generation_resolution" computerName="RICKEBO" duration="00:00:00.0102734" startTime="2026-08-25T23:14:51.6243748+02:00" endTime="2026-08-25T23:14:55.7638637+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="328036bd-cd7f-4975-b7fe-ed3e72223cd1" />
+    <UnitTestResult executionId="b29a4f3f-84be-4bfa-aa9c-4d67a42d8087" testId="1fc2753d-a96e-a308-ed65-48d9eea2f56e" testName="KnowledgeService.IntegrationTests.PostgresLifecycleTests.Forged_source_partition_identity_is_rejected_before_inbox_persistence" computerName="RICKEBO" duration="00:00:00.0024286" startTime="2026-08-25T23:15:34.8136043+02:00" endTime="2026-08-25T23:15:39.6217105+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="b29a4f3f-84be-4bfa-aa9c-4d67a42d8087" />
+    <UnitTestResult executionId="7cf2d96c-3775-41ff-808f-b62aba5f77ad" testId="79e0020d-cb8f-215b-3cbe-5216c7381f50" testName="KnowledgeService.IntegrationTests.PostgresLifecycleTests.Workspace_deletion_denies_new_work_and_emits_typed_acknowledgement" computerName="RICKEBO" duration="00:00:00.0187829" startTime="2026-08-25T23:14:06.5109837+02:00" endTime="2026-08-25T23:14:16.7118658+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="7cf2d96c-3775-41ff-808f-b62aba5f77ad" />
+    <UnitTestResult executionId="23b1ccfe-877a-4c82-8179-646571398921" testId="1a24db41-6c4f-be2d-c247-830bdd565f20" testName="KnowledgeService.IntegrationTests.PostgresLifecycleTests.Retryable_failure_schedules_a_new_delayed_attempt" computerName="RICKEBO" duration="00:00:00.0279346" startTime="2026-08-25T23:15:16.7265262+02:00" endTime="2026-08-25T23:15:19.6193434+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="23b1ccfe-877a-4c82-8179-646571398921" />
+    <UnitTestResult executionId="002f1eb5-4c52-4dc7-bf08-fcbc0ca98cf4" testId="2c9fdd7f-6421-6ad0-9119-8d4bae469755" testName="KnowledgeService.IntegrationTests.PostgresLifecycleTests.Outbox_retry_survives_repository_restart" computerName="RICKEBO" duration="00:00:00.0195538" startTime="2026-08-25T23:13:26.5044167+02:00" endTime="2026-08-25T23:13:33.7897145+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="002f1eb5-4c52-4dc7-bf08-fcbc0ca98cf4" />
+    <UnitTestResult executionId="4fe6f0d7-e713-43ee-8922-dfbb64e105bc" testId="5a427aad-9f60-15ba-ea7d-3ffea8ec213d" testName="KnowledgeService.IntegrationTests.PostgresLifecycleTests.Workspace_deletion_and_generation_invalidation_use_a_consistent_lock_order" computerName="RICKEBO" duration="00:00:00.0865649" startTime="2026-08-25T23:15:12.8848305+02:00" endTime="2026-08-25T23:15:16.7262374+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="4fe6f0d7-e713-43ee-8922-dfbb64e105bc" />
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="KnowledgeService.IntegrationTests.PostgresLifecycleTests.Produced_events_include_the_complete_required_envelope" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/knowledgeservice.integrationtests/bin/release/net10.0/knowledgeservice.integrationtests.dll" id="d98fea8e-273d-ce90-fe83-81b22ac081ec">
+      <Execution id="748f64b5-d16c-4f93-a138-1c24992b2759" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/KnowledgeService.IntegrationTests/bin/Release/net10.0/KnowledgeService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="KnowledgeService.IntegrationTests.PostgresLifecycleTests" name="Produced_events_include_the_complete_required_envelope" />
+    </UnitTest>
+    <UnitTest name="KnowledgeService.IntegrationTests.PostgresLifecycleTests.Missing_object_id_algorithm_is_rejected_before_inbox_persistence" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/knowledgeservice.integrationtests/bin/release/net10.0/knowledgeservice.integrationtests.dll" id="02e790dc-6391-5aa0-194b-9017ed5dd201">
+      <Execution id="72aea89f-7808-4fba-af0c-829b0591ccb2" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/KnowledgeService.IntegrationTests/bin/Release/net10.0/KnowledgeService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="KnowledgeService.IntegrationTests.PostgresLifecycleTests" name="Missing_object_id_algorithm_is_rejected_before_inbox_persistence" />
+    </UnitTest>
+    <UnitTest name="KnowledgeService.IntegrationTests.PostgresLifecycleTests.Workspace_deletion_waits_for_ingestion_after_the_tombstone_check" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/knowledgeservice.integrationtests/bin/release/net10.0/knowledgeservice.integrationtests.dll" id="c2ef8144-123f-7c42-4d0e-fe74f04c6698">
+      <Execution id="255bd990-a1a1-4b04-b368-f448afd7bc9f" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/KnowledgeService.IntegrationTests/bin/Release/net10.0/KnowledgeService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="KnowledgeService.IntegrationTests.PostgresLifecycleTests" name="Workspace_deletion_waits_for_ingestion_after_the_tombstone_check" />
+    </UnitTest>
+    <UnitTest name="KnowledgeService.IntegrationTests.PostgresLifecycleTests.Expired_processing_lease_is_recovered_and_fences_the_previous_owner" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/knowledgeservice.integrationtests/bin/release/net10.0/knowledgeservice.integrationtests.dll" id="e72e7714-03e1-9a71-1c63-6ba1fbc35dbe">
+      <Execution id="44dcdda5-3aaa-4e1e-8d74-7d4e2ca5b6de" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/KnowledgeService.IntegrationTests/bin/Release/net10.0/KnowledgeService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="KnowledgeService.IntegrationTests.PostgresLifecycleTests" name="Expired_processing_lease_is_recovered_and_fences_the_previous_owner" />
+    </UnitTest>
+    <UnitTest name="KnowledgeService.IntegrationTests.PostgresLifecycleTests.Outbox_retry_survives_repository_restart" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/knowledgeservice.integrationtests/bin/release/net10.0/knowledgeservice.integrationtests.dll" id="2c9fdd7f-6421-6ad0-9119-8d4bae469755">
+      <Execution id="002f1eb5-4c52-4dc7-bf08-fcbc0ca98cf4" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/KnowledgeService.IntegrationTests/bin/Release/net10.0/KnowledgeService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="KnowledgeService.IntegrationTests.PostgresLifecycleTests" name="Outbox_retry_survives_repository_restart" />
+    </UnitTest>
+    <UnitTest name="KnowledgeService.IntegrationTests.PostgresLifecycleTests.Same_track_builds_are_serialized_and_head_moves_by_sequence" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/knowledgeservice.integrationtests/bin/release/net10.0/knowledgeservice.integrationtests.dll" id="b4c39dc4-086d-6a85-9242-861a30bd9512">
+      <Execution id="81a819b5-6ca8-444e-8120-f0786c861853" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/KnowledgeService.IntegrationTests/bin/Release/net10.0/KnowledgeService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="KnowledgeService.IntegrationTests.PostgresLifecycleTests" name="Same_track_builds_are_serialized_and_head_moves_by_sequence" />
+    </UnitTest>
+    <UnitTest name="KnowledgeService.IntegrationTests.PostgresLifecycleTests.Existing_workspace_deletion_tombstone_skips_generation_resolution" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/knowledgeservice.integrationtests/bin/release/net10.0/knowledgeservice.integrationtests.dll" id="9ef3326d-db0b-3a92-2311-8e22332ab299">
+      <Execution id="328036bd-cd7f-4975-b7fe-ed3e72223cd1" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/KnowledgeService.IntegrationTests/bin/Release/net10.0/KnowledgeService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="KnowledgeService.IntegrationTests.PostgresLifecycleTests" name="Existing_workspace_deletion_tombstone_skips_generation_resolution" />
+    </UnitTest>
+    <UnitTest name="KnowledgeService.IntegrationTests.PostgresLifecycleTests.Workspace_deletion_and_generation_invalidation_use_a_consistent_lock_order" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/knowledgeservice.integrationtests/bin/release/net10.0/knowledgeservice.integrationtests.dll" id="5a427aad-9f60-15ba-ea7d-3ffea8ec213d">
+      <Execution id="4fe6f0d7-e713-43ee-8922-dfbb64e105bc" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/KnowledgeService.IntegrationTests/bin/Release/net10.0/KnowledgeService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="KnowledgeService.IntegrationTests.PostgresLifecycleTests" name="Workspace_deletion_and_generation_invalidation_use_a_consistent_lock_order" />
+    </UnitTest>
+    <UnitTest name="KnowledgeService.IntegrationTests.PostgresLifecycleTests.Failed_build_event_reuses_the_persisted_build_context" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/knowledgeservice.integrationtests/bin/release/net10.0/knowledgeservice.integrationtests.dll" id="eead5db7-ce4b-be3c-136d-26365abbcb9f">
+      <Execution id="3ce360d9-39b9-4478-bba3-c98700b5a3dd" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/KnowledgeService.IntegrationTests/bin/Release/net10.0/KnowledgeService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="KnowledgeService.IntegrationTests.PostgresLifecycleTests" name="Failed_build_event_reuses_the_persisted_build_context" />
+    </UnitTest>
+    <UnitTest name="KnowledgeService.IntegrationTests.PostgresLifecycleTests.Source_event_requires_producer_owned_snapshot_and_artifact_fields" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/knowledgeservice.integrationtests/bin/release/net10.0/knowledgeservice.integrationtests.dll" id="5916550e-5ab6-7157-25ca-4fde5663e5f7">
+      <Execution id="69fb1299-3f0e-4223-983c-8d07e369e9dd" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/KnowledgeService.IntegrationTests/bin/Release/net10.0/KnowledgeService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="KnowledgeService.IntegrationTests.PostgresLifecycleTests" name="Source_event_requires_producer_owned_snapshot_and_artifact_fields" />
+    </UnitTest>
+    <UnitTest name="KnowledgeService.IntegrationTests.PostgresLifecycleTests.Source_event_rejects_invalid_non_null_causation(causationId: &quot;&quot;)" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/knowledgeservice.integrationtests/bin/release/net10.0/knowledgeservice.integrationtests.dll" id="6e90f157-45c0-68f6-c3c7-4636a39bcc51">
+      <Execution id="303abda7-baee-4095-97e6-e0bff93da812" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/KnowledgeService.IntegrationTests/bin/Release/net10.0/KnowledgeService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="KnowledgeService.IntegrationTests.PostgresLifecycleTests" name="Source_event_rejects_invalid_non_null_causation" />
+    </UnitTest>
+    <UnitTest name="KnowledgeService.IntegrationTests.PostgresLifecycleTests.Source_event_rejects_invalid_non_null_causation(causationId: &quot;00000000-0000-0000-0000-000000000000&quot;)" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/knowledgeservice.integrationtests/bin/release/net10.0/knowledgeservice.integrationtests.dll" id="0e73374e-aa13-474a-761d-6fdc3e900b01">
+      <Execution id="0344bf37-ddb7-44b6-b70b-49ee6b6c1fab" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/KnowledgeService.IntegrationTests/bin/Release/net10.0/KnowledgeService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="KnowledgeService.IntegrationTests.PostgresLifecycleTests" name="Source_event_rejects_invalid_non_null_causation" />
+    </UnitTest>
+    <UnitTest name="KnowledgeService.IntegrationTests.PostgresLifecycleTests.Workspace_deletion_denies_new_work_and_emits_typed_acknowledgement" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/knowledgeservice.integrationtests/bin/release/net10.0/knowledgeservice.integrationtests.dll" id="79e0020d-cb8f-215b-3cbe-5216c7381f50">
+      <Execution id="7cf2d96c-3775-41ff-808f-b62aba5f77ad" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/KnowledgeService.IntegrationTests/bin/Release/net10.0/KnowledgeService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="KnowledgeService.IntegrationTests.PostgresLifecycleTests" name="Workspace_deletion_denies_new_work_and_emits_typed_acknowledgement" />
+    </UnitTest>
+    <UnitTest name="KnowledgeService.IntegrationTests.PostgresLifecycleTests.Distinct_cloud_event_replay_reuses_the_persisted_desired_state" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/knowledgeservice.integrationtests/bin/release/net10.0/knowledgeservice.integrationtests.dll" id="a1a79737-71b4-9e2a-8c97-afb50bfc717e">
+      <Execution id="1bb8fc2a-434c-4011-b0fc-31a70ea25528" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/KnowledgeService.IntegrationTests/bin/Release/net10.0/KnowledgeService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="KnowledgeService.IntegrationTests.PostgresLifecycleTests" name="Distinct_cloud_event_replay_reuses_the_persisted_desired_state" />
+    </UnitTest>
+    <UnitTest name="KnowledgeService.IntegrationTests.PostgresLifecycleTests.Stale_snapshot_replay_is_acknowledged_before_generation_resolution" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/knowledgeservice.integrationtests/bin/release/net10.0/knowledgeservice.integrationtests.dll" id="82dc851f-c7ba-ed39-dc08-a9684570a788">
+      <Execution id="9602b06f-d011-4eb1-b39a-67fe09edfdf0" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/KnowledgeService.IntegrationTests/bin/Release/net10.0/KnowledgeService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="KnowledgeService.IntegrationTests.PostgresLifecycleTests" name="Stale_snapshot_replay_is_acknowledged_before_generation_resolution" />
+    </UnitTest>
+    <UnitTest name="KnowledgeService.IntegrationTests.PostgresLifecycleTests.Source_event_requires_complete_cloud_event_envelope_before_resolution" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/knowledgeservice.integrationtests/bin/release/net10.0/knowledgeservice.integrationtests.dll" id="94c20d68-2ad7-b765-0626-64f412ae0c38">
+      <Execution id="7faab1b0-8e18-4130-91be-17509eba9d41" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/KnowledgeService.IntegrationTests/bin/Release/net10.0/KnowledgeService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="KnowledgeService.IntegrationTests.PostgresLifecycleTests" name="Source_event_requires_complete_cloud_event_envelope_before_resolution" />
+    </UnitTest>
+    <UnitTest name="KnowledgeService.IntegrationTests.PostgresLifecycleTests.Generation_fence_rejects_resolution_that_started_before_lifecycle_invalidation" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/knowledgeservice.integrationtests/bin/release/net10.0/knowledgeservice.integrationtests.dll" id="460d2cde-92c5-5bfe-528d-84e01a8263fa">
+      <Execution id="58d47c1d-520c-4e8b-86e8-6823188afe23" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/KnowledgeService.IntegrationTests/bin/Release/net10.0/KnowledgeService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="KnowledgeService.IntegrationTests.PostgresLifecycleTests" name="Generation_fence_rejects_resolution_that_started_before_lifecycle_invalidation" />
+    </UnitTest>
+    <UnitTest name="KnowledgeService.IntegrationTests.PostgresLifecycleTests.Recreated_track_generation_starts_a_distinct_sequence_checkpoint" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/knowledgeservice.integrationtests/bin/release/net10.0/knowledgeservice.integrationtests.dll" id="47d544af-fd98-d6fd-6133-f7d396b8f50c">
+      <Execution id="59e2c6f1-02ac-4426-8207-4dc554005f25" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/KnowledgeService.IntegrationTests/bin/Release/net10.0/KnowledgeService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="KnowledgeService.IntegrationTests.PostgresLifecycleTests" name="Recreated_track_generation_starts_a_distinct_sequence_checkpoint" />
+    </UnitTest>
+    <UnitTest name="KnowledgeService.IntegrationTests.PostgresLifecycleTests.Source_event_accepts_null_causation_from_producer_contract" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/knowledgeservice.integrationtests/bin/release/net10.0/knowledgeservice.integrationtests.dll" id="5baf328b-c91e-4408-ae4e-674d486fd47c">
+      <Execution id="5cb9c9ab-fdd0-4011-8e14-2660de16c250" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/KnowledgeService.IntegrationTests/bin/Release/net10.0/KnowledgeService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="KnowledgeService.IntegrationTests.PostgresLifecycleTests" name="Source_event_accepts_null_causation_from_producer_contract" />
+    </UnitTest>
+    <UnitTest name="KnowledgeService.IntegrationTests.PostgresLifecycleTests.Failed_next_build_preserves_last_known_good_head" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/knowledgeservice.integrationtests/bin/release/net10.0/knowledgeservice.integrationtests.dll" id="e6e1c432-418d-27ff-ee28-b53bd6acd527">
+      <Execution id="171294f8-10d3-45f8-a600-d4650c3ba6e8" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/KnowledgeService.IntegrationTests/bin/Release/net10.0/KnowledgeService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="KnowledgeService.IntegrationTests.PostgresLifecycleTests" name="Failed_next_build_preserves_last_known_good_head" />
+    </UnitTest>
+    <UnitTest name="KnowledgeService.IntegrationTests.PostgresLifecycleTests.Duplicate_source_event_creates_one_desired_state_build_and_outbox_fact" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/knowledgeservice.integrationtests/bin/release/net10.0/knowledgeservice.integrationtests.dll" id="91366935-19b2-3c84-72bd-cf86cf4332c9">
+      <Execution id="8753f5ba-bd60-43a6-92dc-552fc47ae26c" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/KnowledgeService.IntegrationTests/bin/Release/net10.0/KnowledgeService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="KnowledgeService.IntegrationTests.PostgresLifecycleTests" name="Duplicate_source_event_creates_one_desired_state_build_and_outbox_fact" />
+    </UnitTest>
+    <UnitTest name="KnowledgeService.IntegrationTests.PostgresLifecycleTests.Retryable_failure_schedules_a_new_delayed_attempt" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/knowledgeservice.integrationtests/bin/release/net10.0/knowledgeservice.integrationtests.dll" id="1a24db41-6c4f-be2d-c247-830bdd565f20">
+      <Execution id="23b1ccfe-877a-4c82-8179-646571398921" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/KnowledgeService.IntegrationTests/bin/Release/net10.0/KnowledgeService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="KnowledgeService.IntegrationTests.PostgresLifecycleTests" name="Retryable_failure_schedules_a_new_delayed_attempt" />
+    </UnitTest>
+    <UnitTest name="KnowledgeService.IntegrationTests.PostgresLifecycleTests.Out_of_order_snapshot_is_held_until_the_missing_sequence_is_replayed" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/knowledgeservice.integrationtests/bin/release/net10.0/knowledgeservice.integrationtests.dll" id="e45b7405-f64e-f3fc-9ee0-b9d042c81681">
+      <Execution id="b55d7b1b-ddda-4edb-9a7c-db589a3cb9a1" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/KnowledgeService.IntegrationTests/bin/Release/net10.0/KnowledgeService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="KnowledgeService.IntegrationTests.PostgresLifecycleTests" name="Out_of_order_snapshot_is_held_until_the_missing_sequence_is_replayed" />
+    </UnitTest>
+    <UnitTest name="KnowledgeService.IntegrationTests.PostgresLifecycleTests.Lifecycle_version_replay_is_acknowledged_without_advancing_the_fence" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/knowledgeservice.integrationtests/bin/release/net10.0/knowledgeservice.integrationtests.dll" id="fa923504-8436-d865-4802-2bf8ddd4afdc">
+      <Execution id="51e3bc27-8dd1-40a1-b20f-0a0af230c85e" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/KnowledgeService.IntegrationTests/bin/Release/net10.0/KnowledgeService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="KnowledgeService.IntegrationTests.PostgresLifecycleTests" name="Lifecycle_version_replay_is_acknowledged_without_advancing_the_fence" />
+    </UnitTest>
+    <UnitTest name="KnowledgeService.IntegrationTests.PostgresLifecycleTests.Forged_source_partition_identity_is_rejected_before_inbox_persistence" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/knowledgeservice.integrationtests/bin/release/net10.0/knowledgeservice.integrationtests.dll" id="1fc2753d-a96e-a308-ed65-48d9eea2f56e">
+      <Execution id="b29a4f3f-84be-4bfa-aa9c-4d67a42d8087" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/KnowledgeService.IntegrationTests/bin/Release/net10.0/KnowledgeService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="KnowledgeService.IntegrationTests.PostgresLifecycleTests" name="Forged_source_partition_identity_is_rejected_before_inbox_persistence" />
+    </UnitTest>
+    <UnitTest name="KnowledgeService.IntegrationTests.PostgresLifecycleTests.Generation_invalidation_and_publish_use_a_consistent_lock_order" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/knowledgeservice.integrationtests/bin/release/net10.0/knowledgeservice.integrationtests.dll" id="ebcc1ac2-7737-4141-0a4c-013ac620d096">
+      <Execution id="a661f7bf-a871-46ea-956a-1475608ef0a2" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/KnowledgeService.IntegrationTests/bin/Release/net10.0/KnowledgeService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="KnowledgeService.IntegrationTests.PostgresLifecycleTests" name="Generation_invalidation_and_publish_use_a_consistent_lock_order" />
+    </UnitTest>
+    <UnitTest name="KnowledgeService.IntegrationTests.PostgresLifecycleTests.Publication_events_reuse_the_persisted_build_context" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/knowledgeservice.integrationtests/bin/release/net10.0/knowledgeservice.integrationtests.dll" id="ab3f779b-287f-c370-20dd-354fbf2379c0">
+      <Execution id="40376398-0535-43fd-b3dd-886f1e53010c" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/KnowledgeService.IntegrationTests/bin/Release/net10.0/KnowledgeService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="KnowledgeService.IntegrationTests.PostgresLifecycleTests" name="Publication_events_reuse_the_persisted_build_context" />
+    </UnitTest>
+    <UnitTest name="KnowledgeService.IntegrationTests.PostgresLifecycleTests.Source_event_rejects_invalid_non_null_causation(causationId: &quot;not-a-guid&quot;)" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/knowledgeservice.integrationtests/bin/release/net10.0/knowledgeservice.integrationtests.dll" id="06d7788d-f43e-08c1-ca11-a903d21afd20">
+      <Execution id="36b36f03-ca25-4785-9570-518f08defbea" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/KnowledgeService.IntegrationTests/bin/Release/net10.0/KnowledgeService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="KnowledgeService.IntegrationTests.PostgresLifecycleTests" name="Source_event_rejects_invalid_non_null_causation" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="d98fea8e-273d-ce90-fe83-81b22ac081ec" executionId="748f64b5-d16c-4f93-a138-1c24992b2759" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="91366935-19b2-3c84-72bd-cf86cf4332c9" executionId="8753f5ba-bd60-43a6-92dc-552fc47ae26c" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="b4c39dc4-086d-6a85-9242-861a30bd9512" executionId="81a819b5-6ca8-444e-8120-f0786c861853" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e72e7714-03e1-9a71-1c63-6ba1fbc35dbe" executionId="44dcdda5-3aaa-4e1e-8d74-7d4e2ca5b6de" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="6e90f157-45c0-68f6-c3c7-4636a39bcc51" executionId="303abda7-baee-4095-97e6-e0bff93da812" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="5baf328b-c91e-4408-ae4e-674d486fd47c" executionId="5cb9c9ab-fdd0-4011-8e14-2660de16c250" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e6e1c432-418d-27ff-ee28-b53bd6acd527" executionId="171294f8-10d3-45f8-a600-d4650c3ba6e8" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="82dc851f-c7ba-ed39-dc08-a9684570a788" executionId="9602b06f-d011-4eb1-b39a-67fe09edfdf0" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="ebcc1ac2-7737-4141-0a4c-013ac620d096" executionId="a661f7bf-a871-46ea-956a-1475608ef0a2" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="eead5db7-ce4b-be3c-136d-26365abbcb9f" executionId="3ce360d9-39b9-4478-bba3-c98700b5a3dd" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="94c20d68-2ad7-b765-0626-64f412ae0c38" executionId="7faab1b0-8e18-4130-91be-17509eba9d41" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="47d544af-fd98-d6fd-6133-f7d396b8f50c" executionId="59e2c6f1-02ac-4426-8207-4dc554005f25" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="ab3f779b-287f-c370-20dd-354fbf2379c0" executionId="40376398-0535-43fd-b3dd-886f1e53010c" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="5916550e-5ab6-7157-25ca-4fde5663e5f7" executionId="69fb1299-3f0e-4223-983c-8d07e369e9dd" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="0e73374e-aa13-474a-761d-6fdc3e900b01" executionId="0344bf37-ddb7-44b6-b70b-49ee6b6c1fab" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="06d7788d-f43e-08c1-ca11-a903d21afd20" executionId="36b36f03-ca25-4785-9570-518f08defbea" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="460d2cde-92c5-5bfe-528d-84e01a8263fa" executionId="58d47c1d-520c-4e8b-86e8-6823188afe23" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="fa923504-8436-d865-4802-2bf8ddd4afdc" executionId="51e3bc27-8dd1-40a1-b20f-0a0af230c85e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e45b7405-f64e-f3fc-9ee0-b9d042c81681" executionId="b55d7b1b-ddda-4edb-9a7c-db589a3cb9a1" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="c2ef8144-123f-7c42-4d0e-fe74f04c6698" executionId="255bd990-a1a1-4b04-b368-f448afd7bc9f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="02e790dc-6391-5aa0-194b-9017ed5dd201" executionId="72aea89f-7808-4fba-af0c-829b0591ccb2" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="a1a79737-71b4-9e2a-8c97-afb50bfc717e" executionId="1bb8fc2a-434c-4011-b0fc-31a70ea25528" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="9ef3326d-db0b-3a92-2311-8e22332ab299" executionId="328036bd-cd7f-4975-b7fe-ed3e72223cd1" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="1fc2753d-a96e-a308-ed65-48d9eea2f56e" executionId="b29a4f3f-84be-4bfa-aa9c-4d67a42d8087" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="79e0020d-cb8f-215b-3cbe-5216c7381f50" executionId="7cf2d96c-3775-41ff-808f-b62aba5f77ad" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="1a24db41-6c4f-be2d-c247-830bdd565f20" executionId="23b1ccfe-877a-4c82-8179-646571398921" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="2c9fdd7f-6421-6ad0-9119-8d4bae469755" executionId="002f1eb5-4c52-4dc7-bf08-fcbc0ca98cf4" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="5a427aad-9f60-15ba-ea7d-3ffea8ec213d" executionId="4fe6f0d7-e713-43ee-8922-dfbb64e105bc" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Completed">
+    <Counters total="28" executed="28" passed="28" failed="0" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v4.0.0+05679a7ab5 (64-bit .NET 10.0.11)
+[xUnit.net 00:00:00.24]   Discovering: KnowledgeService.IntegrationTests
+[xUnit.net 00:00:00.28]   Discovered:  KnowledgeService.IntegrationTests
+[xUnit.net 00:00:00.30]   Starting:    KnowledgeService.IntegrationTests
+[testcontainers.org 00:00:00.08] Connected to Docker:
+  Host: unix:///var/run/docker.sock
+  Server Version: 29.7.2
+  Kernel Version: 6.18.44-1-lts
+  API Version: 1.55
+  Operating System: Arch Linux
+  Total Memory: 60.48 GB
+[testcontainers.org 00:00:00.38] Docker container 94a2dcbe8f7a created
+[testcontainers.org 00:00:00.40] Start Docker container 94a2dcbe8f7a
+[testcontainers.org 00:00:00.56] Wait for Docker container 94a2dcbe8f7a to complete readiness checks
+[testcontainers.org 00:00:01.58] Docker container 94a2dcbe8f7a ready
+[testcontainers.org 00:00:01.81] Docker container 2e0e16227176 created
+[testcontainers.org 00:00:01.81] Start Docker container 2e0e16227176
+[testcontainers.org 00:00:01.91] Wait for Docker container 2e0e16227176 to complete readiness checks
+[testcontainers.org 00:00:01.92] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 2e0e16227176
+[testcontainers.org 00:00:02.94] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 2e0e16227176
+[testcontainers.org 00:00:03.96] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 2e0e16227176
+[testcontainers.org 00:00:04.98] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 2e0e16227176
+[testcontainers.org 00:00:05.00] Docker container 2e0e16227176 ready
+[testcontainers.org 00:00:05.11] Delete Docker container 2e0e16227176
+[testcontainers.org 00:00:05.88] Docker container a709a43a615b created
+[testcontainers.org 00:00:05.88] Start Docker container a709a43a615b
+[testcontainers.org 00:00:06.01] Wait for Docker container a709a43a615b to complete readiness checks
+[testcontainers.org 00:00:06.01] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container a709a43a615b
+[testcontainers.org 00:00:07.03] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container a709a43a615b
+[testcontainers.org 00:00:08.04] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container a709a43a615b
+[testcontainers.org 00:00:09.06] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container a709a43a615b
+[testcontainers.org 00:00:09.08] Docker container a709a43a615b ready
+[testcontainers.org 00:00:09.11] Delete Docker container a709a43a615b
+[testcontainers.org 00:00:09.92] Docker container 94ddc5352c8a created
+[testcontainers.org 00:00:09.92] Start Docker container 94ddc5352c8a
+[testcontainers.org 00:00:10.09] Wait for Docker container 94ddc5352c8a to complete readiness checks
+[testcontainers.org 00:00:10.09] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 94ddc5352c8a
+[testcontainers.org 00:00:11.11] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 94ddc5352c8a
+[testcontainers.org 00:00:12.13] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 94ddc5352c8a
+[testcontainers.org 00:00:13.15] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 94ddc5352c8a
+[testcontainers.org 00:00:14.16] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 94ddc5352c8a
+[testcontainers.org 00:00:15.18] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 94ddc5352c8a
+[testcontainers.org 00:00:15.20] Docker container 94ddc5352c8a ready
+[testcontainers.org 00:00:15.23] Delete Docker container 94ddc5352c8a
+[testcontainers.org 00:00:16.16] Docker container 0f07d49975af created
+[testcontainers.org 00:00:16.16] Start Docker container 0f07d49975af
+[testcontainers.org 00:00:16.34] Wait for Docker container 0f07d49975af to complete readiness checks
+[testcontainers.org 00:00:16.34] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 0f07d49975af
+[testcontainers.org 00:00:17.36] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 0f07d49975af
+[testcontainers.org 00:00:18.38] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 0f07d49975af
+[testcontainers.org 00:00:19.39] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 0f07d49975af
+[testcontainers.org 00:00:20.41] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 0f07d49975af
+[testcontainers.org 00:00:21.43] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 0f07d49975af
+[testcontainers.org 00:00:21.45] Docker container 0f07d49975af ready
+[testcontainers.org 00:00:21.47] Delete Docker container 0f07d49975af
+[testcontainers.org 00:00:23.24] Docker container bb7dada1d44a created
+[testcontainers.org 00:00:23.24] Start Docker container bb7dada1d44a
+[testcontainers.org 00:00:23.44] Wait for Docker container bb7dada1d44a to complete readiness checks
+[testcontainers.org 00:00:23.44] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container bb7dada1d44a
+[testcontainers.org 00:00:24.46] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container bb7dada1d44a
+[testcontainers.org 00:00:25.47] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container bb7dada1d44a
+[testcontainers.org 00:00:26.49] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container bb7dada1d44a
+[testcontainers.org 00:00:27.51] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container bb7dada1d44a
+[testcontainers.org 00:00:28.53] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container bb7dada1d44a
+[testcontainers.org 00:00:29.54] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container bb7dada1d44a
+[testcontainers.org 00:00:29.56] Docker container bb7dada1d44a ready
+[testcontainers.org 00:00:29.59] Delete Docker container bb7dada1d44a
+[testcontainers.org 00:00:30.75] Docker container 781bbb1f3ab2 created
+[testcontainers.org 00:00:30.75] Start Docker container 781bbb1f3ab2
+[testcontainers.org 00:00:30.92] Wait for Docker container 781bbb1f3ab2 to complete readiness checks
+[testcontainers.org 00:00:30.92] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 781bbb1f3ab2
+[testcontainers.org 00:00:31.94] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 781bbb1f3ab2
+[testcontainers.org 00:00:32.96] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 781bbb1f3ab2
+[testcontainers.org 00:00:33.97] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 781bbb1f3ab2
+[testcontainers.org 00:00:34.99] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 781bbb1f3ab2
+[testcontainers.org 00:00:36.01] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 781bbb1f3ab2
+[testcontainers.org 00:00:36.03] Docker container 781bbb1f3ab2 ready
+[testcontainers.org 00:00:36.13] Delete Docker container 781bbb1f3ab2
+[testcontainers.org 00:00:37.47] Docker container 8d60b05d9600 created
+[testcontainers.org 00:00:37.47] Start Docker container 8d60b05d9600
+[testcontainers.org 00:00:37.63] Wait for Docker container 8d60b05d9600 to complete readiness checks
+[testcontainers.org 00:00:37.63] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 8d60b05d9600
+[testcontainers.org 00:00:38.65] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 8d60b05d9600
+[testcontainers.org 00:00:39.67] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 8d60b05d9600
+[testcontainers.org 00:00:40.68] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 8d60b05d9600
+[testcontainers.org 00:00:41.70] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 8d60b05d9600
+[testcontainers.org 00:00:42.72] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 8d60b05d9600
+[testcontainers.org 00:00:43.74] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 8d60b05d9600
+[testcontainers.org 00:00:44.76] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 8d60b05d9600
+[testcontainers.org 00:00:44.78] Docker container 8d60b05d9600 ready
+[testcontainers.org 00:00:44.85] Delete Docker container 8d60b05d9600
+[testcontainers.org 00:00:46.85] Docker container 2f577e79f09c created
+[testcontainers.org 00:00:46.85] Start Docker container 2f577e79f09c
+[testcontainers.org 00:00:47.09] Wait for Docker container 2f577e79f09c to complete readiness checks
+[testcontainers.org 00:00:47.09] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 2f577e79f09c
+[testcontainers.org 00:00:48.11] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 2f577e79f09c
+[testcontainers.org 00:00:49.13] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 2f577e79f09c
+[testcontainers.org 00:00:50.14] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 2f577e79f09c
+[testcontainers.org 00:00:51.16] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 2f577e79f09c
+[testcontainers.org 00:00:52.18] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 2f577e79f09c
+[testcontainers.org 00:00:52.20] Docker container 2f577e79f09c ready
+[testcontainers.org 00:00:52.24] Delete Docker container 2f577e79f09c
+[testcontainers.org 00:00:53.92] Docker container cf6e150b9f78 created
+[testcontainers.org 00:00:53.92] Start Docker container cf6e150b9f78
+[testcontainers.org 00:00:54.07] Wait for Docker container cf6e150b9f78 to complete readiness checks
+[testcontainers.org 00:00:54.07] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container cf6e150b9f78
+[testcontainers.org 00:00:55.08] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container cf6e150b9f78
+[testcontainers.org 00:00:56.10] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container cf6e150b9f78
+[testcontainers.org 00:00:57.12] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container cf6e150b9f78
+[testcontainers.org 00:00:58.13] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container cf6e150b9f78
+[testcontainers.org 00:00:59.15] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container cf6e150b9f78
+[testcontainers.org 00:01:00.17] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container cf6e150b9f78
+[testcontainers.org 00:01:01.18] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container cf6e150b9f78
+[testcontainers.org 00:01:01.20] Docker container cf6e150b9f78 ready
+[testcontainers.org 00:01:01.23] Delete Docker container cf6e150b9f78
+[testcontainers.org 00:01:02.90] Docker container 22310c52c7a8 created
+[testcontainers.org 00:01:02.90] Start Docker container 22310c52c7a8
+[testcontainers.org 00:01:03.21] Wait for Docker container 22310c52c7a8 to complete readiness checks
+[testcontainers.org 00:01:03.21] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 22310c52c7a8
+[testcontainers.org 00:01:04.22] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 22310c52c7a8
+[testcontainers.org 00:01:05.24] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 22310c52c7a8
+[testcontainers.org 00:01:06.26] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 22310c52c7a8
+[testcontainers.org 00:01:07.27] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 22310c52c7a8
+[testcontainers.org 00:01:08.30] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 22310c52c7a8
+[testcontainers.org 00:01:08.32] Docker container 22310c52c7a8 ready
+[testcontainers.org 00:01:08.36] Delete Docker container 22310c52c7a8
+[testcontainers.org 00:01:10.62] Docker container 41ed100adcf4 created
+[testcontainers.org 00:01:10.62] Start Docker container 41ed100adcf4
+[testcontainers.org 00:01:10.83] Wait for Docker container 41ed100adcf4 to complete readiness checks
+[testcontainers.org 00:01:10.83] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 41ed100adcf4
+[testcontainers.org 00:01:11.85] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 41ed100adcf4
+[testcontainers.org 00:01:12.87] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 41ed100adcf4
+[testcontainers.org 00:01:13.88] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 41ed100adcf4
+[testcontainers.org 00:01:14.90] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 41ed100adcf4
+[testcontainers.org 00:01:15.92] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 41ed100adcf4
+[testcontainers.org 00:01:16.93] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 41ed100adcf4
+[testcontainers.org 00:01:16.95] Docker container 41ed100adcf4 ready
+[testcontainers.org 00:01:17.00] Delete Docker container 41ed100adcf4
+[testcontainers.org 00:01:18.49] Docker container c4222de38ee7 created
+[testcontainers.org 00:01:18.49] Start Docker container c4222de38ee7
+[testcontainers.org 00:01:18.69] Wait for Docker container c4222de38ee7 to complete readiness checks
+[testcontainers.org 00:01:18.69] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container c4222de38ee7
+[testcontainers.org 00:01:19.71] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container c4222de38ee7
+[testcontainers.org 00:01:20.72] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container c4222de38ee7
+[testcontainers.org 00:01:21.74] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container c4222de38ee7
+[testcontainers.org 00:01:22.76] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container c4222de38ee7
+[testcontainers.org 00:01:23.77] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container c4222de38ee7
+[testcontainers.org 00:01:24.79] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container c4222de38ee7
+[testcontainers.org 00:01:24.81] Docker container c4222de38ee7 ready
+[testcontainers.org 00:01:24.85] Delete Docker container c4222de38ee7
+[testcontainers.org 00:01:26.73] Docker container 7842bb72d198 created
+[testcontainers.org 00:01:26.73] Start Docker container 7842bb72d198
+[testcontainers.org 00:01:26.97] Wait for Docker container 7842bb72d198 to complete readiness checks
+[testcontainers.org 00:01:26.97] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 7842bb72d198
+[testcontainers.org 00:01:27.99] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 7842bb72d198
+[testcontainers.org 00:01:29.00] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 7842bb72d198
+[testcontainers.org 00:01:30.02] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 7842bb72d198
+[testcontainers.org 00:01:31.04] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 7842bb72d198
+[testcontainers.org 00:01:32.06] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 7842bb72d198
+[testcontainers.org 00:01:33.07] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 7842bb72d198
+[testcontainers.org 00:01:34.09] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 7842bb72d198
+[testcontainers.org 00:01:34.11] Docker container 7842bb72d198 ready
+[testcontainers.org 00:01:34.15] Delete Docker container 7842bb72d198
+[testcontainers.org 00:01:36.87] Docker container 4ccff8c90195 created
+[testcontainers.org 00:01:36.87] Start Docker container 4ccff8c90195
+[testcontainers.org 00:01:37.04] Wait for Docker container 4ccff8c90195 to complete readiness checks
+[testcontainers.org 00:01:37.04] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 4ccff8c90195
+[testcontainers.org 00:01:38.06] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 4ccff8c90195
+[testcontainers.org 00:01:39.08] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 4ccff8c90195
+[testcontainers.org 00:01:40.10] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 4ccff8c90195
+[testcontainers.org 00:01:41.11] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 4ccff8c90195
+[testcontainers.org 00:01:42.13] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 4ccff8c90195
+[testcontainers.org 00:01:43.15] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 4ccff8c90195
+[testcontainers.org 00:01:43.17] Docker container 4ccff8c90195 ready
+[testcontainers.org 00:01:43.19] Delete Docker container 4ccff8c90195
+[testcontainers.org 00:01:45.38] Docker container 9f75700a648d created
+[testcontainers.org 00:01:45.38] Start Docker container 9f75700a648d
+[testcontainers.org 00:01:45.57] Wait for Docker container 9f75700a648d to complete readiness checks
+[testcontainers.org 00:01:45.57] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 9f75700a648d
+[testcontainers.org 00:01:46.59] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 9f75700a648d
+[testcontainers.org 00:01:47.61] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 9f75700a648d
+[testcontainers.org 00:01:48.62] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 9f75700a648d
+[testcontainers.org 00:01:49.64] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 9f75700a648d
+[testcontainers.org 00:01:50.66] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 9f75700a648d
+[testcontainers.org 00:01:51.67] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 9f75700a648d
+[testcontainers.org 00:01:51.70] Docker container 9f75700a648d ready
+[testcontainers.org 00:01:51.77] Delete Docker container 9f75700a648d
+[testcontainers.org 00:01:53.42] Docker container 416d08e1cae2 created
+[testcontainers.org 00:01:53.42] Start Docker container 416d08e1cae2
+[testcontainers.org 00:01:53.64] Wait for Docker container 416d08e1cae2 to complete readiness checks
+[testcontainers.org 00:01:53.64] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 416d08e1cae2
+[testcontainers.org 00:01:54.66] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 416d08e1cae2
+[testcontainers.org 00:01:55.67] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 416d08e1cae2
+[testcontainers.org 00:01:56.69] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 416d08e1cae2
+[testcontainers.org 00:01:57.71] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 416d08e1cae2
+[testcontainers.org 00:01:58.73] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 416d08e1cae2
+[testcontainers.org 00:01:59.74] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 416d08e1cae2
+[testcontainers.org 00:02:00.76] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 416d08e1cae2
+[testcontainers.org 00:02:01.78] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 416d08e1cae2
+[testcontainers.org 00:02:01.80] Docker container 416d08e1cae2 ready
+[testcontainers.org 00:02:01.84] Delete Docker container 416d08e1cae2
+[testcontainers.org 00:02:04.32] Docker container cd74820fa124 created
+[testcontainers.org 00:02:04.32] Start Docker container cd74820fa124
+[testcontainers.org 00:02:04.49] Wait for Docker container cd74820fa124 to complete readiness checks
+[testcontainers.org 00:02:04.49] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container cd74820fa124
+[testcontainers.org 00:02:05.51] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container cd74820fa124
+[testcontainers.org 00:02:06.53] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container cd74820fa124
+[testcontainers.org 00:02:07.54] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container cd74820fa124
+[testcontainers.org 00:02:08.56] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container cd74820fa124
+[testcontainers.org 00:02:09.63] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container cd74820fa124
+[testcontainers.org 00:02:09.66] Docker container cd74820fa124 ready
+[testcontainers.org 00:02:09.69] Delete Docker container cd74820fa124
+[testcontainers.org 00:02:12.20] Docker container ac53dfc4abb2 created
+[testcontainers.org 00:02:12.20] Start Docker container ac53dfc4abb2
+[testcontainers.org 00:02:12.37] Wait for Docker container ac53dfc4abb2 to complete readiness checks
+[testcontainers.org 00:02:12.37] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container ac53dfc4abb2
+[testcontainers.org 00:02:13.38] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container ac53dfc4abb2
+[testcontainers.org 00:02:14.40] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container ac53dfc4abb2
+[testcontainers.org 00:02:14.42] Docker container ac53dfc4abb2 ready
+[testcontainers.org 00:02:14.45] Delete Docker container ac53dfc4abb2
+[testcontainers.org 00:02:16.30] Docker container 701553ff368a created
+[testcontainers.org 00:02:16.31] Start Docker container 701553ff368a
+[testcontainers.org 00:02:16.76] Wait for Docker container 701553ff368a to complete readiness checks
+[testcontainers.org 00:02:16.76] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 701553ff368a
+[testcontainers.org 00:02:17.78] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 701553ff368a
+[testcontainers.org 00:02:18.80] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 701553ff368a
+[testcontainers.org 00:02:19.81] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 701553ff368a
+[testcontainers.org 00:02:20.83] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 701553ff368a
+[testcontainers.org 00:02:21.85] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 701553ff368a
+[testcontainers.org 00:02:22.86] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 701553ff368a
+[testcontainers.org 00:02:23.88] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 701553ff368a
+[testcontainers.org 00:02:23.90] Docker container 701553ff368a ready
+[testcontainers.org 00:02:23.97] Delete Docker container 701553ff368a
+[testcontainers.org 00:02:25.56] Docker container 4722ee1abcff created
+[testcontainers.org 00:02:25.56] Start Docker container 4722ee1abcff
+[testcontainers.org 00:02:25.81] Wait for Docker container 4722ee1abcff to complete readiness checks
+[testcontainers.org 00:02:25.81] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 4722ee1abcff
+[testcontainers.org 00:02:26.84] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 4722ee1abcff
+[testcontainers.org 00:02:27.87] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 4722ee1abcff
+[testcontainers.org 00:02:27.89] Docker container 4722ee1abcff ready
+[testcontainers.org 00:02:27.92] Delete Docker container 4722ee1abcff
+[testcontainers.org 00:02:29.46] Docker container 964aae6298d3 created
+[testcontainers.org 00:02:29.46] Start Docker container 964aae6298d3
+[testcontainers.org 00:02:29.78] Wait for Docker container 964aae6298d3 to complete readiness checks
+[testcontainers.org 00:02:29.78] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 964aae6298d3
+[testcontainers.org 00:02:30.80] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 964aae6298d3
+[testcontainers.org 00:02:31.82] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 964aae6298d3
+[testcontainers.org 00:02:31.84] Docker container 964aae6298d3 ready
+[testcontainers.org 00:02:31.88] Delete Docker container 964aae6298d3
+[testcontainers.org 00:02:33.27] Docker container 9f10f6a39327 created
+[testcontainers.org 00:02:33.28] Start Docker container 9f10f6a39327
+[testcontainers.org 00:02:33.54] Wait for Docker container 9f10f6a39327 to complete readiness checks
+[testcontainers.org 00:02:33.54] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 9f10f6a39327
+[testcontainers.org 00:02:34.56] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 9f10f6a39327
+[testcontainers.org 00:02:35.57] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 9f10f6a39327
+[testcontainers.org 00:02:35.59] Docker container 9f10f6a39327 ready
+[testcontainers.org 00:02:35.70] Delete Docker container 9f10f6a39327
+[testcontainers.org 00:02:37.27] Docker container 434b563951f4 created
+[testcontainers.org 00:02:37.27] Start Docker container 434b563951f4
+[testcontainers.org 00:02:37.50] Wait for Docker container 434b563951f4 to complete readiness checks
+[testcontainers.org 00:02:37.50] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 434b563951f4
+[testcontainers.org 00:02:38.52] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 434b563951f4
+[testcontainers.org 00:02:38.54] Docker container 434b563951f4 ready
+[testcontainers.org 00:02:38.59] Delete Docker container 434b563951f4
+[testcontainers.org 00:02:39.75] Docker container a6a0f7e291b6 created
+[testcontainers.org 00:02:39.75] Start Docker container a6a0f7e291b6
+[testcontainers.org 00:02:40.00] Wait for Docker container a6a0f7e291b6 to complete readiness checks
+[testcontainers.org 00:02:40.00] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container a6a0f7e291b6
+[testcontainers.org 00:02:41.02] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container a6a0f7e291b6
+[testcontainers.org 00:02:41.04] Docker container a6a0f7e291b6 ready
+[testcontainers.org 00:02:41.06] Delete Docker container a6a0f7e291b6
+[testcontainers.org 00:02:42.75] Docker container 4f0bd80e068b created
+[testcontainers.org 00:02:42.75] Start Docker container 4f0bd80e068b
+[testcontainers.org 00:02:43.07] Wait for Docker container 4f0bd80e068b to complete readiness checks
+[testcontainers.org 00:02:43.07] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 4f0bd80e068b
+[testcontainers.org 00:02:44.09] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 4f0bd80e068b
+[testcontainers.org 00:02:45.11] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 4f0bd80e068b
+[testcontainers.org 00:02:45.13] Docker container 4f0bd80e068b ready
+[testcontainers.org 00:02:45.16] Delete Docker container 4f0bd80e068b
+[testcontainers.org 00:02:47.05] Docker container 4ab2cc197f0b created
+[testcontainers.org 00:02:47.05] Start Docker container 4ab2cc197f0b
+[testcontainers.org 00:02:47.32] Wait for Docker container 4ab2cc197f0b to complete readiness checks
+[testcontainers.org 00:02:47.33] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 4ab2cc197f0b
+[testcontainers.org 00:02:48.34] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 4ab2cc197f0b
+[testcontainers.org 00:02:49.36] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 4ab2cc197f0b
+[testcontainers.org 00:02:49.38] Docker container 4ab2cc197f0b ready
+[testcontainers.org 00:02:49.46] Delete Docker container 4ab2cc197f0b
+[testcontainers.org 00:02:51.41] Docker container 4606ecf06a1e created
+[testcontainers.org 00:02:51.41] Start Docker container 4606ecf06a1e
+[testcontainers.org 00:02:51.65] Wait for Docker container 4606ecf06a1e to complete readiness checks
+[testcontainers.org 00:02:51.65] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 4606ecf06a1e
+[testcontainers.org 00:02:52.67] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 4606ecf06a1e
+[testcontainers.org 00:02:52.69] Docker container 4606ecf06a1e ready
+[testcontainers.org 00:02:52.72] Delete Docker container 4606ecf06a1e
+[testcontainers.org 00:02:55.78] Docker container 55c266c1f2e7 created
+[testcontainers.org 00:02:55.78] Start Docker container 55c266c1f2e7
+[testcontainers.org 00:02:56.35] Wait for Docker container 55c266c1f2e7 to complete readiness checks
+[testcontainers.org 00:02:56.35] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 55c266c1f2e7
+[testcontainers.org 00:02:57.37] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 55c266c1f2e7
+[testcontainers.org 00:02:58.39] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 55c266c1f2e7
+[testcontainers.org 00:02:58.41] Docker container 55c266c1f2e7 ready
+[testcontainers.org 00:02:58.43] Delete Docker container 55c266c1f2e7
+[xUnit.net 00:02:59.77]   Finished:    KnowledgeService.IntegrationTests
+</StdOut>
+    </Output>
+  </ResultSummary>
+</TestRun>

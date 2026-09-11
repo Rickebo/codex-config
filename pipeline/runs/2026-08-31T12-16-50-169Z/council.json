@@ -1,0 +1,15 @@
+{
+  "task": "codicarium/lc-config#309 production delivery on standard runtime",
+  "decision": "GO for revised specification and application/config implementation; NO-GO for activation until explicit context, single ownership, exact-head CI, and immutable artifacts are proven",
+  "perspectives": [
+    {"role": "planner", "decision": "RE-SPEC", "summary": "The user materially reversed the Kata activation gate and added self-hosted CI; preserve old evidence but use a new pipeline run."},
+    {"role": "platform reviewer", "decision": "GO single destination", "summary": "Keep deployment-controller and one codicarium-prod destination; current platform/infrastructure issues own prerequisites and future Kata readiness."},
+    {"role": "security reviewer", "decision": "GO with controls", "summary": "Standard runtime is acceptable only with restricted security, provenance, admission, non-ARC placement, secrets, and network controls unchanged."},
+    {"role": "tech_lead_qa", "decision": "NO-GO live until gates", "summary": "Require genuine self-hosted exact-head checks, explicit codicarium-prod context, conflict-free ownership, rollback, and player-path smoke evidence."}
+  ],
+  "external_gates": [
+    "Publish a supported kubeconfig containing an explicitly named codicarium-prod context in the current owning repository.",
+    "Resolve Nexus NuGet authorization if self-hosted application builds continue to return HTTP 401.",
+    "Prove deployment-controller prerequisites and conflict-free legacy-owner retirement without implementing platform, infrastructure, or app-config changes in this delivery."
+  ]
+}

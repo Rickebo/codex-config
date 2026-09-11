@@ -1,0 +1,1 @@
+codicarium/infra#1290 consolidation: unify PR #1293 authority-runner ownership verifier with PR #1294 installer/package protocol into one reviewed fail-closed contract; no host install, group policy change, workflow dispatch, merge, or live mutation

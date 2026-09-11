@@ -1,0 +1,53 @@
+{
+  "stage": "spec",
+  "status": "pass",
+  "summary": "Council consensus validated the documented agent-mcp MVP as a stageable v0.1.0 feature. Scope remains limited to the plan; reviewer safeguards are recorded as implementation and validation checks.",
+  "changed_files": [
+    "/home/rickebo/.codex/pipeline/runs/2026-08-20T10-24-30-001Z/spec.json",
+    "/home/rickebo/.codex/pipeline/runs/2026-08-20T10-24-30-001Z/spec-check.json",
+    "/home/rickebo/.codex/pipeline/runs/2026-08-20T10-24-30-001Z/council.json"
+  ],
+  "validation": [
+    "pipeline-spec-check returned ok=true",
+    "8 requirements, 5 Gherkin acceptance criteria, 5 tests, and 8 traceability rows validated",
+    "Three council perspectives recorded: planner_lite, reviewer, tech_lead_qa",
+    "Explicit non-goals preserve private MetaMCP authentication boundary and no Kubernetes/backwards compatibility",
+    "Stage dependencies preserve documented Stage 0 through Stage 8 ordering"
+  ],
+  "blockers": [],
+  "next_action": "Advance through the controller, then execute Stage 0 bootstrap validation in the required worktree workflow.",
+  "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T10-24-30-001Z/spec.json",
+  "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T10-24-30-001Z/spec-check.json",
+  "council_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T10-24-30-001Z/council.json",
+  "requires_council": true,
+  "independent_lanes": [
+    "Package and core application",
+    "Transport integration",
+    "Deployment and release automation"
+  ],
+  "route_to": "code",
+  "risk_level": "high",
+  "issues": [
+    {
+      "id": "SPEC-RISK-001",
+      "title": "Path and command confinement must be reviewed for symlink races and arbitrary argv behavior",
+      "severity": "critical",
+      "details": "Keep all path operations on the shared policy and verify boundary behavior before each operation; do not add a new command policy language.",
+      "owner_stage": "review"
+    },
+    {
+      "id": "SPEC-RISK-002",
+      "title": "Stateful SSE and HTTP contexts must remain isolated",
+      "severity": "high",
+      "details": "Integration tests must cover interleaved requests and mismatched or missing working-directory headers.",
+      "owner_stage": "test"
+    },
+    {
+      "id": "SPEC-RISK-003",
+      "title": "Main release publication must be serialized and rerun-safe",
+      "severity": "high",
+      "details": "Review and validate main-only concurrency, idempotent tag/release/image publication, and digest consistency.",
+      "owner_stage": "validation"
+    }
+  ]
+}

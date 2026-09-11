@@ -1,0 +1,43 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Independent Luna review of PR #1293 head 17f309e1 remains NO-GO: raw-byte systemd relevance inference is bypassable, FIFO entries can block inventory reads, and contract JSON loading bypasses the 64 KiB bound.",
+  "changed_files": [],
+  "validation": [
+    "Exact head 17f309e13e95a1993e1e9a5c8eb2f1fef72f5cfd reviewed against base efb9faac0606e02b7cac8e36e716f1ede9a50fb6.",
+    "Reviewer reproduced a verifier hang by placing a FIFO in an allowed unrelated systemd inventory directory.",
+    "Systemd token detection was assessed against continuations, environment expansion, and EnvironmentFile indirection and cannot establish semantic confinement.",
+    "Exact-head Validate, guard, and ARC classifier pass; protected ARC producer remains queued."
+  ],
+  "blockers": [
+    "Remove or replace raw-byte systemd relevance inference; define the verifier boundary around exact managed runner units and exact sudo-callable commands, explicitly treating unrelated root-managed services and root compromise as out of scope.",
+    "Reject non-regular inventory entries before any blocking open/read and add FIFO/device/socket regression coverage.",
+    "Load contract JSON through a bounded no-follow descriptor path and reject oversized input before unbounded allocation."
+  ],
+  "next_action": "Return to Luna code owner for loop-5 simplification and bounded type-safe reads, then independently re-review the exact head.",
+  "route_to": "code",
+  "risk_level": "high",
+  "issues": [
+    {
+      "id": "REV-1290-017",
+      "title": "Raw systemd relevance inference is semantically bypassable",
+      "severity": "high",
+      "details": "Raw contiguous token scanning cannot account for line continuations, environment composition, or EnvironmentFile indirection; narrow the stated boundary instead of implementing a partial parser.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV-1290-018",
+      "title": "Inventory reads can block indefinitely on non-regular entries",
+      "severity": "high",
+      "details": "An unrelated FIFO is opened O_RDONLY before type rejection and hangs the verifier; validate type via no-follow metadata before opening.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV-1290-019",
+      "title": "Contract JSON load bypasses descriptor size bound",
+      "severity": "high",
+      "details": "load_json uses an unbounded stream read, allowing memory exhaustion before the verifier applies bounded evidence handling.",
+      "owner_stage": "code"
+    }
+  ]
+}

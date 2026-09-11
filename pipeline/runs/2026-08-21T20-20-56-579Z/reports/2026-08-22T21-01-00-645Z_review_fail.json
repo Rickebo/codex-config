@@ -1,0 +1,54 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Loop-4 review of PR #522 commit 994bdb7 found three high blockers in clean-checkout testing, graph-byte capture, and Kopia restore verification.",
+  "changed_files": [
+    "PR #522 commit 994bdb7",
+    "tests/test_workspace_context_llm_proxy_gitops.py",
+    "tests/fixtures/workspace_context_restore/README.md",
+    "workspace-context/templates/backup.yaml",
+    "workspace-context/templates/gated.yaml",
+    "workspace-context/tests/static.sh",
+    "workspace-context/tests/cleanup-restore-drill.sh"
+  ],
+  "validation": [
+    "PR #522 is OPEN at 994bdb77e7bf7c97efd4d48701d672736fd53e02; GitHub reports no checks; merge state is CLEAN.",
+    "Exact PR tarball: workspace-context/tests/static.sh passed; both Helm lints passed; bash syntax checks passed.",
+    "Exact PR tarball: tests/fixtures/kopia_restore/run.sh passed and reported snapshot_id=snapshot-001.",
+    "Focused pytest failed because tests/fixtures/workspace_context_restore/run.sh is absent from the PR tree; GitHub Contents API returned 404 while only README.md is present.",
+    "Enabled render confirms graph-artifacts is read-only only in synthetic-bundle; kopia-handoff runs snapshot create /graph-artifacts without that mount.",
+    "Current-run CI: ok=true, checked_runs=1, failed_runs=0, warning_count=0; no deployment, restore, sync, source mutation, or secret-value access performed."
+  ],
+  "blockers": [
+    "HIGH — tests/test_workspace_context_llm_proxy_gitops.py:245-251 executes missing tests/fixtures/workspace_context_restore/run.sh; the focused suite fails. Commit the executable fixture or make the documented skip path real.",
+    "HIGH — workspace-context/templates/backup.yaml:108,118-120 mounts graph-artifacts only in init; kopia-handoff snapshots an unmounted /graph-artifacts. Mount the PVC read-only in handoff and assert it in rendering.",
+    "HIGH — workspace-context/templates/gated.yaml:43-47 restores only graph; pg_restore reads DB from scratch and graph-manifest.sha256 is not checked. Restore both IDs into fresh paths and verify path/size/SHA."
+  ],
+  "next_action": "Route to code to fix the three blockers, add executable enabled-path assertions for graph handoff and DB/graph Kopia restore readback, then rerun independent review and current-run CI; do not approve.",
+  "route_to": "code",
+  "risk_level": "high",
+  "requires_council": true,
+  "issues": [
+    {
+      "id": "REVIEW-522-CLEAN-FIXTURE",
+      "title": "Submitted focused fixture is missing",
+      "severity": "high",
+      "details": "The focused test invokes tests/fixtures/workspace_context_restore/run.sh, but commit 994bdb7 contains only its README.md.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REVIEW-522-GRAPH-HANDOFF-MOUNT",
+      "title": "Kopia handoff lacks graph PVC mount",
+      "severity": "high",
+      "details": "The graph PVC is mounted only by the init container; the Kopia handoff snapshots an unavailable /graph-artifacts path.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REVIEW-522-KOPIA-RESTORE-READBACK",
+      "title": "DB and graph Kopia readback is incomplete",
+      "severity": "high",
+      "details": "Restore uses a graph snapshot ID but reads the database dump from scratch and never verifies restored graph files against the real-file manifest.",
+      "owner_stage": "code"
+    }
+  ]
+}

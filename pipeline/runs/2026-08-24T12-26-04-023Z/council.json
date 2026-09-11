@@ -1,0 +1,22 @@
+{
+  "perspectives": [
+    {
+      "role": "planner",
+      "summary": "Resume the highest protected-main-reachable unpublished stable tag before evaluating follow-up commits; preserve source A and discover A's exact successful CI run."
+    },
+    {
+      "role": "security",
+      "summary": "Dispatch the publisher from a source-free verifier handoff with narrow actions/checks write permissions, and authenticate the full verifier, coordinator, CI, check, tag, source, and publisher-revision chain before writes."
+    },
+    {
+      "role": "QA",
+      "summary": "Require deterministic coverage for pending v0.6.13 plus chore/fix follow-ups, failed verifier states, fabricated identities, reruns, concurrency, artifact binding, provenance migration, and no v0.6.14."
+    }
+  ],
+  "consensus": "Use an explicit trusted workflow_dispatch handoff after verification success; do not rely on GITHUB_TOKEN recursion. Resume v0.6.13 at ad52dfc with its exact CI run before any new SemVer allocation. Keep all mutations create-only, non-canceling, serialized, and restricted to trusted release jobs.",
+  "resolved_questions": [
+    "Publisher runs from protected main because the v0.6.13 source revision predates the repaired publisher workflow.",
+    "Normal publisher provenance requires workflow_dispatch; historical workflow_run evidence needs explicit legacy opt-in.",
+    "The codicarium/infra verifier migration is tracked separately as issue #1184 and is not implemented in this PR."
+  ]
+}

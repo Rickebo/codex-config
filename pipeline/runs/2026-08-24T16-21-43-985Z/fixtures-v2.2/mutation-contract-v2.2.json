@@ -1,0 +1,31 @@
+{
+  "schema": "codicarium.four-party-mutation-contract/v2",
+  "steps": [
+    {
+      "schema": "codicarium.mutation-intent/v2",
+      "principal": "dedicated writer",
+      "fields": "requested mutation only; no readback or signature"
+    },
+    {
+      "schema": "codicarium.mutation-readback/v2",
+      "principal": "independent authenticated collector",
+      "fields": "raw bytes, JCS bytes, ETag, immutable target and collector identity"
+    },
+    {
+      "schema": "codicarium.mutation-signature/v2",
+      "principal": "Vault transit signer",
+      "fields": "intent and readback hashes; no target write"
+    },
+    {
+      "schema": "codicarium.mutation-commit/v2",
+      "principal": "distinct append-only committer",
+      "fields": "verification result, epoch, sequence and previous commit hash"
+    }
+  ],
+  "invariants": [
+    "four distinct service accounts and Vault roles",
+    "no GitHub App or RBAC overlap",
+    "deny direct writer egress to collector signer and committer",
+    "UNKNOWN freezes epoch; never retry"
+  ]
+}

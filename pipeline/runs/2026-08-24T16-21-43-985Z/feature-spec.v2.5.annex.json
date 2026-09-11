@@ -1,0 +1,662 @@
+{
+  "schema": "codicarium.deployment-controller-release-spec/v2.5",
+  "generated_at": "2026-08-26T12:00:00Z",
+  "predecessor_council_hashes": {
+    "v2_1": "ed0e9615847927c41f08c2e08ac37423de4f1d2d669b4c7c69c94c3a02958996",
+    "v2_2": "b8d5fd6157c112f841e5d03d2f2df2cc0418f118f83361c85ec7c9ae12fa0f29",
+    "v2_3": "4b5786803c2fbd05cb277e08f51cd36b8d629c84c7a367dfd118e068bab5bb3d",
+    "v2_4": "650c87bee7dfd6bf8027d07219d527fac8e7e07dd1c8136615f7a3906cd6c9a2"
+  },
+  "baselines": {
+    "source_version": "v2.4",
+    "issue_93": "closed",
+    "released": "v0.6.13",
+    "absent": "v0.6.14",
+    "newer_tags": "verified v0.7.x exist"
+  },
+  "release_identity": {
+    "requested": "NEXT_SEMVER",
+    "old_prerequisite": "v0.6.14",
+    "objective_change": "monotonic resolver from refreshed verified tags",
+    "resolver": {
+      "verified_tags": [
+        {
+          "tag": "v0.7.1",
+          "verified": true,
+          "source": "frozen-read-only-tag-snapshot",
+          "commit": "2724b4f1663e705871656c1f0626cdd0773f130aad5b2b13e54c5348a29a9f5e"
+        },
+        {
+          "tag": "v0.7.5",
+          "verified": true,
+          "source": "frozen-read-only-tag-snapshot",
+          "commit": "0a73d951a4f9a178b79ff36a6fd89ee27532c60c2ccb1cd2d0217a20d6f6483d"
+        },
+        {
+          "tag": "v0.8.0",
+          "verified": true,
+          "source": "frozen-read-only-tag-snapshot",
+          "commit": "cf7e01d12b432dc13b6ec03bbd566fb70f92d1a604902f5bb27ca2228415b13b"
+        }
+      ],
+      "frozen_next_semver": "v0.8.1",
+      "freeze_node": "X39",
+      "refresh_required_before_mutation": true
+    }
+  },
+  "app_config_lane": [
+    {
+      "id": "AP20",
+      "repository": "codicarium/app-config",
+      "path": ".codicarium/dev/bootstrap-release-20.yaml",
+      "argo_kind": "Application",
+      "application_name": "deployment-controller-bootstrap-20",
+      "artifact_sha256": "508c90cdb188137ccbad9fadd24c52a726b0e95d2c51b15ca80b130332333928",
+      "bootstrap_only": true
+    },
+    {
+      "id": "AP21",
+      "repository": "codicarium/app-config",
+      "path": ".codicarium/dev/bootstrap-release-21.yaml",
+      "argo_kind": "Application",
+      "application_name": "deployment-controller-bootstrap-21",
+      "artifact_sha256": "00382d376c7859a7f82a640ad90301a79acfe473872cf5d2cdc2ddfdd3b8e709",
+      "bootstrap_only": true
+    },
+    {
+      "id": "AP22",
+      "repository": "codicarium/app-config",
+      "path": ".codicarium/dev/bootstrap-release-22.yaml",
+      "argo_kind": "Application",
+      "application_name": "deployment-controller-bootstrap-22",
+      "artifact_sha256": "c0bc68df4729c8bb6bad6c179fb33130475e49b66de9d498f442638fa4612469",
+      "bootstrap_only": true
+    },
+    {
+      "id": "AP23",
+      "repository": "codicarium/app-config",
+      "path": ".codicarium/dev/bootstrap-release-23.yaml",
+      "argo_kind": "Application",
+      "application_name": "deployment-controller-bootstrap-23",
+      "artifact_sha256": "c79eed3d6a3998a5b7205ef40938b0da05937207bb0f25c18e03ba432fb63099",
+      "bootstrap_only": true
+    },
+    {
+      "id": "AP24",
+      "repository": "codicarium/app-config",
+      "path": ".codicarium/dev/bootstrap-release-24.yaml",
+      "argo_kind": "Application",
+      "application_name": "deployment-controller-bootstrap-24",
+      "artifact_sha256": "2df1d0bfaa45f051aad8daf108141a93ad466fb91f877be1b35dfb617a074e61",
+      "bootstrap_only": true
+    },
+    {
+      "id": "AP25",
+      "repository": "codicarium/app-config",
+      "path": ".codicarium/dev/bootstrap-release-25.yaml",
+      "argo_kind": "Application",
+      "application_name": "deployment-controller-bootstrap-25",
+      "artifact_sha256": "15732488598695cd89a78e41decc25f46b3a879c24e24a82d244a0d8339861a4",
+      "bootstrap_only": true
+    }
+  ],
+  "app_config_boundary": "bootstrap wiring only; no workload chart or values ownership",
+  "dag": {
+    "path": "fixtures-v2.5/rollout-dag-v2.5.json",
+    "root": "S00",
+    "join": "AP25->X41"
+  },
+  "semantic_trace": [
+    {
+      "requirement_id": "REQ-001",
+      "semantic_statement": "Freeze canonical bytes at injected clock",
+      "dag_nodes": [
+        "S00"
+      ],
+      "command_id": "cmd.S00",
+      "schema_id": "payload.v2.5",
+      "positive_fixture": "fixtures-v2.5/base-contracts-v2.5.json",
+      "negative_oracles": [
+        "N01"
+      ],
+      "effect_oracle": "independently hash pre/post target bytes in finally",
+      "state_owner": "release-platform-config"
+    },
+    {
+      "requirement_id": "REQ-002",
+      "semantic_statement": "Bind exact predecessor council hashes",
+      "dag_nodes": [
+        "X01"
+      ],
+      "command_id": "cmd.X01",
+      "schema_id": "payload.v2.5",
+      "positive_fixture": "fixtures-v2.5/base-contracts-v2.5.json",
+      "negative_oracles": [
+        "N02"
+      ],
+      "effect_oracle": "independently hash pre/post target bytes in finally",
+      "state_owner": "release-platform-config"
+    },
+    {
+      "requirement_id": "REQ-003",
+      "semantic_statement": "Resolve NEXT_SEMVER from refreshed verified tags",
+      "dag_nodes": [
+        "X02"
+      ],
+      "command_id": "cmd.X02",
+      "schema_id": "semver.v2.5",
+      "positive_fixture": "fixtures-v2.5/base-contracts-v2.5.json",
+      "negative_oracles": [
+        "N03"
+      ],
+      "effect_oracle": "independently hash pre/post target bytes in finally",
+      "state_owner": "release-platform-config"
+    },
+    {
+      "requirement_id": "REQ-004",
+      "semantic_statement": "Reject second root and prove success reachability",
+      "dag_nodes": [
+        "X03"
+      ],
+      "command_id": "cmd.X03",
+      "schema_id": "fsm.v2.5",
+      "positive_fixture": "fixtures-v2.5/base-contracts-v2.5.json",
+      "negative_oracles": [
+        "N04"
+      ],
+      "effect_oracle": "independently hash pre/post target bytes in finally",
+      "state_owner": "release-platform-config"
+    },
+    {
+      "requirement_id": "REQ-005",
+      "semantic_statement": "Bind immutable argv digest shell and network",
+      "dag_nodes": [
+        "X04"
+      ],
+      "command_id": "cmd.X04",
+      "schema_id": "command.v2.5",
+      "positive_fixture": "fixtures-v2.5/base-contracts-v2.5.json",
+      "negative_oracles": [
+        "N05"
+      ],
+      "effect_oracle": "independently hash pre/post target bytes in finally",
+      "state_owner": "release-platform-config"
+    },
+    {
+      "requirement_id": "REQ-006",
+      "semantic_statement": "Validate payloads with Draft 2020-12",
+      "dag_nodes": [
+        "X05"
+      ],
+      "command_id": "cmd.X05",
+      "schema_id": "payload.v2.5",
+      "positive_fixture": "fixtures-v2.5/base-contracts-v2.5.json",
+      "negative_oracles": [
+        "N06"
+      ],
+      "effect_oracle": "independently hash pre/post target bytes in finally",
+      "state_owner": "release-platform-config"
+    },
+    {
+      "requirement_id": "REQ-007",
+      "semantic_statement": "Verify offline RFC 8785 signatures",
+      "dag_nodes": [
+        "X06"
+      ],
+      "command_id": "cmd.X06",
+      "schema_id": "signature.v2.5",
+      "positive_fixture": "fixtures-v2.5/base-contracts-v2.5.json",
+      "negative_oracles": [
+        "N07"
+      ],
+      "effect_oracle": "independently hash pre/post target bytes in finally",
+      "state_owner": "release-platform-config"
+    },
+    {
+      "requirement_id": "REQ-008",
+      "semantic_statement": "Reject incomplete live Sigstore or Vault evidence",
+      "dag_nodes": [
+        "X07"
+      ],
+      "command_id": "cmd.X07",
+      "schema_id": "signature.v2.5",
+      "positive_fixture": "fixtures-v2.5/base-contracts-v2.5.json",
+      "negative_oracles": [
+        "N08"
+      ],
+      "effect_oracle": "independently hash pre/post target bytes in finally",
+      "state_owner": "release-platform-config"
+    },
+    {
+      "requirement_id": "REQ-009",
+      "semantic_statement": "Evaluate issued not-before expiry fixed clock skew",
+      "dag_nodes": [
+        "X08"
+      ],
+      "command_id": "cmd.X08",
+      "schema_id": "payload.v2.5",
+      "positive_fixture": "fixtures-v2.5/base-contracts-v2.5.json",
+      "negative_oracles": [
+        "N09"
+      ],
+      "effect_oracle": "independently hash pre/post target bytes in finally",
+      "state_owner": "release-platform-config"
+    },
+    {
+      "requirement_id": "REQ-010",
+      "semantic_statement": "Read SQLite replay state without writes",
+      "dag_nodes": [
+        "X09"
+      ],
+      "command_id": "cmd.X09",
+      "schema_id": "replay.v2.5",
+      "positive_fixture": "fixtures-v2.5/base-contracts-v2.5.json",
+      "negative_oracles": [
+        "N10"
+      ],
+      "effect_oracle": "independently hash pre/post target bytes in finally",
+      "state_owner": "release-platform-config"
+    },
+    {
+      "requirement_id": "REQ-011",
+      "semantic_statement": "Recompute target identity and bytes",
+      "dag_nodes": [
+        "X10"
+      ],
+      "command_id": "cmd.X10",
+      "schema_id": "target.v2.5",
+      "positive_fixture": "fixtures-v2.5/base-contracts-v2.5.json",
+      "negative_oracles": [
+        "N11"
+      ],
+      "effect_oracle": "independently hash pre/post target bytes in finally",
+      "state_owner": "release-platform-config"
+    },
+    {
+      "requirement_id": "REQ-012",
+      "semantic_statement": "Derive pre post bytes and effect in finally",
+      "dag_nodes": [
+        "X11"
+      ],
+      "command_id": "cmd.X11",
+      "schema_id": "mutation.v2.5",
+      "positive_fixture": "fixtures-v2.5/base-contracts-v2.5.json",
+      "negative_oracles": [
+        "N12"
+      ],
+      "effect_oracle": "independently hash pre/post target bytes in finally",
+      "state_owner": "release-platform-config"
+    },
+    {
+      "requirement_id": "REQ-013",
+      "semantic_statement": "Apply distinct negatives and reject no-op harness",
+      "dag_nodes": [
+        "X12"
+      ],
+      "command_id": "cmd.X12",
+      "schema_id": "mutation.v2.5",
+      "positive_fixture": "fixtures-v2.5/base-contracts-v2.5.json",
+      "negative_oracles": [
+        "N13"
+      ],
+      "effect_oracle": "independently hash pre/post target bytes in finally",
+      "state_owner": "release-platform-config"
+    },
+    {
+      "requirement_id": "REQ-014",
+      "semantic_statement": "Execute explicit spec pipeline node",
+      "dag_nodes": [
+        "X14"
+      ],
+      "command_id": "cmd.pipeline.spec",
+      "schema_id": "fsm.v2.5",
+      "positive_fixture": "fixtures-v2.5/base-contracts-v2.5.json",
+      "negative_oracles": [
+        "N14"
+      ],
+      "effect_oracle": "independently hash pre/post target bytes in finally",
+      "state_owner": "release-platform-config"
+    },
+    {
+      "requirement_id": "REQ-015",
+      "semantic_statement": "Execute explicit code pipeline node",
+      "dag_nodes": [
+        "X15"
+      ],
+      "command_id": "cmd.pipeline.code",
+      "schema_id": "fsm.v2.5",
+      "positive_fixture": "fixtures-v2.5/base-contracts-v2.5.json",
+      "negative_oracles": [
+        "N15"
+      ],
+      "effect_oracle": "independently hash pre/post target bytes in finally",
+      "state_owner": "release-platform-config"
+    },
+    {
+      "requirement_id": "REQ-016",
+      "semantic_statement": "Execute explicit review pipeline node",
+      "dag_nodes": [
+        "X16"
+      ],
+      "command_id": "cmd.pipeline.review",
+      "schema_id": "fsm.v2.5",
+      "positive_fixture": "fixtures-v2.5/base-contracts-v2.5.json",
+      "negative_oracles": [
+        "N16"
+      ],
+      "effect_oracle": "independently hash pre/post target bytes in finally",
+      "state_owner": "release-platform-config"
+    },
+    {
+      "requirement_id": "REQ-017",
+      "semantic_statement": "Execute explicit test pipeline node",
+      "dag_nodes": [
+        "X17"
+      ],
+      "command_id": "cmd.pipeline.test",
+      "schema_id": "fsm.v2.5",
+      "positive_fixture": "fixtures-v2.5/base-contracts-v2.5.json",
+      "negative_oracles": [
+        "N17"
+      ],
+      "effect_oracle": "independently hash pre/post target bytes in finally",
+      "state_owner": "release-platform-config"
+    },
+    {
+      "requirement_id": "REQ-018",
+      "semantic_statement": "Execute explicit validation pipeline node",
+      "dag_nodes": [
+        "X18"
+      ],
+      "command_id": "cmd.pipeline.validation",
+      "schema_id": "fsm.v2.5",
+      "positive_fixture": "fixtures-v2.5/base-contracts-v2.5.json",
+      "negative_oracles": [
+        "N18"
+      ],
+      "effect_oracle": "independently hash pre/post target bytes in finally",
+      "state_owner": "release-platform-config"
+    },
+    {
+      "requirement_id": "REQ-019",
+      "semantic_statement": "Enforce normal administrator identities TTL one-use audit revocation",
+      "dag_nodes": [
+        "X19"
+      ],
+      "command_id": "cmd.admin.normal",
+      "schema_id": "admin.v2.5",
+      "positive_fixture": "fixtures-v2.5/base-contracts-v2.5.json",
+      "negative_oracles": [
+        "N19"
+      ],
+      "effect_oracle": "independently hash pre/post target bytes in finally",
+      "state_owner": "release-platform-config"
+    },
+    {
+      "requirement_id": "REQ-020",
+      "semantic_statement": "Enforce break-glass dual approvers distinct executor and forbidden operations",
+      "dag_nodes": [
+        "X25"
+      ],
+      "command_id": "cmd.admin.breakglass",
+      "schema_id": "admin.v2.5",
+      "positive_fixture": "fixtures-v2.5/base-contracts-v2.5.json",
+      "negative_oracles": [
+        "N20"
+      ],
+      "effect_oracle": "independently hash pre/post target bytes in finally",
+      "state_owner": "release-platform-config"
+    },
+    {
+      "requirement_id": "REQ-021",
+      "semantic_statement": "Bootstrap AP20 descriptor and Argo object",
+      "dag_nodes": [
+        "AP20"
+      ],
+      "command_id": "cmd.AP20",
+      "schema_id": "app-bootstrap.v2.5",
+      "positive_fixture": "fixtures-v2.5/base-contracts-v2.5.json",
+      "negative_oracles": [
+        "N21"
+      ],
+      "effect_oracle": "independently hash pre/post target bytes in finally",
+      "state_owner": "app-config"
+    },
+    {
+      "requirement_id": "REQ-022",
+      "semantic_statement": "Bootstrap AP21 descriptor and Argo object",
+      "dag_nodes": [
+        "AP21"
+      ],
+      "command_id": "cmd.AP21",
+      "schema_id": "app-bootstrap.v2.5",
+      "positive_fixture": "fixtures-v2.5/base-contracts-v2.5.json",
+      "negative_oracles": [
+        "N22"
+      ],
+      "effect_oracle": "independently hash pre/post target bytes in finally",
+      "state_owner": "app-config"
+    },
+    {
+      "requirement_id": "REQ-023",
+      "semantic_statement": "Bootstrap AP22 descriptor and Argo object",
+      "dag_nodes": [
+        "AP22"
+      ],
+      "command_id": "cmd.AP22",
+      "schema_id": "app-bootstrap.v2.5",
+      "positive_fixture": "fixtures-v2.5/base-contracts-v2.5.json",
+      "negative_oracles": [
+        "N23"
+      ],
+      "effect_oracle": "independently hash pre/post target bytes in finally",
+      "state_owner": "app-config"
+    },
+    {
+      "requirement_id": "REQ-024",
+      "semantic_statement": "Bootstrap AP23 descriptor and Argo object",
+      "dag_nodes": [
+        "AP23"
+      ],
+      "command_id": "cmd.AP23",
+      "schema_id": "app-bootstrap.v2.5",
+      "positive_fixture": "fixtures-v2.5/base-contracts-v2.5.json",
+      "negative_oracles": [
+        "N24"
+      ],
+      "effect_oracle": "independently hash pre/post target bytes in finally",
+      "state_owner": "app-config"
+    },
+    {
+      "requirement_id": "REQ-025",
+      "semantic_statement": "Bootstrap AP24 descriptor and Argo object",
+      "dag_nodes": [
+        "AP24"
+      ],
+      "command_id": "cmd.AP24",
+      "schema_id": "app-bootstrap.v2.5",
+      "positive_fixture": "fixtures-v2.5/base-contracts-v2.5.json",
+      "negative_oracles": [
+        "N01"
+      ],
+      "effect_oracle": "independently hash pre/post target bytes in finally",
+      "state_owner": "app-config"
+    },
+    {
+      "requirement_id": "REQ-026",
+      "semantic_statement": "Join AP25 bootstrap to X41 before mutation",
+      "dag_nodes": [
+        "AP25",
+        "X41"
+      ],
+      "command_id": "cmd.X41",
+      "schema_id": "fsm.v2.5",
+      "positive_fixture": "fixtures-v2.5/base-contracts-v2.5.json",
+      "negative_oracles": [
+        "N02"
+      ],
+      "effect_oracle": "independently hash pre/post target bytes in finally",
+      "state_owner": "app-config"
+    },
+    {
+      "requirement_id": "REQ-027",
+      "semantic_statement": "Verify candidate bytes media and sandbox",
+      "dag_nodes": [
+        "X26"
+      ],
+      "command_id": "cmd.X26",
+      "schema_id": "candidate.v2.5",
+      "positive_fixture": "fixtures-v2.5/base-contracts-v2.5.json",
+      "negative_oracles": [
+        "N03"
+      ],
+      "effect_oracle": "independently hash pre/post target bytes in finally",
+      "state_owner": "release-platform-config"
+    },
+    {
+      "requirement_id": "REQ-028",
+      "semantic_statement": "Verify proxy host listener audience SNI operations",
+      "dag_nodes": [
+        "X27"
+      ],
+      "command_id": "cmd.X27",
+      "schema_id": "proxy.v2.5",
+      "positive_fixture": "fixtures-v2.5/base-contracts-v2.5.json",
+      "negative_oracles": [
+        "N04"
+      ],
+      "effect_oracle": "independently hash pre/post target bytes in finally",
+      "state_owner": "release-platform-config"
+    },
+    {
+      "requirement_id": "REQ-029",
+      "semantic_statement": "Verify Vault role principal key and revocation",
+      "dag_nodes": [
+        "X28"
+      ],
+      "command_id": "cmd.X28",
+      "schema_id": "vault.v2.5",
+      "positive_fixture": "fixtures-v2.5/base-contracts-v2.5.json",
+      "negative_oracles": [
+        "N05"
+      ],
+      "effect_oracle": "independently hash pre/post target bytes in finally",
+      "state_owner": "release-platform-config"
+    },
+    {
+      "requirement_id": "REQ-030",
+      "semantic_statement": "Verify three-node CNPG synchronous TLS contract",
+      "dag_nodes": [
+        "X29"
+      ],
+      "command_id": "cmd.X29",
+      "schema_id": "cnpg.v2.5",
+      "positive_fixture": "fixtures-v2.5/base-contracts-v2.5.json",
+      "negative_oracles": [
+        "N06"
+      ],
+      "effect_oracle": "independently hash pre/post target bytes in finally",
+      "state_owner": "release-platform-config"
+    },
+    {
+      "requirement_id": "REQ-031",
+      "semantic_statement": "Verify four unique roles keys nonces bytes hashes",
+      "dag_nodes": [
+        "X30"
+      ],
+      "command_id": "cmd.X30",
+      "schema_id": "mutation.v2.5",
+      "positive_fixture": "fixtures-v2.5/base-contracts-v2.5.json",
+      "negative_oracles": [
+        "N07"
+      ],
+      "effect_oracle": "independently hash pre/post target bytes in finally",
+      "state_owner": "release-platform-config"
+    },
+    {
+      "requirement_id": "REQ-032",
+      "semantic_statement": "Route every failure to atomic fence cancel quarantine classify",
+      "dag_nodes": [
+        "X31"
+      ],
+      "command_id": "cmd.X31",
+      "schema_id": "fsm.v2.5",
+      "positive_fixture": "fixtures-v2.5/base-contracts-v2.5.json",
+      "negative_oracles": [
+        "N08"
+      ],
+      "effect_oracle": "independently hash pre/post target bytes in finally",
+      "state_owner": "release-platform-config"
+    },
+    {
+      "requirement_id": "REQ-033",
+      "semantic_statement": "Execute U00-U08 recovery commands to terminal",
+      "dag_nodes": [
+        "X32"
+      ],
+      "command_id": "cmd.X32",
+      "schema_id": "recovery.v2.5",
+      "positive_fixture": "fixtures-v2.5/base-contracts-v2.5.json",
+      "negative_oracles": [
+        "N09"
+      ],
+      "effect_oracle": "independently hash pre/post target bytes in finally",
+      "state_owner": "release-platform-config"
+    },
+    {
+      "requirement_id": "REQ-034",
+      "semantic_statement": "Bind detached council to manifest and report hashes",
+      "dag_nodes": [
+        "X33",
+        "X34",
+        "X35",
+        "X36"
+      ],
+      "command_id": "cmd.X36",
+      "schema_id": "closure.v2.5",
+      "positive_fixture": "fixtures-v2.5/base-contracts-v2.5.json",
+      "negative_oracles": [
+        "N10"
+      ],
+      "effect_oracle": "independently hash pre/post target bytes in finally",
+      "state_owner": "release-platform-config"
+    },
+    {
+      "requirement_id": "REQ-035",
+      "semantic_statement": "Keep activation blocked and refresh before mutation",
+      "dag_nodes": [
+        "X39"
+      ],
+      "command_id": "cmd.X39",
+      "schema_id": "activation.v2.5",
+      "positive_fixture": "fixtures-v2.5/base-contracts-v2.5.json",
+      "negative_oracles": [
+        "N11"
+      ],
+      "effect_oracle": "independently hash pre/post target bytes in finally",
+      "state_owner": "release-platform-config"
+    }
+  ],
+  "contracts": {
+    "candidate": "fixtures-v2.5/candidate-contract-v2.5.json",
+    "proxy": "fixtures-v2.5/proxy-contract-v2.5.json",
+    "vault": "fixtures-v2.5/vault-contract-v2.5.json",
+    "cnpg": "fixtures-v2.5/cnpg-contract-v2.5.json",
+    "admin": "fixtures-v2.5/admin-contracts-v2.5.json",
+    "activation": "fixtures-v2.5/activation-contract-v2.5.json",
+    "recovery": "fixtures-v2.5/recovery-contract-v2.5.json",
+    "semver": "fixtures-v2.5/semver-snapshot-v2.5.json"
+  },
+  "hash_closure": {
+    "manifest": "fixtures-v2.5/pre-council-bundle-manifest-v2.5.json",
+    "report": "fixtures-v2.5/pre-council-validation-report-v2.5.json",
+    "council_template": "fixtures-v2.5/council-closure-template-v2.5.json",
+    "council_detached": true
+  },
+  "activation": {
+    "state": "BLOCKED_PREACTIVATION",
+    "live_gate_count": 0,
+    "refresh_required_before_mutation": true,
+    "synthetic_evidence_authorizes": false
+  }
+}

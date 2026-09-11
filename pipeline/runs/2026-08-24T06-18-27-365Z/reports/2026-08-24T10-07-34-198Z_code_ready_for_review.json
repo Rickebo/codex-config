@@ -1,0 +1,34 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Removed the invalid workflow_run actor assumption, extracted executable coordinator trust policy fixtures used by Release Verify, and added a verified exact-asset public-release no-op path with all later publisher steps skipped.",
+  "changed_files": [
+    ".github/workflows/automatic-release.yaml",
+    ".github/workflows/release.yaml",
+    ".github/workflows/publish-release.yaml",
+    ".github/workflows/recover-release-attestations.yaml",
+    "hack/release-coordinator-policy.js",
+    "hack/test-release-coordinator-policy.js",
+    "hack/release-plan.py",
+    "hack/test-release-plan.py",
+    "hack/release-provenance.py",
+    "hack/publisher-subject-evidence.py",
+    "hack/test-release-graph.py",
+    "hack/test-release-image-flow.py",
+    "hack/test-publisher-subject-evidence.py",
+    "Makefile",
+    "docs/README.md",
+    "docs/releasing.md"
+  ],
+  "validation": [
+    "make test-release-flow: passed including 42 release-graph tests",
+    "node hack/test-release-coordinator-policy.js: passed",
+    "hack/test-release-image-flow.py: 26 tests passed",
+    "hack/test-recover-release-attestations.py: 24 tests passed",
+    "actionlint on four affected workflows: passed",
+    "git diff --check: passed",
+    "diff SHA-256: 6e7e40c8b4327fa6992e1bffbd5aecba12cba6f5dab90246755191e31b6b0d20"
+  ],
+  "blockers": [],
+  "next_action": "Repeat independent review of actor semantics, executable trust policy, and verified public-release rerun no-op behavior."
+}

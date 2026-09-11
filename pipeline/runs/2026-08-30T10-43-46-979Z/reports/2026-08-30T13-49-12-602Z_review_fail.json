@@ -1,0 +1,50 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Independent Luna review rejected 8f037dae with two high and two medium security/correctness findings: source digest/reopen TOCTOU during root installation, incomplete runner-6252 proof, potentially blocking special-file opens in the offline verifier, and a stale conflicting fixture digest. The root-capable lifecycle and live evidence gates also remain unverified.",
+  "changed_files": [],
+  "validation": [
+    "Independent findings-first review completed against exact commit 8f037dae and the 12-requirement feature spec.",
+    "Reviewer inspected installer source capture, workflow identity, descriptor open semantics, and fixture/package consistency.",
+    "Pipeline review decision: FAIL."
+  ],
+  "blockers": [
+    "REV-001 HIGH: install.sh validates source digests then reopens mutable paths for root installation, permitting replacement between check and copy.",
+    "REV-002 HIGH: protected workflow does not prove runner ID 6252/group membership/selected-workflow policy; group+label alone is insufficient.",
+    "REV-003 MEDIUM: verifier opens final objects with blocking O_RDONLY before rejecting FIFO/socket/device types.",
+    "REV-004 MEDIUM: preflight fixture pins obsolete 6a865d digest instead of the canonical package digest."
+  ],
+  "next_action": "Return to the same Luna code owner for focused remediation and tests, then obtain a fresh independent review of the new exact commit.",
+  "route_to": "code",
+  "risk_level": "critical",
+  "issues": [
+    {
+      "id": "REV-001",
+      "title": "Root installer source validation/copy TOCTOU",
+      "severity": "high",
+      "details": "Capture immutable source descriptors/bytes first and stage exactly those verified bytes; do not hash then reopen mutable checkout paths.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV-002",
+      "title": "Protected workflow lacks runner-6252 proof path",
+      "severity": "high",
+      "details": "Add the strongest job-visible exact runner identity checks and a fail-closed external read-only GitHub API evidence contract without secrets or label-only trust.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV-003",
+      "title": "Offline verifier may block on special files",
+      "severity": "medium",
+      "details": "Acquire final objects nonblocking/no-follow and reject non-regular types before any read.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV-004",
+      "title": "Stale copied fixture conflicts with canonical package",
+      "severity": "medium",
+      "details": "Generate fixture content from the canonical package or remove the predecessor fixture and assert exact package fidelity.",
+      "owner_stage": "code"
+    }
+  ]
+}

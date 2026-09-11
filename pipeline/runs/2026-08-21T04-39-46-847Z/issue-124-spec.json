@@ -1,0 +1,91 @@
+{
+  "meta": {
+    "id": "SPEC-124-supply-chain-metadata",
+    "title": "Pin supply-chain metadata and publish verifiable artifacts",
+    "author": "Codex manager",
+    "created_at": "2026-08-21T04:55:00+02:00",
+    "version": "1.0"
+  },
+  "feature": {
+    "problem_statement": "Mutable workflow action refs, unpinned build/migration images, missing dependency automation and Go vulnerability coverage, and absent SBOM/provenance publication reduce confidence that released artifacts correspond to reviewed source.",
+    "goals": [
+      "Pin every external/internal action and governed production image to reviewed immutable identifiers.",
+      "Add reviewable dependency update configuration and a reproducible Go vulnerability gate.",
+      "Generate SBOM/provenance metadata tied to exact release digests and document verification.",
+      "Make platform-dependent signature/referrer prerequisites explicit rather than claiming unverified deployment enforcement."
+    ],
+    "non_goals": [
+      "Inventing private action SHAs, image digests, signing keys, or registry capabilities.",
+      "Adding standalone binary release artifacts that the repository does not currently publish.",
+      "Changing Argo admission policy or Nexus configuration without platform-owner evidence."
+    ],
+    "scope_in": [
+      "CI/release action refs, Dockerfile and chart migration image references.",
+      "Supply-chain checker/tests, Dependabot configuration, and pinned govulncheck invocation.",
+      "Release SBOM/provenance/signing wiring only where verified platform prerequisites exist, plus safe documentation and explicit fail-closed prerequisites."
+    ],
+    "scope_out": ["Live production registry policy mutation", "KMS/Fulcio/Rekor provisioning", "Deployment admission enforcement without platform approval"]
+  },
+  "requirements": [
+    {
+      "id": "REQ-124-001",
+      "priority": "MUST",
+      "statement": "All GitHub Action references in CI and release workflows, including private Codicarium actions, must use reviewed full commit SHAs with a human-readable release comment.",
+      "rationale": "Mutable tags allow trusted build behavior to change without a repository diff."
+    },
+    {
+      "id": "REQ-124-002",
+      "priority": "MUST",
+      "statement": "Production Dockerfile bases and governed chart/CI migration images must use verified immutable multi-architecture digest references; a supply-chain checker must reject mutable or empty governed references.",
+      "rationale": "Build and migration inputs must resolve to reviewed content across supported architectures."
+    },
+    {
+      "id": "REQ-124-003",
+      "priority": "MUST",
+      "statement": "Repository configuration must provide reviewable automated updates for GitHub Actions, Go modules, npm, and Docker inputs, and CI must run a reproducibly pinned Go vulnerability check alongside existing tests/vet/audit.",
+      "rationale": "Pinned inputs need a safe update path and language-appropriate vulnerability coverage."
+    },
+    {
+      "id": "REQ-124-004",
+      "priority": "MUST",
+      "statement": "Release metadata must include an SBOM for published image/chart contents and provenance tied to GITHUB_SHA and immutable artifact digests, or fail closed with an explicit documented platform prerequisite when the target registry cannot store/verify attestations.",
+      "rationale": "Consumers need verifiable component and source-to-artifact evidence rather than an undocumented promise."
+    },
+    {
+      "id": "REQ-124-005",
+      "priority": "SHOULD",
+      "statement": "Deployment documentation must describe digest, SBOM, provenance, and signature verification and identify Nexus referrer, signer identity, and Argo/admission prerequisites as external gates when not verified.",
+      "rationale": "Repository changes cannot substitute for platform trust configuration."
+    }
+  ],
+  "acceptance_criteria": [
+    {"id":"AC-124-001","requirement_ids":["REQ-124-001"],"scenario":"Given CI and release workflow YAML, when the supply-chain checker runs, then every action uses a reviewed full SHA and retains a release comment."},
+    {"id":"AC-124-002","requirement_ids":["REQ-124-002"],"scenario":"Given Dockerfile, chart, and governed CI image references, when checker/tests run, then mutable tags or empty digests fail and verified multi-architecture digests pass."},
+    {"id":"AC-124-003","requirement_ids":["REQ-124-003"],"scenario":"Given a clean checkout, when CI runs, then Dependabot configuration is discoverable and the pinned govulncheck command executes reproducibly."},
+    {"id":"AC-124-004","requirement_ids":["REQ-124-004"],"scenario":"Given a release digest, when release metadata is generated, then SBOM/provenance is tied to that digest and source SHA; unsupported registry/signing prerequisites fail closed with an actionable reason."},
+    {"id":"AC-124-005","requirement_ids":["REQ-124-005"],"scenario":"Given deployment documentation, when an operator verifies an artifact, then the exact digest/SBOM/provenance/signature procedure and external platform prerequisites are clear."}
+  ],
+  "test_plan": [
+    {"id":"TST-124-001","type":"static","requirement_ids":["REQ-124-001","REQ-124-002"],"approach":"Parse workflow refs and governed image references; reject tags, missing SHAs, empty digests, malformed/mismatched architectures."},
+    {"id":"TST-124-002","type":"configuration","requirement_ids":["REQ-124-003"],"approach":"Validate Dependabot ecosystems and run pinned govulncheck fixture/command without @latest or mutable installer."},
+    {"id":"TST-124-003","type":"release","requirement_ids":["REQ-124-004"],"approach":"Exercise SBOM/provenance generation with synthetic immutable digest and verify subject SHA/digest; use a negative unsupported-referrer fixture."},
+    {"id":"TST-124-004","type":"regression","requirement_ids":["REQ-124-005"],"approach":"Run docs/workflow parsing, actionlint, full CI, and diff/credential scans; inspect verification runbook for external gates."}
+  ],
+  "traceability": [
+    {"requirement_id":"REQ-124-001","acceptance_ids":["AC-124-001"],"test_ids":["TST-124-001"],"review_checks":["Every action SHA verified against upstream tag commit"],"validation_checks":["Hosted workflow parser passes"]},
+    {"requirement_id":"REQ-124-002","acceptance_ids":["AC-124-002"],"test_ids":["TST-124-001"],"review_checks":["Digest architecture and provenance reviewed"],"validation_checks":["Docker/Helm smoke passes"]},
+    {"requirement_id":"REQ-124-003","acceptance_ids":["AC-124-003"],"test_ids":["TST-124-002"],"review_checks":["No mutable tool installer"],"validation_checks":["Vulnerability gate evidence"]},
+    {"requirement_id":"REQ-124-004","acceptance_ids":["AC-124-004"],"test_ids":["TST-124-003"],"review_checks":["No unsupported attestation claim"],"validation_checks":["Release metadata subject matches digest/SHA"]},
+    {"requirement_id":"REQ-124-005","acceptance_ids":["AC-124-005"],"test_ids":["TST-124-004"],"review_checks":["Docs distinguish repository and platform responsibilities"],"validation_checks":["Docs checks pass"]}
+  ],
+  "quality_gates": {"spec_review_required":true,"testability_required":true,"traceability_required":true},
+  "council": {
+    "perspectives": [
+      {"role":"planner_lite","summary":"Split repository-verifiable pinning/scanning from Nexus signing and Argo enforcement prerequisites; avoid unverifiable claims."},
+      {"role":"reviewer","summary":"Require exact action commits, multi-architecture image digests, fail-closed reference checks, and no mutable vulnerability installer."},
+      {"role":"tech_lead_qa","summary":"Demand negative fixtures, release-subject digest linkage, full CI, and independent platform capability evidence."}
+    ],
+    "consensus_summary":"Implement the repository-side supply-chain controls now, and leave signed attestation/deployment enforcement explicitly gated on verified Nexus and identity capabilities.",
+    "open_questions":["Does Nexus support OCI referrers for image/chart SBOMs and signatures?","Which signer identity/OIDC or KMS path is approved for release?","Can private Codicarium action SHAs be kept stable through the update process?"]
+  }
+}

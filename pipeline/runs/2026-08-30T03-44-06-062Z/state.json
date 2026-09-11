@@ -1,0 +1,233 @@
+{
+  "version": 1,
+  "created_at": "2026-08-30T03:44:06.064Z",
+  "updated_at": "2026-08-30T05:04:46.287Z",
+  "task": "codicarium/infra#1288: use authoritative typed HA Kubernetes API VIP for guarded deployment-controller upgrade without weakening identity validation",
+  "policy_path": "/home/rickebo/.codex/pipeline/transitions.json",
+  "approval_rules_path": "/home/rickebo/.codex/pipeline/approval-rules.json",
+  "initial_stage": "spec",
+  "current_stage": "validation",
+  "pipeline_profile": "full",
+  "done": false,
+  "max_loops": 6,
+  "loop_count": 1,
+  "approval_required_count": 6,
+  "approvals": [
+    {
+      "at": "2026-08-30T03:58:06.246Z",
+      "approver": "user",
+      "note": "User explicitly approved and repeatedly instructed proceed; approval applies to PR-only code stage for infra #1288, not live dispatch.",
+      "gate": "spec_to_code",
+      "reason": "Spec pass requires explicit approval before implementation starts.",
+      "risk_level": "high",
+      "from_stage": "spec",
+      "next_stage": "code",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T03-44-06-062Z/reports/2026-08-30T03-57-55-566Z_spec_pass.json"
+    },
+    {
+      "at": "2026-08-30T04:34:25.000Z",
+      "approver": "user",
+      "note": "Standing user approval to proceed authorizes independent review of PR #1292 exact head; it does not authorize merge or live dispatch.",
+      "gate": "risk_threshold",
+      "reason": "Risk level high meets or exceeds threshold high.",
+      "risk_level": "high",
+      "from_stage": "code",
+      "next_stage": "review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T03-44-06-062Z/reports/2026-08-30T04-34-13-787Z_code_ready_for_review.json"
+    },
+    {
+      "at": "2026-08-30T04:42:49.953Z",
+      "approver": "user",
+      "note": "Standing user approval authorizes the focused Luna fix for review finding REV-001; no manual CI retry, merge, or live dispatch.",
+      "gate": "risk_threshold",
+      "reason": "Risk level high meets or exceeds threshold high.",
+      "risk_level": "high",
+      "from_stage": "review",
+      "next_stage": "code",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T03-44-06-062Z/reports/2026-08-30T04-42-33-395Z_review_fail.json"
+    },
+    {
+      "at": "2026-08-30T04:49:36.365Z",
+      "approver": "user",
+      "note": "Standing user approval authorizes independent re-review of exact head 9dbb5de9 only; merge and live dispatch remain unauthorized.",
+      "gate": "risk_threshold",
+      "reason": "Risk level high meets or exceeds threshold high.",
+      "risk_level": "high",
+      "from_stage": "code",
+      "next_stage": "review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T03-44-06-062Z/reports/2026-08-30T04-49-25-929Z_code_ready_for_review.json"
+    },
+    {
+      "at": "2026-08-30T04:51:49.408Z",
+      "approver": "user",
+      "note": "Standing user approval authorizes independent QA testing of exact head 9dbb5de9; merge and live dispatch remain gated.",
+      "gate": "risk_threshold",
+      "reason": "Risk level high meets or exceeds threshold high.",
+      "risk_level": "high",
+      "from_stage": "review",
+      "next_stage": "test",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T03-44-06-062Z/reports/2026-08-30T04-51-40-878Z_review_pass.json"
+    },
+    {
+      "at": "2026-08-30T05:04:46.287Z",
+      "approver": "user",
+      "note": "Standing user approval authorizes validation-only exact-head CI evidence gathering; no merge or live upgrade dispatch.",
+      "gate": "risk_threshold",
+      "reason": "Risk level high meets or exceeds threshold high.",
+      "risk_level": "high",
+      "from_stage": "test",
+      "next_stage": "validation",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T03-44-06-062Z/reports/2026-08-30T05-04-37-363Z_test_pass.json"
+    }
+  ],
+  "awaiting_approval": null,
+  "spec_gate": {
+    "passed": true,
+    "passed_at": "2026-08-30T03:58:06.246Z",
+    "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T03-44-06-062Z/feature-spec.json",
+    "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T03-44-06-062Z/spec-check.json",
+    "council_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T03-44-06-062Z/council.json"
+  },
+  "council_policy": {
+    "required": "always"
+  },
+  "history": [
+    {
+      "at": "2026-08-30T03:57:55.567Z",
+      "event": "approval_required",
+      "stage": "spec",
+      "status": "pass",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T03-44-06-062Z/reports/2026-08-30T03-57-55-566Z_spec_pass.json",
+      "requested_next_stage": "code",
+      "gate": "spec_to_code",
+      "reason": "Spec pass requires explicit approval before implementation starts.",
+      "risk_level": "high",
+      "spec_gate": {
+        "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T03-44-06-062Z/feature-spec.json",
+        "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T03-44-06-062Z/spec-check.json",
+        "council_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T03-44-06-062Z/council.json",
+        "checked_at": "2026-08-30T03:57:28.787Z"
+      }
+    },
+    {
+      "at": "2026-08-30T03:58:06.246Z",
+      "event": "approved_transition",
+      "stage": "spec",
+      "status": "pass",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T03-44-06-062Z/reports/2026-08-30T03-57-55-566Z_spec_pass.json",
+      "approver": "user",
+      "note": "User explicitly approved and repeatedly instructed proceed; approval applies to PR-only code stage for infra #1288, not live dispatch.",
+      "next_stage": "code"
+    },
+    {
+      "at": "2026-08-30T04:34:13.787Z",
+      "event": "approval_required",
+      "stage": "code",
+      "status": "ready_for_review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T03-44-06-062Z/reports/2026-08-30T04-34-13-787Z_code_ready_for_review.json",
+      "requested_next_stage": "review",
+      "gate": "risk_threshold",
+      "reason": "Risk level high meets or exceeds threshold high.",
+      "risk_level": "high",
+      "spec_gate": null
+    },
+    {
+      "at": "2026-08-30T04:34:25.000Z",
+      "event": "approved_transition",
+      "stage": "code",
+      "status": "ready_for_review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T03-44-06-062Z/reports/2026-08-30T04-34-13-787Z_code_ready_for_review.json",
+      "approver": "user",
+      "note": "Standing user approval to proceed authorizes independent review of PR #1292 exact head; it does not authorize merge or live dispatch.",
+      "next_stage": "review"
+    },
+    {
+      "at": "2026-08-30T04:42:33.395Z",
+      "event": "approval_required",
+      "stage": "review",
+      "status": "fail",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T03-44-06-062Z/reports/2026-08-30T04-42-33-395Z_review_fail.json",
+      "requested_next_stage": "code",
+      "gate": "risk_threshold",
+      "reason": "Risk level high meets or exceeds threshold high.",
+      "risk_level": "high",
+      "spec_gate": null
+    },
+    {
+      "at": "2026-08-30T04:42:49.953Z",
+      "event": "approved_transition",
+      "stage": "review",
+      "status": "fail",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T03-44-06-062Z/reports/2026-08-30T04-42-33-395Z_review_fail.json",
+      "approver": "user",
+      "note": "Standing user approval authorizes the focused Luna fix for review finding REV-001; no manual CI retry, merge, or live dispatch.",
+      "next_stage": "code"
+    },
+    {
+      "at": "2026-08-30T04:49:25.929Z",
+      "event": "approval_required",
+      "stage": "code",
+      "status": "ready_for_review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T03-44-06-062Z/reports/2026-08-30T04-49-25-929Z_code_ready_for_review.json",
+      "requested_next_stage": "review",
+      "gate": "risk_threshold",
+      "reason": "Risk level high meets or exceeds threshold high.",
+      "risk_level": "high",
+      "spec_gate": null
+    },
+    {
+      "at": "2026-08-30T04:49:36.365Z",
+      "event": "approved_transition",
+      "stage": "code",
+      "status": "ready_for_review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T03-44-06-062Z/reports/2026-08-30T04-49-25-929Z_code_ready_for_review.json",
+      "approver": "user",
+      "note": "Standing user approval authorizes independent re-review of exact head 9dbb5de9 only; merge and live dispatch remain unauthorized.",
+      "next_stage": "review"
+    },
+    {
+      "at": "2026-08-30T04:51:40.879Z",
+      "event": "approval_required",
+      "stage": "review",
+      "status": "pass",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T03-44-06-062Z/reports/2026-08-30T04-51-40-878Z_review_pass.json",
+      "requested_next_stage": "test",
+      "gate": "risk_threshold",
+      "reason": "Risk level high meets or exceeds threshold high.",
+      "risk_level": "high",
+      "spec_gate": null
+    },
+    {
+      "at": "2026-08-30T04:51:49.409Z",
+      "event": "approved_transition",
+      "stage": "review",
+      "status": "pass",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T03-44-06-062Z/reports/2026-08-30T04-51-40-878Z_review_pass.json",
+      "approver": "user",
+      "note": "Standing user approval authorizes independent QA testing of exact head 9dbb5de9; merge and live dispatch remain gated.",
+      "next_stage": "test"
+    },
+    {
+      "at": "2026-08-30T05:04:37.363Z",
+      "event": "approval_required",
+      "stage": "test",
+      "status": "pass",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T03-44-06-062Z/reports/2026-08-30T05-04-37-363Z_test_pass.json",
+      "requested_next_stage": "validation",
+      "gate": "risk_threshold",
+      "reason": "Risk level high meets or exceeds threshold high.",
+      "risk_level": "high",
+      "spec_gate": null
+    },
+    {
+      "at": "2026-08-30T05:04:46.287Z",
+      "event": "approved_transition",
+      "stage": "test",
+      "status": "pass",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T03-44-06-062Z/reports/2026-08-30T05-04-37-363Z_test_pass.json",
+      "approver": "user",
+      "note": "Standing user approval authorizes validation-only exact-head CI evidence gathering; no merge or live upgrade dispatch.",
+      "next_stage": "validation"
+    }
+  ]
+}

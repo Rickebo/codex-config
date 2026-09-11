@@ -1,0 +1,31 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Luna completed loop-3 remediation on PR #1293 at exact head 254513f3: unit integrity is pinned and parsed, privileged ancestors require root ownership, content checks use descriptor-relative no-follow reads, and deterministic swap-race coverage was added.",
+  "changed_files": [
+    "contracts/authority-runner-ownership.json",
+    "docs/authority-runner-ownership-runbook.md",
+    "scripts/verify-authority-runner-contract.py",
+    "tests/fixtures/authority-runner/actions.runner.codicarium.external-linux-400-4.service",
+    "tests/fixtures/authority-runner/check-codicarium-artifacts.py",
+    "tests/fixtures/authority-runner/codicarium-artifact-seal-v1",
+    "tests/fixtures/authority-runner/codicarium-artifact-seal-v1-preflight",
+    "tests/test-authority-runner-contract.py"
+  ],
+  "validation": [
+    "Sixteen focused positive and adversarial tests passed in the Luna implementation lane.",
+    "Python compilation, contract JSON validation, and git diff --check origin/main...HEAD passed.",
+    "Systemd unit digest/directive, arbitrary ExecStart, service-state, ancestor ownership, unprefixed sudo policy, and descriptor swap-race mutations fail closed.",
+    "Artifacts, sudo policy, service state, and unit content are read through descriptor-relative O_NOFOLLOW traversal with fstat validation.",
+    "Worktree is clean and matches pushed PR head 254513f33dda571e2c9d1a7e2d4a5dd8ffb2afbf.",
+    "Exact-head CI restarted and is queued; prior-head results are not treated as current evidence.",
+    "No live host access, sudo/systemctl execution, workflow dispatch, merge, or secret access occurred."
+  ],
+  "blockers": [],
+  "next_action": "Perform a fresh independent Luna security review of exact head 254513f3, including descriptor lifetime/race safety and unit directive parsing, before test stage.",
+  "route_to": "review",
+  "risk_level": "high",
+  "independent_lanes": [
+    "authority-runner verifier trust chain, descriptor safety, unit integrity, and adversarial fixtures"
+  ]
+}

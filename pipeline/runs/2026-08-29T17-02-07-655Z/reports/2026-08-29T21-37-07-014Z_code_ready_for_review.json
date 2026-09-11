@@ -1,0 +1,25 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Luna resolved PR #156 review blockers in commit bd5dbccd701c7ace526305d1db2fbcd1c4588fa2 by authenticating every referenced release run/check tuple and adding final serialized live tag/release-shell rechecks before create-only tag allocation.",
+  "changed_files": [
+    ".github/workflows/automatic-release.yaml",
+    "hack/release-failure-policy.js",
+    "hack/test-release-failure-policy.js",
+    "hack/test-release-graph.py"
+  ],
+  "validation": [
+    "Full make test-release-flow passed",
+    "Failure-policy, planner, and 47 release-graph tests passed",
+    "Forged, deleted, replayed, stale, wrong-attempt/repository/ref/handoff fixtures passed",
+    "Modified workflow actionlint passed",
+    "Repository validation and pinned-action verification passed",
+    "JavaScript syntax and git diff --check passed",
+    "Worktree clean at exact head bd5dbccd701c7ace526305d1db2fbcd1c4588fa2"
+  ],
+  "blockers": [
+    "Independent Luna re-review of both corrected findings and fresh exact-head protected CI remain required"
+  ],
+  "next_action": "Push the exact corrective commit, re-review full proof-chain and TOCTOU fixes independently, and require fresh protected CI before merge.",
+  "risk_level": "critical"
+}

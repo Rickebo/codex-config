@@ -1,0 +1,21 @@
+{
+  "schema": "codicarium.issue93-follow-up-order/v1",
+  "total_order": [
+    "issue-93-corrective-pr-merged-and-old-workflows-retired",
+    "v0.6.14-public-release-and-full-live-evidence-verified",
+    "issue-98-v0.6.8-recovery-success-and-eight-assets-read-back",
+    "pr-99-rebased-on-current-main",
+    "pr-99-five-checks-at-one-head",
+    "pr-99-merged",
+    "recover-release-v068.yaml-absent-at-pr-99-merge-sha",
+    "issue-98-closed",
+    "pr-94-rebased-on-resulting-main",
+    "pr-94-five-checks-at-one-head",
+    "pr-94-merged"
+  ],
+  "forbidden": [
+    "PR #99 triggers or resumes v0.6.13",
+    "PR #94 triggers or resumes v0.6.13",
+    "any v0.6.13 publication authority"
+  ]
+}

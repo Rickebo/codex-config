@@ -1,0 +1,29 @@
+{
+  "stage": "spec",
+  "status": "pass",
+  "summary": "Council-approved spec defines an authenticated verifier-to-publisher dispatch, pending v0.6.13 resumption, exact CI/source binding, least privilege, idempotence, provenance migration, and live acceptance proof.",
+  "changed_files": [
+    "/home/rickebo/.codex/pipeline/runs/2026-08-24T12-26-04-023Z/feature-spec.json",
+    "/home/rickebo/.codex/pipeline/runs/2026-08-24T12-26-04-023Z/council.json"
+  ],
+  "validation": [
+    "Feature spec will be validated by pipeline-spec-check.",
+    "QA council reproduced the pending-tag planner gap and defined QA-01 through QA-08.",
+    "Security council defined least-privilege dispatch and exact identity binding."
+  ],
+  "blockers": [],
+  "next_action": "Implement the approved release planner, verifier handoff, authenticated publisher, provenance, tests, and documentation in the recovery worktree.",
+  "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T12-26-04-023Z/feature-spec.json",
+  "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T12-26-04-023Z/spec-check.json",
+  "council_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T12-26-04-023Z/council.json",
+  "requires_council": true,
+  "independent_lanes": [
+    "release planner and exact-CI recovery",
+    "verifier handoff and publisher authentication",
+    "provenance and subject evidence",
+    "focused tests and documentation"
+  ],
+  "route_to": "code",
+  "risk_level": "high",
+  "issues": []
+}

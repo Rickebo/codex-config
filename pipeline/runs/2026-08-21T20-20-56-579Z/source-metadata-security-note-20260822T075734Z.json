@@ -1,0 +1,14 @@
+{
+  "generated_at": "2026-08-22T07:57:34Z",
+  "scope": "read-only target/source re-audit",
+  "status": "requires_separate_credential_review",
+  "observed": "An agent reported that a broad repository grep incidentally surfaced an OIDC value during metadata inspection.",
+  "omissions": "No value, token, key, credential, or raw secret content is repeated or stored in this note or subsequent evidence.",
+  "actions_taken": [
+    "Stopped using broad selectors for secret-adjacent inspection.",
+    "Did not copy, use, persist, rotate, revoke, or publish the surfaced value.",
+    "Did not mutate Codicarium, the target cluster, Git, or local Codex configuration."
+  ],
+  "required_follow_up": "An authorized operator must determine whether the surfaced value is live and review/rotate it under a separate approved credential procedure. This clone run will not mutate the source to remediate it.",
+  "impact_on_pipeline": "Source artifact/WAL and target storage/identity gates remain unresolved; pipeline remains at spec."
+}

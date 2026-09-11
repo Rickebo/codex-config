@@ -1,0 +1,24 @@
+{
+  "stage": "test",
+  "status": "pass",
+  "summary": "Rebased issue #93 cleanly onto exact protected main 74defd205658b8db4b90a80cc7f8aa05dfe8a193. Focused release policy, full release flow, Go unit and integration suites, lint/generation/chart checks, actionlint, YAML parsing, and diff checks passed; kubeconform alone was environment-blocked by Docker daemon bind visibility under /mnt.",
+  "changed_files": [
+    ".github/workflows/automatic-release.yaml",
+    "hack/release-handoff-policy.js",
+    "hack/test-release-graph.py",
+    "hack/test-release-handoff-policy.js"
+  ],
+  "validation": [
+    "Clean conflict-free rebase; HEAD 3fc52e80d7ac16afa73fdb65a0a0442bd995d176 and merge-base 74defd205658b8db4b90a80cc7f8aa05dfe8a193.",
+    "Focused handoff policy passed; focused release graph passed 46 tests; make test-release-flow passed.",
+    "make test passed all Go packages; make test-integration passed the complete integration binary.",
+    "fmt-check, vet, tidy-check, verify-generated, and verify-chart passed.",
+    "Actionlint, parsing every workflow YAML file, and git diff --check passed.",
+    "release.yaml and publish-release.yaml are byte-identical to the new base.",
+    "verify-kubeconform reached Docker but could not bind a generated /mnt worktree path; daemon returned permission denied before validation."
+  ],
+  "blockers": [],
+  "next_action": "Validate the rebased release recovery behavior and treat kubeconform's Docker /mnt bind failure as an environment limitation unless a daemon-visible workspace rerun is required.",
+  "route_to": "validation",
+  "risk_level": "high"
+}

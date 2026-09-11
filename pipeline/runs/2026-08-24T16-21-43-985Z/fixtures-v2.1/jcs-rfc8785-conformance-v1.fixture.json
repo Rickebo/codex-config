@@ -1,0 +1,141 @@
+{
+  "schema": "codicarium.rfc8785-conformance/v1",
+  "source": "RFC 8785 sections 3.2.2-3.2.3 and Appendix B boundary cases",
+  "positive_vectors": [
+    {
+      "name": "rounded-binary64",
+      "input_json": "333333333.33333329",
+      "expected_jcs": "333333333.3333333"
+    },
+    {
+      "name": "positive-exponent",
+      "input_json": "1E30",
+      "expected_jcs": "1e+30"
+    },
+    {
+      "name": "strip-trailing-zero",
+      "input_json": "4.50",
+      "expected_jcs": "4.5"
+    },
+    {
+      "name": "plain-small-number",
+      "input_json": "2e-3",
+      "expected_jcs": "0.002"
+    },
+    {
+      "name": "negative-exponent",
+      "input_json": "0.000000000000000000000000001",
+      "expected_jcs": "1e-27"
+    },
+    {
+      "name": "negative-zero",
+      "input_json": "-0",
+      "expected_jcs": "0"
+    },
+    {
+      "name": "smallest-positive-binary64",
+      "input_json": "5e-324",
+      "expected_jcs": "5e-324"
+    },
+    {
+      "name": "largest-finite-binary64",
+      "input_json": "1.7976931348623157e308",
+      "expected_jcs": "1.7976931348623157e+308"
+    },
+    {
+      "name": "decimal-exponent-lower-bound",
+      "input_json": "1e-6",
+      "expected_jcs": "0.000001"
+    },
+    {
+      "name": "exponent-below-lower-bound",
+      "input_json": "1e-7",
+      "expected_jcs": "1e-7"
+    },
+    {
+      "name": "decimal-exponent-upper-bound",
+      "input_json": "1e20",
+      "expected_jcs": "100000000000000000000"
+    },
+    {
+      "name": "exponent-at-upper-bound",
+      "input_json": "1e21",
+      "expected_jcs": "1e+21"
+    },
+    {
+      "name": "utf16-property-order",
+      "input_json": "{\"\\u20ac\":\"Euro Sign\",\"\\r\":\"Carriage Return\",\"\\ufb33\":\"Hebrew Letter Dalet With Dagesh\",\"1\":\"One\",\"\\ud83d\\ude00\":\"Emoji\",\"\\u0080\":\"Control\",\"\\u00f6\":\"Latin Small Letter O With Diaeresis\"}",
+      "expected_jcs": "{\"\\r\":\"Carriage Return\",\"1\":\"One\",\"\":\"Control\",\"ö\":\"Latin Small Letter O With Diaeresis\",\"€\":\"Euro Sign\",\"😀\":\"Emoji\",\"דּ\":\"Hebrew Letter Dalet With Dagesh\"}"
+    },
+    {
+      "name": "valid-non-bmp-value",
+      "input_json": "{\"emoji\":\"\\ud83d\\ude00\"}",
+      "expected_jcs": "{\"emoji\":\"😀\"}"
+    },
+    {
+      "name": "utf16-not-unicode-scalar-order",
+      "input_json": "{\"\\ue000\":\"bmp\",\"\\ud83d\\ude00\":\"non-bmp\"}",
+      "expected_jcs": "{\"😀\":\"non-bmp\",\"\":\"bmp\"}"
+    },
+    {
+      "name": "unicode-normalization-is-preserved",
+      "input_json": "{\"A\\u030a\":\"decomposed\",\"\\u00c5\":\"composed\"}",
+      "expected_jcs": "{\"Å\":\"decomposed\",\"Å\":\"composed\"}"
+    }
+  ],
+  "negative_vectors": [
+    {
+      "name": "lone-high-surrogate",
+      "position": "value",
+      "utf16_code_units": [
+        "d800"
+      ],
+      "outcome": "REJECT_INVALID_UNICODE"
+    },
+    {
+      "name": "lone-low-surrogate",
+      "position": "value",
+      "utf16_code_units": [
+        "dc00"
+      ],
+      "outcome": "REJECT_INVALID_UNICODE"
+    },
+    {
+      "name": "high-surrogate-not-followed-by-low",
+      "position": "value",
+      "utf16_code_units": [
+        "d800",
+        "0061"
+      ],
+      "outcome": "REJECT_INVALID_UNICODE"
+    },
+    {
+      "name": "lone-high-surrogate-property",
+      "position": "key",
+      "utf16_code_units": [
+        "d800"
+      ],
+      "outcome": "REJECT_INVALID_UNICODE"
+    },
+    {
+      "name": "nan",
+      "input_json": "NaN",
+      "outcome": "REJECT_NON_FINITE_NUMBER"
+    },
+    {
+      "name": "positive-infinity",
+      "input_json": "Infinity",
+      "outcome": "REJECT_NON_FINITE_NUMBER"
+    },
+    {
+      "name": "negative-infinity",
+      "input_json": "-Infinity",
+      "outcome": "REJECT_NON_FINITE_NUMBER"
+    },
+    {
+      "name": "overflow-to-infinity",
+      "input_json": "1e400",
+      "outcome": "REJECT_NON_FINITE_NUMBER"
+    }
+  ]
+}

@@ -1,0 +1,109 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "payloadType",
+    "payload",
+    "signatures",
+    "signer",
+    "publication_authority"
+  ],
+  "properties": {
+    "payloadType": {
+      "const": "application/vnd.codicarium.command-evidence+jcs"
+    },
+    "payload": {
+      "type": "string",
+      "contentEncoding": "base64"
+    },
+    "signatures": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "keyid",
+          "sig"
+        ],
+        "properties": {
+          "keyid": {
+            "type": "string"
+          },
+          "sig": {
+            "type": "string",
+            "contentEncoding": "base64"
+          }
+        }
+      }
+    },
+    "signer": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "issuer",
+            "subject",
+            "workflow_ref",
+            "workflow_sha"
+          ],
+          "properties": {
+            "kind": {
+              "enum": [
+                "sigstore-keyless-workflow/v1",
+                "test-only-ed25519/v1"
+              ]
+            },
+            "issuer": {
+              "type": "string"
+            },
+            "subject": {
+              "type": "string"
+            },
+            "workflow_ref": {
+              "type": "string"
+            },
+            "workflow_sha": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{40}$"
+            },
+            "public_key_spki": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "vault_address",
+            "transit_key",
+            "kubernetes_principal"
+          ],
+          "properties": {
+            "kind": {
+              "const": "vault-transit-kubernetes/v1"
+            },
+            "vault_address": {
+              "type": "string"
+            },
+            "transit_key": {
+              "type": "string"
+            },
+            "kubernetes_principal": {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    },
+    "publication_authority": {
+      "type": "boolean"
+    }
+  }
+}

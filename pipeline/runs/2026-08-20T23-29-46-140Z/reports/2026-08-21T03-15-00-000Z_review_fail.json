@@ -1,0 +1,27 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Re-review clears the earlier P1s but finds five remaining gaps in release migration digest enforcement, Helm-shaped migration execution, complete route-source coverage, manifest helper enforcement, and real signal interruption tests.",
+  "changed_files": [],
+  "validation": [
+    "Independent review completed against a8aa1675ae2db657c349e2691364664290648917",
+    "Exact-head QA passed local, immutable, and cleanup checks but hosted evidence is still pending"
+  ],
+  "blockers": [
+    "Release mode can omit MIGRATION_IMAGE_DIGEST and still use a mutable migration image.",
+    "Smoke runs the migration image as the database server instead of the Helm client-against-pinned-Postgres shape.",
+    "OpenAPI parity scans only internal/server/http.go, allowing registrations in other Go files to escape.",
+    "Public check_migration_assets(root, chart) can bypass the authoritative manifest.",
+    "Interrupted-create tests do not send real SIGTERM during in-flight Docker creation."
+  ],
+  "next_action": "Return to code for the five focused fixes, then repeat independent review and exact-head QA before opening the PR.",
+  "route_to": "code",
+  "risk_level": "high",
+  "issues": [
+    {"id":"REV-128-5","title":"Require migration digest in release mode","severity":"high","details":"Release architecture mode must require both app and migration immutable digests before Docker operations.","owner_stage":"code"},
+    {"id":"REV-128-6","title":"Run Helm-shaped migration client against separate DB","severity":"medium","details":"Use pinned PostgreSQL server plus resolved migration image as shell/psql client, matching the Helm job contract.","owner_stage":"code"},
+    {"id":"REV-128-7","title":"Scan all runtime route registration sources","severity":"medium","details":"Route registrations in other Go files must be detected and compared with the spec/manifest.","owner_stage":"code"},
+    {"id":"REV-128-8","title":"Enforce manifest through public migration helper","severity":"medium","details":"Alternate callers/tests must not bypass authoritative migration filename/checksum validation.","owner_stage":"code"},
+    {"id":"REV-128-9","title":"Test real SIGTERM during each Docker create","severity":"medium","details":"Subprocess fixtures must signal in-flight network/Postgres/app creates and verify label recovery/cleanup.","owner_stage":"code"}
+  ]
+}

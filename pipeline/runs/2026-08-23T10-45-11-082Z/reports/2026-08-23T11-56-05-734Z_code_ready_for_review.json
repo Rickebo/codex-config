@@ -1,0 +1,30 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Activated Youtarr controller Google OAuth with exact Bitwarden keys and VPN-only internal ingress; committed and opened PR.",
+  "changed_files": [
+    "youtarr/values.yaml",
+    "youtarr/tests/test_google_oauth_render.py"
+  ],
+  "validation": [
+    "python -m unittest youtarr.tests.test_google_oauth_render (4 tests passed)",
+    "helm lint youtarr with immutable sha256 digest (passed)",
+    "Rendered manifests confirm youtarr-internal only, exact callback/hostname, no public ExternalDNS, and three exact remote keys",
+    "git diff --check (passed)"
+  ],
+  "blockers": [
+    "Broader legacy internal-ingress tests still assert the prior disabled-by-default OAuth contract and were intentionally not changed in this scoped stage."
+  ],
+  "next_action": "Review PR #532; do not merge or deploy in this stage.",
+  "route_to": "review",
+  "risk_level": "high",
+  "issues": [
+    {
+      "id": "pve-infra#505",
+      "title": "Activate internal Youtarr Google OAuth listener",
+      "severity": "high",
+      "details": "Production OAuth and ingress exposure defaults changed; review required before merge.",
+      "owner_stage": "review"
+    }
+  ]
+}

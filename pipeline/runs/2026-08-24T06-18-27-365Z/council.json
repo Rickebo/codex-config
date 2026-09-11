@@ -1,0 +1,22 @@
+{
+  "perspectives": [
+    {
+      "role": "planner",
+      "summary": "Add one serialized Automatic Release workflow after successful main CI, compute the highest conventional SemVer bump across the unreleased first-parent range, atomically create an immutable lightweight tag, and explicitly dispatch Release Verify at that tag so GITHUB_TOKEN recursion is not assumed."
+    },
+    {
+      "role": "security reviewer",
+      "summary": "Keep write permissions only on the trusted workflow_run coordinator; validate the exact CI run and source history before mutation; remove the unauthenticated manual tag-push entry; fail closed on mismatched tags/releases and never update or delete refs or assets."
+    },
+    {
+      "role": "QA lead",
+      "summary": "Cover fix/feat/breaking/non-releasable version selection, mixed ranges, exact CI binding, serialized candidates, existing tag and release states, reruns, explicit dispatch, restricted permissions, and the end-to-end v0.6.13 release proof."
+    }
+  ],
+  "consensus": "Use a constant non-canceling concurrency group and an explicit workflow_dispatch of the existing Release Verify workflow at the newly created tag. Release Verify validates its tag/source/CI inputs before building signed artifacts; Publish Release remains the sole publisher and accepts only the dispatched verifier event. Successful older candidates may release while still in protected main history; out-of-order candidates already covered by a newer tag are no-ops.",
+  "resolved_questions": [
+    "Only fix, feat, and conventional breaking changes are releasable; all other commit types are non-releasable unless the range also contains a releasable commit.",
+    "Manual tag pushes no longer start releases; no backwards-compatible tag-push path is retained.",
+    "The repository tag ruleset permits tag creation and forbids version-tag update/deletion, matching atomic create-only automation."
+  ]
+}

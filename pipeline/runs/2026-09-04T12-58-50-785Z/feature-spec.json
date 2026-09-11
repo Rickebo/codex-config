@@ -1,0 +1,410 @@
+{
+  "meta": {
+    "id": "SPEC-codex-stats-chart-dashboard-adoption",
+    "title": "Chart-owned Codex Stats Grafana dashboard and staged Argo adoption",
+    "author": "manager",
+    "created_at": "2026-09-04T13:14:44Z",
+    "version": "1.0.0"
+  },
+  "feature": {
+    "problem_statement": "The Codex Stats GrafanaDashboard and its detailed tests are owned by pve-infra instead of the published codicarium/codex-stats Helm chart, while the dashboard lacks a selected-range hourly view of raw observed quota burn. Ownership must move without Argo pruning or duplicating the live object, without corrupting Grafana legend templates, and without backend changes.",
+    "goals": [
+      "Make charts/codex-stats the canonical owner of an optional, portable GrafanaDashboard and its detailed contract tests.",
+      "Add a precise hourly 5h/1w raw observed percentage-point burn panel with correct reset, filtering, absence, layout, and explanatory semantics.",
+      "Adopt the existing live resource through immutable chart release and GitOps-only promotion with temporary prune protection and a separately verified cleanup."
+    ],
+    "non_goals": [
+      "Changing the Codex Stats backend, metric emission, persistence, APIs, watcher, or telemetry schema.",
+      "Providing compatibility aliases for the old standalone dashboard source or keeping duplicate tests in pve-infra.",
+      "Estimating, extrapolating, normalizing, or adding the independent 5h and 1w quota windows.",
+      "Directly patching Kubernetes resources, manually syncing Argo applications, or bypassing GitHub PR and release workflows."
+    ],
+    "scope_in": [
+      "Helm values, template, raw dashboard JSON, chart packaging, dashboard tests, and chart documentation under codicarium/codex-stats charts/codex-stats.",
+      "pve-infra GitOps protection, exact chart version/digest promotion, values, standalone-source removal, adoption evidence, and follow-up protection cleanup.",
+      "Offline rendering, immutable artifact verification, explicit-context dry-run, and read-only Argo, Kubernetes, Prometheus, and Grafana validation."
+    ],
+    "scope_out": [
+      "Backend or telemetry implementation changes.",
+      "Direct live mutations outside automated GitOps reconciliation from merged PRs.",
+      "Unrelated dashboard redesign or compatibility shims."
+    ]
+  },
+  "requirements": [
+    {
+      "id": "REQ-001",
+      "priority": "MUST",
+      "statement": "charts/codex-stats MUST become the sole canonical source of the Codex Stats GrafanaDashboard and its detailed dashboard contract tests after promotion, while preserving the existing live resource name and namespace during adoption.",
+      "rationale": "Single ownership prevents drift and preserving identity lets Argo adopt instead of recreate the dashboard."
+    },
+    {
+      "id": "REQ-002",
+      "priority": "MUST",
+      "statement": "The chart GrafanaDashboard MUST be optional and disabled by default; when enabled it MUST render into a non-empty explicitly configured namespace rather than relying on the Helm release namespace or active CLI context.",
+      "rationale": "The chart must remain portable and must not unexpectedly install an operator custom resource."
+    },
+    {
+      "id": "REQ-003",
+      "priority": "MUST",
+      "statement": "The chart values contract MUST configure Grafana instance selector labels, datasource UID, exact Prometheus job matcher value, folder, resync period, and arbitrary metadata annotations, and MUST fail clearly for invalid enabled-state configuration.",
+      "rationale": "Operator installations and monitoring labels differ across clusters and must not be hard-coded."
+    },
+    {
+      "id": "REQ-004",
+      "priority": "MUST",
+      "statement": "The dashboard MUST be stored as raw JSON inside the chart and loaded with .Files.Get without tpl; any value injection MUST be narrowly scoped and MUST preserve every Grafana {{...}} legend template exactly in the rendered JSON.",
+      "rationale": "Helm tpl interprets Grafana legend braces and can silently corrupt dashboard semantics."
+    },
+    {
+      "id": "REQ-005",
+      "priority": "MUST",
+      "statement": "The new hourly burn query MUST produce raw observed percentage-point decreases independently for window=5h and window=1w by summing clamp_min(previous remaining percent at offset 5m minus current remaining percent, 0) over [1h:5m], while excluding each 5-minute step where increase(codex_usage_resets_total[5m]) is positive on the same job, window, user_id, machine_id, model, and reasoning labels.",
+      "rationale": "Positive observed deltas measure actual quota consumption while reset masking prevents replenishment boundaries from appearing as burn."
+    },
+    {
+      "id": "REQ-006",
+      "priority": "MUST",
+      "statement": "The hourly burn query MUST apply the configured Prometheus job matcher and all dashboard user, machine, model, and reasoning filters symmetrically to codex_usage_remaining_percent and codex_usage_resets_total, use a Grafana query interval of 1h, contain the literal subquery range [1h:5m], define no target or panel timeFrom, perform no cross-window aggregation, and use no zero-fill fallback.",
+      "rationale": "Fixed sampling and symmetric filtering keep the result raw, selected-range aware, dimensionally correct, and absent when telemetry is missing."
+    },
+    {
+      "id": "REQ-007",
+      "priority": "MUST",
+      "statement": "The new panel MUST be a normal-stacked bar chart placed directly beside Daily burn - 1w; its description MUST state that values are raw observed percentage-point burn and that 5h and 1w windows are independent and non-additive, while missing telemetry MUST remain absent.",
+      "rationale": "Presentation and wording prevent a visually stacked chart from being interpreted as an additive total."
+    },
+    {
+      "id": "REQ-008",
+      "priority": "MUST",
+      "statement": "Reasoning throughput MUST move below the row containing Daily burn - 1w and the new hourly burn panel, and all later panels MUST shift as needed so that no panel grid rectangles overlap and their relative order is preserved.",
+      "rationale": "The new panel must fit the requested information hierarchy without breaking dashboard layout."
+    },
+    {
+      "id": "REQ-009",
+      "priority": "MUST",
+      "statement": "The implementation MUST make no backend, API, metric-emission, telemetry, persistence, server, or watcher changes.",
+      "rationale": "Existing metrics are sufficient and the requested scope is chart, dashboard, tests, and GitOps promotion only."
+    },
+    {
+      "id": "REQ-010",
+      "priority": "MUST",
+      "statement": "Before chart publication or adoption, a first pve-infra PR MUST add argocd.argoproj.io/sync-options=Prune=false protection to the existing standalone GrafanaDashboard, pass checks, merge, and be observed on the intended live object using explicit kubeconfig, context, namespace, and Argo application identifiers.",
+      "rationale": "Protection must exist before ownership moves so source removal cannot prune the live dashboard."
+    },
+    {
+      "id": "REQ-011",
+      "priority": "MUST",
+      "statement": "The chart dashboard implementation and tests MUST merge through a codicarium/codex-stats PR, then publish a unique immutable chart version with a verifiable OCI digest, final tag, and release receipt tied to the merged commit; publication is blocked until REQ-010 is verified.",
+      "rationale": "Promotion must consume a reproducible artifact and respect the protection-first sequence."
+    },
+    {
+      "id": "REQ-012",
+      "priority": "MUST",
+      "statement": "A pve-infra promotion PR MUST atomically pin the new chart version and digest, enable the chart GrafanaDashboard with the existing identity and Prune=false supplied through chart values, and remove the standalone dashboard source and obsolete pve-infra dashboard tests so the full desired render contains exactly one GrafanaDashboard resource.",
+      "rationale": "One atomic desired-state transition avoids duplicate ownership and closes the old source of truth."
+    },
+    {
+      "id": "REQ-013",
+      "priority": "MUST",
+      "statement": "All implementation and rollout work MUST use linked GitHub issues, dedicated branches/worktrees, PRs, required checks, and issue comments for dependency and verification evidence; no direct live patch or manual Argo sync is permitted.",
+      "rationale": "A resumable, reviewable GitOps audit trail is required for a cross-repository ownership transfer."
+    },
+    {
+      "id": "REQ-014",
+      "priority": "MUST",
+      "statement": "After promotion, explicit-context read-only validation MUST prove the same resource identity is chart-owned and synchronized/healthy, the live PromQL returns correct raw/reset-masked or absent results, and authenticated Grafana visual inspection confirms panel placement, stacking, legends, description, filters, and non-overlap.",
+      "rationale": "Rendered manifests alone cannot prove Argo adoption, live query behavior, or dashboard usability."
+    },
+    {
+      "id": "REQ-015",
+      "priority": "MUST",
+      "statement": "Temporary Prune=false protection MUST be removed only in a separate follow-up pve-infra PR after REQ-014 passes, followed by explicit-context dry-run and read-only Argo/Grafana revalidation before closing issues and cleaning merged branches/worktrees.",
+      "rationale": "Separating cleanup leaves a recoverable observation period and prevents premature loss of the adoption guard."
+    }
+  ],
+  "acceptance_criteria": [
+    {
+      "id": "AC-001",
+      "requirement_ids": ["REQ-001", "REQ-002", "REQ-003"],
+      "scenario": "Given the chart's default values, When Helm lint and template run, Then no GrafanaDashboard is rendered; Given valid enabled values including an explicit namespace, When the chart renders, Then exactly one correctly named GrafanaDashboard is emitted in that namespace with the configured selector, datasource UID, job, folder, resync, and annotations."
+    },
+    {
+      "id": "AC-002",
+      "requirement_ids": ["REQ-003"],
+      "scenario": "Given the dashboard is enabled with a missing required namespace or malformed required selection/configuration value, When Helm renders the chart, Then rendering fails with a clear value-specific error."
+    },
+    {
+      "id": "AC-003",
+      "requirement_ids": ["REQ-004"],
+      "scenario": "Given raw dashboard JSON containing Grafana {{...}} legends, When the enabled chart renders and the embedded JSON is extracted, Then the JSON parses, the legends are byte-for-byte intact, and the dashboard file was not evaluated with tpl."
+    },
+    {
+      "id": "AC-004",
+      "requirement_ids": ["REQ-005", "REQ-006"],
+      "scenario": "Given filtered 5h and 1w remaining-percent samples with ordinary decreases, increases, a reset interval, and missing samples, When the hourly query is evaluated, Then each window reports only summed positive observed 5-minute decreases over [1h:5m], masks the reset step, ignores increases, preserves absence, and never combines windows."
+    },
+    {
+      "id": "AC-005",
+      "requirement_ids": ["REQ-006", "REQ-007", "REQ-008"],
+      "scenario": "Given the rendered dashboard, When its panel and target JSON are inspected, Then the hourly target has interval 1h and no timeFrom, all required filters are present, the panel is a normal-stacked bar chart beside Daily burn - 1w, its warning description is present, Reasoning throughput is below it, and no panel overlaps another."
+    },
+    {
+      "id": "AC-006",
+      "requirement_ids": ["REQ-009"],
+      "scenario": "Given the codicarium/codex-stats feature PR, When its exact diff is reviewed against the base commit, Then all changes are confined to chart/dashboard/test/documentation or release metadata paths and no backend, server, watcher, API, storage, or metric-emission source changes exist."
+    },
+    {
+      "id": "AC-007",
+      "requirement_ids": ["REQ-010", "REQ-013"],
+      "scenario": "Given the existing standalone dashboard, When the first pve-infra protection PR merges and automated Argo reconciliation completes, Then explicit-context read-only inspection shows the same live object is synchronized/healthy and carries Prune=false before chart publication or source removal."
+    },
+    {
+      "id": "AC-008",
+      "requirement_ids": ["REQ-011", "REQ-013"],
+      "scenario": "Given the chart PR is merged after protection verification, When the chart release workflow completes, Then a unique version, immutable OCI digest, final tag, and release receipt all resolve to the merged commit and a pull by exact version renders the tested dashboard."
+    },
+    {
+      "id": "AC-009",
+      "requirement_ids": ["REQ-001", "REQ-012", "REQ-013"],
+      "scenario": "Given the verified chart artifact and protected old object, When the pve-infra promotion PR is rendered and checked, Then chart version and digest are exact, chart values enable the same protected identity, the standalone source/tests are absent, and the complete desired manifests contain exactly one GrafanaDashboard before merge."
+    },
+    {
+      "id": "AC-010",
+      "requirement_ids": ["REQ-012", "REQ-013"],
+      "scenario": "Given explicit kubeconfig, context, namespace, and application identifiers, When the promotion manifests undergo client and server dry-run and the PR checks execute, Then all validation passes without a direct live apply, patch, delete, or manual Argo sync."
+    },
+    {
+      "id": "AC-011",
+      "requirement_ids": ["REQ-014"],
+      "scenario": "Given automated reconciliation of the merged promotion, When read-only Argo, Kubernetes, and Prometheus checks run with explicit context, Then the original dashboard identity is chart-owned and synchronized/healthy and live range queries demonstrate valid raw burn or correct absence, including reset masking where reset evidence exists."
+    },
+    {
+      "id": "AC-012",
+      "requirement_ids": ["REQ-004", "REQ-007", "REQ-008", "REQ-014"],
+      "scenario": "Given authenticated access to the reconciled Grafana dashboard, When representative selected ranges, filters, data/no-data cases, and viewport widths are inspected, Then legends render correctly, the new chart and description match the contract, Reasoning throughput and later rows do not overlap, and missing telemetry is not displayed as zero."
+    },
+    {
+      "id": "AC-013",
+      "requirement_ids": ["REQ-013", "REQ-015"],
+      "scenario": "Given all adoption and live checks have passed and evidence is recorded on linked issues, When the separate cleanup PR removes Prune=false, Then dry-run and post-merge read-only checks pass with exactly one chart-owned dashboard, linked issues close, and merged branches/worktrees are removed."
+    }
+  ],
+  "test_plan": [
+    {
+      "id": "TST-001",
+      "type": "integration",
+      "requirement_ids": ["REQ-002", "REQ-003"],
+      "approach": "Run Helm lint and template with default/explicit-disabled values and assert zero GrafanaDashboard documents; rerun with a complete enabled fixture and assert exactly one resource with explicit namespace and every configured operator field/annotation."
+    },
+    {
+      "id": "TST-002",
+      "type": "integration",
+      "requirement_ids": ["REQ-003"],
+      "approach": "Render enabled negative fixtures with missing namespace and invalid required selector/datasource/job/folder/resync configuration and assert deterministic, field-specific Helm failures."
+    },
+    {
+      "id": "TST-003",
+      "type": "integration",
+      "requirement_ids": ["REQ-004"],
+      "approach": "Extract the rendered GrafanaDashboard JSON, parse it with a JSON parser, compare all expected Grafana {{...}} legends exactly, and statically assert the chart template loads the file with .Files.Get and contains no tpl invocation for dashboard content."
+    },
+    {
+      "id": "TST-004",
+      "type": "unit",
+      "requirement_ids": ["REQ-005", "REQ-006"],
+      "approach": "Dashboard contract tests parse the hourly target and require both window values, both metric names, offset 5m, clamp_min, positive reset increase masking, symmetric job/user/machine/model/reasoning matchers, literal [1h:5m], interval 1h, no timeFrom, no zero-fill, and no aggregation across window."
+    },
+    {
+      "id": "TST-005",
+      "type": "unit",
+      "requirement_ids": ["REQ-007", "REQ-008"],
+      "approach": "Parse dashboard panel JSON and assert type=barchart, stacking mode=normal, adjacency to Daily burn - 1w, required independent/non-additive warning text, Reasoning throughput below, preserved later-row ordering, and pairwise non-overlap of every gridPos rectangle."
+    },
+    {
+      "id": "TST-006",
+      "type": "non_functional",
+      "requirement_ids": ["REQ-001", "REQ-009"],
+      "approach": "Inspect the exact PR diff and path allowlist to prove canonical dashboard/tests moved into the chart, old copies are deleted only in promotion, and no backend/server/watcher/API/storage/metric source path changes."
+    },
+    {
+      "id": "TST-007",
+      "type": "integration",
+      "requirement_ids": ["REQ-010", "REQ-012", "REQ-013"],
+      "approach": "At each GitOps phase render the complete Argo desired inputs and assert protection-first ordering, same apiVersion/kind/name/namespace identity, Prune=false during adoption, no standalone source after promotion, and exactly one GrafanaDashboard document/resource key."
+    },
+    {
+      "id": "TST-008",
+      "type": "integration",
+      "requirement_ids": ["REQ-011", "REQ-012"],
+      "approach": "Verify release receipt, final tag, merged commit, unique chart version, registry manifest digest, and promotion pin agree; pull the exact OCI version/digest and rerun Helm render, JSON parse, and dashboard contract tests against the packaged artifact."
+    },
+    {
+      "id": "TST-009",
+      "type": "integration",
+      "requirement_ids": ["REQ-012", "REQ-013", "REQ-015"],
+      "approach": "Run Helm rendering plus kubectl client/server dry-run with the explicitly named target kubeconfig, context, namespace, and intended manifests for promotion and cleanup; inspect commands/logs to ensure no apply, patch, delete, or manual Argo sync occurred."
+    },
+    {
+      "id": "TST-010",
+      "type": "e2e",
+      "requirement_ids": ["REQ-010", "REQ-014", "REQ-015"],
+      "approach": "Use explicit-context read-only Argo and Kubernetes commands after each merged stage to capture application revision, sync/health, resource identity, annotations, ownership/tracking metadata, operator synchronization condition, generation, and resync status."
+    },
+    {
+      "id": "TST-011",
+      "type": "e2e",
+      "requirement_ids": ["REQ-005", "REQ-006", "REQ-014"],
+      "approach": "Execute live Prometheus instant/range queries for 5h and 1w using the configured job and representative filters, compare raw 5-minute decreases and reset counter evidence to hourly results, and verify missing telemetry returns no series rather than zero."
+    },
+    {
+      "id": "TST-012",
+      "type": "manual",
+      "requirement_ids": ["REQ-004", "REQ-007", "REQ-008", "REQ-014"],
+      "approach": "Authenticate to Grafana and visually inspect representative desktop widths, selected ranges, every filter, both quota-window series where available, reset/no-data cases, legend text, stacking, description, adjacency, row movement, and absence of overlap; retain screenshots and observations on the issue."
+    },
+    {
+      "id": "TST-013",
+      "type": "non_functional",
+      "requirement_ids": ["REQ-013", "REQ-015"],
+      "approach": "Audit linked issues, PR references, dependency comments, required checks, release and live evidence, cleanup sequencing, issue closure, remote branch deletion, and local worktree cleanup."
+    }
+  ],
+  "traceability": [
+    {
+      "requirement_id": "REQ-001",
+      "acceptance_ids": ["AC-001", "AC-009"],
+      "test_ids": ["TST-006", "TST-007"],
+      "review_checks": ["Confirm one canonical chart source/test suite and unchanged resource identity."],
+      "validation_checks": ["Count one desired and one live GrafanaDashboard after adoption."]
+    },
+    {
+      "requirement_id": "REQ-002",
+      "acceptance_ids": ["AC-001"],
+      "test_ids": ["TST-001"],
+      "review_checks": ["Confirm enabled defaults false and metadata.namespace comes only from explicit values."],
+      "validation_checks": ["Render default, disabled, and valid enabled fixtures."]
+    },
+    {
+      "requirement_id": "REQ-003",
+      "acceptance_ids": ["AC-001", "AC-002"],
+      "test_ids": ["TST-001", "TST-002"],
+      "review_checks": ["Review values schema/template mapping for all requested portable settings and clear validation."],
+      "validation_checks": ["Assert enabled positive and negative render fixtures cover every setting."]
+    },
+    {
+      "requirement_id": "REQ-004",
+      "acceptance_ids": ["AC-003", "AC-012"],
+      "test_ids": ["TST-003", "TST-012"],
+      "review_checks": ["Reject tpl use on dashboard content and broad substitutions that can alter Grafana braces."],
+      "validation_checks": ["Parse packaged JSON and compare rendered/live legend templates exactly."]
+    },
+    {
+      "requirement_id": "REQ-005",
+      "acceptance_ids": ["AC-004", "AC-011"],
+      "test_ids": ["TST-004", "TST-011"],
+      "review_checks": ["Review positive-decrease sign, five-minute offset, reset label matching, and independent window grouping."],
+      "validation_checks": ["Compare live hourly output with raw remaining/reset samples for each available window."]
+    },
+    {
+      "requirement_id": "REQ-006",
+      "acceptance_ids": ["AC-004", "AC-005"],
+      "test_ids": ["TST-004", "TST-011"],
+      "review_checks": ["Confirm symmetric filters, fixed interval/range, no timeFrom, no zero fill, and no cross-window sum."],
+      "validation_checks": ["Exercise live query with representative filters and absent series."]
+    },
+    {
+      "requirement_id": "REQ-007",
+      "acceptance_ids": ["AC-005", "AC-012"],
+      "test_ids": ["TST-005", "TST-012"],
+      "review_checks": ["Confirm bar chart normal stacking and warning wording prevent additive interpretation."],
+      "validation_checks": ["Inspect rendered JSON and authenticated live panel semantics."]
+    },
+    {
+      "requirement_id": "REQ-008",
+      "acceptance_ids": ["AC-005", "AC-012"],
+      "test_ids": ["TST-005", "TST-012"],
+      "review_checks": ["Review grid movement and pairwise panel rectangle calculations."],
+      "validation_checks": ["Run structural overlap test and visual checks at representative widths."]
+    },
+    {
+      "requirement_id": "REQ-009",
+      "acceptance_ids": ["AC-006"],
+      "test_ids": ["TST-006"],
+      "review_checks": ["Reject any backend, telemetry, API, storage, server, watcher, or metric implementation diff."],
+      "validation_checks": ["Audit exact changed paths and semantic diff against the PR base."]
+    },
+    {
+      "requirement_id": "REQ-010",
+      "acceptance_ids": ["AC-007"],
+      "test_ids": ["TST-007", "TST-010"],
+      "review_checks": ["Confirm protection PR is independent, first, and targets the exact current object."],
+      "validation_checks": ["Observe Prune=false live on the synchronized object before release/adoption."]
+    },
+    {
+      "requirement_id": "REQ-011",
+      "acceptance_ids": ["AC-008"],
+      "test_ids": ["TST-008"],
+      "review_checks": ["Verify release uniqueness, provenance, and protection dependency before publication."],
+      "validation_checks": ["Pull exact immutable chart and match digest, receipt, tag, and commit."]
+    },
+    {
+      "requirement_id": "REQ-012",
+      "acceptance_ids": ["AC-009", "AC-010"],
+      "test_ids": ["TST-007", "TST-008", "TST-009"],
+      "review_checks": ["Confirm atomic promotion, exact version/digest, same protected identity, and standalone-source removal."],
+      "validation_checks": ["Render all desired sources, count one identity, and pass explicit-context dry-run."]
+    },
+    {
+      "requirement_id": "REQ-013",
+      "acceptance_ids": ["AC-007", "AC-008", "AC-009", "AC-010", "AC-013"],
+      "test_ids": ["TST-007", "TST-009", "TST-013"],
+      "review_checks": ["Review issue dependencies, PR references, worktree scopes, and prohibition on direct live mutation."],
+      "validation_checks": ["Audit GitHub history and command evidence for PR-only GitOps execution."]
+    },
+    {
+      "requirement_id": "REQ-014",
+      "acceptance_ids": ["AC-011", "AC-012"],
+      "test_ids": ["TST-010", "TST-011", "TST-012"],
+      "review_checks": ["Require ownership, sync, PromQL, missing-data, and visual evidence rather than manifest-only proof."],
+      "validation_checks": ["Complete explicit-context live read-only and authenticated Grafana checks."]
+    },
+    {
+      "requirement_id": "REQ-015",
+      "acceptance_ids": ["AC-013"],
+      "test_ids": ["TST-009", "TST-010", "TST-013"],
+      "review_checks": ["Confirm cleanup is a separate blocked PR and removes only temporary protection."],
+      "validation_checks": ["Revalidate one chart-owned synchronized dashboard after cleanup and close tracked work."]
+    }
+  ],
+  "quality_gates": {
+    "spec_review_required": true,
+    "testability_required": true,
+    "traceability_required": true
+  },
+  "council": {
+    "perspectives": [
+      {
+        "role": "product_semantics",
+        "summary": "Define raw observed percentage-point burn, preserve absence, and warn that independent 5h/1w windows are non-additive."
+      },
+      {
+        "role": "helm_portability",
+        "summary": "Use disabled-by-default portable values and raw .Files.Get dashboard loading without tpl while preserving Grafana legends."
+      },
+      {
+        "role": "gitops_safety",
+        "summary": "Protect first, adopt the same identity with Prune=false, promote immutable version/digest atomically, and clean protection later."
+      },
+      {
+        "role": "observability_correctness",
+        "summary": "Use positive five-minute remaining-percent decreases, reset masking, symmetric filters, fixed hourly evaluation, and no zero fill."
+      },
+      {
+        "role": "qa_release",
+        "summary": "Require offline chart/dashboard contracts, artifact provenance, explicit-context dry-run, and live Argo/PromQL/Grafana evidence."
+      }
+    ],
+    "consensus_summary": "Proceed with a chart-owned dashboard and raw hourly burn panel through a protection-first, immutable-release, atomic-promotion, read-only-verification, separate-cleanup sequence. Keep one resource identity, no backend changes, no tpl over dashboard JSON, and no direct live mutation.",
+    "open_questions": []
+  }
+}

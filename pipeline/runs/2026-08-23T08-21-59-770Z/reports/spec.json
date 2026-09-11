@@ -1,0 +1,37 @@
+{
+  "stage": "spec",
+  "status": "pass",
+  "summary": "Phase 0 is specified against infra origin/main 89603c4. The safe implementation is a paired Terraform/bootstrap default-deny change with parity tests; merge remains blocked on live SSO identity and ownership evidence.",
+  "changed_files": [
+    "/home/rickebo/.codex/pipeline/runs/2026-08-23T08-21-59-770Z/feature-spec.json",
+    "/home/rickebo/.codex/pipeline/runs/2026-08-23T08-21-59-770Z/council.json",
+    "/home/rickebo/.codex/pipeline/runs/2026-08-23T08-21-59-770Z/spec-check.json"
+  ],
+  "validation": [
+    "Spec checker passed with requirements, Given/When/Then acceptance criteria, full traceability, testable MUSTs, and three council perspectives.",
+    "Remote main and both role:readonly renderers were independently verified; referenced prepared bundle is absent.",
+    "Live codicarium-dev RBAC, declared Authentik groups scope, and Kubernetes break-glass evidence were read without mutation."
+  ],
+  "blockers": [
+    "Deployment gate: no real ordinary SSO session or directly verified SSO administrator session is available.",
+    "Deployment gate: live argocd-rbac-cm ownership is not mapped to the expected Argo application.",
+    "Deployment gate: prod endpoint retirement/topology is not conclusively established."
+  ],
+  "next_action": "Implement the minimal paired renderer change and focused contract tests in an infra worktree based on origin/main; do not merge or deploy while live blockers remain.",
+  "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-23T08-21-59-770Z/feature-spec.json",
+  "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-08-23T08-21-59-770Z/spec-check.json",
+  "council_file": "/home/rickebo/.codex/pipeline/runs/2026-08-23T08-21-59-770Z/council.json",
+  "requires_council": true,
+  "independent_lanes": ["security lockout review", "QA testability review", "live Codicarium evidence", "remote-main and patch applicability", "GitHub task memory"],
+  "route_to": "code",
+  "risk_level": "critical",
+  "issues": [
+    {
+      "id": "infra-1143",
+      "title": "Lockout-safe Argo CD authenticated default deny",
+      "severity": "critical",
+      "details": "https://github.com/codicarium/infra/issues/1143 tracks implementation and live rollout evidence.",
+      "owner_stage": "validation"
+    }
+  ]
+}

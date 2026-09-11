@@ -1,0 +1,27 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Stage 5 registers the canonical eight tools and exposes Streamable HTTP, legacy SSE, stdio, healthz, and request working-directory middleware.",
+  "changed_files": [
+    "src/agent_mcp/server.py",
+    "src/agent_mcp/cli.py",
+    "docs/tools.md",
+    "tests/integration/test_http_transports.py",
+    "tests/integration/test_stdio.py",
+    "tests/test_cli.py"
+  ],
+  "validation": [
+    "uv run pytest tests/integration: 7 passed",
+    "uv run pytest: 84 passed",
+    "uv run agent-mcp serve --help: passed",
+    "uv run agent-mcp stdio --help: passed",
+    "uv run ruff check src/agent_mcp tests: passed",
+    "uv run mypy src: passed",
+    "Independent review: no blocking findings"
+  ],
+  "blockers": [],
+  "next_action": "Advance to review, test, and validation evidence for the completed Stage 5 implementation.",
+  "route_to": "review",
+  "risk_level": "medium",
+  "independent_lanes": ["MCP tool registration", "HTTP/SSE lifecycle", "stdio CLI and conformance tests"]
+}

@@ -1,0 +1,29 @@
+{
+  "generated_at": "2026-08-22T14:43:57Z",
+  "stage": "spec",
+  "status": "blocked_pending_evidence",
+  "source_boundary": "Codicarium remains strictly read-only; this packet contains no credentials, Secret values, source payloads, or personal data.",
+  "decisions": {
+    "D-001": {
+      "status": "open",
+      "decision": "Preserve the unresolved source provider evidence gate.",
+      "required_evidence": "Sanitized provider-side cutoff/WAL continuity and graph-artifact existence/SHA closure; no source payload export or mutation."
+    },
+    "D-002": {
+      "status": "decided_with_readiness_gate",
+      "decision": "Use no new Longhorn for this workload: 5Gi local-path RWO per PostgreSQL database, 1Gi runtime per service, 20Gi static NFS RWX Retain for graph artifacts, temporary 5Gi NFS scratch, and temporary restore volumes.",
+      "safeguards": "Test 70% warning and 85% critical alerts plus logical dump/restore migration to a larger PVC; leave unrelated Longhorn and historical/retained PVCs untouched.",
+      "unresolved_evidence": "NAS ACL/capacity, reclaim/retention, off-node backup health, and target-only restore proof."
+    },
+    "D-003": {
+      "status": "decided_with_readiness_gate",
+      "decision": "Use target-only identity and secret-manager paths with deny-by-default mapping and fresh target-only Data Protection, backend, runtime, MCP, and gateway credentials.",
+      "unresolved_evidence": "Exact subject/group mapping, callback/scopes, ServiceAccount/RBAC path, credential ownership/rotation, and re-authentication proof."
+    },
+    "D-004": {
+      "status": "decided",
+      "decision": "Leave unrelated Longhorn resources and the two historical/retained LLM Proxy PVCs untouched; provenance or cleanup is a separate authorized task."
+    }
+  },
+  "safe_boundary": "Remain at spec until D-001 evidence and D-002/D-003 readiness evidence pass. Do not create clone resources, restore, reconcile, deploy, mutate Codicarium, or revive historical PVCs."
+}

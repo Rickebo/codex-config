@@ -1,0 +1,51 @@
+{
+  "schema": "codicarium.council-closure/v2.6",
+  "bundle_manifest_sha256": "a6f171850af4bad7cce49974998005081ba233b97dac97fe329d8feb9623d0f6",
+  "pre_council_report_sha256": "3adea43d24257e2839c93f1ba84b2326f4cdb8bdb06746730a05e1f8d7c9b193",
+  "decision": "UNSIGNED_TEMPLATE",
+  "activation_ready": false,
+  "live_gate_aggregate": {
+    "complete": false,
+    "signed": false,
+    "gate_count": 0,
+    "passed_count": 0
+  },
+  "lanes": [
+    {
+      "role": "planner",
+      "principal": "EXTERNAL_REQUIRED",
+      "key_fingerprint": "EXTERNAL_REQUIRED",
+      "derived_key_fingerprint": "EXTERNAL_REQUIRED",
+      "public_key": "EXTERNAL_REQUIRED",
+      "verdict": "EXTERNAL_REQUIRED",
+      "signature": null
+    },
+    {
+      "role": "security",
+      "principal": "EXTERNAL_REQUIRED",
+      "key_fingerprint": "EXTERNAL_REQUIRED",
+      "derived_key_fingerprint": "EXTERNAL_REQUIRED",
+      "public_key": "EXTERNAL_REQUIRED",
+      "verdict": "EXTERNAL_REQUIRED",
+      "signature": null
+    },
+    {
+      "role": "tech_lead_devops",
+      "principal": "EXTERNAL_REQUIRED",
+      "key_fingerprint": "EXTERNAL_REQUIRED",
+      "derived_key_fingerprint": "EXTERNAL_REQUIRED",
+      "public_key": "EXTERNAL_REQUIRED",
+      "verdict": "EXTERNAL_REQUIRED",
+      "signature": null
+    },
+    {
+      "role": "tech_lead_qa",
+      "principal": "EXTERNAL_REQUIRED",
+      "key_fingerprint": "EXTERNAL_REQUIRED",
+      "derived_key_fingerprint": "EXTERNAL_REQUIRED",
+      "public_key": "EXTERNAL_REQUIRED",
+      "verdict": "EXTERNAL_REQUIRED",
+      "signature": null
+    }
+  ]
+}

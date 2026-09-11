@@ -1,0 +1,36 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Fresh full-branch backend and QA reviews found two issue-#28 blockers: redundant Source identity composition can conflict with signed per-request headers, and post-deletion events may be classified contract_invalid before the local deletion tombstone yields workspace_deleted. All other loop-3 blocker groups and system cleanup/diagnostic behavior reviewed cleanly.",
+  "changed_files": [],
+  "validation": [
+    "Backend reviewer inspected the complete origin/main...407110f diff and reran validate-specs plus 19 focused Knowledge tests",
+    "QA lead inspected all REQ-001..REQ-008 mappings and reran 16 resolver tests plus 15 system lifecycle/diagnostic tests",
+    "Both reviewers confirmed the real-flow test launches separate Source, Workspace, Model, and Knowledge processes",
+    "QA review confirmed replay/build identity and the repaired system cleanup, timeout, diagnostic, and leak boundaries",
+    "git status and origin/main...HEAD diff checks were clean at reviewed HEAD 407110f"
+  ],
+  "blockers": [
+    "Knowledge Worker configures a default X-Workload-Identity while WorkloadProof also supplies the signed per-request value; remove the redundant default and cover configured composition.",
+    "Snapshot ingestion resolves dependencies before checking the local deletion tombstone, so Workspace status=deleting can reach contract_invalid DLQ instead of the typed workspace_deleted outcome."
+  ],
+  "next_action": "Return to code for minimal composition and deletion-classification fixes with focused regression tests, then repeat full-branch review at a new clean HEAD.",
+  "route_to": "code",
+  "risk_level": "high",
+  "issues": [
+    {
+      "id": "REV4-BE-001",
+      "title": "Source workload identity is redundantly composed",
+      "severity": "high",
+      "details": "KnowledgeService.Worker Program.cs adds X-Workload-Identity as a default header while WorkloadProof.Apply adds the signed request header. Remove the default and add a worker composition test proving one configured signed identity.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV4-QA-001",
+      "title": "Deleting workspace can be classified as contract_invalid",
+      "severity": "high",
+      "details": "IngestSnapshotAsync resolves Source/Workspace/Model before the local tombstone check. A Workspace status=deleting response throws ContractValidationException and reaches contract_invalid DLQ rather than KnowledgeWorkspaceDeletedException/workspace_deleted.",
+      "owner_stage": "code"
+    }
+  ]
+}

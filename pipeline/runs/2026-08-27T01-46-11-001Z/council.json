@@ -1,0 +1,32 @@
+{
+  "task": "Issue #28 post-review reliability blocker remediation and integration completion from clean HEAD 447dee9",
+  "perspectives": [
+    {
+      "role": "backend",
+      "agent": "/root/final_backend_review",
+      "summary": "Confirmed that an Insights Gap successor can remain permanently retryable when drain fails and predecessor redelivery is Duplicate; no independent reconciler exists."
+    },
+    {
+      "role": "cross_service",
+      "agent": "/root/formal_cross_service_review",
+      "summary": "Found no blocking Source, Knowledge, Workspace, Model, HMAC, OpenAPI, CloudEvent, or ownership mismatch; broader live permanent-gap coverage remains parent #26 scope."
+    },
+    {
+      "role": "qa",
+      "agent": "/root/formal_qa_review",
+      "summary": "Independently confirmed the Insights recovery blocker and kept final-head FastSystem and candidate/main Model comparison as mandatory test-stage work."
+    },
+    {
+      "role": "system_reliability",
+      "agent": "/root/formal_system_review",
+      "summary": "Confirmed the Insights blocker plus process-exit diagnostic ordering and retry-suppressed cleanup defects in branch-added system infrastructure."
+    }
+  ],
+  "consensus": [
+    "The original eight-requirement issue #28 feature specification remains authoritative and already passed the spec checker.",
+    "Fix only the three concrete review blockers before reopening review; do not broaden into parent #26 permanent-gap system coverage.",
+    "Use deterministic regression tests for duplicate-redelivery drain recovery, exit-marker publication ordering, and retryable cleanup.",
+    "After review passes, run the complete final-head service/system/static matrix and the identical candidate/main Model comparison before validation."
+  ],
+  "open_questions": []
+}

@@ -1,0 +1,121 @@
+[
+  {
+    "id": "synthetic-authority",
+    "mutation": "set publication_authority true",
+    "expected_result": "REJECT",
+    "oracle": "synthetic evidence can never authorize",
+    "effect_count": 0
+  },
+  {
+    "id": "bad-signature",
+    "mutation": "flip signature byte",
+    "expected_result": "REJECT",
+    "oracle": "DSSE signature must fail",
+    "effect_count": 0
+  },
+  {
+    "id": "non-jcs",
+    "mutation": "re-encode payload with whitespace",
+    "expected_result": "REJECT",
+    "oracle": "payload bytes must equal RFC8785 JCS",
+    "effect_count": 0
+  },
+  {
+    "id": "nonce-replay",
+    "mutation": "reuse nonce in same authority epoch",
+    "expected_result": "REJECT",
+    "oracle": "nonce ledger must reject",
+    "effect_count": 0
+  },
+  {
+    "id": "stale",
+    "mutation": "set computed_at older than max_age_seconds",
+    "expected_result": "REJECT",
+    "oracle": "freshness must fail",
+    "effect_count": 0
+  },
+  {
+    "id": "wrong-workflow",
+    "mutation": "change exact workflow_ref",
+    "expected_result": "REJECT",
+    "oracle": "identity must fail",
+    "effect_count": 0
+  },
+  {
+    "id": "wrong-pod-uid",
+    "mutation": "change TokenReview pod UID",
+    "expected_result": "REJECT",
+    "oracle": "identity must fail",
+    "effect_count": 0
+  },
+  {
+    "id": "wrong-target",
+    "mutation": "change immutable target ID",
+    "expected_result": "REJECT",
+    "oracle": "target binding must fail",
+    "effect_count": 0
+  },
+  {
+    "id": "predicate-forgery",
+    "mutation": "mark PASS without recomputation",
+    "expected_result": "REJECT",
+    "oracle": "evaluator must fail",
+    "effect_count": 0
+  },
+  {
+    "id": "candidate-second-read",
+    "mutation": "read an already consumed capability",
+    "expected_result": "REJECT",
+    "oracle": "must return 410",
+    "effect_count": 0
+  },
+  {
+    "id": "collector-writer-overlap",
+    "mutation": "reuse writer as collector",
+    "expected_result": "REJECT",
+    "oracle": "four-party separation must fail",
+    "effect_count": 0
+  },
+  {
+    "id": "admin-single-approver",
+    "mutation": "remove one approver",
+    "expected_result": "REJECT",
+    "oracle": "dual control must fail",
+    "effect_count": 0
+  },
+  {
+    "id": "break-glass-publish",
+    "mutation": "request publish",
+    "expected_result": "REJECT",
+    "oracle": "forbidden operation must fail",
+    "effect_count": 0
+  },
+  {
+    "id": "vault-wildcard",
+    "mutation": "add wildcard secret path",
+    "expected_result": "REJECT",
+    "oracle": "Vault contract must fail",
+    "effect_count": 0
+  },
+  {
+    "id": "cnpg-two-nodes",
+    "mutation": "place three instances on two nodes",
+    "expected_result": "REJECT",
+    "oracle": "N-1 placement must fail",
+    "effect_count": 0
+  },
+  {
+    "id": "proxy-generic-post",
+    "mutation": "request unlisted POST",
+    "expected_result": "REJECT",
+    "oracle": "closed catalog must fail",
+    "effect_count": 0
+  },
+  {
+    "id": "unknown-retry",
+    "mutation": "edge UNKNOWN back to claim",
+    "expected_result": "REJECT",
+    "oracle": "no-retry DAG must fail",
+    "effect_count": 0
+  }
+]

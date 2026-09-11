@@ -1,0 +1,18 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Added a narrowly scoped systemd verification fallback for runners without a user manager; unexpected user-mode failures remain fatal.",
+  "changed_files": [".github/workflows/ci.yml"],
+  "validation": [
+    "systemd user-mode verification and known no-user-manager fallback passed locally",
+    "actionlint passed locally",
+    "Ruby YAML parsing passed locally",
+    "git diff --check passed",
+    "independent review found no blocking findings"
+  ],
+  "blockers": [],
+  "next_action": "Run the review gate, then repeat the full test-stage validation before rerunning PR CI.",
+  "route_to": "review",
+  "risk_level": "medium",
+  "independent_lanes": ["workflow fallback portability"]
+}

@@ -1,0 +1,27 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "The committed e016f54 Model observer fix has no finding and its three-pass native-crash evidence is sufficient. Cross-service and QA lanes found no blockers. System review found the issue #28 FastSystem fixture still uses the same unsafe AdminClient ListConsumerGroupOffsetsAsync path for its live ordering assertion, so the native OffsetFetch crash remains reachable during the required system matrix.",
+  "changed_files": [],
+  "validation": [
+    "Model replacement uses read-only IConsumer.Committed without subscribe, assign, commit, join, or rebalance",
+    "Model focused candidate/main comparison and three complete candidate 7/7 suites substantiate the fix",
+    "Cross-service review found no production or REQ-001 through REQ-008 regression",
+    "QA review found no missing merge-blocking evidence for the committed Model delta",
+    "System review traced WaitForKnowledgeConsumerOffsetAsync to AdminClient.ListConsumerGroupOffsetsAsync",
+    "CaptureConsumerGroupDiagnosticsAsync also uses the unsafe AdminClient query on the timeout-only diagnostics path"
+  ],
+  "blockers": [
+    "REV1-SYSTEM-OFFSET-001: KnowledgeGenerationSystemFixture.WaitForKnowledgeConsumerOffsetAsync can still trigger the confirmed librdkafka AdminClient OffsetFetch crash during required issue #28 FastSystem ordering validation."
+  ],
+  "next_action": "Return to code and replace both FastSystem AdminClient group-offset probes with one bounded scoped same-group consumer Committed helper, then run focused fixture and complete FastSystem tests with core/resource cleanup audits.",
+  "route_to": "code",
+  "risk_level": "high",
+  "independent_lanes": [
+    "Model Kafka lifecycle correctness",
+    "cross-service acceptance impact",
+    "QA evidence sufficiency",
+    "FastSystem offset-observer lifecycle"
+  ],
+  "requires_council": false
+}

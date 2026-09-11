@@ -1,0 +1,106 @@
+{
+  "generated_at": "2026-08-21T21:23:22Z",
+  "run_dir": "/home/rickebo/.codex/pipeline/runs/2026-08-21T20-20-56-579Z",
+  "stage": "spec/preflight-reaudit",
+  "status": "blocked",
+  "plan_document": {
+    "path": "/home/rickebo/homelab-workspace-context-llm-proxy-plan.md",
+    "sha256": "a43ebb349eef11f7db2ac66984295f40ea0bdeba4d9bcc5840ed7491c49510a6",
+    "stage_headings": [
+      "Stage 1 — Spec and preflight",
+      "Stage 2 — Homelab GitOps foundation",
+      "Stage 3 — Clean-room restore rehearsal"
+    ],
+    "structural_check": "pass",
+    "correction": "The current plan is structurally separated; earlier malformed/concatenated text findings are stale generated-snapshot narrative and are not treated as a current plan blocker."
+  },
+  "source": {
+    "kubeconfig": "/home/rickebo/.kube/codicarium-dev.yaml",
+    "context": "codicarium-dev",
+    "api_server": "https://10.99.0.21:6443",
+    "applications": "dev-workspace-context and dev-llm-proxy Synced/Healthy",
+    "database_backups": {
+      "workspace_context": {
+        "completed_count": 33,
+        "latest_end": "2026-08-21T02:17:14Z"
+      },
+      "llm_proxy": {
+        "completed_count": 33,
+        "latest_end": "2026-08-21T02:47:22Z"
+      },
+      "retention": "32 days"
+    },
+    "candidate_cutoff": "2026-08-21T02:47:22Z",
+    "workspace_context_revision_closure": {
+      "revision_count": 1353,
+      "datasets_per_revision": 1,
+      "sha256_format": "all values are valid 64-hex SHA-256 strings",
+      "database_side_joins": "no missing joins, duplicate keys, or duplicate hashes observed"
+    },
+    "artifact_authority": {
+      "endpoint": "https://s3.sbg.io.cloud.ovh.net",
+      "bucket": "codicarium-dev-workspace-context-artifacts",
+      "key_pattern": "workspaces/<workspace-id>/revisions/<revision-id>.tar.gz",
+      "schema_version": 3
+    }
+  },
+  "target": {
+    "kubeconfig": "/home/rickebo/.kube/homelab.yaml",
+    "context": "default",
+    "api_server": "https://192.168.1.89:6443",
+    "storage": {
+      "longhorn_available_bytes_approx": 75000000000,
+      "longhorn_scheduled_bytes_approx": 180000000000,
+      "additional_disk": "NotReady: filesystem/UUID mismatch",
+      "image_filesystem": "93–94% used in recent kubelet evidence",
+      "required_artifact_storage": "100Gi RWX plus database volumes",
+      "rwx_status": "healthy target-owned RWX path not proven",
+      "alternative_paths": "NFS/object-store path and capacity/retention not approved or evidenced"
+    },
+    "backup": {
+      "default_backup_target": "available=true; Unavailable=False",
+      "recent_completed_backup_count": 25,
+      "retained_llm_proxy_volume_coverage": "none found",
+      "target_only_restore_drill": "not performed and not evidenced"
+    },
+    "retained_pvcs": [
+      "llm-proxy-database-backups (5Gi, ownerless, Retain PV)",
+      "llm-proxy-postgres-1 (10Gi, ownerless, Retain PV)"
+    ],
+    "oidc_secret_store": "InvalidProviderConfig: required ServiceAccount is absent",
+    "existing_worker": "llm-proxy-worker remains Argo Synced/Healthy and 2/2 Ready"
+  },
+  "hard_gates": [
+    {
+      "gate": "common database cutoff and WAL continuity",
+      "status": "blocked",
+      "evidence": "candidate cutoff and backup endpoints identified; exact Barman WAL-object continuity remains unproven and one historical proxy archiving failure was observed"
+    },
+    {
+      "gate": "graph artifact existence and SHA closure",
+      "status": "blocked",
+      "evidence": "database-side closure is internally consistent; S3 HEAD requests returned 403 without narrowly scoped read-only metadata credentials"
+    },
+    {
+      "gate": "target-owned artifact storage and backup/restore",
+      "status": "blocked",
+      "evidence": "Longhorn capacity/RWX health is unsafe or unproven; no approved alternative path or target-only restore drill"
+    },
+    {
+      "gate": "OIDC, Data Protection, backend, runtime, and key disposition",
+      "status": "blocked",
+      "evidence": "target-only provisioning/recreation decision and secret-manager path are unresolved; fresh target runtime and keys remain the safe default"
+    },
+    {
+      "gate": "retained PVC provenance and disposition",
+      "status": "blocked",
+      "evidence": "claims are ownerless and detached/unknown; no matching retained-volume backup history found"
+    }
+  ],
+  "issues": {
+    "parent": "https://github.com/Rickebo/pve-infra/issues/482",
+    "inventory": "https://github.com/Rickebo/pve-infra/issues/483",
+    "status": "open; sanitized corrected backup-target progress comments posted"
+  },
+  "no_mutation": "No Codicarium mutation, source export, restore, apply, restart, Argo sync, target clone resource creation, or local Codex switch was performed."
+}

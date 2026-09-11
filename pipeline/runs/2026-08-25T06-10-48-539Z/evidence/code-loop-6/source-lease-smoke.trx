@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="e1e990be-a8b9-42ce-8075-8cebf056b6ee" name="@RICKEBO 2026-08-25 23:16:40" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2026-08-25T23:16:40.3205297+02:00" queuing="2026-08-25T23:16:40.3205297+02:00" start="2026-08-25T23:16:30.2970577+02:00" finish="2026-08-25T23:16:40.3239534+02:00" />
+  <TestSettings name="default" id="2c454ad3-017f-4526-91ee-388a687445a8">
+    <Deployment runDeploymentRoot="_RICKEBO_2026-08-25_23_16_40" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="750539a7-897a-4692-b1ef-44a40707b9c3" testId="b6d55168-8834-6023-a616-b3b142e34d42" testName="SourceService.Integration.Tests.ApiSmokeTests.Consumer_read_routes_scope_metadata_and_redeem_exact_artifact_lease_once" computerName="RICKEBO" duration="00:00:09.3821093" startTime="2026-08-25T23:16:30.8384955+02:00" endTime="2026-08-25T23:16:40.2345485+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="750539a7-897a-4692-b1ef-44a40707b9c3">
+      <Output>
+        <ErrorInfo>
+          <Message>Amazon.S3.AmazonS3Exception : Storage backend has reached its minimum free drive threshold. Please delete a few objects to proceed.
+---- Amazon.Runtime.Internal.HttpErrorResponseException : Exception of type 'Amazon.Runtime.Internal.HttpErrorResponseException' was thrown.</Message>
+          <StackTrace>   at Amazon.Runtime.Internal.HttpErrorResponseExceptionHandler.HandleExceptionStream(IRequestContext requestContext, IWebResponseData httpErrorResponse, HttpErrorResponseException exception, Stream responseStream)
+   at Amazon.Runtime.Internal.HttpErrorResponseExceptionHandler.HandleExceptionAsync(IExecutionContext executionContext, HttpErrorResponseException exception)
+   at Amazon.Runtime.Internal.ExceptionHandler`1.HandleAsync(IExecutionContext executionContext, Exception exception)
+   at Amazon.Runtime.Internal.ErrorHandler.ProcessExceptionAsync(IExecutionContext executionContext, Exception exception)
+   at Amazon.Runtime.Internal.ErrorHandler.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.Runtime.Internal.CallbackHandler.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.Runtime.Internal.Signer.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.S3.Internal.S3Express.S3ExpressPreSigner.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.Runtime.Internal.EndpointDiscoveryHandler.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.Runtime.Internal.EndpointDiscoveryHandler.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.Runtime.Internal.RetryHandler.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.Runtime.Internal.RetryHandler.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.Runtime.Internal.CallbackHandler.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.Runtime.Internal.BaseAuthResolverHandler.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.Runtime.Internal.Marshaller.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.Runtime.Internal.CallbackHandler.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.S3.Internal.AmazonS3ExceptionHandler.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.Runtime.Internal.ErrorCallbackHandler.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.Runtime.Internal.MetricsHandler.InvokeAsync[T](IExecutionContext executionContext)
+   at SourceService.Infrastructure.S3ArtifactStore.PutImmutableAsync(Stream content, String mediaType, CancellationToken cancellationToken) in /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/services/source-service/src/SourceService.Infrastructure/S3ArtifactStore.cs:line 83
+   at SourceService.Infrastructure.S3ArtifactStore.PutImmutableAsync(Stream content, String mediaType, CancellationToken cancellationToken) in /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/services/source-service/src/SourceService.Infrastructure/S3ArtifactStore.cs:line 87
+   at SourceService.Infrastructure.SourcePlane.SyncTrackAsync(Guid workspaceId, Guid trackId, Guid correlationId, CancellationToken cancellationToken) in /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/services/source-service/src/SourceService.Infrastructure/SourcePlane.cs:line 158
+   at SourceService.Infrastructure.SourcePlane.SyncTrackAsync(Guid workspaceId, Guid trackId, Guid correlationId, CancellationToken cancellationToken) in /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/services/source-service/src/SourceService.Infrastructure/SourcePlane.cs:line 174
+   at SourceService.Infrastructure.SourcePlane.CreateTrackAsync(Guid workspaceId, Guid bindingId, String name, String slug, String fullRefName, JsonElement trackingPolicy, Guid correlationId, CancellationToken cancellationToken) in /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/services/source-service/src/SourceService.Infrastructure/SourcePlane.cs:line 94
+   at SourceService.Integration.Tests.ApiSmokeTests.Consumer_read_routes_scope_metadata_and_redeem_exact_artifact_lease_once() in /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/source-service/SourceService.Integration.Tests/ApiSmokeTests.cs:line 251
+   at SourceService.Integration.Tests.ApiSmokeTests.Consumer_read_routes_scope_metadata_and_redeem_exact_artifact_lease_once() in /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/source-service/SourceService.Integration.Tests/ApiSmokeTests.cs:line 397
+   at SourceService.Integration.Tests.ApiSmokeTests.Consumer_read_routes_scope_metadata_and_redeem_exact_artifact_lease_once() in /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/source-service/SourceService.Integration.Tests/ApiSmokeTests.cs:line 397
+   at SourceService.Integration.Tests.ApiSmokeTests.Consumer_read_routes_scope_metadata_and_redeem_exact_artifact_lease_once() in /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/source-service/SourceService.Integration.Tests/ApiSmokeTests.cs:line 397
+--- End of stack trace from previous location ---
+----- Inner Stack Trace -----
+   at Amazon.Runtime.HttpWebRequestMessage.ProcessHttpResponseMessage(HttpResponseMessage responseMessage)
+   at Amazon.Runtime.HttpWebRequestMessage.GetResponseAsync(CancellationToken cancellationToken)
+   at Amazon.Runtime.Internal.HttpHandler`1.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.Runtime.Internal.RedirectHandler.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.Runtime.Internal.Unmarshaller.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.S3.Internal.AmazonS3ResponseHandler.InvokeAsync[T](IExecutionContext executionContext)
+   at Amazon.Runtime.Internal.ErrorHandler.InvokeAsync[T](IExecutionContext executionContext)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="SourceService.Integration.Tests.ApiSmokeTests.Consumer_read_routes_scope_metadata_and_redeem_exact_artifact_lease_once" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/source-service/sourceservice.integration.tests/bin/release/net10.0/sourceservice.integration.tests.dll" id="b6d55168-8834-6023-a616-b3b142e34d42">
+      <Execution id="750539a7-897a-4692-b1ef-44a40707b9c3" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/source-service/SourceService.Integration.Tests/bin/Release/net10.0/SourceService.Integration.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="SourceService.Integration.Tests.ApiSmokeTests" name="Consumer_read_routes_scope_metadata_and_redeem_exact_artifact_lease_once" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="b6d55168-8834-6023-a616-b3b142e34d42" executionId="750539a7-897a-4692-b1ef-44a40707b9c3" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Failed">
+    <Counters total="1" executed="1" passed="0" failed="1" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v3.1.5+1b188a7b0a (64-bit .NET 10.0.11)
+[xUnit.net 00:00:00.09]   Discovering: SourceService.Integration.Tests
+[xUnit.net 00:00:00.19]   Discovered:  SourceService.Integration.Tests
+[xUnit.net 00:00:00.28]   Starting:    SourceService.Integration.Tests
+[xUnit.net 00:00:09.72]       Amazon.S3.AmazonS3Exception : Storage backend has reached its minimum free drive threshold. Please delete a few objects to proceed.
+[xUnit.net 00:00:09.72]       ---- Amazon.Runtime.Internal.HttpErrorResponseException : Exception of type 'Amazon.Runtime.Internal.HttpErrorResponseException' was thrown.
+[xUnit.net 00:00:09.72]       Stack Trace:
+[xUnit.net 00:00:09.72]            at Amazon.Runtime.Internal.HttpErrorResponseExceptionHandler.HandleExceptionStream(IRequestContext requestContext, IWebResponseData httpErrorResponse, HttpErrorResponseException exception, Stream responseStream)
+[xUnit.net 00:00:09.72]            at Amazon.Runtime.Internal.HttpErrorResponseExceptionHandler.HandleExceptionAsync(IExecutionContext executionContext, HttpErrorResponseException exception)
+[xUnit.net 00:00:09.72]            at Amazon.Runtime.Internal.ExceptionHandler`1.HandleAsync(IExecutionContext executionContext, Exception exception)
+[xUnit.net 00:00:09.72]            at Amazon.Runtime.Internal.ErrorHandler.ProcessExceptionAsync(IExecutionContext executionContext, Exception exception)
+[xUnit.net 00:00:09.72]            at Amazon.Runtime.Internal.ErrorHandler.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:09.72]            at Amazon.Runtime.Internal.CallbackHandler.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:09.72]            at Amazon.Runtime.Internal.Signer.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:09.72]            at Amazon.S3.Internal.S3Express.S3ExpressPreSigner.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:09.72]            at Amazon.Runtime.Internal.EndpointDiscoveryHandler.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:09.72]            at Amazon.Runtime.Internal.EndpointDiscoveryHandler.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:09.72]            at Amazon.Runtime.Internal.RetryHandler.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:09.72]            at Amazon.Runtime.Internal.RetryHandler.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:09.72]            at Amazon.Runtime.Internal.CallbackHandler.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:09.72]            at Amazon.Runtime.Internal.BaseAuthResolverHandler.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:09.72]            at Amazon.Runtime.Internal.Marshaller.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:09.72]            at Amazon.Runtime.Internal.CallbackHandler.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:09.72]            at Amazon.S3.Internal.AmazonS3ExceptionHandler.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:09.72]            at Amazon.Runtime.Internal.ErrorCallbackHandler.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:09.72]            at Amazon.Runtime.Internal.MetricsHandler.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:09.72]         /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/services/source-service/src/SourceService.Infrastructure/S3ArtifactStore.cs(83,0): at SourceService.Infrastructure.S3ArtifactStore.PutImmutableAsync(Stream content, String mediaType, CancellationToken cancellationToken)
+[xUnit.net 00:00:09.72]         /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/services/source-service/src/SourceService.Infrastructure/S3ArtifactStore.cs(87,0): at SourceService.Infrastructure.S3ArtifactStore.PutImmutableAsync(Stream content, String mediaType, CancellationToken cancellationToken)
+[xUnit.net 00:00:09.72]         /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/services/source-service/src/SourceService.Infrastructure/SourcePlane.cs(158,0): at SourceService.Infrastructure.SourcePlane.SyncTrackAsync(Guid workspaceId, Guid trackId, Guid correlationId, CancellationToken cancellationToken)
+[xUnit.net 00:00:09.72]         /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/services/source-service/src/SourceService.Infrastructure/SourcePlane.cs(174,0): at SourceService.Infrastructure.SourcePlane.SyncTrackAsync(Guid workspaceId, Guid trackId, Guid correlationId, CancellationToken cancellationToken)
+[xUnit.net 00:00:09.72]         /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/services/source-service/src/SourceService.Infrastructure/SourcePlane.cs(94,0): at SourceService.Infrastructure.SourcePlane.CreateTrackAsync(Guid workspaceId, Guid bindingId, String name, String slug, String fullRefName, JsonElement trackingPolicy, Guid correlationId, CancellationToken cancellationToken)
+[xUnit.net 00:00:09.72]         /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/source-service/SourceService.Integration.Tests/ApiSmokeTests.cs(251,0): at SourceService.Integration.Tests.ApiSmokeTests.Consumer_read_routes_scope_metadata_and_redeem_exact_artifact_lease_once()
+[xUnit.net 00:00:09.72]         /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/source-service/SourceService.Integration.Tests/ApiSmokeTests.cs(397,0): at SourceService.Integration.Tests.ApiSmokeTests.Consumer_read_routes_scope_metadata_and_redeem_exact_artifact_lease_once()
+[xUnit.net 00:00:09.72]         /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/source-service/SourceService.Integration.Tests/ApiSmokeTests.cs(397,0): at SourceService.Integration.Tests.ApiSmokeTests.Consumer_read_routes_scope_metadata_and_redeem_exact_artifact_lease_once()
+[xUnit.net 00:00:09.72]         /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/source-service/SourceService.Integration.Tests/ApiSmokeTests.cs(397,0): at SourceService.Integration.Tests.ApiSmokeTests.Consumer_read_routes_scope_metadata_and_redeem_exact_artifact_lease_once()
+[xUnit.net 00:00:09.72]         --- End of stack trace from previous location ---
+[xUnit.net 00:00:09.72]         ----- Inner Stack Trace -----
+[xUnit.net 00:00:09.72]            at Amazon.Runtime.HttpWebRequestMessage.ProcessHttpResponseMessage(HttpResponseMessage responseMessage)
+[xUnit.net 00:00:09.72]            at Amazon.Runtime.HttpWebRequestMessage.GetResponseAsync(CancellationToken cancellationToken)
+[xUnit.net 00:00:09.72]            at Amazon.Runtime.Internal.HttpHandler`1.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:09.72]            at Amazon.Runtime.Internal.RedirectHandler.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:09.72]            at Amazon.Runtime.Internal.Unmarshaller.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:09.72]            at Amazon.S3.Internal.AmazonS3ResponseHandler.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:09.72]            at Amazon.Runtime.Internal.ErrorHandler.InvokeAsync[T](IExecutionContext executionContext)
+[xUnit.net 00:00:09.73]   Finished:    SourceService.Integration.Tests (ID = '06dd392f73dd766546ef20ac004a9a7bd0caf3d6f22af91d50b6e32a5d6c5a8d')
+</StdOut>
+    </Output>
+    <RunInfos>
+      <RunInfo computerName="RICKEBO" outcome="Error" timestamp="2026-08-25T23:16:40.2394879+02:00">
+        <Text>[xUnit.net 00:00:09.72]     SourceService.Integration.Tests.ApiSmokeTests.Consumer_read_routes_scope_metadata_and_redeem_exact_artifact_lease_once [FAIL]</Text>
+      </RunInfo>
+    </RunInfos>
+  </ResultSummary>
+</TestRun>

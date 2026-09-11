@@ -1,0 +1,46 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Corrective commit f8bef3f is HEAD and closes the prior code-stage findings; focused tests, chart checks, Argo inline-value renders, diff checks, and protected-path checks pass. Ready for independent review.",
+  "changed_files": [
+    "apps/llm-proxy.yaml",
+    "apps/workspace-context.yaml",
+    "llm-proxy/charts/llm-proxy-0.3.19-r.1.homelab.1.tgz",
+    "llm-proxy/templates/alerts.yaml",
+    "llm-proxy/templates/database-backup.yaml",
+    "llm-proxy/templates/homelab-egress-compatibility.yaml",
+    "llm-proxy/templates/restore.yaml",
+    "llm-proxy/values.yaml",
+    "llm-proxy/vendor/llm-proxy/templates/services.yaml",
+    "tests/test_workspace_context_llm_proxy_gitops.py",
+    "workspace-context/Chart.yaml",
+    "workspace-context/templates/_helpers.tpl",
+    "workspace-context/templates/alerts.yaml",
+    "workspace-context/templates/backup.yaml",
+    "workspace-context/templates/database.yaml",
+    "workspace-context/templates/gated.yaml",
+    "workspace-context/templates/networkpolicy.yaml",
+    "workspace-context/templates/storage.yaml",
+    "workspace-context/templates/workload.yaml",
+    "workspace-context/tests/static.sh"
+  ],
+  "validation": [
+    "HEAD is f8bef3fbe86d5efbdfcf61c7e951f9d7211d1eac; corrective commit f8bef3f is present as HEAD.",
+    "Focused repository test passed: pytest -q tests/test_workspace_context_llm_proxy_gitops.py; 5 passed.",
+    "workspace-context/tests/static.sh passed; workspace-context and llm-proxy helm lint each passed.",
+    "Default helm template passed for both charts with no render errors.",
+    "Actual Argo inline helm values rendered successfully for apps/workspace-context.yaml and apps/llm-proxy.yaml.",
+    "git diff --check passed for f8bef3f^..f8bef3f and the protected-path diff is empty.",
+    "Worktree status contains only pre-existing graphify-out/GRAPH_REPORT.md, graph.html, and graph.json dirt.",
+    "No cluster action, deployment, Argo sync, restore, source mutation, or secret-value handling was performed."
+  ],
+  "blockers": [],
+  "next_action": "Route to REVIEW for independent review of f8bef3f; do not approve, sync, deploy, restore, mutate cluster/source state, handle secret values, activate credentials, provision paid resources, or perform cutover.",
+  "route_to": "review",
+  "risk_level": "high",
+  "requires_council": true,
+  "independent_lanes": [
+    "Review corrective commit f8bef3f against the approved spec and protected paths.",
+    "Confirm Helm/application safety and downstream prohibition boundaries."
+  ]
+}

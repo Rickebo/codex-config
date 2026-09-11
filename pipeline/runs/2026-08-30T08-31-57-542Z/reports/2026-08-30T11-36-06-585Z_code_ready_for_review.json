@@ -1,0 +1,50 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Published lc-config PR #310 with a strict prod deployment-controller descriptor, local proxy chart, kata-clh proxy/lobby placement, generated-server admission correction, validators, and handoff documentation.",
+  "changed_files": [
+    ".codicarium/prod/deploy.yaml",
+    "charts/lobby/templates/statefulset.yaml",
+    "charts/lobby/values.yaml",
+    "charts/orchestrator-api/resources/generated-server-admission-policy.yaml",
+    "charts/proxy-offline-test/values.yaml",
+    "charts/proxy/.helmignore",
+    "charts/proxy/Chart.yaml",
+    "charts/proxy/templates/_helpers.tpl",
+    "charts/proxy/templates/configmap.yaml",
+    "charts/proxy/templates/deployment.yaml",
+    "charts/proxy/templates/externalsecret-forwarding.yaml",
+    "charts/proxy/templates/pdb.yaml",
+    "charts/proxy/templates/service.yaml",
+    "charts/proxy/templates/serviceaccount.yaml",
+    "charts/proxy/values.yaml",
+    "docs/deployment-controller-prod.md",
+    "scripts/tests/test-deployment-controller-prod.sh",
+    "scripts/validate-deployment-controller-prod.py"
+  ],
+  "validation": [
+    "Descriptor validator passed for seven exact components and regular local Chart.yaml paths.",
+    "Descriptor negative fixture suite passed.",
+    "Helm lint/template passed for all seven component mappings, including offline proxy/lobby values.",
+    "Proxy and lobby renders contain kata-clh runtimeClassName, LC node selector, and toleration.",
+    "LC release validator passed.",
+    "Working-tree and cached git diff checks passed.",
+    "Graphify state refreshed from the lc-config worktree.",
+    "Commit 730a7bec19a4cf0da75e3fd07eb45822bfc436b9 pushed and PR #310 opened."
+  ],
+  "blockers": [],
+  "next_action": "Perform independent correctness/security review of PR #310 and post REVIEW STAGE evidence.",
+  "requires_council": false,
+  "independent_lanes": [
+    "descriptor and validator correctness",
+    "Helm workload security and runtime placement",
+    "production ownership and rollback documentation"
+  ],
+  "risk_level": "critical",
+  "issues": [
+    {"id":"EXT-INFRA-1296","title":"Dedicated Kata-capable LC prod nodes are external","severity":"critical","details":"Tracked in codicarium/infra#1296; no infra changes are authorized in this task.","owner_stage":"validation"},
+    {"id":"EXT-PLATFORM-169","title":"Central controller grant/profile and RuntimeClass are external","severity":"critical","details":"Tracked in codicarium/platform#169; descriptor cannot activate until central policy is ready.","owner_stage":"validation"},
+    {"id":"EXT-APPCONFIG-728","title":"Legacy LC Argo owner cutover is external","severity":"high","details":"Tracked in codicarium/app-config#728; overlapping ownership must be prevented at activation.","owner_stage":"validation"}
+  ],
+  "route_to": "review"
+}

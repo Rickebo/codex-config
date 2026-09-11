@@ -1,0 +1,1 @@
+Refresh infra PR #1155 on canonical main, fix invalid MetaMCP revocation parser with real parser coverage, preserve lockout safety, and stop before merge/deploy or live authorization mutation

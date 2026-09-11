@@ -1,0 +1,29 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Luna corrected PR #151 SBOM identity integration at exact head f5298c3a1b327c409bfb2824667b264791542191. The trusted inventory and OCI verification now require rolebinding-admission, with missing and unexpected applications rejected fail closed.",
+  "changed_files": [
+    "hack/trivy_spdx_identity.py",
+    "hack/verify-oci-archive.py",
+    "hack/test-release-image-flow.py"
+  ],
+  "validation": [
+    "Focused SBOM regression passed",
+    "Python compilation passed",
+    "make test-release-image-flow passed 27 tests",
+    "hack/validate-repository.sh passed",
+    "git diff --check passed",
+    "Remote PR head matches f5298c3a1b327c409bfb2824667b264791542191"
+  ],
+  "blockers": [
+    "Fresh exact-head protected CI is running",
+    "Fresh independent Luna exact-head review is running"
+  ],
+  "next_action": "Complete fresh independent security review and protected checks on f5298c3a1b327c409bfb2824667b264791542191.",
+  "independent_lanes": [
+    "PR #151 independent exact-head review",
+    "PR #151 protected CI",
+    "infra PR #1272 queued protected ARC preparation"
+  ],
+  "risk_level": "critical"
+}

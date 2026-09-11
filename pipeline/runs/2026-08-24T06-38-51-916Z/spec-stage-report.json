@@ -1,0 +1,32 @@
+{
+  "stage": "spec",
+  "status": "pass",
+  "summary": "Full-profile council-reviewed specification for server-side Jellyfin Quick Connect default authentication, fixed browser link, internal-only password fallback, per-user opaque sessions, and VPN-only GitOps rollout.",
+  "changed_files": [
+    "/home/rickebo/.codex/pipeline/runs/2026-08-24T06-38-51-916Z/feature-spec.json",
+    "/home/rickebo/.codex/pipeline/runs/2026-08-24T06-38-51-916Z/council.json",
+    "/home/rickebo/.codex/pipeline/runs/2026-08-24T06-38-51-916Z/spec-check.json",
+    "/home/rickebo/.codex/pipeline/runs/2026-08-24T06-38-51-916Z/spec-stage-report.json"
+  ],
+  "validation": [
+    "Full-profile council synthesized planner, security reviewer, QA lead, and Jellyfin API researcher perspectives.",
+    "Official Jellyfin Quick Connect docs and stable OpenAPI contract inspected.",
+    "Youtarr v0.3.29 setup UI/public API/session/store and pve-infra Youtarr chart inspected.",
+    "pipeline-spec-check reports schema, traceability, Gherkin, MUST-test, and council coverage pass."
+  ],
+  "blockers": [
+    "No implementation or live deployment was performed by this SPEC stage; code stage must resolve the exact deployed Jellyfin response casing/device-ID derivation and select keyed-hash versus encrypted flow-secret storage using existing facilities."
+  ],
+  "next_action": "Advance through the pipeline controller to code after the parent agent records this passing spec report; implementation must not bypass the stage gate.",
+  "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T06-38-51-916Z/feature-spec.json",
+  "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T06-38-51-916Z/spec-check.json",
+  "council_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T06-38-51-916Z/council.json",
+  "requires_council": true,
+  "independent_lanes": [
+    "Youtarr Go API/Jellyfin client and server-side flow persistence",
+    "Embedded setup UI and Playwright browser contract",
+    "Helm/GitOps/VPN-only configuration and release rollout"
+  ],
+  "route_to": "code",
+  "risk_level": "high"
+}

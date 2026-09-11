@@ -1,0 +1,29 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Remediated all five independent legacy-quarantine review findings and committed exact SHA 96945d2ecbc4cc8e53a42fce587e9db989b60aab. Missing, duplicate, mismatched, deleting, nonterminal, unknown, and generation-drift states now fail closed before writes.",
+  "changed_files": [
+    "internal/controller/activation/legacy_preapproval.go",
+    "internal/controller/activation/legacy_preapproval_test.go",
+    "internal/controller/activation/reconciler.go",
+    "docs/operations.md"
+  ],
+  "validation": [
+    "Focused red tests reproduced duplicate/missing activation fallthrough, generation drift, invalid Work phases, and unreferenced Work",
+    "go test ./internal/controller/activation -run Test(ActivationEventLegacy|LegacyActivate|DeploymentActivationReconciler) -count=1: pass",
+    "go test ./internal/controller/activation ./internal/controller/runtime -count=1: pass",
+    "go test -race ./internal/controller/activation ./internal/controller/runtime: pass",
+    "go vet ./internal/controller/activation ./internal/controller/runtime: pass",
+    "go test ./...: pass",
+    "./hack/validate-repository.sh: pass",
+    "./hack/verify-chart-crds.sh: pass",
+    "./hack/verify-doc-links.py: pass",
+    "git diff --check: pass",
+    "Worktree clean at 96945d2ecbc4cc8e53a42fce587e9db989b60aab",
+    "No envtest harness exists; tests use real API types with fake client and status-subresource configuration"
+  ],
+  "blockers": [],
+  "next_action": "Independently re-review exact SHA 96945d2e against protected-main base 989799c, including all prior findings and zero-write semantics.",
+  "route_to": "review",
+  "risk_level": "critical"
+}

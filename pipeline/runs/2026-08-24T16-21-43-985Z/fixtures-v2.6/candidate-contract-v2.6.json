@@ -1,0 +1,6 @@
+{
+  "media_type": "application/gzip",
+  "byte_length": 64,
+  "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+  "sandbox": "destroyed-no-network-kata"
+}

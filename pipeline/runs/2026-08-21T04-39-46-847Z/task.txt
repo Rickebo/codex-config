@@ -1,0 +1,1 @@
+Issue #124: pin supply-chain metadata and publish verifiable artifacts in codicarium/agent-orchestrator

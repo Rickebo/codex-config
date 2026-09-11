@@ -1,0 +1,354 @@
+{
+  "schema": "codicarium.issue93-workflow-permissions/v2",
+  "top_level_default": {},
+  "check_runs": {
+    "authority": false,
+    "use": "observation-only",
+    "permitted_scopes": [
+      "checks:read"
+    ],
+    "forbidden_scopes": [
+      "checks:write"
+    ]
+  },
+  "workflows": {
+    ".github/workflows/automatic-release-v2.yaml": {
+      "name": "Automatic Release v2",
+      "jobs": {
+        "plan": {
+          "contents": "read",
+          "actions": "read",
+          "checks": "read"
+        },
+        "claim-cas": {
+          "contents": "read",
+          "actions": "read",
+          "checks": "read"
+        },
+        "verifier-dispatch-reserve": {
+          "contents": "read",
+          "actions": "read"
+        },
+        "verifier-dispatch-write": {
+          "contents": "read",
+          "actions": "write"
+        },
+        "verifier-dispatch-commit": {
+          "contents": "read",
+          "actions": "read"
+        },
+        "verification-observe": {
+          "contents": "read",
+          "actions": "read",
+          "checks": "read"
+        },
+        "verification-authorize": {
+          "contents": "read",
+          "actions": "read",
+          "checks": "read",
+          "id-token": "write"
+        },
+        "publisher-dispatch-reserve": {
+          "contents": "read",
+          "actions": "read"
+        },
+        "publisher-dispatch-write": {
+          "contents": "read",
+          "actions": "write"
+        },
+        "publisher-dispatch-commit": {
+          "contents": "read",
+          "actions": "read"
+        }
+      }
+    },
+    ".github/workflows/release-verify-v2.yaml": {
+      "name": "Release Verify v2",
+      "jobs": {
+        "preflight": {
+          "contents": "read",
+          "actions": "read",
+          "checks": "read"
+        },
+        "prefetch": {
+          "contents": "read"
+        },
+        "candidate-capability-mint": {
+          "contents": "read",
+          "id-token": "write"
+        },
+        "candidate-kata-job": {},
+        "attester-capability-mint": {
+          "contents": "read",
+          "id-token": "write"
+        },
+        "attester": {
+          "contents": "read",
+          "actions": "read",
+          "checks": "read",
+          "id-token": "write"
+        }
+      }
+    },
+    ".github/workflows/publish-release-v2.yaml": {
+      "name": "Publish Release v2",
+      "jobs": {
+        "admission": {
+          "contents": "read",
+          "actions": "read",
+          "checks": "read"
+        },
+        "01-tag-create-reserve": {
+          "contents": "read",
+          "actions": "read"
+        },
+        "01-tag-create-target-write": {
+          "contents": "write",
+          "actions": "read"
+        },
+        "01-tag-create-journal-commit": {
+          "contents": "read",
+          "actions": "read"
+        },
+        "02-draft-release-create-reserve": {
+          "contents": "read",
+          "actions": "read"
+        },
+        "02-draft-release-create-target-write": {
+          "contents": "write",
+          "actions": "read"
+        },
+        "02-draft-release-create-journal-commit": {
+          "contents": "read",
+          "actions": "read"
+        },
+        "03-image-publish-reserve": {
+          "contents": "read",
+          "actions": "read"
+        },
+        "03-image-publish-target-write": {
+          "contents": "read",
+          "actions": "read"
+        },
+        "03-image-publish-journal-commit": {
+          "contents": "read",
+          "actions": "read"
+        },
+        "04-chart-publish-reserve": {
+          "contents": "read",
+          "actions": "read"
+        },
+        "04-chart-publish-target-write": {
+          "contents": "read",
+          "actions": "read"
+        },
+        "04-chart-publish-journal-commit": {
+          "contents": "read",
+          "actions": "read"
+        },
+        "05-asset-01-create-reserve": {
+          "contents": "read",
+          "actions": "read"
+        },
+        "05-asset-01-create-target-write": {
+          "contents": "write",
+          "actions": "read"
+        },
+        "05-asset-01-create-journal-commit": {
+          "contents": "read",
+          "actions": "read"
+        },
+        "06-asset-02-create-reserve": {
+          "contents": "read",
+          "actions": "read"
+        },
+        "06-asset-02-create-target-write": {
+          "contents": "write",
+          "actions": "read"
+        },
+        "06-asset-02-create-journal-commit": {
+          "contents": "read",
+          "actions": "read"
+        },
+        "07-asset-03-create-reserve": {
+          "contents": "read",
+          "actions": "read"
+        },
+        "07-asset-03-create-target-write": {
+          "contents": "write",
+          "actions": "read"
+        },
+        "07-asset-03-create-journal-commit": {
+          "contents": "read",
+          "actions": "read"
+        },
+        "08-asset-04-create-reserve": {
+          "contents": "read",
+          "actions": "read"
+        },
+        "08-asset-04-create-target-write": {
+          "contents": "write",
+          "actions": "read"
+        },
+        "08-asset-04-create-journal-commit": {
+          "contents": "read",
+          "actions": "read"
+        },
+        "09-asset-05-create-reserve": {
+          "contents": "read",
+          "actions": "read"
+        },
+        "09-asset-05-create-target-write": {
+          "contents": "write",
+          "actions": "read"
+        },
+        "09-asset-05-create-journal-commit": {
+          "contents": "read",
+          "actions": "read"
+        },
+        "10-asset-06-create-reserve": {
+          "contents": "read",
+          "actions": "read"
+        },
+        "10-asset-06-create-target-write": {
+          "contents": "write",
+          "actions": "read"
+        },
+        "10-asset-06-create-journal-commit": {
+          "contents": "read",
+          "actions": "read"
+        },
+        "11-asset-07-create-reserve": {
+          "contents": "read",
+          "actions": "read"
+        },
+        "11-asset-07-create-target-write": {
+          "contents": "write",
+          "actions": "read"
+        },
+        "11-asset-07-create-journal-commit": {
+          "contents": "read",
+          "actions": "read"
+        },
+        "12-asset-08-create-reserve": {
+          "contents": "read",
+          "actions": "read"
+        },
+        "12-asset-08-create-target-write": {
+          "contents": "write",
+          "actions": "read"
+        },
+        "12-asset-08-create-journal-commit": {
+          "contents": "read",
+          "actions": "read"
+        },
+        "13-asset-09-create-reserve": {
+          "contents": "read",
+          "actions": "read"
+        },
+        "13-asset-09-create-target-write": {
+          "contents": "write",
+          "actions": "read"
+        },
+        "13-asset-09-create-journal-commit": {
+          "contents": "read",
+          "actions": "read"
+        },
+        "14-asset-10-create-reserve": {
+          "contents": "read",
+          "actions": "read"
+        },
+        "14-asset-10-create-target-write": {
+          "contents": "write",
+          "actions": "read"
+        },
+        "14-asset-10-create-journal-commit": {
+          "contents": "read",
+          "actions": "read"
+        },
+        "15-asset-11-create-reserve": {
+          "contents": "read",
+          "actions": "read"
+        },
+        "15-asset-11-create-target-write": {
+          "contents": "write",
+          "actions": "read"
+        },
+        "15-asset-11-create-journal-commit": {
+          "contents": "read",
+          "actions": "read"
+        },
+        "16-asset-12-create-reserve": {
+          "contents": "read",
+          "actions": "read"
+        },
+        "16-asset-12-create-target-write": {
+          "contents": "write",
+          "actions": "read"
+        },
+        "16-asset-12-create-journal-commit": {
+          "contents": "read",
+          "actions": "read"
+        },
+        "17-asset-13-create-reserve": {
+          "contents": "read",
+          "actions": "read"
+        },
+        "17-asset-13-create-target-write": {
+          "contents": "write",
+          "actions": "read"
+        },
+        "17-asset-13-create-journal-commit": {
+          "contents": "read",
+          "actions": "read"
+        },
+        "18-asset-14-create-reserve": {
+          "contents": "read",
+          "actions": "read"
+        },
+        "18-asset-14-create-target-write": {
+          "contents": "write",
+          "actions": "read"
+        },
+        "18-asset-14-create-journal-commit": {
+          "contents": "read",
+          "actions": "read"
+        },
+        "19-release-finalize-reserve": {
+          "contents": "read",
+          "actions": "read"
+        },
+        "19-release-finalize-target-write": {
+          "contents": "write",
+          "actions": "read"
+        },
+        "19-release-finalize-journal-commit": {
+          "contents": "read",
+          "actions": "read"
+        }
+      },
+      "static_expansion": "Exactly nineteen serial reserve -> target-write -> independently signed journal-commit triplets. Sequence 1 creates the tag; 2 creates the draft release; 3 publishes the image; 4 publishes the chart; 5..18 create the fourteen ordered assets; 19 finalizes the release."
+    },
+    ".github/workflows/ci.yaml": {
+      "name": "CI",
+      "top_level_permissions": {
+        "contents": "read"
+      },
+      "jobs": {
+        "test": {},
+        "lint": {},
+        "chart": {},
+        "integration": {},
+        "supply-chain": {}
+      }
+    }
+  },
+  "invariants": [
+    "All non-CI top-level permissions are {} and unspecified scopes are none.",
+    "Check Runs are observation only; no v2 job has checks:write.",
+    "A target writer cannot reserve, sign, or commit a journal entry.",
+    "A signer or journal committer cannot mutate GitHub, Nexus, OCI, S3, or any release target.",
+    "The candidate Kata Job receives no GITHUB_TOKEN, service-account token, proxy, public egress, reusable secret, registry authority, object-store authority, or signing key.",
+    "All five retired privileged workflow paths are absent and have no entry in this active map."
+  ]
+}

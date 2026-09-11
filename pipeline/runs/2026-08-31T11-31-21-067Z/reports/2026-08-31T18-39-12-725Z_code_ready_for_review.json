@@ -1,0 +1,25 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Luna integrated current infra main via conflict-free merge commit e09557f7, repaired merged digest locks in 930a5113, and passed the complete post-merge authority-runner matrix.",
+  "changed_files": [
+    "scripts/verify-authority-runner-contract.py",
+    "platform/authority-runner/artifact-seal-v1/manifest.sha256"
+  ],
+  "validation": [
+    "Exact head 930a511373c7929b26331a8ec2a1780f39267b60, tree 2bba9ae47cda80f34d91ed4ba2211f043fde3287",
+    "Current main e56e0e95 is first-parent ancestor through merge e09557f7",
+    "Contract: 12/12 PASS",
+    "Package contract: PASS",
+    "Disposable-root Docker: 11/11 PASS",
+    "Ownership, safety, sudoers, GitHub authority evidence, manifest verification, and syntax: PASS",
+    "No push, host install, workflow dispatch, runner mutation, or live change occurred"
+  ],
+  "blockers": [],
+  "next_action": "Run fresh independent full-diff security review of integrated exact head 930a5113 against current main e56e0e95.",
+  "route_to": "review",
+  "risk_level": "critical",
+  "independent_lanes": [
+    "Fresh Luna integrated-tree security review"
+  ]
+}

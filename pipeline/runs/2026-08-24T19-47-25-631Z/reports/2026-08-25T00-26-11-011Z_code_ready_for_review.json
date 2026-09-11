@@ -1,0 +1,26 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Rebased candidate 05fae66 onto protected main ca55729 as 7180787, then advanced HEAD 7180787 -> da479fc. The loop-1 fix separates immutable release source from historical coordinator workflow revision and requires exact source-to-workflow-to-current-main ancestry before resume. publish-release.yaml remains unchanged.",
+  "changed_files": [
+    ".github/workflows/automatic-release.yaml",
+    "hack/release-handoff-policy.js",
+    "hack/test-release-graph.py",
+    "hack/test-release-handoff-policy.js"
+  ],
+  "validation": [
+    "TDD red: node hack/test-release-handoff-policy.js exited 1 with 'unpublished tag coordinator run is not exact completed success' for real run 32768808057/1 at workflow SHA 6053f97.",
+    "Focused green: node hack/test-release-handoff-policy.js passed real-tuple, exact identity, identical/ahead ancestry, divergence, malformed identity/ref/comparison, and API-error fixtures.",
+    "python3 hack/test-release-graph.py passed all 46 release workflow policy tests.",
+    "make test-release-flow passed every release-flow Python group and both JavaScript policy suites.",
+    "actionlint passed; PyYAML parsed all 6 workflows; Node syntax checks and Python compilation passed; git diff --check passed.",
+    "Live read-only GitHub checks confirmed run 32768808057/1 at 6053f97 and both exact compare edges as ahead_by=1, behind_by=0 through current main ca55729.",
+    "cmp proved .github/workflows/publish-release.yaml byte-identical to rebased origin/main.",
+    "Workspace Context impact analysis accepted all 6 candidate paths against revision ca2b1a96 and base ca55729; published-baseline traversal was untruncated.",
+    "Independent read-only design review found no loop blocker; its publisher concern was withdrawn after verifying the exact unforgeable handoff-check binding."
+  ],
+  "blockers": [],
+  "next_action": "Review commit da479fc, focusing on fail-closed compare semantics and the distinct source, historical coordinator revision, and freshly resolved current-main identities; do not change publish-release.yaml.",
+  "route_to": "review",
+  "risk_level": "high"
+}

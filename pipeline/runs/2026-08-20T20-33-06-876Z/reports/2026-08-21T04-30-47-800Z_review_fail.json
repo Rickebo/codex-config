@@ -1,0 +1,35 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "PR #450 correctly narrows the Kubernetes startup lock, but removes the focused regression test and lacks coverage for prefetch failure.",
+  "changed_files": [
+    "scripts/metamcp/bootstrap.sql",
+    "scripts/metamcp/tests/test-kubernetes-child-startup.sh"
+  ],
+  "validation": [
+    "Independent review verified shell quoting, argv forwarding, flock lifecycle, failure gate, flags, and environment handling.",
+    "No hosted PR checks are reported for PR #450.",
+    "The focused concurrency test passed during review but is deleted from the final PR.",
+    "Live deployment was not mutated by this review."
+  ],
+  "blockers": [
+    "Restore or add deterministic CI coverage for persistent child concurrency and one-shot prefetch failure before approval."
+  ],
+  "next_action": "Route to code: restore equivalent focused Kubernetes startup regression coverage, run it and diff checks, then repeat review.",
+  "route_to": "code",
+  "risk_level": "critical",
+  "independent_lanes": [
+    "Bootstrap SQL command contract",
+    "Kubernetes child startup regression coverage"
+  ],
+  "requires_council": true,
+  "issues": [
+    {
+      "id": "REV-K8S-COVERAGE",
+      "title": "Focused Kubernetes startup regression test removed",
+      "severity": "high",
+      "details": "The final PR deletes the focused test while relying on its earlier result. Coverage must remain in the repository and include the prefetch-failure gate.",
+      "owner_stage": "code"
+    }
+  ]
+}

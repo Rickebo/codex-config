@@ -1,0 +1,56 @@
+{
+  "stage": "spec",
+  "status": "fail",
+  "summary": "Spec/preflight failed safely: explicit identities and source inventory are recorded, but target capacity/backup health, coupled DB-artifact cutoff, secret/identity procedure, retained-PVC provenance, and malformed plan text leave hard gates unresolved.",
+  "changed_files": [
+    ".codex/pipeline/runs/2026-08-21T20-20-56-579Z/council.json",
+    ".codex/pipeline/runs/2026-08-21T20-20-56-579Z/feature-spec.json",
+    ".codex/pipeline/runs/2026-08-21T20-20-56-579Z/inventory.json",
+    ".codex/pipeline/runs/2026-08-21T20-20-56-579Z/spec-report.json"
+  ],
+  "validation": [
+    "Full pipeline initialized at current_stage=spec with council required.",
+    "Source guard: codicarium-dev -> https://10.99.0.21:6443, v1.31.14+k3s1; source Argo apps Synced/Healthy.",
+    "Target guard: homelab/default -> https://192.168.1.89:6443, v1.36.3+k3s1; both nodes Ready.",
+    "GitHub authenticated; pve-infra main remote head f039009a3cb700b814b4f3d5e942256bc7ec1e60.",
+    "Clean isolated worktree created; dirty base checkout preserved.",
+    "Source CNPG 18.4 backups complete through 2026-08-21; Workspace Context artifact PVC is 100Gi RWX and not independently backed up.",
+    "Existing llm-proxy-worker is 2/2 central-connected; retained target PVCs untouched.",
+    "Spec contains council, hard gates, acceptance, tests, and traceability."
+  ],
+  "blockers": [
+    "Longhorn has about 78Gi available versus about 180Gi scheduled, an additional disk NotReady, and reported 94% image-filesystem pressure.",
+    "Off-node Longhorn backup target is Unavailable, so target backup/restore is unproven.",
+    "No read-only atomic source method is evidenced for coupled databases plus graph artifacts and SHA closure.",
+    "Target secret paths, OIDC mapping, Data Protection overlap, and backend preservation are unresolved.",
+    "Retained llm-proxy PVC provenance and safe disposition are undocumented.",
+    "Supplied plan has malformed/concatenated Stage 1–3 text requiring canonical correction."
+  ],
+  "next_action": "Ask the user to resolve or authorize remediation for storage/backup and data/identity gates; keep Codicarium read-only and do not advance the pipeline.",
+  "route_to": "spec",
+  "risk_level": "high",
+  "requires_council": true,
+  "council_file": "/home/rickebo/.codex/pipeline/runs/2026-08-21T20-20-56-579Z/council.json",
+  "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-21T20-20-56-579Z/feature-spec.json",
+  "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-08-21T20-20-56-579Z/spec-check.json",
+  "independent_lanes": [
+    "source inventory/export",
+    "homelab storage and GitOps",
+    "data/artifact consistency",
+    "secrets and identity",
+    "independent review",
+    "GitHub task memory"
+  ],
+  "issues": [
+    {
+      "id": "GH-482",
+      "title": "Homelab Workspace Context + LLM Proxy point-in-time clone",
+      "severity": "high"
+    },
+    {
+      "id": "GH-483",
+      "title": "Source/target inventory, cutoff, data manifest, capacity, retained-PVC disposition",
+      "severity": "high"
+    }
+  ]
+}

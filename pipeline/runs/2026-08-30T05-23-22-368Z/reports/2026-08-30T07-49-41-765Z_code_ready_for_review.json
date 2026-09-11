@@ -1,0 +1,32 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Luna completed loop-4 remediation on PR #1293 at exact head 17f309e1: security-relevant systemd units are detected without claiming unrelated services, cleanup is argument-free and validated, the handoff parent is pinned, and descriptor reads are bounded.",
+  "changed_files": [
+    "contracts/authority-runner-ownership.json",
+    "docs/authority-runner-ownership-runbook.md",
+    "scripts/verify-authority-runner-contract.py",
+    "tests/fixtures/authority-runner/actions.runner.codicarium.external-linux-400-4.service",
+    "tests/fixtures/authority-runner/check-codicarium-artifacts.py",
+    "tests/fixtures/authority-runner/codicarium-artifact-seal-v1",
+    "tests/fixtures/authority-runner/codicarium-artifact-seal-v1-cleanup",
+    "tests/fixtures/authority-runner/codicarium-artifact-seal-v1-preflight",
+    "tests/test-authority-runner-contract.py"
+  ],
+  "validation": [
+    "Eighteen focused positive and adversarial tests passed in the Luna implementation lane.",
+    "Python compilation, contract JSON validation, and git diff --check origin/main...HEAD passed.",
+    "Systemd inventory distinguishes managed runner units, unrelated safe units, and outside-prefix units that reference authority-bound paths.",
+    "Argument-free cleanup validates randomized handoff names, root ownership, and mode before delegating to the fixed helper.",
+    "The /var/tmp parent is contract-bound to root-owned sticky 01777 and descriptor reads are capped at 64 KiB with deterministic oversize evidence.",
+    "Worktree is clean at pushed head 17f309e13e95a1993e1e9a5c8eb2f1fef72f5cfd; exact-head Validate is in progress and ARC producer remains queued.",
+    "No live host access, sudo/systemctl execution, workflow dispatch, merge, or secret access occurred."
+  ],
+  "blockers": [],
+  "next_action": "Perform a fresh independent Luna security review of exact head 17f309e1, emphasizing unit-reference detection, cleanup confinement, and bounded descriptor reads.",
+  "route_to": "review",
+  "risk_level": "high",
+  "independent_lanes": [
+    "authority-runner systemd scope, handoff cleanup confinement, descriptor bounds, and regression safety"
+  ]
+}

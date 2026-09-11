@@ -1,0 +1,22 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Commit 8476d1d sanitizes the bootstrap-render subprocess environment, confines HOME/TMPDIR/ARTIFACT_DIR to TemporaryDirectory, and adds sentinel leak plus cleanup regression tests.",
+  "changed_files": ["scripts/check-argocd-rbac-contract.py","tests/test-argocd-rbac-contract.py"],
+  "validation": [
+    "TDD red leaked the sentinel and rendered role:readonly; green passed 11/11 tests.",
+    "Cleanup assertion proves outer TMPDIR remains empty after checker exit.",
+    "Ruff, topology guard, bootstrap test, bash syntax, actionlint, and diff check passed.",
+    "Worktree clean at 8476d1d; no push, PR, chart change, plan, apply, or live mutation."
+  ],
+  "blockers": ["Chart/Argo v3.4.4 semantic evaluation remains test-stage work.","Live identity and MetaMCP drift remain deployment gates.","Untrusted PR runner isolation remains residual issue infra#1151."],
+  "next_action": "Perform final compact review of the environment-isolation fix, then advance to exact-version test stage if clean.",
+  "requires_council": false,
+  "independent_lanes": ["subprocess environment isolation","artifact cleanup regression"],
+  "route_to": "review",
+  "risk_level": "critical",
+  "issues": [
+    {"id":"review-subprocess-env","title":"Bootstrap contract subprocess inherits runner environment","severity":"high","details":"Remediated in 8476d1d with sentinel and cleanup coverage.","owner_stage":"review"},
+    {"id":"infra-1151","title":"Isolate untrusted PR runners","severity":"high","details":"Pre-existing residual CI isolation risk tracked separately.","owner_stage":"validation"}
+  ]
+}

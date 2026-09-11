@@ -1,0 +1,365 @@
+{
+  "version": 1,
+  "created_at": "2026-08-24T06:38:51.918Z",
+  "updated_at": "2026-08-24T10:46:22.285Z",
+  "task": "Implement and deploy Jellyfin Quick Connect as Youtarr's default login, with configured Jellyfin browser URL, password fallback without editable URL, secure per-user session binding, and end-to-end VPN-only validation",
+  "policy_path": "/home/rickebo/.codex/pipeline/transitions.json",
+  "approval_rules_path": "/home/rickebo/.codex/pipeline/approval-rules.json",
+  "initial_stage": "spec",
+  "current_stage": "validation",
+  "pipeline_profile": "full",
+  "done": false,
+  "max_loops": 6,
+  "loop_count": 3,
+  "approval_required_count": 10,
+  "approvals": [
+    {
+      "at": "2026-08-24T07:08:03.292Z",
+      "approver": "rickebo (user)",
+      "note": "User explicitly requested an easier Jellyfin connection flow; the spec selects supported Quick Connect with password fallback and fixed configured server URL.",
+      "gate": "spec_to_code",
+      "reason": "Spec pass requires explicit approval before implementation starts.",
+      "risk_level": "high",
+      "from_stage": "spec",
+      "next_stage": "code",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T06-38-51-916Z/reports/2026-08-24T07-07-31-315Z_spec_pass.json"
+    },
+    {
+      "at": "2026-08-24T08:22:34.153Z",
+      "approver": "rickebo (user)",
+      "note": "User requested the easier Jellyfin login flow; Quick Connect implementation PR #95 passed the delegated code-stage test suite and is ready for independent review.",
+      "gate": "risk_threshold",
+      "reason": "Risk level high meets or exceeds threshold high.",
+      "risk_level": "high",
+      "from_stage": "code",
+      "next_stage": "review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T06-38-51-916Z/reports/2026-08-24T08-22-10-556Z_code_ready_for_review.json"
+    },
+    {
+      "at": "2026-08-24T08:47:56.754Z",
+      "approver": "rickebo (user)",
+      "note": "Continue within the requested Quick Connect feature to fix three high-severity CSRF and rate-limiter findings before merge.",
+      "gate": "risk_threshold",
+      "reason": "Risk level high meets or exceeds threshold high.",
+      "risk_level": "high",
+      "from_stage": "review",
+      "next_stage": "code",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T06-38-51-916Z/reports/2026-08-24T08-47-08-469Z_review_fail.json"
+    },
+    {
+      "at": "2026-08-24T09:22:18.769Z",
+      "approver": "rickebo (user)",
+      "note": "All three high-severity review findings were fixed with regression tests; continue the requested Quick Connect feature to independent re-review.",
+      "gate": "risk_threshold",
+      "reason": "Risk level high meets or exceeds threshold high.",
+      "risk_level": "high",
+      "from_stage": "code",
+      "next_stage": "review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T06-38-51-916Z/reports/2026-08-24T09-21-32-264Z_code_ready_for_review.json"
+    },
+    {
+      "at": "2026-08-24T09:30:51.948Z",
+      "approver": "rickebo (user)",
+      "note": "Continue within scope to fix the remaining abandoned-flow limiter leak and investigate the single CI race failure without rerunning blindly.",
+      "gate": "risk_threshold",
+      "reason": "Risk level high meets or exceeds threshold high.",
+      "risk_level": "high",
+      "from_stage": "review",
+      "next_stage": "code",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T06-38-51-916Z/reports/2026-08-24T09-30-07-773Z_review_fail.json"
+    },
+    {
+      "at": "2026-08-24T09:50:05.877Z",
+      "approver": "rickebo (user)",
+      "note": "Final abandoned-flow limiter leak is fixed with bounded-state regression coverage; identical-SHA PR CI passed and the discovery timeout was independently confirmed unrelated.",
+      "gate": "risk_threshold",
+      "reason": "Risk level high meets or exceeds threshold high.",
+      "risk_level": "high",
+      "from_stage": "code",
+      "next_stage": "review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T06-38-51-916Z/reports/2026-08-24T09-49-19-309Z_code_ready_for_review.json"
+    },
+    {
+      "at": "2026-08-24T09:57:19.968Z",
+      "approver": "rickebo (user)",
+      "note": "Continue within scope to close the final concurrent poll/cancel limiter recreation race before merge.",
+      "gate": "risk_threshold",
+      "reason": "Risk level high meets or exceeds threshold high.",
+      "risk_level": "high",
+      "from_stage": "review",
+      "next_stage": "code",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T06-38-51-916Z/reports/2026-08-24T09-56-23-932Z_review_fail.json"
+    },
+    {
+      "at": "2026-08-24T10:08:40.439Z",
+      "approver": "rickebo (user)",
+      "note": "The final concurrent poll/cancel limiter race is fixed with deterministic race coverage; continue to independent re-review.",
+      "gate": "risk_threshold",
+      "reason": "Risk level high meets or exceeds threshold high.",
+      "risk_level": "high",
+      "from_stage": "code",
+      "next_stage": "review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T06-38-51-916Z/reports/2026-08-24T10-07-59-076Z_code_ready_for_review.json"
+    },
+    {
+      "at": "2026-08-24T10:21:59.393Z",
+      "approver": "rickebo (user)",
+      "note": "Independent review now passes with all Quick Connect security and concurrency findings resolved; continue to dedicated tests.",
+      "gate": "risk_threshold",
+      "reason": "Risk level high meets or exceeds threshold high.",
+      "risk_level": "high",
+      "from_stage": "review",
+      "next_stage": "test",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T06-38-51-916Z/reports/2026-08-24T10-20-57-069Z_review_pass.json"
+    },
+    {
+      "at": "2026-08-24T10:46:22.284Z",
+      "approver": "rickebo (user)",
+      "note": "Dedicated QA passed all available suites; proceed to validation, but activate scoped rollout alarm suppression before any live Quick Connect deployment.",
+      "gate": "risk_threshold",
+      "reason": "Risk level high meets or exceeds threshold high.",
+      "risk_level": "high",
+      "from_stage": "test",
+      "next_stage": "validation",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T06-38-51-916Z/reports/2026-08-24T10-45-40-309Z_test_pass.json"
+    }
+  ],
+  "awaiting_approval": null,
+  "spec_gate": {
+    "passed": true,
+    "passed_at": "2026-08-24T07:08:03.292Z",
+    "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T06-38-51-916Z/feature-spec.json",
+    "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T06-38-51-916Z/spec-check.json",
+    "council_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T06-38-51-916Z/council.json"
+  },
+  "council_policy": {
+    "required": "always"
+  },
+  "history": [
+    {
+      "at": "2026-08-24T07:07:31.316Z",
+      "event": "approval_required",
+      "stage": "spec",
+      "status": "pass",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T06-38-51-916Z/reports/2026-08-24T07-07-31-315Z_spec_pass.json",
+      "requested_next_stage": "code",
+      "gate": "spec_to_code",
+      "reason": "Spec pass requires explicit approval before implementation starts.",
+      "risk_level": "high",
+      "spec_gate": {
+        "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T06-38-51-916Z/feature-spec.json",
+        "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T06-38-51-916Z/spec-check.json",
+        "council_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T06-38-51-916Z/council.json",
+        "checked_at": "2026-08-24T07:01:37.981Z"
+      }
+    },
+    {
+      "at": "2026-08-24T07:08:03.292Z",
+      "event": "approved_transition",
+      "stage": "spec",
+      "status": "pass",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T06-38-51-916Z/reports/2026-08-24T07-07-31-315Z_spec_pass.json",
+      "approver": "rickebo (user)",
+      "note": "User explicitly requested an easier Jellyfin connection flow; the spec selects supported Quick Connect with password fallback and fixed configured server URL.",
+      "next_stage": "code"
+    },
+    {
+      "at": "2026-08-24T08:22:10.557Z",
+      "event": "approval_required",
+      "stage": "code",
+      "status": "ready_for_review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T06-38-51-916Z/reports/2026-08-24T08-22-10-556Z_code_ready_for_review.json",
+      "requested_next_stage": "review",
+      "gate": "risk_threshold",
+      "reason": "Risk level high meets or exceeds threshold high.",
+      "risk_level": "high",
+      "spec_gate": null
+    },
+    {
+      "at": "2026-08-24T08:22:34.153Z",
+      "event": "approved_transition",
+      "stage": "code",
+      "status": "ready_for_review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T06-38-51-916Z/reports/2026-08-24T08-22-10-556Z_code_ready_for_review.json",
+      "approver": "rickebo (user)",
+      "note": "User requested the easier Jellyfin login flow; Quick Connect implementation PR #95 passed the delegated code-stage test suite and is ready for independent review.",
+      "next_stage": "review"
+    },
+    {
+      "at": "2026-08-24T08:47:08.469Z",
+      "event": "approval_required",
+      "stage": "review",
+      "status": "fail",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T06-38-51-916Z/reports/2026-08-24T08-47-08-469Z_review_fail.json",
+      "requested_next_stage": "code",
+      "gate": "risk_threshold",
+      "reason": "Risk level high meets or exceeds threshold high.",
+      "risk_level": "high",
+      "spec_gate": null
+    },
+    {
+      "at": "2026-08-24T08:47:56.754Z",
+      "event": "approved_transition",
+      "stage": "review",
+      "status": "fail",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T06-38-51-916Z/reports/2026-08-24T08-47-08-469Z_review_fail.json",
+      "approver": "rickebo (user)",
+      "note": "Continue within the requested Quick Connect feature to fix three high-severity CSRF and rate-limiter findings before merge.",
+      "next_stage": "code"
+    },
+    {
+      "at": "2026-08-24T09:21:32.267Z",
+      "event": "approval_required",
+      "stage": "code",
+      "status": "ready_for_review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T06-38-51-916Z/reports/2026-08-24T09-21-32-264Z_code_ready_for_review.json",
+      "requested_next_stage": "review",
+      "gate": "risk_threshold",
+      "reason": "Risk level high meets or exceeds threshold high.",
+      "risk_level": "high",
+      "spec_gate": null
+    },
+    {
+      "at": "2026-08-24T09:22:18.770Z",
+      "event": "approved_transition",
+      "stage": "code",
+      "status": "ready_for_review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T06-38-51-916Z/reports/2026-08-24T09-21-32-264Z_code_ready_for_review.json",
+      "approver": "rickebo (user)",
+      "note": "All three high-severity review findings were fixed with regression tests; continue the requested Quick Connect feature to independent re-review.",
+      "next_stage": "review"
+    },
+    {
+      "at": "2026-08-24T09:30:07.773Z",
+      "event": "approval_required",
+      "stage": "review",
+      "status": "fail",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T06-38-51-916Z/reports/2026-08-24T09-30-07-773Z_review_fail.json",
+      "requested_next_stage": "code",
+      "gate": "risk_threshold",
+      "reason": "Risk level high meets or exceeds threshold high.",
+      "risk_level": "high",
+      "spec_gate": null
+    },
+    {
+      "at": "2026-08-24T09:30:51.952Z",
+      "event": "approved_transition",
+      "stage": "review",
+      "status": "fail",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T06-38-51-916Z/reports/2026-08-24T09-30-07-773Z_review_fail.json",
+      "approver": "rickebo (user)",
+      "note": "Continue within scope to fix the remaining abandoned-flow limiter leak and investigate the single CI race failure without rerunning blindly.",
+      "next_stage": "code"
+    },
+    {
+      "at": "2026-08-24T09:49:19.310Z",
+      "event": "approval_required",
+      "stage": "code",
+      "status": "ready_for_review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T06-38-51-916Z/reports/2026-08-24T09-49-19-309Z_code_ready_for_review.json",
+      "requested_next_stage": "review",
+      "gate": "risk_threshold",
+      "reason": "Risk level high meets or exceeds threshold high.",
+      "risk_level": "high",
+      "spec_gate": null
+    },
+    {
+      "at": "2026-08-24T09:50:05.877Z",
+      "event": "approved_transition",
+      "stage": "code",
+      "status": "ready_for_review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T06-38-51-916Z/reports/2026-08-24T09-49-19-309Z_code_ready_for_review.json",
+      "approver": "rickebo (user)",
+      "note": "Final abandoned-flow limiter leak is fixed with bounded-state regression coverage; identical-SHA PR CI passed and the discovery timeout was independently confirmed unrelated.",
+      "next_stage": "review"
+    },
+    {
+      "at": "2026-08-24T09:56:23.933Z",
+      "event": "approval_required",
+      "stage": "review",
+      "status": "fail",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T06-38-51-916Z/reports/2026-08-24T09-56-23-932Z_review_fail.json",
+      "requested_next_stage": "code",
+      "gate": "risk_threshold",
+      "reason": "Risk level high meets or exceeds threshold high.",
+      "risk_level": "high",
+      "spec_gate": null
+    },
+    {
+      "at": "2026-08-24T09:57:19.968Z",
+      "event": "approved_transition",
+      "stage": "review",
+      "status": "fail",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T06-38-51-916Z/reports/2026-08-24T09-56-23-932Z_review_fail.json",
+      "approver": "rickebo (user)",
+      "note": "Continue within scope to close the final concurrent poll/cancel limiter recreation race before merge.",
+      "next_stage": "code"
+    },
+    {
+      "at": "2026-08-24T10:07:59.076Z",
+      "event": "approval_required",
+      "stage": "code",
+      "status": "ready_for_review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T06-38-51-916Z/reports/2026-08-24T10-07-59-076Z_code_ready_for_review.json",
+      "requested_next_stage": "review",
+      "gate": "risk_threshold",
+      "reason": "Risk level high meets or exceeds threshold high.",
+      "risk_level": "high",
+      "spec_gate": null
+    },
+    {
+      "at": "2026-08-24T10:08:40.439Z",
+      "event": "approved_transition",
+      "stage": "code",
+      "status": "ready_for_review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T06-38-51-916Z/reports/2026-08-24T10-07-59-076Z_code_ready_for_review.json",
+      "approver": "rickebo (user)",
+      "note": "The final concurrent poll/cancel limiter race is fixed with deterministic race coverage; continue to independent re-review.",
+      "next_stage": "review"
+    },
+    {
+      "at": "2026-08-24T10:20:57.069Z",
+      "event": "approval_required",
+      "stage": "review",
+      "status": "pass",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T06-38-51-916Z/reports/2026-08-24T10-20-57-069Z_review_pass.json",
+      "requested_next_stage": "test",
+      "gate": "risk_threshold",
+      "reason": "Risk level high meets or exceeds threshold high.",
+      "risk_level": "high",
+      "spec_gate": null
+    },
+    {
+      "at": "2026-08-24T10:21:59.393Z",
+      "event": "approved_transition",
+      "stage": "review",
+      "status": "pass",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T06-38-51-916Z/reports/2026-08-24T10-20-57-069Z_review_pass.json",
+      "approver": "rickebo (user)",
+      "note": "Independent review now passes with all Quick Connect security and concurrency findings resolved; continue to dedicated tests.",
+      "next_stage": "test"
+    },
+    {
+      "at": "2026-08-24T10:45:40.310Z",
+      "event": "approval_required",
+      "stage": "test",
+      "status": "pass",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T06-38-51-916Z/reports/2026-08-24T10-45-40-309Z_test_pass.json",
+      "requested_next_stage": "validation",
+      "gate": "risk_threshold",
+      "reason": "Risk level high meets or exceeds threshold high.",
+      "risk_level": "high",
+      "spec_gate": null
+    },
+    {
+      "at": "2026-08-24T10:46:22.285Z",
+      "event": "approved_transition",
+      "stage": "test",
+      "status": "pass",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T06-38-51-916Z/reports/2026-08-24T10-45-40-309Z_test_pass.json",
+      "approver": "rickebo (user)",
+      "note": "Dedicated QA passed all available suites; proceed to validation, but activate scoped rollout alarm suppression before any live Quick Connect deployment.",
+      "next_stage": "validation"
+    }
+  ]
+}

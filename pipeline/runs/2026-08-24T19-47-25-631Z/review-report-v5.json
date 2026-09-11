@@ -1,0 +1,28 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "The runtime capability gate is fail-closed for malformed current schemas and preserves the prior chart/provenance checks, but the legacy compatibility regression does not exercise the actual immutable ad52 Helm archive.",
+  "changed_files": [],
+  "validation": [
+    "Reviewed 897c78dec850617315fbbe55a0704219145c787b against f1ee15f8916cbb939e88e5a1491588d3b7a95f7d.",
+    "python3 hack/test-chart-verifier-compat.py -v passed 5/5 tests.",
+    "python3 hack/test-release-chart-flow.py -v passed 11/11 tests, including the loaded compatibility suite.",
+    "bash -n hack/verify-chart-artifact.sh and Python byte-compilation passed.",
+    "The diff retains checksum, chart-source-revision, archive/source/CRD parity, Helm schema/security-negative, and default-render validation before capability gating."
+  ],
+  "blockers": [
+    "Legacy compatibility packages a new archive from exported ad52 source instead of passing the immutable ad52 Helm archive through the verifier; historical tar members, metadata, or generated content can regress unnoticed."
+  ],
+  "next_action": "Return to test to run verify-chart-artifact.sh against the captured immutable ad52 archive and its checksum (or add an exact-byte fixture with provenance), while retaining the source-tree predicate tests.",
+  "route_to": "code",
+  "risk_level": "high",
+  "issues": [
+    {
+      "id": "REV5-CHART-001",
+      "title": "Legacy regression does not verify the actual immutable ad52 archive",
+      "severity": "medium",
+      "details": "hack/test-chart-verifier-compat.py::test_immutable_v0613_source_archive_passes_current_verifier calls export_revision(ad52) and package_and_verify(), creating a fresh chart with the current packager. It never supplies the historical immutable Helm .tgz/checksum, so archive-specific compatibility is untested.",
+      "owner_stage": "test"
+    }
+  ]
+}

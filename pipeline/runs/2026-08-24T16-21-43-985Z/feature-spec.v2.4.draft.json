@@ -1,0 +1,1220 @@
+{
+  "meta": {
+    "id": "SPEC-deployment-controller-successor-v2-4",
+    "title": "Release platform v2.4 clean executable authority specification",
+    "author": "Codex release manager",
+    "created_at": "2026-08-26T12:00:00Z",
+    "version": "2.4.0-council-draft"
+  },
+  "feature": {
+    "problem_statement": "v2.4 is a clean-room executable release-authority contract that closes v2.1/v2.2/v2.3 council findings without inheriting their semantic arrays or validators.",
+    "goals": [
+      "Bind every semantic requirement to executable evidence.",
+      "Keep live activation fail-closed.",
+      "Produce a reproducible detached-council bundle."
+    ],
+    "non_goals": [
+      "Live GitHub, Vault, registry, Kubernetes or Argo mutation.",
+      "Treating offline fixtures as production authority."
+    ],
+    "scope_in": [
+      "deployment-controller release DAG",
+      "app-config bootstrap lane",
+      "offline validator and cryptographic fixtures"
+    ],
+    "scope_out": [
+      "workload chart and values ownership",
+      "live signer enrollment",
+      "production promotion"
+    ]
+  },
+  "requirements": [
+    {
+      "id": "REQ-001",
+      "priority": "MUST",
+      "statement": "Freeze the v2.4 artifact set with canonical JSON bytes and a fixed generation clock.",
+      "rationale": "A repeated build must have identical bytes."
+    },
+    {
+      "id": "REQ-002",
+      "priority": "MUST",
+      "statement": "Bind the v2.2 baseline spec and annex digests before planning changes.",
+      "rationale": "Historical inputs must be exact."
+    },
+    {
+      "id": "REQ-003",
+      "priority": "MUST",
+      "statement": "Resolve NEXT_SEMVER as the first verified tag greater than every verified v0.7.x tag and freeze it at X39.",
+      "rationale": "The obsolete v0.6.14 prerequisite is not reused."
+    },
+    {
+      "id": "REQ-004",
+      "priority": "MUST",
+      "statement": "Materialize one S00 root and reject any second root or unreachable success node.",
+      "rationale": "A graph with two roots can bypass gates."
+    },
+    {
+      "id": "REQ-005",
+      "priority": "MUST",
+      "statement": "Run AP20 through AP25 in app-config, with only bootstrap wiring and an explicit join to X41.",
+      "rationale": "App-config owns bootstrap wiring, not workload desired state."
+    },
+    {
+      "id": "REQ-006",
+      "priority": "MUST",
+      "statement": "Bind every DAG command to immutable argv, digest, no shell and no network.",
+      "rationale": "A writer cannot substitute a broader command."
+    },
+    {
+      "id": "REQ-007",
+      "priority": "MUST",
+      "statement": "Validate each typed payload against an actual strict JSON schema before predicate evaluation.",
+      "rationale": "Shape errors must fail before authority."
+    },
+    {
+      "id": "REQ-008",
+      "priority": "MUST",
+      "statement": "Sign the exact RFC 8785-compatible payload bytes inside an offline DSSE-style envelope.",
+      "rationale": "Fixture signatures must be cryptographically verifiable."
+    },
+    {
+      "id": "REQ-009",
+      "priority": "MUST",
+      "statement": "Treat offline fixture signatures as authority=false and reject Sigstore or Vault evidence without complete live verification inputs.",
+      "rationale": "Synthetic records must never authorize publication."
+    },
+    {
+      "id": "REQ-010",
+      "priority": "MUST",
+      "statement": "Compare issued_at and expires_at with an injected fixed clock and thirty-second skew.",
+      "rationale": "Freshness must not use wall-clock variance."
+    },
+    {
+      "id": "REQ-011",
+      "priority": "MUST",
+      "statement": "Reject a nonce present in the durable replay ledger, including when two validator processes read the same snapshot.",
+      "rationale": "Replay state survives process boundaries."
+    },
+    {
+      "id": "REQ-012",
+      "priority": "MUST",
+      "statement": "Recompute immutable repository, Kubernetes and artifact target bindings instead of trusting declared target text.",
+      "rationale": "Authority must be scoped to one target."
+    },
+    {
+      "id": "REQ-013",
+      "priority": "MUST",
+      "statement": "Derive pre-target and post-target digests and effect count from bytes independently of declared counts.",
+      "rationale": "A declaration cannot hide a partial effect."
+    },
+    {
+      "id": "REQ-014",
+      "priority": "MUST",
+      "statement": "Execute every negative as a distinct patch through schema, signature, predicate and ledger evaluators.",
+      "rationale": "Each failure has an executable oracle."
+    },
+    {
+      "id": "REQ-015",
+      "priority": "MUST",
+      "statement": "Link exactly four signed records per M01 through M19 with a predecessor hash chain.",
+      "rationale": "Writer, collector, signer and committer actions remain separate."
+    },
+    {
+      "id": "REQ-016",
+      "priority": "MUST",
+      "statement": "Publish fourteen named assets with exact media type, source digest and destination binding.",
+      "rationale": "Asset identity must be independently read back."
+    },
+    {
+      "id": "REQ-017",
+      "priority": "MUST",
+      "statement": "Keep app-config paths limited to bootstrap descriptors and prohibit workload chart or values ownership.",
+      "rationale": "The app-of-apps boundary stays narrow."
+    },
+    {
+      "id": "REQ-018",
+      "priority": "MUST",
+      "statement": "Require normal administration to use three exact distinct identities, bounded TTL, one-use credentials, audit and revocation.",
+      "rationale": "Routine control must be attributable."
+    },
+    {
+      "id": "REQ-019",
+      "priority": "MUST",
+      "statement": "Require break-glass to use two exact approvers and a distinct executor with shorter TTL and forbidden publish operations.",
+      "rationale": "Emergency access cannot become release authority."
+    },
+    {
+      "id": "REQ-020",
+      "priority": "MUST",
+      "statement": "Verify candidate archive media, byte length and digest before no-network extraction.",
+      "rationale": "Unverified bytes must not enter the release workspace."
+    },
+    {
+      "id": "REQ-021",
+      "priority": "MUST",
+      "statement": "Verify Vault transit role, exact Kubernetes identity and revoked-key state before secret evidence is accepted.",
+      "rationale": "Secret authority is narrow and auditable."
+    },
+    {
+      "id": "REQ-022",
+      "priority": "MUST",
+      "statement": "Require the three-node PostgreSQL placement and TLS identity contract before release-platform workloads.",
+      "rationale": "Data availability is a prerequisite."
+    },
+    {
+      "id": "REQ-023",
+      "priority": "MUST",
+      "statement": "Allow only the enumerated GitHub proxy operations with fixed host, listener, audience and SNI.",
+      "rationale": "An unlisted proxy call is not a release capability."
+    },
+    {
+      "id": "REQ-024",
+      "priority": "MUST",
+      "statement": "Route every UNKNOWN, TIMEOUT, PARTIAL_EFFECT and MISMATCH from every executable node to atomic U00.",
+      "rationale": "No failure can skip fencing."
+    },
+    {
+      "id": "REQ-025",
+      "priority": "MUST",
+      "statement": "Traverse U00 through U08 as fence, cancel, quarantine, revoke, reconcile, successor, audit and terminal actions.",
+      "rationale": "Recovery is one reachable state machine."
+    },
+    {
+      "id": "REQ-026",
+      "priority": "MUST",
+      "statement": "Join AP25 to X41 before any release mutation node is reachable.",
+      "rationale": "Bootstrap completion is ordered before publication."
+    },
+    {
+      "id": "REQ-027",
+      "priority": "MUST",
+      "statement": "Map every requirement, criterion and executable test to its own semantic node, command, schema and oracles.",
+      "rationale": "Traceability must prove behavior, not labels."
+    },
+    {
+      "id": "REQ-028",
+      "priority": "MUST",
+      "statement": "Hash the pre-council bundle manifest over spec, annex, spec-check, fixtures, builder and validator.",
+      "rationale": "The review input cannot drift silently."
+    },
+    {
+      "id": "REQ-029",
+      "priority": "MUST",
+      "statement": "Hash the pre-council validator report over the bundle hash and all computed results.",
+      "rationale": "Validation output is bound to the exact bundle."
+    },
+    {
+      "id": "REQ-030",
+      "priority": "MUST",
+      "statement": "Require detached council lane signatures, verdicts, manifest hash and report hash in a closure check.",
+      "rationale": "Council closure must not self-reference its input bundle."
+    },
+    {
+      "id": "REQ-031",
+      "priority": "MUST",
+      "statement": "Keep activation BLOCKED_PREACTIVATION with zero live gates and reject any live promotion command.",
+      "rationale": "No fixture can activate the live pipeline."
+    },
+    {
+      "id": "REQ-032",
+      "priority": "MUST",
+      "statement": "Record the objective change from the historical v0.6.14 prerequisite to the monotonic NEXT_SEMVER resolver.",
+      "rationale": "Release identity follows verified tags at implementation time."
+    }
+  ],
+  "acceptance_criteria": [
+    {
+      "id": "AC-001",
+      "requirement_ids": [
+        "REQ-001"
+      ],
+      "scenario": "Given S00 has its bound evidence When the v2.4 evaluator runs the const-bound command Then the semantic predicate and its zero-effect negative oracle are evaluated."
+    },
+    {
+      "id": "AC-002",
+      "requirement_ids": [
+        "REQ-002"
+      ],
+      "scenario": "Given X01 has its bound evidence When the v2.4 evaluator runs the const-bound command Then the semantic predicate and its zero-effect negative oracle are evaluated."
+    },
+    {
+      "id": "AC-003",
+      "requirement_ids": [
+        "REQ-003"
+      ],
+      "scenario": "Given X02 has its bound evidence When the v2.4 evaluator runs the const-bound command Then the semantic predicate and its zero-effect negative oracle are evaluated."
+    },
+    {
+      "id": "AC-004",
+      "requirement_ids": [
+        "REQ-004"
+      ],
+      "scenario": "Given X03 has its bound evidence When the v2.4 evaluator runs the const-bound command Then the semantic predicate and its zero-effect negative oracle are evaluated."
+    },
+    {
+      "id": "AC-005",
+      "requirement_ids": [
+        "REQ-005"
+      ],
+      "scenario": "Given AP20|AP21|AP22|AP23|AP24|AP25 has its bound evidence When the v2.4 evaluator runs the const-bound command Then the semantic predicate and its zero-effect negative oracle are evaluated."
+    },
+    {
+      "id": "AC-006",
+      "requirement_ids": [
+        "REQ-006"
+      ],
+      "scenario": "Given X04|X05 has its bound evidence When the v2.4 evaluator runs the const-bound command Then the semantic predicate and its zero-effect negative oracle are evaluated."
+    },
+    {
+      "id": "AC-007",
+      "requirement_ids": [
+        "REQ-007"
+      ],
+      "scenario": "Given X06 has its bound evidence When the v2.4 evaluator runs the const-bound command Then the semantic predicate and its zero-effect negative oracle are evaluated."
+    },
+    {
+      "id": "AC-008",
+      "requirement_ids": [
+        "REQ-008"
+      ],
+      "scenario": "Given X07 has its bound evidence When the v2.4 evaluator runs the const-bound command Then the semantic predicate and its zero-effect negative oracle are evaluated."
+    },
+    {
+      "id": "AC-009",
+      "requirement_ids": [
+        "REQ-009"
+      ],
+      "scenario": "Given X08 has its bound evidence When the v2.4 evaluator runs the const-bound command Then the semantic predicate and its zero-effect negative oracle are evaluated."
+    },
+    {
+      "id": "AC-010",
+      "requirement_ids": [
+        "REQ-010"
+      ],
+      "scenario": "Given X09 has its bound evidence When the v2.4 evaluator runs the const-bound command Then the semantic predicate and its zero-effect negative oracle are evaluated."
+    },
+    {
+      "id": "AC-011",
+      "requirement_ids": [
+        "REQ-011"
+      ],
+      "scenario": "Given X10 has its bound evidence When the v2.4 evaluator runs the const-bound command Then the semantic predicate and its zero-effect negative oracle are evaluated."
+    },
+    {
+      "id": "AC-012",
+      "requirement_ids": [
+        "REQ-012"
+      ],
+      "scenario": "Given X11 has its bound evidence When the v2.4 evaluator runs the const-bound command Then the semantic predicate and its zero-effect negative oracle are evaluated."
+    },
+    {
+      "id": "AC-013",
+      "requirement_ids": [
+        "REQ-013"
+      ],
+      "scenario": "Given X12 has its bound evidence When the v2.4 evaluator runs the const-bound command Then the semantic predicate and its zero-effect negative oracle are evaluated."
+    },
+    {
+      "id": "AC-014",
+      "requirement_ids": [
+        "REQ-014"
+      ],
+      "scenario": "Given X13 has its bound evidence When the v2.4 evaluator runs the const-bound command Then the semantic predicate and its zero-effect negative oracle are evaluated."
+    },
+    {
+      "id": "AC-015",
+      "requirement_ids": [
+        "REQ-015"
+      ],
+      "scenario": "Given M01|M02|M03|M04|M12|M13|M14|M19 has its bound evidence When the v2.4 evaluator runs the const-bound command Then the semantic predicate and its zero-effect negative oracle are evaluated."
+    },
+    {
+      "id": "AC-016",
+      "requirement_ids": [
+        "REQ-016"
+      ],
+      "scenario": "Given M05|M06|M07|M08|M09|M10|M11|M12|M13|M14|M15|M16|M17|M18 has its bound evidence When the v2.4 evaluator runs the const-bound command Then the semantic predicate and its zero-effect negative oracle are evaluated."
+    },
+    {
+      "id": "AC-017",
+      "requirement_ids": [
+        "REQ-017"
+      ],
+      "scenario": "Given AP25 has its bound evidence When the v2.4 evaluator runs the const-bound command Then the semantic predicate and its zero-effect negative oracle are evaluated."
+    },
+    {
+      "id": "AC-018",
+      "requirement_ids": [
+        "REQ-018"
+      ],
+      "scenario": "Given X14 has its bound evidence When the v2.4 evaluator runs the const-bound command Then the semantic predicate and its zero-effect negative oracle are evaluated."
+    },
+    {
+      "id": "AC-019",
+      "requirement_ids": [
+        "REQ-019"
+      ],
+      "scenario": "Given X15 has its bound evidence When the v2.4 evaluator runs the const-bound command Then the semantic predicate and its zero-effect negative oracle are evaluated."
+    },
+    {
+      "id": "AC-020",
+      "requirement_ids": [
+        "REQ-020"
+      ],
+      "scenario": "Given X16 has its bound evidence When the v2.4 evaluator runs the const-bound command Then the semantic predicate and its zero-effect negative oracle are evaluated."
+    },
+    {
+      "id": "AC-021",
+      "requirement_ids": [
+        "REQ-021"
+      ],
+      "scenario": "Given X17 has its bound evidence When the v2.4 evaluator runs the const-bound command Then the semantic predicate and its zero-effect negative oracle are evaluated."
+    },
+    {
+      "id": "AC-022",
+      "requirement_ids": [
+        "REQ-022"
+      ],
+      "scenario": "Given X18 has its bound evidence When the v2.4 evaluator runs the const-bound command Then the semantic predicate and its zero-effect negative oracle are evaluated."
+    },
+    {
+      "id": "AC-023",
+      "requirement_ids": [
+        "REQ-023"
+      ],
+      "scenario": "Given X19 has its bound evidence When the v2.4 evaluator runs the const-bound command Then the semantic predicate and its zero-effect negative oracle are evaluated."
+    },
+    {
+      "id": "AC-024",
+      "requirement_ids": [
+        "REQ-024"
+      ],
+      "scenario": "Given X20|X21 has its bound evidence When the v2.4 evaluator runs the const-bound command Then the semantic predicate and its zero-effect negative oracle are evaluated."
+    },
+    {
+      "id": "AC-025",
+      "requirement_ids": [
+        "REQ-025"
+      ],
+      "scenario": "Given X22 has its bound evidence When the v2.4 evaluator runs the const-bound command Then the semantic predicate and its zero-effect negative oracle are evaluated."
+    },
+    {
+      "id": "AC-026",
+      "requirement_ids": [
+        "REQ-026"
+      ],
+      "scenario": "Given X41 has its bound evidence When the v2.4 evaluator runs the const-bound command Then the semantic predicate and its zero-effect negative oracle are evaluated."
+    },
+    {
+      "id": "AC-027",
+      "requirement_ids": [
+        "REQ-027"
+      ],
+      "scenario": "Given X23|X27|X28|X29|X30|X31|X32|X33|X34|X35|X36|X37|X38 has its bound evidence When the v2.4 evaluator runs the const-bound command Then the semantic predicate and its zero-effect negative oracle are evaluated."
+    },
+    {
+      "id": "AC-028",
+      "requirement_ids": [
+        "REQ-028"
+      ],
+      "scenario": "Given X24 has its bound evidence When the v2.4 evaluator runs the const-bound command Then the semantic predicate and its zero-effect negative oracle are evaluated."
+    },
+    {
+      "id": "AC-029",
+      "requirement_ids": [
+        "REQ-029"
+      ],
+      "scenario": "Given X25 has its bound evidence When the v2.4 evaluator runs the const-bound command Then the semantic predicate and its zero-effect negative oracle are evaluated."
+    },
+    {
+      "id": "AC-030",
+      "requirement_ids": [
+        "REQ-030"
+      ],
+      "scenario": "Given X26 has its bound evidence When the v2.4 evaluator runs the const-bound command Then the semantic predicate and its zero-effect negative oracle are evaluated."
+    },
+    {
+      "id": "AC-031",
+      "requirement_ids": [
+        "REQ-031"
+      ],
+      "scenario": "Given S99 has its bound evidence When the v2.4 evaluator runs the const-bound command Then the semantic predicate and its zero-effect negative oracle are evaluated."
+    },
+    {
+      "id": "AC-032",
+      "requirement_ids": [
+        "REQ-032"
+      ],
+      "scenario": "Given X39 has its bound evidence When the v2.4 evaluator runs the const-bound command Then the semantic predicate and its zero-effect negative oracle are evaluated."
+    }
+  ],
+  "test_plan": [
+    {
+      "id": "TST-001",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-001"
+      ],
+      "approach": "Run cmd.freeze.spec at S00 against payload.v2.4, positive/base-command, and artifact-bytes; assert the exact predicate result and independently derived target effect count."
+    },
+    {
+      "id": "TST-002",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-002"
+      ],
+      "approach": "Run cmd.bind.baseline at X01 against payload.v2.4, positive/base-command, and baseline-hash; assert the exact predicate result and independently derived target effect count."
+    },
+    {
+      "id": "TST-003",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-003"
+      ],
+      "approach": "Run cmd.resolve.semver at X02 against payload.v2.4, positive/base-command, and release-version; assert the exact predicate result and independently derived target effect count."
+    },
+    {
+      "id": "TST-004",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-004"
+      ],
+      "approach": "Run cmd.validate.root at X03 against fsm.v2.4, positive/base-command, and fsm-root; assert the exact predicate result and independently derived target effect count."
+    },
+    {
+      "id": "TST-005",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-005"
+      ],
+      "approach": "Run cmd.app-config.bootstrap at AP20|AP21|AP22|AP23|AP24|AP25 against payload.v2.4, positive/base-command, and app-config-scope; assert the exact predicate result and independently derived target effect count."
+    },
+    {
+      "id": "TST-006",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-006"
+      ],
+      "approach": "Run cmd.bind.command at X04|X05 against command.v2.4, positive/base-command, and const-argv; assert the exact predicate result and independently derived target effect count."
+    },
+    {
+      "id": "TST-007",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-007"
+      ],
+      "approach": "Run cmd.validate.schema at X06 against payload.v2.4, positive/base-command, and schema-id; assert the exact predicate result and independently derived target effect count."
+    },
+    {
+      "id": "TST-008",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-008"
+      ],
+      "approach": "Run cmd.verify.signature at X07 against signature.v2.4, positive/base-command, and signature; assert the exact predicate result and independently derived target effect count."
+    },
+    {
+      "id": "TST-009",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-009"
+      ],
+      "approach": "Run cmd.reject.live at X08 against signature.v2.4, positive/base-command, and signer-kind; assert the exact predicate result and independently derived target effect count."
+    },
+    {
+      "id": "TST-010",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-010"
+      ],
+      "approach": "Run cmd.check.freshness at X09 against payload.v2.4, positive/base-command, and issued-at; assert the exact predicate result and independently derived target effect count."
+    },
+    {
+      "id": "TST-011",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-011"
+      ],
+      "approach": "Run cmd.check.replay at X10 against payload.v2.4, positive/base-command, and nonce; assert the exact predicate result and independently derived target effect count."
+    },
+    {
+      "id": "TST-012",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-012"
+      ],
+      "approach": "Run cmd.check.target at X11 against payload.v2.4, positive/base-command, and target-digest; assert the exact predicate result and independently derived target effect count."
+    },
+    {
+      "id": "TST-013",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-013"
+      ],
+      "approach": "Run cmd.derive.effects at X12 against mutation.v2.4, positive/base-command, and effect-count; assert the exact predicate result and independently derived target effect count."
+    },
+    {
+      "id": "TST-014",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-014"
+      ],
+      "approach": "Run cmd.run.negatives at X13 against mutation.v2.4, positive/base-command, and negative-paths; assert the exact predicate result and independently derived target effect count."
+    },
+    {
+      "id": "TST-015",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-015"
+      ],
+      "approach": "Run cmd.verify.chain at M01|M02|M03|M04|M12|M13|M14|M19 against mutation.v2.4, positive/signed-command-evidence, and record-hash; assert the exact predicate result and independently derived target effect count."
+    },
+    {
+      "id": "TST-016",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-016"
+      ],
+      "approach": "Run cmd.bind.assets at M05|M06|M07|M08|M09|M10|M11|M12|M13|M14|M15|M16|M17|M18 against asset.v2.4, positive/assets, and asset-source-sha256; assert the exact predicate result and independently derived target effect count."
+    },
+    {
+      "id": "TST-017",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-017"
+      ],
+      "approach": "Run cmd.app-config.bootstrap at AP25 against payload.v2.4, positive/base-command, and app-config-scope; assert the exact predicate result and independently derived target effect count."
+    },
+    {
+      "id": "TST-018",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-018"
+      ],
+      "approach": "Run cmd.check.admin.normal at X14 against admin.v2.4, positive/admin-contracts, and admin-identity; assert the exact predicate result and independently derived target effect count."
+    },
+    {
+      "id": "TST-019",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-019"
+      ],
+      "approach": "Run cmd.check.admin.breakglass at X15 against admin.v2.4, positive/admin-contracts, and breakglass; assert the exact predicate result and independently derived target effect count."
+    },
+    {
+      "id": "TST-020",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-020"
+      ],
+      "approach": "Run cmd.verify.candidate at X16 against asset.v2.4, positive/assets, and candidate-digest; assert the exact predicate result and independently derived target effect count."
+    },
+    {
+      "id": "TST-021",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-021"
+      ],
+      "approach": "Run cmd.verify.vault at X17 against signature.v2.4, positive/base-command, and revoked; assert the exact predicate result and independently derived target effect count."
+    },
+    {
+      "id": "TST-022",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-022"
+      ],
+      "approach": "Run cmd.verify.postgres at X18 against payload.v2.4, positive/base-command, and target-digest; assert the exact predicate result and independently derived target effect count."
+    },
+    {
+      "id": "TST-023",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-023"
+      ],
+      "approach": "Run cmd.verify.proxy at X19 against command.v2.4, positive/base-command, and const-argv; assert the exact predicate result and independently derived target effect count."
+    },
+    {
+      "id": "TST-024",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-024"
+      ],
+      "approach": "Run cmd.fsm.failure at X20|X21 against fsm.v2.4, positive/base-command, and fsm-transition; assert the exact predicate result and independently derived target effect count."
+    },
+    {
+      "id": "TST-025",
+      "type": "unit",
+      "requirement_ids": [
+        "REQ-025"
+      ],
+      "approach": "Run cmd.fsm.recovery at X22 against fsm.v2.4, positive/base-command, and fsm-transition; assert the exact predicate result and independently derived target effect count."
+    },
+    {
+      "id": "TST-026",
+      "type": "unit",
+      "requirement_ids": [
+        "REQ-026"
+      ],
+      "approach": "Run cmd.join.app-config at X41 against fsm.v2.4, positive/base-command, and app-config-scope; assert the exact predicate result and independently derived target effect count."
+    },
+    {
+      "id": "TST-027",
+      "type": "unit",
+      "requirement_ids": [
+        "REQ-027"
+      ],
+      "approach": "Run cmd.validate.trace at X23|X27|X28|X29|X30|X31|X32|X33|X34|X35|X36|X37|X38 against payload.v2.4, positive/base-command, and negative-paths; assert the exact predicate result and independently derived target effect count."
+    },
+    {
+      "id": "TST-028",
+      "type": "unit",
+      "requirement_ids": [
+        "REQ-028"
+      ],
+      "approach": "Run cmd.hash.bundle at X24 against payload.v2.4, positive/base-command, and manifest-hash; assert the exact predicate result and independently derived target effect count."
+    },
+    {
+      "id": "TST-029",
+      "type": "unit",
+      "requirement_ids": [
+        "REQ-029"
+      ],
+      "approach": "Run cmd.hash.report at X25 against payload.v2.4, positive/base-command, and report-hash; assert the exact predicate result and independently derived target effect count."
+    },
+    {
+      "id": "TST-030",
+      "type": "unit",
+      "requirement_ids": [
+        "REQ-030"
+      ],
+      "approach": "Run cmd.verify.council at X26 against signature.v2.4, positive/council-closure, and council-hash; assert the exact predicate result and independently derived target effect count."
+    },
+    {
+      "id": "TST-031",
+      "type": "unit",
+      "requirement_ids": [
+        "REQ-031"
+      ],
+      "approach": "Run cmd.block.activation at S99 against payload.v2.4, positive/base-command, and live-evidence; assert the exact predicate result and independently derived target effect count."
+    },
+    {
+      "id": "TST-032",
+      "type": "unit",
+      "requirement_ids": [
+        "REQ-032"
+      ],
+      "approach": "Run cmd.resolve.semver at X39 against payload.v2.4, positive/base-command, and release-version; assert the exact predicate result and independently derived target effect count."
+    }
+  ],
+  "traceability": [
+    {
+      "requirement_id": "REQ-001",
+      "acceptance_ids": [
+        "AC-001"
+      ],
+      "test_ids": [
+        "TST-001"
+      ],
+      "review_checks": [
+        "RC-v2.4-001"
+      ],
+      "validation_checks": [
+        "VC-v2.4-001"
+      ]
+    },
+    {
+      "requirement_id": "REQ-002",
+      "acceptance_ids": [
+        "AC-002"
+      ],
+      "test_ids": [
+        "TST-002"
+      ],
+      "review_checks": [
+        "RC-v2.4-002"
+      ],
+      "validation_checks": [
+        "VC-v2.4-002"
+      ]
+    },
+    {
+      "requirement_id": "REQ-003",
+      "acceptance_ids": [
+        "AC-003"
+      ],
+      "test_ids": [
+        "TST-003"
+      ],
+      "review_checks": [
+        "RC-v2.4-003"
+      ],
+      "validation_checks": [
+        "VC-v2.4-003"
+      ]
+    },
+    {
+      "requirement_id": "REQ-004",
+      "acceptance_ids": [
+        "AC-004"
+      ],
+      "test_ids": [
+        "TST-004"
+      ],
+      "review_checks": [
+        "RC-v2.4-004"
+      ],
+      "validation_checks": [
+        "VC-v2.4-004"
+      ]
+    },
+    {
+      "requirement_id": "REQ-005",
+      "acceptance_ids": [
+        "AC-005"
+      ],
+      "test_ids": [
+        "TST-005"
+      ],
+      "review_checks": [
+        "RC-v2.4-005"
+      ],
+      "validation_checks": [
+        "VC-v2.4-005"
+      ]
+    },
+    {
+      "requirement_id": "REQ-006",
+      "acceptance_ids": [
+        "AC-006"
+      ],
+      "test_ids": [
+        "TST-006"
+      ],
+      "review_checks": [
+        "RC-v2.4-006"
+      ],
+      "validation_checks": [
+        "VC-v2.4-006"
+      ]
+    },
+    {
+      "requirement_id": "REQ-007",
+      "acceptance_ids": [
+        "AC-007"
+      ],
+      "test_ids": [
+        "TST-007"
+      ],
+      "review_checks": [
+        "RC-v2.4-007"
+      ],
+      "validation_checks": [
+        "VC-v2.4-007"
+      ]
+    },
+    {
+      "requirement_id": "REQ-008",
+      "acceptance_ids": [
+        "AC-008"
+      ],
+      "test_ids": [
+        "TST-008"
+      ],
+      "review_checks": [
+        "RC-v2.4-008"
+      ],
+      "validation_checks": [
+        "VC-v2.4-008"
+      ]
+    },
+    {
+      "requirement_id": "REQ-009",
+      "acceptance_ids": [
+        "AC-009"
+      ],
+      "test_ids": [
+        "TST-009"
+      ],
+      "review_checks": [
+        "RC-v2.4-009"
+      ],
+      "validation_checks": [
+        "VC-v2.4-009"
+      ]
+    },
+    {
+      "requirement_id": "REQ-010",
+      "acceptance_ids": [
+        "AC-010"
+      ],
+      "test_ids": [
+        "TST-010"
+      ],
+      "review_checks": [
+        "RC-v2.4-010"
+      ],
+      "validation_checks": [
+        "VC-v2.4-010"
+      ]
+    },
+    {
+      "requirement_id": "REQ-011",
+      "acceptance_ids": [
+        "AC-011"
+      ],
+      "test_ids": [
+        "TST-011"
+      ],
+      "review_checks": [
+        "RC-v2.4-011"
+      ],
+      "validation_checks": [
+        "VC-v2.4-011"
+      ]
+    },
+    {
+      "requirement_id": "REQ-012",
+      "acceptance_ids": [
+        "AC-012"
+      ],
+      "test_ids": [
+        "TST-012"
+      ],
+      "review_checks": [
+        "RC-v2.4-012"
+      ],
+      "validation_checks": [
+        "VC-v2.4-012"
+      ]
+    },
+    {
+      "requirement_id": "REQ-013",
+      "acceptance_ids": [
+        "AC-013"
+      ],
+      "test_ids": [
+        "TST-013"
+      ],
+      "review_checks": [
+        "RC-v2.4-013"
+      ],
+      "validation_checks": [
+        "VC-v2.4-013"
+      ]
+    },
+    {
+      "requirement_id": "REQ-014",
+      "acceptance_ids": [
+        "AC-014"
+      ],
+      "test_ids": [
+        "TST-014"
+      ],
+      "review_checks": [
+        "RC-v2.4-014"
+      ],
+      "validation_checks": [
+        "VC-v2.4-014"
+      ]
+    },
+    {
+      "requirement_id": "REQ-015",
+      "acceptance_ids": [
+        "AC-015"
+      ],
+      "test_ids": [
+        "TST-015"
+      ],
+      "review_checks": [
+        "RC-v2.4-015"
+      ],
+      "validation_checks": [
+        "VC-v2.4-015"
+      ]
+    },
+    {
+      "requirement_id": "REQ-016",
+      "acceptance_ids": [
+        "AC-016"
+      ],
+      "test_ids": [
+        "TST-016"
+      ],
+      "review_checks": [
+        "RC-v2.4-016"
+      ],
+      "validation_checks": [
+        "VC-v2.4-016"
+      ]
+    },
+    {
+      "requirement_id": "REQ-017",
+      "acceptance_ids": [
+        "AC-017"
+      ],
+      "test_ids": [
+        "TST-017"
+      ],
+      "review_checks": [
+        "RC-v2.4-017"
+      ],
+      "validation_checks": [
+        "VC-v2.4-017"
+      ]
+    },
+    {
+      "requirement_id": "REQ-018",
+      "acceptance_ids": [
+        "AC-018"
+      ],
+      "test_ids": [
+        "TST-018"
+      ],
+      "review_checks": [
+        "RC-v2.4-018"
+      ],
+      "validation_checks": [
+        "VC-v2.4-018"
+      ]
+    },
+    {
+      "requirement_id": "REQ-019",
+      "acceptance_ids": [
+        "AC-019"
+      ],
+      "test_ids": [
+        "TST-019"
+      ],
+      "review_checks": [
+        "RC-v2.4-019"
+      ],
+      "validation_checks": [
+        "VC-v2.4-019"
+      ]
+    },
+    {
+      "requirement_id": "REQ-020",
+      "acceptance_ids": [
+        "AC-020"
+      ],
+      "test_ids": [
+        "TST-020"
+      ],
+      "review_checks": [
+        "RC-v2.4-020"
+      ],
+      "validation_checks": [
+        "VC-v2.4-020"
+      ]
+    },
+    {
+      "requirement_id": "REQ-021",
+      "acceptance_ids": [
+        "AC-021"
+      ],
+      "test_ids": [
+        "TST-021"
+      ],
+      "review_checks": [
+        "RC-v2.4-021"
+      ],
+      "validation_checks": [
+        "VC-v2.4-021"
+      ]
+    },
+    {
+      "requirement_id": "REQ-022",
+      "acceptance_ids": [
+        "AC-022"
+      ],
+      "test_ids": [
+        "TST-022"
+      ],
+      "review_checks": [
+        "RC-v2.4-022"
+      ],
+      "validation_checks": [
+        "VC-v2.4-022"
+      ]
+    },
+    {
+      "requirement_id": "REQ-023",
+      "acceptance_ids": [
+        "AC-023"
+      ],
+      "test_ids": [
+        "TST-023"
+      ],
+      "review_checks": [
+        "RC-v2.4-023"
+      ],
+      "validation_checks": [
+        "VC-v2.4-023"
+      ]
+    },
+    {
+      "requirement_id": "REQ-024",
+      "acceptance_ids": [
+        "AC-024"
+      ],
+      "test_ids": [
+        "TST-024"
+      ],
+      "review_checks": [
+        "RC-v2.4-024"
+      ],
+      "validation_checks": [
+        "VC-v2.4-024"
+      ]
+    },
+    {
+      "requirement_id": "REQ-025",
+      "acceptance_ids": [
+        "AC-025"
+      ],
+      "test_ids": [
+        "TST-025"
+      ],
+      "review_checks": [
+        "RC-v2.4-025"
+      ],
+      "validation_checks": [
+        "VC-v2.4-025"
+      ]
+    },
+    {
+      "requirement_id": "REQ-026",
+      "acceptance_ids": [
+        "AC-026"
+      ],
+      "test_ids": [
+        "TST-026"
+      ],
+      "review_checks": [
+        "RC-v2.4-026"
+      ],
+      "validation_checks": [
+        "VC-v2.4-026"
+      ]
+    },
+    {
+      "requirement_id": "REQ-027",
+      "acceptance_ids": [
+        "AC-027"
+      ],
+      "test_ids": [
+        "TST-027"
+      ],
+      "review_checks": [
+        "RC-v2.4-027"
+      ],
+      "validation_checks": [
+        "VC-v2.4-027"
+      ]
+    },
+    {
+      "requirement_id": "REQ-028",
+      "acceptance_ids": [
+        "AC-028"
+      ],
+      "test_ids": [
+        "TST-028"
+      ],
+      "review_checks": [
+        "RC-v2.4-028"
+      ],
+      "validation_checks": [
+        "VC-v2.4-028"
+      ]
+    },
+    {
+      "requirement_id": "REQ-029",
+      "acceptance_ids": [
+        "AC-029"
+      ],
+      "test_ids": [
+        "TST-029"
+      ],
+      "review_checks": [
+        "RC-v2.4-029"
+      ],
+      "validation_checks": [
+        "VC-v2.4-029"
+      ]
+    },
+    {
+      "requirement_id": "REQ-030",
+      "acceptance_ids": [
+        "AC-030"
+      ],
+      "test_ids": [
+        "TST-030"
+      ],
+      "review_checks": [
+        "RC-v2.4-030"
+      ],
+      "validation_checks": [
+        "VC-v2.4-030"
+      ]
+    },
+    {
+      "requirement_id": "REQ-031",
+      "acceptance_ids": [
+        "AC-031"
+      ],
+      "test_ids": [
+        "TST-031"
+      ],
+      "review_checks": [
+        "RC-v2.4-031"
+      ],
+      "validation_checks": [
+        "VC-v2.4-031"
+      ]
+    },
+    {
+      "requirement_id": "REQ-032",
+      "acceptance_ids": [
+        "AC-032"
+      ],
+      "test_ids": [
+        "TST-032"
+      ],
+      "review_checks": [
+        "RC-v2.4-032"
+      ],
+      "validation_checks": [
+        "VC-v2.4-032"
+      ]
+    }
+  ],
+  "quality_gates": {
+    "spec_review_required": true,
+    "testability_required": true,
+    "traceability_required": true
+  },
+  "council": {
+    "perspectives": [
+      {
+        "role": "planner",
+        "summary": "Clean-room semantic DAG and detached closure are required."
+      },
+      {
+        "role": "security",
+        "summary": "Offline signatures are non-authoritative and live evidence is rejected without full verification."
+      },
+      {
+        "role": "tech_lead_devops",
+        "summary": "App-config is bootstrap-only and live gates remain blocked."
+      },
+      {
+        "role": "tech_lead_qa",
+        "summary": "Every negative executes with independent effect and replay checks."
+      }
+    ],
+    "consensus_summary": "Pre-council artifacts are reviewable but live activation is blocked.",
+    "open_questions": [
+      "External council must supply four signed lane verdicts over the manifest and report hashes."
+    ]
+  }
+}

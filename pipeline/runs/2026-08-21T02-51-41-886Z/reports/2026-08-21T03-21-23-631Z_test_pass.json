@@ -1,0 +1,25 @@
+{
+  "stage": "test",
+  "status": "pass",
+  "summary": "Exact-head QA PASS for issue #131: both CI and DEV renders enforce false automount, negative fixtures fail closed, and full local validation is green.",
+  "changed_files": [],
+  "validation": [
+    "Exact SHA 69554eb281acf3b81fdbf21366650669e3ce0896",
+    "Helm contract runner and tests",
+    "Helm lint and kubeconform for CI and DEV",
+    "CI render 5 resources; DEV render 10 resources",
+    "Deployment pod and application ServiceAccount automount false in both renders",
+    "Migration Job remains token-disabled",
+    "Missing/true negative fixtures reject; false fixture accepts",
+    "Probes, DEV ExternalSecrets, and migration resources remain present",
+    "96 Python tool tests, full Go race tests, vet, docs-check, actionlint, workflow parsing, YAML assertions, diff check"
+  ],
+  "blockers": [
+    "Hosted PR validation and live DEV rollout/readback remain outstanding."
+  ],
+  "next_action": "Advance to validation, publish the PR at the exact head, run hosted checks, and collect explicit DEV rollout evidence after a protected merge.",
+  "route_to": "validation",
+  "risk_level": "low",
+  "commit": "69554eb281acf3b81fdbf21366650669e3ce0896",
+  "qa": "PASS"
+}

@@ -1,0 +1,935 @@
+{
+  "schema": "codicarium.executable-gate-schema-bundle/v1",
+  "schemas": {
+    "GATE-001": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "gate_id",
+        "evidence_class",
+        "publication_authority",
+        "observed_at",
+        "command_outputs",
+        "result"
+      ],
+      "properties": {
+        "schema": {
+          "const": "codicarium.gate-001-evidence/v1"
+        },
+        "gate_id": {
+          "const": "GATE-001"
+        },
+        "evidence_class": {
+          "enum": [
+            "synthetic",
+            "live"
+          ]
+        },
+        "publication_authority": {
+          "type": "boolean"
+        },
+        "observed_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "result": {
+          "enum": [
+            "PASS",
+            "FAIL"
+          ]
+        },
+        "command_outputs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "command_id",
+              "sha256"
+            ],
+            "properties": {
+              "command_id": {
+                "type": "string"
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          }
+        }
+      }
+    },
+    "GATE-002": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "gate_id",
+        "evidence_class",
+        "publication_authority",
+        "observed_at",
+        "command_outputs",
+        "result"
+      ],
+      "properties": {
+        "schema": {
+          "const": "codicarium.gate-002-evidence/v1"
+        },
+        "gate_id": {
+          "const": "GATE-002"
+        },
+        "evidence_class": {
+          "enum": [
+            "synthetic",
+            "live"
+          ]
+        },
+        "publication_authority": {
+          "type": "boolean"
+        },
+        "observed_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "result": {
+          "enum": [
+            "PASS",
+            "FAIL"
+          ]
+        },
+        "command_outputs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "command_id",
+              "sha256"
+            ],
+            "properties": {
+              "command_id": {
+                "type": "string"
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          }
+        }
+      }
+    },
+    "GATE-003": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "gate_id",
+        "evidence_class",
+        "publication_authority",
+        "observed_at",
+        "command_outputs",
+        "result"
+      ],
+      "properties": {
+        "schema": {
+          "const": "codicarium.gate-003-evidence/v1"
+        },
+        "gate_id": {
+          "const": "GATE-003"
+        },
+        "evidence_class": {
+          "enum": [
+            "synthetic",
+            "live"
+          ]
+        },
+        "publication_authority": {
+          "type": "boolean"
+        },
+        "observed_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "result": {
+          "enum": [
+            "PASS",
+            "FAIL"
+          ]
+        },
+        "command_outputs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "command_id",
+              "sha256"
+            ],
+            "properties": {
+              "command_id": {
+                "type": "string"
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          }
+        }
+      }
+    },
+    "GATE-004": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "gate_id",
+        "evidence_class",
+        "publication_authority",
+        "observed_at",
+        "command_outputs",
+        "result"
+      ],
+      "properties": {
+        "schema": {
+          "const": "codicarium.gate-004-evidence/v1"
+        },
+        "gate_id": {
+          "const": "GATE-004"
+        },
+        "evidence_class": {
+          "enum": [
+            "synthetic",
+            "live"
+          ]
+        },
+        "publication_authority": {
+          "type": "boolean"
+        },
+        "observed_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "result": {
+          "enum": [
+            "PASS",
+            "FAIL"
+          ]
+        },
+        "command_outputs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "command_id",
+              "sha256"
+            ],
+            "properties": {
+              "command_id": {
+                "type": "string"
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          }
+        }
+      }
+    },
+    "GATE-005": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "gate_id",
+        "evidence_class",
+        "publication_authority",
+        "observed_at",
+        "command_outputs",
+        "result"
+      ],
+      "properties": {
+        "schema": {
+          "const": "codicarium.gate-005-evidence/v1"
+        },
+        "gate_id": {
+          "const": "GATE-005"
+        },
+        "evidence_class": {
+          "enum": [
+            "synthetic",
+            "live"
+          ]
+        },
+        "publication_authority": {
+          "type": "boolean"
+        },
+        "observed_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "result": {
+          "enum": [
+            "PASS",
+            "FAIL"
+          ]
+        },
+        "command_outputs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "command_id",
+              "sha256"
+            ],
+            "properties": {
+              "command_id": {
+                "type": "string"
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          }
+        }
+      }
+    },
+    "GATE-006": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "gate_id",
+        "evidence_class",
+        "publication_authority",
+        "observed_at",
+        "command_outputs",
+        "result"
+      ],
+      "properties": {
+        "schema": {
+          "const": "codicarium.gate-006-evidence/v1"
+        },
+        "gate_id": {
+          "const": "GATE-006"
+        },
+        "evidence_class": {
+          "enum": [
+            "synthetic",
+            "live"
+          ]
+        },
+        "publication_authority": {
+          "type": "boolean"
+        },
+        "observed_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "result": {
+          "enum": [
+            "PASS",
+            "FAIL"
+          ]
+        },
+        "command_outputs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "command_id",
+              "sha256"
+            ],
+            "properties": {
+              "command_id": {
+                "type": "string"
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          }
+        }
+      }
+    },
+    "GATE-007": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "gate_id",
+        "evidence_class",
+        "publication_authority",
+        "observed_at",
+        "command_outputs",
+        "result"
+      ],
+      "properties": {
+        "schema": {
+          "const": "codicarium.gate-007-evidence/v1"
+        },
+        "gate_id": {
+          "const": "GATE-007"
+        },
+        "evidence_class": {
+          "enum": [
+            "synthetic",
+            "live"
+          ]
+        },
+        "publication_authority": {
+          "type": "boolean"
+        },
+        "observed_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "result": {
+          "enum": [
+            "PASS",
+            "FAIL"
+          ]
+        },
+        "command_outputs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "command_id",
+              "sha256"
+            ],
+            "properties": {
+              "command_id": {
+                "type": "string"
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          }
+        }
+      }
+    },
+    "GATE-008": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "gate_id",
+        "evidence_class",
+        "publication_authority",
+        "observed_at",
+        "command_outputs",
+        "result"
+      ],
+      "properties": {
+        "schema": {
+          "const": "codicarium.gate-008-evidence/v1"
+        },
+        "gate_id": {
+          "const": "GATE-008"
+        },
+        "evidence_class": {
+          "enum": [
+            "synthetic",
+            "live"
+          ]
+        },
+        "publication_authority": {
+          "type": "boolean"
+        },
+        "observed_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "result": {
+          "enum": [
+            "PASS",
+            "FAIL"
+          ]
+        },
+        "command_outputs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "command_id",
+              "sha256"
+            ],
+            "properties": {
+              "command_id": {
+                "type": "string"
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          }
+        }
+      }
+    },
+    "GATE-009": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "gate_id",
+        "evidence_class",
+        "publication_authority",
+        "observed_at",
+        "command_outputs",
+        "result"
+      ],
+      "properties": {
+        "schema": {
+          "const": "codicarium.gate-009-evidence/v1"
+        },
+        "gate_id": {
+          "const": "GATE-009"
+        },
+        "evidence_class": {
+          "enum": [
+            "synthetic",
+            "live"
+          ]
+        },
+        "publication_authority": {
+          "type": "boolean"
+        },
+        "observed_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "result": {
+          "enum": [
+            "PASS",
+            "FAIL"
+          ]
+        },
+        "command_outputs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "command_id",
+              "sha256"
+            ],
+            "properties": {
+              "command_id": {
+                "type": "string"
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          }
+        }
+      }
+    },
+    "GATE-010": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "gate_id",
+        "evidence_class",
+        "publication_authority",
+        "observed_at",
+        "command_outputs",
+        "result"
+      ],
+      "properties": {
+        "schema": {
+          "const": "codicarium.gate-010-evidence/v1"
+        },
+        "gate_id": {
+          "const": "GATE-010"
+        },
+        "evidence_class": {
+          "enum": [
+            "synthetic",
+            "live"
+          ]
+        },
+        "publication_authority": {
+          "type": "boolean"
+        },
+        "observed_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "result": {
+          "enum": [
+            "PASS",
+            "FAIL"
+          ]
+        },
+        "command_outputs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "command_id",
+              "sha256"
+            ],
+            "properties": {
+              "command_id": {
+                "type": "string"
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          }
+        }
+      }
+    },
+    "GATE-011": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "gate_id",
+        "evidence_class",
+        "publication_authority",
+        "observed_at",
+        "command_outputs",
+        "result"
+      ],
+      "properties": {
+        "schema": {
+          "const": "codicarium.gate-011-evidence/v1"
+        },
+        "gate_id": {
+          "const": "GATE-011"
+        },
+        "evidence_class": {
+          "enum": [
+            "synthetic",
+            "live"
+          ]
+        },
+        "publication_authority": {
+          "type": "boolean"
+        },
+        "observed_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "result": {
+          "enum": [
+            "PASS",
+            "FAIL"
+          ]
+        },
+        "command_outputs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "command_id",
+              "sha256"
+            ],
+            "properties": {
+              "command_id": {
+                "type": "string"
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          }
+        }
+      }
+    },
+    "GATE-012": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "gate_id",
+        "evidence_class",
+        "publication_authority",
+        "observed_at",
+        "command_outputs",
+        "result"
+      ],
+      "properties": {
+        "schema": {
+          "const": "codicarium.gate-012-evidence/v1"
+        },
+        "gate_id": {
+          "const": "GATE-012"
+        },
+        "evidence_class": {
+          "enum": [
+            "synthetic",
+            "live"
+          ]
+        },
+        "publication_authority": {
+          "type": "boolean"
+        },
+        "observed_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "result": {
+          "enum": [
+            "PASS",
+            "FAIL"
+          ]
+        },
+        "command_outputs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "command_id",
+              "sha256"
+            ],
+            "properties": {
+              "command_id": {
+                "type": "string"
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          }
+        }
+      }
+    },
+    "GATE-013": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "gate_id",
+        "evidence_class",
+        "publication_authority",
+        "observed_at",
+        "command_outputs",
+        "result"
+      ],
+      "properties": {
+        "schema": {
+          "const": "codicarium.gate-013-evidence/v1"
+        },
+        "gate_id": {
+          "const": "GATE-013"
+        },
+        "evidence_class": {
+          "enum": [
+            "synthetic",
+            "live"
+          ]
+        },
+        "publication_authority": {
+          "type": "boolean"
+        },
+        "observed_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "result": {
+          "enum": [
+            "PASS",
+            "FAIL"
+          ]
+        },
+        "command_outputs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "command_id",
+              "sha256"
+            ],
+            "properties": {
+              "command_id": {
+                "type": "string"
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          }
+        }
+      }
+    },
+    "GATE-014": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "gate_id",
+        "evidence_class",
+        "publication_authority",
+        "observed_at",
+        "command_outputs",
+        "result"
+      ],
+      "properties": {
+        "schema": {
+          "const": "codicarium.gate-014-evidence/v1"
+        },
+        "gate_id": {
+          "const": "GATE-014"
+        },
+        "evidence_class": {
+          "enum": [
+            "synthetic",
+            "live"
+          ]
+        },
+        "publication_authority": {
+          "type": "boolean"
+        },
+        "observed_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "result": {
+          "enum": [
+            "PASS",
+            "FAIL"
+          ]
+        },
+        "command_outputs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "command_id",
+              "sha256"
+            ],
+            "properties": {
+              "command_id": {
+                "type": "string"
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          }
+        }
+      }
+    },
+    "GATE-015": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "gate_id",
+        "evidence_class",
+        "publication_authority",
+        "observed_at",
+        "command_outputs",
+        "result"
+      ],
+      "properties": {
+        "schema": {
+          "const": "codicarium.gate-015-evidence/v1"
+        },
+        "gate_id": {
+          "const": "GATE-015"
+        },
+        "evidence_class": {
+          "enum": [
+            "synthetic",
+            "live"
+          ]
+        },
+        "publication_authority": {
+          "type": "boolean"
+        },
+        "observed_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "result": {
+          "enum": [
+            "PASS",
+            "FAIL"
+          ]
+        },
+        "command_outputs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "command_id",
+              "sha256"
+            ],
+            "properties": {
+              "command_id": {
+                "type": "string"
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

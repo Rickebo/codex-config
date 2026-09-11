@@ -1,0 +1,85 @@
+{
+  "meta": {
+    "id": "SPEC-example-feature",
+    "title": "Example Feature Title",
+    "author": "manager",
+    "created_at": "2026-01-01T00:00:00Z",
+    "version": "0.1.0"
+  },
+  "feature": {
+    "problem_statement": "Describe the user or business problem this feature solves.",
+    "goals": [
+      "Goal 1"
+    ],
+    "non_goals": [
+      "Non-goal 1"
+    ],
+    "scope_in": [
+      "In-scope item"
+    ],
+    "scope_out": [
+      "Out-of-scope item"
+    ]
+  },
+  "requirements": [
+    {
+      "id": "REQ-001",
+      "priority": "MUST",
+      "statement": "System MUST do X when Y.",
+      "rationale": "Why this is required."
+    }
+  ],
+  "acceptance_criteria": [
+    {
+      "id": "AC-001",
+      "requirement_ids": ["REQ-001"],
+      "scenario": "Given precondition A, When action B, Then outcome C."
+    }
+  ],
+  "test_plan": [
+    {
+      "id": "TST-001",
+      "type": "integration",
+      "requirement_ids": ["REQ-001"],
+      "approach": "How the requirement will be tested."
+    }
+  ],
+  "traceability": [
+    {
+      "requirement_id": "REQ-001",
+      "acceptance_ids": ["AC-001"],
+      "test_ids": ["TST-001"],
+      "review_checks": [
+        "Code paths and edge cases reviewed."
+      ],
+      "validation_checks": [
+        "Requirement verified against expected behavior."
+      ]
+    }
+  ],
+  "quality_gates": {
+    "spec_review_required": true,
+    "testability_required": true,
+    "traceability_required": true
+  },
+  "council": {
+    "perspectives": [
+      {
+        "role": "planner",
+        "summary": "Planning perspective summary."
+      },
+      {
+        "role": "reviewer",
+        "summary": "Risk and correctness perspective summary."
+      },
+      {
+        "role": "tech_lead_qa",
+        "summary": "Testability and quality-gate perspective summary."
+      }
+    ],
+    "consensus_summary": "Consensus decisions and tradeoffs.",
+    "open_questions": [
+      "Any unresolved question."
+    ]
+  }
+}

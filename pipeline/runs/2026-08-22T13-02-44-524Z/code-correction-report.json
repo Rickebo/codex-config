@@ -1,0 +1,31 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Corrected the review findings: comma-delimited URI-safe environment allowlists, printable-ASCII bearer token validation and safe non-ASCII rejection, and environment-only token configuration.",
+  "changed_files": [
+    "src/agent_mcp/config.py",
+    "src/agent_mcp/cli.py",
+    "src/agent_mcp/server.py",
+    "tests/test_config.py",
+    "tests/test_cli.py",
+    "tests/integration/test_http_transports.py",
+    "README.md",
+    "deploy/systemd/agent-mcp.env.example"
+  ],
+  "validation": [
+    "Full pytest: 93 passed",
+    "Focused config/CLI/HTTP tests: 34 passed",
+    "Independent comma-delimiter probe preserved dev.example:* and https://dev.example:* patterns",
+    "Ruff passed",
+    "mypy src passed",
+    "git diff --check passed",
+    "serve --help no longer exposes --auth-token"
+  ],
+  "blockers": [
+    "mypy . remains nonzero with 34 existing test typing errors; runtime source typing is clean and this was not introduced by the feature."
+  ],
+  "next_action": "Repeat independent security/correctness review of the corrected diff.",
+  "route_to": "review",
+  "risk_level": "high",
+  "independent_lanes": ["configuration and CLI", "ASGI authentication and transport policy", "tests and operational documentation"]
+}

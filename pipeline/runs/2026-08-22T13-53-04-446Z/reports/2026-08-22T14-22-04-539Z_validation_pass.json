@@ -1,0 +1,37 @@
+{
+  "stage": "validation",
+  "status": "pass",
+  "summary": "The private repository and feature PR are published, the final branch is clean and synchronized, and the GitHub Actions Helm job passes on the pushed head commit.",
+  "changed_files": [
+    ".github/workflows/validate.yaml",
+    ".gitignore",
+    ".helmignore",
+    "Chart.yaml",
+    "Chart.lock",
+    "README.md",
+    "scripts/validate.rb",
+    "templates/_keep.tpl",
+    "values.schema.json",
+    "values.yaml"
+  ],
+  "validation": [
+    "Private repository rickebo-com/kafka-config exists with default branch main",
+    "PR #2 is open from feat/redpanda-config at b704f197a6d22575cf94a674b39331b0953a85f5 against main",
+    "GitHub Actions run 32578432008 / job 97044101096 passed: repository setup, Helm/Ruby setup, public repo add, dependency build, lint, render inspection, and schema-negative drift test",
+    "Feature worktree and base clone are clean; base main remains at 2c76d14 and feature branch tracks origin",
+    "Chart.lock pins redpanda 5.10.2 from https://charts.redpanda.com with digest sha256:2a9ee5b946c1b2fca6e3b07b5d952c8f7f14a0fbd9912c96f0225b96a97826e2"
+  ],
+  "blockers": [],
+  "next_action": "Finish the goal with the repository, branch, commit, PR, changed-file, and validation handoff; do not merge or alter pve-infra in this scoped task.",
+  "spec_file": "/tmp/kafka-config-feature-spec.json",
+  "spec_check_file": "/tmp/kafka-config-feature-spec-check.json",
+  "council_file": "/tmp/kafka-config-council.json",
+  "requires_council": true,
+  "independent_lanes": [
+    "Local Helm/rendered contract validation",
+    "GitHub repository, PR, and CI validation"
+  ],
+  "route_to": "done",
+  "risk_level": "high",
+  "issues": []
+}

@@ -1,0 +1,117 @@
+{
+  "meta": {
+    "id": "SPEC-132-reconcile-canonical-status",
+    "title": "Reconcile canonical README, release status, and stale rollout trackers",
+    "author": "Codex manager",
+    "created_at": "2026-08-21T03:35:00+02:00",
+    "version": "1.0"
+  },
+  "feature": {
+    "problem_statement": "Canonical README and deployment/operator trackers still describe the browser UI as a fixture-only preview, repeat closed issue #65 as a live blocker, and hardcode an obsolete chart version despite the implemented API-backed UI and current desired-state descriptor.",
+    "goals": [
+      "Make the README accurately distinguish shipped API-backed authenticated UI from remaining autonomous and live-acceptance work.",
+      "Align .codicarium/README.md, deployment docs, and operator quickstart with the current desired chart version and historical-vs-active blocker wording.",
+      "Preserve honest uncertainty: do not claim a fresh live DEV rollout or close unresolved #4/#28 acceptance work without evidence.",
+      "Record tracker comments that preserve #97 history and clarify remaining #4/#28 scope."
+    ],
+    "non_goals": [
+      "Changing application code, runtime routes, deployment state, or GitHub rulesets.",
+      "Claiming current live chart/image health without an explicit DEV readback.",
+      "Reopening or closing issues solely to make documentation look tidy."
+    ],
+    "scope_in": [
+      "README product status, feature table, architecture/tree, limitations, and roadmap.",
+      ".codicarium/README.md, docs/deployment.md, docs/operator-quickstart.md stale version/blocker statements.",
+      "Focused docs/quickstart consistency tests and required GitHub tracker comments."
+    ],
+    "scope_out": ["Live cluster mutation", "Secret changes", "Application UI redesign"]
+  },
+  "requirements": [
+    {
+      "id": "REQ-132-001",
+      "priority": "MUST",
+      "statement": "README must describe the implemented authenticated API-backed web UI, its list/detail/timeline routes, and the remaining live acceptance boundary without calling it fixture-only or planned API work.",
+      "rationale": "The repository source and PR #94 contradict the old preview-only status."
+    },
+    {
+      "id": "REQ-132-002",
+      "priority": "MUST",
+      "statement": "README and deployment trackers must use .codicarium/dev/deploy.yaml chart version 0.1.29 as desired-state evidence and must not present closed issue #65 as an active blocker.",
+      "rationale": "Hardcoded 0.1.18 and an old Nexus incident mislead operators about current desired state."
+    },
+    {
+      "id": "REQ-132-003",
+      "priority": "MUST",
+      "statement": "Documentation must preserve honest boundaries: #97 remains completed history, #4 remains open for authenticated/live acceptance scope, and #28 remains open/blocked where durable DeploymentGrant evidence is absent.",
+      "rationale": "Docs must not erase unresolved operational acceptance or claim unverified rollout completion."
+    },
+    {
+      "id": "REQ-132-004",
+      "priority": "SHOULD",
+      "statement": "Documentation validation must fail on reintroduced obsolete preview markers, 0.1.18 tracker references, or contradictory closed-issue blocker wording in the maintained status surfaces.",
+      "rationale": "The reconciliation should remain durable across future roadmap edits."
+    }
+  ],
+  "acceptance_criteria": [
+    {
+      "id": "AC-132-001",
+      "requirement_ids": ["REQ-132-001"],
+      "scenario": "Given apps/web/src and the live UI routes, when a reader uses README, then shipped UI status, architecture, limitations, and roadmap agree that authenticated list/detail/timeline behavior is implemented while broader controls/autonomy remain future work."
+    },
+    {
+      "id": "AC-132-002",
+      "requirement_ids": ["REQ-132-002"],
+      "scenario": "Given the desired-state descriptor, when maintained docs are checked, then chart 0.1.29 is the only current desired version and issue #65 is described only as historical/resolved context."
+    },
+    {
+      "id": "AC-132-003",
+      "requirement_ids": ["REQ-132-003"],
+      "scenario": "Given tracker comments and docs, when an operator evaluates acceptance, then #97 is not reopened, #4 remains scoped to live authenticated acceptance, and #28 remains blocked pending reviewed DeploymentGrant evidence."
+    },
+    {
+      "id": "AC-132-004",
+      "requirement_ids": ["REQ-132-004"],
+      "scenario": "Given a fixture-only marker, 0.1.18 marker, or active #65 blocker added to maintained docs, when docs checks run, then validation fails with an actionable message."
+    }
+  ],
+  "test_plan": [
+    {
+      "id": "TST-132-001",
+      "type": "documentation",
+      "requirement_ids": ["REQ-132-001", "REQ-132-002", "REQ-132-003"],
+      "approach": "Run docs-check, quickstart semantic checker, and exact rg assertions over maintained status surfaces; inspect links and route names."
+    },
+    {
+      "id": "TST-132-002",
+      "type": "regression",
+      "requirement_ids": ["REQ-132-004"],
+      "approach": "Add focused checker fixtures for obsolete chart/blocker/preview markers and require the desired-state version to match deploy.yaml."
+    },
+    {
+      "id": "TST-132-003",
+      "type": "repository",
+      "requirement_ids": ["REQ-132-001", "REQ-132-002"],
+      "approach": "Run existing make ci documentation/workflow checks and inspect git diff/checksums; no runtime mutation is required."
+    }
+  ],
+  "traceability": [
+    {"requirement_id":"REQ-132-001","acceptance_ids":["AC-132-001"],"test_ids":["TST-132-001","TST-132-003"],"review_checks":["No fixture-only or planned-live contradictions remain"],"validation_checks":["Docs checker and hosted validate pass"]},
+    {"requirement_id":"REQ-132-002","acceptance_ids":["AC-132-002"],"test_ids":["TST-132-001","TST-132-002"],"review_checks":["Version derives from desired-state descriptor"],"validation_checks":["No obsolete 0.1.18 marker remains"]},
+    {"requirement_id":"REQ-132-003","acceptance_ids":["AC-132-003"],"test_ids":["TST-132-001"],"review_checks":["No issue is incorrectly closed/reopened"],"validation_checks":["Tracker comments recorded"]},
+    {"requirement_id":"REQ-132-004","acceptance_ids":["AC-132-004"],"test_ids":["TST-132-002"],"review_checks":["Negative documentation fixtures fail closed"],"validation_checks":["Hosted validate runs checker"]}
+  ],
+  "quality_gates": {
+    "spec_review_required": true,
+    "testability_required": true,
+    "traceability_required": true
+  },
+  "council": {
+    "perspectives": [
+      {"role":"planner_lite","summary":"Keep the change documentation-only and derive version facts from the committed desired-state descriptor."},
+      {"role":"reviewer_lite","summary":"Avoid overclaiming live rollout and preserve open/blocked tracker scope for #4 and #28."},
+      {"role":"tech_lead_qa","summary":"Add focused negative documentation checks while retaining the existing quickstart semantic safety checker."}
+    ],
+    "consensus_summary":"Reconcile shipped UI facts and desired chart state, preserve unresolved operational acceptance boundaries, and add lightweight regression checks.",
+    "open_questions":[]
+  }
+}

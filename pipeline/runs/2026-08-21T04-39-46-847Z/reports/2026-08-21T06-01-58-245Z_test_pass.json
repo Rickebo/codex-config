@@ -1,0 +1,37 @@
+{
+  "stage": "test",
+  "status": "pass",
+  "summary": "Exact-head QA passed remediation commit 12d02f7bef8e9f4dacb727ae6c4a2caec514e0f6 with full repository, workflow, Helm, Docker, vulnerability, and metadata coverage.",
+  "changed_files": [
+    ".github/dependabot.yml",
+    ".github/workflows/ci.yml",
+    ".github/workflows/release.yml",
+    "Dockerfile",
+    "Makefile",
+    "charts/agent-orchestrator/values.yaml",
+    "docs/deployment.md",
+    "go.mod",
+    "go.sum",
+    "tools/check_supply_chain.py",
+    "tools/generate_release_metadata.py",
+    "tools/supply_chain_images.json",
+    "tools/test_check_supply_chain.py",
+    "tools/test_generate_release_metadata.py"
+  ],
+  "validation": [
+    "Python supply-chain and metadata tests passed (5 tests)",
+    "make ci passed serially including Go, web, migrations, Docker, Helm, and workflow parsing",
+    "go test ./... and go vet ./... passed",
+    "govulncheck v1.1.4 reported zero code vulnerabilities",
+    "actionlint and both workflow parser checks passed",
+    "Helm lint/contracts and strict pinned kubeconform validation passed",
+    "Release digest and chart-version checks passed",
+    "git diff --check passed"
+  ],
+  "blockers": [
+    "Host kubeconform, ShellCheck, and yamllint binaries are unavailable; pinned kubeconform container validation passed. A transient npm ENOTEMPTY cleanup failure was resolved by an immediate passing serial retry.",
+    "Nexus OCI referrer/signing support and admission enforcement remain external unverified prerequisites."
+  ],
+  "next_action": "Create PR from the exact remediation head and run hosted validation before protected merge evaluation.",
+  "route_to": "validation"
+}

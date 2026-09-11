@@ -1,0 +1,51 @@
+{
+  "schema": "codicarium.kube-context-binding/v1",
+  "kubeconfig": "/home/rickebo/.kube/codicarium-dev.yaml",
+  "context": "codicarium-dev",
+  "api_server": "https://10.99.0.21:6443",
+  "ca_pem_sha256": "c73f41a70db74a9e1020ce84bf27227e0523055d3156d8d47ef31d41a3e3b935",
+  "kube_system_uid": "03dea961-55e6-4141-bb23-6cb4b9f79681",
+  "kubernetes_service": {
+    "namespace": "default",
+    "service": "kubernetes",
+    "cluster_ip": "10.43.0.1",
+    "port": 443,
+    "accepted_audience": "https://kubernetes.default.svc",
+    "accepted_audience_status": "REQUIRED_PREACTIVATION_TOKENREVIEW_PROBE",
+    "ca_pem_sha256": "c73f41a70db74a9e1020ce84bf27227e0523055d3156d8d47ef31d41a3e3b935",
+    "certificate_dns_san": "kubernetes.default.svc",
+    "tls_san_status": "REQUIRED_PREACTIVATION_TLS_PROBE",
+    "discovery_command": "kubectl --kubeconfig=/home/rickebo/.kube/codicarium-dev.yaml --context=codicarium-dev --namespace=default get service kubernetes"
+  },
+  "dns": {
+    "namespace": "kube-system",
+    "service": "kube-dns",
+    "cluster_ip": "10.43.0.10",
+    "port": 53,
+    "protocols": [
+      "UDP",
+      "TCP"
+    ]
+  },
+  "monitoring": {
+    "namespace": "monitoring",
+    "namespace_uid": "f78cd9cb-d069-4bde-bc56-33686eef5968",
+    "namespace_labels": [
+      "kubernetes.io/metadata.name=monitoring"
+    ],
+    "prometheus_pod_labels": [
+      "app.kubernetes.io/instance=prometheus-stack-prometheus",
+      "app.kubernetes.io/name=prometheus",
+      "operator.prometheus.io/name=prometheus-stack-prometheus",
+      "operator.prometheus.io/shard=0",
+      "prometheus=prometheus-stack-prometheus"
+    ]
+  },
+  "commands": [
+    "kubectl --kubeconfig=/home/rickebo/.kube/codicarium-dev.yaml --context=codicarium-dev config view --minify -o json",
+    "kubectl --kubeconfig=/home/rickebo/.kube/codicarium-dev.yaml --context=codicarium-dev get --raw=/version",
+    "kubectl --kubeconfig=/home/rickebo/.kube/codicarium-dev.yaml --context=codicarium-dev get namespace kube-system -o json",
+    "kubectl --kubeconfig=/home/rickebo/.kube/codicarium-dev.yaml --context=codicarium-dev get namespace monitoring -o json"
+  ],
+  "mutation_guard": "Every cluster command includes the exact --kubeconfig and --context flags; server, CA PEM SHA-256, context, or kube-system UID mismatch exits before every mutation."
+}

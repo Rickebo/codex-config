@@ -1,0 +1,24 @@
+{
+  "stage": "validation",
+  "status": "pass",
+  "summary": "Release run 32571915272 published immutable linux/amd64 application and migration images, chart 0.1.31, SBOM/provenance metadata, merged the protected DEV bump PR, and the explicit codicarium-dev rollout is Synced/Healthy with healthz and readyz passing.",
+  "changed_files": [
+    ".github/workflows/release.yml",
+    "tools/test_docker_smoke.py",
+    "Makefile",
+    ".codicarium/dev/deploy.yaml"
+  ],
+  "validation": [
+    "Hosted release run 32571915272 completed successfully.",
+    "Immutable application image digest sha256:143d274fad3c49276065fbf9e0e444081e04d8c3978b834e737734866535ec71 pulled as linux/amd64 and smoke passed.",
+    "Migration image postgres@sha256:18cfe3ef5e6815560c98237d6216d1e5119702fb0f3894c8785dd58b8bbe5d73 completed successfully in DEV.",
+    "Chart 0.1.31 published; SBOM/provenance artifact agent-orchestrator-release-metadata-0.1.31 is available.",
+    "Protected DEV bump PR 178 passed validate and merged as caf97da4693dd56f2e8f434dd882ba4c1a14bfa0.",
+    "Explicit kubeconfig /home/rickebo/.kube/codicarium-dev.yaml context codicarium-dev: Argo dev-agent-orchestrator Synced/Healthy/Succeeded.",
+    "DEV deployment is 1/1 ready on the immutable application digest; /healthz returned 200 status ok and /readyz returned 200 status ready."
+  ],
+  "blockers": [],
+  "next_action": "Reconcile issue #128 and Project #3 to Done/Idle with the release and DEV rollout evidence, then clean only obsolete merged branches/worktrees.",
+  "route_to": "done",
+  "risk_level": "high"
+}

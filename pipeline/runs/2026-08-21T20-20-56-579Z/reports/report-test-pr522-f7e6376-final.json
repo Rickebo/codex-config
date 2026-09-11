@@ -1,0 +1,28 @@
+{
+  "stage": "test",
+  "status": "pass",
+  "summary": "Final exact-head TEST pass for PR #522 commit f7e637629375aa42faabe6a286b898d4bb833e90; all changed-scope checks pass and the lane routes to validation.",
+  "changed_files": [],
+  "validation": [
+    "Disposable GitHub checkout resolved exact head f7e637629375aa42faabe6a286b898d4bb833e90, parent 4b5e3b1da62ea02d24d37c943683f9d865e22f92, and remained clean.",
+    "pytest -q tests/test_workspace_context_llm_proxy_gitops.py: 13 passed in 3.13s.",
+    "Fake-Kopia dual-snapshot fixture passed with marker=workspace-context-synthetic-v1 and count=2; it asserted restored DB rows plus graph path, size, and SHA-256 manifest values.",
+    "workspace-context/tests/static.sh passed; helm lint --strict workspace-context and llm-proxy both passed.",
+    "Exact Argo render matrix passed: both actual inline gate-off applications rendered without target workload/storage kinds; enabled Workspace Context, LLM restore, identity, and illegal-gate cases passed (5 selected tests).",
+    "YAML application parsing, bash -n, git diff --check, and protected-path checks passed; PR diff contains only the three expected changed files.",
+    "PYTHONPATH=. pytest -q at HEAD: 2 failed, 233 passed, 1 skipped; the same two unrelated failure IDs reproduce at the parent baseline, so they are not changed-scope blockers.",
+    "Current-run pipeline CI audit: ok=true, checked_runs=1, failed_runs=0, warnings=0; loop_count=6/6. GitHub PR checks/statuses currently report zero runs/statuses.",
+    "No repository source, deployment environment, Argo, cluster, NAS, credential, approval, or merge mutation was performed."
+  ],
+  "blockers": [],
+  "next_action": "Route to validation for downstream runtime/provider/NAS/operational readiness checks; do not approve or merge in this lane.",
+  "route_to": "validation",
+  "risk_level": "high",
+  "requires_council": false,
+  "independent_lanes": [
+    "Focused behavior and fake-Kopia dual-snapshot restore",
+    "Helm, Argo render matrices, static, YAML/bash, diff, and protected checks",
+    "Full-suite baseline comparison and current-run CI/PR check inspection"
+  ],
+  "issues": []
+}

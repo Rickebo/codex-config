@@ -1,0 +1,32 @@
+{
+  "stage": "spec",
+  "status": "pass",
+  "summary": "Three council perspectives converged on a testable dev-only admission remediation. The exact writer must be fenced by a platform-owned dev namespace set before the existing fresh unique DeploymentGrant/Profile join, with canonical subjects and roleRef preserved. Admission stays disabled; the merged image-size controls stay intact; merge, release, deployment, and enablement remain separate gates.",
+  "changed_files": [
+    "/home/rickebo/.codex/pipeline/runs/2026-08-31T05-30-28-734Z/feature-spec.json",
+    "/home/rickebo/.codex/pipeline/runs/2026-08-31T05-30-28-734Z/spec-check.json",
+    "/home/rickebo/.codex/pipeline/runs/2026-08-31T05-30-28-734Z/council.json"
+  ],
+  "validation": [
+    "Feature spec defines 8 testable MUST requirements, 6 Given/When/Then acceptance criteria, 5 test lanes, and complete requirement traceability.",
+    "pipeline-spec-check passed requirements, acceptance, traceability, testability, and minimum-three-perspective council gates with no errors or warnings.",
+    "Current remote main was re-snapshotted as 26e4b12e3932d7eb97cc1e78f90110fb03034827; local default checkout was identified as stale and will not be used as branch authority.",
+    "PR #153 image-size remediation is already merged; this pipeline will preserve it rather than duplicate or weaken the publisher boundary.",
+    "Admission and access-controller remain disabled/undeployed; no release, deployment, or live authorization mutation is authorized."
+  ],
+  "blockers": [
+    "Immutable release remains separately blocked by issue #171/PR #172 and is outside the code implementation gate; it does not block dev-boundary source remediation."
+  ],
+  "next_action": "Create a fresh current-main worktree and delegate the exact dev-only validator/config/chart/test implementation to a Luna code worker, with no release or live enablement.",
+  "route_to": "code",
+  "risk_level": "critical",
+  "requires_council": true,
+  "independent_lanes": [
+    "admission runtime and validator policy",
+    "chart schema/templates and dormant rendering",
+    "artifact/supply-chain regression verification"
+  ],
+  "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-31T05-30-28-734Z/feature-spec.json",
+  "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-08-31T05-30-28-734Z/spec-check.json",
+  "council_file": "/home/rickebo/.codex/pipeline/runs/2026-08-31T05-30-28-734Z/council.json"
+}

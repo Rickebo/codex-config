@@ -1,0 +1,53 @@
+{
+  "stage": "spec",
+  "status": "fail",
+  "summary": "Spec re-audit remains blocked: published S3 support removes the application-code concern, but source WAL/artifact closure, target storage/restore, and target identity/secret decisions are unresolved.",
+  "changed_files": [
+    ".codex/pipeline/runs/2026-08-21T20-20-56-579Z/spec-reaudit-20260821T214126Z.json",
+    ".codex/pipeline/runs/2026-08-21T20-20-56-579Z/spec-decisions-required-20260821T214126Z.json",
+    ".codex/pipeline/runs/2026-08-21T20-20-56-579Z/council-reaudit-20260821T214126Z.json"
+  ],
+  "validation": [
+    "Explicit source identity remains codicarium-dev; both source Argo applications and CNPG/Barman plugins are healthy.",
+    "Explicit target identity remains homelab/default; llm-proxy-worker remains Synced/Healthy and 2/2 central-connected.",
+    "Published chart/config supports runtime.artifacts.backend=s3 with separate builder/reader/GC ExternalSecret credentials.",
+    "Candidate cutoff and 1,353 database-side graph revisions are known; exact WAL/object closure is not.",
+    "Target BackupTarget is available, but no retained-volume coverage or target-only restore drill exists.",
+    "Plan/controller/worktree boundaries remain unchanged; no target or source mutation occurred."
+  ],
+  "blockers": [
+    "Barman WAL continuity through the candidate cutoff remains unproven; cloud-side read-only object listing or sanitized archive output is required.",
+    "All referenced S3 artifact existence and SHA metadata remain unclosed without narrowly scoped read-only metadata access.",
+    "No safe target-owned >=100Gi artifact backend is proven: Longhorn is overscheduled, extra disk is NotReady, NFS RWX PVs are bound, and no object-store path is evidenced.",
+    "Target-only backup/restore, retention, and artifact recoverability are unproven.",
+    "OIDC SecretStore RBAC is missing; mapping includes codicarium-users; target-only identity and fresh credential decisions are unresolved.",
+    "Retained ownerless 5Gi/10Gi PVC provenance and disposition remain unresolved."
+  ],
+  "next_action": "Resolve decisions D-001 through D-004 in the accompanying decision record; then re-audit spec gates before any wrapper code, target resource creation, or restore.",
+  "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-21T20-20-56-579Z/feature-spec.json",
+  "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-08-21T20-20-56-579Z/spec-reaudit-check-20260821T214126Z.json",
+  "council_file": "/home/rickebo/.codex/pipeline/runs/2026-08-21T20-20-56-579Z/council-reaudit-20260821T214126Z.json",
+  "requires_council": true,
+  "independent_lanes": [
+    "source Barman/WAL continuity",
+    "target-owned artifact storage feasibility",
+    "homelab OIDC and secret-manager feasibility",
+    "pve-infra artifact backend and GitOps mapping"
+  ],
+  "route_to": "spec",
+  "risk_level": "high",
+  "issues": [
+    {
+      "id": "GH-482",
+      "title": "Homelab Workspace Context + LLM Proxy point-in-time clone",
+      "severity": "high",
+      "details": "Parent remains open; implementation is not authorized while spec gates fail."
+    },
+    {
+      "id": "GH-483",
+      "title": "Inventory and cutoff for homelab Workspace Context + LLM Proxy clone",
+      "severity": "high",
+      "details": "Inventory remains open; latest source, storage, and artifact-contract evidence is recorded in the run directory."
+    }
+  ]
+}

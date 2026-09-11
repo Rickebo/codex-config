@@ -1,0 +1,54 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Fresh four-lane review of clean HEAD 447dee9 found three in-scope reliability blockers: failed Insights pending drains can become permanently stranded after predecessor redelivery, LocalDotNetProcess publishes exit state before its diagnostic marker, and system resource sets suppress cleanup retries after transient disposal failure. Cross-service contracts and authentication had no blocking findings.",
+  "changed_files": [],
+  "validation": [
+    "Backend, cross-service, QA, and system-fixture reviewers independently inspected 447dee9 against published baseline 72728d1",
+    "Backend and QA independently reproduced the exact Insights control-flow path from committed Gap through failed drain, predecessor Duplicate redelivery, offset commit, and stranded retryable row",
+    "System-fixture review observed the LocalDotNetProcess spawn-child-and-exit theory fail once and pass on rerun, matching the exit-state/diagnostic ordering race",
+    "System cleanup review traced disposed flags being published before resource disposal completes, preventing a later retry after transient cleanup failure",
+    "Cross-service review found no blocking Source, Knowledge, Workspace, Model, HMAC, OpenAPI, CloudEvent, or service-ownership mismatch",
+    "Prior final-head evidence remains green: Source 35/35, Knowledge 111/111 plus 19/19 and runtime 3/3, Insights 12/12 plus 17/17, builds/spec/format/cleanup gates",
+    "Candidate worktree remained clean at 447dee9 and git diff --check passed",
+    "Formal test-stage FastSystem rerun and clean-main/candidate Model crash comparison remain intentionally unopened"
+  ],
+  "blockers": [
+    "Insights can strand a committed Gap successor forever when its drain fails and the predecessor redelivery is Duplicate, because only Accepted events trigger DrainPendingAsync and no independent reconciler exists.",
+    "LocalDotNetProcess publishes HasExited before appending the exit diagnostic marker, so callers can observe exit without the required diagnostics and focused coverage is flaky.",
+    "AsyncResourceSet and system container resource sets mark themselves disposed before cleanup succeeds, so a transient disposal failure makes retry a no-op and can leak run-owned resources."
+  ],
+  "next_action": "Return to code for bounded fixes and deterministic regressions for Insights duplicate-redelivery drain recovery, exit-marker ordering, and retryable resource disposal; then repeat formal review.",
+  "route_to": "code",
+  "risk_level": "high",
+  "issues": [
+    {
+      "id": "REV7-INSIGHTS-001",
+      "title": "Failed pending drain can strand a committed gap event",
+      "severity": "high",
+      "details": "After a Gap offset is committed, predecessor activation may fail while draining the retryable successor. Redelivery returns Duplicate, and the worker commits without another drain. Safely drain on duplicate or add a durable reconciler and a restart regression.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV7-SYSTEM-001",
+      "title": "Process exit state races diagnostic publication",
+      "severity": "high",
+      "details": "LocalDotNetProcess sets the exited signal before appending the diagnostic marker. Record and synchronize diagnostics before publishing HasExited, or await output drain, and make the focused theory deterministic.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV7-SYSTEM-002",
+      "title": "Failed resource cleanup cannot be retried",
+      "severity": "high",
+      "details": "AsyncResourceSet, SystemContainerResources, and RealServiceContainerResources set disposed before all cleanup succeeds. Publish disposed only after success or retain failed resources for retry, with injected-failure coverage.",
+      "owner_stage": "code"
+    }
+  ],
+  "independent_lanes": [
+    "backend transaction, ordering, leases, and crash recovery",
+    "cross-service contracts, HMAC, CloudEvents, and ownership",
+    "QA requirement and acceptance traceability",
+    "system process, Kafka, diagnostics, and cleanup reliability"
+  ],
+  "requires_council": false
+}

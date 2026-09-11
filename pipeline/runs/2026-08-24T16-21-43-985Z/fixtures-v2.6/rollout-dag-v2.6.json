@@ -1,0 +1,3054 @@
+{
+  "schema": "codicarium.release-fsm/v2.6",
+  "root": "S00",
+  "nodes": [
+    {
+      "id": "S00",
+      "owner": "release-platform-config",
+      "scope": "release-orchestration",
+      "stage": null,
+      "command_id": "cmd.S00",
+      "schema_id": "payload.v2.6",
+      "command_digest": "d383008e1897254de1e508408f64520a8f6e5d767475359de9c0a7a205d21918",
+      "command_argv": [
+        "codex-v2.6",
+        "S00",
+        "cmd.S00"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N01"
+      ],
+      "success_predecessors": [],
+      "success_successor": "X01"
+    },
+    {
+      "id": "X01",
+      "owner": "release-platform-config",
+      "scope": "release-orchestration",
+      "stage": null,
+      "command_id": "cmd.X01",
+      "schema_id": "payload.v2.6",
+      "command_digest": "b4c5f3fc60cf2b03d10c9c5dd95b89c2d734dd42a696d20561c7c8f531b30410",
+      "command_argv": [
+        "codex-v2.6",
+        "X01",
+        "cmd.X01"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N02"
+      ],
+      "success_predecessors": [
+        "S00"
+      ],
+      "success_successor": "X02"
+    },
+    {
+      "id": "X02",
+      "owner": "release-platform-config",
+      "scope": "release-orchestration",
+      "stage": null,
+      "command_id": "cmd.X02",
+      "schema_id": "semver.v2.6",
+      "command_digest": "4d7db8d96e091fc7693182800303a5eba6a2d664dcc618d4712ce94804e532b5",
+      "command_argv": [
+        "codex-v2.6",
+        "X02",
+        "cmd.X02"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N03"
+      ],
+      "success_predecessors": [
+        "X01"
+      ],
+      "success_successor": "X03"
+    },
+    {
+      "id": "X03",
+      "owner": "release-platform-config",
+      "scope": "release-orchestration",
+      "stage": null,
+      "command_id": "cmd.X03",
+      "schema_id": "fsm.v2.6",
+      "command_digest": "1d6e4e4993d5d798e27dc428f489ce8f6a491c0b65d920cd86ce69f73707236a",
+      "command_argv": [
+        "codex-v2.6",
+        "X03",
+        "cmd.X03"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N04"
+      ],
+      "success_predecessors": [
+        "X02"
+      ],
+      "success_successor": "X04"
+    },
+    {
+      "id": "X04",
+      "owner": "release-platform-config",
+      "scope": "release-orchestration",
+      "stage": null,
+      "command_id": "cmd.X04",
+      "schema_id": "command.v2.6",
+      "command_digest": "691402ea531989d85832f4de0d28a299ccbec9ed2ff42a94ec805ed405e401f5",
+      "command_argv": [
+        "codex-v2.6",
+        "X04",
+        "cmd.X04"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N05"
+      ],
+      "success_predecessors": [
+        "X03"
+      ],
+      "success_successor": "X05"
+    },
+    {
+      "id": "X05",
+      "owner": "release-platform-config",
+      "scope": "release-orchestration",
+      "stage": null,
+      "command_id": "cmd.X05",
+      "schema_id": "payload.v2.6",
+      "command_digest": "3e1ccf8e945b2232a08f5faf056e173cc336d8318b833b7e8b4e5a9dfd781979",
+      "command_argv": [
+        "codex-v2.6",
+        "X05",
+        "cmd.X05"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N06"
+      ],
+      "success_predecessors": [
+        "X04"
+      ],
+      "success_successor": "X06"
+    },
+    {
+      "id": "X06",
+      "owner": "release-platform-config",
+      "scope": "release-orchestration",
+      "stage": null,
+      "command_id": "cmd.X06",
+      "schema_id": "payload.v2.6",
+      "command_digest": "8cf7c7e7de247322c7990d2747355414180fa770a747e6a2d14d6fca716d3198",
+      "command_argv": [
+        "codex-v2.6",
+        "X06",
+        "cmd.X06"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N07"
+      ],
+      "success_predecessors": [
+        "X05"
+      ],
+      "success_successor": "X07"
+    },
+    {
+      "id": "X07",
+      "owner": "release-platform-config",
+      "scope": "release-orchestration",
+      "stage": null,
+      "command_id": "cmd.X07",
+      "schema_id": "payload.v2.6",
+      "command_digest": "e53bd591753f2d207d7c191adef9c1b722524dd86b49a450ceb916f1fd0130ef",
+      "command_argv": [
+        "codex-v2.6",
+        "X07",
+        "cmd.X07"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N08"
+      ],
+      "success_predecessors": [
+        "X06"
+      ],
+      "success_successor": "X08"
+    },
+    {
+      "id": "X08",
+      "owner": "release-platform-config",
+      "scope": "release-orchestration",
+      "stage": null,
+      "command_id": "cmd.X08",
+      "schema_id": "payload.v2.6",
+      "command_digest": "33e3a131b623a1d30682da8b040200ff4411b638e6591795044d6c9db39db045",
+      "command_argv": [
+        "codex-v2.6",
+        "X08",
+        "cmd.X08"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N09"
+      ],
+      "success_predecessors": [
+        "X07"
+      ],
+      "success_successor": "X09"
+    },
+    {
+      "id": "X09",
+      "owner": "release-platform-config",
+      "scope": "release-orchestration",
+      "stage": null,
+      "command_id": "cmd.X09",
+      "schema_id": "payload.v2.6",
+      "command_digest": "8f1a94c6fb37044655f0bb0030c437473e1f079b0d46cb497f01f82e163f9738",
+      "command_argv": [
+        "codex-v2.6",
+        "X09",
+        "cmd.X09"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N10"
+      ],
+      "success_predecessors": [
+        "X08"
+      ],
+      "success_successor": "X10"
+    },
+    {
+      "id": "X10",
+      "owner": "release-platform-config",
+      "scope": "release-orchestration",
+      "stage": null,
+      "command_id": "cmd.X10",
+      "schema_id": "payload.v2.6",
+      "command_digest": "3f5488b0c150b7894e7e77766ef6b7d214993e51354fe5c1c0a0b0b1035176fe",
+      "command_argv": [
+        "codex-v2.6",
+        "X10",
+        "cmd.X10"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N11"
+      ],
+      "success_predecessors": [
+        "X09"
+      ],
+      "success_successor": "X11"
+    },
+    {
+      "id": "X11",
+      "owner": "release-platform-config",
+      "scope": "release-orchestration",
+      "stage": null,
+      "command_id": "cmd.X11",
+      "schema_id": "payload.v2.6",
+      "command_digest": "89b649e8d5ba56b25edd2abcfd0eaa85a2576ba974c62fa7376e8b3b65d8fea4",
+      "command_argv": [
+        "codex-v2.6",
+        "X11",
+        "cmd.X11"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N12"
+      ],
+      "success_predecessors": [
+        "X10"
+      ],
+      "success_successor": "X12"
+    },
+    {
+      "id": "X12",
+      "owner": "release-platform-config",
+      "scope": "release-orchestration",
+      "stage": null,
+      "command_id": "cmd.X12",
+      "schema_id": "payload.v2.6",
+      "command_digest": "e72b8c8ddd14ea1c9a834a2155df5d84a8d05c2cfb9bdbd0354e22a352dd674f",
+      "command_argv": [
+        "codex-v2.6",
+        "X12",
+        "cmd.X12"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N13"
+      ],
+      "success_predecessors": [
+        "X11"
+      ],
+      "success_successor": "X13"
+    },
+    {
+      "id": "X13",
+      "owner": "release-platform-config",
+      "scope": "release-orchestration",
+      "stage": null,
+      "command_id": "cmd.X13",
+      "schema_id": "payload.v2.6",
+      "command_digest": "8214ea64d74f183d3a6697eb4a0c0577d841564877da66033f09be2b42f40393",
+      "command_argv": [
+        "codex-v2.6",
+        "X13",
+        "cmd.X13"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N14"
+      ],
+      "success_predecessors": [
+        "X12"
+      ],
+      "success_successor": "X14"
+    },
+    {
+      "id": "X14",
+      "owner": "release-platform-config",
+      "scope": "release-orchestration",
+      "stage": "spec",
+      "command_id": "cmd.pipeline.spec",
+      "schema_id": "payload.v2.6",
+      "command_digest": "c1eabcb94ea1c1e9e3b62778ebf9b3b597a19f7ea2101f31122fc4fb79c50ba8",
+      "command_argv": [
+        "codex-v2.6",
+        "pipeline.spec",
+        "cmd.pipeline.spec"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N15"
+      ],
+      "success_predecessors": [
+        "X13"
+      ],
+      "success_successor": "X15"
+    },
+    {
+      "id": "X15",
+      "owner": "release-platform-config",
+      "scope": "release-orchestration",
+      "stage": "code",
+      "command_id": "cmd.pipeline.code",
+      "schema_id": "payload.v2.6",
+      "command_digest": "ab5dc7eb0376604c98beea20f49dec26b9b81eefa217d289dcfb351b40541376",
+      "command_argv": [
+        "codex-v2.6",
+        "pipeline.code",
+        "cmd.pipeline.code"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N16"
+      ],
+      "success_predecessors": [
+        "X14"
+      ],
+      "success_successor": "X16"
+    },
+    {
+      "id": "X16",
+      "owner": "release-platform-config",
+      "scope": "release-orchestration",
+      "stage": "review",
+      "command_id": "cmd.pipeline.review",
+      "schema_id": "payload.v2.6",
+      "command_digest": "f18087d65d613725fe357601015e67fbb0813ea56497e3e83d6d8e22030098ca",
+      "command_argv": [
+        "codex-v2.6",
+        "pipeline.review",
+        "cmd.pipeline.review"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N17"
+      ],
+      "success_predecessors": [
+        "X15"
+      ],
+      "success_successor": "X17"
+    },
+    {
+      "id": "X17",
+      "owner": "release-platform-config",
+      "scope": "release-orchestration",
+      "stage": "test",
+      "command_id": "cmd.pipeline.test",
+      "schema_id": "payload.v2.6",
+      "command_digest": "bb58c1a717332e421194660d53a934e4b53d986ad3b53e30bed63b946b03ea60",
+      "command_argv": [
+        "codex-v2.6",
+        "pipeline.test",
+        "cmd.pipeline.test"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N18"
+      ],
+      "success_predecessors": [
+        "X16"
+      ],
+      "success_successor": "X18"
+    },
+    {
+      "id": "X18",
+      "owner": "release-platform-config",
+      "scope": "release-orchestration",
+      "stage": "validation",
+      "command_id": "cmd.pipeline.validation",
+      "schema_id": "payload.v2.6",
+      "command_digest": "bc8a40f150bc9946084a056585d9b776b82e33ebee160cab5b48bc7f3d5773b3",
+      "command_argv": [
+        "codex-v2.6",
+        "pipeline.validation",
+        "cmd.pipeline.validation"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N19"
+      ],
+      "success_predecessors": [
+        "X17"
+      ],
+      "success_successor": "X19"
+    },
+    {
+      "id": "X19",
+      "owner": "release-platform-config",
+      "scope": "release-orchestration",
+      "stage": null,
+      "command_id": "cmd.admin.normal",
+      "schema_id": "admin.v2.6",
+      "command_digest": "82c6e0018c16ea4eae36ee1482587e7096b8e8d45735bcbdcf6974dbce9d5ede",
+      "command_argv": [
+        "codex-v2.6",
+        "admin.normal",
+        "cmd.admin.normal"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N20"
+      ],
+      "success_predecessors": [
+        "X18"
+      ],
+      "success_successor": "X20"
+    },
+    {
+      "id": "X20",
+      "owner": "release-platform-config",
+      "scope": "release-orchestration",
+      "stage": null,
+      "command_id": "cmd.X20",
+      "schema_id": "payload.v2.6",
+      "command_digest": "55899460e0aad1bc3cafc23d110dbc873b267a37757aab6e6ea7150d78121ede",
+      "command_argv": [
+        "codex-v2.6",
+        "X20",
+        "cmd.X20"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N21"
+      ],
+      "success_predecessors": [
+        "X19"
+      ],
+      "success_successor": "X21"
+    },
+    {
+      "id": "X21",
+      "owner": "release-platform-config",
+      "scope": "release-orchestration",
+      "stage": null,
+      "command_id": "cmd.X21",
+      "schema_id": "payload.v2.6",
+      "command_digest": "b62957f7ae5b73a053dd3769369012b5944a7bfd81fdc411c1e53f8bc74a0d8d",
+      "command_argv": [
+        "codex-v2.6",
+        "X21",
+        "cmd.X21"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N22"
+      ],
+      "success_predecessors": [
+        "X20"
+      ],
+      "success_successor": "X22"
+    },
+    {
+      "id": "X22",
+      "owner": "release-platform-config",
+      "scope": "release-orchestration",
+      "stage": null,
+      "command_id": "cmd.X22",
+      "schema_id": "payload.v2.6",
+      "command_digest": "70d32e8e591a1e5fd25832c25d452ac592b22ba3bae3de139daadc8fc477be8d",
+      "command_argv": [
+        "codex-v2.6",
+        "X22",
+        "cmd.X22"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N23"
+      ],
+      "success_predecessors": [
+        "X21"
+      ],
+      "success_successor": "X23"
+    },
+    {
+      "id": "X23",
+      "owner": "release-platform-config",
+      "scope": "release-orchestration",
+      "stage": null,
+      "command_id": "cmd.X23",
+      "schema_id": "payload.v2.6",
+      "command_digest": "9fbc9421013a7c8f552ea2502ef731178e088f0da114aac9f7034f9b2777e95b",
+      "command_argv": [
+        "codex-v2.6",
+        "X23",
+        "cmd.X23"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N24"
+      ],
+      "success_predecessors": [
+        "X22"
+      ],
+      "success_successor": "X24"
+    },
+    {
+      "id": "X24",
+      "owner": "release-platform-config",
+      "scope": "release-orchestration",
+      "stage": null,
+      "command_id": "cmd.X24",
+      "schema_id": "payload.v2.6",
+      "command_digest": "c8de1a27a2bf0fe4193304c7628b6e0d3d719618a4ac8aef4cac13adc2fcd903",
+      "command_argv": [
+        "codex-v2.6",
+        "X24",
+        "cmd.X24"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N01"
+      ],
+      "success_predecessors": [
+        "X23"
+      ],
+      "success_successor": "X25"
+    },
+    {
+      "id": "X25",
+      "owner": "release-platform-config",
+      "scope": "release-orchestration",
+      "stage": null,
+      "command_id": "cmd.admin.breakglass",
+      "schema_id": "admin.v2.6",
+      "command_digest": "99c5f413d2f91aa9862b2287193714e2844057476f78d1980cdcc352ba4bddb1",
+      "command_argv": [
+        "codex-v2.6",
+        "admin.breakglass",
+        "cmd.admin.breakglass"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N02"
+      ],
+      "success_predecessors": [
+        "X24"
+      ],
+      "success_successor": "X26"
+    },
+    {
+      "id": "X26",
+      "owner": "release-platform-config",
+      "scope": "release-orchestration",
+      "stage": null,
+      "command_id": "cmd.X26",
+      "schema_id": "candidate.v2.6",
+      "command_digest": "adc0f6d664819a5431ed3d4c9d072ef2dd205d6a392b77e2a6123f65e4bcd3c5",
+      "command_argv": [
+        "codex-v2.6",
+        "X26",
+        "cmd.X26"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N03"
+      ],
+      "success_predecessors": [
+        "X25"
+      ],
+      "success_successor": "X27"
+    },
+    {
+      "id": "X27",
+      "owner": "release-platform-config",
+      "scope": "release-orchestration",
+      "stage": null,
+      "command_id": "cmd.X27",
+      "schema_id": "proxy.v2.6",
+      "command_digest": "fa6f1449c5ea701a6246c45b15f9bd6aad9e72fa00a7575ed259e25d3cbf593a",
+      "command_argv": [
+        "codex-v2.6",
+        "X27",
+        "cmd.X27"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N04"
+      ],
+      "success_predecessors": [
+        "X26"
+      ],
+      "success_successor": "X28"
+    },
+    {
+      "id": "X28",
+      "owner": "release-platform-config",
+      "scope": "release-orchestration",
+      "stage": null,
+      "command_id": "cmd.X28",
+      "schema_id": "vault.v2.6",
+      "command_digest": "abcb95e6b9eb156b571f2690d15d1aff03308047489abae44097e51833444dd8",
+      "command_argv": [
+        "codex-v2.6",
+        "X28",
+        "cmd.X28"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N05"
+      ],
+      "success_predecessors": [
+        "X27"
+      ],
+      "success_successor": "X29"
+    },
+    {
+      "id": "X29",
+      "owner": "release-platform-config",
+      "scope": "release-orchestration",
+      "stage": null,
+      "command_id": "cmd.X29",
+      "schema_id": "cnpg.v2.6",
+      "command_digest": "9ca48d04aae158bcb871880d2b8cf2493717f0f558e868319f60f502869d8bab",
+      "command_argv": [
+        "codex-v2.6",
+        "X29",
+        "cmd.X29"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N06"
+      ],
+      "success_predecessors": [
+        "X28"
+      ],
+      "success_successor": "X30"
+    },
+    {
+      "id": "X30",
+      "owner": "release-platform-config",
+      "scope": "release-orchestration",
+      "stage": null,
+      "command_id": "cmd.X30",
+      "schema_id": "mutation.v2.6",
+      "command_digest": "02d71e972115cde7385eddc8133d062419bc435e5cbf799d4d27ffbcf6fcb2ad",
+      "command_argv": [
+        "codex-v2.6",
+        "X30",
+        "cmd.X30"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N07"
+      ],
+      "success_predecessors": [
+        "X29"
+      ],
+      "success_successor": "X31"
+    },
+    {
+      "id": "X31",
+      "owner": "release-platform-config",
+      "scope": "release-orchestration",
+      "stage": null,
+      "command_id": "cmd.X31",
+      "schema_id": "fsm.v2.6",
+      "command_digest": "7be92e7f11a2afcfbb1a6e49c1559d7e939d3b2e46221d7beab6f11427514ba4",
+      "command_argv": [
+        "codex-v2.6",
+        "X31",
+        "cmd.X31"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N08"
+      ],
+      "success_predecessors": [
+        "X30"
+      ],
+      "success_successor": "X32"
+    },
+    {
+      "id": "X32",
+      "owner": "release-platform-config",
+      "scope": "release-orchestration",
+      "stage": null,
+      "command_id": "cmd.X32",
+      "schema_id": "fsm.v2.6",
+      "command_digest": "22f9b14f19da4af17d8965b58f884fb092426e9140e5b3f9df62d7bc7de96aa4",
+      "command_argv": [
+        "codex-v2.6",
+        "X32",
+        "cmd.X32"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N09"
+      ],
+      "success_predecessors": [
+        "X31"
+      ],
+      "success_successor": "X33"
+    },
+    {
+      "id": "X33",
+      "owner": "release-platform-config",
+      "scope": "release-orchestration",
+      "stage": null,
+      "command_id": "cmd.X33",
+      "schema_id": "closure.v2.6",
+      "command_digest": "53b354e3f6353c69020ca82ac3dab28dd5c165240390632f051885ee5d6ff22b",
+      "command_argv": [
+        "codex-v2.6",
+        "X33",
+        "cmd.X33"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N10"
+      ],
+      "success_predecessors": [
+        "X32"
+      ],
+      "success_successor": "X34"
+    },
+    {
+      "id": "X34",
+      "owner": "release-platform-config",
+      "scope": "release-orchestration",
+      "stage": null,
+      "command_id": "cmd.X34",
+      "schema_id": "closure.v2.6",
+      "command_digest": "e637728806d9676019f63824841ca6ab98019b005ef2b2630c7de61c60552aa3",
+      "command_argv": [
+        "codex-v2.6",
+        "X34",
+        "cmd.X34"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N11"
+      ],
+      "success_predecessors": [
+        "X33"
+      ],
+      "success_successor": "X35"
+    },
+    {
+      "id": "X35",
+      "owner": "release-platform-config",
+      "scope": "release-orchestration",
+      "stage": null,
+      "command_id": "cmd.X35",
+      "schema_id": "closure.v2.6",
+      "command_digest": "bb31e35daa7b67251a27c947eaf1d44cb9991999b26498d473579b7e31a6356b",
+      "command_argv": [
+        "codex-v2.6",
+        "X35",
+        "cmd.X35"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N12"
+      ],
+      "success_predecessors": [
+        "X34"
+      ],
+      "success_successor": "X36"
+    },
+    {
+      "id": "X36",
+      "owner": "release-platform-config",
+      "scope": "release-orchestration",
+      "stage": null,
+      "command_id": "cmd.X36",
+      "schema_id": "closure.v2.6",
+      "command_digest": "d7a5fa1bc7194135539c840424f17a50fbb538a99a21c2c92a6cc02a0cc11661",
+      "command_argv": [
+        "codex-v2.6",
+        "X36",
+        "cmd.X36"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N13"
+      ],
+      "success_predecessors": [
+        "X35"
+      ],
+      "success_successor": "X37"
+    },
+    {
+      "id": "X37",
+      "owner": "release-platform-config",
+      "scope": "release-orchestration",
+      "stage": null,
+      "command_id": "cmd.X37",
+      "schema_id": "payload.v2.6",
+      "command_digest": "52c7b1e6425216a115c09732bac487bf4096e95ed3872505150c8d9010563a0c",
+      "command_argv": [
+        "codex-v2.6",
+        "X37",
+        "cmd.X37"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N14"
+      ],
+      "success_predecessors": [
+        "X36"
+      ],
+      "success_successor": "X38"
+    },
+    {
+      "id": "X38",
+      "owner": "release-platform-config",
+      "scope": "release-orchestration",
+      "stage": null,
+      "command_id": "cmd.X38",
+      "schema_id": "payload.v2.6",
+      "command_digest": "39ee8c1b5862bd510056d39244efe21a78fafda90722e769bf0f96426371af84",
+      "command_argv": [
+        "codex-v2.6",
+        "X38",
+        "cmd.X38"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N15"
+      ],
+      "success_predecessors": [
+        "X37"
+      ],
+      "success_successor": "X39"
+    },
+    {
+      "id": "X39",
+      "owner": "release-platform-config",
+      "scope": "release-orchestration",
+      "stage": null,
+      "command_id": "cmd.X39",
+      "schema_id": "activation.v2.6",
+      "command_digest": "5e2eb4bda409223c4988df4f57f53bdd393c4c72e9bb66c600a9ae976d85d186",
+      "command_argv": [
+        "codex-v2.6",
+        "X39",
+        "cmd.X39"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N16"
+      ],
+      "success_predecessors": [
+        "X38"
+      ],
+      "success_successor": "AP20"
+    },
+    {
+      "id": "AP20",
+      "owner": "app-config",
+      "scope": "bootstrap-wiring-only",
+      "stage": null,
+      "command_id": "cmd.AP20",
+      "schema_id": "payload.v2.6",
+      "command_digest": "7d6c454106cabc81123827a392d767280951fa5bb6ab7fe787a0f44205df00b2",
+      "command_argv": [
+        "codex-v2.6",
+        "AP20",
+        "cmd.AP20"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N17"
+      ],
+      "success_predecessors": [
+        "X39"
+      ],
+      "success_successor": "AP21"
+    },
+    {
+      "id": "AP21",
+      "owner": "app-config",
+      "scope": "bootstrap-wiring-only",
+      "stage": null,
+      "command_id": "cmd.AP21",
+      "schema_id": "payload.v2.6",
+      "command_digest": "0c8eb165f560576d1bb53a1e9c2d52c7a4e44740af4582056898e0b58a65daec",
+      "command_argv": [
+        "codex-v2.6",
+        "AP21",
+        "cmd.AP21"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N18"
+      ],
+      "success_predecessors": [
+        "AP20"
+      ],
+      "success_successor": "AP22"
+    },
+    {
+      "id": "AP22",
+      "owner": "app-config",
+      "scope": "bootstrap-wiring-only",
+      "stage": null,
+      "command_id": "cmd.AP22",
+      "schema_id": "payload.v2.6",
+      "command_digest": "264ed8ae016de6b84187373bb35283731d3f7572ef0862ead15dea9e923c78d1",
+      "command_argv": [
+        "codex-v2.6",
+        "AP22",
+        "cmd.AP22"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N19"
+      ],
+      "success_predecessors": [
+        "AP21"
+      ],
+      "success_successor": "AP23"
+    },
+    {
+      "id": "AP23",
+      "owner": "app-config",
+      "scope": "bootstrap-wiring-only",
+      "stage": null,
+      "command_id": "cmd.AP23",
+      "schema_id": "payload.v2.6",
+      "command_digest": "d7ea6dfc732d53ac4072647f6ff6a1637d8967b7eba25fc8fdc3225bd31bbdd9",
+      "command_argv": [
+        "codex-v2.6",
+        "AP23",
+        "cmd.AP23"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N20"
+      ],
+      "success_predecessors": [
+        "AP22"
+      ],
+      "success_successor": "AP24"
+    },
+    {
+      "id": "AP24",
+      "owner": "app-config",
+      "scope": "bootstrap-wiring-only",
+      "stage": null,
+      "command_id": "cmd.AP24",
+      "schema_id": "payload.v2.6",
+      "command_digest": "9ed0051f2f387e842d044b69cd1626ac70d7c286bbd5ec6f5bde0f894de3aab0",
+      "command_argv": [
+        "codex-v2.6",
+        "AP24",
+        "cmd.AP24"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N21"
+      ],
+      "success_predecessors": [
+        "AP23"
+      ],
+      "success_successor": "AP25"
+    },
+    {
+      "id": "AP25",
+      "owner": "app-config",
+      "scope": "bootstrap-wiring-only",
+      "stage": null,
+      "command_id": "cmd.AP25",
+      "schema_id": "payload.v2.6",
+      "command_digest": "0b6ef304044f1015db449c94997ec19acf45440e82438f323b24cab345d4cb38",
+      "command_argv": [
+        "codex-v2.6",
+        "AP25",
+        "cmd.AP25"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N22"
+      ],
+      "success_predecessors": [
+        "AP24"
+      ],
+      "success_successor": "X41"
+    },
+    {
+      "id": "X41",
+      "owner": "release-platform-config",
+      "scope": "release-orchestration",
+      "stage": null,
+      "command_id": "cmd.X41",
+      "schema_id": "fsm.v2.6",
+      "command_digest": "0b6e08741f4bc82f223288cb3960959fe6a00f004c905b3b2befc995338759bd",
+      "command_argv": [
+        "codex-v2.6",
+        "X41",
+        "cmd.X41"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N23"
+      ],
+      "success_predecessors": [
+        "AP25"
+      ],
+      "success_successor": "M01"
+    },
+    {
+      "id": "M01",
+      "owner": "deployment-controller",
+      "scope": "release-orchestration",
+      "stage": null,
+      "command_id": "cmd.M01",
+      "schema_id": "mutation.v2.6",
+      "command_digest": "7c32c8e350b4a7d15aa2feec284530432568796bf0ef42bdeed3dd8bb82fc8f0",
+      "command_argv": [
+        "codex-v2.6",
+        "M01",
+        "cmd.M01"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N24"
+      ],
+      "success_predecessors": [
+        "X41"
+      ],
+      "success_successor": "M02"
+    },
+    {
+      "id": "M02",
+      "owner": "deployment-controller",
+      "scope": "release-orchestration",
+      "stage": null,
+      "command_id": "cmd.M02",
+      "schema_id": "mutation.v2.6",
+      "command_digest": "d4fc153846ccc0115767ae975f1fe71e6594d9c23cf156ff40f139eade044a56",
+      "command_argv": [
+        "codex-v2.6",
+        "M02",
+        "cmd.M02"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N01"
+      ],
+      "success_predecessors": [
+        "M01"
+      ],
+      "success_successor": "M03"
+    },
+    {
+      "id": "M03",
+      "owner": "deployment-controller",
+      "scope": "release-orchestration",
+      "stage": null,
+      "command_id": "cmd.M03",
+      "schema_id": "mutation.v2.6",
+      "command_digest": "4268aa732ae74670e6a97e1435f9d01bceeeb71bb6fa1a60cbcb64f9e5fe0408",
+      "command_argv": [
+        "codex-v2.6",
+        "M03",
+        "cmd.M03"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N02"
+      ],
+      "success_predecessors": [
+        "M02"
+      ],
+      "success_successor": "M04"
+    },
+    {
+      "id": "M04",
+      "owner": "deployment-controller",
+      "scope": "release-orchestration",
+      "stage": null,
+      "command_id": "cmd.M04",
+      "schema_id": "mutation.v2.6",
+      "command_digest": "4e489979a8d681d0370c29656616fc5ebdd60c4396e8aedeb1b5ff0bd9601a2c",
+      "command_argv": [
+        "codex-v2.6",
+        "M04",
+        "cmd.M04"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N03"
+      ],
+      "success_predecessors": [
+        "M03"
+      ],
+      "success_successor": "M05"
+    },
+    {
+      "id": "M05",
+      "owner": "deployment-controller",
+      "scope": "release-orchestration",
+      "stage": null,
+      "command_id": "cmd.M05",
+      "schema_id": "mutation.v2.6",
+      "command_digest": "b319cc4fa96af75cac9d4eec8044af5c7a75f17b73e8d11928d09aaad5db7e25",
+      "command_argv": [
+        "codex-v2.6",
+        "M05",
+        "cmd.M05"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N04"
+      ],
+      "success_predecessors": [
+        "M04"
+      ],
+      "success_successor": "M06"
+    },
+    {
+      "id": "M06",
+      "owner": "deployment-controller",
+      "scope": "release-orchestration",
+      "stage": null,
+      "command_id": "cmd.M06",
+      "schema_id": "mutation.v2.6",
+      "command_digest": "634cf49c5df066974e11dca4b265525b7625e985c5695ce76e8dd2cd3ca54e91",
+      "command_argv": [
+        "codex-v2.6",
+        "M06",
+        "cmd.M06"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N05"
+      ],
+      "success_predecessors": [
+        "M05"
+      ],
+      "success_successor": "M07"
+    },
+    {
+      "id": "M07",
+      "owner": "deployment-controller",
+      "scope": "release-orchestration",
+      "stage": null,
+      "command_id": "cmd.M07",
+      "schema_id": "mutation.v2.6",
+      "command_digest": "638197eda8a296d775d2fb99c19f7f2cace430e307c64ff6ef01843f220d72de",
+      "command_argv": [
+        "codex-v2.6",
+        "M07",
+        "cmd.M07"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N06"
+      ],
+      "success_predecessors": [
+        "M06"
+      ],
+      "success_successor": "M08"
+    },
+    {
+      "id": "M08",
+      "owner": "deployment-controller",
+      "scope": "release-orchestration",
+      "stage": null,
+      "command_id": "cmd.M08",
+      "schema_id": "mutation.v2.6",
+      "command_digest": "626bf5a7270afc92a525a4d91b029260dea18f8d607994f9059ef74e499d10dc",
+      "command_argv": [
+        "codex-v2.6",
+        "M08",
+        "cmd.M08"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N07"
+      ],
+      "success_predecessors": [
+        "M07"
+      ],
+      "success_successor": "M09"
+    },
+    {
+      "id": "M09",
+      "owner": "deployment-controller",
+      "scope": "release-orchestration",
+      "stage": null,
+      "command_id": "cmd.M09",
+      "schema_id": "mutation.v2.6",
+      "command_digest": "444ad372ccfb0a4fba8cf9b905261d0621885a90099b3d967c5c3769ab69697a",
+      "command_argv": [
+        "codex-v2.6",
+        "M09",
+        "cmd.M09"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N08"
+      ],
+      "success_predecessors": [
+        "M08"
+      ],
+      "success_successor": "M10"
+    },
+    {
+      "id": "M10",
+      "owner": "deployment-controller",
+      "scope": "release-orchestration",
+      "stage": null,
+      "command_id": "cmd.M10",
+      "schema_id": "mutation.v2.6",
+      "command_digest": "1ab2a6a58ebb094302a5a6dbe1fdabbe877627a2c84c3221d00b4d89c4c231dd",
+      "command_argv": [
+        "codex-v2.6",
+        "M10",
+        "cmd.M10"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N09"
+      ],
+      "success_predecessors": [
+        "M09"
+      ],
+      "success_successor": "M11"
+    },
+    {
+      "id": "M11",
+      "owner": "deployment-controller",
+      "scope": "release-orchestration",
+      "stage": null,
+      "command_id": "cmd.M11",
+      "schema_id": "mutation.v2.6",
+      "command_digest": "517122e2dbcc2543b928fad8276bd5e327c63fe6b8e8f6d65bf9b1310315b86d",
+      "command_argv": [
+        "codex-v2.6",
+        "M11",
+        "cmd.M11"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N10"
+      ],
+      "success_predecessors": [
+        "M10"
+      ],
+      "success_successor": "M12"
+    },
+    {
+      "id": "M12",
+      "owner": "deployment-controller",
+      "scope": "release-orchestration",
+      "stage": null,
+      "command_id": "cmd.M12",
+      "schema_id": "mutation.v2.6",
+      "command_digest": "39ea90a33237ba09aaff368fa6bca1790804eb7d52ded071016af37eababff5e",
+      "command_argv": [
+        "codex-v2.6",
+        "M12",
+        "cmd.M12"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N11"
+      ],
+      "success_predecessors": [
+        "M11"
+      ],
+      "success_successor": "M13"
+    },
+    {
+      "id": "M13",
+      "owner": "deployment-controller",
+      "scope": "release-orchestration",
+      "stage": null,
+      "command_id": "cmd.M13",
+      "schema_id": "mutation.v2.6",
+      "command_digest": "3c1f8387890ca117a78a07c93cdf7c9af626c4a5b62967dee5dc0ec2a0efb877",
+      "command_argv": [
+        "codex-v2.6",
+        "M13",
+        "cmd.M13"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N12"
+      ],
+      "success_predecessors": [
+        "M12"
+      ],
+      "success_successor": "M14"
+    },
+    {
+      "id": "M14",
+      "owner": "deployment-controller",
+      "scope": "release-orchestration",
+      "stage": null,
+      "command_id": "cmd.M14",
+      "schema_id": "mutation.v2.6",
+      "command_digest": "ff929a90f4cb1602b746918c2a6236d615e7d8d35fcab2359850b383b1bce0a1",
+      "command_argv": [
+        "codex-v2.6",
+        "M14",
+        "cmd.M14"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N13"
+      ],
+      "success_predecessors": [
+        "M13"
+      ],
+      "success_successor": "M15"
+    },
+    {
+      "id": "M15",
+      "owner": "deployment-controller",
+      "scope": "release-orchestration",
+      "stage": null,
+      "command_id": "cmd.M15",
+      "schema_id": "mutation.v2.6",
+      "command_digest": "cc26ac637dac849a80725068cc20836e547f8446b5cbc940982d3a40fdff8e04",
+      "command_argv": [
+        "codex-v2.6",
+        "M15",
+        "cmd.M15"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N14"
+      ],
+      "success_predecessors": [
+        "M14"
+      ],
+      "success_successor": "M16"
+    },
+    {
+      "id": "M16",
+      "owner": "deployment-controller",
+      "scope": "release-orchestration",
+      "stage": null,
+      "command_id": "cmd.M16",
+      "schema_id": "mutation.v2.6",
+      "command_digest": "bb4bed41af255c5fbdd55daafdd20128c72f7f61f7e2a3e6e565193c25c081fa",
+      "command_argv": [
+        "codex-v2.6",
+        "M16",
+        "cmd.M16"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N15"
+      ],
+      "success_predecessors": [
+        "M15"
+      ],
+      "success_successor": "M17"
+    },
+    {
+      "id": "M17",
+      "owner": "deployment-controller",
+      "scope": "release-orchestration",
+      "stage": null,
+      "command_id": "cmd.M17",
+      "schema_id": "mutation.v2.6",
+      "command_digest": "a74545318f378100d2dbc8a25b511c1ba47d3b27f939b2f9ed99a3e46363c6c1",
+      "command_argv": [
+        "codex-v2.6",
+        "M17",
+        "cmd.M17"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N16"
+      ],
+      "success_predecessors": [
+        "M16"
+      ],
+      "success_successor": "M18"
+    },
+    {
+      "id": "M18",
+      "owner": "deployment-controller",
+      "scope": "release-orchestration",
+      "stage": null,
+      "command_id": "cmd.M18",
+      "schema_id": "mutation.v2.6",
+      "command_digest": "0fa65e42e373507d49237d3bd6e9b893de0862cd42b7e964b700d6f79a7a2276",
+      "command_argv": [
+        "codex-v2.6",
+        "M18",
+        "cmd.M18"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N17"
+      ],
+      "success_predecessors": [
+        "M17"
+      ],
+      "success_successor": "M19"
+    },
+    {
+      "id": "M19",
+      "owner": "deployment-controller",
+      "scope": "release-orchestration",
+      "stage": null,
+      "command_id": "cmd.M19",
+      "schema_id": "mutation.v2.6",
+      "command_digest": "bd39a5c18fa63877001799a082ca8dc3c028044bd2993ecaabd10fd913992036",
+      "command_argv": [
+        "codex-v2.6",
+        "M19",
+        "cmd.M19"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N18"
+      ],
+      "success_predecessors": [
+        "M18"
+      ],
+      "success_successor": "S99"
+    },
+    {
+      "id": "S99",
+      "owner": "release-platform-config",
+      "scope": "release-orchestration",
+      "stage": null,
+      "command_id": "cmd.S99",
+      "schema_id": "payload.v2.6",
+      "command_digest": "4479addb211e26db91a9a0d684354a17c19bbf77b4a6302c48c6ab2ef35e4a7a",
+      "command_argv": [
+        "codex-v2.6",
+        "S99",
+        "cmd.S99"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N19"
+      ],
+      "success_predecessors": [
+        "M19"
+      ],
+      "success_successor": null
+    },
+    {
+      "id": "U00",
+      "owner": "release-platform-config",
+      "scope": "release-orchestration",
+      "stage": null,
+      "command_id": "cmd.fence",
+      "schema_id": "recovery.v2.6",
+      "command_digest": "d7e2c520e06e1e2bbd842d3d1a1a5942d4c1b0b8ef1c7765ff0b929e7694bf0e",
+      "command_argv": [
+        "codex-v2.6",
+        "fence",
+        "cmd.fence"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N20"
+      ],
+      "success_predecessors": [],
+      "success_successor": null
+    },
+    {
+      "id": "U01",
+      "owner": "release-platform-config",
+      "scope": "release-orchestration",
+      "stage": null,
+      "command_id": "cmd.cancel",
+      "schema_id": "recovery.v2.6",
+      "command_digest": "cdae54bb276a780e45249c5d2f4c1acad471c76262bcd84466bd93a8fee3b108",
+      "command_argv": [
+        "codex-v2.6",
+        "cancel",
+        "cmd.cancel"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N21"
+      ],
+      "success_predecessors": [],
+      "success_successor": null
+    },
+    {
+      "id": "U02",
+      "owner": "release-platform-config",
+      "scope": "release-orchestration",
+      "stage": null,
+      "command_id": "cmd.quarantine",
+      "schema_id": "recovery.v2.6",
+      "command_digest": "abc5634a8c30c69a1668db8442f92a0e7d9bd96270698ec4d78f75320ff3df29",
+      "command_argv": [
+        "codex-v2.6",
+        "quarantine",
+        "cmd.quarantine"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N22"
+      ],
+      "success_predecessors": [],
+      "success_successor": null
+    },
+    {
+      "id": "U03",
+      "owner": "release-platform-config",
+      "scope": "release-orchestration",
+      "stage": null,
+      "command_id": "cmd.classify",
+      "schema_id": "recovery.v2.6",
+      "command_digest": "d462f7be778438d99c40159bc35ab299d80755c6262905dbf5755a8fcfe802c4",
+      "command_argv": [
+        "codex-v2.6",
+        "classify",
+        "cmd.classify"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N23"
+      ],
+      "success_predecessors": [],
+      "success_successor": null
+    },
+    {
+      "id": "U04",
+      "owner": "release-platform-config",
+      "scope": "release-orchestration",
+      "stage": null,
+      "command_id": "cmd.repair",
+      "schema_id": "recovery.v2.6",
+      "command_digest": "bd16f29306f5db502e3772d358de7f4ef479dde5de1192e42ecdfb5f69df7903",
+      "command_argv": [
+        "codex-v2.6",
+        "repair",
+        "cmd.repair"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N24"
+      ],
+      "success_predecessors": [],
+      "success_successor": null
+    },
+    {
+      "id": "U05",
+      "owner": "release-platform-config",
+      "scope": "release-orchestration",
+      "stage": null,
+      "command_id": "cmd.successor",
+      "schema_id": "recovery.v2.6",
+      "command_digest": "290b7868ee39b37a1ae96e23e59f6e1372652c9fdbfb00f72fe016cb30369dc0",
+      "command_argv": [
+        "codex-v2.6",
+        "successor",
+        "cmd.successor"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N01"
+      ],
+      "success_predecessors": [],
+      "success_successor": null
+    },
+    {
+      "id": "U06",
+      "owner": "release-platform-config",
+      "scope": "release-orchestration",
+      "stage": null,
+      "command_id": "cmd.audit",
+      "schema_id": "recovery.v2.6",
+      "command_digest": "c442a9ccc973092171ce4ac6d18351550a24d31145f6217fb7d35786e2b57eaa",
+      "command_argv": [
+        "codex-v2.6",
+        "audit",
+        "cmd.audit"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N02"
+      ],
+      "success_predecessors": [],
+      "success_successor": null
+    },
+    {
+      "id": "U07",
+      "owner": "release-platform-config",
+      "scope": "release-orchestration",
+      "stage": null,
+      "command_id": "cmd.reconcile",
+      "schema_id": "recovery.v2.6",
+      "command_digest": "a3cdb6912caf9bba7e39d6761a838d33540e6164fc69839afcfafe46f63cd050",
+      "command_argv": [
+        "codex-v2.6",
+        "reconcile",
+        "cmd.reconcile"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N03"
+      ],
+      "success_predecessors": [],
+      "success_successor": null
+    },
+    {
+      "id": "U08",
+      "owner": "release-platform-config",
+      "scope": "release-orchestration",
+      "stage": null,
+      "command_id": "cmd.terminal",
+      "schema_id": "recovery.v2.6",
+      "command_digest": "846ce802a2ab12c377c5740fa383a65d8a036aaa3d4f4e43b0a59a729831fafd",
+      "command_argv": [
+        "codex-v2.6",
+        "terminal",
+        "cmd.terminal"
+      ],
+      "positive_fixture": "fixtures-v2.6/base-contracts-v2.6.json",
+      "negative_ids": [
+        "N04"
+      ],
+      "success_predecessors": [],
+      "success_successor": null
+    }
+  ],
+  "success_edges": [
+    {
+      "from": "S00",
+      "to": "X01"
+    },
+    {
+      "from": "X01",
+      "to": "X02"
+    },
+    {
+      "from": "X02",
+      "to": "X03"
+    },
+    {
+      "from": "X03",
+      "to": "X04"
+    },
+    {
+      "from": "X04",
+      "to": "X05"
+    },
+    {
+      "from": "X05",
+      "to": "X06"
+    },
+    {
+      "from": "X06",
+      "to": "X07"
+    },
+    {
+      "from": "X07",
+      "to": "X08"
+    },
+    {
+      "from": "X08",
+      "to": "X09"
+    },
+    {
+      "from": "X09",
+      "to": "X10"
+    },
+    {
+      "from": "X10",
+      "to": "X11"
+    },
+    {
+      "from": "X11",
+      "to": "X12"
+    },
+    {
+      "from": "X12",
+      "to": "X13"
+    },
+    {
+      "from": "X13",
+      "to": "X14"
+    },
+    {
+      "from": "X14",
+      "to": "X15"
+    },
+    {
+      "from": "X15",
+      "to": "X16"
+    },
+    {
+      "from": "X16",
+      "to": "X17"
+    },
+    {
+      "from": "X17",
+      "to": "X18"
+    },
+    {
+      "from": "X18",
+      "to": "X19"
+    },
+    {
+      "from": "X19",
+      "to": "X20"
+    },
+    {
+      "from": "X20",
+      "to": "X21"
+    },
+    {
+      "from": "X21",
+      "to": "X22"
+    },
+    {
+      "from": "X22",
+      "to": "X23"
+    },
+    {
+      "from": "X23",
+      "to": "X24"
+    },
+    {
+      "from": "X24",
+      "to": "X25"
+    },
+    {
+      "from": "X25",
+      "to": "X26"
+    },
+    {
+      "from": "X26",
+      "to": "X27"
+    },
+    {
+      "from": "X27",
+      "to": "X28"
+    },
+    {
+      "from": "X28",
+      "to": "X29"
+    },
+    {
+      "from": "X29",
+      "to": "X30"
+    },
+    {
+      "from": "X30",
+      "to": "X31"
+    },
+    {
+      "from": "X31",
+      "to": "X32"
+    },
+    {
+      "from": "X32",
+      "to": "X33"
+    },
+    {
+      "from": "X33",
+      "to": "X34"
+    },
+    {
+      "from": "X34",
+      "to": "X35"
+    },
+    {
+      "from": "X35",
+      "to": "X36"
+    },
+    {
+      "from": "X36",
+      "to": "X37"
+    },
+    {
+      "from": "X37",
+      "to": "X38"
+    },
+    {
+      "from": "X38",
+      "to": "X39"
+    },
+    {
+      "from": "X39",
+      "to": "AP20"
+    },
+    {
+      "from": "AP20",
+      "to": "AP21"
+    },
+    {
+      "from": "AP21",
+      "to": "AP22"
+    },
+    {
+      "from": "AP22",
+      "to": "AP23"
+    },
+    {
+      "from": "AP23",
+      "to": "AP24"
+    },
+    {
+      "from": "AP24",
+      "to": "AP25"
+    },
+    {
+      "from": "AP25",
+      "to": "X41"
+    },
+    {
+      "from": "X41",
+      "to": "M01"
+    },
+    {
+      "from": "M01",
+      "to": "M02"
+    },
+    {
+      "from": "M02",
+      "to": "M03"
+    },
+    {
+      "from": "M03",
+      "to": "M04"
+    },
+    {
+      "from": "M04",
+      "to": "M05"
+    },
+    {
+      "from": "M05",
+      "to": "M06"
+    },
+    {
+      "from": "M06",
+      "to": "M07"
+    },
+    {
+      "from": "M07",
+      "to": "M08"
+    },
+    {
+      "from": "M08",
+      "to": "M09"
+    },
+    {
+      "from": "M09",
+      "to": "M10"
+    },
+    {
+      "from": "M10",
+      "to": "M11"
+    },
+    {
+      "from": "M11",
+      "to": "M12"
+    },
+    {
+      "from": "M12",
+      "to": "M13"
+    },
+    {
+      "from": "M13",
+      "to": "M14"
+    },
+    {
+      "from": "M14",
+      "to": "M15"
+    },
+    {
+      "from": "M15",
+      "to": "M16"
+    },
+    {
+      "from": "M16",
+      "to": "M17"
+    },
+    {
+      "from": "M17",
+      "to": "M18"
+    },
+    {
+      "from": "M18",
+      "to": "M19"
+    },
+    {
+      "from": "M19",
+      "to": "S99"
+    }
+  ],
+  "failure_outcomes": [
+    "UNKNOWN",
+    "TIMEOUT",
+    "PARTIAL_EFFECT",
+    "MISMATCH"
+  ],
+  "failure_edges": [
+    {
+      "from": "S00",
+      "to": "U00",
+      "outcomes": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "atomic_actions": [
+        "fence",
+        "cancel",
+        "quarantine",
+        "classify"
+      ]
+    },
+    {
+      "from": "X01",
+      "to": "U00",
+      "outcomes": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "atomic_actions": [
+        "fence",
+        "cancel",
+        "quarantine",
+        "classify"
+      ]
+    },
+    {
+      "from": "X02",
+      "to": "U00",
+      "outcomes": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "atomic_actions": [
+        "fence",
+        "cancel",
+        "quarantine",
+        "classify"
+      ]
+    },
+    {
+      "from": "X03",
+      "to": "U00",
+      "outcomes": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "atomic_actions": [
+        "fence",
+        "cancel",
+        "quarantine",
+        "classify"
+      ]
+    },
+    {
+      "from": "X04",
+      "to": "U00",
+      "outcomes": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "atomic_actions": [
+        "fence",
+        "cancel",
+        "quarantine",
+        "classify"
+      ]
+    },
+    {
+      "from": "X05",
+      "to": "U00",
+      "outcomes": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "atomic_actions": [
+        "fence",
+        "cancel",
+        "quarantine",
+        "classify"
+      ]
+    },
+    {
+      "from": "X06",
+      "to": "U00",
+      "outcomes": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "atomic_actions": [
+        "fence",
+        "cancel",
+        "quarantine",
+        "classify"
+      ]
+    },
+    {
+      "from": "X07",
+      "to": "U00",
+      "outcomes": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "atomic_actions": [
+        "fence",
+        "cancel",
+        "quarantine",
+        "classify"
+      ]
+    },
+    {
+      "from": "X08",
+      "to": "U00",
+      "outcomes": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "atomic_actions": [
+        "fence",
+        "cancel",
+        "quarantine",
+        "classify"
+      ]
+    },
+    {
+      "from": "X09",
+      "to": "U00",
+      "outcomes": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "atomic_actions": [
+        "fence",
+        "cancel",
+        "quarantine",
+        "classify"
+      ]
+    },
+    {
+      "from": "X10",
+      "to": "U00",
+      "outcomes": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "atomic_actions": [
+        "fence",
+        "cancel",
+        "quarantine",
+        "classify"
+      ]
+    },
+    {
+      "from": "X11",
+      "to": "U00",
+      "outcomes": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "atomic_actions": [
+        "fence",
+        "cancel",
+        "quarantine",
+        "classify"
+      ]
+    },
+    {
+      "from": "X12",
+      "to": "U00",
+      "outcomes": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "atomic_actions": [
+        "fence",
+        "cancel",
+        "quarantine",
+        "classify"
+      ]
+    },
+    {
+      "from": "X13",
+      "to": "U00",
+      "outcomes": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "atomic_actions": [
+        "fence",
+        "cancel",
+        "quarantine",
+        "classify"
+      ]
+    },
+    {
+      "from": "X14",
+      "to": "U00",
+      "outcomes": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "atomic_actions": [
+        "fence",
+        "cancel",
+        "quarantine",
+        "classify"
+      ]
+    },
+    {
+      "from": "X15",
+      "to": "U00",
+      "outcomes": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "atomic_actions": [
+        "fence",
+        "cancel",
+        "quarantine",
+        "classify"
+      ]
+    },
+    {
+      "from": "X16",
+      "to": "U00",
+      "outcomes": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "atomic_actions": [
+        "fence",
+        "cancel",
+        "quarantine",
+        "classify"
+      ]
+    },
+    {
+      "from": "X17",
+      "to": "U00",
+      "outcomes": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "atomic_actions": [
+        "fence",
+        "cancel",
+        "quarantine",
+        "classify"
+      ]
+    },
+    {
+      "from": "X18",
+      "to": "U00",
+      "outcomes": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "atomic_actions": [
+        "fence",
+        "cancel",
+        "quarantine",
+        "classify"
+      ]
+    },
+    {
+      "from": "X19",
+      "to": "U00",
+      "outcomes": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "atomic_actions": [
+        "fence",
+        "cancel",
+        "quarantine",
+        "classify"
+      ]
+    },
+    {
+      "from": "X20",
+      "to": "U00",
+      "outcomes": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "atomic_actions": [
+        "fence",
+        "cancel",
+        "quarantine",
+        "classify"
+      ]
+    },
+    {
+      "from": "X21",
+      "to": "U00",
+      "outcomes": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "atomic_actions": [
+        "fence",
+        "cancel",
+        "quarantine",
+        "classify"
+      ]
+    },
+    {
+      "from": "X22",
+      "to": "U00",
+      "outcomes": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "atomic_actions": [
+        "fence",
+        "cancel",
+        "quarantine",
+        "classify"
+      ]
+    },
+    {
+      "from": "X23",
+      "to": "U00",
+      "outcomes": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "atomic_actions": [
+        "fence",
+        "cancel",
+        "quarantine",
+        "classify"
+      ]
+    },
+    {
+      "from": "X24",
+      "to": "U00",
+      "outcomes": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "atomic_actions": [
+        "fence",
+        "cancel",
+        "quarantine",
+        "classify"
+      ]
+    },
+    {
+      "from": "X25",
+      "to": "U00",
+      "outcomes": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "atomic_actions": [
+        "fence",
+        "cancel",
+        "quarantine",
+        "classify"
+      ]
+    },
+    {
+      "from": "X26",
+      "to": "U00",
+      "outcomes": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "atomic_actions": [
+        "fence",
+        "cancel",
+        "quarantine",
+        "classify"
+      ]
+    },
+    {
+      "from": "X27",
+      "to": "U00",
+      "outcomes": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "atomic_actions": [
+        "fence",
+        "cancel",
+        "quarantine",
+        "classify"
+      ]
+    },
+    {
+      "from": "X28",
+      "to": "U00",
+      "outcomes": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "atomic_actions": [
+        "fence",
+        "cancel",
+        "quarantine",
+        "classify"
+      ]
+    },
+    {
+      "from": "X29",
+      "to": "U00",
+      "outcomes": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "atomic_actions": [
+        "fence",
+        "cancel",
+        "quarantine",
+        "classify"
+      ]
+    },
+    {
+      "from": "X30",
+      "to": "U00",
+      "outcomes": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "atomic_actions": [
+        "fence",
+        "cancel",
+        "quarantine",
+        "classify"
+      ]
+    },
+    {
+      "from": "X31",
+      "to": "U00",
+      "outcomes": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "atomic_actions": [
+        "fence",
+        "cancel",
+        "quarantine",
+        "classify"
+      ]
+    },
+    {
+      "from": "X32",
+      "to": "U00",
+      "outcomes": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "atomic_actions": [
+        "fence",
+        "cancel",
+        "quarantine",
+        "classify"
+      ]
+    },
+    {
+      "from": "X33",
+      "to": "U00",
+      "outcomes": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "atomic_actions": [
+        "fence",
+        "cancel",
+        "quarantine",
+        "classify"
+      ]
+    },
+    {
+      "from": "X34",
+      "to": "U00",
+      "outcomes": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "atomic_actions": [
+        "fence",
+        "cancel",
+        "quarantine",
+        "classify"
+      ]
+    },
+    {
+      "from": "X35",
+      "to": "U00",
+      "outcomes": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "atomic_actions": [
+        "fence",
+        "cancel",
+        "quarantine",
+        "classify"
+      ]
+    },
+    {
+      "from": "X36",
+      "to": "U00",
+      "outcomes": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "atomic_actions": [
+        "fence",
+        "cancel",
+        "quarantine",
+        "classify"
+      ]
+    },
+    {
+      "from": "X37",
+      "to": "U00",
+      "outcomes": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "atomic_actions": [
+        "fence",
+        "cancel",
+        "quarantine",
+        "classify"
+      ]
+    },
+    {
+      "from": "X38",
+      "to": "U00",
+      "outcomes": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "atomic_actions": [
+        "fence",
+        "cancel",
+        "quarantine",
+        "classify"
+      ]
+    },
+    {
+      "from": "X39",
+      "to": "U00",
+      "outcomes": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "atomic_actions": [
+        "fence",
+        "cancel",
+        "quarantine",
+        "classify"
+      ]
+    },
+    {
+      "from": "AP20",
+      "to": "U00",
+      "outcomes": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "atomic_actions": [
+        "fence",
+        "cancel",
+        "quarantine",
+        "classify"
+      ]
+    },
+    {
+      "from": "AP21",
+      "to": "U00",
+      "outcomes": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "atomic_actions": [
+        "fence",
+        "cancel",
+        "quarantine",
+        "classify"
+      ]
+    },
+    {
+      "from": "AP22",
+      "to": "U00",
+      "outcomes": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "atomic_actions": [
+        "fence",
+        "cancel",
+        "quarantine",
+        "classify"
+      ]
+    },
+    {
+      "from": "AP23",
+      "to": "U00",
+      "outcomes": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "atomic_actions": [
+        "fence",
+        "cancel",
+        "quarantine",
+        "classify"
+      ]
+    },
+    {
+      "from": "AP24",
+      "to": "U00",
+      "outcomes": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "atomic_actions": [
+        "fence",
+        "cancel",
+        "quarantine",
+        "classify"
+      ]
+    },
+    {
+      "from": "AP25",
+      "to": "U00",
+      "outcomes": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "atomic_actions": [
+        "fence",
+        "cancel",
+        "quarantine",
+        "classify"
+      ]
+    },
+    {
+      "from": "X41",
+      "to": "U00",
+      "outcomes": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "atomic_actions": [
+        "fence",
+        "cancel",
+        "quarantine",
+        "classify"
+      ]
+    },
+    {
+      "from": "M01",
+      "to": "U00",
+      "outcomes": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "atomic_actions": [
+        "fence",
+        "cancel",
+        "quarantine",
+        "classify"
+      ]
+    },
+    {
+      "from": "M02",
+      "to": "U00",
+      "outcomes": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "atomic_actions": [
+        "fence",
+        "cancel",
+        "quarantine",
+        "classify"
+      ]
+    },
+    {
+      "from": "M03",
+      "to": "U00",
+      "outcomes": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "atomic_actions": [
+        "fence",
+        "cancel",
+        "quarantine",
+        "classify"
+      ]
+    },
+    {
+      "from": "M04",
+      "to": "U00",
+      "outcomes": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "atomic_actions": [
+        "fence",
+        "cancel",
+        "quarantine",
+        "classify"
+      ]
+    },
+    {
+      "from": "M05",
+      "to": "U00",
+      "outcomes": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "atomic_actions": [
+        "fence",
+        "cancel",
+        "quarantine",
+        "classify"
+      ]
+    },
+    {
+      "from": "M06",
+      "to": "U00",
+      "outcomes": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "atomic_actions": [
+        "fence",
+        "cancel",
+        "quarantine",
+        "classify"
+      ]
+    },
+    {
+      "from": "M07",
+      "to": "U00",
+      "outcomes": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "atomic_actions": [
+        "fence",
+        "cancel",
+        "quarantine",
+        "classify"
+      ]
+    },
+    {
+      "from": "M08",
+      "to": "U00",
+      "outcomes": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "atomic_actions": [
+        "fence",
+        "cancel",
+        "quarantine",
+        "classify"
+      ]
+    },
+    {
+      "from": "M09",
+      "to": "U00",
+      "outcomes": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "atomic_actions": [
+        "fence",
+        "cancel",
+        "quarantine",
+        "classify"
+      ]
+    },
+    {
+      "from": "M10",
+      "to": "U00",
+      "outcomes": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "atomic_actions": [
+        "fence",
+        "cancel",
+        "quarantine",
+        "classify"
+      ]
+    },
+    {
+      "from": "M11",
+      "to": "U00",
+      "outcomes": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "atomic_actions": [
+        "fence",
+        "cancel",
+        "quarantine",
+        "classify"
+      ]
+    },
+    {
+      "from": "M12",
+      "to": "U00",
+      "outcomes": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "atomic_actions": [
+        "fence",
+        "cancel",
+        "quarantine",
+        "classify"
+      ]
+    },
+    {
+      "from": "M13",
+      "to": "U00",
+      "outcomes": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "atomic_actions": [
+        "fence",
+        "cancel",
+        "quarantine",
+        "classify"
+      ]
+    },
+    {
+      "from": "M14",
+      "to": "U00",
+      "outcomes": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "atomic_actions": [
+        "fence",
+        "cancel",
+        "quarantine",
+        "classify"
+      ]
+    },
+    {
+      "from": "M15",
+      "to": "U00",
+      "outcomes": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "atomic_actions": [
+        "fence",
+        "cancel",
+        "quarantine",
+        "classify"
+      ]
+    },
+    {
+      "from": "M16",
+      "to": "U00",
+      "outcomes": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "atomic_actions": [
+        "fence",
+        "cancel",
+        "quarantine",
+        "classify"
+      ]
+    },
+    {
+      "from": "M17",
+      "to": "U00",
+      "outcomes": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "atomic_actions": [
+        "fence",
+        "cancel",
+        "quarantine",
+        "classify"
+      ]
+    },
+    {
+      "from": "M18",
+      "to": "U00",
+      "outcomes": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "atomic_actions": [
+        "fence",
+        "cancel",
+        "quarantine",
+        "classify"
+      ]
+    },
+    {
+      "from": "M19",
+      "to": "U00",
+      "outcomes": [
+        "UNKNOWN",
+        "TIMEOUT",
+        "PARTIAL_EFFECT",
+        "MISMATCH"
+      ],
+      "atomic_actions": [
+        "fence",
+        "cancel",
+        "quarantine",
+        "classify"
+      ]
+    }
+  ],
+  "recovery_nodes": [
+    "U00",
+    "U01",
+    "U02",
+    "U03",
+    "U04",
+    "U05",
+    "U06",
+    "U07",
+    "U08"
+  ],
+  "recovery_edges": [
+    {
+      "from": "U00",
+      "to": "U01",
+      "command_id": "cmd.fence",
+      "atomic": true
+    },
+    {
+      "from": "U01",
+      "to": "U02",
+      "command_id": "cmd.cancel",
+      "atomic": true
+    },
+    {
+      "from": "U02",
+      "to": "U03",
+      "command_id": "cmd.quarantine",
+      "atomic": true
+    },
+    {
+      "from": "U03",
+      "to": "U04",
+      "command_id": "cmd.classify",
+      "atomic": true
+    },
+    {
+      "from": "U04",
+      "to": "U05",
+      "command_id": "cmd.repair",
+      "atomic": true
+    },
+    {
+      "from": "U05",
+      "to": "U06",
+      "command_id": "cmd.successor",
+      "atomic": true
+    },
+    {
+      "from": "U06",
+      "to": "U07",
+      "command_id": "cmd.audit",
+      "atomic": true
+    },
+    {
+      "from": "U07",
+      "to": "U08",
+      "command_id": "cmd.reconcile",
+      "atomic": true
+    }
+  ],
+  "retry_edges": [],
+  "terminals": [
+    "S99",
+    "U08"
+  ]
+}

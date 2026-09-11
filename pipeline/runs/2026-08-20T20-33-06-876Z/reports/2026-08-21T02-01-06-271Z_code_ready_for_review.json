@@ -1,0 +1,41 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "PR #442 adds the Grafana Community Helm repository to Argo default project policy and passes Kubernetes in-cluster service variables explicitly to the MetaMCP child process.",
+  "changed_files": [
+    "argocd/default-project.yaml",
+    "scripts/metamcp/bootstrap.sql"
+  ],
+  "validation": [
+    "PR #442 is open, merge-clean, and contains no credentials.",
+    "Helm lint passed for the MetaMCP chart and Grafana MCP render validation passed with read-only flags.",
+    "Rendered MetaMCP output retains the dedicated ServiceAccount token mount and read-only RBAC.",
+    "Package help for kubernetes-mcp-server@0.0.66 confirms the in-cluster provider flag.",
+    "YAML parsing and git diff --check passed in the remediation lane."
+  ],
+  "blockers": [
+    "PR #442 must be reviewed, tested, and merged before the root Argo Application can reconcile the allowlist and the bootstrap can refresh Kubernetes child environment values.",
+    "Public DNS/AuthentiK routing for mcp.rickebo.com still needs external validation after the MetaMCP public ingress reconciles."
+  ],
+  "next_action": "Review and test PR #442, merge it, selectively sync the root and MetaMCP Argo Applications, rerun protected bootstrap, and revalidate Loki/Kubernetes tools and safe calls.",
+  "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T20-33-06-876Z/spec.json",
+  "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T20-33-06-876Z/spec-check.json",
+  "council_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T20-33-06-876Z/council.json",
+  "requires_council": true,
+  "independent_lanes": [
+    "Argo source policy validation",
+    "Kubernetes child environment validation",
+    "Live MCP and OAuth revalidation"
+  ],
+  "route_to": "review",
+  "risk_level": "critical",
+  "issues": [
+    {
+      "id": "#441",
+      "title": "Restore homelab Loki and Kubernetes MetaMCP child discovery",
+      "severity": "high",
+      "details": "PR #442 is the remediation implementation for the live validation failure.",
+      "owner_stage": "review"
+    }
+  ]
+}

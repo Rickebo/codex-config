@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="c13b82be-8ba8-46e7-ab6d-8ba8b7ac8aa6" name="@RICKEBO 2026-08-27 02:01:17" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2026-08-27T02:01:17.9279057+02:00" queuing="2026-08-27T02:01:17.9279057+02:00" start="2026-08-27T02:01:15.8375406+02:00" finish="2026-08-27T02:01:28.3302164+02:00" />
+  <TestSettings name="default" id="17b3f913-68d0-4b3a-850d-2e1f7bd93788">
+    <Deployment runDeploymentRoot="_RICKEBO_2026-08-27_02_01_17" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="aa077e6a-af57-4d17-8522-c0906d218f3c" testId="8cee5eef-30f9-0bca-a716-f4c0fb15c818" testName="KnowledgeService.IntegrationTests.SourceGapRepositoryTests.Gap_claim_is_exclusive_and_can_be_reclaimed_after_release" computerName="RICKEBO" duration="00:00:00.0407448" startTime="2026-08-27T02:01:22.9345135+02:00" endTime="2026-08-27T02:01:25.6373179+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="aa077e6a-af57-4d17-8522-c0906d218f3c" />
+    <UnitTestResult executionId="5dce26ac-aabe-41ca-b2ff-1cc858e1f3d8" testId="528ac87e-52ff-5016-30cc-08165fa61640" testName="KnowledgeService.IntegrationTests.SourceGapRepositoryTests.Worker_recovers_seq2_and_drains_a_retained_seq3_once" computerName="RICKEBO" duration="00:00:00.5757037" startTime="2026-08-27T02:01:16.9038085+02:00" endTime="2026-08-27T02:01:22.9324015+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="5dce26ac-aabe-41ca-b2ff-1cc858e1f3d8" />
+    <UnitTestResult executionId="0bc5963e-5bd9-4649-9050-c8ff6dc78ee3" testId="03342709-4c2f-44b1-fcfb-f73111ab2276" testName="KnowledgeService.IntegrationTests.SourceGapRepositoryTests.Claim_bootstraps_a_missing_sequence_from_a_later_ingested_trigger" computerName="RICKEBO" duration="00:00:00.0184080" startTime="2026-08-27T02:01:25.6378051+02:00" endTime="2026-08-27T02:01:28.2891636+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="0bc5963e-5bd9-4649-9050-c8ff6dc78ee3" />
+    <UnitTestResult executionId="519bc00b-53f6-4bba-b7e1-3e9714c28ed0" testId="ba992476-6675-f831-bf09-ae3714e61366" testName="KnowledgeService.IntegrationTests.SourceSnapshotGapClientTests.Rate_limit_retries_use_a_fresh_authenticated_nonce_per_request" computerName="RICKEBO" duration="00:00:00.1750303" startTime="2026-08-27T02:01:16.9045461+02:00" endTime="2026-08-27T02:01:17.0830320+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="519bc00b-53f6-4bba-b7e1-3e9714c28ed0" />
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="KnowledgeService.IntegrationTests.SourceGapRepositoryTests.Claim_bootstraps_a_missing_sequence_from_a_later_ingested_trigger" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/knowledgeservice.integrationtests/bin/release/net10.0/knowledgeservice.integrationtests.dll" id="03342709-4c2f-44b1-fcfb-f73111ab2276">
+      <Execution id="0bc5963e-5bd9-4649-9050-c8ff6dc78ee3" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/KnowledgeService.IntegrationTests/bin/Release/net10.0/KnowledgeService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="KnowledgeService.IntegrationTests.SourceGapRepositoryTests" name="Claim_bootstraps_a_missing_sequence_from_a_later_ingested_trigger" />
+    </UnitTest>
+    <UnitTest name="KnowledgeService.IntegrationTests.SourceGapRepositoryTests.Worker_recovers_seq2_and_drains_a_retained_seq3_once" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/knowledgeservice.integrationtests/bin/release/net10.0/knowledgeservice.integrationtests.dll" id="528ac87e-52ff-5016-30cc-08165fa61640">
+      <Execution id="5dce26ac-aabe-41ca-b2ff-1cc858e1f3d8" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/KnowledgeService.IntegrationTests/bin/Release/net10.0/KnowledgeService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="KnowledgeService.IntegrationTests.SourceGapRepositoryTests" name="Worker_recovers_seq2_and_drains_a_retained_seq3_once" />
+    </UnitTest>
+    <UnitTest name="KnowledgeService.IntegrationTests.SourceGapRepositoryTests.Gap_claim_is_exclusive_and_can_be_reclaimed_after_release" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/knowledgeservice.integrationtests/bin/release/net10.0/knowledgeservice.integrationtests.dll" id="8cee5eef-30f9-0bca-a716-f4c0fb15c818">
+      <Execution id="aa077e6a-af57-4d17-8522-c0906d218f3c" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/KnowledgeService.IntegrationTests/bin/Release/net10.0/KnowledgeService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="KnowledgeService.IntegrationTests.SourceGapRepositoryTests" name="Gap_claim_is_exclusive_and_can_be_reclaimed_after_release" />
+    </UnitTest>
+    <UnitTest name="KnowledgeService.IntegrationTests.SourceSnapshotGapClientTests.Rate_limit_retries_use_a_fresh_authenticated_nonce_per_request" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/knowledgeservice.integrationtests/bin/release/net10.0/knowledgeservice.integrationtests.dll" id="ba992476-6675-f831-bf09-ae3714e61366">
+      <Execution id="519bc00b-53f6-4bba-b7e1-3e9714c28ed0" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/KnowledgeService.IntegrationTests/bin/Release/net10.0/KnowledgeService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="KnowledgeService.IntegrationTests.SourceSnapshotGapClientTests" name="Rate_limit_retries_use_a_fresh_authenticated_nonce_per_request" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="8cee5eef-30f9-0bca-a716-f4c0fb15c818" executionId="aa077e6a-af57-4d17-8522-c0906d218f3c" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="528ac87e-52ff-5016-30cc-08165fa61640" executionId="5dce26ac-aabe-41ca-b2ff-1cc858e1f3d8" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="03342709-4c2f-44b1-fcfb-f73111ab2276" executionId="0bc5963e-5bd9-4649-9050-c8ff6dc78ee3" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="ba992476-6675-f831-bf09-ae3714e61366" executionId="519bc00b-53f6-4bba-b7e1-3e9714c28ed0" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Completed">
+    <Counters total="4" executed="4" passed="4" failed="0" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v4.0.0+05679a7ab5 (64-bit .NET 10.0.11)
+[xUnit.net 00:00:00.40]   Discovering: KnowledgeService.IntegrationTests
+[xUnit.net 00:00:00.44]   Discovered:  KnowledgeService.IntegrationTests
+[xUnit.net 00:00:00.46]   Starting:    KnowledgeService.IntegrationTests
+[testcontainers.org 00:00:00.09] Connected to Docker:
+  Host: unix:///var/run/docker.sock
+  Server Version: 29.7.2
+  Kernel Version: 6.18.44-1-lts
+  API Version: 1.55
+  Operating System: Arch Linux
+  Total Memory: 60.48 GB
+[testcontainers.org 00:00:00.24] Docker container bc53895c49bc created
+[testcontainers.org 00:00:00.26] Start Docker container bc53895c49bc
+[testcontainers.org 00:00:00.39] Wait for Docker container bc53895c49bc to complete readiness checks
+[testcontainers.org 00:00:01.40] Docker container bc53895c49bc ready
+[testcontainers.org 00:00:01.56] Docker container 2589de473119 created
+[testcontainers.org 00:00:01.56] Start Docker container 2589de473119
+[testcontainers.org 00:00:01.74] Wait for Docker container 2589de473119 to complete readiness checks
+[testcontainers.org 00:00:01.74] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 2589de473119
+[testcontainers.org 00:00:02.77] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 2589de473119
+[testcontainers.org 00:00:03.83] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 2589de473119
+[testcontainers.org 00:00:04.85] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 2589de473119
+[testcontainers.org 00:00:04.87] Docker container 2589de473119 ready
+[testcontainers.org 00:00:05.31] Delete Docker container 2589de473119
+[testcontainers.org 00:00:05.76] Docker container 5e663f9a9782 created
+[testcontainers.org 00:00:05.76] Start Docker container 5e663f9a9782
+[testcontainers.org 00:00:05.86] Wait for Docker container 5e663f9a9782 to complete readiness checks
+[testcontainers.org 00:00:05.86] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 5e663f9a9782
+[testcontainers.org 00:00:06.89] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 5e663f9a9782
+[testcontainers.org 00:00:07.94] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 5e663f9a9782
+[testcontainers.org 00:00:07.97] Docker container 5e663f9a9782 ready
+[testcontainers.org 00:00:08.04] Delete Docker container 5e663f9a9782
+[testcontainers.org 00:00:08.48] Docker container d03ac13b2521 created
+[testcontainers.org 00:00:08.48] Start Docker container d03ac13b2521
+[testcontainers.org 00:00:08.57] Wait for Docker container d03ac13b2521 to complete readiness checks
+[testcontainers.org 00:00:08.57] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container d03ac13b2521
+[testcontainers.org 00:00:09.59] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container d03ac13b2521
+[testcontainers.org 00:00:10.61] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container d03ac13b2521
+[testcontainers.org 00:00:10.63] Docker container d03ac13b2521 ready
+[testcontainers.org 00:00:10.67] Delete Docker container d03ac13b2521
+[xUnit.net 00:00:11.86]   Finished:    KnowledgeService.IntegrationTests
+</StdOut>
+    </Output>
+  </ResultSummary>
+</TestRun>

@@ -1,0 +1,286 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="648f7e9e-a614-4ac6-a718-b9c518c46559" name="@RICKEBO 2026-08-25 23:19:09" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2026-08-25T23:19:09.5942041+02:00" queuing="2026-08-25T23:19:09.5942041+02:00" start="2026-08-25T23:18:45.4154619+02:00" finish="2026-08-25T23:21:16.9821251+02:00" />
+  <TestSettings name="default" id="574e8a4f-103c-4612-821b-c42bf81770f5">
+    <Deployment runDeploymentRoot="_RICKEBO_2026-08-25_23_19_09" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="8eea80a8-eff3-4ce4-81cd-12ce01d5cf40" testId="2d147410-9ddf-b43c-2c94-efe883ed863e" testName="KnowledgeService.IntegrationTests.KafkaIntegrationTests.Broker_duplicate_and_out_of_order_source_events_create_one_build_per_snapshot_in_sequence" computerName="RICKEBO" duration="00:00:04.0043303" startTime="2026-08-25T23:20:37.4901211+02:00" endTime="2026-08-25T23:21:03.5083922+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="8eea80a8-eff3-4ce4-81cd-12ce01d5cf40" />
+    <UnitTestResult executionId="eeaddcb7-d70d-4bf0-bd51-4975e120b216" testId="302940f5-8bcd-d100-3192-d4265a307374" testName="KnowledgeService.IntegrationTests.KafkaIntegrationTests.Consumer_rewinds_poison_offset_when_dead_letter_publication_fails" computerName="RICKEBO" duration="00:00:05.3020521" startTime="2026-08-25T23:20:17.8619773+02:00" endTime="2026-08-25T23:20:37.4891357+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="eeaddcb7-d70d-4bf0-bd51-4975e120b216" />
+    <UnitTestResult executionId="57708d84-b2d7-48af-95b5-73d8e51a3933" testId="ca393c9e-1b67-cbe9-7e51-3e2465660f24" testName="KnowledgeService.IntegrationTests.KafkaIntegrationTests.Consumer_dead_letters_post_deletion_snapshot_and_continues" computerName="RICKEBO" duration="00:00:00.8259491" startTime="2026-08-25T23:20:01.4059991+02:00" endTime="2026-08-25T23:20:17.8615342+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="57708d84-b2d7-48af-95b5-73d8e51a3933" />
+    <UnitTestResult executionId="2e70d1f3-f478-4ede-a20e-2921fbaf3287" testId="7090a943-de99-3056-5eef-c740ae62bfe6" testName="KnowledgeService.IntegrationTests.KafkaIntegrationTests.Consumer_dead_letters_deleted_workspace_from_http_resolver" computerName="RICKEBO" duration="00:00:16.0110567" startTime="2026-08-25T23:18:45.7265741+02:00" endTime="2026-08-25T23:19:09.5714838+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="2e70d1f3-f478-4ede-a20e-2921fbaf3287">
+      <Output>
+        <ErrorInfo>
+          <Message>System.TimeoutException : The expected broker-backed state was not observed within 15 seconds.</Message>
+          <StackTrace>   at KnowledgeService.IntegrationTests.KafkaIntegrationTests.EventuallyAsync(Func`1 observe) in /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/KnowledgeService.IntegrationTests/KafkaIntegrationTests.cs:line 835
+   at KnowledgeService.IntegrationTests.KafkaIntegrationTests.Consumer_dead_letters_deleted_workspace_from_http_resolver() in /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/KnowledgeService.IntegrationTests/KafkaIntegrationTests.cs:line 507
+   at KnowledgeService.IntegrationTests.KafkaIntegrationTests.Consumer_dead_letters_deleted_workspace_from_http_resolver() in /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/KnowledgeService.IntegrationTests/KafkaIntegrationTests.cs:line 514
+   at KnowledgeService.IntegrationTests.KafkaIntegrationTests.Consumer_dead_letters_deleted_workspace_from_http_resolver() in /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/KnowledgeService.IntegrationTests/KafkaIntegrationTests.cs:line 522
+   at KnowledgeService.IntegrationTests.KafkaIntegrationTests.Consumer_dead_letters_deleted_workspace_from_http_resolver() in /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/KnowledgeService.IntegrationTests/KafkaIntegrationTests.cs:line 522
+--- End of stack trace from previous location ---</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="c0eb6365-f84d-4691-8d27-73dd0c9f2d6a" testId="1eb7c901-fc73-2ddc-0998-74030e513aec" testName="KnowledgeService.IntegrationTests.KafkaIntegrationTests.Consumer_retries_transient_generation_failure_and_recovers_without_dead_letter" computerName="RICKEBO" duration="00:00:04.8162197" startTime="2026-08-25T23:19:41.6266072+02:00" endTime="2026-08-25T23:20:01.4055726+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="c0eb6365-f84d-4691-8d27-73dd0c9f2d6a" />
+    <UnitTestResult executionId="0a699eda-a9b0-4e28-b9db-7799cc58648d" testId="52be1aad-9752-8bc4-d2ce-07c711f5deb3" testName="KnowledgeService.IntegrationTests.KafkaIntegrationTests.Consumer_dead_letters_tombstone_and_non_object_roots_and_continues" computerName="RICKEBO" duration="00:00:01.7885791" startTime="2026-08-25T23:21:03.5088227+02:00" endTime="2026-08-25T23:21:16.9193491+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="0a699eda-a9b0-4e28-b9db-7799cc58648d" />
+    <UnitTestResult executionId="3cb8a6b2-d860-413b-86f4-72797d119560" testId="ccbdcdd1-ade6-3cca-202e-c47bf999f67b" testName="KnowledgeService.IntegrationTests.KafkaIntegrationTests.Consumer_recovers_generation_fence_change_without_dead_letter" computerName="RICKEBO" duration="00:00:01.0120342" startTime="2026-08-25T23:19:31.7635641+02:00" endTime="2026-08-25T23:19:41.6262164+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="3cb8a6b2-d860-413b-86f4-72797d119560" />
+    <UnitTestResult executionId="1165c7fb-39ab-4568-8867-e24273178916" testId="15bd6c27-bb7f-ed9d-593f-699818cd2b36" testName="KnowledgeService.IntegrationTests.KafkaIntegrationTests.Retried_outbox_event_is_delivered_after_dispatcher_restart" computerName="RICKEBO" duration="00:00:03.2624571" startTime="2026-08-25T23:19:18.5383948+02:00" endTime="2026-08-25T23:19:31.7630002+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="1165c7fb-39ab-4568-8867-e24273178916" />
+    <UnitTestResult executionId="9c629428-96da-48f9-98c9-e07f1aebd982" testId="71d3c3bd-becc-9451-b935-dc20ddef7923" testName="KnowledgeService.IntegrationTests.KafkaIntegrationTests.Consumer_rewinds_tombstone_offset_when_dead_letter_publication_fails" computerName="RICKEBO" duration="00:00:02.8387463" startTime="2026-08-25T23:19:09.5811312+02:00" endTime="2026-08-25T23:19:18.5370834+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="9c629428-96da-48f9-98c9-e07f1aebd982" />
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="KnowledgeService.IntegrationTests.KafkaIntegrationTests.Broker_duplicate_and_out_of_order_source_events_create_one_build_per_snapshot_in_sequence" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/knowledgeservice.integrationtests/bin/release/net10.0/knowledgeservice.integrationtests.dll" id="2d147410-9ddf-b43c-2c94-efe883ed863e">
+      <Execution id="8eea80a8-eff3-4ce4-81cd-12ce01d5cf40" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/KnowledgeService.IntegrationTests/bin/Release/net10.0/KnowledgeService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="KnowledgeService.IntegrationTests.KafkaIntegrationTests" name="Broker_duplicate_and_out_of_order_source_events_create_one_build_per_snapshot_in_sequence" />
+    </UnitTest>
+    <UnitTest name="KnowledgeService.IntegrationTests.KafkaIntegrationTests.Consumer_retries_transient_generation_failure_and_recovers_without_dead_letter" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/knowledgeservice.integrationtests/bin/release/net10.0/knowledgeservice.integrationtests.dll" id="1eb7c901-fc73-2ddc-0998-74030e513aec">
+      <Execution id="c0eb6365-f84d-4691-8d27-73dd0c9f2d6a" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/KnowledgeService.IntegrationTests/bin/Release/net10.0/KnowledgeService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="KnowledgeService.IntegrationTests.KafkaIntegrationTests" name="Consumer_retries_transient_generation_failure_and_recovers_without_dead_letter" />
+    </UnitTest>
+    <UnitTest name="KnowledgeService.IntegrationTests.KafkaIntegrationTests.Consumer_dead_letters_deleted_workspace_from_http_resolver" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/knowledgeservice.integrationtests/bin/release/net10.0/knowledgeservice.integrationtests.dll" id="7090a943-de99-3056-5eef-c740ae62bfe6">
+      <Execution id="2e70d1f3-f478-4ede-a20e-2921fbaf3287" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/KnowledgeService.IntegrationTests/bin/Release/net10.0/KnowledgeService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="KnowledgeService.IntegrationTests.KafkaIntegrationTests" name="Consumer_dead_letters_deleted_workspace_from_http_resolver" />
+    </UnitTest>
+    <UnitTest name="KnowledgeService.IntegrationTests.KafkaIntegrationTests.Consumer_dead_letters_tombstone_and_non_object_roots_and_continues" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/knowledgeservice.integrationtests/bin/release/net10.0/knowledgeservice.integrationtests.dll" id="52be1aad-9752-8bc4-d2ce-07c711f5deb3">
+      <Execution id="0a699eda-a9b0-4e28-b9db-7799cc58648d" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/KnowledgeService.IntegrationTests/bin/Release/net10.0/KnowledgeService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="KnowledgeService.IntegrationTests.KafkaIntegrationTests" name="Consumer_dead_letters_tombstone_and_non_object_roots_and_continues" />
+    </UnitTest>
+    <UnitTest name="KnowledgeService.IntegrationTests.KafkaIntegrationTests.Consumer_rewinds_poison_offset_when_dead_letter_publication_fails" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/knowledgeservice.integrationtests/bin/release/net10.0/knowledgeservice.integrationtests.dll" id="302940f5-8bcd-d100-3192-d4265a307374">
+      <Execution id="eeaddcb7-d70d-4bf0-bd51-4975e120b216" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/KnowledgeService.IntegrationTests/bin/Release/net10.0/KnowledgeService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="KnowledgeService.IntegrationTests.KafkaIntegrationTests" name="Consumer_rewinds_poison_offset_when_dead_letter_publication_fails" />
+    </UnitTest>
+    <UnitTest name="KnowledgeService.IntegrationTests.KafkaIntegrationTests.Consumer_recovers_generation_fence_change_without_dead_letter" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/knowledgeservice.integrationtests/bin/release/net10.0/knowledgeservice.integrationtests.dll" id="ccbdcdd1-ade6-3cca-202e-c47bf999f67b">
+      <Execution id="3cb8a6b2-d860-413b-86f4-72797d119560" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/KnowledgeService.IntegrationTests/bin/Release/net10.0/KnowledgeService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="KnowledgeService.IntegrationTests.KafkaIntegrationTests" name="Consumer_recovers_generation_fence_change_without_dead_letter" />
+    </UnitTest>
+    <UnitTest name="KnowledgeService.IntegrationTests.KafkaIntegrationTests.Consumer_rewinds_tombstone_offset_when_dead_letter_publication_fails" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/knowledgeservice.integrationtests/bin/release/net10.0/knowledgeservice.integrationtests.dll" id="71d3c3bd-becc-9451-b935-dc20ddef7923">
+      <Execution id="9c629428-96da-48f9-98c9-e07f1aebd982" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/KnowledgeService.IntegrationTests/bin/Release/net10.0/KnowledgeService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="KnowledgeService.IntegrationTests.KafkaIntegrationTests" name="Consumer_rewinds_tombstone_offset_when_dead_letter_publication_fails" />
+    </UnitTest>
+    <UnitTest name="KnowledgeService.IntegrationTests.KafkaIntegrationTests.Retried_outbox_event_is_delivered_after_dispatcher_restart" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/knowledgeservice.integrationtests/bin/release/net10.0/knowledgeservice.integrationtests.dll" id="15bd6c27-bb7f-ed9d-593f-699818cd2b36">
+      <Execution id="1165c7fb-39ab-4568-8867-e24273178916" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/KnowledgeService.IntegrationTests/bin/Release/net10.0/KnowledgeService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="KnowledgeService.IntegrationTests.KafkaIntegrationTests" name="Retried_outbox_event_is_delivered_after_dispatcher_restart" />
+    </UnitTest>
+    <UnitTest name="KnowledgeService.IntegrationTests.KafkaIntegrationTests.Consumer_dead_letters_post_deletion_snapshot_and_continues" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/knowledgeservice.integrationtests/bin/release/net10.0/knowledgeservice.integrationtests.dll" id="ca393c9e-1b67-cbe9-7e51-3e2465660f24">
+      <Execution id="57708d84-b2d7-48af-95b5-73d8e51a3933" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/KnowledgeService.IntegrationTests/bin/Release/net10.0/KnowledgeService.IntegrationTests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="KnowledgeService.IntegrationTests.KafkaIntegrationTests" name="Consumer_dead_letters_post_deletion_snapshot_and_continues" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="2d147410-9ddf-b43c-2c94-efe883ed863e" executionId="8eea80a8-eff3-4ce4-81cd-12ce01d5cf40" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="302940f5-8bcd-d100-3192-d4265a307374" executionId="eeaddcb7-d70d-4bf0-bd51-4975e120b216" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="ca393c9e-1b67-cbe9-7e51-3e2465660f24" executionId="57708d84-b2d7-48af-95b5-73d8e51a3933" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="7090a943-de99-3056-5eef-c740ae62bfe6" executionId="2e70d1f3-f478-4ede-a20e-2921fbaf3287" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="1eb7c901-fc73-2ddc-0998-74030e513aec" executionId="c0eb6365-f84d-4691-8d27-73dd0c9f2d6a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="52be1aad-9752-8bc4-d2ce-07c711f5deb3" executionId="0a699eda-a9b0-4e28-b9db-7799cc58648d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="ccbdcdd1-ade6-3cca-202e-c47bf999f67b" executionId="3cb8a6b2-d860-413b-86f4-72797d119560" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="15bd6c27-bb7f-ed9d-593f-699818cd2b36" executionId="1165c7fb-39ab-4568-8867-e24273178916" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="71d3c3bd-becc-9451-b935-dc20ddef7923" executionId="9c629428-96da-48f9-98c9-e07f1aebd982" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Failed">
+    <Counters total="9" executed="9" passed="8" failed="1" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v4.0.0+05679a7ab5 (64-bit .NET 10.0.11)
+[xUnit.net 00:00:00.05]   Discovering: KnowledgeService.IntegrationTests
+[xUnit.net 00:00:00.09]   Discovered:  KnowledgeService.IntegrationTests
+[xUnit.net 00:00:00.10]   Starting:    KnowledgeService.IntegrationTests
+[testcontainers.org 00:00:00.09] Connected to Docker:
+  Host: unix:///var/run/docker.sock
+  Server Version: 29.7.2
+  Kernel Version: 6.18.44-1-lts
+  API Version: 1.55
+  Operating System: Arch Linux
+  Total Memory: 60.48 GB
+[testcontainers.org 00:00:00.42] Docker container efdbccbe696b created
+[testcontainers.org 00:00:00.44] Start Docker container efdbccbe696b
+[testcontainers.org 00:00:00.57] Wait for Docker container efdbccbe696b to complete readiness checks
+[testcontainers.org 00:00:01.58] Docker container efdbccbe696b ready
+[testcontainers.org 00:00:01.76] Docker container c2e94a0bc8c2 created
+[testcontainers.org 00:00:01.76] Docker container b0a160827409 created
+[testcontainers.org 00:00:01.76] Start Docker container c2e94a0bc8c2
+[testcontainers.org 00:00:01.76] Start Docker container b0a160827409
+[testcontainers.org 00:00:01.89] Wait for Docker container c2e94a0bc8c2 to complete readiness checks
+[testcontainers.org 00:00:01.89] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container c2e94a0bc8c2
+[testcontainers.org 00:00:01.91] Add file to tar archive: Content length: 131 byte(s), Target file: "/testcontainers.sh", UID: 0, GID: 0, Mode: 0755
+[testcontainers.org 00:00:01.92] Copy tar archive to container: Content length: 131 byte(s), Docker container: b0a160827409
+[testcontainers.org 00:00:01.92] Wait for Docker container b0a160827409 to complete readiness checks
+[testcontainers.org 00:00:02.92] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container c2e94a0bc8c2
+[testcontainers.org 00:00:03.94] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container c2e94a0bc8c2
+[testcontainers.org 00:00:04.95] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container c2e94a0bc8c2
+[testcontainers.org 00:00:04.98] Docker container c2e94a0bc8c2 ready
+[testcontainers.org 00:00:05.94] Docker container b0a160827409 ready
+[testcontainers.org 00:00:22.23] Delete Docker container b0a160827409
+[testcontainers.org 00:00:22.23] Delete Docker container c2e94a0bc8c2
+[xUnit.net 00:00:23.96]       System.TimeoutException : The expected broker-backed state was not observed within 15 seconds.
+[xUnit.net 00:00:23.96]       Stack Trace:
+[xUnit.net 00:00:23.96]         /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/KnowledgeService.IntegrationTests/KafkaIntegrationTests.cs(835,0): at KnowledgeService.IntegrationTests.KafkaIntegrationTests.EventuallyAsync(Func`1 observe)
+[xUnit.net 00:00:23.96]         /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/KnowledgeService.IntegrationTests/KafkaIntegrationTests.cs(507,0): at KnowledgeService.IntegrationTests.KafkaIntegrationTests.Consumer_dead_letters_deleted_workspace_from_http_resolver()
+[xUnit.net 00:00:23.96]         /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/KnowledgeService.IntegrationTests/KafkaIntegrationTests.cs(514,0): at KnowledgeService.IntegrationTests.KafkaIntegrationTests.Consumer_dead_letters_deleted_workspace_from_http_resolver()
+[xUnit.net 00:00:23.96]         /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/KnowledgeService.IntegrationTests/KafkaIntegrationTests.cs(522,0): at KnowledgeService.IntegrationTests.KafkaIntegrationTests.Consumer_dead_letters_deleted_workspace_from_http_resolver()
+[xUnit.net 00:00:23.96]         /mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/knowledge-service/KnowledgeService.IntegrationTests/KafkaIntegrationTests.cs(522,0): at KnowledgeService.IntegrationTests.KafkaIntegrationTests.Consumer_dead_letters_deleted_workspace_from_http_resolver()
+[xUnit.net 00:00:23.96]         --- End of stack trace from previous location ---
+[testcontainers.org 00:00:24.15] Docker container 703e1061b3e0 created
+[testcontainers.org 00:00:24.15] Docker container 8e4a5aca888f created
+[testcontainers.org 00:00:24.15] Start Docker container 703e1061b3e0
+[testcontainers.org 00:00:24.15] Start Docker container 8e4a5aca888f
+[testcontainers.org 00:00:24.31] Add file to tar archive: Content length: 131 byte(s), Target file: "/testcontainers.sh", UID: 0, GID: 0, Mode: 0755
+[testcontainers.org 00:00:24.31] Copy tar archive to container: Content length: 131 byte(s), Docker container: 8e4a5aca888f
+[testcontainers.org 00:00:24.31] Wait for Docker container 8e4a5aca888f to complete readiness checks
+[testcontainers.org 00:00:24.32] Wait for Docker container 703e1061b3e0 to complete readiness checks
+[testcontainers.org 00:00:24.32] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 703e1061b3e0
+[testcontainers.org 00:00:25.34] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 703e1061b3e0
+[testcontainers.org 00:00:26.36] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 703e1061b3e0
+[testcontainers.org 00:00:27.31] Docker container 8e4a5aca888f ready
+[testcontainers.org 00:00:27.38] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 703e1061b3e0
+[testcontainers.org 00:00:27.40] Docker container 703e1061b3e0 ready
+[testcontainers.org 00:00:30.46] Delete Docker container 8e4a5aca888f
+[testcontainers.org 00:00:30.46] Delete Docker container 703e1061b3e0
+[testcontainers.org 00:00:36.30] Docker container eea102449791 created
+[testcontainers.org 00:00:36.30] Docker container bb7910c97378 created
+[testcontainers.org 00:00:36.30] Start Docker container bb7910c97378
+[testcontainers.org 00:00:36.30] Start Docker container eea102449791
+[testcontainers.org 00:00:36.60] Wait for Docker container eea102449791 to complete readiness checks
+[testcontainers.org 00:00:36.60] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container eea102449791
+[testcontainers.org 00:00:36.63] Add file to tar archive: Content length: 131 byte(s), Target file: "/testcontainers.sh", UID: 0, GID: 0, Mode: 0755
+[testcontainers.org 00:00:36.63] Copy tar archive to container: Content length: 131 byte(s), Docker container: bb7910c97378
+[testcontainers.org 00:00:36.63] Wait for Docker container bb7910c97378 to complete readiness checks
+[testcontainers.org 00:00:37.61] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container eea102449791
+[testcontainers.org 00:00:38.63] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container eea102449791
+[testcontainers.org 00:00:38.65] Docker container eea102449791 ready
+[testcontainers.org 00:00:40.63] Docker container bb7910c97378 ready
+[testcontainers.org 00:00:44.12] Delete Docker container eea102449791
+[testcontainers.org 00:00:44.12] Delete Docker container bb7910c97378
+[testcontainers.org 00:00:46.70] Docker container 9a618c128d63 created
+[testcontainers.org 00:00:46.70] Start Docker container 9a618c128d63
+[testcontainers.org 00:00:46.70] Docker container 0d6a26439d13 created
+[testcontainers.org 00:00:46.70] Start Docker container 0d6a26439d13
+[testcontainers.org 00:00:46.96] Add file to tar archive: Content length: 131 byte(s), Target file: "/testcontainers.sh", UID: 0, GID: 0, Mode: 0755
+[testcontainers.org 00:00:46.96] Copy tar archive to container: Content length: 131 byte(s), Docker container: 9a618c128d63
+[testcontainers.org 00:00:46.96] Wait for Docker container 9a618c128d63 to complete readiness checks
+[testcontainers.org 00:00:46.97] Wait for Docker container 0d6a26439d13 to complete readiness checks
+[testcontainers.org 00:00:46.97] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 0d6a26439d13
+[testcontainers.org 00:00:47.99] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 0d6a26439d13
+[testcontainers.org 00:00:49.01] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 0d6a26439d13
+[testcontainers.org 00:00:49.96] Docker container 9a618c128d63 ready
+[testcontainers.org 00:00:50.03] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 0d6a26439d13
+[testcontainers.org 00:00:51.05] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 0d6a26439d13
+[testcontainers.org 00:00:52.07] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 0d6a26439d13
+[testcontainers.org 00:00:52.09] Docker container 0d6a26439d13 ready
+[testcontainers.org 00:00:53.33] Delete Docker container 0d6a26439d13
+[testcontainers.org 00:00:53.33] Delete Docker container 9a618c128d63
+[testcontainers.org 00:00:56.73] Docker container cea2df8c309f created
+[testcontainers.org 00:00:56.73] Start Docker container cea2df8c309f
+[testcontainers.org 00:00:56.76] Docker container 57d3730cf318 created
+[testcontainers.org 00:00:56.77] Start Docker container 57d3730cf318
+[testcontainers.org 00:00:56.97] Add file to tar archive: Content length: 131 byte(s), Target file: "/testcontainers.sh", UID: 0, GID: 0, Mode: 0755
+[testcontainers.org 00:00:56.97] Copy tar archive to container: Content length: 131 byte(s), Docker container: 57d3730cf318
+[testcontainers.org 00:00:56.97] Wait for Docker container 57d3730cf318 to complete readiness checks
+[testcontainers.org 00:00:56.99] Wait for Docker container cea2df8c309f to complete readiness checks
+[testcontainers.org 00:00:56.99] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container cea2df8c309f
+[testcontainers.org 00:00:58.01] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container cea2df8c309f
+[testcontainers.org 00:00:59.03] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container cea2df8c309f
+[testcontainers.org 00:01:00.05] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container cea2df8c309f
+[testcontainers.org 00:01:00.98] Docker container 57d3730cf318 ready
+[testcontainers.org 00:01:01.08] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container cea2df8c309f
+[testcontainers.org 00:01:02.10] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container cea2df8c309f
+[testcontainers.org 00:01:03.12] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container cea2df8c309f
+[testcontainers.org 00:01:04.14] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container cea2df8c309f
+[testcontainers.org 00:01:05.16] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container cea2df8c309f
+[testcontainers.org 00:01:06.18] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container cea2df8c309f
+[testcontainers.org 00:01:06.20] Docker container cea2df8c309f ready
+[testcontainers.org 00:01:11.54] Delete Docker container cea2df8c309f
+[testcontainers.org 00:01:11.54] Delete Docker container 57d3730cf318
+[testcontainers.org 00:01:17.47] Docker container 62883858f7a9 created
+[testcontainers.org 00:01:17.47] Start Docker container 62883858f7a9
+[testcontainers.org 00:01:17.48] Docker container a25574dcbe5b created
+[testcontainers.org 00:01:17.48] Start Docker container a25574dcbe5b
+[testcontainers.org 00:01:17.72] Add file to tar archive: Content length: 131 byte(s), Target file: "/testcontainers.sh", UID: 0, GID: 0, Mode: 0755
+[testcontainers.org 00:01:17.72] Copy tar archive to container: Content length: 131 byte(s), Docker container: 62883858f7a9
+[testcontainers.org 00:01:17.72] Wait for Docker container 62883858f7a9 to complete readiness checks
+[testcontainers.org 00:01:17.74] Wait for Docker container a25574dcbe5b to complete readiness checks
+[testcontainers.org 00:01:17.75] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container a25574dcbe5b
+[testcontainers.org 00:01:18.76] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container a25574dcbe5b
+[testcontainers.org 00:01:19.78] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container a25574dcbe5b
+[testcontainers.org 00:01:20.72] Docker container 62883858f7a9 ready
+[testcontainers.org 00:01:20.80] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container a25574dcbe5b
+[testcontainers.org 00:01:21.81] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container a25574dcbe5b
+[testcontainers.org 00:01:22.83] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container a25574dcbe5b
+[testcontainers.org 00:01:23.85] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container a25574dcbe5b
+[testcontainers.org 00:01:24.87] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container a25574dcbe5b
+[testcontainers.org 00:01:25.88] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container a25574dcbe5b
+[testcontainers.org 00:01:26.90] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container a25574dcbe5b
+[testcontainers.org 00:01:26.92] Docker container a25574dcbe5b ready
+[testcontainers.org 00:01:27.97] Delete Docker container 62883858f7a9
+[testcontainers.org 00:01:27.97] Delete Docker container a25574dcbe5b
+[testcontainers.org 00:01:32.92] Docker container 333be811ed61 created
+[testcontainers.org 00:01:32.92] Docker container dbf4516ba568 created
+[testcontainers.org 00:01:32.92] Start Docker container dbf4516ba568
+[testcontainers.org 00:01:32.92] Start Docker container 333be811ed61
+[testcontainers.org 00:01:33.30] Wait for Docker container dbf4516ba568 to complete readiness checks
+[testcontainers.org 00:01:33.30] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container dbf4516ba568
+[testcontainers.org 00:01:33.33] Add file to tar archive: Content length: 131 byte(s), Target file: "/testcontainers.sh", UID: 0, GID: 0, Mode: 0755
+[testcontainers.org 00:01:33.33] Copy tar archive to container: Content length: 131 byte(s), Docker container: 333be811ed61
+[testcontainers.org 00:01:33.33] Wait for Docker container 333be811ed61 to complete readiness checks
+[testcontainers.org 00:01:34.32] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container dbf4516ba568
+[testcontainers.org 00:01:35.34] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container dbf4516ba568
+[testcontainers.org 00:01:36.36] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container dbf4516ba568
+[testcontainers.org 00:01:37.38] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container dbf4516ba568
+[testcontainers.org 00:01:38.40] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container dbf4516ba568
+[testcontainers.org 00:01:39.34] Docker container 333be811ed61 ready
+[testcontainers.org 00:01:39.64] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container dbf4516ba568
+[testcontainers.org 00:01:40.65] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container dbf4516ba568
+[testcontainers.org 00:01:41.67] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container dbf4516ba568
+[testcontainers.org 00:01:42.68] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container dbf4516ba568
+[testcontainers.org 00:01:42.70] Docker container dbf4516ba568 ready
+[testcontainers.org 00:01:48.23] Delete Docker container dbf4516ba568
+[testcontainers.org 00:01:48.23] Delete Docker container 333be811ed61
+[testcontainers.org 00:01:54.63] Docker container f0c46b2a150d created
+[testcontainers.org 00:01:54.63] Start Docker container f0c46b2a150d
+[testcontainers.org 00:01:54.87] Docker container eb5d61b91e5c created
+[testcontainers.org 00:01:54.87] Start Docker container eb5d61b91e5c
+[testcontainers.org 00:01:55.19] Add file to tar archive: Content length: 131 byte(s), Target file: "/testcontainers.sh", UID: 0, GID: 0, Mode: 0755
+[testcontainers.org 00:01:55.19] Copy tar archive to container: Content length: 131 byte(s), Docker container: f0c46b2a150d
+[testcontainers.org 00:01:55.19] Wait for Docker container f0c46b2a150d to complete readiness checks
+[testcontainers.org 00:01:55.23] Wait for Docker container eb5d61b91e5c to complete readiness checks
+[testcontainers.org 00:01:55.23] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container eb5d61b91e5c
+[testcontainers.org 00:01:56.25] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container eb5d61b91e5c
+[testcontainers.org 00:01:57.27] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container eb5d61b91e5c
+[testcontainers.org 00:01:58.20] Docker container f0c46b2a150d ready
+[testcontainers.org 00:01:58.29] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container eb5d61b91e5c
+[testcontainers.org 00:01:59.32] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container eb5d61b91e5c
+[testcontainers.org 00:02:00.34] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container eb5d61b91e5c
+[testcontainers.org 00:02:01.35] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container eb5d61b91e5c
+[testcontainers.org 00:02:02.37] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container eb5d61b91e5c
+[testcontainers.org 00:02:03.42] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container eb5d61b91e5c
+[testcontainers.org 00:02:04.44] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container eb5d61b91e5c
+[testcontainers.org 00:02:04.46] Docker container eb5d61b91e5c ready
+[testcontainers.org 00:02:08.69] Delete Docker container eb5d61b91e5c
+[testcontainers.org 00:02:08.69] Delete Docker container f0c46b2a150d
+[testcontainers.org 00:02:19.49] Docker container 7206e7fd4aad created
+[testcontainers.org 00:02:19.49] Docker container 25443feac028 created
+[testcontainers.org 00:02:19.49] Start Docker container 7206e7fd4aad
+[testcontainers.org 00:02:19.49] Start Docker container 25443feac028
+[testcontainers.org 00:02:20.47] Add file to tar archive: Content length: 131 byte(s), Target file: "/testcontainers.sh", UID: 0, GID: 0, Mode: 0755
+[testcontainers.org 00:02:20.47] Copy tar archive to container: Content length: 131 byte(s), Docker container: 25443feac028
+[testcontainers.org 00:02:20.48] Wait for Docker container 25443feac028 to complete readiness checks
+[testcontainers.org 00:02:20.62] Wait for Docker container 7206e7fd4aad to complete readiness checks
+[testcontainers.org 00:02:20.62] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 7206e7fd4aad
+[testcontainers.org 00:02:21.63] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 7206e7fd4aad
+[testcontainers.org 00:02:22.65] Execute "pg_isready --host localhost --dbname knowledge_service --username knowledge_service" at Docker container 7206e7fd4aad
+[testcontainers.org 00:02:22.67] Docker container 7206e7fd4aad ready
+[testcontainers.org 00:02:24.48] Docker container 25443feac028 ready
+[testcontainers.org 00:02:26.49] Delete Docker container 7206e7fd4aad
+[testcontainers.org 00:02:26.49] Delete Docker container 25443feac028
+[xUnit.net 00:02:31.31]   Finished:    KnowledgeService.IntegrationTests
+</StdOut>
+    </Output>
+    <RunInfos>
+      <RunInfo computerName="RICKEBO" outcome="Error" timestamp="2026-08-25T23:19:09.5734782+02:00">
+        <Text>[xUnit.net 00:00:23.96]     KnowledgeService.IntegrationTests.KafkaIntegrationTests.Consumer_dead_letters_deleted_workspace_from_http_resolver [FAIL]</Text>
+      </RunInfo>
+    </RunInfos>
+  </ResultSummary>
+</TestRun>

@@ -1,0 +1,19 @@
+{
+  "schema": "codicarium.release-identity-fixtures/v1",
+  "handoff": {
+    "json_byte_length": 697,
+    "json_sha256": "8abe528bb32aaa47f8fc496c3571d4b91248f3ebfe4c8be29463a25277bd9e88",
+    "digest_base64url": "ir5Si7Mqqkf4_ElsNXHUuRJI8-v-TIvilGOiUne9nog",
+    "tuple_grammar": "release-verify:<verifier_id>/<attempt>:<tag>:<source>:<ci_id>/<attempt>:<coordinator_id>/<attempt>:<coordinator_check_id>:<publisher_revision>",
+    "tuple": "release-verify:9003001/1:v0.6.14:1111111111111111111111111111111111111111:9001001/1:9002001/1:9002003:2222222222222222222222222222222222222222",
+    "tuple_base64url": "cmVsZWFzZS12ZXJpZnk6OTAwMzAwMS8xOnYwLjYuMTQ6MTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTo5MDAxMDAxLzE6OTAwMjAwMS8xOjkwMDIwMDM6MjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMg"
+  },
+  "dispatch": {
+    "json_byte_length": 436,
+    "json_sha256": "b150fa8dad70a207fb7a78f6a41ab1bc1430833ba70b86fdc2f08a13c7c11f3b",
+    "digest_base64url": "sVD6ja1wogf7enj2pBqxvBQwgzunC4b9wvCKE8fBHzs",
+    "tuple_grammar": "publisher-dispatch:<authorizer_id>/<attempt>:<handoff_check_id>:<handoff_sha256>:<publisher_revision>:<repository>:<tag>:<source>",
+    "tuple": "publisher-dispatch:9004001/1:9004003:8abe528bb32aaa47f8fc496c3571d4b91248f3ebfe4c8be29463a25277bd9e88:2222222222222222222222222222222222222222:codicarium/deployment-controller:v0.6.14:1111111111111111111111111111111111111111",
+    "tuple_base64url": "cHVibGlzaGVyLWRpc3BhdGNoOjkwMDQwMDEvMTo5MDA0MDAzOjhhYmU1MjhiYjMyYWFhNDdmOGZjNDk2YzM1NzFkNGI5MTI0OGYzZWJmZTRjOGJlMjk0NjNhMjUyNzdiZDllODg6MjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjpjb2RpY2FyaXVtL2RlcGxveW1lbnQtY29udHJvbGxlcjp2MC42LjE0OjExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTE"
+  }
+}

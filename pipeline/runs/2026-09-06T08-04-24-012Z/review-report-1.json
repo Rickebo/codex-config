@@ -1,0 +1,29 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Independent code and DevOps review found blocking historical-catalog, same-timestamp conflict, workflow credential-ordering, and test-invocation defects.",
+  "changed_files": [],
+  "validation": [
+    "Complete commit 709a37f diff reviewed independently",
+    "Historical gpt-5.5 row loss reproduced by comparing prior values catalog to canonical JSON",
+    "Same-timestamp changed-rate duplicate reproduced and rejected by production loader",
+    "Workflow inspection proved persisted default checkout credential could perform git push before App-token boundary",
+    "Natural unittest invocation failed while PYTHONPATH-specific invocation passed",
+    "actionlint, changed-artifact test, Helm render, and loader checks otherwise passed"
+  ],
+  "blockers": [
+    "Preserve all historical catalog rows including gpt-5.5 and add a migration regression",
+    "Reject same-timestamp rate conflicts atomically",
+    "Make job/default token read-only, disable persisted checkout credentials, and authenticate push only with the post-validation App token",
+    "Pin manual dispatch checkout to main and make parser tests runnable and gated in CI/workflow"
+  ],
+  "next_action": "Fix all review findings in the issue worktree and rerun the complete implementation validation matrix.",
+  "route_to": "code",
+  "risk_level": "high",
+  "independent_lanes": [
+    "catalog migration and updater conflict semantics",
+    "workflow credential and dispatch hardening",
+    "test discovery and CI gating"
+  ],
+  "requires_council": false
+}

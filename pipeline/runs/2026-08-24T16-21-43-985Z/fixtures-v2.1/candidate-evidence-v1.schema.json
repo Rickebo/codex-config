@@ -1,0 +1,294 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.codicarium.com/release/candidate-evidence-v1.schema.json",
+  "title": "Codicarium release candidate evidence v1",
+  "type": "object",
+  "required": [
+    "schema",
+    "repository",
+    "tag",
+    "source_revision",
+    "ci",
+    "verifier",
+    "archives"
+  ],
+  "properties": {
+    "schema": {
+      "const": "codicarium.release-candidate-evidence/v1"
+    },
+    "repository": {
+      "const": "codicarium/deployment-controller"
+    },
+    "tag": {
+      "const": "v0.6.14"
+    },
+    "source_revision": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "ci": {
+      "type": "object",
+      "required": [
+        "run_id",
+        "run_attempt"
+      ],
+      "properties": {
+        "run_id": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        },
+        "run_attempt": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        }
+      },
+      "additionalProperties": false
+    },
+    "verifier": {
+      "type": "object",
+      "required": [
+        "run_id",
+        "run_attempt"
+      ],
+      "properties": {
+        "run_id": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        },
+        "run_attempt": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        }
+      },
+      "additionalProperties": false
+    },
+    "archives": {
+      "type": "object",
+      "required": [
+        "deployment-controller-verified-image",
+        "deployment-controller-verified-chart"
+      ],
+      "properties": {
+        "deployment-controller-verified-image": {
+          "type": "object",
+          "required": [
+            "object_key",
+            "archive_sha256",
+            "byte_length",
+            "capability_nonce",
+            "capability_expires_at",
+            "files"
+          ],
+          "properties": {
+            "object_key": {
+              "type": "string",
+              "pattern": "^artifacts/v1/orgs/255540067/repos/1303901324/releases/v0\\.6\\.14/sources/[0-9a-f]{40}/runs/[1-9][0-9]*/attempts/[1-9][0-9]*/deployment-controller-verified-image/[0-9a-f]{32}\\.tar\\.zst$"
+            },
+            "archive_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "byte_length": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "capability_nonce": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            },
+            "capability_expires_at": {
+              "type": "string",
+              "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])-([0-2][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]Z$"
+            },
+            "files": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "type": "object",
+                  "required": [
+                    "path",
+                    "size",
+                    "sha256"
+                  ],
+                  "properties": {
+                    "path": {
+                      "const": "deployment-controller-linux-amd64.spdx.json"
+                    },
+                    "size": {
+                      "type": "string",
+                      "pattern": "^[1-9][0-9]*$"
+                    },
+                    "sha256": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{64}$"
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "required": [
+                    "path",
+                    "size",
+                    "sha256"
+                  ],
+                  "properties": {
+                    "path": {
+                      "const": "deployment-controller-linux-arm64.spdx.json"
+                    },
+                    "size": {
+                      "type": "string",
+                      "pattern": "^[1-9][0-9]*$"
+                    },
+                    "sha256": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{64}$"
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "required": [
+                    "path",
+                    "size",
+                    "sha256"
+                  ],
+                  "properties": {
+                    "path": {
+                      "const": "deployment-controller.env"
+                    },
+                    "size": {
+                      "type": "string",
+                      "pattern": "^[1-9][0-9]*$"
+                    },
+                    "sha256": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{64}$"
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "required": [
+                    "path",
+                    "size",
+                    "sha256"
+                  ],
+                  "properties": {
+                    "path": {
+                      "const": "deployment-controller.oci.tar"
+                    },
+                    "size": {
+                      "type": "string",
+                      "pattern": "^[1-9][0-9]*$"
+                    },
+                    "sha256": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{64}$"
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              ],
+              "items": false,
+              "minItems": 4,
+              "maxItems": 4
+            }
+          },
+          "additionalProperties": false
+        },
+        "deployment-controller-verified-chart": {
+          "type": "object",
+          "required": [
+            "object_key",
+            "archive_sha256",
+            "byte_length",
+            "capability_nonce",
+            "capability_expires_at",
+            "files"
+          ],
+          "properties": {
+            "object_key": {
+              "type": "string",
+              "pattern": "^artifacts/v1/orgs/255540067/repos/1303901324/releases/v0\\.6\\.14/sources/[0-9a-f]{40}/runs/[1-9][0-9]*/attempts/[1-9][0-9]*/deployment-controller-verified-chart/[0-9a-f]{32}\\.tar\\.zst$"
+            },
+            "archive_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "byte_length": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$"
+            },
+            "capability_nonce": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            },
+            "capability_expires_at": {
+              "type": "string",
+              "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])-([0-2][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]Z$"
+            },
+            "files": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "type": "object",
+                  "required": [
+                    "path",
+                    "size",
+                    "sha256"
+                  ],
+                  "properties": {
+                    "path": {
+                      "const": "deployment-controller-0.6.14.tgz"
+                    },
+                    "size": {
+                      "type": "string",
+                      "pattern": "^[1-9][0-9]*$"
+                    },
+                    "sha256": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{64}$"
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "required": [
+                    "path",
+                    "size",
+                    "sha256"
+                  ],
+                  "properties": {
+                    "path": {
+                      "const": "deployment-controller-chart.sha256"
+                    },
+                    "size": {
+                      "type": "string",
+                      "pattern": "^[1-9][0-9]*$"
+                    },
+                    "sha256": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{64}$"
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              ],
+              "items": false,
+              "minItems": 2,
+              "maxItems": 2
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "unevaluatedProperties": false
+}

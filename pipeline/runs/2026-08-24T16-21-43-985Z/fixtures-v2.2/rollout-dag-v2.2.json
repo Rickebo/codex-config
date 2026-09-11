@@ -1,0 +1,911 @@
+[
+  {
+    "id": "S00",
+    "owner": "release-manager",
+    "action": "Collect fresh non-authorizing inventory at the seven immutable heads",
+    "depends_on": [],
+    "mode": "normal"
+  },
+  {
+    "id": "S01",
+    "owner": "release-manager",
+    "action": "Obtain exact-hash council decision bound to spec, annex, spec-check and validator hashes",
+    "depends_on": [
+      "S00"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "B10",
+    "owner": "release-manager",
+    "action": "GET repository and require exact 404, then one-use dual-control private repository create",
+    "depends_on": [
+      "S01"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "B11",
+    "owner": "independent-readback",
+    "action": "Read repository numeric ID, node ID and settings independently",
+    "depends_on": [
+      "B10"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "B12",
+    "owner": "release-manager",
+    "action": "Commit exact approved seed and RepositoryBindingEnvelope",
+    "depends_on": [
+      "B11"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "B13",
+    "owner": "independent-readback",
+    "action": "Read exact seed Git tree and canonical blob bytes",
+    "depends_on": [
+      "B12"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "B14",
+    "owner": "independent-readback",
+    "action": "Read Apps, rulesets, environments and required checks",
+    "depends_on": [
+      "B13"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "B15",
+    "owner": "administrator-readback",
+    "action": "Read unredacted administrator-visible bypass actors",
+    "depends_on": [
+      "B14"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "CA20",
+    "owner": "codicarium/codicarium-actions",
+    "action": "Implement the bounded lane at the frozen base head",
+    "depends_on": [
+      "B15"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "CA21",
+    "owner": "independent-reviewer",
+    "action": "Sign exact-head and exact-diff review evidence",
+    "depends_on": [
+      "CA20"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "CA22",
+    "owner": "independent-qa",
+    "action": "Run positive tests and zero-effect negative oracles",
+    "depends_on": [
+      "CA21"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "CA23",
+    "owner": "github-actions",
+    "action": "Pass protected checks at the same candidate head",
+    "depends_on": [
+      "CA22"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "CA24",
+    "owner": "guarded-merge",
+    "action": "Merge the exact approved head without bypass",
+    "depends_on": [
+      "CA23"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "CA25",
+    "owner": "independent-readback",
+    "action": "Read post-merge main and successful protected CI",
+    "depends_on": [
+      "CA24"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "IF20",
+    "owner": "codicarium/infra",
+    "action": "Implement the bounded lane at the frozen base head",
+    "depends_on": [
+      "CA25"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "IF21",
+    "owner": "independent-reviewer",
+    "action": "Sign exact-head and exact-diff review evidence",
+    "depends_on": [
+      "IF20"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "IF22",
+    "owner": "independent-qa",
+    "action": "Run positive tests and zero-effect negative oracles",
+    "depends_on": [
+      "IF21"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "IF23",
+    "owner": "github-actions",
+    "action": "Pass protected checks at the same candidate head",
+    "depends_on": [
+      "IF22"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "IF24",
+    "owner": "guarded-merge",
+    "action": "Merge the exact approved head without bypass",
+    "depends_on": [
+      "IF23"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "IF25",
+    "owner": "independent-readback",
+    "action": "Read post-merge main and successful protected CI",
+    "depends_on": [
+      "IF24"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "PG20",
+    "owner": "codicarium/postgres-config",
+    "action": "Implement the bounded lane at the frozen base head",
+    "depends_on": [
+      "CA25"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "PG21",
+    "owner": "independent-reviewer",
+    "action": "Sign exact-head and exact-diff review evidence",
+    "depends_on": [
+      "PG20"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "PG22",
+    "owner": "independent-qa",
+    "action": "Run positive tests and zero-effect negative oracles",
+    "depends_on": [
+      "PG21"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "PG23",
+    "owner": "github-actions",
+    "action": "Pass protected checks at the same candidate head",
+    "depends_on": [
+      "PG22"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "PG24",
+    "owner": "guarded-merge",
+    "action": "Merge the exact approved head without bypass",
+    "depends_on": [
+      "PG23"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "PG25",
+    "owner": "independent-readback",
+    "action": "Read post-merge main and successful protected CI",
+    "depends_on": [
+      "PG24"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "VA20",
+    "owner": "codicarium/vault-config",
+    "action": "Implement the bounded lane at the frozen base head",
+    "depends_on": [
+      "CA25"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "VA21",
+    "owner": "independent-reviewer",
+    "action": "Sign exact-head and exact-diff review evidence",
+    "depends_on": [
+      "VA20"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "VA22",
+    "owner": "independent-qa",
+    "action": "Run positive tests and zero-effect negative oracles",
+    "depends_on": [
+      "VA21"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "VA23",
+    "owner": "github-actions",
+    "action": "Pass protected checks at the same candidate head",
+    "depends_on": [
+      "VA22"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "VA24",
+    "owner": "guarded-merge",
+    "action": "Merge the exact approved head without bypass",
+    "depends_on": [
+      "VA23"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "VA25",
+    "owner": "independent-readback",
+    "action": "Read post-merge main and successful protected CI",
+    "depends_on": [
+      "VA24"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "RP20",
+    "owner": "codicarium/release-platform-config",
+    "action": "Implement the bounded lane at the frozen base head",
+    "depends_on": [
+      "CA25"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "RP21",
+    "owner": "independent-reviewer",
+    "action": "Sign exact-head and exact-diff review evidence",
+    "depends_on": [
+      "RP20"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "RP22",
+    "owner": "independent-qa",
+    "action": "Run positive tests and zero-effect negative oracles",
+    "depends_on": [
+      "RP21"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "RP23",
+    "owner": "github-actions",
+    "action": "Pass protected checks at the same candidate head",
+    "depends_on": [
+      "RP22"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "RP24",
+    "owner": "guarded-merge",
+    "action": "Merge the exact approved head without bypass",
+    "depends_on": [
+      "RP23"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "RP25",
+    "owner": "independent-readback",
+    "action": "Read post-merge main and successful protected CI",
+    "depends_on": [
+      "RP24"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "DC20",
+    "owner": "codicarium/deployment-controller",
+    "action": "Implement the bounded lane at the frozen base head",
+    "depends_on": [
+      "CA25"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "DC21",
+    "owner": "independent-reviewer",
+    "action": "Sign exact-head and exact-diff review evidence",
+    "depends_on": [
+      "DC20"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "DC22",
+    "owner": "independent-qa",
+    "action": "Run positive tests and zero-effect negative oracles",
+    "depends_on": [
+      "DC21"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "DC23",
+    "owner": "github-actions",
+    "action": "Pass protected checks at the same candidate head",
+    "depends_on": [
+      "DC22"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "DC24",
+    "owner": "guarded-merge",
+    "action": "Merge the exact approved head without bypass",
+    "depends_on": [
+      "DC23"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "DC25",
+    "owner": "independent-readback",
+    "action": "Read post-merge main and successful protected CI",
+    "depends_on": [
+      "DC24"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "G30",
+    "owner": "codicarium/infra",
+    "action": "Materialize central capacity, Kata, namespaces, admission, proxy and RBAC",
+    "depends_on": [
+      "IF25"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "G31",
+    "owner": "independent-qa",
+    "action": "Run live infrastructure positive and zero-effect negative probes",
+    "depends_on": [
+      "G30"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "G32",
+    "owner": "postgres-config+vault-config",
+    "action": "Materialize CNPG, verify-full TLS and Vault bootstrap contracts",
+    "depends_on": [
+      "PG25",
+      "VA25"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "G33",
+    "owner": "independent-qa",
+    "action": "Prove HA, RBAC, backup, isolated restore and any-node-loss RPO/RTO",
+    "depends_on": [
+      "G32"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "G34",
+    "owner": "release-platform-config",
+    "action": "Materialize release platform after infra, data, Vault and controller merge",
+    "depends_on": [
+      "RP25",
+      "G31",
+      "G33",
+      "DC25"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "G35",
+    "owner": "independent-qa",
+    "action": "Prove successor is inert and has zero publication or activation effects",
+    "depends_on": [
+      "G34"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "X40",
+    "owner": "independent-readback",
+    "action": "Prove complete grant and Application set is absent",
+    "depends_on": [
+      "G35"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "X41",
+    "owner": "release-platform-config",
+    "action": "Create the complete set atomically from the bound repository identity",
+    "depends_on": [
+      "X40"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "X42",
+    "owner": "independent-readback",
+    "action": "Prove health and exact runner-config descriptor/value/handoff blobs unchanged",
+    "depends_on": [
+      "X41"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "L40",
+    "owner": "deployment-controller",
+    "action": "Disable and remove all five legacy workflows",
+    "depends_on": [
+      "X42"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "L41",
+    "owner": "deployment-controller",
+    "action": "Cancel every queued or in-progress legacy run",
+    "depends_on": [
+      "L40"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "L42",
+    "owner": "security-operator",
+    "action": "Prove terminal runs and revoke credentials, routes and sessions",
+    "depends_on": [
+      "L41"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "L43",
+    "owner": "security-operator",
+    "action": "Wait the observed maximum TTL plus clock skew",
+    "depends_on": [
+      "L42"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "L44",
+    "owner": "independent-readback",
+    "action": "Sign zero-authority inventory after quiescence",
+    "depends_on": [
+      "L43"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "Q40",
+    "owner": "gate-controller",
+    "action": "Collect fresh live gates only after materialization and quiescence",
+    "depends_on": [
+      "L44"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "Q41",
+    "owner": "independent-evaluator",
+    "action": "Recompute every signed predicate from raw command payloads",
+    "depends_on": [
+      "Q40"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "Q42",
+    "owner": "authorization-controller",
+    "action": "Authorize exactly one narrow work item without publication",
+    "depends_on": [
+      "Q41"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "A50",
+    "owner": "activation-controller",
+    "action": "Activate the exact work item and epoch once",
+    "depends_on": [
+      "Q42"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "A51",
+    "owner": "independent-readback",
+    "action": "Prove activated authority isolation and unchanged forbidden targets",
+    "depends_on": [
+      "A50"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "F00",
+    "owner": "candidate-broker",
+    "action": "Deliver one candidate through candidate-source-capability/v2 and read it once",
+    "depends_on": [
+      "A51"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "F01",
+    "owner": "claim-controller",
+    "action": "Reserve a new release claim CAS or enter U00",
+    "depends_on": [
+      "F00"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "F02",
+    "owner": "github-proxy",
+    "action": "Dispatch verifier with exact 200 run details",
+    "depends_on": [
+      "F01"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "F03",
+    "owner": "authorization-controller",
+    "action": "Issue signed publication authorization for the exact claim",
+    "depends_on": [
+      "F02"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "F04",
+    "owner": "github-proxy",
+    "action": "Dispatch publisher and commit sequence zero",
+    "depends_on": [
+      "F03"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "M01",
+    "owner": "four-party-mutation",
+    "action": "Reserve sequence, write intent, collect independently, sign with transit, and append by a distinct committer",
+    "depends_on": [
+      "F04"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "M02",
+    "owner": "four-party-mutation",
+    "action": "Reserve sequence, write intent, collect independently, sign with transit, and append by a distinct committer",
+    "depends_on": [
+      "M01"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "M03",
+    "owner": "four-party-mutation",
+    "action": "Reserve sequence, write intent, collect independently, sign with transit, and append by a distinct committer",
+    "depends_on": [
+      "M02"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "M04",
+    "owner": "four-party-mutation",
+    "action": "Reserve sequence, write intent, collect independently, sign with transit, and append by a distinct committer",
+    "depends_on": [
+      "M03"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "M05",
+    "owner": "four-party-mutation",
+    "action": "Reserve sequence, write intent, collect independently, sign with transit, and append by a distinct committer",
+    "depends_on": [
+      "M04"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "M06",
+    "owner": "four-party-mutation",
+    "action": "Reserve sequence, write intent, collect independently, sign with transit, and append by a distinct committer",
+    "depends_on": [
+      "M05"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "M07",
+    "owner": "four-party-mutation",
+    "action": "Reserve sequence, write intent, collect independently, sign with transit, and append by a distinct committer",
+    "depends_on": [
+      "M06"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "M08",
+    "owner": "four-party-mutation",
+    "action": "Reserve sequence, write intent, collect independently, sign with transit, and append by a distinct committer",
+    "depends_on": [
+      "M07"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "M09",
+    "owner": "four-party-mutation",
+    "action": "Reserve sequence, write intent, collect independently, sign with transit, and append by a distinct committer",
+    "depends_on": [
+      "M08"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "M10",
+    "owner": "four-party-mutation",
+    "action": "Reserve sequence, write intent, collect independently, sign with transit, and append by a distinct committer",
+    "depends_on": [
+      "M09"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "M11",
+    "owner": "four-party-mutation",
+    "action": "Reserve sequence, write intent, collect independently, sign with transit, and append by a distinct committer",
+    "depends_on": [
+      "M10"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "M12",
+    "owner": "four-party-mutation",
+    "action": "Reserve sequence, write intent, collect independently, sign with transit, and append by a distinct committer",
+    "depends_on": [
+      "M11"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "M13",
+    "owner": "four-party-mutation",
+    "action": "Reserve sequence, write intent, collect independently, sign with transit, and append by a distinct committer",
+    "depends_on": [
+      "M12"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "M14",
+    "owner": "four-party-mutation",
+    "action": "Reserve sequence, write intent, collect independently, sign with transit, and append by a distinct committer",
+    "depends_on": [
+      "M13"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "M15",
+    "owner": "four-party-mutation",
+    "action": "Reserve sequence, write intent, collect independently, sign with transit, and append by a distinct committer",
+    "depends_on": [
+      "M14"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "M16",
+    "owner": "four-party-mutation",
+    "action": "Reserve sequence, write intent, collect independently, sign with transit, and append by a distinct committer",
+    "depends_on": [
+      "M15"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "M17",
+    "owner": "four-party-mutation",
+    "action": "Reserve sequence, write intent, collect independently, sign with transit, and append by a distinct committer",
+    "depends_on": [
+      "M16"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "M18",
+    "owner": "four-party-mutation",
+    "action": "Reserve sequence, write intent, collect independently, sign with transit, and append by a distinct committer",
+    "depends_on": [
+      "M17"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "M19",
+    "owner": "four-party-mutation",
+    "action": "Reserve sequence, write intent, collect independently, sign with transit, and append by a distinct committer",
+    "depends_on": [
+      "M18"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "F20",
+    "owner": "independent-readback",
+    "action": "Read canonical final tag, release, image, chart and fourteen assets",
+    "depends_on": [
+      "M19"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "F21",
+    "owner": "independent-evaluator",
+    "action": "Verify complete mutation and evidence hash-chain closure",
+    "depends_on": [
+      "F20"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "F22",
+    "owner": "security-operator",
+    "action": "Retire temporary candidate and publication capabilities",
+    "depends_on": [
+      "F21"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "F23",
+    "owner": "security-operator",
+    "action": "Revoke sessions and sign final zero-authority audit",
+    "depends_on": [
+      "F22"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "F24",
+    "owner": "release-manager",
+    "action": "Close the successor issue using exact final evidence hashes",
+    "depends_on": [
+      "F23"
+    ],
+    "mode": "normal"
+  },
+  {
+    "id": "U00",
+    "owner": "freeze-controller",
+    "action": "Freeze the current epoch immediately on any ambiguity",
+    "depends_on": [],
+    "mode": "terminal-recovery"
+  },
+  {
+    "id": "U01",
+    "owner": "incident-commander",
+    "action": "Classify the ambiguity without retry",
+    "depends_on": [
+      "U00"
+    ],
+    "mode": "terminal-recovery"
+  },
+  {
+    "id": "U02",
+    "owner": "independent-readback",
+    "action": "Sign quarantine state and zero further effects",
+    "depends_on": [
+      "U01"
+    ],
+    "mode": "terminal-recovery"
+  },
+  {
+    "id": "U03",
+    "owner": "repair-owner",
+    "action": "Implement forward-only repair under a new work item",
+    "depends_on": [
+      "U02"
+    ],
+    "mode": "terminal-recovery"
+  },
+  {
+    "id": "U04",
+    "owner": "independent-reviewer",
+    "action": "Review exact repair head and diff",
+    "depends_on": [
+      "U03"
+    ],
+    "mode": "terminal-recovery"
+  },
+  {
+    "id": "U05",
+    "owner": "independent-qa",
+    "action": "Run repair tests and zero-effect negatives",
+    "depends_on": [
+      "U04"
+    ],
+    "mode": "terminal-recovery"
+  },
+  {
+    "id": "U06",
+    "owner": "guarded-merge",
+    "action": "Pass protected validation and merge exact repair head",
+    "depends_on": [
+      "U05"
+    ],
+    "mode": "terminal-recovery"
+  },
+  {
+    "id": "U07",
+    "owner": "claim-controller",
+    "action": "Allocate a later unused release ID, new claim, epoch, nonce and work item",
+    "depends_on": [
+      "U06"
+    ],
+    "mode": "terminal-recovery"
+  },
+  {
+    "id": "U08",
+    "owner": "release-manager",
+    "action": "Sign successor handoff and end the current DAG without a retry edge",
+    "depends_on": [
+      "U07"
+    ],
+    "mode": "terminal-recovery"
+  }
+]

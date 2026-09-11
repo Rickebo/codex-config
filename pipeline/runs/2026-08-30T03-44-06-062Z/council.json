@@ -1,0 +1,37 @@
+{
+  "task": "codicarium/infra#1288",
+  "decision": "GO for PR-only code stage; NO-GO for live dispatch",
+  "perspectives": [
+    {
+      "role": "planner",
+      "decision": "GO",
+      "key_points": [
+        "Use stable API VIP terminology; current topology is kube_vip_single_host, not HA.",
+        "Audit active artifact-lock consumers and preserve independently versioned historical paths.",
+        "Never globally replace the control-node address."
+      ]
+    },
+    {
+      "role": "reviewer",
+      "decision": "GO",
+      "key_points": [
+        "Update active lock, upgrade guard, bootstrap checker, and any coupled active producer or activation copies.",
+        "Preserve typed kubeconfig publication and exact pre-mutation identity checks.",
+        "Require negative drift and command-pinning tests."
+      ]
+    },
+    {
+      "role": "tech_lead_qa",
+      "decision": "NO-GO for dispatch until implementation and proof",
+      "key_points": [
+        "Require exact-head CI and explicit-context read-only VIP readiness evidence.",
+        "Prove mismatch diagnostics remain sanitized and mutation-free.",
+        "Scope the active-path scan so legitimate node and firewall references remain."
+      ]
+    }
+  ],
+  "external_live_gates": [
+    "codicarium/infra#1259: deployment-controller-live-upgrade environment protection and branch rules",
+    "codicarium/infra#1289: dedicated trusted runner boundary for live upgrade"
+  ]
+}

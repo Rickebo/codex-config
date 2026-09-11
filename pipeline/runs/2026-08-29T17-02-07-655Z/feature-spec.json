@@ -1,0 +1,209 @@
+{
+  "meta": {
+    "id": "SPEC-codicarium-authz-admission-150",
+    "title": "Codicarium repository RoleBinding admission boundary",
+    "author": "root-manager",
+    "created_at": "2026-08-29T17:04:00Z",
+    "version": "0.1.0"
+  },
+  "feature": {
+    "problem_statement": "The access-controller can plan repository-derived Kubernetes RoleBindings, but Kubernetes does not yet independently enforce that those writes exactly match centrally authorized DeploymentGrant and DeploymentProfile state.",
+    "goals": [
+      "Add a separate platform-owned validating admission service that fails closed for access-controller RoleBinding writes.",
+      "Permit only deterministic repository viewer bindings derived from fresh central grant/profile state.",
+      "Preserve explicit non-repository-derived break-glass recovery and keep rollout separate from implementation."
+    ],
+    "non_goals": [
+      "Enable access-controller apply mode or mutate live authorization.",
+      "Deploy or upgrade the live deployment-controller.",
+      "Authorize arbitrary RoleBinding shapes, subjects, namespaces, roles, or repository-provided policy.",
+      "Solve every denial-of-service scenario from a compromised single writer."
+    ],
+    "scope_in": [
+      "A distinct RoleBinding validator binary, Service, Deployment, ServiceAccount, optional chart resources, policy source reads, and adversarial tests for issue #150 without changing the existing edge-route admission behavior.",
+      "Exact CREATE validation, unconditional UPDATE denial, constrained DELETE validation, coherent direct policy snapshots, TLS/readiness, bounded redacted audit decisions, and requester-filtered fail-closed webhook configuration.",
+      "Independent Luna review, exact-head CI, and release evidence; no rollout."
+    ],
+    "scope_out": [
+      "Kafka ACL activation or legacy Argo Application cutover.",
+      "Authentik, Rancher, or Kubernetes provider writes.",
+      "Argo Phase 0 deployment while browser-backed admin/non-admin and break-glass evidence is unavailable."
+    ]
+  },
+  "requirements": [
+    {
+      "id": "REQ-001",
+      "priority": "MUST",
+      "statement": "The admission boundary MUST permit CREATE only for a namespaced, no-subresource rbac.authorization.k8s.io/v1 RoleBinding request from the exact centrally configured access-controller ServiceAccount. The object MUST use a positive decimal repository ID without leading zeroes; exact canonical name, namespace, metadata allowlist, fixed ClusterRole roleRef, and exactly one Group subject with exact API group; and no extra subjects, ownerReferences, finalizers, or fields. Every value MUST be derived from coherent eligible central DeploymentGrant and approved DeploymentProfile state.",
+      "rationale": "Repository contents and a compromised access-controller request must not broaden their own security boundary."
+    },
+    {
+      "id": "REQ-002",
+      "priority": "MUST",
+      "statement": "The admission boundary MUST deny UPDATE unconditionally. DELETE MUST have empty object and complete oldObject matching the exact canonical controller-managed envelope and marker, and MUST be allowed only after authoritative coherent reads prove grant disappearance or an explicit centrally valid revocation state. An existing eligible grant, stale or ambiguous policy, partial oldObject, API error, or cache uncertainty MUST deny.",
+      "rationale": "Delete and recreate gives a smaller auditable state machine and prevents mutation into a broader grant."
+    },
+    {
+      "id": "REQ-003",
+      "priority": "MUST",
+      "statement": "The admission boundary MUST use direct uncached bounded-deadline reads from the platform-owned policy namespace and establish a coherent snapshot by comparing stable resourceVersions across complete before/after reads. It MUST require unique immutable repository/environment/namespace ownership, non-deleting objects, matching UIDs and referenced generations, metadata.generation equal to status.observedGeneration, Ready=True, Authorized=True, InvalidPolicy=False, and centrally enumerated approved reasons/profile. It MUST fail closed on stale, duplicate, partial, unavailable, changing, or inconsistent state and for matching access-controller requests on webhook outage.",
+      "rationale": "Authorization uncertainty cannot be treated as permission."
+    },
+    {
+      "id": "REQ-004",
+      "priority": "MUST",
+      "statement": "The admission service MUST run as a distinct process, Deployment, Service, and ServiceAccount from the deployment controller, existing edge admission service, and access-controller. Its RBAC MUST be an exact non-aggregating allowlist limited to direct get and, only where coherent inventory validation requires it, list of DeploymentGrant/DeploymentProfile resources in the platform policy namespace; no watch without separately reviewed cache consistency, wildcard, Secret, RBAC write, RoleBinding write, serviceaccounts/token, TokenReview, impersonate, bind, or escalate permission is allowed.",
+      "rationale": "The independent enforcement point must not itself become a privilege-escalation path."
+    },
+    {
+      "id": "REQ-005",
+      "priority": "MUST",
+      "statement": "Implementation, merge, and optional artifact publication MUST remain rollout-inert: no .codicarium change, active platform values bump, Application/Grant/Profile activation, apply mode, bootstrap wiring, or active ValidatingWebhookConfiguration may be introduced. Default and every active values file MUST render no RoleBinding webhook. A later webhook MUST use exact access-controller userInfo match conditions (or an equivalent isolated endpoint), failurePolicy Fail, bounded timeout/body, sideEffects None, validated CA/SAN/readiness/API-server network path, so matching access-controller requests fail closed while system:masters break-glass does not invoke the unavailable webhook. Live activation requires a separate reviewed GitOps change and runtime preflight.",
+      "rationale": "The current live controller is outdated and unhealthy, and lockout-safe rollout evidence is not yet available."
+    },
+    {
+      "id": "REQ-006",
+      "priority": "SHOULD",
+      "statement": "Infra PR #1272 at exact head 662525b4e74b456ccc9c9d650afbcefd64ee43cd MAY merge only after all protected checks, including Legacy Guard guard, Deployment Bootstrap Validate, Trusted ARC classification, Prepare fixed ARC validation inputs, and any delegated required jobs, pass for that exact head and an independent Luna review proves repository-wide that it is unwired from all active values, workflows, generated inputs, mutating scripts, and activation flags. Any head change invalidates the evidence.",
+      "rationale": "Central staging can advance without creating a second live writer or activating an unadoptable Application."
+    },
+    {
+      "id": "REQ-007",
+      "priority": "MUST",
+      "statement": "The validator MUST emit bounded, redacted, fixed-category allow/deny audit decisions, including centrally configured break-glass use, without logging tokens, object bodies, group inventories, or sensitive policy contents.",
+      "rationale": "Every grant or denial must be explainable without creating a new sensitive-data channel."
+    }
+  ],
+  "acceptance_criteria": [
+    {
+      "id": "AC-001",
+      "requirement_ids": ["REQ-001", "REQ-003"],
+      "scenario": "Given a RoleBinding CREATE request, when the API version/resource/subresource, requester, positive-decimal repository ID form, name, namespace, repository mapping, roleRef, subject kind/API group/name/count, metadata allowlist, ownerReferences/finalizers, object fields, UIDs/generations/status/reasons/profile, policy inventory completeness, bounded read, or stable resourceVersion snapshot is wrong or ambiguous, then admission denies it; only the exact coherent canonical viewer binding is allowed."
+    },
+    {
+      "id": "AC-002",
+      "requirement_ids": ["REQ-002", "REQ-003"],
+      "scenario": "Given managed UPDATE or DELETE requests, when UPDATE is attempted, DELETE contains object, lacks complete oldObject, has a noncanonical marker/envelope, encounters partial/timeout/changing policy reads, or an eligible grant still exists, then admission denies; only exact oldObject for authoritative grant disappearance or explicit central revocation cleanup is permitted."
+    },
+    {
+      "id": "AC-003",
+      "requirement_ids": ["REQ-004", "REQ-005"],
+      "scenario": "Given the implementation diff plus default and every active values render, when resources and permissions are inspected, then the new binary/service identity is separate, RBAC is an exact read-only non-aggregating allowlist, no active RoleBinding webhook or desired-state activation exists, matching access-controller requests would fail closed, system:masters bypasses the webhook match, and decisions use bounded redacted categories."
+    },
+    {
+      "id": "AC-004",
+      "requirement_ids": ["REQ-006"],
+      "scenario": "Given infra PR #1272 exact head 662525b4e74b456ccc9c9d650afbcefd64ee43cd, when repository-wide negative reference checks, aggregate bootstrap tests, every protected/delegated required check, and an independent Luna exact-head review pass, then the staged contract is demonstrably outside all active values, workflows, generated inputs, mutating paths, and activation flags and may merge without changing live state; otherwise it remains blocked."
+    },
+    {
+      "id": "AC-005",
+      "requirement_ids": ["REQ-005"],
+      "scenario": "Given a later rollout request, when prerequisites are evaluated, then #150 is inertly merged/released first, deployment-controller v0.13.0 or newer is healthy, server-side dry-run passes, legacy writer quiescence and guarded no-dual-owner handoff are proven, and a separate reviewed GitOps activation/preflight is required before any webhook, Grant, Profile, Application, or apply mode becomes live."
+    },
+    {
+      "id": "AC-006",
+      "requirement_ids": ["REQ-007"],
+      "scenario": "Given allow, deny, source-failure, and centrally configured break-glass decisions, when audit output is inspected, then fixed categories and correlation metadata are present while tokens, bodies, inventories, and policy contents are absent."
+    }
+  ],
+  "test_plan": [
+    {
+      "id": "TST-001",
+      "type": "unit",
+      "requirement_ids": ["REQ-001", "REQ-002", "REQ-003", "REQ-007"],
+      "approach": "Add table-driven adversarial admission tests for API envelope/subresource, requester, positive-decimal and leading-zero IDs, canonical name/namespace/repository kind and ownership, roleRef, subject kind/API group/name/count, metadata/extra fields, UIDs/generations/status/reasons/profile, complete double-read inventories, timeouts/partial/changing reads, CREATE/UPDATE/DELETE object and oldObject handling, existing/revoked/disappeared grants, and deterministic audit categories."
+    },
+    {
+      "id": "TST-002",
+      "type": "integration",
+      "requirement_ids": ["REQ-004", "REQ-005"],
+      "approach": "Render/lint default and every active values file; prove the distinct binary/Deployment/ServiceAccount, exact non-aggregating read-only RBAC, TLS/readiness and requester match-condition templates, failurePolicy Fail, timeout/body/sideEffects settings, system:masters outage preservation, and absence/disabled state of the RoleBinding webhook and all activation paths."
+    },
+    {
+      "id": "TST-003",
+      "type": "integration",
+      "requirement_ids": ["REQ-006"],
+      "approach": "At exact PR head 662525b4e74b456ccc9c9d650afbcefd64ee43cd, enumerate repository-wide references across active values, workflows, generated inputs, scripts, bootstrap wiring, and activation flags; run staging and full bootstrap aggregate tests; then require all protected and delegated checks for the same head."
+    },
+    {
+      "id": "TST-004",
+      "type": "manual",
+      "requirement_ids": ["REQ-001", "REQ-002", "REQ-003", "REQ-004", "REQ-005", "REQ-006", "REQ-007"],
+      "approach": "Require an independent Luna security review artifact tied to each exact PR head and record protected check evidence, changed-head invalidation, sequencing, and all residual rollout blockers before merge or release."
+    }
+  ],
+  "traceability": [
+    {
+      "requirement_id": "REQ-001",
+      "acceptance_ids": ["AC-001"],
+      "test_ids": ["TST-001", "TST-004"],
+      "review_checks": ["Canonical binding derivation has no repository-controlled subject or permission input."],
+      "validation_checks": ["Exact canonical CREATE passes and every broadened variant fails."]
+    },
+    {
+      "requirement_id": "REQ-002",
+      "acceptance_ids": ["AC-002"],
+      "test_ids": ["TST-001", "TST-004"],
+      "review_checks": ["UPDATE is unconditional deny and DELETE uses oldObject plus current revocation state."],
+      "validation_checks": ["Adversarial operation and missing-oldObject tests pass."]
+    },
+    {
+      "requirement_id": "REQ-003",
+      "acceptance_ids": ["AC-001", "AC-002"],
+      "test_ids": ["TST-001", "TST-004"],
+      "review_checks": ["All unavailable, stale, duplicate, partial, and inconsistent source paths deny."],
+      "validation_checks": ["Failure-path tests and webhook failurePolicy checks pass."]
+    },
+    {
+      "requirement_id": "REQ-004",
+      "acceptance_ids": ["AC-003"],
+      "test_ids": ["TST-002", "TST-004"],
+      "review_checks": ["Service identity and RBAC are separate and exclude forbidden verbs/resources."],
+      "validation_checks": ["Rendered manifests and chart tests prove least privilege."]
+    },
+    {
+      "requirement_id": "REQ-005",
+      "acceptance_ids": ["AC-003", "AC-005"],
+      "test_ids": ["TST-002", "TST-004"],
+      "review_checks": ["No default or active values enable the webhook or provider apply; sequencing and rollout remain separate gates."],
+      "validation_checks": ["Git diff plus default and every active values render show no live activation path; later rollout prerequisites are explicit."]
+    },
+    {
+      "requirement_id": "REQ-006",
+      "acceptance_ids": ["AC-004"],
+      "test_ids": ["TST-003", "TST-004"],
+      "review_checks": ["Staged Kafka contract is not referenced from active values, scripts, or workflows."],
+      "validation_checks": ["Repository-wide negative references, exact-head protected/delegated CI, and independent exact-head review pass before merge."]
+    },
+    {
+      "requirement_id": "REQ-007",
+      "acceptance_ids": ["AC-006"],
+      "test_ids": ["TST-001", "TST-004"],
+      "review_checks": ["Audit fields are fixed-cardinality, bounded, and exclude sensitive content."],
+      "validation_checks": ["Allow, deny, failure, and break-glass audit tests prove useful redacted categories."]
+    }
+  ],
+  "quality_gates": {
+    "spec_review_required": true,
+    "testability_required": true,
+    "traceability_required": true
+  },
+  "council": {
+    "perspectives": [
+      {
+        "role": "planner",
+        "summary": "Required mechanically inert defaults, exact-head sequencing, separate RoleBinding validator ownership, coherent snapshots, and webhook matching that preserves break-glass during outage."
+      },
+      {
+        "role": "security_reviewer",
+        "summary": "Required an exact admission envelope and principal, normative policy eligibility and DELETE semantics, explicit least-privilege RBAC, fail-closed webhook safety, and bounded redacted audit decisions."
+      },
+      {
+        "role": "tech_lead_qa",
+        "summary": "Required complete adversarial coverage, deterministic security predicates, corrected traceability, repository-wide Kafka staging inertness checks, and evidence pinned to the exact PR head."
+      }
+    ],
+    "consensus_summary": "Proceed only with a separate rollout-inert RoleBinding validator whose allow path is fully deterministic, whose policy reads prove a coherent central snapshot, whose webhook scope excludes break-glass requests, and whose exact-head review and CI evidence cannot be reused after a head change. Infra #1272 remains an independent merge-inert lane and cannot activate Kafka authorization.",
+    "open_questions": []
+  }
+}

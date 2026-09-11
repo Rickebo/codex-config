@@ -1,0 +1,32 @@
+{
+  "schema": "codicarium.council-closure/v2.5",
+  "bundle_manifest_sha256": "144e1afe87ec815315eb34898f1df4b1e01d204be6bf6d61e6623de9d427f352",
+  "pre_council_report_sha256": "5d1b726f1369971491f1349675bd7e233dcfe4a5f5e5670aef286177d10037b1",
+  "decision": "UNSIGNED_TEMPLATE",
+  "lanes": [
+    {
+      "role": "planner",
+      "key_fingerprint": "EXTERNAL_REQUIRED",
+      "verdict": "EXTERNAL_REQUIRED",
+      "signature": null
+    },
+    {
+      "role": "security",
+      "key_fingerprint": "EXTERNAL_REQUIRED",
+      "verdict": "EXTERNAL_REQUIRED",
+      "signature": null
+    },
+    {
+      "role": "tech_lead_devops",
+      "key_fingerprint": "EXTERNAL_REQUIRED",
+      "verdict": "EXTERNAL_REQUIRED",
+      "signature": null
+    },
+    {
+      "role": "tech_lead_qa",
+      "key_fingerprint": "EXTERNAL_REQUIRED",
+      "verdict": "EXTERNAL_REQUIRED",
+      "signature": null
+    }
+  ]
+}

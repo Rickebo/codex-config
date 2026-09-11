@@ -1,0 +1,42 @@
+{
+  "generated_at": "2026-08-22T08:18:44Z",
+  "stage": "spec/preflight-reaudit",
+  "status": "blocked",
+  "source": {
+    "kubeconfig": "/home/rickebo/.kube/codicarium-dev.yaml",
+    "context": "codicarium-dev",
+    "backup_endpoints": {
+      "workspace_context": "2026-08-22T02:17:15Z",
+      "llm_proxy": "2026-08-22T02:47:13Z"
+    },
+    "wal_status": "Per-database backups and ObjectStores are healthy; no shared logical/WAL cutoff across the two databases is proven.",
+    "artifact_status": "No sanitized provider-side ListObjects/HEAD metadata proves existence and SHA-256 parity for every referenced graph artifact.",
+    "contract_status": "Published workspace-context-config supports runtime.artifacts.backend=s3 with separate builder/reader/GC credentials; no application-code change is indicated.",
+    "mutation_status": "Read-only inspection only; no Secret payloads, jobs, exec, export, restore, apply, patch, or restart used."
+  },
+  "target": {
+    "kubeconfig": "/home/rickebo/.kube/homelab.yaml",
+    "context": "default",
+    "storage": {
+      "longhorn_default_free_gib_approx": 74,
+      "longhorn_scheduled_gib_approx": 180,
+      "data_disk": "node1/data-disk-1 NotReady with zero capacity",
+      "available_rwx": "No unbound RWX PV at or above 100Gi; existing large Retain NFS PVs are bound to other workloads.",
+      "dynamic_rwx": "longhorn-rwx exists but current capacity is unsafe"
+    },
+    "backup": "Longhorn backup target default is available with 25 completed backups at 100%; no target-only restore drill exists.",
+    "identity": "Bitwarden ClusterSecretStore is Ready; target llm-proxy OIDC SecretStore is Ready=False because its required ServiceAccount is missing; current Authentik mapping includes codicarium-users.",
+    "mutation_status": "No target mutation, resource creation, restore, Argo sync, or retained-PVC access performed."
+  },
+  "tracking": {
+    "issues": ["https://github.com/Rickebo/pve-infra/issues/482", "https://github.com/Rickebo/pve-infra/issues/483", "https://github.com/Rickebo/pve-infra/issues/489"],
+    "handoff_comment": "https://github.com/Rickebo/pve-infra/issues/489#issuecomment-5379216774"
+  },
+  "hard_gates": [
+    "D-001: provider-side read-only Barman/S3 metadata or equivalent sanitized WAL-gap and artifact SHA evidence",
+    "D-002: approved dedicated target-owned artifact backend with capacity, retention, off-node backup, and restore proof",
+    "D-003: approved target-only identity mapping and fresh target Data Protection/backend/runtime/MCP/gateway credentials",
+    "D-004: retain historical ownerless PVCs untouched until provenance and backup evidence exist"
+  ],
+  "pipeline": "Remain at spec; do not create clone resources, attach retained PVs, revive historical branches, deploy, or switch local Codex."
+}

@@ -1,0 +1,431 @@
+{
+  "version": 1,
+  "created_at": "2026-08-29T22:21:18.183Z",
+  "updated_at": "2026-08-30T02:08:51.661Z",
+  "task": "Complete deployment-controller PR #156 terminal failed-candidate recovery after the exhausted prior pipeline: correct the shared release-mutation concurrency documentation contract using Luna, obtain independent exact-head review and protected CI, merge safely, and verify immutable release recovery without deployment or live authorization activation",
+  "policy_path": "/home/rickebo/.codex/pipeline/transitions.json",
+  "approval_rules_path": "/home/rickebo/.codex/pipeline/approval-rules.json",
+  "initial_stage": "spec",
+  "current_stage": "validation",
+  "pipeline_profile": "full",
+  "done": false,
+  "max_loops": 6,
+  "loop_count": 3,
+  "approval_required_count": 12,
+  "approvals": [
+    {
+      "at": "2026-08-29T22:38:59.813Z",
+      "approver": "user",
+      "note": "Active goal continuation and prior explicit Proceed authorize Luna implementation of the spec-approved documentation-only correction and subsequent exact-head evidence; no deployment, manual release mutation, or live authorization activation.",
+      "gate": "spec_to_code",
+      "reason": "Spec pass requires explicit approval before implementation starts.",
+      "risk_level": "critical",
+      "from_stage": "spec",
+      "next_stage": "code",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-29T22-21-18-183Z/reports/2026-08-29T22-38-49-659Z_spec_pass.json"
+    },
+    {
+      "at": "2026-08-29T22:58:25.809Z",
+      "approver": "user",
+      "note": "Active goal continuation and prior explicit Proceed authorize independent review and exact-head protected CI for 229df7bd30f6410b4b057565f398281762ecf134; merge remains gated on verified CODEOWNERS ruleset containment and no deployment/live authorization activation.",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "from_stage": "code",
+      "next_stage": "review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-29T22-21-18-183Z/reports/2026-08-29T22-58-02-857Z_code_ready_for_review.json"
+    },
+    {
+      "at": "2026-08-29T23:07:41.883Z",
+      "approver": "user",
+      "note": "Active goal continuation and explicit Proceed authorize Luna trust-boundary documentation plus live main-ruleset tightening that adds code-owner review and stale dismissal while preserving all five checks and zero bypass actors. Last-push approval is deferred only until immediately after the documented bootstrap merge; no deployment or authorization activation.",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "from_stage": "review",
+      "next_stage": "code",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-29T22-21-18-183Z/reports/2026-08-29T23-07-27-475Z_review_fail.json"
+    },
+    {
+      "at": "2026-08-29T23:15:23.989Z",
+      "approver": "user",
+      "note": "Active goal continuation and explicit Proceed authorize exact-head re-review and protected CI for 37267d0e1dafa7d005187a041a8419f6049927b1 after verified live code-owner/stale-review enforcement. Merge remains gated on GO review, green checks, and immediate post-bootstrap last-push enforcement.",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "from_stage": "code",
+      "next_stage": "review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-29T22-21-18-183Z/reports/2026-08-29T23-14-51-454Z_code_ready_for_review.json"
+    },
+    {
+      "at": "2026-08-29T23:29:15.489Z",
+      "approver": "user",
+      "note": "Active goal continuation and explicit Proceed authorize exact-head protected test evidence after independent GO review; merge remains gated on the validation-stage bootstrap and immediate last-push enforcement.",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "from_stage": "review",
+      "next_stage": "test",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-29T22-21-18-183Z/reports/2026-08-29T23-29-03-549Z_review_pass.json"
+    },
+    {
+      "at": "2026-08-29T23:30:02.454Z",
+      "approver": "user",
+      "note": "Active goal continuation and explicit Proceed authorize guarded exact-head squash merge, immediate last-push ruleset enforcement, main CI, and workflow-driven release recovery validation. No deployment or live application authorization activation is authorized.",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "from_stage": "test",
+      "next_stage": "validation",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-29T22-21-18-183Z/reports/2026-08-29T23-29-45-814Z_test_pass.json"
+    },
+    {
+      "at": "2026-08-29T23:45:39.752Z",
+      "approver": "user",
+      "note": "Active goal continuation and explicit Proceed authorize Luna to fix the reproduced retirement-map JSON handling defect and add regression tests. No unchanged retry, manual tag/release mutation, deployment, or live authorization activation.",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "from_stage": "validation",
+      "next_stage": "code",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-29T22-21-18-183Z/reports/2026-08-29T23-45-25-428Z_validation_fail.json"
+    },
+    {
+      "at": "2026-08-29T23:59:58.385Z",
+      "approver": "user",
+      "note": "Explicit Proceed authorizes independent Luna review of issue #158 exact local head 8c9b076587c4aa8826ede15abfed6a26a468474f. No push, merge, release rerun, deployment, or live authorization activation is authorized by this gate alone.",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "from_stage": "code",
+      "next_stage": "review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-29T22-21-18-183Z/reports/2026-08-29T23-59-43-020Z_code_ready_for_review.json"
+    },
+    {
+      "at": "2026-08-30T00:10:41.493Z",
+      "approver": "user",
+      "note": "Explicit Proceed authorizes Luna to resolve the independent review's issue #158 regression-test wiring gap. Scope is tests and any strictly necessary workflow adjustment only; no push, merge, release rerun, deployment, or live authorization activation.",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "from_stage": "review",
+      "next_stage": "code",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-29T22-21-18-183Z/reports/2026-08-30T00-10-29-463Z_review_fail.json"
+    },
+    {
+      "at": "2026-08-30T00:17:14.058Z",
+      "approver": "user",
+      "note": "Explicit Proceed authorizes fresh independent Luna re-review of amended issue #158 exact head 91080852320997f19ff268b65b85fb7f0d0ef5bc. No push, merge, release rerun, deployment, or live authorization activation at this gate.",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "from_stage": "code",
+      "next_stage": "review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-29T22-21-18-183Z/reports/2026-08-30T00-17-00-780Z_code_ready_for_review.json"
+    },
+    {
+      "at": "2026-08-30T00:18:57.962Z",
+      "approver": "user",
+      "note": "Explicit Proceed authorizes pushing exact independently reviewed head 91080852320997f19ff268b65b85fb7f0d0ef5bc, opening an issue-linked PR, and obtaining protected exact-head CI and required review. Merge and release recovery remain separately gated by verified PR state.",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "from_stage": "review",
+      "next_stage": "test",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-29T22-21-18-183Z/reports/2026-08-30T00-18-47-924Z_review_pass.json"
+    },
+    {
+      "at": "2026-08-30T02:08:51.661Z",
+      "approver": "user",
+      "note": "User explicitly said proceed here. This authorizes final read-only merge-readiness validation of deployment-controller PR #159. It does not authorize bypassing required review, weakening rules, merging, releasing, deploying, or activating live authorization.",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "from_stage": "test",
+      "next_stage": "validation",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-29T22-21-18-183Z/reports/2026-08-30T02-08-37-470Z_test_pass.json"
+    }
+  ],
+  "awaiting_approval": null,
+  "spec_gate": {
+    "passed": true,
+    "passed_at": "2026-08-29T22:38:59.813Z",
+    "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-29T22-21-18-183Z/feature-spec.json",
+    "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-08-29T22-21-18-183Z/spec-check.json",
+    "council_file": "/home/rickebo/.codex/pipeline/runs/2026-08-29T22-21-18-183Z/council.md"
+  },
+  "council_policy": {
+    "required": "always"
+  },
+  "history": [
+    {
+      "at": "2026-08-29T22:38:49.659Z",
+      "event": "approval_required",
+      "stage": "spec",
+      "status": "pass",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-29T22-21-18-183Z/reports/2026-08-29T22-38-49-659Z_spec_pass.json",
+      "requested_next_stage": "code",
+      "gate": "spec_to_code",
+      "reason": "Spec pass requires explicit approval before implementation starts.",
+      "risk_level": "critical",
+      "spec_gate": {
+        "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-29T22-21-18-183Z/feature-spec.json",
+        "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-08-29T22-21-18-183Z/spec-check.json",
+        "council_file": "/home/rickebo/.codex/pipeline/runs/2026-08-29T22-21-18-183Z/council.md",
+        "checked_at": "2026-08-29T22:37:57.525Z"
+      }
+    },
+    {
+      "at": "2026-08-29T22:38:59.813Z",
+      "event": "approved_transition",
+      "stage": "spec",
+      "status": "pass",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-29T22-21-18-183Z/reports/2026-08-29T22-38-49-659Z_spec_pass.json",
+      "approver": "user",
+      "note": "Active goal continuation and prior explicit Proceed authorize Luna implementation of the spec-approved documentation-only correction and subsequent exact-head evidence; no deployment, manual release mutation, or live authorization activation.",
+      "next_stage": "code"
+    },
+    {
+      "at": "2026-08-29T22:58:02.857Z",
+      "event": "approval_required",
+      "stage": "code",
+      "status": "ready_for_review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-29T22-21-18-183Z/reports/2026-08-29T22-58-02-857Z_code_ready_for_review.json",
+      "requested_next_stage": "review",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "spec_gate": null
+    },
+    {
+      "at": "2026-08-29T22:58:25.809Z",
+      "event": "approved_transition",
+      "stage": "code",
+      "status": "ready_for_review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-29T22-21-18-183Z/reports/2026-08-29T22-58-02-857Z_code_ready_for_review.json",
+      "approver": "user",
+      "note": "Active goal continuation and prior explicit Proceed authorize independent review and exact-head protected CI for 229df7bd30f6410b4b057565f398281762ecf134; merge remains gated on verified CODEOWNERS ruleset containment and no deployment/live authorization activation.",
+      "next_stage": "review"
+    },
+    {
+      "at": "2026-08-29T23:07:27.475Z",
+      "event": "approval_required",
+      "stage": "review",
+      "status": "fail",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-29T22-21-18-183Z/reports/2026-08-29T23-07-27-475Z_review_fail.json",
+      "requested_next_stage": "code",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "spec_gate": null
+    },
+    {
+      "at": "2026-08-29T23:07:41.884Z",
+      "event": "approved_transition",
+      "stage": "review",
+      "status": "fail",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-29T22-21-18-183Z/reports/2026-08-29T23-07-27-475Z_review_fail.json",
+      "approver": "user",
+      "note": "Active goal continuation and explicit Proceed authorize Luna trust-boundary documentation plus live main-ruleset tightening that adds code-owner review and stale dismissal while preserving all five checks and zero bypass actors. Last-push approval is deferred only until immediately after the documented bootstrap merge; no deployment or authorization activation.",
+      "next_stage": "code"
+    },
+    {
+      "at": "2026-08-29T23:14:51.455Z",
+      "event": "approval_required",
+      "stage": "code",
+      "status": "ready_for_review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-29T22-21-18-183Z/reports/2026-08-29T23-14-51-454Z_code_ready_for_review.json",
+      "requested_next_stage": "review",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "spec_gate": null
+    },
+    {
+      "at": "2026-08-29T23:15:23.989Z",
+      "event": "approved_transition",
+      "stage": "code",
+      "status": "ready_for_review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-29T22-21-18-183Z/reports/2026-08-29T23-14-51-454Z_code_ready_for_review.json",
+      "approver": "user",
+      "note": "Active goal continuation and explicit Proceed authorize exact-head re-review and protected CI for 37267d0e1dafa7d005187a041a8419f6049927b1 after verified live code-owner/stale-review enforcement. Merge remains gated on GO review, green checks, and immediate post-bootstrap last-push enforcement.",
+      "next_stage": "review"
+    },
+    {
+      "at": "2026-08-29T23:29:03.549Z",
+      "event": "approval_required",
+      "stage": "review",
+      "status": "pass",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-29T22-21-18-183Z/reports/2026-08-29T23-29-03-549Z_review_pass.json",
+      "requested_next_stage": "test",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "spec_gate": null
+    },
+    {
+      "at": "2026-08-29T23:29:15.489Z",
+      "event": "approved_transition",
+      "stage": "review",
+      "status": "pass",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-29T22-21-18-183Z/reports/2026-08-29T23-29-03-549Z_review_pass.json",
+      "approver": "user",
+      "note": "Active goal continuation and explicit Proceed authorize exact-head protected test evidence after independent GO review; merge remains gated on the validation-stage bootstrap and immediate last-push enforcement.",
+      "next_stage": "test"
+    },
+    {
+      "at": "2026-08-29T23:29:45.815Z",
+      "event": "approval_required",
+      "stage": "test",
+      "status": "pass",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-29T22-21-18-183Z/reports/2026-08-29T23-29-45-814Z_test_pass.json",
+      "requested_next_stage": "validation",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "spec_gate": null
+    },
+    {
+      "at": "2026-08-29T23:30:02.454Z",
+      "event": "approved_transition",
+      "stage": "test",
+      "status": "pass",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-29T22-21-18-183Z/reports/2026-08-29T23-29-45-814Z_test_pass.json",
+      "approver": "user",
+      "note": "Active goal continuation and explicit Proceed authorize guarded exact-head squash merge, immediate last-push ruleset enforcement, main CI, and workflow-driven release recovery validation. No deployment or live application authorization activation is authorized.",
+      "next_stage": "validation"
+    },
+    {
+      "at": "2026-08-29T23:45:25.428Z",
+      "event": "approval_required",
+      "stage": "validation",
+      "status": "fail",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-29T22-21-18-183Z/reports/2026-08-29T23-45-25-428Z_validation_fail.json",
+      "requested_next_stage": "code",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "spec_gate": null
+    },
+    {
+      "at": "2026-08-29T23:45:39.752Z",
+      "event": "approved_transition",
+      "stage": "validation",
+      "status": "fail",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-29T22-21-18-183Z/reports/2026-08-29T23-45-25-428Z_validation_fail.json",
+      "approver": "user",
+      "note": "Active goal continuation and explicit Proceed authorize Luna to fix the reproduced retirement-map JSON handling defect and add regression tests. No unchanged retry, manual tag/release mutation, deployment, or live authorization activation.",
+      "next_stage": "code"
+    },
+    {
+      "at": "2026-08-29T23:59:43.027Z",
+      "event": "approval_required",
+      "stage": "code",
+      "status": "ready_for_review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-29T22-21-18-183Z/reports/2026-08-29T23-59-43-020Z_code_ready_for_review.json",
+      "requested_next_stage": "review",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "spec_gate": null
+    },
+    {
+      "at": "2026-08-29T23:59:58.385Z",
+      "event": "approved_transition",
+      "stage": "code",
+      "status": "ready_for_review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-29T22-21-18-183Z/reports/2026-08-29T23-59-43-020Z_code_ready_for_review.json",
+      "approver": "user",
+      "note": "Explicit Proceed authorizes independent Luna review of issue #158 exact local head 8c9b076587c4aa8826ede15abfed6a26a468474f. No push, merge, release rerun, deployment, or live authorization activation is authorized by this gate alone.",
+      "next_stage": "review"
+    },
+    {
+      "at": "2026-08-30T00:10:29.463Z",
+      "event": "approval_required",
+      "stage": "review",
+      "status": "fail",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-29T22-21-18-183Z/reports/2026-08-30T00-10-29-463Z_review_fail.json",
+      "requested_next_stage": "code",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "spec_gate": null
+    },
+    {
+      "at": "2026-08-30T00:10:41.493Z",
+      "event": "approved_transition",
+      "stage": "review",
+      "status": "fail",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-29T22-21-18-183Z/reports/2026-08-30T00-10-29-463Z_review_fail.json",
+      "approver": "user",
+      "note": "Explicit Proceed authorizes Luna to resolve the independent review's issue #158 regression-test wiring gap. Scope is tests and any strictly necessary workflow adjustment only; no push, merge, release rerun, deployment, or live authorization activation.",
+      "next_stage": "code"
+    },
+    {
+      "at": "2026-08-30T00:17:00.783Z",
+      "event": "approval_required",
+      "stage": "code",
+      "status": "ready_for_review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-29T22-21-18-183Z/reports/2026-08-30T00-17-00-780Z_code_ready_for_review.json",
+      "requested_next_stage": "review",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "spec_gate": null
+    },
+    {
+      "at": "2026-08-30T00:17:14.058Z",
+      "event": "approved_transition",
+      "stage": "code",
+      "status": "ready_for_review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-29T22-21-18-183Z/reports/2026-08-30T00-17-00-780Z_code_ready_for_review.json",
+      "approver": "user",
+      "note": "Explicit Proceed authorizes fresh independent Luna re-review of amended issue #158 exact head 91080852320997f19ff268b65b85fb7f0d0ef5bc. No push, merge, release rerun, deployment, or live authorization activation at this gate.",
+      "next_stage": "review"
+    },
+    {
+      "at": "2026-08-30T00:18:47.924Z",
+      "event": "approval_required",
+      "stage": "review",
+      "status": "pass",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-29T22-21-18-183Z/reports/2026-08-30T00-18-47-924Z_review_pass.json",
+      "requested_next_stage": "test",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "spec_gate": null
+    },
+    {
+      "at": "2026-08-30T00:18:57.962Z",
+      "event": "approved_transition",
+      "stage": "review",
+      "status": "pass",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-29T22-21-18-183Z/reports/2026-08-30T00-18-47-924Z_review_pass.json",
+      "approver": "user",
+      "note": "Explicit Proceed authorizes pushing exact independently reviewed head 91080852320997f19ff268b65b85fb7f0d0ef5bc, opening an issue-linked PR, and obtaining protected exact-head CI and required review. Merge and release recovery remain separately gated by verified PR state.",
+      "next_stage": "test"
+    },
+    {
+      "at": "2026-08-30T02:08:37.470Z",
+      "event": "approval_required",
+      "stage": "test",
+      "status": "pass",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-29T22-21-18-183Z/reports/2026-08-30T02-08-37-470Z_test_pass.json",
+      "requested_next_stage": "validation",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "spec_gate": null
+    },
+    {
+      "at": "2026-08-30T02:08:51.661Z",
+      "event": "approved_transition",
+      "stage": "test",
+      "status": "pass",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-29T22-21-18-183Z/reports/2026-08-30T02-08-37-470Z_test_pass.json",
+      "approver": "user",
+      "note": "User explicitly said proceed here. This authorizes final read-only merge-readiness validation of deployment-controller PR #159. It does not authorize bypassing required review, weakening rules, merging, releasing, deploying, or activating live authorization.",
+      "next_stage": "validation"
+    }
+  ]
+}

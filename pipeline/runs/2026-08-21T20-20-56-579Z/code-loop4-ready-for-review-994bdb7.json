@@ -1,0 +1,33 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Fixed the five PR #522 review findings with target-only Kopia wiring, deterministic graph/database evidence, repository-backed restore validation, and explicit disposable cleanup.",
+  "changed_files": [
+    "workspace-context/tests/static.sh",
+    "workspace-context/templates/backup.yaml",
+    "workspace-context/templates/gated.yaml",
+    "workspace-context/values.yaml",
+    "llm-proxy/templates/database-backup.yaml",
+    "llm-proxy/values.yaml",
+    "tests/fixtures/kopia_restore/run.sh",
+    "workspace-context/tests/cleanup-restore-drill.sh"
+  ],
+  "validation": [
+    "bash workspace-context/tests/static.sh passed, including dedicatedPath mismatch negative case and enabled render.",
+    "pytest -q tests/test_workspace_context_llm_proxy_gitops.py: 11 passed, 1 skipped.",
+    "helm lint workspace-context and helm lint llm-proxy passed.",
+    "tests/fixtures/kopia_restore/run.sh passed and reported snapshot_id=snapshot-001 from repository restore.",
+    "bash -n, git diff --check, digest/protected-path audit passed; no cluster, NAS, source, secret, deployment, or approval action performed.",
+    "Commit 994bdb7 pushed to PR #522 branch."
+  ],
+  "blockers": [],
+  "next_action": "Route to independent review for PR #522, then run focused test and validation stages; do not approve.",
+  "route_to": "review",
+  "risk_level": "high",
+  "independent_lanes": [
+    "Review workspace-context static fixtures and Kopia repository wiring.",
+    "Review graph manifest, linked snapshot IDs, restore/readback proof, and fake-Kopia fixture.",
+    "Review disposable cleanup scope and protected production resources."
+  ],
+  "requires_council": false
+}

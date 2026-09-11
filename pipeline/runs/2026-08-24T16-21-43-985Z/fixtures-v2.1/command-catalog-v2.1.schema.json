@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "array",
+  "minItems": 20,
+  "maxItems": 20,
+  "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "id",
+      "executor",
+      "operation",
+      "arguments",
+      "output_schema"
+    ],
+    "properties": {
+      "id": {
+        "type": "string",
+        "pattern": "^CMD-[0-9]{3}-[A-Z0-9-]+$"
+      },
+      "executor": {
+        "type": "string",
+        "minLength": 3
+      },
+      "operation": {
+        "type": "string",
+        "minLength": 12
+      },
+      "arguments": {
+        "type": "object"
+      },
+      "output_schema": {
+        "type": "string",
+        "pattern": "^codicarium\\.[a-z0-9.-]+/v[0-9]+$"
+      }
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Cross-repo contract repair is implemented in separate infra and runner-config worktrees; protected-base prerequisite PR #1085 is also isolated and pushed.",
+  "changed_files": [
+    "codicarium/infra:.github/workflows/trusted-arc-pr-validation.yml",
+    "codicarium/infra:scripts/prepare-trusted-arc-pr-validation.py",
+    "codicarium/infra:tests/test-activation-evidence-contract.py",
+    "codicarium/infra:tests/test-trusted-arc-pr-validation-boundary.py",
+    "codicarium/infra:tests/fixtures/runner-config/reviewed/scripts/activation_evidence.py",
+    "codicarium/runner-config:scripts/activation_evidence.py",
+    "codicarium/runner-config:scripts/activation-evidence.schema.json",
+    "codicarium/runner-config:tests/test_activation_evidence.py",
+    "codicarium/infra-prerequisite:tests/trusted-arc-validation-harness.py"
+  ],
+  "validation": [
+    "runner-config unittest discovery: 68 passed",
+    "runner-config policy_check --source-tree-only passed",
+    "runner-config scripts/validate.sh and actionlint passed",
+    "infra evidence, boundary, Argo-scope, readback, bootstrap, and shell contract tests passed",
+    "infra actionlint, kubectl kustomize, JSON, compileall, and git diff --check passed",
+    "infra prerequisite actionlint, boundary, compileall, isolated unshare harness, and git diff --check passed"
+  ],
+  "blockers": [
+    "Protected-base prerequisite infra PR #1085 must merge before #1078 can observe its pull_request_target workflow changes.",
+    "Existing protected preparation gate currently fails Nexus HTTP 403; no bypass was used.",
+    "Terraform/OpenTofu is not installed locally, so Terraform fmt/validate remains an external gate.",
+    "runner-config PR #44 has no GitHub checks reported yet."
+  ],
+  "next_action": "Route to controller review stage for independent diff and security-boundary review.",
+  "route_to": "review",
+  "risk_level": "high",
+  "requires_council": false,
+  "independent_lanes": [
+    "infra evidence contract and protected validation boundary",
+    "runner-config verifier/schema contract",
+    "infra protected-base prerequisite and dependency tracking"
+  ],
+  "issues": [
+    {
+      "id": "codicarium/infra#1084",
+      "title": "Land protected ARC validation handoff before contract repair",
+      "severity": "high",
+      "details": "Tracked prerequisite PR #1085 is open at 8c2259a.",
+      "owner_stage": "validation"
+    }
+  ]
+}

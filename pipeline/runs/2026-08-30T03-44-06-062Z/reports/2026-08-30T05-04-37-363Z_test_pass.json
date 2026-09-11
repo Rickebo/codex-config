@@ -1,0 +1,22 @@
+{
+  "stage": "test",
+  "status": "pass",
+  "summary": "Independent Luna QA passed the full local deployment-controller bootstrap validation and all focused endpoint, kubeconfig, historical fixture, syntax, static, actionlint, and diff checks at exact head 9dbb5de9.",
+  "changed_files": [],
+  "validation": [
+    "Full tests/test-deployment-controller-bootstrap.sh completed successfully within 180 seconds.",
+    "Deployment-controller upgrade suite passed 50/50.",
+    "Typed kubeconfig tests passed 16/16 plus both shell harnesses.",
+    "Historical v0.6.12 upgrade-state suite passed 7/7 with intentional .21 endpoint assertion.",
+    "Bootstrap checker, JSON/env parsing, Python compilation, Bash syntax, actionlint, and git diff checks passed.",
+    "Active v0.8.1 upgrade identities use .10; remaining .21 references are classified historical, recovery, node, firewall, NetworkPolicy, or matching tests.",
+    "Worktree is clean at exact head 9dbb5de971c54fedd664e5bab0484a299ce71376."
+  ],
+  "blockers": [
+    "Exact-head Deployment Controller Bootstrap check is absent after the synchronize event.",
+    "Trusted ARC run 33293299332 remains queued because the dedicated producer runner does not exist."
+  ],
+  "next_action": "Enter validation, produce one exact-head validation-only Bootstrap run, and retain merge NO-GO until the trusted ARC producer gate is resolved.",
+  "route_to": "validation",
+  "risk_level": "high"
+}

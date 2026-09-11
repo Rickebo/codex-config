@@ -1,0 +1,18 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Added a verified actionlint v1.7.12 fallback for Codicarium runners that lack actionlint and Ruby.",
+  "changed_files": [".github/workflows/ci.yml"],
+  "validation": [
+    "actionlint passed on both workflows",
+    "Ruby YAML parsing passed locally",
+    "convco check passed for 8 commits",
+    "actionlint archive SHA-256 verification passed",
+    "independent review found no blocking findings"
+  ],
+  "blockers": [],
+  "next_action": "Run the test-stage validation and push the conventional commit so the PR CI gate reruns.",
+  "route_to": "review",
+  "risk_level": "medium",
+  "independent_lanes": ["workflow syntax validation"]
+}

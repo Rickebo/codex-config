@@ -1,0 +1,1399 @@
+{
+  "meta": {
+    "id": "SPEC-deployment-controller-issue-93-successor-v2-1",
+    "title": "Successor release-platform authority with executable preactivation gates",
+    "author": "Codex release manager",
+    "created_at": "2026-08-25T22:30:00Z",
+    "version": "2.1.0-council-closure"
+  },
+  "feature": {
+    "problem_statement": "v2.0 was deterministic but rejected for stale baselines and unsafe prose gates readback retirement migration identity PostgreSQL and archive details. Issue 93 is closed and v0.6.13 exists while v0.6.14 is absent. v2.1 is linked successor work, not a reopening, and closes each finding with two authority envelopes, a closed DAG and typed gates.",
+    "goals": [
+      "Create a non-circular separate release authority boundary.",
+      "Make GATE-001 through GATE-015 executable typed fresh fail-closed and DAG-bound.",
+      "Prove independent readback quiescent retirement writer fencing archive replay admission and CNPG N-1 behavior."
+    ],
+    "non_goals": [
+      "Reopen issue 93 alter v0.6.13 change runner-config-dev or preserve any UID.",
+      "Claim any live preactivation gate already passes.",
+      "Mutate repositories GitHub cluster Vault registry release or database during spec revision."
+    ],
+    "scope_in": [
+      "Exact annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f and 42-file manifest.",
+      "Seven baselines two envelopes exact S01 to Z50 DAG closed command catalog typed evidence and fifteen gates."
+    ],
+    "scope_out": [
+      "Activation before fresh live gates.",
+      "Backward compatibility with v2.0 authority or legacy workflows."
+    ]
+  },
+  "requirements": [
+    {
+      "id": "REQ-001",
+      "priority": "MUST",
+      "statement": "Freeze the seven v2.1 baselines. SpecEnvelope keeps release-platform-config unresolved through unanimous S01 approval; R10 stops if it already exists and creates it otherwise; R11 commits RepositoryBindingEnvelope before any consumer uses its numeric ID.",
+      "rationale": "Fail-closed requirement bound to v2.1 annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+    },
+    {
+      "id": "REQ-002",
+      "priority": "MUST",
+      "statement": "Account for deployment-controller #103 by retaining admissible dev event-driven RequestRef+Kafka activation and rejecting PollOnly/dev; account for vault-config #258 with schema-2 paired data/metadata deny evidence.",
+      "rationale": "Fail-closed requirement bound to v2.1 annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+    },
+    {
+      "id": "REQ-003",
+      "priority": "MUST",
+      "statement": "Treat every generated source/workflow identity and signed chain as synthetic-conformance-fixture with publication_authority=false and its exact fixture identity digest; after the protected corrective merge derive the only live claim key from the separately discovered non-fixture live identity JCS.",
+      "rationale": "Fail-closed requirement bound to v2.1 annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+    },
+    {
+      "id": "REQ-004",
+      "priority": "MUST",
+      "statement": "Make a live-identity-bound claim CAS the first durable release side effect: reject every synthetic SHA/digest/key even if relabeled or re-signed; first create 201, exact read-only replay 200, conflict 409, and ambiguity UNKNOWN_MANUAL with no retry.",
+      "rationale": "Fail-closed requirement bound to v2.1 annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+    },
+    {
+      "id": "REQ-005",
+      "priority": "MUST",
+      "statement": "Use a new dedicated dev PostgreSQL journal, never S3, with SERIALIZABLE transactions, synchronous_commit=on, primary/unique/check constraints, append-only rows, synchronous replicas, and N-1 evidence.",
+      "rationale": "Fail-closed requirement bound to v2.1 annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+    },
+    {
+      "id": "REQ-006",
+      "priority": "MUST",
+      "statement": "Define every journal function as SECURITY DEFINER with SET search_path = pg_catalog, release_journal, pg_temp; fully qualify persistent relations/non-builtins with release_journal and builtins with pg_catalog; revoke PUBLIC/runtime database TEMP and schema CREATE, and test relation/function temp-shadow attacks in addition to PUBLIC execute, direct DML, TRUNCATE, and DDL denial.",
+      "rationale": "Fail-closed requirement bound to v2.1 annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+    },
+    {
+      "id": "REQ-007",
+      "priority": "MUST",
+      "statement": "Enforce the closed journal FSM: claim; verifier reserve/commit; authorization; publisher reserve/commit; mutation reserve/commit 1..19; complete or UNKNOWN_MANUAL, with exactly one next sequence.",
+      "rationale": "Fail-closed requirement bound to v2.1 annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+    },
+    {
+      "id": "REQ-008",
+      "priority": "MUST",
+      "statement": "Make every reservation/commit immutable, previous-hash linked, and independently Vault-transit signed; target writers cannot sign/commit and signers/committers cannot mutate targets.",
+      "rationale": "Fail-closed requirement bound to v2.1 annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+    },
+    {
+      "id": "REQ-009",
+      "priority": "MUST",
+      "statement": "Expose claim/read/reserve/commit/authorize/complete procedures only; no update or delete endpoint exists.",
+      "rationale": "Fail-closed requirement bound to v2.1 annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+    },
+    {
+      "id": "REQ-010",
+      "priority": "MUST",
+      "statement": "Treat Check Runs only as observations with checks:read; no Check Run, external ID, URL, or checks:write grants publication authority.",
+      "rationale": "Fail-closed requirement bound to v2.1 annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+    },
+    {
+      "id": "REQ-011",
+      "priority": "MUST",
+      "statement": "Dispatch verifier with X-GitHub-Api-Version 2026-03-10 and return_run_details=true; accept only the direct HTTP-200 workflow_run_id/URLs, while HTTP 204 or any missing response is UNKNOWN_MANUAL with zero retry and no commit.",
+      "rationale": "Fail-closed requirement bound to v2.1 annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+    },
+    {
+      "id": "REQ-012",
+      "priority": "MUST",
+      "statement": "Record one closed verification-authorization state that binds claim, candidate evidence, protected verifier identity, and authorization digest.",
+      "rationale": "Fail-closed requirement bound to v2.1 annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+    },
+    {
+      "id": "REQ-013",
+      "priority": "MUST",
+      "statement": "Dispatch publisher with X-GitHub-Api-Version 2026-03-10 and return_run_details=true; accept only the direct HTTP-200 workflow_run_id/URLs, commit it as sequence 0, and map HTTP 204, manual, independent, or rerun execution to UNKNOWN_MANUAL with zero retry.",
+      "rationale": "Fail-closed requirement bound to v2.1 annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+    },
+    {
+      "id": "REQ-014",
+      "priority": "MUST",
+      "statement": "Move tag creation out of Automatic Release into publisher mutation 1; execute draft release, image, chart, fourteen assets, and finalize as mutations 2..19.",
+      "rationale": "Fail-closed requirement bound to v2.1 annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+    },
+    {
+      "id": "REQ-015",
+      "priority": "MUST",
+      "statement": "Emit exactly twenty signed publication receipts: one dispatch plus nineteen mutation receipts, each over actual canonical body/request/readback/target hashes rather than placeholder labels.",
+      "rationale": "Fail-closed requirement bound to v2.1 annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+    },
+    {
+      "id": "REQ-016",
+      "priority": "MUST",
+      "statement": "Stop permanently at UNKNOWN_MANUAL after any ambiguous reservation, target write, readback, signing, or commit; never retry or advance sequence.",
+      "rationale": "Fail-closed requirement bound to v2.1 annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+    },
+    {
+      "id": "REQ-017",
+      "priority": "MUST",
+      "statement": "Preserve raw release-handoff-v1.json at exactly 697 bytes/SHA-256 8abe528b... and raw publisher-dispatch-v1.json at exactly 436 bytes/SHA-256 b150fa8d..., with independently recomputed canonical metadata.",
+      "rationale": "Fail-closed requirement bound to v2.1 annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+    },
+    {
+      "id": "REQ-018",
+      "priority": "MUST",
+      "statement": "Reject duplicate, unknown, and byte-mutated identity vectors; distinguish handoff coordinator Check Run 9002003 from dispatch handoff Check Run 9004003 and keep both observation-only.",
+      "rationale": "Fail-closed requirement bound to v2.1 annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+    },
+    {
+      "id": "REQ-019",
+      "priority": "MUST",
+      "statement": "Before a v0.6.14 side effect, disable and delete all five legacy workflows, enumerate and cancel every queued or running run, disable reruns, and prove terminal states through GATE-011.",
+      "rationale": "Fail-closed requirement bound to v2.1 annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+    },
+    {
+      "id": "REQ-020",
+      "priority": "MUST",
+      "statement": "Before the first claim, revoke legacy secrets environments and runner routes, inventory credentials and sessions, and remain quiescent for the maximum observed TTL with zero active token session or job.",
+      "rationale": "Fail-closed requirement bound to v2.1 annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+    },
+    {
+      "id": "REQ-021",
+      "priority": "MUST",
+      "statement": "Any recovery successor is a new workflow identity after verified v0.6.14 with one typed broker target and no contents write broad token reusable secret signing key or legacy session.",
+      "rationale": "Fail-closed requirement bound to v2.1 annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+    },
+    {
+      "id": "REQ-022",
+      "priority": "MUST",
+      "statement": "Treat candidate archives as hostile: enforce the annex entry path expansion single-entry compression nesting CPU memory and deadline ceilings in a sandbox, reject unsafe entry types, and prove zero effects for every breach.",
+      "rationale": "Fail-closed requirement bound to v2.1 annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+    },
+    {
+      "id": "REQ-023",
+      "priority": "MUST",
+      "statement": "Never execute candidate source on trusted release-control runners; authenticate its 8443 proxy access with a 600-second projected Pod-bound codicarium-egress-proxy token, TokenReview, exact namespace/SA/UID/source-Pod binding and nonce replay denial, then allow only the exact GitHub host+method ACL; the separate proxy verifier gets only tokenreviews.create plus Pod get/list/watch RoleBindings in control and broker namespaces, exact authorization inventory, and context-bound 10.43.0.1/32:443 API egress.",
+      "rationale": "Fail-closed requirement bound to v2.1 annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+    },
+    {
+      "id": "REQ-024",
+      "priority": "MUST",
+      "statement": "Authenticate broker 8444 proxy access with the same enforceable projected-token/TokenReview Pod binding but a distinct artifact-capability principal and exact S3/OIDC host+method ACL; neither verifier may read Secrets, create TokenRequests, access exec/attach/log, mutate Pods, or hold wildcard/extra bindings; deny listener confusion and direct public/proxy bypass, and reach Vault directly only after exact internal IP/port/SNI/CA verification.",
+      "rationale": "Fail-closed requirement bound to v2.1 annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+    },
+    {
+      "id": "REQ-025",
+      "priority": "MUST",
+      "statement": "Use NetworkPolicy only for namespace labels admission-verified immutable Pod labels protocol port and IP blocks; it MUST NOT claim ServiceAccount identity. Central ValidatingAdmissionPolicy and Binding fail closed on the exact group kind namespace identity label and serviceAccountName mapping.",
+      "rationale": "Fail-closed requirement bound to v2.1 annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+    },
+    {
+      "id": "REQ-026",
+      "priority": "MUST",
+      "statement": "Keep BLOCKED_PREACTIVATION until GATE-001 through GATE-015 each has fresh typed live non-synthetic PASS evidence. GATE-015 aggregates without activation and Z50 is a separate leaf.",
+      "rationale": "Fail-closed requirement bound to v2.1 annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+    },
+    {
+      "id": "REQ-027",
+      "priority": "MUST",
+      "statement": "Keep runner-config-dev and arc-path-helm unchanged by exact descriptor values and handoff blob SHA-256. Create the separate release-platform-config grant only from R11 binding and never duplicate the runner grant.",
+      "rationale": "Fail-closed requirement bound to v2.1 annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+    },
+    {
+      "id": "REQ-028",
+      "priority": "MUST",
+      "statement": "Do not replace delete recreate or adopt runner-config-dev and do not claim UID preservation. Fence every new authority writer with a serializable durable epoch CAS acknowledged before any claim.",
+      "rationale": "Fail-closed requirement bound to v2.1 annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+    },
+    {
+      "id": "REQ-029",
+      "priority": "MUST",
+      "statement": "Permit rollback only before activation; never reuse an old grant UID, proof, activation, work item, or epoch after recreation.",
+      "rationale": "Fail-closed requirement bound to v2.1 annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+    },
+    {
+      "id": "REQ-030",
+      "priority": "MUST",
+      "statement": "Bind every cluster command to the exact kubeconfig, context, API server, CA PEM SHA-256, and kube-system UID in the context fixture; mismatch exits before mutation.",
+      "rationale": "Fail-closed requirement bound to v2.1 annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+    },
+    {
+      "id": "REQ-031",
+      "priority": "MUST",
+      "statement": "postgres-config owns three-instance runner-platform-journal using actual Secrets runner-platform-journal-app and runner-platform-journal-ca; clients use verify-full TLS and create-only Vault transfer; infra owns namespaces/admission; release-platform-config owns release desired state; app-config is bootstrap-only.",
+      "rationale": "Fail-closed requirement bound to v2.1 annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+    },
+    {
+      "id": "REQ-032",
+      "priority": "MUST",
+      "statement": "Retain exactly test, lint, chart, integration, and supply-chain from GitHub Actions app ID 15368 at one current head; repository-controlled content cannot self-authorize.",
+      "rationale": "Fail-closed requirement bound to v2.1 annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+    },
+    {
+      "id": "REQ-033",
+      "priority": "MUST",
+      "statement": "Treat existing v0.6.13 as immutable historical release evidence, never reuse or mutate it, and release only new forward v0.6.14 after all gates without restoring legacy authority.",
+      "rationale": "Fail-closed requirement bound to v2.1 annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+    },
+    {
+      "id": "REQ-034",
+      "priority": "MUST",
+      "statement": "Treat closed issue 93 as historical predecessor, link successor work without reopening it, and sequence implementation through the exact S01 to Z50 DAG with all protected checks at each exact head.",
+      "rationale": "Fail-closed requirement bound to v2.1 annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+    },
+    {
+      "id": "REQ-035",
+      "priority": "MUST",
+      "statement": "Post-merge evidence discovers the successor corrective merge and exact protected workflow identities, binds one live non-fixture identity through claim journal receipts checks tag source image chart fourteen assets retirement and final non-draft v0.6.14 readback.",
+      "rationale": "Fail-closed requirement bound to v2.1 annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+    },
+    {
+      "id": "REQ-036",
+      "priority": "MUST",
+      "statement": "Ship the v2.0 corpus plus v2.1 command gate-evidence and DAG schemas; validate duplicate keys schema closure exact manifests DAG acyclicity independent readback archive ceilings replay race and every GATE binding.",
+      "rationale": "Fail-closed requirement bound to v2.1 annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+    },
+    {
+      "id": "REQ-037",
+      "priority": "MUST",
+      "statement": "Define GATE-001 through GATE-015 with stable IDs owners dependencies closed command IDs typed evidence schemas maximum ages and objective predicates; shell and manual probes are non-authorizing.",
+      "rationale": "Closes a v2.0 council NO-GO finding against annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+    },
+    {
+      "id": "REQ-038",
+      "priority": "MUST",
+      "statement": "Execute the exact closed edges S01-R10-R11-C20-A20-T20-G20-Q30, S01-W20-W21-P20-Q30, W21-G20, R11-T20 and G20, Q30-X31-X32-X33, S01-D40, and X33 plus D40-D41-D42-Z50; Z50 is a leaf.",
+      "rationale": "Closes a v2.0 council NO-GO finding against annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+    },
+    {
+      "id": "REQ-039",
+      "priority": "MUST",
+      "statement": "For every mutation a distinct read-only collector authenticates to the target, reads canonical state independently, hashes canonical JSON or raw bytes, binds the mutation and prior readback, and signs it; writer-supplied digests are forbidden.",
+      "rationale": "Closes a v2.0 council NO-GO finding against annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+    },
+    {
+      "id": "REQ-040",
+      "priority": "MUST",
+      "statement": "Atomically reserve token issuer JTI Pod UID and listener ID in a durable linearizable ledger before effects, retain tombstones beyond expiry skew and audit retention, and permit exactly one winner in thirty-two concurrent attempts.",
+      "rationale": "Closes a v2.0 council NO-GO finding against annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+    },
+    {
+      "id": "REQ-041",
+      "priority": "MUST",
+      "statement": "Central admission enumerates exact core apps batch networking policy cert-manager monitoring and CNPG kinds and denies unapproved group kind namespace identity-label or serviceAccountName combinations when unavailable.",
+      "rationale": "Closes a v2.0 council NO-GO finding against annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+    },
+    {
+      "id": "REQ-042",
+      "priority": "MUST",
+      "statement": "GATE-005 and GATE-006 prove CNPG three-instance readiness actual app and CA Secret metadata verify-full CA SAN expiry and plaintext negatives synchronous replication any-node-loss continuity zero data loss and RTO at most one hundred twenty seconds.",
+      "rationale": "Closes a v2.0 council NO-GO finding against annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+    },
+    {
+      "id": "REQ-043",
+      "priority": "MUST",
+      "statement": "GATE-011 proves cancellation and terminal state for every queued or running legacy run plus credential session environment and runner-route quiescence before the first claim; file deletion alone is insufficient.",
+      "rationale": "Closes a v2.0 council NO-GO finding against annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+    },
+    {
+      "id": "REQ-044",
+      "priority": "MUST",
+      "statement": "Use SpecEnvelope then RepositoryBindingEnvelope: unresolved is legal only pre-R10; R11 binds numeric and node IDs privacy default branch receipts seed SHA and approved spec hash; unresolved consumers and post-binding delete or recreate are forbidden.",
+      "rationale": "Closes a v2.0 council NO-GO finding against annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+    },
+    {
+      "id": "REQ-045",
+      "priority": "MUST",
+      "statement": "PrepareActivation X31 requires ALL grant Applications absent and rejects subsets. Synthetic fixtures have publication_authority false; until fifteen fresh live gates pass the only state is BLOCKED_PREACTIVATION and no claim mutation activation or UID assertion is authorized.",
+      "rationale": "Closes a v2.0 council NO-GO finding against annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+    }
+  ],
+  "acceptance_criteria": [
+    {
+      "id": "AC-001",
+      "requirement_ids": [
+        "REQ-001",
+        "REQ-002"
+      ],
+      "scenario": "Given v2.1 annex and BLOCKED_PREACTIVATION, When REQ-001 and REQ-002 use closed typed evidence and negatives, Then they pass exactly or authorize no claim mutation activation or UID assertion."
+    },
+    {
+      "id": "AC-002",
+      "requirement_ids": [
+        "REQ-003",
+        "REQ-004"
+      ],
+      "scenario": "Given v2.1 annex and BLOCKED_PREACTIVATION, When REQ-003 and REQ-004 use closed typed evidence and negatives, Then they pass exactly or authorize no claim mutation activation or UID assertion."
+    },
+    {
+      "id": "AC-003",
+      "requirement_ids": [
+        "REQ-005",
+        "REQ-006"
+      ],
+      "scenario": "Given v2.1 annex and BLOCKED_PREACTIVATION, When REQ-005 and REQ-006 use closed typed evidence and negatives, Then they pass exactly or authorize no claim mutation activation or UID assertion."
+    },
+    {
+      "id": "AC-004",
+      "requirement_ids": [
+        "REQ-007",
+        "REQ-008"
+      ],
+      "scenario": "Given v2.1 annex and BLOCKED_PREACTIVATION, When REQ-007 and REQ-008 use closed typed evidence and negatives, Then they pass exactly or authorize no claim mutation activation or UID assertion."
+    },
+    {
+      "id": "AC-005",
+      "requirement_ids": [
+        "REQ-009",
+        "REQ-010"
+      ],
+      "scenario": "Given v2.1 annex and BLOCKED_PREACTIVATION, When REQ-009 and REQ-010 use closed typed evidence and negatives, Then they pass exactly or authorize no claim mutation activation or UID assertion."
+    },
+    {
+      "id": "AC-006",
+      "requirement_ids": [
+        "REQ-011",
+        "REQ-012"
+      ],
+      "scenario": "Given v2.1 annex and BLOCKED_PREACTIVATION, When REQ-011 and REQ-012 use closed typed evidence and negatives, Then they pass exactly or authorize no claim mutation activation or UID assertion."
+    },
+    {
+      "id": "AC-007",
+      "requirement_ids": [
+        "REQ-013",
+        "REQ-014"
+      ],
+      "scenario": "Given v2.1 annex and BLOCKED_PREACTIVATION, When REQ-013 and REQ-014 use closed typed evidence and negatives, Then they pass exactly or authorize no claim mutation activation or UID assertion."
+    },
+    {
+      "id": "AC-008",
+      "requirement_ids": [
+        "REQ-015",
+        "REQ-016"
+      ],
+      "scenario": "Given v2.1 annex and BLOCKED_PREACTIVATION, When REQ-015 and REQ-016 use closed typed evidence and negatives, Then they pass exactly or authorize no claim mutation activation or UID assertion."
+    },
+    {
+      "id": "AC-009",
+      "requirement_ids": [
+        "REQ-017",
+        "REQ-018"
+      ],
+      "scenario": "Given v2.1 annex and BLOCKED_PREACTIVATION, When REQ-017 and REQ-018 use closed typed evidence and negatives, Then they pass exactly or authorize no claim mutation activation or UID assertion."
+    },
+    {
+      "id": "AC-010",
+      "requirement_ids": [
+        "REQ-019",
+        "REQ-020"
+      ],
+      "scenario": "Given v2.1 annex and BLOCKED_PREACTIVATION, When REQ-019 and REQ-020 use closed typed evidence and negatives, Then they pass exactly or authorize no claim mutation activation or UID assertion."
+    },
+    {
+      "id": "AC-011",
+      "requirement_ids": [
+        "REQ-021",
+        "REQ-022"
+      ],
+      "scenario": "Given v2.1 annex and BLOCKED_PREACTIVATION, When REQ-021 and REQ-022 use closed typed evidence and negatives, Then they pass exactly or authorize no claim mutation activation or UID assertion."
+    },
+    {
+      "id": "AC-012",
+      "requirement_ids": [
+        "REQ-023",
+        "REQ-024"
+      ],
+      "scenario": "Given v2.1 annex and BLOCKED_PREACTIVATION, When REQ-023 and REQ-024 use closed typed evidence and negatives, Then they pass exactly or authorize no claim mutation activation or UID assertion."
+    },
+    {
+      "id": "AC-013",
+      "requirement_ids": [
+        "REQ-025",
+        "REQ-026"
+      ],
+      "scenario": "Given v2.1 annex and BLOCKED_PREACTIVATION, When REQ-025 and REQ-026 use closed typed evidence and negatives, Then they pass exactly or authorize no claim mutation activation or UID assertion."
+    },
+    {
+      "id": "AC-014",
+      "requirement_ids": [
+        "REQ-027",
+        "REQ-028"
+      ],
+      "scenario": "Given v2.1 annex and BLOCKED_PREACTIVATION, When REQ-027 and REQ-028 use closed typed evidence and negatives, Then they pass exactly or authorize no claim mutation activation or UID assertion."
+    },
+    {
+      "id": "AC-015",
+      "requirement_ids": [
+        "REQ-029",
+        "REQ-030"
+      ],
+      "scenario": "Given v2.1 annex and BLOCKED_PREACTIVATION, When REQ-029 and REQ-030 use closed typed evidence and negatives, Then they pass exactly or authorize no claim mutation activation or UID assertion."
+    },
+    {
+      "id": "AC-016",
+      "requirement_ids": [
+        "REQ-031",
+        "REQ-032"
+      ],
+      "scenario": "Given v2.1 annex and BLOCKED_PREACTIVATION, When REQ-031 and REQ-032 use closed typed evidence and negatives, Then they pass exactly or authorize no claim mutation activation or UID assertion."
+    },
+    {
+      "id": "AC-017",
+      "requirement_ids": [
+        "REQ-033",
+        "REQ-034"
+      ],
+      "scenario": "Given v2.1 annex and BLOCKED_PREACTIVATION, When REQ-033 and REQ-034 use closed typed evidence and negatives, Then they pass exactly or authorize no claim mutation activation or UID assertion."
+    },
+    {
+      "id": "AC-018",
+      "requirement_ids": [
+        "REQ-035",
+        "REQ-036"
+      ],
+      "scenario": "Given v2.1 annex and BLOCKED_PREACTIVATION, When REQ-035 and REQ-036 use closed typed evidence and negatives, Then they pass exactly or authorize no claim mutation activation or UID assertion."
+    },
+    {
+      "id": "AC-019",
+      "requirement_ids": [
+        "REQ-037",
+        "REQ-038"
+      ],
+      "scenario": "Given v2.1 annex and BLOCKED_PREACTIVATION, When REQ-037 and REQ-038 use closed typed evidence and negatives, Then they pass exactly or authorize no claim mutation activation or UID assertion."
+    },
+    {
+      "id": "AC-020",
+      "requirement_ids": [
+        "REQ-039",
+        "REQ-040"
+      ],
+      "scenario": "Given v2.1 annex and BLOCKED_PREACTIVATION, When REQ-039 and REQ-040 use closed typed evidence and negatives, Then they pass exactly or authorize no claim mutation activation or UID assertion."
+    },
+    {
+      "id": "AC-021",
+      "requirement_ids": [
+        "REQ-041",
+        "REQ-042"
+      ],
+      "scenario": "Given v2.1 annex and BLOCKED_PREACTIVATION, When REQ-041 and REQ-042 use closed typed evidence and negatives, Then they pass exactly or authorize no claim mutation activation or UID assertion."
+    },
+    {
+      "id": "AC-022",
+      "requirement_ids": [
+        "REQ-043",
+        "REQ-044"
+      ],
+      "scenario": "Given v2.1 annex and BLOCKED_PREACTIVATION, When REQ-043 and REQ-044 use closed typed evidence and negatives, Then they pass exactly or authorize no claim mutation activation or UID assertion."
+    },
+    {
+      "id": "AC-023",
+      "requirement_ids": [
+        "REQ-045"
+      ],
+      "scenario": "Given v2.1 annex and BLOCKED_PREACTIVATION, When REQ-045 use closed typed evidence and negatives, Then they pass exactly or authorize no claim mutation activation or UID assertion."
+    }
+  ],
+  "test_plan": [
+    {
+      "id": "TST-001",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-001",
+        "REQ-002"
+      ],
+      "approach": "Run validate-v2.1.py and mapped gate oracles for REQ-001 and REQ-002; mutate every authority field and assert typed failure with zero side effects."
+    },
+    {
+      "id": "TST-002",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-003",
+        "REQ-004"
+      ],
+      "approach": "Run validate-v2.1.py and mapped gate oracles for REQ-003 and REQ-004; mutate every authority field and assert typed failure with zero side effects."
+    },
+    {
+      "id": "TST-003",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-005",
+        "REQ-006"
+      ],
+      "approach": "Run validate-v2.1.py and mapped gate oracles for REQ-005 and REQ-006; mutate every authority field and assert typed failure with zero side effects."
+    },
+    {
+      "id": "TST-004",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-007",
+        "REQ-008"
+      ],
+      "approach": "Run validate-v2.1.py and mapped gate oracles for REQ-007 and REQ-008; mutate every authority field and assert typed failure with zero side effects."
+    },
+    {
+      "id": "TST-005",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-009",
+        "REQ-010"
+      ],
+      "approach": "Run validate-v2.1.py and mapped gate oracles for REQ-009 and REQ-010; mutate every authority field and assert typed failure with zero side effects."
+    },
+    {
+      "id": "TST-006",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-011",
+        "REQ-012"
+      ],
+      "approach": "Run validate-v2.1.py and mapped gate oracles for REQ-011 and REQ-012; mutate every authority field and assert typed failure with zero side effects."
+    },
+    {
+      "id": "TST-007",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-013",
+        "REQ-014"
+      ],
+      "approach": "Run validate-v2.1.py and mapped gate oracles for REQ-013 and REQ-014; mutate every authority field and assert typed failure with zero side effects."
+    },
+    {
+      "id": "TST-008",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-015",
+        "REQ-016"
+      ],
+      "approach": "Run validate-v2.1.py and mapped gate oracles for REQ-015 and REQ-016; mutate every authority field and assert typed failure with zero side effects."
+    },
+    {
+      "id": "TST-009",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-017",
+        "REQ-018"
+      ],
+      "approach": "Run validate-v2.1.py and mapped gate oracles for REQ-017 and REQ-018; mutate every authority field and assert typed failure with zero side effects."
+    },
+    {
+      "id": "TST-010",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-019",
+        "REQ-020"
+      ],
+      "approach": "Run validate-v2.1.py and mapped gate oracles for REQ-019 and REQ-020; mutate every authority field and assert typed failure with zero side effects."
+    },
+    {
+      "id": "TST-011",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-021",
+        "REQ-022"
+      ],
+      "approach": "Run validate-v2.1.py and mapped gate oracles for REQ-021 and REQ-022; mutate every authority field and assert typed failure with zero side effects."
+    },
+    {
+      "id": "TST-012",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-023",
+        "REQ-024"
+      ],
+      "approach": "Run validate-v2.1.py and mapped gate oracles for REQ-023 and REQ-024; mutate every authority field and assert typed failure with zero side effects."
+    },
+    {
+      "id": "TST-013",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-025",
+        "REQ-026"
+      ],
+      "approach": "Run validate-v2.1.py and mapped gate oracles for REQ-025 and REQ-026; mutate every authority field and assert typed failure with zero side effects."
+    },
+    {
+      "id": "TST-014",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-027",
+        "REQ-028"
+      ],
+      "approach": "Run validate-v2.1.py and mapped gate oracles for REQ-027 and REQ-028; mutate every authority field and assert typed failure with zero side effects."
+    },
+    {
+      "id": "TST-015",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-029",
+        "REQ-030"
+      ],
+      "approach": "Run validate-v2.1.py and mapped gate oracles for REQ-029 and REQ-030; mutate every authority field and assert typed failure with zero side effects."
+    },
+    {
+      "id": "TST-016",
+      "type": "e2e",
+      "requirement_ids": [
+        "REQ-031",
+        "REQ-032"
+      ],
+      "approach": "Run validate-v2.1.py and mapped gate oracles for REQ-031 and REQ-032; mutate every authority field and assert typed failure with zero side effects."
+    },
+    {
+      "id": "TST-017",
+      "type": "e2e",
+      "requirement_ids": [
+        "REQ-033",
+        "REQ-034"
+      ],
+      "approach": "Run validate-v2.1.py and mapped gate oracles for REQ-033 and REQ-034; mutate every authority field and assert typed failure with zero side effects."
+    },
+    {
+      "id": "TST-018",
+      "type": "e2e",
+      "requirement_ids": [
+        "REQ-035",
+        "REQ-036"
+      ],
+      "approach": "Run validate-v2.1.py and mapped gate oracles for REQ-035 and REQ-036; mutate every authority field and assert typed failure with zero side effects."
+    },
+    {
+      "id": "TST-019",
+      "type": "e2e",
+      "requirement_ids": [
+        "REQ-037",
+        "REQ-038"
+      ],
+      "approach": "Run validate-v2.1.py and mapped gate oracles for REQ-037 and REQ-038; mutate every authority field and assert typed failure with zero side effects."
+    },
+    {
+      "id": "TST-020",
+      "type": "e2e",
+      "requirement_ids": [
+        "REQ-039",
+        "REQ-040"
+      ],
+      "approach": "Run validate-v2.1.py and mapped gate oracles for REQ-039 and REQ-040; mutate every authority field and assert typed failure with zero side effects."
+    },
+    {
+      "id": "TST-021",
+      "type": "e2e",
+      "requirement_ids": [
+        "REQ-041",
+        "REQ-042"
+      ],
+      "approach": "Run validate-v2.1.py and mapped gate oracles for REQ-041 and REQ-042; mutate every authority field and assert typed failure with zero side effects."
+    },
+    {
+      "id": "TST-022",
+      "type": "e2e",
+      "requirement_ids": [
+        "REQ-043",
+        "REQ-044"
+      ],
+      "approach": "Run validate-v2.1.py and mapped gate oracles for REQ-043 and REQ-044; mutate every authority field and assert typed failure with zero side effects."
+    },
+    {
+      "id": "TST-023",
+      "type": "e2e",
+      "requirement_ids": [
+        "REQ-045"
+      ],
+      "approach": "Run validate-v2.1.py and mapped gate oracles for REQ-045; mutate every authority field and assert typed failure with zero side effects."
+    }
+  ],
+  "traceability": [
+    {
+      "requirement_id": "REQ-001",
+      "acceptance_ids": [
+        "AC-001"
+      ],
+      "test_ids": [
+        "TST-001"
+      ],
+      "review_checks": [
+        "Review REQ-001 against annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+      ],
+      "validation_checks": [
+        "Run validate-v2.1.py; missing stale or synthetic live evidence remains BLOCKED_PREACTIVATION."
+      ]
+    },
+    {
+      "requirement_id": "REQ-002",
+      "acceptance_ids": [
+        "AC-001"
+      ],
+      "test_ids": [
+        "TST-001"
+      ],
+      "review_checks": [
+        "Review REQ-002 against annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+      ],
+      "validation_checks": [
+        "Run validate-v2.1.py; missing stale or synthetic live evidence remains BLOCKED_PREACTIVATION."
+      ]
+    },
+    {
+      "requirement_id": "REQ-003",
+      "acceptance_ids": [
+        "AC-002"
+      ],
+      "test_ids": [
+        "TST-002"
+      ],
+      "review_checks": [
+        "Review REQ-003 against annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+      ],
+      "validation_checks": [
+        "Run validate-v2.1.py; missing stale or synthetic live evidence remains BLOCKED_PREACTIVATION."
+      ]
+    },
+    {
+      "requirement_id": "REQ-004",
+      "acceptance_ids": [
+        "AC-002"
+      ],
+      "test_ids": [
+        "TST-002"
+      ],
+      "review_checks": [
+        "Review REQ-004 against annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+      ],
+      "validation_checks": [
+        "Run validate-v2.1.py; missing stale or synthetic live evidence remains BLOCKED_PREACTIVATION."
+      ]
+    },
+    {
+      "requirement_id": "REQ-005",
+      "acceptance_ids": [
+        "AC-003"
+      ],
+      "test_ids": [
+        "TST-003"
+      ],
+      "review_checks": [
+        "Review REQ-005 against annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+      ],
+      "validation_checks": [
+        "Run validate-v2.1.py; missing stale or synthetic live evidence remains BLOCKED_PREACTIVATION."
+      ]
+    },
+    {
+      "requirement_id": "REQ-006",
+      "acceptance_ids": [
+        "AC-003"
+      ],
+      "test_ids": [
+        "TST-003"
+      ],
+      "review_checks": [
+        "Review REQ-006 against annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+      ],
+      "validation_checks": [
+        "Run validate-v2.1.py; missing stale or synthetic live evidence remains BLOCKED_PREACTIVATION."
+      ]
+    },
+    {
+      "requirement_id": "REQ-007",
+      "acceptance_ids": [
+        "AC-004"
+      ],
+      "test_ids": [
+        "TST-004"
+      ],
+      "review_checks": [
+        "Review REQ-007 against annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+      ],
+      "validation_checks": [
+        "Run validate-v2.1.py; missing stale or synthetic live evidence remains BLOCKED_PREACTIVATION."
+      ]
+    },
+    {
+      "requirement_id": "REQ-008",
+      "acceptance_ids": [
+        "AC-004"
+      ],
+      "test_ids": [
+        "TST-004"
+      ],
+      "review_checks": [
+        "Review REQ-008 against annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+      ],
+      "validation_checks": [
+        "Run validate-v2.1.py; missing stale or synthetic live evidence remains BLOCKED_PREACTIVATION."
+      ]
+    },
+    {
+      "requirement_id": "REQ-009",
+      "acceptance_ids": [
+        "AC-005"
+      ],
+      "test_ids": [
+        "TST-005"
+      ],
+      "review_checks": [
+        "Review REQ-009 against annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+      ],
+      "validation_checks": [
+        "Run validate-v2.1.py; missing stale or synthetic live evidence remains BLOCKED_PREACTIVATION."
+      ]
+    },
+    {
+      "requirement_id": "REQ-010",
+      "acceptance_ids": [
+        "AC-005"
+      ],
+      "test_ids": [
+        "TST-005"
+      ],
+      "review_checks": [
+        "Review REQ-010 against annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+      ],
+      "validation_checks": [
+        "Run validate-v2.1.py; missing stale or synthetic live evidence remains BLOCKED_PREACTIVATION."
+      ]
+    },
+    {
+      "requirement_id": "REQ-011",
+      "acceptance_ids": [
+        "AC-006"
+      ],
+      "test_ids": [
+        "TST-006"
+      ],
+      "review_checks": [
+        "Review REQ-011 against annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+      ],
+      "validation_checks": [
+        "Run validate-v2.1.py; missing stale or synthetic live evidence remains BLOCKED_PREACTIVATION."
+      ]
+    },
+    {
+      "requirement_id": "REQ-012",
+      "acceptance_ids": [
+        "AC-006"
+      ],
+      "test_ids": [
+        "TST-006"
+      ],
+      "review_checks": [
+        "Review REQ-012 against annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+      ],
+      "validation_checks": [
+        "Run validate-v2.1.py; missing stale or synthetic live evidence remains BLOCKED_PREACTIVATION."
+      ]
+    },
+    {
+      "requirement_id": "REQ-013",
+      "acceptance_ids": [
+        "AC-007"
+      ],
+      "test_ids": [
+        "TST-007"
+      ],
+      "review_checks": [
+        "Review REQ-013 against annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+      ],
+      "validation_checks": [
+        "Run validate-v2.1.py; missing stale or synthetic live evidence remains BLOCKED_PREACTIVATION."
+      ]
+    },
+    {
+      "requirement_id": "REQ-014",
+      "acceptance_ids": [
+        "AC-007"
+      ],
+      "test_ids": [
+        "TST-007"
+      ],
+      "review_checks": [
+        "Review REQ-014 against annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+      ],
+      "validation_checks": [
+        "Run validate-v2.1.py; missing stale or synthetic live evidence remains BLOCKED_PREACTIVATION."
+      ]
+    },
+    {
+      "requirement_id": "REQ-015",
+      "acceptance_ids": [
+        "AC-008"
+      ],
+      "test_ids": [
+        "TST-008"
+      ],
+      "review_checks": [
+        "Review REQ-015 against annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+      ],
+      "validation_checks": [
+        "Run validate-v2.1.py; missing stale or synthetic live evidence remains BLOCKED_PREACTIVATION."
+      ]
+    },
+    {
+      "requirement_id": "REQ-016",
+      "acceptance_ids": [
+        "AC-008"
+      ],
+      "test_ids": [
+        "TST-008"
+      ],
+      "review_checks": [
+        "Review REQ-016 against annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+      ],
+      "validation_checks": [
+        "Run validate-v2.1.py; missing stale or synthetic live evidence remains BLOCKED_PREACTIVATION."
+      ]
+    },
+    {
+      "requirement_id": "REQ-017",
+      "acceptance_ids": [
+        "AC-009"
+      ],
+      "test_ids": [
+        "TST-009"
+      ],
+      "review_checks": [
+        "Review REQ-017 against annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+      ],
+      "validation_checks": [
+        "Run validate-v2.1.py; missing stale or synthetic live evidence remains BLOCKED_PREACTIVATION."
+      ]
+    },
+    {
+      "requirement_id": "REQ-018",
+      "acceptance_ids": [
+        "AC-009"
+      ],
+      "test_ids": [
+        "TST-009"
+      ],
+      "review_checks": [
+        "Review REQ-018 against annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+      ],
+      "validation_checks": [
+        "Run validate-v2.1.py; missing stale or synthetic live evidence remains BLOCKED_PREACTIVATION."
+      ]
+    },
+    {
+      "requirement_id": "REQ-019",
+      "acceptance_ids": [
+        "AC-010"
+      ],
+      "test_ids": [
+        "TST-010"
+      ],
+      "review_checks": [
+        "Review REQ-019 against annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+      ],
+      "validation_checks": [
+        "Run validate-v2.1.py; missing stale or synthetic live evidence remains BLOCKED_PREACTIVATION."
+      ]
+    },
+    {
+      "requirement_id": "REQ-020",
+      "acceptance_ids": [
+        "AC-010"
+      ],
+      "test_ids": [
+        "TST-010"
+      ],
+      "review_checks": [
+        "Review REQ-020 against annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+      ],
+      "validation_checks": [
+        "Run validate-v2.1.py; missing stale or synthetic live evidence remains BLOCKED_PREACTIVATION."
+      ]
+    },
+    {
+      "requirement_id": "REQ-021",
+      "acceptance_ids": [
+        "AC-011"
+      ],
+      "test_ids": [
+        "TST-011"
+      ],
+      "review_checks": [
+        "Review REQ-021 against annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+      ],
+      "validation_checks": [
+        "Run validate-v2.1.py; missing stale or synthetic live evidence remains BLOCKED_PREACTIVATION."
+      ]
+    },
+    {
+      "requirement_id": "REQ-022",
+      "acceptance_ids": [
+        "AC-011"
+      ],
+      "test_ids": [
+        "TST-011"
+      ],
+      "review_checks": [
+        "Review REQ-022 against annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+      ],
+      "validation_checks": [
+        "Run validate-v2.1.py; missing stale or synthetic live evidence remains BLOCKED_PREACTIVATION."
+      ]
+    },
+    {
+      "requirement_id": "REQ-023",
+      "acceptance_ids": [
+        "AC-012"
+      ],
+      "test_ids": [
+        "TST-012"
+      ],
+      "review_checks": [
+        "Review REQ-023 against annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+      ],
+      "validation_checks": [
+        "Run validate-v2.1.py; missing stale or synthetic live evidence remains BLOCKED_PREACTIVATION."
+      ]
+    },
+    {
+      "requirement_id": "REQ-024",
+      "acceptance_ids": [
+        "AC-012"
+      ],
+      "test_ids": [
+        "TST-012"
+      ],
+      "review_checks": [
+        "Review REQ-024 against annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+      ],
+      "validation_checks": [
+        "Run validate-v2.1.py; missing stale or synthetic live evidence remains BLOCKED_PREACTIVATION."
+      ]
+    },
+    {
+      "requirement_id": "REQ-025",
+      "acceptance_ids": [
+        "AC-013"
+      ],
+      "test_ids": [
+        "TST-013"
+      ],
+      "review_checks": [
+        "Review REQ-025 against annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+      ],
+      "validation_checks": [
+        "Run validate-v2.1.py; missing stale or synthetic live evidence remains BLOCKED_PREACTIVATION."
+      ]
+    },
+    {
+      "requirement_id": "REQ-026",
+      "acceptance_ids": [
+        "AC-013"
+      ],
+      "test_ids": [
+        "TST-013"
+      ],
+      "review_checks": [
+        "Review REQ-026 against annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+      ],
+      "validation_checks": [
+        "Run validate-v2.1.py; missing stale or synthetic live evidence remains BLOCKED_PREACTIVATION."
+      ]
+    },
+    {
+      "requirement_id": "REQ-027",
+      "acceptance_ids": [
+        "AC-014"
+      ],
+      "test_ids": [
+        "TST-014"
+      ],
+      "review_checks": [
+        "Review REQ-027 against annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+      ],
+      "validation_checks": [
+        "Run validate-v2.1.py; missing stale or synthetic live evidence remains BLOCKED_PREACTIVATION."
+      ]
+    },
+    {
+      "requirement_id": "REQ-028",
+      "acceptance_ids": [
+        "AC-014"
+      ],
+      "test_ids": [
+        "TST-014"
+      ],
+      "review_checks": [
+        "Review REQ-028 against annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+      ],
+      "validation_checks": [
+        "Run validate-v2.1.py; missing stale or synthetic live evidence remains BLOCKED_PREACTIVATION."
+      ]
+    },
+    {
+      "requirement_id": "REQ-029",
+      "acceptance_ids": [
+        "AC-015"
+      ],
+      "test_ids": [
+        "TST-015"
+      ],
+      "review_checks": [
+        "Review REQ-029 against annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+      ],
+      "validation_checks": [
+        "Run validate-v2.1.py; missing stale or synthetic live evidence remains BLOCKED_PREACTIVATION."
+      ]
+    },
+    {
+      "requirement_id": "REQ-030",
+      "acceptance_ids": [
+        "AC-015"
+      ],
+      "test_ids": [
+        "TST-015"
+      ],
+      "review_checks": [
+        "Review REQ-030 against annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+      ],
+      "validation_checks": [
+        "Run validate-v2.1.py; missing stale or synthetic live evidence remains BLOCKED_PREACTIVATION."
+      ]
+    },
+    {
+      "requirement_id": "REQ-031",
+      "acceptance_ids": [
+        "AC-016"
+      ],
+      "test_ids": [
+        "TST-016"
+      ],
+      "review_checks": [
+        "Review REQ-031 against annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+      ],
+      "validation_checks": [
+        "Run validate-v2.1.py; missing stale or synthetic live evidence remains BLOCKED_PREACTIVATION."
+      ]
+    },
+    {
+      "requirement_id": "REQ-032",
+      "acceptance_ids": [
+        "AC-016"
+      ],
+      "test_ids": [
+        "TST-016"
+      ],
+      "review_checks": [
+        "Review REQ-032 against annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+      ],
+      "validation_checks": [
+        "Run validate-v2.1.py; missing stale or synthetic live evidence remains BLOCKED_PREACTIVATION."
+      ]
+    },
+    {
+      "requirement_id": "REQ-033",
+      "acceptance_ids": [
+        "AC-017"
+      ],
+      "test_ids": [
+        "TST-017"
+      ],
+      "review_checks": [
+        "Review REQ-033 against annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+      ],
+      "validation_checks": [
+        "Run validate-v2.1.py; missing stale or synthetic live evidence remains BLOCKED_PREACTIVATION."
+      ]
+    },
+    {
+      "requirement_id": "REQ-034",
+      "acceptance_ids": [
+        "AC-017"
+      ],
+      "test_ids": [
+        "TST-017"
+      ],
+      "review_checks": [
+        "Review REQ-034 against annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+      ],
+      "validation_checks": [
+        "Run validate-v2.1.py; missing stale or synthetic live evidence remains BLOCKED_PREACTIVATION."
+      ]
+    },
+    {
+      "requirement_id": "REQ-035",
+      "acceptance_ids": [
+        "AC-018"
+      ],
+      "test_ids": [
+        "TST-018"
+      ],
+      "review_checks": [
+        "Review REQ-035 against annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+      ],
+      "validation_checks": [
+        "Run validate-v2.1.py; missing stale or synthetic live evidence remains BLOCKED_PREACTIVATION."
+      ]
+    },
+    {
+      "requirement_id": "REQ-036",
+      "acceptance_ids": [
+        "AC-018"
+      ],
+      "test_ids": [
+        "TST-018"
+      ],
+      "review_checks": [
+        "Review REQ-036 against annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+      ],
+      "validation_checks": [
+        "Run validate-v2.1.py; missing stale or synthetic live evidence remains BLOCKED_PREACTIVATION."
+      ]
+    },
+    {
+      "requirement_id": "REQ-037",
+      "acceptance_ids": [
+        "AC-019"
+      ],
+      "test_ids": [
+        "TST-019"
+      ],
+      "review_checks": [
+        "Review REQ-037 against annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+      ],
+      "validation_checks": [
+        "Run validate-v2.1.py; missing stale or synthetic live evidence remains BLOCKED_PREACTIVATION."
+      ]
+    },
+    {
+      "requirement_id": "REQ-038",
+      "acceptance_ids": [
+        "AC-019"
+      ],
+      "test_ids": [
+        "TST-019"
+      ],
+      "review_checks": [
+        "Review REQ-038 against annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+      ],
+      "validation_checks": [
+        "Run validate-v2.1.py; missing stale or synthetic live evidence remains BLOCKED_PREACTIVATION."
+      ]
+    },
+    {
+      "requirement_id": "REQ-039",
+      "acceptance_ids": [
+        "AC-020"
+      ],
+      "test_ids": [
+        "TST-020"
+      ],
+      "review_checks": [
+        "Review REQ-039 against annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+      ],
+      "validation_checks": [
+        "Run validate-v2.1.py; missing stale or synthetic live evidence remains BLOCKED_PREACTIVATION."
+      ]
+    },
+    {
+      "requirement_id": "REQ-040",
+      "acceptance_ids": [
+        "AC-020"
+      ],
+      "test_ids": [
+        "TST-020"
+      ],
+      "review_checks": [
+        "Review REQ-040 against annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+      ],
+      "validation_checks": [
+        "Run validate-v2.1.py; missing stale or synthetic live evidence remains BLOCKED_PREACTIVATION."
+      ]
+    },
+    {
+      "requirement_id": "REQ-041",
+      "acceptance_ids": [
+        "AC-021"
+      ],
+      "test_ids": [
+        "TST-021"
+      ],
+      "review_checks": [
+        "Review REQ-041 against annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+      ],
+      "validation_checks": [
+        "Run validate-v2.1.py; missing stale or synthetic live evidence remains BLOCKED_PREACTIVATION."
+      ]
+    },
+    {
+      "requirement_id": "REQ-042",
+      "acceptance_ids": [
+        "AC-021"
+      ],
+      "test_ids": [
+        "TST-021"
+      ],
+      "review_checks": [
+        "Review REQ-042 against annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+      ],
+      "validation_checks": [
+        "Run validate-v2.1.py; missing stale or synthetic live evidence remains BLOCKED_PREACTIVATION."
+      ]
+    },
+    {
+      "requirement_id": "REQ-043",
+      "acceptance_ids": [
+        "AC-022"
+      ],
+      "test_ids": [
+        "TST-022"
+      ],
+      "review_checks": [
+        "Review REQ-043 against annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+      ],
+      "validation_checks": [
+        "Run validate-v2.1.py; missing stale or synthetic live evidence remains BLOCKED_PREACTIVATION."
+      ]
+    },
+    {
+      "requirement_id": "REQ-044",
+      "acceptance_ids": [
+        "AC-022"
+      ],
+      "test_ids": [
+        "TST-022"
+      ],
+      "review_checks": [
+        "Review REQ-044 against annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+      ],
+      "validation_checks": [
+        "Run validate-v2.1.py; missing stale or synthetic live evidence remains BLOCKED_PREACTIVATION."
+      ]
+    },
+    {
+      "requirement_id": "REQ-045",
+      "acceptance_ids": [
+        "AC-023"
+      ],
+      "test_ids": [
+        "TST-023"
+      ],
+      "review_checks": [
+        "Review REQ-045 against annex SHA-256 0ae827f5404cbbf9cbfe3752ccc67e71c9b430d55efa6243e7d9024d2d17e34f."
+      ],
+      "validation_checks": [
+        "Run validate-v2.1.py; missing stale or synthetic live evidence remains BLOCKED_PREACTIVATION."
+      ]
+    }
+  ],
+  "quality_gates": {
+    "spec_review_required": true,
+    "testability_required": true,
+    "traceability_required": true
+  },
+  "council": {
+    "perspectives": [
+      {
+        "role": "planner",
+        "summary": "Review dependency order, current-main impact, ownership, migration epochs, rollback, and traceability."
+      },
+      {
+        "role": "security",
+        "summary": "Review claim/JCS identity, PostgreSQL RBAC, transit signatures, role separation, network proxy/Vault boundaries, and retirement."
+      },
+      {
+        "role": "tech_lead_qa",
+        "summary": "Recompute schemas, raw bytes, hashes, signatures, journal/receipt chains, counts, manifest, archives, and negative vectors."
+      },
+      {
+        "role": "tech_lead_devops",
+        "summary": "Review explicit kube binding, workers/Kata/proxy/Vault/PostgreSQL blockers, event-driven dev compatibility, GitOps ownership, and N-1 gates."
+      }
+    ],
+    "consensus_summary": "Draft v2.1 structurally closes every v2.0 NO-GO; unanimous exact-hash council approval at S01 is required before R10.",
+    "open_questions": []
+  }
+}

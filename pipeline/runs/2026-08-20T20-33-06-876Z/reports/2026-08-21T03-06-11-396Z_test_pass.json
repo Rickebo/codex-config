@@ -1,0 +1,29 @@
+{
+  "stage": "test",
+  "status": "pass",
+  "summary": "Offline and focused runtime-contract tests passed for the Grafana Host allowlist and restart-safe Kubernetes npx serialization changes.",
+  "changed_files": [
+    "charts/grafana-mcp/values.yaml",
+    "scripts/metamcp/bootstrap.sql"
+  ],
+  "validation": [
+    "PR #446 YAML parse, Helm lint, Helm render, diff check, and explicit homelab Service/Deployment port inspection passed.",
+    "PR #446 render contains both --disable-write and the exact grafana-mcp.grafana-mcp.svc.cluster.local:8000 allowlist.",
+    "PR #447 SQL/static/diff checks passed and the exact stdio argv contract was verified.",
+    "PR #447 concurrent flock serialization test passed; the running MetaMCP image contains /usr/bin/flock.",
+    "The Kubernetes package runs successfully with npx once and exposes the documented read-only in-cluster flags."
+  ],
+  "blockers": [],
+  "next_action": "Merge PRs #446 and #447 and proceed to live reconciliation and clean-pod validation.",
+  "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T20-33-06-876Z/spec.json",
+  "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T20-33-06-876Z/spec-check.json",
+  "council_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T20-33-06-876Z/council.json",
+  "requires_council": true,
+  "independent_lanes": [
+    "Grafana Helm/render validation",
+    "Kubernetes SQL/argv/lock validation"
+  ],
+  "route_to": "validation",
+  "risk_level": "critical",
+  "issues": []
+}

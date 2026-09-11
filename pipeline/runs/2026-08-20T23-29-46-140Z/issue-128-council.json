@@ -1,0 +1,14 @@
+{
+  "issue": 128,
+  "perspectives": [
+    {"role":"planner_lite","summary":"Use disjoint artifact, migration, final-image smoke, and QA lanes; preserve application and migration semantics."},
+    {"role":"reviewer","summary":"Fail closed on placeholder artifacts, readiness-only checks, mutable image tags, stale migration expectations, and weak API contract checks."},
+    {"role":"tech_lead_qa","summary":"Require positive/negative fixtures, current UI/API/schema assertions, exact digest/platform, and cleanup evidence."}
+  ],
+  "consensus": "Issue #128 is a high-risk release-fidelity change. The implementation must prove real artifacts, complete current schema, current runtime behavior, immutable final image identity, and cleanup under failure.",
+  "open_questions": [
+    "Choose a stable recognizable UI marker and current authenticated API route from the existing application rather than inventing functionality.",
+    "Expose release-resolved image digest/platform to smoke without mutable fallback.",
+    "Keep OpenAPI parity strengthening bounded to existing route/spec contracts."
+  ]
+}

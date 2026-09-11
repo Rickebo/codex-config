@@ -1,0 +1,28 @@
+{
+  "stage": "spec",
+  "status": "pass",
+  "summary": "Council-approved #28 specification defines eight testable MUST requirements for exact generation resolution, ownership, fail-closed nonce-backed workload proof, event retry/DLQ safety, generation fencing, replay/outage recovery, real FastSystem proof, and release consistency.",
+  "changed_files": [
+    "/home/rickebo/.codex/pipeline/runs/2026-08-25T06-10-48-539Z/council.json",
+    "/home/rickebo/.codex/pipeline/runs/2026-08-25T06-10-48-539Z/feature-spec.json",
+    "/home/rickebo/.codex/pipeline/runs/2026-08-25T06-10-48-539Z/spec-check.json"
+  ],
+  "validation": [
+    "pipeline-spec-check: ok=true; 8 requirements, 7 acceptance criteria, 7 tests, 8 complete trace rows",
+    "Council perspectives: planning/architecture, QA, and backend engineering",
+    "Issue #28 and parent #26 acceptance reconciled with docs/plan.md and normative Knowledge/system specifications"
+  ],
+  "blockers": [],
+  "next_action": "Advance to code, approve the high-risk spec-to-code transition, then resume the existing #28 owner for targeted completion and rebase.",
+  "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-25T06-10-48-539Z/feature-spec.json",
+  "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-08-25T06-10-48-539Z/spec-check.json",
+  "council_file": "/home/rickebo/.codex/pipeline/runs/2026-08-25T06-10-48-539Z/council.json",
+  "requires_council": true,
+  "independent_lanes": [
+    "Knowledge/Model/Workspace backend and contract completion",
+    "Clean-main versus feature-branch Model SIGSEGV classification",
+    "Real Source-to-Knowledge FastSystem scenario"
+  ],
+  "route_to": "code",
+  "risk_level": "high"
+}

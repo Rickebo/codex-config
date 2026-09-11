@@ -1,0 +1,17 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Closed the get-to-cancel-to-begin Quick Connect race by deleting poll limiter state on lost-flow acquisition, with deterministic barrier regression coverage and full validation.",
+  "changed_files": ["README.md", "cmd/controller/main.go", "docs/jellyfin-quick-connect.md", "internal/config/config.go", "internal/config/config_test.go", "internal/jellyfin/client.go", "internal/jellyfin/client_test.go", "internal/publicapi/server.go", "internal/publicapi/quickconnect.go", "internal/publicapi/server_test.go", "internal/publicapi/quickconnect_test.go", "internal/setupui/static/app.js", "internal/setupui/static/index.html", "internal/setupui/static/styles.css", "tests/frontend/setup-ui.test.mjs"],
+  "validation": ["go test -race ./... passed", "go vet ./... passed", "go build ./... passed", "npm run frontend:check passed", "npm run frontend:test passed (7 tests)", "Deterministic concurrent get-cancel-begin regression passed under race detector", "Repeated prune lifecycle tests passed with bounded flow and limiter state", "git diff --check passed", "Secret scan found no unexpected credential material; fixtures remain test-only", "Playwright was unavailable; static frontend tests passed"],
+  "blockers": ["Live Jellyfin and VPN-only Playwright acceptance remain deployment-stage work.", "GitOps chart, immutable image, network policy, and rollout checks remain outside this Youtarr PR."],
+  "next_action": "Review updated PR #95, then run deployment-stage chart, VPN canary, and Playwright acceptance checks.",
+  "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T06-38-51-916Z/feature-spec.json",
+  "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T06-38-51-916Z/spec-check.json",
+  "council_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T06-38-51-916Z/council.json",
+  "requires_council": true,
+  "independent_lanes": ["Youtarr Go API and Jellyfin client", "Embedded setup UI and frontend contract"],
+  "route_to": "review",
+  "risk_level": "high",
+  "issues": [{"id": "CODE-PLAYWRIGHT-UNAVAILABLE", "title": "Live browser acceptance not run", "severity": "medium", "details": "No deployed browser environment was available; static Node DOM checks passed and live acceptance remains validation-stage work.", "owner_stage": "validation"}]
+}

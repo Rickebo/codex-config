@@ -1,0 +1,25 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Remediation commit 12d02f7bef8e9f4dacb727ae6c4a2caec514e0f6 binds metadata to the published chart, all Go modules, and both immutable image inputs.",
+  "changed_files": [
+    ".github/workflows/release.yml",
+    "docs/deployment.md",
+    "tools/generate_release_metadata.py",
+    "tools/test_generate_release_metadata.py"
+  ],
+  "validation": [
+    "make ci passed",
+    "make govulncheck passed",
+    "go test ./... and go vet ./... passed",
+    "metadata and supply-chain tests passed with regression assertions",
+    "actionlint and workflow parser passed",
+    "Helm lint, contracts, and release-digest validation passed",
+    "git diff --check passed"
+  ],
+  "blockers": [
+    "Nexus OCI referrer/signing support and approved signer/admission configuration remain external, unverified prerequisites; repository metadata remains unsigned by design."
+  ],
+  "next_action": "Repeat independent exact-head review and QA on remediation commit.",
+  "route_to": "review"
+}

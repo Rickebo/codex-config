@@ -1,0 +1,25 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Luna fixed the Phase 0 revocation sequencing defect at exact local head dbaccadb. The guard now accepts only the old readonly or new empty default, transactionally pins the observed value, rejects unknown states, and aborts on drift.",
+  "changed_files": [
+    "scripts/revoke-legacy-metamcp-argocd-credentials.sh",
+    "tests/test-revoke-legacy-metamcp-argocd-credentials.py",
+    "tests/test-revoke-legacy-metamcp-argocd-credentials-transaction.py"
+  ],
+  "validation": [
+    "Canonical main remains 09e6e5405d799446354d531ae76c314374576e74 and is an ancestor",
+    "Seven previously reviewed commits are preserved plus fix(security): preserve approved Argo default policy",
+    "7 revocation contract tests and 5 transaction tests passed",
+    "2 real-kubectl parser, 12 Argo RBAC, and 16 typed-kubeconfig tests passed",
+    "Argo/RBAC, break-glass, topology, actionlint, shell, Python, and diff checks passed",
+    "Worktree is clean; no push or live mutation occurred"
+  ],
+  "blockers": [
+    "New exact head requires independent Luna security review before exact-lease push",
+    "Protected ARC producer runner and live identity/break-glass gates remain external blockers"
+  ],
+  "next_action": "Route exact head dbaccadbb857a6c853c382aac6bd93862fd8073d to independent Luna review; do not push before GO.",
+  "route_to": "review",
+  "risk_level": "critical"
+}

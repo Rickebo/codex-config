@@ -1,0 +1,266 @@
+{
+  "version": 1,
+  "created_at": "2026-08-30T08:31:57.592Z",
+  "updated_at": "2026-08-30T20:03:23.063Z",
+  "task": "Deploy the Lightning Craft stack to Codicarium production through deployment-controller GitOps; lc-config owns control-plane hosting; proxy and all game servers use a dedicated Kata RuntimeClass",
+  "policy_path": "/home/rickebo/.codex/pipeline/transitions.json",
+  "approval_rules_path": "/home/rickebo/.codex/pipeline/approval-rules.json",
+  "initial_stage": "spec",
+  "current_stage": "code",
+  "pipeline_profile": "full",
+  "done": false,
+  "max_loops": 6,
+  "loop_count": 3,
+  "approval_required_count": 7,
+  "approvals": [
+    {
+      "at": "2026-08-30T09:07:57.266Z",
+      "approver": "user",
+      "note": "User explicitly requested proceeding to make the LC stack operational in Codicarium production; approval covers implementation and PR workflow, not unsafe live activation without explicit prod context.",
+      "gate": "spec_to_code",
+      "reason": "Spec pass requires explicit approval before implementation starts.",
+      "risk_level": "critical",
+      "from_stage": "spec",
+      "next_stage": "code",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T08-31-57-542Z/reports/2026-08-30T09-07-37-997Z_spec_pass.json"
+    },
+    {
+      "at": "2026-08-30T11:37:05.835Z",
+      "approver": "user",
+      "note": "Existing user authorization covers lc-config PR workflow and independent review; no live activation or external platform/infra/app-config changes are approved.",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "from_stage": "code",
+      "next_stage": "review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T08-31-57-542Z/reports/2026-08-30T11-36-06-585Z_code_ready_for_review.json"
+    },
+    {
+      "at": "2026-08-30T12:05:03.946Z",
+      "approver": "user",
+      "note": "Existing user authorization covers remediating blocking review findings in lc-config PR #310; no live activation or external repo changes are approved.",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "from_stage": "review",
+      "next_stage": "code",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T08-31-57-542Z/reports/2026-08-30T12-04-36-988Z_review_fail.json"
+    },
+    {
+      "at": "2026-08-30T17:30:11.655Z",
+      "approver": "user",
+      "note": "Existing user authorization covers independent review of lc-config PR #310 and application-only remediation; no live activation or platform, infrastructure, or app-config implementation is approved.",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "from_stage": "code",
+      "next_stage": "review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T08-31-57-542Z/reports/2026-08-30T17-29-29-816Z_code_ready_for_review.json"
+    },
+    {
+      "at": "2026-08-30T18:11:51.601Z",
+      "approver": "user",
+      "note": "User explicitly authorized making the LC stack operational and restricted this work to lc-config application delivery; approval covers remediation of PR #310 review findings only, with no platform, infrastructure, app-config, or live-cluster mutation.",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "from_stage": "review",
+      "next_stage": "code",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T08-31-57-542Z/reports/2026-08-30T18-11-38-008Z_review_fail.json"
+    },
+    {
+      "at": "2026-08-30T19:39:31.469Z",
+      "approver": "user",
+      "note": "Existing user authorization covers independent review of exact lc-config PR #310 head 3e6ebed and application-only follow-up; no platform, infrastructure, app-config, workflow rerun, merge, or live-cluster mutation is approved by this transition.",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "from_stage": "code",
+      "next_stage": "review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T08-31-57-542Z/reports/2026-08-30T19-39-12-990Z_code_ready_for_review.json"
+    },
+    {
+      "at": "2026-08-30T20:03:23.063Z",
+      "approver": "user",
+      "note": "Existing user authorization covers application-level remediation needed to make LC production operational, including lc-config and LC application source/image work; it explicitly excludes platform, infrastructure, app-config, live-cluster mutation, workflow bypasses, and merge before genuine checks pass.",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "from_stage": "review",
+      "next_stage": "code",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T08-31-57-542Z/reports/2026-08-30T20-03-04-394Z_review_fail.json"
+    }
+  ],
+  "awaiting_approval": null,
+  "spec_gate": {
+    "passed": true,
+    "passed_at": "2026-08-30T09:07:57.266Z",
+    "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T08-31-57-542Z/feature-spec.json",
+    "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T08-31-57-542Z/spec-check.json",
+    "council_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T08-31-57-542Z/council.json"
+  },
+  "council_policy": {
+    "required": "always"
+  },
+  "history": [
+    {
+      "at": "2026-08-30T09:07:37.997Z",
+      "event": "approval_required",
+      "stage": "spec",
+      "status": "pass",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T08-31-57-542Z/reports/2026-08-30T09-07-37-997Z_spec_pass.json",
+      "requested_next_stage": "code",
+      "gate": "spec_to_code",
+      "reason": "Spec pass requires explicit approval before implementation starts.",
+      "risk_level": "critical",
+      "spec_gate": {
+        "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T08-31-57-542Z/feature-spec.json",
+        "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T08-31-57-542Z/spec-check.json",
+        "council_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T08-31-57-542Z/council.json",
+        "checked_at": "2026-08-30T09:07:11.972Z"
+      }
+    },
+    {
+      "at": "2026-08-30T09:07:57.266Z",
+      "event": "approved_transition",
+      "stage": "spec",
+      "status": "pass",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T08-31-57-542Z/reports/2026-08-30T09-07-37-997Z_spec_pass.json",
+      "approver": "user",
+      "note": "User explicitly requested proceeding to make the LC stack operational in Codicarium production; approval covers implementation and PR workflow, not unsafe live activation without explicit prod context.",
+      "next_stage": "code"
+    },
+    {
+      "at": "2026-08-30T11:36:06.586Z",
+      "event": "approval_required",
+      "stage": "code",
+      "status": "ready_for_review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T08-31-57-542Z/reports/2026-08-30T11-36-06-585Z_code_ready_for_review.json",
+      "requested_next_stage": "review",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "spec_gate": null
+    },
+    {
+      "at": "2026-08-30T11:37:05.835Z",
+      "event": "approved_transition",
+      "stage": "code",
+      "status": "ready_for_review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T08-31-57-542Z/reports/2026-08-30T11-36-06-585Z_code_ready_for_review.json",
+      "approver": "user",
+      "note": "Existing user authorization covers lc-config PR workflow and independent review; no live activation or external platform/infra/app-config changes are approved.",
+      "next_stage": "review"
+    },
+    {
+      "at": "2026-08-30T12:04:37.015Z",
+      "event": "approval_required",
+      "stage": "review",
+      "status": "fail",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T08-31-57-542Z/reports/2026-08-30T12-04-36-988Z_review_fail.json",
+      "requested_next_stage": "code",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "spec_gate": null
+    },
+    {
+      "at": "2026-08-30T12:05:03.946Z",
+      "event": "approved_transition",
+      "stage": "review",
+      "status": "fail",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T08-31-57-542Z/reports/2026-08-30T12-04-36-988Z_review_fail.json",
+      "approver": "user",
+      "note": "Existing user authorization covers remediating blocking review findings in lc-config PR #310; no live activation or external repo changes are approved.",
+      "next_stage": "code"
+    },
+    {
+      "at": "2026-08-30T17:29:29.816Z",
+      "event": "approval_required",
+      "stage": "code",
+      "status": "ready_for_review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T08-31-57-542Z/reports/2026-08-30T17-29-29-816Z_code_ready_for_review.json",
+      "requested_next_stage": "review",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "spec_gate": null
+    },
+    {
+      "at": "2026-08-30T17:30:11.655Z",
+      "event": "approved_transition",
+      "stage": "code",
+      "status": "ready_for_review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T08-31-57-542Z/reports/2026-08-30T17-29-29-816Z_code_ready_for_review.json",
+      "approver": "user",
+      "note": "Existing user authorization covers independent review of lc-config PR #310 and application-only remediation; no live activation or platform, infrastructure, or app-config implementation is approved.",
+      "next_stage": "review"
+    },
+    {
+      "at": "2026-08-30T18:11:38.008Z",
+      "event": "approval_required",
+      "stage": "review",
+      "status": "fail",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T08-31-57-542Z/reports/2026-08-30T18-11-38-008Z_review_fail.json",
+      "requested_next_stage": "code",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "spec_gate": null
+    },
+    {
+      "at": "2026-08-30T18:11:51.601Z",
+      "event": "approved_transition",
+      "stage": "review",
+      "status": "fail",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T08-31-57-542Z/reports/2026-08-30T18-11-38-008Z_review_fail.json",
+      "approver": "user",
+      "note": "User explicitly authorized making the LC stack operational and restricted this work to lc-config application delivery; approval covers remediation of PR #310 review findings only, with no platform, infrastructure, app-config, or live-cluster mutation.",
+      "next_stage": "code"
+    },
+    {
+      "at": "2026-08-30T19:39:12.992Z",
+      "event": "approval_required",
+      "stage": "code",
+      "status": "ready_for_review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T08-31-57-542Z/reports/2026-08-30T19-39-12-990Z_code_ready_for_review.json",
+      "requested_next_stage": "review",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "spec_gate": null
+    },
+    {
+      "at": "2026-08-30T19:39:31.469Z",
+      "event": "approved_transition",
+      "stage": "code",
+      "status": "ready_for_review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T08-31-57-542Z/reports/2026-08-30T19-39-12-990Z_code_ready_for_review.json",
+      "approver": "user",
+      "note": "Existing user authorization covers independent review of exact lc-config PR #310 head 3e6ebed and application-only follow-up; no platform, infrastructure, app-config, workflow rerun, merge, or live-cluster mutation is approved by this transition.",
+      "next_stage": "review"
+    },
+    {
+      "at": "2026-08-30T20:03:04.395Z",
+      "event": "approval_required",
+      "stage": "review",
+      "status": "fail",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T08-31-57-542Z/reports/2026-08-30T20-03-04-394Z_review_fail.json",
+      "requested_next_stage": "code",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "spec_gate": null
+    },
+    {
+      "at": "2026-08-30T20:03:23.063Z",
+      "event": "approved_transition",
+      "stage": "review",
+      "status": "fail",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T08-31-57-542Z/reports/2026-08-30T20-03-04-394Z_review_fail.json",
+      "approver": "user",
+      "note": "Existing user authorization covers application-level remediation needed to make LC production operational, including lc-config and LC application source/image work; it explicitly excludes platform, infrastructure, app-config, live-cluster mutation, workflow bypasses, and merge before genuine checks pass.",
+      "next_stage": "code"
+    }
+  ]
+}

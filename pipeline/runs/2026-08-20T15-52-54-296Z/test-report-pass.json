@@ -1,0 +1,28 @@
+{
+  "stage": "test",
+  "status": "pass",
+  "summary": "Independent exact-head QA is green for repository validation and hosted CI at 612446f; external platform evidence is intentionally deferred to validation.",
+  "changed_files": [],
+  "validation": [
+    "Exact head 612446f and base main verified",
+    "go test ./tools/workflowtrust and go test ./... passed",
+    "96 Python tests passed",
+    "make ci-pr and full make ci passed",
+    "workflow parser, actionlint, YAML parse, and git diff --check passed",
+    "Hosted exact-SHA validate run 32413508440 succeeded",
+    "No owned migration/smoke containers or networks remained"
+  ],
+  "blockers": [
+    "No live fork canary, ephemeral VM destruction, trusted release-runner isolation, failure/cancellation cleanup, or network/cache/credential attestation exists."
+  ],
+  "next_action": "Run the validation stage: verify hosted/platform evidence and decide whether the PR can merge while issue closure remains gated.",
+  "route_to": "validation",
+  "risk_level": "critical",
+  "independent_lanes": [
+    "Repository unit/integration tests",
+    "Hosted exact-head CI",
+    "Resource cleanup audit",
+    "External trust-boundary evidence audit"
+  ],
+  "requires_council": true
+}

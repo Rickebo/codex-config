@@ -1,0 +1,27 @@
+{
+  "stage": "spec",
+  "status": "pass",
+  "summary": "Council and traceable feature specification define repository workflow hardening for PR/release trust isolation while explicitly leaving runner provisioning and teardown evidence to platform validation.",
+  "changed_files": [],
+  "validation": [
+    "pipeline-spec-check: ok",
+    "four independent council perspectives synthesized",
+    "six MUST requirements traced to five Gherkin acceptance criteria and five test plans"
+  ],
+  "blockers": [
+    "Dedicated runner pools, egress/Docker isolation, and cleanup attestation require external platform evidence before issue closure."
+  ],
+  "next_action": "Delegate repository workflow hardening and fail-closed contract tests in a dedicated worktree.",
+  "route_to": "code",
+  "risk_level": "critical",
+  "independent_lanes": [
+    "PR workflow runner/permission hardening",
+    "Release trusted-runner/ref/permission hardening",
+    "Workflow trust contract checker and tests",
+    "Trust model and external evidence documentation"
+  ],
+  "requires_council": true,
+  "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T15-52-54-296Z/issue-123-spec.json",
+  "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T15-52-54-296Z/issue-123-spec-check.json",
+  "council_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T15-52-54-296Z/issue-123-council.json"
+}

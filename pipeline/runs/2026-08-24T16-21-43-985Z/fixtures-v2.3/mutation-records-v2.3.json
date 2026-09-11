@@ -1,0 +1,819 @@
+[
+  {
+    "node": "M01",
+    "operation": "tag refs/tags/v0.6.14",
+    "target": "github-ref/release",
+    "records": [
+      {
+        "kind": "intent",
+        "sequence": 1,
+        "predecessor": "F04/sequence-0",
+        "role": "intent-role",
+        "target_state_bytes_base64": "dGFnIHJlZnMvdGFncy92MC42LjE0OmludGVudA==",
+        "sha256": "b8cd7588bb4c13a652ecabec92087f46e5ed77787eab040ff01ee01e0adb803d",
+        "signature_algorithm": "Ed25519"
+      },
+      {
+        "kind": "readback",
+        "sequence": 1,
+        "predecessor": "F04/sequence-0",
+        "role": "readback-role",
+        "target_state_bytes_base64": "dGFnIHJlZnMvdGFncy92MC42LjE0OnJlYWRiYWNr",
+        "sha256": "40a65669e2af361af851778010f4b40fcb84d02a2d2eabbb58c8fc5cb068f112",
+        "signature_algorithm": "Ed25519"
+      },
+      {
+        "kind": "signature",
+        "sequence": 1,
+        "predecessor": "F04/sequence-0",
+        "role": "signature-role",
+        "target_state_bytes_base64": "dGFnIHJlZnMvdGFncy92MC42LjE0OnNpZ25hdHVyZQ==",
+        "sha256": "01aeb7d00adbd2fcc216c670b00350f96b4de615d8bfceaa9e8650aeeddfd885",
+        "signature_algorithm": "Ed25519"
+      },
+      {
+        "kind": "commit",
+        "sequence": 1,
+        "predecessor": "F04/sequence-0",
+        "role": "commit-role",
+        "target_state_bytes_base64": "dGFnIHJlZnMvdGFncy92MC42LjE0OmNvbW1pdA==",
+        "sha256": "46acd51a081c3c4d96dc906c033bf35ad7a6e44e17abfa7e2fa386b9b0f71ad9",
+        "signature_algorithm": "Ed25519"
+      }
+    ]
+  },
+  {
+    "node": "M02",
+    "operation": "draft release v0.6.14",
+    "target": "github-ref/release",
+    "records": [
+      {
+        "kind": "intent",
+        "sequence": 2,
+        "predecessor": "M01/commit",
+        "role": "intent-role",
+        "target_state_bytes_base64": "ZHJhZnQgcmVsZWFzZSB2MC42LjE0OmludGVudA==",
+        "sha256": "d33b1f2229948364f6104c676e22bc00d50fc4949e87f31df7bd8afd9c0425ed",
+        "signature_algorithm": "Ed25519"
+      },
+      {
+        "kind": "readback",
+        "sequence": 2,
+        "predecessor": "M01/commit",
+        "role": "readback-role",
+        "target_state_bytes_base64": "ZHJhZnQgcmVsZWFzZSB2MC42LjE0OnJlYWRiYWNr",
+        "sha256": "c03c7a2c4462849007c61bf3e822e65607b73b525d1c52fd8c67cd582707ba0f",
+        "signature_algorithm": "Ed25519"
+      },
+      {
+        "kind": "signature",
+        "sequence": 2,
+        "predecessor": "M01/commit",
+        "role": "signature-role",
+        "target_state_bytes_base64": "ZHJhZnQgcmVsZWFzZSB2MC42LjE0OnNpZ25hdHVyZQ==",
+        "sha256": "da866664f8963bc86500303d9ca3e3e06705113cf0b4e3145b4054a855f486ef",
+        "signature_algorithm": "Ed25519"
+      },
+      {
+        "kind": "commit",
+        "sequence": 2,
+        "predecessor": "M01/commit",
+        "role": "commit-role",
+        "target_state_bytes_base64": "ZHJhZnQgcmVsZWFzZSB2MC42LjE0OmNvbW1pdA==",
+        "sha256": "bc939bd1f290c883a1681a00b2e63d07180a60d4045ec1819866a165c4d11c03",
+        "signature_algorithm": "Ed25519"
+      }
+    ]
+  },
+  {
+    "node": "M03",
+    "operation": "image manifest",
+    "target": "nexus-image",
+    "records": [
+      {
+        "kind": "intent",
+        "sequence": 3,
+        "predecessor": "M02/commit",
+        "role": "intent-role",
+        "target_state_bytes_base64": "aW1hZ2UgbWFuaWZlc3Q6aW50ZW50",
+        "sha256": "06651d615b9dc523d2126ab2f6c224fc35ab6236b398deee9355228cdd4d260c",
+        "signature_algorithm": "Ed25519"
+      },
+      {
+        "kind": "readback",
+        "sequence": 3,
+        "predecessor": "M02/commit",
+        "role": "readback-role",
+        "target_state_bytes_base64": "aW1hZ2UgbWFuaWZlc3Q6cmVhZGJhY2s=",
+        "sha256": "60f9db056895f33061c5ff3812e9214f27733f5034d4148b2dbbb4877c7422f3",
+        "signature_algorithm": "Ed25519"
+      },
+      {
+        "kind": "signature",
+        "sequence": 3,
+        "predecessor": "M02/commit",
+        "role": "signature-role",
+        "target_state_bytes_base64": "aW1hZ2UgbWFuaWZlc3Q6c2lnbmF0dXJl",
+        "sha256": "8fd2fda492ad5ceea432ac58318a3c94207f10131b467a4dd7b33d09c118a722",
+        "signature_algorithm": "Ed25519"
+      },
+      {
+        "kind": "commit",
+        "sequence": 3,
+        "predecessor": "M02/commit",
+        "role": "commit-role",
+        "target_state_bytes_base64": "aW1hZ2UgbWFuaWZlc3Q6Y29tbWl0",
+        "sha256": "21034076e83c2d0037547cc580d1300727eee53f68dbe0db4de62dd2e07549fa",
+        "signature_algorithm": "Ed25519"
+      }
+    ]
+  },
+  {
+    "node": "M04",
+    "operation": "chart 0.6.14",
+    "target": "nexus-chart",
+    "records": [
+      {
+        "kind": "intent",
+        "sequence": 4,
+        "predecessor": "M03/commit",
+        "role": "intent-role",
+        "target_state_bytes_base64": "Y2hhcnQgMC42LjE0OmludGVudA==",
+        "sha256": "bc6caa4d4df89c943d61ad2d1df9a4bdb50bf0a3d12a0c906be9908c09ab57e4",
+        "signature_algorithm": "Ed25519"
+      },
+      {
+        "kind": "readback",
+        "sequence": 4,
+        "predecessor": "M03/commit",
+        "role": "readback-role",
+        "target_state_bytes_base64": "Y2hhcnQgMC42LjE0OnJlYWRiYWNr",
+        "sha256": "2c49ffa1dd2db516935f29d08ae42872b9f9135d191b5423cf618d983d564a81",
+        "signature_algorithm": "Ed25519"
+      },
+      {
+        "kind": "signature",
+        "sequence": 4,
+        "predecessor": "M03/commit",
+        "role": "signature-role",
+        "target_state_bytes_base64": "Y2hhcnQgMC42LjE0OnNpZ25hdHVyZQ==",
+        "sha256": "5405ecd6425ca4e0552cb5e2e595bf991d6b5150e65130926bed6e70eff56525",
+        "signature_algorithm": "Ed25519"
+      },
+      {
+        "kind": "commit",
+        "sequence": 4,
+        "predecessor": "M03/commit",
+        "role": "commit-role",
+        "target_state_bytes_base64": "Y2hhcnQgMC42LjE0OmNvbW1pdA==",
+        "sha256": "badfe1cf1652ba6ee0c6d9800da07a610a9d843a4bf2605eaf80b42fb66a6d01",
+        "signature_algorithm": "Ed25519"
+      }
+    ]
+  },
+  {
+    "node": "M05",
+    "operation": "asset-01",
+    "target": "github-release/asset-01",
+    "records": [
+      {
+        "kind": "intent",
+        "sequence": 5,
+        "predecessor": "M04/commit",
+        "role": "intent-role",
+        "target_state_bytes_base64": "YXNzZXQtMDE6aW50ZW50",
+        "sha256": "ea6aa815660fd2e83104079bc757571879ca49529276f1a0e9e338c617a911ea",
+        "signature_algorithm": "Ed25519"
+      },
+      {
+        "kind": "readback",
+        "sequence": 5,
+        "predecessor": "M04/commit",
+        "role": "readback-role",
+        "target_state_bytes_base64": "YXNzZXQtMDE6cmVhZGJhY2s=",
+        "sha256": "1ac2a8646694c052ded4433c2eed2263d3854aae69828f7ba564737de0b0d1f6",
+        "signature_algorithm": "Ed25519"
+      },
+      {
+        "kind": "signature",
+        "sequence": 5,
+        "predecessor": "M04/commit",
+        "role": "signature-role",
+        "target_state_bytes_base64": "YXNzZXQtMDE6c2lnbmF0dXJl",
+        "sha256": "fc714ac1be5d32242a2c41d6a87efa519298f992780713473afa6d9fae88152e",
+        "signature_algorithm": "Ed25519"
+      },
+      {
+        "kind": "commit",
+        "sequence": 5,
+        "predecessor": "M04/commit",
+        "role": "commit-role",
+        "target_state_bytes_base64": "YXNzZXQtMDE6Y29tbWl0",
+        "sha256": "88d9646103c04081c1442b2c93ef586e039e4a4dea9a75348c6f5fbcde9f3ad2",
+        "signature_algorithm": "Ed25519"
+      }
+    ]
+  },
+  {
+    "node": "M06",
+    "operation": "asset-02",
+    "target": "github-release/asset-02",
+    "records": [
+      {
+        "kind": "intent",
+        "sequence": 6,
+        "predecessor": "M05/commit",
+        "role": "intent-role",
+        "target_state_bytes_base64": "YXNzZXQtMDI6aW50ZW50",
+        "sha256": "d1a811e252d0751ce350e329cac2ea4d56914ff0524a40df5764967b441e331e",
+        "signature_algorithm": "Ed25519"
+      },
+      {
+        "kind": "readback",
+        "sequence": 6,
+        "predecessor": "M05/commit",
+        "role": "readback-role",
+        "target_state_bytes_base64": "YXNzZXQtMDI6cmVhZGJhY2s=",
+        "sha256": "fc8a936e1cbd587401ee783c16d5b30a8cbc8fde6c1802e6b9cfa388ade56e67",
+        "signature_algorithm": "Ed25519"
+      },
+      {
+        "kind": "signature",
+        "sequence": 6,
+        "predecessor": "M05/commit",
+        "role": "signature-role",
+        "target_state_bytes_base64": "YXNzZXQtMDI6c2lnbmF0dXJl",
+        "sha256": "a326e3d4ae62b8e07bab2c150d555df274f418015d4307e31d157a6c29b23417",
+        "signature_algorithm": "Ed25519"
+      },
+      {
+        "kind": "commit",
+        "sequence": 6,
+        "predecessor": "M05/commit",
+        "role": "commit-role",
+        "target_state_bytes_base64": "YXNzZXQtMDI6Y29tbWl0",
+        "sha256": "04eb009c90ec86e95121558e013b458dcd818b5b26517ec8e4b43bd48979b11c",
+        "signature_algorithm": "Ed25519"
+      }
+    ]
+  },
+  {
+    "node": "M07",
+    "operation": "asset-03",
+    "target": "github-release/asset-03",
+    "records": [
+      {
+        "kind": "intent",
+        "sequence": 7,
+        "predecessor": "M06/commit",
+        "role": "intent-role",
+        "target_state_bytes_base64": "YXNzZXQtMDM6aW50ZW50",
+        "sha256": "bd71fd7525f8497262c937ad070e33ac80393cc85599a9a136514628763d51e8",
+        "signature_algorithm": "Ed25519"
+      },
+      {
+        "kind": "readback",
+        "sequence": 7,
+        "predecessor": "M06/commit",
+        "role": "readback-role",
+        "target_state_bytes_base64": "YXNzZXQtMDM6cmVhZGJhY2s=",
+        "sha256": "737603ecc0c546ef81eb98d87dc7f0509b486386f3f606fef7baac5e9047bbf4",
+        "signature_algorithm": "Ed25519"
+      },
+      {
+        "kind": "signature",
+        "sequence": 7,
+        "predecessor": "M06/commit",
+        "role": "signature-role",
+        "target_state_bytes_base64": "YXNzZXQtMDM6c2lnbmF0dXJl",
+        "sha256": "cefc06682bc745b89b902bf5a399120eaceecbabc194343997af0d9805b89046",
+        "signature_algorithm": "Ed25519"
+      },
+      {
+        "kind": "commit",
+        "sequence": 7,
+        "predecessor": "M06/commit",
+        "role": "commit-role",
+        "target_state_bytes_base64": "YXNzZXQtMDM6Y29tbWl0",
+        "sha256": "22e068a93b3f5dd2f09c8d6a3cc2717041a970cfd727d56826f5ee0b24ad7d68",
+        "signature_algorithm": "Ed25519"
+      }
+    ]
+  },
+  {
+    "node": "M08",
+    "operation": "asset-04",
+    "target": "github-release/asset-04",
+    "records": [
+      {
+        "kind": "intent",
+        "sequence": 8,
+        "predecessor": "M07/commit",
+        "role": "intent-role",
+        "target_state_bytes_base64": "YXNzZXQtMDQ6aW50ZW50",
+        "sha256": "b32c7671eecbef7b6729f1382a67d4b4e94733b073d03d5bbdd6ea7711e8853a",
+        "signature_algorithm": "Ed25519"
+      },
+      {
+        "kind": "readback",
+        "sequence": 8,
+        "predecessor": "M07/commit",
+        "role": "readback-role",
+        "target_state_bytes_base64": "YXNzZXQtMDQ6cmVhZGJhY2s=",
+        "sha256": "dbb47bea47a85e4c4faadb50a4aa10ab855cd1654f66b89ed874f49aeb327cc3",
+        "signature_algorithm": "Ed25519"
+      },
+      {
+        "kind": "signature",
+        "sequence": 8,
+        "predecessor": "M07/commit",
+        "role": "signature-role",
+        "target_state_bytes_base64": "YXNzZXQtMDQ6c2lnbmF0dXJl",
+        "sha256": "ec6cd3dce2563921e4cb08b19c3883c8bbdaf4f98782fd87f1f390a917e886cf",
+        "signature_algorithm": "Ed25519"
+      },
+      {
+        "kind": "commit",
+        "sequence": 8,
+        "predecessor": "M07/commit",
+        "role": "commit-role",
+        "target_state_bytes_base64": "YXNzZXQtMDQ6Y29tbWl0",
+        "sha256": "d2fba72751cdd2d59c12204aa3f351986dbe1f2de1bacc6cdc671b663c3e19eb",
+        "signature_algorithm": "Ed25519"
+      }
+    ]
+  },
+  {
+    "node": "M09",
+    "operation": "asset-05",
+    "target": "github-release/asset-05",
+    "records": [
+      {
+        "kind": "intent",
+        "sequence": 9,
+        "predecessor": "M08/commit",
+        "role": "intent-role",
+        "target_state_bytes_base64": "YXNzZXQtMDU6aW50ZW50",
+        "sha256": "59e2dc09da44beb234d72f9310c9f91a89e23564fa8d1b2a99872b7e805760fc",
+        "signature_algorithm": "Ed25519"
+      },
+      {
+        "kind": "readback",
+        "sequence": 9,
+        "predecessor": "M08/commit",
+        "role": "readback-role",
+        "target_state_bytes_base64": "YXNzZXQtMDU6cmVhZGJhY2s=",
+        "sha256": "cafc2b010ea2624e5d376ab5de751054568a1d1d20273cb85f3c27f0594319ae",
+        "signature_algorithm": "Ed25519"
+      },
+      {
+        "kind": "signature",
+        "sequence": 9,
+        "predecessor": "M08/commit",
+        "role": "signature-role",
+        "target_state_bytes_base64": "YXNzZXQtMDU6c2lnbmF0dXJl",
+        "sha256": "4f7cdbb8a84d66b6aee123b69e1165f1ad8060917478ce61c9e128f721121b8f",
+        "signature_algorithm": "Ed25519"
+      },
+      {
+        "kind": "commit",
+        "sequence": 9,
+        "predecessor": "M08/commit",
+        "role": "commit-role",
+        "target_state_bytes_base64": "YXNzZXQtMDU6Y29tbWl0",
+        "sha256": "619c59a2230159d4a66835aff919f5a41c9f66158b02d16e33ff6b74edb53074",
+        "signature_algorithm": "Ed25519"
+      }
+    ]
+  },
+  {
+    "node": "M10",
+    "operation": "asset-06",
+    "target": "github-release/asset-06",
+    "records": [
+      {
+        "kind": "intent",
+        "sequence": 10,
+        "predecessor": "M09/commit",
+        "role": "intent-role",
+        "target_state_bytes_base64": "YXNzZXQtMDY6aW50ZW50",
+        "sha256": "a521b469a4b8d9c8269f8122168cd374493fe2ac6739ea0cb966878981b939cf",
+        "signature_algorithm": "Ed25519"
+      },
+      {
+        "kind": "readback",
+        "sequence": 10,
+        "predecessor": "M09/commit",
+        "role": "readback-role",
+        "target_state_bytes_base64": "YXNzZXQtMDY6cmVhZGJhY2s=",
+        "sha256": "5a1d500b65f7792094509c6affb48e369e209810b2fa840cc56af9027475044f",
+        "signature_algorithm": "Ed25519"
+      },
+      {
+        "kind": "signature",
+        "sequence": 10,
+        "predecessor": "M09/commit",
+        "role": "signature-role",
+        "target_state_bytes_base64": "YXNzZXQtMDY6c2lnbmF0dXJl",
+        "sha256": "b2b1f683bbce36a6c6752edfd8af0f09e53bac61d7e4141cf1dd4bcc8a3da622",
+        "signature_algorithm": "Ed25519"
+      },
+      {
+        "kind": "commit",
+        "sequence": 10,
+        "predecessor": "M09/commit",
+        "role": "commit-role",
+        "target_state_bytes_base64": "YXNzZXQtMDY6Y29tbWl0",
+        "sha256": "026c8a203b6554de78547522f02e68a1bd33d86f996a9d06e59d37e13506e462",
+        "signature_algorithm": "Ed25519"
+      }
+    ]
+  },
+  {
+    "node": "M11",
+    "operation": "asset-07",
+    "target": "github-release/asset-07",
+    "records": [
+      {
+        "kind": "intent",
+        "sequence": 11,
+        "predecessor": "M10/commit",
+        "role": "intent-role",
+        "target_state_bytes_base64": "YXNzZXQtMDc6aW50ZW50",
+        "sha256": "d6972169b0ee539af03fc455932f8ebe3ace0114ea0c2e260f9fdff7eb9bf553",
+        "signature_algorithm": "Ed25519"
+      },
+      {
+        "kind": "readback",
+        "sequence": 11,
+        "predecessor": "M10/commit",
+        "role": "readback-role",
+        "target_state_bytes_base64": "YXNzZXQtMDc6cmVhZGJhY2s=",
+        "sha256": "1619edcb952e38b84951c7bdee58438eee423ba3cbcb14cf14263b85312c3a71",
+        "signature_algorithm": "Ed25519"
+      },
+      {
+        "kind": "signature",
+        "sequence": 11,
+        "predecessor": "M10/commit",
+        "role": "signature-role",
+        "target_state_bytes_base64": "YXNzZXQtMDc6c2lnbmF0dXJl",
+        "sha256": "c2ae9f034e1b938d79dbd7cf344039a2493917d1126fe8afb02cd5a6b1a53484",
+        "signature_algorithm": "Ed25519"
+      },
+      {
+        "kind": "commit",
+        "sequence": 11,
+        "predecessor": "M10/commit",
+        "role": "commit-role",
+        "target_state_bytes_base64": "YXNzZXQtMDc6Y29tbWl0",
+        "sha256": "d37b24f4d83a7271bea79708f3236bbd964c8ed9937942b8a4373e5984665045",
+        "signature_algorithm": "Ed25519"
+      }
+    ]
+  },
+  {
+    "node": "M12",
+    "operation": "asset-08",
+    "target": "github-release/asset-08",
+    "records": [
+      {
+        "kind": "intent",
+        "sequence": 12,
+        "predecessor": "M11/commit",
+        "role": "intent-role",
+        "target_state_bytes_base64": "YXNzZXQtMDg6aW50ZW50",
+        "sha256": "034655471bb87d926ac017f8932509551bb3db9487adf6f0b5a235bb4d497c2b",
+        "signature_algorithm": "Ed25519"
+      },
+      {
+        "kind": "readback",
+        "sequence": 12,
+        "predecessor": "M11/commit",
+        "role": "readback-role",
+        "target_state_bytes_base64": "YXNzZXQtMDg6cmVhZGJhY2s=",
+        "sha256": "aca244785dc905056b1765ffa7f2b28cf61cd7e40dd873bf98c042a8da0094a8",
+        "signature_algorithm": "Ed25519"
+      },
+      {
+        "kind": "signature",
+        "sequence": 12,
+        "predecessor": "M11/commit",
+        "role": "signature-role",
+        "target_state_bytes_base64": "YXNzZXQtMDg6c2lnbmF0dXJl",
+        "sha256": "ee2a430bf2404462a19e63e40e8e5370777a98c2d65df2282846d03c8a229e80",
+        "signature_algorithm": "Ed25519"
+      },
+      {
+        "kind": "commit",
+        "sequence": 12,
+        "predecessor": "M11/commit",
+        "role": "commit-role",
+        "target_state_bytes_base64": "YXNzZXQtMDg6Y29tbWl0",
+        "sha256": "8e41a800f0689715308772f64cb60ba095c27e03ec9fd12daaefeae7b74340ff",
+        "signature_algorithm": "Ed25519"
+      }
+    ]
+  },
+  {
+    "node": "M13",
+    "operation": "asset-09",
+    "target": "github-release/asset-09",
+    "records": [
+      {
+        "kind": "intent",
+        "sequence": 13,
+        "predecessor": "M12/commit",
+        "role": "intent-role",
+        "target_state_bytes_base64": "YXNzZXQtMDk6aW50ZW50",
+        "sha256": "73605539bf6bf0b9c6c46e6ed74049ee4d0159d273518b738f60d0b93efcaa7a",
+        "signature_algorithm": "Ed25519"
+      },
+      {
+        "kind": "readback",
+        "sequence": 13,
+        "predecessor": "M12/commit",
+        "role": "readback-role",
+        "target_state_bytes_base64": "YXNzZXQtMDk6cmVhZGJhY2s=",
+        "sha256": "bfdc4d8a65e11c05ce528075812e462dd915ca97c8d2918d22cb1c450a6baa35",
+        "signature_algorithm": "Ed25519"
+      },
+      {
+        "kind": "signature",
+        "sequence": 13,
+        "predecessor": "M12/commit",
+        "role": "signature-role",
+        "target_state_bytes_base64": "YXNzZXQtMDk6c2lnbmF0dXJl",
+        "sha256": "e7fd2c702c48c3e0979e1364e26f3229254c051603b9c252adffc4c2f668bafe",
+        "signature_algorithm": "Ed25519"
+      },
+      {
+        "kind": "commit",
+        "sequence": 13,
+        "predecessor": "M12/commit",
+        "role": "commit-role",
+        "target_state_bytes_base64": "YXNzZXQtMDk6Y29tbWl0",
+        "sha256": "36ac257aec0a080e9adb9187535462958cdf06485070cbfb54b2174309604033",
+        "signature_algorithm": "Ed25519"
+      }
+    ]
+  },
+  {
+    "node": "M14",
+    "operation": "asset-10",
+    "target": "github-release/asset-10",
+    "records": [
+      {
+        "kind": "intent",
+        "sequence": 14,
+        "predecessor": "M13/commit",
+        "role": "intent-role",
+        "target_state_bytes_base64": "YXNzZXQtMTA6aW50ZW50",
+        "sha256": "4c2c79e32ec01033098e39a509643a2c71733a64dc13e89d11611031716aee60",
+        "signature_algorithm": "Ed25519"
+      },
+      {
+        "kind": "readback",
+        "sequence": 14,
+        "predecessor": "M13/commit",
+        "role": "readback-role",
+        "target_state_bytes_base64": "YXNzZXQtMTA6cmVhZGJhY2s=",
+        "sha256": "63f2be5af75a46cfda5e7d187415453269fa41e108b9d4f49afe1786cbdd0395",
+        "signature_algorithm": "Ed25519"
+      },
+      {
+        "kind": "signature",
+        "sequence": 14,
+        "predecessor": "M13/commit",
+        "role": "signature-role",
+        "target_state_bytes_base64": "YXNzZXQtMTA6c2lnbmF0dXJl",
+        "sha256": "e1b317dbe0c653f4ace892303294540677b5879ff65ce62814f5012827db27bd",
+        "signature_algorithm": "Ed25519"
+      },
+      {
+        "kind": "commit",
+        "sequence": 14,
+        "predecessor": "M13/commit",
+        "role": "commit-role",
+        "target_state_bytes_base64": "YXNzZXQtMTA6Y29tbWl0",
+        "sha256": "cd7afc355fc72f3bdff703d3160706ac15f9803f51feee3eb37f05adb7c361a9",
+        "signature_algorithm": "Ed25519"
+      }
+    ]
+  },
+  {
+    "node": "M15",
+    "operation": "asset-11",
+    "target": "github-release/asset-11",
+    "records": [
+      {
+        "kind": "intent",
+        "sequence": 15,
+        "predecessor": "M14/commit",
+        "role": "intent-role",
+        "target_state_bytes_base64": "YXNzZXQtMTE6aW50ZW50",
+        "sha256": "8a1168c14ae45d4a5cbf58f12ac1254b2f4635ff6946937e0a5a64ebf47d8f38",
+        "signature_algorithm": "Ed25519"
+      },
+      {
+        "kind": "readback",
+        "sequence": 15,
+        "predecessor": "M14/commit",
+        "role": "readback-role",
+        "target_state_bytes_base64": "YXNzZXQtMTE6cmVhZGJhY2s=",
+        "sha256": "9db41ce51ece1625124ab545067041b628e39f8d9bfed1ca692496b2e9ccd6bf",
+        "signature_algorithm": "Ed25519"
+      },
+      {
+        "kind": "signature",
+        "sequence": 15,
+        "predecessor": "M14/commit",
+        "role": "signature-role",
+        "target_state_bytes_base64": "YXNzZXQtMTE6c2lnbmF0dXJl",
+        "sha256": "7c3b7b2a9f86efd2d0520b70b6816c3e1bb68ae44667bf31a450d339c475f758",
+        "signature_algorithm": "Ed25519"
+      },
+      {
+        "kind": "commit",
+        "sequence": 15,
+        "predecessor": "M14/commit",
+        "role": "commit-role",
+        "target_state_bytes_base64": "YXNzZXQtMTE6Y29tbWl0",
+        "sha256": "817c89f7321381d26ce67963cc50fb1360c11188b9df965c61280a367c91558f",
+        "signature_algorithm": "Ed25519"
+      }
+    ]
+  },
+  {
+    "node": "M16",
+    "operation": "asset-12",
+    "target": "github-release/asset-12",
+    "records": [
+      {
+        "kind": "intent",
+        "sequence": 16,
+        "predecessor": "M15/commit",
+        "role": "intent-role",
+        "target_state_bytes_base64": "YXNzZXQtMTI6aW50ZW50",
+        "sha256": "c46c8de9ab2565991e87492c3cde05fe71d3ca0e6c1ce4a90ae9eff71f6e44c3",
+        "signature_algorithm": "Ed25519"
+      },
+      {
+        "kind": "readback",
+        "sequence": 16,
+        "predecessor": "M15/commit",
+        "role": "readback-role",
+        "target_state_bytes_base64": "YXNzZXQtMTI6cmVhZGJhY2s=",
+        "sha256": "e52b3a188b644d1415c197b54387f3e1bfc52096b47878bf358fb43a8a10674a",
+        "signature_algorithm": "Ed25519"
+      },
+      {
+        "kind": "signature",
+        "sequence": 16,
+        "predecessor": "M15/commit",
+        "role": "signature-role",
+        "target_state_bytes_base64": "YXNzZXQtMTI6c2lnbmF0dXJl",
+        "sha256": "3010193db0900f1d4744ad28fe5496dd0e6e928a72d44966527b9af6628cb785",
+        "signature_algorithm": "Ed25519"
+      },
+      {
+        "kind": "commit",
+        "sequence": 16,
+        "predecessor": "M15/commit",
+        "role": "commit-role",
+        "target_state_bytes_base64": "YXNzZXQtMTI6Y29tbWl0",
+        "sha256": "afd9cbfd4e6905bc85d092463f09a6f0dc0681a641a2df2c2f9d9e2f43d66f09",
+        "signature_algorithm": "Ed25519"
+      }
+    ]
+  },
+  {
+    "node": "M17",
+    "operation": "asset-13",
+    "target": "github-release/asset-13",
+    "records": [
+      {
+        "kind": "intent",
+        "sequence": 17,
+        "predecessor": "M16/commit",
+        "role": "intent-role",
+        "target_state_bytes_base64": "YXNzZXQtMTM6aW50ZW50",
+        "sha256": "5eb7021c94fd75a4801e0b54099d3c393402cc369fa311e4f10f7e7cc4d6e37a",
+        "signature_algorithm": "Ed25519"
+      },
+      {
+        "kind": "readback",
+        "sequence": 17,
+        "predecessor": "M16/commit",
+        "role": "readback-role",
+        "target_state_bytes_base64": "YXNzZXQtMTM6cmVhZGJhY2s=",
+        "sha256": "833e41f03d736e8bff22ca03d7f258ce176ab2c909f3525b79bf292f1acf7bbb",
+        "signature_algorithm": "Ed25519"
+      },
+      {
+        "kind": "signature",
+        "sequence": 17,
+        "predecessor": "M16/commit",
+        "role": "signature-role",
+        "target_state_bytes_base64": "YXNzZXQtMTM6c2lnbmF0dXJl",
+        "sha256": "17bb866ca4f2cc34a39bf229eec707f6192b9202f0c095d36e4ef1f606b2bbc0",
+        "signature_algorithm": "Ed25519"
+      },
+      {
+        "kind": "commit",
+        "sequence": 17,
+        "predecessor": "M16/commit",
+        "role": "commit-role",
+        "target_state_bytes_base64": "YXNzZXQtMTM6Y29tbWl0",
+        "sha256": "0cc9aa447da482d219bf8ddab5d5889d75d787421ab4d8da3fb53b1babac72a6",
+        "signature_algorithm": "Ed25519"
+      }
+    ]
+  },
+  {
+    "node": "M18",
+    "operation": "asset-14",
+    "target": "github-release/asset-14",
+    "records": [
+      {
+        "kind": "intent",
+        "sequence": 18,
+        "predecessor": "M17/commit",
+        "role": "intent-role",
+        "target_state_bytes_base64": "YXNzZXQtMTQ6aW50ZW50",
+        "sha256": "db893c934d0526b8f997c2fb5691d3186550ead1641779c4fcfc28d89402b1ba",
+        "signature_algorithm": "Ed25519"
+      },
+      {
+        "kind": "readback",
+        "sequence": 18,
+        "predecessor": "M17/commit",
+        "role": "readback-role",
+        "target_state_bytes_base64": "YXNzZXQtMTQ6cmVhZGJhY2s=",
+        "sha256": "fc1b97a22ab4d38ef05a19c73a44e15cd74aef609a58bd04fa7b47aba37071ac",
+        "signature_algorithm": "Ed25519"
+      },
+      {
+        "kind": "signature",
+        "sequence": 18,
+        "predecessor": "M17/commit",
+        "role": "signature-role",
+        "target_state_bytes_base64": "YXNzZXQtMTQ6c2lnbmF0dXJl",
+        "sha256": "1ebb18af7a25d402ac42299919935e05655aa4f33cbb196755cea4303155364d",
+        "signature_algorithm": "Ed25519"
+      },
+      {
+        "kind": "commit",
+        "sequence": 18,
+        "predecessor": "M17/commit",
+        "role": "commit-role",
+        "target_state_bytes_base64": "YXNzZXQtMTQ6Y29tbWl0",
+        "sha256": "78846902230ed418962aa31b363e4e6dcb6291615787e28d92c22281251a1763",
+        "signature_algorithm": "Ed25519"
+      }
+    ]
+  },
+  {
+    "node": "M19",
+    "operation": "finalize release",
+    "target": "github-release/finalize",
+    "records": [
+      {
+        "kind": "intent",
+        "sequence": 19,
+        "predecessor": "M18/commit",
+        "role": "intent-role",
+        "target_state_bytes_base64": "ZmluYWxpemUgcmVsZWFzZTppbnRlbnQ=",
+        "sha256": "6ddffe8530def1dc661435523afdd988bdcae77f054595886c556c4f33794ae3",
+        "signature_algorithm": "Ed25519"
+      },
+      {
+        "kind": "readback",
+        "sequence": 19,
+        "predecessor": "M18/commit",
+        "role": "readback-role",
+        "target_state_bytes_base64": "ZmluYWxpemUgcmVsZWFzZTpyZWFkYmFjaw==",
+        "sha256": "a51f109267c9d58989f81f52d348f960d2b76b34833b00a1443b3d8161f367a0",
+        "signature_algorithm": "Ed25519"
+      },
+      {
+        "kind": "signature",
+        "sequence": 19,
+        "predecessor": "M18/commit",
+        "role": "signature-role",
+        "target_state_bytes_base64": "ZmluYWxpemUgcmVsZWFzZTpzaWduYXR1cmU=",
+        "sha256": "1f0c411b5464d2cf9a62c8fdb5a2a1ac058ebe629ef77bc1166f5215a594aca7",
+        "signature_algorithm": "Ed25519"
+      },
+      {
+        "kind": "commit",
+        "sequence": 19,
+        "predecessor": "M18/commit",
+        "role": "commit-role",
+        "target_state_bytes_base64": "ZmluYWxpemUgcmVsZWFzZTpjb21taXQ=",
+        "sha256": "3f1415baddb345014a45ed572714742dd4fa53db4d834b5a88a5abbad3b670e7",
+        "signature_algorithm": "Ed25519"
+      }
+    ]
+  }
+]

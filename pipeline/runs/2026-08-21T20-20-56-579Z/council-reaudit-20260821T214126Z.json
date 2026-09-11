@@ -1,0 +1,35 @@
+{
+  "run_dir": "/home/rickebo/.codex/pipeline/runs/2026-08-21T20-20-56-579Z",
+  "stage": "spec",
+  "risk_level": "high",
+  "generated_at": "2026-08-21T21:41:26Z",
+  "perspectives": [
+    {
+      "role": "codicarium_devops",
+      "status": "blocked",
+      "summary": "Backup IDs and candidate cutoff are known, but Barman WAL continuity through 2026-08-21T02:47:22Z requires cloud-side read-only listing because Kubernetes metadata cannot close the historical archive gap."
+    },
+    {
+      "role": "homelab_devops",
+      "status": "blocked",
+      "summary": "Published Workspace Context S3 mode avoids an application-code change, but the target has no proven target-owned S3 path and no safe >=100Gi RWX path; existing NFS RWX PVs are bound and target restore is unproven."
+    },
+    {
+      "role": "reviewer",
+      "status": "blocked",
+      "summary": "Target OIDC discovery works, but SecretStore RBAC is missing and current mapping includes codicarium-users. Fresh target Data Protection, backend, runtime, MCP, and gateway credentials remain the safe default pending target-only approval."
+    },
+    {
+      "role": "code_mapper",
+      "status": "complete_with_blockers",
+      "summary": "pve-infra has no Workspace Context wrapper or artifact backend; existing published source chart/config has the required S3 contract and ExternalSecret hooks, so a wrapper can be considered only after storage and identity gates."
+    }
+  ],
+  "consensus_summary": "Remain at spec. The published chart supports S3 without application changes, but source consistency evidence, target-owned artifact storage/restore, and target identity/secret decisions are still missing. No code, restore, reconciliation, live apply, source export, or Codicarium mutation is authorized.",
+  "open_questions": [
+    "Will an ephemeral read-only Barman/S3 metadata path be provided?",
+    "Which distinct target-owned artifact backend is approved and recoverable without unapproved paid provisioning?",
+    "Should the target use a narrow homelab Authentik mapping and fresh target-only secrets/credentials?",
+    "Are the retained ownerless PVCs to remain preserved and untouched?"
+  ]
+}

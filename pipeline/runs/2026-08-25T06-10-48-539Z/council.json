@@ -1,0 +1,28 @@
+{
+  "task": "Workspace Manager issue #28 production Knowledge generation resolver integration and acceptance proof",
+  "perspectives": [
+    {
+      "role": "planner_architecture",
+      "agent": "/root/map_m4_28_acceptance",
+      "summary": "Issue #28 requires public-contract resolution of exact Source, version-consistent Workspace, and canonical Model inputs; Knowledge owns processing_generation. The directly required system proof is real Source event to Knowledge build, while broad lifecycle administration remains #23 and full Milestone 4 closure remains #26."
+    },
+    {
+      "role": "tech_lead_qa",
+      "agent": "/root/classify_model_testhost",
+      "summary": "Focused resolver tests must be supplemented by complete Source/Knowledge/Model suites and a real cross-service FastSystem flow with duplicate, outage, and recovery assertions. Model SIGSEGV classification requires identical clean-main and rebased-branch isolated runs with explicit Docker endpoint and coredump evidence."
+    },
+    {
+      "role": "tech_lead_backend",
+      "agent": "/root/implement_knowledge_28",
+      "summary": "Backend invariants are bounded dependency retries, generation-fence re-resolution, no offset commit before processing or successful DLQ publication, complete CloudEvent validation, and workspace-bound nonce-backed HMAC proof with atomic single-use persistence. Direct DLQ-publish-failure coverage and the real system proof remain required."
+    }
+  ],
+  "consensus": [
+    "Use the producer-owned v1 Source, Workspace, and Model HTTP/event contracts; do not add compatibility shims.",
+    "Resolve all generation inputs before inbox/desired-state acceptance; transient dependency failures retry in order and terminal poison records require confirmed DLQ publication before commit.",
+    "Treat authentication, nonce migration, generation fencing, event validation, and cross-service proof as merge-blocking gates.",
+    "Do not classify the Model test-host SIGSEGV as environmental until the clean-main comparison protocol is complete.",
+    "Keep broad Knowledge administration in #23, durable deletion-consumer DLQ/replay in #46, and remaining fault/browser/container matrix work in #26."
+  ],
+  "open_questions": []
+}

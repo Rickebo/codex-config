@@ -1,0 +1,13 @@
+{
+  "no_op": {
+    "path": "/payload/nonce",
+    "replacement": "nonce-M01-v2.6",
+    "expected": "TEST_FAILURE"
+  },
+  "unauthorized_effect": {
+    "path": "/payload/nonce",
+    "replacement": "nonce-unauthorized-effect",
+    "simulated_post_target_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+    "expected": "TEST_FAILURE"
+  }
+}

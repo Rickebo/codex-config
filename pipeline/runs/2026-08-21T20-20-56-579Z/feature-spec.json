@@ -1,0 +1,571 @@
+{
+  "meta": {
+    "id": "SPEC-HOMELAB-CONTEXT-LLM-PROXY-001",
+    "title": "Homelab Workspace Context and LLM Proxy point-in-time clone",
+    "author": "root-orchestrator",
+    "created_at": "2026-08-21T20:20:56.579Z",
+    "version": "1.3.0"
+  },
+  "feature": {
+    "problem_statement": "Provide Rickebo private homelab instances backed by a verified point-in-time clone while leaving Codicarium authoritative and strictly read-only and retaining a tested local Codex fallback.",
+    "goals": [
+      "Own both services through pve-infra GitOps with current immutable artifacts.",
+      "Define target-only GitOps code, manifests, policies, and tooling for the database, graph-artifact, identity, endpoint, route, backend, and runtime clone; perform restore only after downstream evidence gates.",
+      "Prove target parity, backups, restoreability, private access, local Codex integration, and rollback.",
+      "Use the operator-approved Longhorn-free storage layout sized from measured usage, with explicit alerting and logical dump/restore migration safeguards."
+    ],
+    "non_goals": [
+      "Mutating Codicarium resources, credentials, webhooks, DNS, databases, storage, backups, or workloads.",
+      "Active-active replication, bidirectional merge, authoritative migration, public webhooks, application forks, or initial worker retirement.",
+      "Reusing/deleting retained LLM Proxy PVs before provenance and contents are known.",
+      "Using Longhorn for the new workload; broader Longhorn migration and historical PVC changes remain out of scope."
+    ],
+    "scope_in": [
+      "pve-infra issues/worktrees/branches/PRs/charts/Argo/policies/runbooks/tests.",
+      "Read-only Codicarium via /home/rickebo/.kube/codicarium-dev.yaml context codicarium-dev.",
+      "Homelab via /home/rickebo/.kube/homelab.yaml context default.",
+      "Target-only GitOps code/manifests/tooling for homelab secrets, identity, private ingress, storage, backups, observability, and target data; ExternalSecret references and least-privilege RBAC may be coded without values.",
+      "Approved storage decision: Workspace Context PostgreSQL and LLM Proxy PostgreSQL each use a 5Gi local-path RWO PVC; each runtime uses 1Gi; graph artifacts use a 20Gi static NFS RWX Retain volume; backup scratch uses a temporary 5Gi NFS volume; restore volumes are temporary."
+    ],
+    "scope_out": [
+      "Source-side helper Pods/Jobs, snapshots, backups, Secret writes, restarts, scaling, patches, or imperative Argo actions.",
+      "Persistent plaintext secret staging, secret values in Git/issues/logs, or source credential/session invalidation.",
+      "Live kubectl apply, Helm install/upgrade, or deployment outside merged PR and Argo."
+    ]
+  },
+  "requirements": [
+    {
+      "id": "REQ-001",
+      "priority": "MUST",
+      "statement": "All source/target cluster commands must specify approved kubeconfig, context, expected API server, and namespace/project; Codicarium operations remain read-only.",
+      "rationale": "Prevents default-context use and proves source immutability."
+    },
+    {
+      "id": "REQ-002",
+      "priority": "MUST",
+      "statement": "Rickebo/pve-infra must solely own homelab desired state from a clean worktree based on the verified remote default branch and immutable published artifacts.",
+      "rationale": "Avoids stale mutable or multi-cluster ownership."
+    },
+    {
+      "id": "REQ-003",
+      "priority": "MUST",
+      "statement": "Produce sanitized source/target inventory, cutoff, immutable backup IDs/timestamps, artifact manifest digest, parity manifest, revisions, and command evidence without secrets.",
+      "rationale": "Makes the clone auditable."
+    },
+    {
+      "id": "REQ-004",
+      "priority": "MUST",
+      "statement": "Capture databases and graph artifacts through a read-only point-in-time method with provider-common cutoff/WAL and complete artifact SHA/reference closure; this evidence is mandatory before restore, logical migration, or cutover and is not a prerequisite for target-only code.",
+      "rationale": "DB graph rows without bytes are invalid."
+    },
+    {
+      "id": "REQ-005",
+      "priority": "MUST",
+      "statement": "Implement target-only manifests for the approved no-new-Longhorn layout: 5Gi local-path RWO for each PostgreSQL database, 1Gi runtime PVC for each service, 20Gi static NFS RWX Retain for graph artifacts, temporary 5Gi NFS backup scratch, and temporary restore volumes. NAS ACL/capacity, access/reclaim/retention, deletion protection, healthy off-node backup, and disposable restore proof are test/validation/deployment gates. Historical PVCs are excluded and must not be inspected, reused, deleted, or mutated.",
+      "rationale": "Measured usage is 677,539,840 bytes for Workspace Context PostgreSQL and 629,596,160 bytes for LLM Proxy PostgreSQL; the 5Gi database claims provide approximately 7.0x and 7.5x capacity headroom. NAS ACL/capacity, off-node backup, and restore evidence remain unresolved gates."
+    },
+    {
+      "id": "REQ-006",
+      "priority": "MUST",
+      "statement": "Code ExternalSecret references, target secret-manager paths, exact target identity, and least-privilege ServiceAccount/RBAC mapping without values; fresh target-only Data Protection, backend, runtime, MCP, and gateway credentials plus reauthentication are mandatory before workload enablement and must not invalidate Codicarium.",
+      "rationale": "Encrypted state and hashes need explicit target handling; exact identity/RBAC readiness and fresh credential provisioning remain unresolved."
+    },
+    {
+      "id": "REQ-007",
+      "priority": "MUST",
+      "statement": "Fence webhooks, writers, queues, reconcilers, GC, runtime ownership, leases, workers, and provider side effects; sanitize transient state only in target.",
+      "rationale": "Ingress disablement alone is insufficient."
+    },
+    {
+      "id": "REQ-008",
+      "priority": "MUST",
+      "statement": "Parity must cover Rickebo identity/memberships, workspaces, repository bindings, graph revisions/artifact hashes, proxy routes/layers/backends, and fresh ChatGPT auth.",
+      "rationale": "Healthy pods alone do not prove parity."
+    },
+    {
+      "id": "REQ-009",
+      "priority": "MUST",
+      "statement": "Target services must be private, deny-by-default, observed, and isolated from the existing 2/2 central-connected llm-proxy-worker.",
+      "rationale": "Protects current operation and private exposure."
+    },
+    {
+      "id": "REQ-010",
+      "priority": "MUST",
+      "statement": "Database and graph-artifact backups must be off-node, checksum-verifiable, retained to approved RPO/RTO, and restorable target-only. Because local-path expansion is not advertised, each PostgreSQL PVC must alert at 70% warning and 85% critical of requested capacity, and the larger-PVC logical dump/restore migration path must be tested.",
+      "rationale": "Recovery must cover coupled data; tested logical migration is the growth path when local-path expansion is not advertised."
+    },
+    {
+      "id": "REQ-011",
+      "priority": "MUST",
+      "statement": "Local Codex switch, Argo sync, restore, source mutation, and credential activation remain prohibited until their downstream gates pass; then use an isolated CODEX_HOME first and a backed-up narrow switch only after tests, with checksum-verified rollback to unchanged Codicarium.",
+      "rationale": "Limits local blast radius."
+    },
+    {
+      "id": "REQ-012",
+      "priority": "MUST",
+      "statement": "Independent review/QA must resolve or escalate all critical/high findings before deployment; closeout records evidence without secrets.",
+      "rationale": "Provides auditable gates."
+    },
+    {
+      "id": "REQ-013",
+      "priority": "SHOULD",
+      "statement": "Track parent, inventory, security, GitOps, restore, and local-integration issues with disjoint PRs and handoffs.",
+      "rationale": "Provides durable task memory."
+    },
+    {
+      "id": "REQ-014",
+      "priority": "SHOULD",
+      "statement": "Provide bounded dashboards and alerts for availability, latency, errors, capacity, backups, artifact verification, backend failures, and worker isolation; alert on each local-path PostgreSQL PVC at warning=70% and critical=85% of requested capacity.",
+      "rationale": "Makes post-reconcile evidence observable and compensates for the lack of advertised local-path expansion."
+    }
+  ],
+  "acceptance_criteria": [
+    {
+      "id": "AC-001",
+      "requirement_ids": [
+        "REQ-001",
+        "REQ-002"
+      ],
+      "scenario": "Given explicit identity guards, When preflight and GitOps checks run, Then approved contexts, verified worktree/head, and unchanged healthy Codicarium are shown."
+    },
+    {
+      "id": "AC-002",
+      "requirement_ids": [
+        "REQ-003",
+        "REQ-004"
+      ],
+      "scenario": "Given target-only code is approved, When provider-common cutoff/WAL, backup IDs, and complete artifact SHA manifest are checked, Then restore/migration/cutover may proceed only if closure is recorded and consistent."
+    },
+    {
+      "id": "AC-003",
+      "requirement_ids": [
+        "REQ-005",
+        "REQ-010"
+      ],
+      "scenario": "Given target-only storage manifests, When NAS ACL/capacity, RWX, reclaim, off-node backup, and disposable restore are tested, Then deployment may proceed without inspecting, reusing, deleting, or mutating historical PVCs."
+    },
+    {
+      "id": "AC-004",
+      "requirement_ids": [
+        "REQ-006"
+      ],
+      "scenario": "Given coded ExternalSecret refs and least-privilege identity/RBAC, When fresh credentials are provisioned and reauthentication is tested, Then workload enablement works without source invalidation."
+    },
+    {
+      "id": "AC-005",
+      "requirement_ids": [
+        "REQ-007",
+        "REQ-008"
+      ],
+      "scenario": "Given an empty target, When sanitation and parity tests run, Then side effects remain fenced, transient state is sanitized, and approved identity/workspace/endpoint/backend/artifact parity matches."
+    },
+    {
+      "id": "AC-006",
+      "requirement_ids": [
+        "REQ-009"
+      ],
+      "scenario": "Given private target ingress and policies, When network and observability checks run, Then webhooks stay disabled and the existing worker remains 2/2 central-connected."
+    },
+    {
+      "id": "AC-007",
+      "requirement_ids": [
+        "REQ-011"
+      ],
+      "scenario": "Given all downstream restore, validation, and enablement evidence, When isolated and normal Codex tests run, Then they work through homelab and rollback reaches unchanged Codicarium."
+    },
+    {
+      "id": "AC-008",
+      "requirement_ids": [
+        "REQ-012",
+        "REQ-013",
+        "REQ-014"
+      ],
+      "scenario": "Given stage evidence, When review and QA closeout run, Then findings are resolved or escalated, issues are linked, alerts are acceptable, and closeout has no secrets."
+    }
+  ],
+  "test_plan": [
+    {
+      "id": "TST-001",
+      "type": "manual",
+      "requirement_ids": [
+        "REQ-001"
+      ],
+      "approach": "Run explicit source/target server/version/auth-can-i guards and compare sanitized source health before/after."
+    },
+    {
+      "id": "TST-002",
+      "type": "manual",
+      "requirement_ids": [
+        "REQ-002",
+        "REQ-003"
+      ],
+      "approach": "Verify GitHub, default branch/head, isolated worktree, issue links, immutable artifacts, and inventory/cutoff manifest."
+    },
+    {
+      "id": "TST-003",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-002",
+        "REQ-009",
+        "REQ-014"
+      ],
+      "approach": "Run Helm lint/template, schema/kubeconform/policy checks on target-only GitOps code/manifests/tooling; do not sync Argo or enable workloads at spec."
+    },
+    {
+      "id": "TST-004",
+      "type": "non_functional",
+      "requirement_ids": [
+        "REQ-005",
+        "REQ-010"
+      ],
+      "approach": "Verify the 5Gi local-path RWO database claims, 1Gi runtime claims, 20Gi static NFS RWX Retain artifact claim, temporary 5Gi NFS scratch, and temporary restore volumes; test ACL/capacity, reclaim/retention, deletion protection, off-node backup, RPO/RTO, and target-only disposable restore while leaving unrelated Longhorn and historical PVCs untouched."
+    },
+    {
+      "id": "TST-005",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-003",
+        "REQ-004",
+        "REQ-007",
+        "REQ-008"
+      ],
+      "approach": "After provider-common cutoff/WAL and artifact SHA evidence passes, restore from empty target using immutable DB backup and read-only artifact capture; prove sanitation, SHA closure, and parity."
+    },
+    {
+      "id": "TST-006",
+      "type": "integration",
+      "requirement_ids": [
+        "REQ-006",
+        "REQ-007"
+      ],
+      "approach": "Review coded ExternalSecret refs, exact OIDC mapping, and least-privilege ServiceAccount/RBAC without values; before enablement validate fresh Data Protection/backend/runtime/MCP/gateway credentials, reauthentication, lease/controller fencing, and no source credential or session changes."
+    },
+    {
+      "id": "TST-007",
+      "type": "e2e",
+      "requirement_ids": [
+        "REQ-008",
+        "REQ-009"
+      ],
+      "approach": "Test Rickebo identity, workspaces, MCP, proxy routes/layers/backends, fresh runtime auth, private ingress, and disabled webhooks."
+    },
+    {
+      "id": "TST-008",
+      "type": "non_functional",
+      "requirement_ids": [
+        "REQ-005",
+        "REQ-009",
+        "REQ-014"
+      ],
+      "approach": "Exercise resource/latency/error/disk/backup probes while verifying worker remains 2/2 central-connected."
+    },
+    {
+      "id": "TST-009",
+      "type": "e2e",
+      "requirement_ids": [
+        "REQ-011"
+      ],
+      "approach": "Run model, completion, MCP, graph-context, and agent smoke tests with isolated CODEX_HOME."
+    },
+    {
+      "id": "TST-010",
+      "type": "manual",
+      "requirement_ids": [
+        "REQ-011",
+        "REQ-012"
+      ],
+      "approach": "Checksum local config backup, switch narrowly after smoke success, fresh-session test, and execute rollback."
+    },
+    {
+      "id": "TST-011",
+      "type": "manual",
+      "requirement_ids": [
+        "REQ-001",
+        "REQ-003",
+        "REQ-012"
+      ],
+      "approach": "Compare final source fingerprints and GitHub diff/audit to preflight; verify allowed-only changes."
+    },
+    {
+      "id": "TST-012",
+      "type": "manual",
+      "requirement_ids": [
+        "REQ-004",
+        "REQ-005",
+        "REQ-007",
+        "REQ-010"
+      ],
+      "approach": "Run provider-common cutoff/WAL/artifact SHA evidence before restore or logical migration; run NAS ACL/capacity, disposable restore, identity/RBAC, and fresh-credential evidence at downstream gates. Keep Argo sync, source mutation, credential activation, and local Codex switch prohibited until each gate is resolved."
+    }
+  ],
+  "traceability": [
+    {
+      "requirement_id": "REQ-001",
+      "acceptance_ids": [
+        "AC-001"
+      ],
+      "test_ids": [
+        "TST-001",
+        "TST-011"
+      ],
+      "review_checks": [
+        "Every cluster command has explicit identity; no source mutation verb/default context."
+      ],
+      "validation_checks": [
+        "Source pre/post fingerprints match; server/auth evidence attached."
+      ]
+    },
+    {
+      "requirement_id": "REQ-002",
+      "acceptance_ids": [
+        "AC-001"
+      ],
+      "test_ids": [
+        "TST-002",
+        "TST-003"
+      ],
+      "review_checks": [
+        "pve-infra sole owner; artifact refs immutable/current."
+      ],
+      "validation_checks": [
+        "Worktree matches remote; Argo reports expected target commit."
+      ]
+    },
+    {
+      "requirement_id": "REQ-003",
+      "acceptance_ids": [
+        "AC-002"
+      ],
+      "test_ids": [
+        "TST-002",
+        "TST-005",
+        "TST-011"
+      ],
+      "review_checks": [
+        "Manifest contains no secrets and immutable cutoff/IDs."
+      ],
+      "validation_checks": [
+        "Manifest digest and issue evidence recorded."
+      ]
+    },
+    {
+      "requirement_id": "REQ-004",
+      "acceptance_ids": [
+        "AC-002"
+      ],
+      "test_ids": [
+        "TST-005",
+        "TST-012"
+      ],
+      "review_checks": [
+        "Provider-common cutoff/WAL and complete artifact SHA/reference closure are mandatory before restore, logical migration, or cutover; not a spec-code prerequisite."
+      ],
+      "validation_checks": [
+        "Sanitized provider evidence proves shared cutoff/WAL continuity and artifact SHA closure before downstream restore/migration."
+      ]
+    },
+    {
+      "requirement_id": "REQ-005",
+      "acceptance_ids": [
+        "AC-003"
+      ],
+      "test_ids": [
+        "TST-004",
+        "TST-008",
+        "TST-012"
+      ],
+      "review_checks": [
+        "Target-only storage manifests use 5Gi DB local-path RWO, 1Gi runtimes, 20Gi static NFS RWX Retain artifacts, temporary 5Gi scratch/restore; historical PVCs are forbidden targets."
+      ],
+      "validation_checks": [
+        "NAS ACL/capacity, reclaim/retention, backup, disposable restore, and 70/85% alerts pass at downstream gates before deployment."
+      ]
+    },
+    {
+      "requirement_id": "REQ-006",
+      "acceptance_ids": [
+        "AC-004"
+      ],
+      "test_ids": [
+        "TST-006",
+        "TST-007"
+      ],
+      "review_checks": [
+        "ExternalSecret refs and least-privilege RBAC may be coded without values; fresh credential activation and reauthentication are downstream gates."
+      ],
+      "validation_checks": [
+        "Fresh target credentials and reauthentication pass before workload enablement without source invalidation."
+      ]
+    },
+    {
+      "requirement_id": "REQ-007",
+      "acceptance_ids": [
+        "AC-005"
+      ],
+      "test_ids": [
+        "TST-005",
+        "TST-006",
+        "TST-012"
+      ],
+      "review_checks": [
+        "All writers/queues/leases/provider side effects fenced."
+      ],
+      "validation_checks": [
+        "Sanitation repeatable and side-effect checks negative."
+      ]
+    },
+    {
+      "requirement_id": "REQ-008",
+      "acceptance_ids": [
+        "AC-004",
+        "AC-005"
+      ],
+      "test_ids": [
+        "TST-005",
+        "TST-007"
+      ],
+      "review_checks": [
+        "Parity covers identity, artifacts, proxy state, routes, layers, backends, runtime."
+      ],
+      "validation_checks": [
+        "Approved manifest matches and backend tests pass."
+      ]
+    },
+    {
+      "requirement_id": "REQ-009",
+      "acceptance_ids": [
+        "AC-006"
+      ],
+      "test_ids": [
+        "TST-003",
+        "TST-007",
+        "TST-008"
+      ],
+      "review_checks": [
+        "Private ingress/policies; worker untouched; webhooks disabled."
+      ],
+      "validation_checks": [
+        "Target private/healthy; worker 2/2 central-connected."
+      ]
+    },
+    {
+      "requirement_id": "REQ-010",
+      "acceptance_ids": [
+        "AC-003"
+      ],
+      "test_ids": [
+        "TST-004",
+        "TST-012"
+      ],
+      "review_checks": [
+        "Off-node backup/restore covers both DB and artifacts."
+      ],
+      "validation_checks": [
+        "Disposable restore and checksums pass."
+      ]
+    },
+    {
+      "requirement_id": "REQ-011",
+      "acceptance_ids": [
+        "AC-007"
+      ],
+      "test_ids": [
+        "TST-009",
+        "TST-010"
+      ],
+      "review_checks": [
+        "Argo sync, restore, source mutation, credential activation, and local Codex switch remain prohibited until downstream gates; rollback is explicit."
+      ],
+      "validation_checks": [
+        "Isolated Codex tests and later narrow switch/rollback pass only after validation and enablement gates."
+      ]
+    },
+    {
+      "requirement_id": "REQ-012",
+      "acceptance_ids": [
+        "AC-008"
+      ],
+      "test_ids": [
+        "TST-010",
+        "TST-011",
+        "TST-012"
+      ],
+      "review_checks": [
+        "Critical/high findings resolved or escalated before deployment."
+      ],
+      "validation_checks": [
+        "Review/test/validation reports linked."
+      ]
+    },
+    {
+      "requirement_id": "REQ-013",
+      "acceptance_ids": [
+        "AC-008"
+      ],
+      "test_ids": [
+        "TST-002",
+        "TST-011"
+      ],
+      "review_checks": [
+        "Issue/PR ownership and disjoint scopes explicit."
+      ],
+      "validation_checks": [
+        "#482/#483 and linked handoffs current."
+      ]
+    },
+    {
+      "requirement_id": "REQ-014",
+      "acceptance_ids": [
+        "AC-008"
+      ],
+      "test_ids": [
+        "TST-003",
+        "TST-008"
+      ],
+      "review_checks": [
+        "Monitoring/alerts bounded and fail-safe."
+      ],
+      "validation_checks": [
+        "Operational evidence acceptable without sensitive logs."
+      ]
+    }
+  ],
+  "quality_gates": {
+    "spec_review_required": true,
+    "testability_required": true,
+    "traceability_required": true
+  },
+  "council": {
+    "run_dir": "/home/rickebo/.codex/pipeline/runs/2026-08-21T20-20-56-579Z",
+    "stage": "spec",
+    "risk_level": "high",
+    "perspectives": [
+      {
+        "role": "planner_lite",
+        "status": "fail",
+        "summary": "The 1.2.0 spec records the approved storage, alert, migration, and untouched-resource decisions; source provider closure, NAS proof, exact identity/RBAC, and fresh-credential readiness remain hard gates."
+      },
+      {
+        "role": "homelab_devops",
+        "status": "complete_with_blockers",
+        "summary": "The approved target is Longhorn-free for this workload: 5Gi local-path RWO per database, 1Gi runtime claims, 20Gi static NFS RWX Retain artifacts, temporary 5Gi NFS scratch, and temporary restore volumes. NAS ACL/capacity/backup/restore proof is still missing; unrelated Longhorn and historical PVCs remain untouched."
+      },
+      {
+        "role": "reviewer_lite",
+        "status": "blocked",
+        "summary": "Hold at spec until source provider cutoff/WAL/artifact closure, NAS ACL/capacity/backup/restore evidence, exact target identity/RBAC, fresh target credentials, side-effect fencing, and retained-PVC protections are evidenced."
+      }
+    ],
+    "consensus_summary": "Keep the full pipeline in spec. The operator-approved Longhorn-free layout and alert/migration safeguards are defined, but source provider closure, NAS ACL/capacity/backup/restore, exact identity/RBAC, and fresh credential readiness are unsafe to infer. No code, restore, reconciliation, live apply, source export, or Codicarium mutation is authorized by this result.",
+    "open_questions": [
+      "Can the approved static NFS export pass ACL, capacity, retention, off-node backup, and target-only restore checks before deployment?",
+      "Can the temporary 5Gi NFS scratch and temporary restore path be proven without touching unrelated Longhorn or historical PVCs?",
+      "What read-only point-in-time method captures both databases and Workspace Context artifacts with shared cutoff/LSN and reference closure?",
+      "What current immutable chart/image digests and PostgreSQL extensions are compatible with target?",
+      "Which exact homelab secret-manager paths, target-only Data Protection overlap, ServiceAccount/RBAC path, and Rickebo OIDC mapping are approved?",
+      "What is the approved backend parity set and can encrypted backends work without source session/credential invalidation?",
+      "What are the provenance and safe disposition of the two retained llm-proxy PVCs, which remain untouched?",
+      "What fresh target credential ownership, rotation, and re-authentication evidence will close D-003?"
+    ]
+  }
+}

@@ -1,0 +1,150 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.codicarium.com/release/release-identity-v1.schema.json",
+  "title": "Closed raw release identity bodies",
+  "oneOf": [
+    {
+      "type": "object",
+      "required": [
+        "authorization_sha256",
+        "authorizer_run_attempt",
+        "authorizer_run_id",
+        "candidate_evidence_sha256",
+        "ci_run_attempt",
+        "ci_run_id",
+        "coordinator_check_run_id",
+        "coordinator_run_attempt",
+        "coordinator_run_id",
+        "kind",
+        "publisher_revision",
+        "repository",
+        "schema",
+        "source_revision",
+        "tag",
+        "verifier_run_attempt",
+        "verifier_run_id"
+      ],
+      "properties": {
+        "authorization_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "authorizer_run_attempt": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        },
+        "authorizer_run_id": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        },
+        "candidate_evidence_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "ci_run_attempt": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        },
+        "ci_run_id": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        },
+        "coordinator_check_run_id": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        },
+        "coordinator_run_attempt": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        },
+        "coordinator_run_id": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        },
+        "kind": {
+          "const": "publish-handoff"
+        },
+        "publisher_revision": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "repository": {
+          "const": "codicarium/deployment-controller"
+        },
+        "schema": {
+          "const": "codicarium.release-identity/v1"
+        },
+        "source_revision": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "tag": {
+          "const": "v0.6.14"
+        },
+        "verifier_run_attempt": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        },
+        "verifier_run_id": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "authorizer_run_attempt",
+        "authorizer_run_id",
+        "handoff_check_run_id",
+        "handoff_sha256",
+        "kind",
+        "publisher_revision",
+        "repository",
+        "schema",
+        "source_revision",
+        "tag"
+      ],
+      "properties": {
+        "authorizer_run_attempt": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        },
+        "authorizer_run_id": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        },
+        "handoff_check_run_id": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        },
+        "handoff_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "kind": {
+          "const": "publisher-dispatch"
+        },
+        "publisher_revision": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "repository": {
+          "const": "codicarium/deployment-controller"
+        },
+        "schema": {
+          "const": "codicarium.release-identity/v1"
+        },
+        "source_revision": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "tag": {
+          "const": "v0.6.14"
+        }
+      },
+      "additionalProperties": false
+    }
+  ]
+}

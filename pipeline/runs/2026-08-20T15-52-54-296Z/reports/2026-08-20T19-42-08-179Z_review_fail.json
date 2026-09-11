@@ -1,0 +1,26 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Second security review found that the CI trust checker allows extra jobs and misses wrapped or optioned make ci invocations.",
+  "changed_files": [],
+  "validation": [
+    "Exact head dc19064 reviewed",
+    "Prior authentication, permission, checkout, and direct command findings were resolved"
+  ],
+  "blockers": [
+    "CI checker must require exactly the validate job and job-level read-only permissions.",
+    "Shell command parser must fail closed on wrappers/options it cannot safely interpret, including env make ci and make -C . ci."
+  ],
+  "next_action": "Harden the checker and add regression tests, then repeat review.",
+  "route_to": "code",
+  "risk_level": "critical",
+  "independent_lanes": [
+    "Exact CI job set and permissions",
+    "Conservative shell command parsing"
+  ],
+  "requires_council": true,
+  "issues": [
+    {"id":"REV-123-005","title":"Extra CI jobs escape trust checks","severity":"high","details":"Checker validates validate only and permits added self-hosted/write/privileged jobs; require exact job map and job-level permissions.","owner_stage":"code"},
+    {"id":"REV-123-006","title":"Wrapped or optioned make ci invocation bypasses parser","severity":"medium","details":"env make ci and make -C . ci are not rejected; fail closed on wrappers/unsupported options or parse them correctly.","owner_stage":"code"}
+  ]
+}

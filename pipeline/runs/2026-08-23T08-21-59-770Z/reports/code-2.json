@@ -1,0 +1,31 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Commit bd1a250 replaces the bypassable regex guard with structural Terraform and executed-bootstrap validation, adds 10 mutation tests, and runs the contract in PR Legacy Freeze Guard.",
+  "changed_files": [
+    ".github/workflows/legacy-freeze-guard.yml",
+    "scripts/check-argocd-rbac-contract.py",
+    "scripts/check-mgmt-topology.sh",
+    "tests/test-argocd-rbac-contract.py"
+  ],
+  "validation": [
+    "TDD red reproduced six appended-decoy bypasses in the prior guard.",
+    "TDD green passed 10/10 structural, rendered, mutation, and PR-wiring tests.",
+    "Topology guard, bootstrap nearest test, bash syntax, ruff, actionlint, YAML parse, and diff check passed.",
+    "Worktree is clean at bd1a250; no push, PR, plan, apply, or live mutation occurred."
+  ],
+  "blockers": [
+    "Exact Argo v3.4.4 policy validation/evaluation remains a test-stage gate.",
+    "Live MetaMCP admin drift and real SSO session gates remain deployment blockers."
+  ],
+  "next_action": "Repeat independent compact security and QA review of both commits, including parser mutation resistance and workflow path coverage.",
+  "requires_council": false,
+  "independent_lanes": ["structural checker remediation", "mutation tests", "PR validation wiring"],
+  "route_to": "review",
+  "risk_level": "critical",
+  "issues": [
+    {"id":"review-parser-bypass","title":"RBAC guard accepts decoy source text","severity":"high","details":"Remediated in bd1a250 with structural parsing and decoy tests.","owner_stage":"review"},
+    {"id":"review-pr-coverage","title":"RBAC guard not guaranteed in PR validation","severity":"high","details":"Remediated by Legacy Freeze Guard focused test step and path coverage.","owner_stage":"review"},
+    {"id":"review-semantic-test","title":"No version-matched Argo RBAC evaluation","severity":"high","details":"Owned by test stage with exact v3.4.4 tooling.","owner_stage":"test"}
+  ]
+}

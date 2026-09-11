@@ -1,0 +1,37 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Three independent Luna reviews rejected exact head 126bafcf. The GitHub evidence workflow binds incompatible run identities and does not prove the privileged job's exact runner. Lifecycle verification cannot install its fixture, uninstall is not deauthorize-first or serialized, interruption recovery/coverage is incomplete, and handoff exposure can precede durable capability registration. No files or live systems were changed by reviewers.",
+  "changed_files": [
+    ".github/workflows/verify-codicarium-artifact-seal-boundary.yml",
+    "contracts/authority-runner-ownership.json",
+    "platform/authority-runner/artifact-seal-v1/install.sh",
+    "platform/authority-runner/artifact-seal-v1/uninstall.sh",
+    "platform/authority-runner/artifact-seal-v1/manifest.sha256",
+    "scripts/harden-codicarium-artifact-ownership.py",
+    "scripts/produce-github-authority-evidence.py",
+    "scripts/verify-github-authority-evidence.py",
+    "tests/test-authority-runner-installed-root.py",
+    "tests/test-codicarium-artifact-seal-install.sh",
+    "tests/test-github-authority-evidence.py"
+  ],
+  "validation": [
+    "Three read-only Luna reviews inspected the complete e3ff9662..126bafcf diff and feature spec independently.",
+    "GitHub lane reproduced acceptance of an attacker runner name and found protected-job/current-run binding incompatible with the producer contract's Terraform apply workflow identity.",
+    "Full-trace lane mapped REQ-004 and REQ-009 to FAIL, REQ-002 and REQ-010 to PARTIAL, and the remaining requirements to PASS.",
+    "Installer lane traced invalid protected lifecycle fixture modes/manifest formatting, uninstall ordering, concurrent install/uninstall race, stale-generation crash artifacts, and capability exposure ordering.",
+    "Reviewers performed no edit, push, API mutation, host install, workflow dispatch, merge, deployment, or live authorization change."
+  ],
+  "blockers": [
+    "REV4-001 HIGH: Align protected-workflow evidence run/path binding with the canonical producer contract while separately proving the Terraform apply workflow policy; current evidence cannot pass current_run_binding.",
+    "REV4-002 HIGH: Bind the privileged protected-boundary job itself to exact runner 6252/name external-linux-400-4 and exact group membership; do not rely on a separately scheduled identity job or permit extra members.",
+    "REV4-003 MEDIUM: Require every GitHub job response to contain a positive run_id equal to the requested run; reject missing/synthesized run binding and add negative coverage.",
+    "REV4-004 HIGH: Make uninstall remove and fsync sudo authorization before package validation/removal, including corrupt or partial generations.",
+    "REV4-005 HIGH: Serialize install and uninstall with a root-owned descriptor lock held across deauthorization, publication, verification, and cleanup.",
+    "REV4-006 HIGH: Repair protected lifecycle admission modes and canonical two-space manifest, then execute/assert the real installed package lifecycle rather than only copying a synthetic installed root.",
+    "REV4-007 HIGH: Test every publication boundary and recover stale stage/new/pending/sudoers artifacts after exceptions and abrupt termination, proving sudo remains absent and generations coherent.",
+    "REV4-008 MEDIUM: Make handoff capability registration durable before exposure, or clean the exposed handoff on failure, and fsync both parent directories to prevent an orphaned handoff without ledger authority."
+  ],
+  "next_action": "Return to Luna code remediation for REV4-001 through REV4-008, update mechanically derived hashes/contracts, rerun exact-head lifecycle and aggregate tests, then obtain another fresh independent review."
+  ,"route_to": "code"
+}

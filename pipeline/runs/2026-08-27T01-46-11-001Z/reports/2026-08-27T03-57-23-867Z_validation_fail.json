@@ -1,0 +1,29 @@
+{
+  "stage": "validation",
+  "status": "fail",
+  "summary": "REQ-001 through REQ-008 and AC-001 through AC-004 plus AC-006 trace cleanly to final implementation and evidence. AC-005 has one narrow evidence gap: FastSystem proves one persisted build after bounded Model outage and Source-event replay, but it does not assert the real provider request count is exactly one, so duplicate Model-use prevention is inferred rather than directly locked down. AC-007 relevant gates pass; Category=System remains parent #26 scope.",
+  "changed_files": [],
+  "validation": [
+    "AC-001 exact producer-owned inputs, Knowledge-owned stable processing generation, and one persisted build are directly covered",
+    "AC-002 dependency negative classes plus forged, expired, cross-workspace, wrong-route/audience, replay, and concurrent nonce cases pass",
+    "AC-003 complete CloudEvent, bounded/cancellation retry, partition ordering, and DLQ-publication-failure offset rewind cases pass",
+    "AC-004 deterministic generation-fence and active-head invalidation races pass",
+    "AC-005 duplicate, delayed, out-of-order, replay, outage, recovery, and single-build behavior pass across integration/FastSystem tests",
+    "FastSystem currently asserts provider total equals authorized and rejected equals zero, but not provider total equals one",
+    "AC-006 real Workspace, Source, Model, and Knowledge processes passed the documented FastSystem flow twice at 77/77",
+    "AC-007 relevant contracts, migrations, suites, builds, formatting, diff, redaction, coredump, and cleanup gates pass",
+    "Category=System requires twelve absent digest-pinned WM_*_IMAGE values and remains an explicit parent #26 non-goal, not a #28 blocker"
+  ],
+  "blockers": [
+    "VAL0-AC005-MODEL-USE-001: add a FastSystem assertion that exactly one real Model provider request occurs across the outage, recovery, and replay scenario."
+  ],
+  "next_action": "Return to code for the single exact-provider-count assertion, run the focused real flow and complete FastSystem filter, review the test-only delta, then repeat test/validation gates using retained unchanged evidence.",
+  "route_to": "code",
+  "risk_level": "high",
+  "independent_lanes": [
+    "authoritative requirement trace",
+    "strict QA acceptance evidence",
+    "cross-service scope and architecture validation"
+  ],
+  "requires_council": false
+}

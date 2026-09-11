@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+CODEX_HOME="${CODEX_HOME:-/home/rickebo/.codex}"
+PID_FILE="$CODEX_HOME/qdrant-memory/run/qdrant.pid"
+SYSTEMD_UNIT="${QDRANT_MEMORY_SYSTEMD_UNIT:-codex-qdrant-memory.service}"
+
+if command -v systemctl >/dev/null 2>&1 && systemctl --user list-unit-files "$SYSTEMD_UNIT" >/dev/null 2>&1; then
+  systemctl --user stop "$SYSTEMD_UNIT" || true
+fi
+
+if [[ -f "$PID_FILE" ]] && kill -0 "$(cat "$PID_FILE")" 2>/dev/null; then
+  kill "$(cat "$PID_FILE")"
+  rm -f "$PID_FILE"
+fi

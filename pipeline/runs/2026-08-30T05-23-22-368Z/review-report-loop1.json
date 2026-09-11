@@ -1,0 +1,28 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Independent Luna security review found the offline verifier can accept modified authority values, leak uncaught filesystem errors, trust unsafe root ancestors, ignore undeclared privileged artifacts, and lacks acceptance-critical adversarial coverage.",
+  "changed_files": [],
+  "validation": [
+    "Exact PR head 1b7dca9a338b65e1a305988f91a01f1d680f1be1 reviewed against base efb9faac0606e02b7cac8e36e716f1ede9a50fb6.",
+    "All four added files reviewed against the six-requirement pipeline spec.",
+    "Existing eight tests are insufficient to exercise positive real-state fixtures and critical drift/ancestor/extra-artifact cases."
+  ],
+  "blockers": [
+    "Executable validation must enforce reviewed immutable IDs, metadata, revisions, and exact digests rather than shapes only.",
+    "All root canonicalization, stat, race, permission, and Unicode failures must map to deterministic sanitized reason codes.",
+    "No-follow ownership/mode/symlink checks must cover the snapshot root and complete root-to-target chain.",
+    "Privileged directories must be inventoried for undeclared artifacts with explicit bounded exceptions.",
+    "Tests must add positive fixtures and one mutation case for every required identity, state, filesystem, sudo, and cleanup attack class."
+  ],
+  "next_action": "Return to Luna code owner for focused remediation of REV-1290-001 through REV-1290-005, then independently re-review the new exact head.",
+  "route_to": "code",
+  "risk_level": "high",
+  "issues": [
+    {"id":"REV-1290-001","title":"Immutable authority values are not enforced","severity":"high","details":"IDs, host metadata, source/upstream revisions, and digests accept arbitrary shaped replacements; identity/workflow checks are no-ops.","owner_stage":"code"},
+    {"id":"REV-1290-002","title":"Filesystem errors can escape sanitized evidence","severity":"high","details":"Root resolve/stat and repeated workspace stat paths can raise uncaught errors or race outside bounded ContractError handling.","owner_stage":"code"},
+    {"id":"REV-1290-003","title":"Root and ancestor trust validation is incomplete","severity":"high","details":"Symlinked or attacker-owned ancestors above the snapshot root can be accepted; use no-follow complete-chain checks.","owner_stage":"code"},
+    {"id":"REV-1290-004","title":"Undeclared privileged artifacts are not detected","severity":"high","details":"Verifier checks declared paths only and does not inventory privileged directories for unexpected helpers or sudo policies.","owner_stage":"code"},
+    {"id":"REV-1290-005","title":"Adversarial suite misses critical acceptance paths","severity":"medium","details":"Add positive fixture and identity, revision, digest, service, ownership, root/ancestor, extra-file, traversal, shell, environment, and cleanup mutations.","owner_stage":"code"}
+  ]
+}

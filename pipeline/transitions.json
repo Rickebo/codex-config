@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "stages": ["start", "spec", "code", "review", "test", "validation", "done"],
+  "transitions": {
+    "start": {
+      "begin": ["spec"]
+    },
+    "spec": {
+      "pass": ["code"],
+      "fail": ["spec"]
+    },
+    "code": {
+      "ready_for_review": ["review"],
+      "blocked": ["code"]
+    },
+    "review": {
+      "pass": ["test"],
+      "fail": ["code"]
+    },
+    "test": {
+      "pass": ["validation"],
+      "fail": ["code"]
+    },
+    "validation": {
+      "pass": ["done"],
+      "fail": ["code", "review", "test"]
+    }
+  },
+  "defaults": {
+    "profile": "full",
+    "max_loops": 6
+  },
+  "profiles": {
+    "lite": {
+      "max_loops": 3,
+      "council": {
+        "required": "risk_or_multilane",
+        "risk_threshold": "medium"
+      }
+    },
+    "full": {
+      "max_loops": 6,
+      "council": {
+        "required": "always"
+      }
+    },
+    "emergency": {
+      "max_loops": 12,
+      "council": {
+        "required": "risk_or_multilane",
+        "risk_threshold": "high"
+      }
+    }
+  }
+}

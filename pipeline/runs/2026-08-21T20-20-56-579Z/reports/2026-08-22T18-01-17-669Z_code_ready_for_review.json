@@ -1,0 +1,26 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Baseline adjudication found no source correction: both isolated commits reproduce the same two full-suite failures, and neither failing path is changed by 1d6d249. Targeted feature and backup-fixture checks pass.",
+  "changed_files": [],
+  "validation": [
+    "HEAD 1d6d249 isolated PYTHONPATH=. pytest -q: 2 failed, 221 passed, 1 skipped; same Servarr synthetic exporter and Codicarium service bridge tests.",
+    "Base f039009 isolated PYTHONPATH=. pytest -q: 2 failed, 213 passed, 1 skipped; identical two failing test IDs and baseline behavior.",
+    "git diff --quiet f039009..1d6d249 confirmed unchanged: servarr synthetic exporter test, observability chart, Codicarium bridge test, and bridge application.",
+    "Targeted GitOps suite PYTHONPATH=. pytest -q tests/test_workspace_context_llm_proxy_gitops.py: 8 passed.",
+    "Isolated backup checksum round-trip fixture: 1 passed, 7 deselected; workspace-context/tests/static.sh passed.",
+    "Current-run pipeline CI: ok=true, checked_runs=1, failed_runs=0; no source, cluster, deployment, restore, or secret mutation performed."
+  ],
+  "blockers": [
+    "Repository-wide Python suite remains red only on two pre-existing failures outside f039009..1d6d249; review/test must carry the documented non-regression disposition.",
+    "Runtime/provider/NAS/restore/deploy evidence remains intentionally out of scope for this read-only QA lane."
+  ],
+  "next_action": "Route to review for independent baseline adjudication, then return through test under the FSM; do not bypass or approve a gate.",
+  "route_to": "review",
+  "risk_level": "high",
+  "requires_council": true,
+  "independent_lanes": [
+    "Review exact HEAD/base failure identity and changed-path exclusion.",
+    "Reconfirm targeted eight-test and isolated backup-fixture evidence in test stage."
+  ]
+}

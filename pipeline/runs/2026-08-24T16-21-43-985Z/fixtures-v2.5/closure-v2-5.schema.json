@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://codicarium.local/v2.5/closure.v2.5",
+  "title": "closure.v2.5",
+  "type": "object",
+  "required": [
+    "bundle_manifest_sha256",
+    "pre_council_report_sha256"
+  ],
+  "properties": {
+    "bundle_manifest_sha256": {
+      "type": "string",
+      "minLength": 1
+    },
+    "pre_council_report_sha256": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://codicarium.local/v2.6/cnpg.v2.6",
+  "title": "cnpg.v2.6",
+  "type": "object",
+  "required": [
+    "instances",
+    "synchronous",
+    "tls_sni",
+    "rpo_seconds",
+    "rto_seconds"
+  ],
+  "properties": {
+    "instances": {
+      "type": "integer"
+    },
+    "synchronous": {
+      "type": "boolean"
+    },
+    "tls_sni": {
+      "type": "string",
+      "minLength": 1
+    },
+    "rpo_seconds": {
+      "type": "integer"
+    },
+    "rto_seconds": {
+      "type": "integer"
+    }
+  },
+  "additionalProperties": false
+}

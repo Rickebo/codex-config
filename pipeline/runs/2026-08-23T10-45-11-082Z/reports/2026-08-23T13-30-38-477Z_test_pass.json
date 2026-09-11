@@ -1,0 +1,17 @@
+{
+  "stage": "test",
+  "status": "pass",
+  "summary": "Independent read-only Youtarr test matrix passed on PR #532 head fceb401.",
+  "changed_files": [],
+  "validation": [
+    "PYTHONPATH=. pytest -q youtarr/tests: 107 passed in 7.24s.",
+    "helm lint youtarr: 1 chart linted, 0 failed.",
+    "helm template youtarr youtarr --namespace servarr ...: 22 YAML documents parsed successfully.",
+    "Focused assertions passed: one internal youtarr.arr.rickebo.com Ingress with VPN allowlist/TLS; no ExternalDNS or legacy public Ingress; public port 8082 and private admin port 8080; exactly three OAuth remote keys; generated keys referenced only by controller.",
+    "No secret values read; no edits, commits, comments, merge, deploy, or browser actions performed."
+  ],
+  "blockers": [],
+  "next_action": "Route to validation stage.",
+  "route_to": "validation",
+  "risk_level": "high"
+}

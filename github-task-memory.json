@@ -1,0 +1,68 @@
+{
+  "defaults": {
+    "issue_labels": [
+      "codex-tracked"
+    ],
+    "priority_labels": [
+      "priority:p0",
+      "priority:p1",
+      "priority:p2",
+      "priority:p3"
+    ],
+    "default_priority_label": "priority:p2",
+    "project_status_field": "Status",
+    "project_fields": {
+      "blocked_reason": "Blocked Reason",
+      "next_action": "Next Action",
+      "agent_owner": "Agent Owner",
+      "target_environment": "Target Environment"
+    },
+    "statuses": {
+      "inbox": "Inbox",
+      "ready": "Ready",
+      "in_progress": "In Progress",
+      "blocked": "Blocked",
+      "review": "Review",
+      "done": "Done",
+      "icebox": "Icebox"
+    }
+  },
+  "repos": {
+    "codicarium/agent-orchestrator": {
+      "project": {
+        "owner": "codicarium",
+        "owner_type": "org",
+        "number": 3
+      },
+      "project_status_field": "Status",
+      "project_fields": {
+        "blocked_reason": "Blocked Reason",
+        "next_action": "Next Action",
+        "agent_owner": "Agent State",
+        "target_environment": "Machine",
+        "agent_state": "Agent State",
+        "machine": "Machine",
+        "last_activity": "Last Activity",
+        "automation": "Automation"
+      }
+    },
+    "Rickebo/pve-infra": {
+      "project": {
+        "owner": "codicarium",
+        "owner_type": "org",
+        "number": 3
+      },
+      "project_status_field": "Status",
+      "project_fields": {
+        "blocked_reason": "Blocked Reason",
+        "next_action": "Next Action",
+        "agent_owner": "Agent State",
+        "target_environment": "Machine",
+        "agent_state": "Agent State",
+        "machine": "Machine",
+        "last_activity": "Last Activity",
+        "automation": "Automation"
+      }
+    }
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "stage": "validation",
+  "status": "pass",
+  "summary": "Homelab MetaMCP 2.4.22 is healthy with all seven requested MCPs registered, discoverable, and safe-call validated; OAuth remains explicitly tracked as not ChatGPT-ready.",
+  "changed_files": [
+    "MetaMCP runtime PostgreSQL mcp_servers registry: Kubernetes and ArgoCD startup wrappers updated; stale observability-endpoint removed"
+  ],
+  "validation": [
+    "ArgoCD metamcp application Synced/Healthy at b75e64e534ca36c42ef51027c7d70ff54323e910",
+    "MetaMCP pod ready 1/1, zero restarts, image 2.4.22 pinned to sha256:6d5e0cba4ffc4976069a980723c11042f993a978fe0f3071ba2ec8a91ebc3d41",
+    "Three cleanup-aware fresh sessions each returned 145 tools: Prometheus 6, Loki 59, Tempo 7, GitHub-p 44, GitHub-p_Actions 4, Kubernetes 14, ArgoCD 11",
+    "One safe read-only tools/call per requested MCP passed",
+    "Registry contains exactly seven rows; both GitHub rows have populated identical bearer tokens without exposing values",
+    "Temporary validation/repair artifacts removed; homelab API key absent from process arguments"
+  ],
+  "blockers": [
+    "ChatGPT OAuth is not standards-complete: protected-resource authorization_servers and OAuth issuer differ by trailing slash, authorization_response_iss_parameter_supported is absent/false, and no authenticated ChatGPT consent flow was completed.",
+    "A cold pod can delay the first discovery while Kubernetes npm dependencies warm; subsequent discovery sessions are stable and return 145 tools.",
+    "The MCP registry is runtime database state rather than a durable GitOps bootstrap migration; a future database rebuild needs a follow-up migration for the seven-server registry and wrappers."
+  ],
+  "next_action": "Implement the MetaMCP OAuth metadata/resource/iss fix and durable registry migration, then complete an authenticated ChatGPT connector flow.",
+  "route_to": "done",
+  "risk_level": "critical",
+  "requires_council": true,
+  "council_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T20-33-06-876Z/council.json",
+  "independent_lanes": [
+    "homelab GitOps and MetaMCP runtime",
+    "seven-server MCP discovery and safe calls",
+    "ChatGPT OAuth standards and user-flow verification"
+  ],
+  "issues": [
+    {
+      "id": "MCP-OAUTH-001",
+      "title": "ChatGPT OAuth metadata and issuer flow is not standards-complete",
+      "severity": "critical",
+      "details": "Align issuer strings, advertise and return RFC 9207 iss, propagate resource, validate audience, and run an authenticated ChatGPT flow.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "MCP-COLD-001",
+      "title": "Cold Kubernetes npm warm-up delays first discovery",
+      "severity": "medium",
+      "details": "The current runtime recovers and remains stable after warm-up; a durable prewarm/image strategy can remove the first-request delay.",
+      "owner_stage": "validation"
+    },
+    {
+      "id": "MCP-REGISTRY-001",
+      "title": "Runtime server registry needs a durable GitOps migration",
+      "severity": "medium",
+      "details": "The current seven-row registry is live and verified, but the chart does not declare these database rows for a future database rebuild.",
+      "owner_stage": "code"
+    }
+  ]
+}

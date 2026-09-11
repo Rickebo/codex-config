@@ -1,0 +1,73 @@
+{
+  "stage": "validation",
+  "status": "fail",
+  "summary": "PR/GitOps promotion completed, but operational acceptance is not met: source D-001 evidence, target storage/backup readiness, and authenticated bounded Argo reconciliation remain unproven. No migration, restore, cutover, credential activation, or local Codex switch was performed.",
+  "changed_files": [
+    "apps/llm-proxy.yaml",
+    "apps/workspace-context.yaml",
+    "docs/workspace-context-llm-proxy.md",
+    "llm-proxy/",
+    "workspace-context/",
+    "authentik/"
+  ],
+  "validation": [
+    "PR #519 merged with references to #482, #483, and #489; merge aa7a921 is an ancestor of origin/main b213028.",
+    "GitHub worker deleted the remote topic branch and preserved local graphify-out user dirt; no local source files were changed by validation.",
+    "Current-run CI is green: checked_runs=1, failed_runs=0, warning_count=0; FSM remains validation, loop 2 of 6.",
+    "Target explicit-context evidence: both nodes Ready on v1.36.3+k3s1; Bitwarden ClusterSecretStore Ready=True Valid.",
+    "Target CRDs for CNPG, ExternalSecrets, ServiceMonitor, and PrometheusRule are Established=True.",
+    "Target Argo state: workspace-context Synced/Healthy; llm-proxy OutOfSync/Degraded at b213028; no bounded sync was possible.",
+    "Inert GitOps values retain all workload, database, backup, restore, migration, cutover, writer, webhook, and provider-effect gates false with blank NAS paths.",
+    "Backup worker found existing Kopia NAS repository with 274GiB available at 79% use, but no workload-specific offsite/readback or restore proof.",
+    "Source worker used required explicit Codicarium context for metadata-only checks and found no provider cutoff/WAL/artifact-SHA closure.",
+    "Focused GitOps validation passed: static checks and 8 targeted tests; no validation worker created or mutated target resources."
+  ],
+  "blockers": [
+    "D-001: missing sanitized provider-common cutoff binding, WAL continuity/no-gap evidence, and graph-artifact existence plus SHA-256 manifest.",
+    "D-002: approved 20Gi/5Gi NAS export paths, ACL/quota/capacity, Retain semantics, offsite retention, and target-only restore readback are unproven.",
+    "D-003: target callback/DNS and exact Authentik mapping plus fresh target credential activation and reauthentication are not proven.",
+    "Argo API/core access is unauthenticated or misconfigured; llm-proxy remains OutOfSync/Degraded, so inert reconciliation cannot be certified.",
+    "No disposable synthetic database-plus-artifact backup/restore rehearsal, checksum/Kopia readback, cleanup, or alert/metric evidence exists.",
+    "Historical LLM Proxy PVCs and unrelated Longhorn workloads remain excluded and untouched; no provenance or reuse decision is authorized."
+  ],
+  "next_action": "Route findings to independent review; stop here. Obtain only the minimal sanitized D-001 bundle, approved target NAS/ACL/offsite evidence, target identity evidence, and authorized Argo access, then rerun validation before any enablement or migration.",
+  "route_to": "review",
+  "risk_level": "critical",
+  "independent_lanes": [
+    "GitHub PR and merge",
+    "Target readiness and inert GitOps",
+    "Backup/restore rehearsal",
+    "Source provider metadata"
+  ],
+  "requires_council": true,
+  "issues": [
+    {
+      "id": "D-001",
+      "title": "Provider common-cutoff, WAL, and artifact SHA closure missing",
+      "severity": "critical",
+      "owner_stage": "validation",
+      "details": "No sanitized provider-side evidence binds the database backup, WAL continuity, and graph-artifact manifest for a coupled restore."
+    },
+    {
+      "id": "D-002",
+      "title": "Target storage and disposable restore evidence missing",
+      "severity": "high",
+      "owner_stage": "validation",
+      "details": "NAS endpoints are blank in committed inert values; ACL, capacity, offsite retention, and synthetic restore readback are not proven."
+    },
+    {
+      "id": "D-003",
+      "title": "Target identity and fresh credential activation unproven",
+      "severity": "high",
+      "owner_stage": "validation",
+      "details": "Controller prerequisites exist, but callback/DNS mapping, fresh credentials, and reauthentication remain unvalidated."
+    },
+    {
+      "id": "ARGO-001",
+      "title": "Bounded Argo reconciliation unavailable",
+      "severity": "high",
+      "owner_stage": "validation",
+      "details": "Argo CLI/API access is unauthenticated or fails core config lookup; no direct Kubernetes mutation was substituted."
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Luna remediated all nine review-loop-3 findings and committed exact head 126bafcf4548e8ad238f1ea31bf35929e72f1875 on origin/main e3ff966271dc76af47387e906a68dcd6cdc90360. GitHub evidence is immutable and redirect-safe; package publication is deauthorize-first and fail-closed; installed-root and protected workflow gates are complete. The worktree is clean. No push, install, dispatch, merge, or live mutation occurred.",
+  "changed_files": [
+    ".github/workflows/verify-codicarium-artifact-seal-boundary.yml",
+    "contracts/authority-runner-ownership.json",
+    "docs/authority-runner-github-evidence.md",
+    "docs/codicarium-artifact-seal-host-prerequisite.md",
+    "platform/authority-runner/artifact-seal-v1/*",
+    "scripts/check-installed-codicarium-artifact-seal.sh",
+    "scripts/harden-codicarium-artifact-ownership.py",
+    "scripts/produce-github-authority-evidence.py",
+    "scripts/verify-authority-runner-contract.py",
+    "scripts/verify-github-authority-evidence.py",
+    "tests/test-authority-runner-contract.py",
+    "tests/test-authority-runner-installed-root.py",
+    "tests/test-codicarium-artifact-ownership.py",
+    "tests/test-codicarium-artifact-ownership.sh",
+    "tests/test-codicarium-artifact-seal-install.sh",
+    "tests/test-codicarium-artifact-seal-package.sh",
+    "tests/test-github-authority-evidence.py"
+  ],
+  "validation": [
+    "Exact provenance: HEAD 126bafcf4548e8ad238f1ea31bf35929e72f1875; origin/main and merge-base e3ff966271dc76af47387e906a68dcd6cdc90360; clean worktree.",
+    "Full tests/test-deployment-controller-bootstrap.sh aggregate passed at the exact committed head.",
+    "Disposable root installed-root verifier passed 4/4 against a read-only bind mount using python:3.13-slim.",
+    "Docker install, preflight, reinstall, uninstall, ownership handoff, package safety, authority 8/8, GitHub 7/7, and ownership Python 8/8 checks passed.",
+    "actionlint, bash syntax, Python compilation, contract JSON parsing, and git diff --check passed.",
+    "GitHub REST producer/verifier now bind immutable org, repository, workflow run/attempt/path/ref/SHA/job, runner 6252, group 6, strict api.github.com origin, redirect denial, and bounded evidence time.",
+    "Installer now fixes identity to agent UID 1000, deauthorizes first, stages a complete generation, fsyncs publication, compares complete pre/post fstat security metadata, and supports injected interruption tests.",
+    "Protected workflow includes disposable root install/reinstall/uninstall and installed-root gates, preserves exact group 6, adds no group-7 fallback, and exposes no token or secret environment.",
+    "No __pycache__, installer debris, untracked files, host installation, runner policy mutation, workflow dispatch, deployment, merge, or live authorization mutation remains."
+  ],
+  "blockers": [],
+  "next_action": "Run fresh independent Luna reviews over origin/main...126bafcf, explicitly rechecking REQ-001 through REQ-012 and REV3-001 through REV3-009 before entering the test stage."
+}

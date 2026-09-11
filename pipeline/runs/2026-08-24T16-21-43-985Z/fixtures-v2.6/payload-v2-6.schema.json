@@ -1,0 +1,129 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://codicarium.local/v2.6/payload.v2.6",
+  "title": "payload.v2.6",
+  "type": "object",
+  "required": [
+    "command_id",
+    "schema_id",
+    "signer_kind",
+    "authority",
+    "nonce",
+    "outer_nonce",
+    "inner_nonce",
+    "issued_at",
+    "not_before",
+    "expires_at",
+    "target_digest",
+    "identity",
+    "mutation_id",
+    "sequence",
+    "previous_hash",
+    "role",
+    "key_fingerprint",
+    "target_bytes_sha256",
+    "request_hash",
+    "readback_hash",
+    "commit_hash"
+  ],
+  "properties": {
+    "command_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "schema_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "signer_kind": {
+      "type": "string",
+      "minLength": 1
+    },
+    "authority": {
+      "type": "boolean"
+    },
+    "nonce": {
+      "type": "string",
+      "minLength": 1
+    },
+    "outer_nonce": {
+      "type": "string",
+      "minLength": 1
+    },
+    "inner_nonce": {
+      "type": "string",
+      "minLength": 1
+    },
+    "issued_at": {
+      "type": "string",
+      "minLength": 1
+    },
+    "not_before": {
+      "type": "string",
+      "minLength": 1
+    },
+    "expires_at": {
+      "type": "string",
+      "minLength": 1
+    },
+    "target_digest": {
+      "type": "string",
+      "minLength": 1
+    },
+    "identity": {
+      "type": "string",
+      "minLength": 1
+    },
+    "mutation_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sequence": {
+      "type": "integer"
+    },
+    "previous_hash": {
+      "type": "string",
+      "minLength": 1
+    },
+    "role": {
+      "type": "string",
+      "minLength": 1
+    },
+    "key_fingerprint": {
+      "type": "string",
+      "minLength": 1
+    },
+    "target_bytes_sha256": {
+      "type": "string",
+      "minLength": 1
+    },
+    "request_hash": {
+      "type": "string",
+      "minLength": 1
+    },
+    "readback_hash": {
+      "type": "string",
+      "minLength": 1
+    },
+    "commit_hash": {
+      "type": "string",
+      "minLength": 1
+    },
+    "signature": {
+      "type": "string",
+      "minLength": 1
+    },
+    "live_evidence": {
+      "type": "boolean"
+    },
+    "app_config_path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "release_version": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "additionalProperties": false
+}

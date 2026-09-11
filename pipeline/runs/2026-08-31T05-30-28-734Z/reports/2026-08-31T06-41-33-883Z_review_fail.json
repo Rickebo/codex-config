@@ -1,0 +1,29 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Independent Luna review found the implementation boundary correct and no security bypass, but exact-head tests omit the required unlisted/prod namespace DELETE cases from REQ-002, REQ-005, and AC-004. Because the spec explicitly requires those revocation-cleanup negatives, the review routes back for a focused test-only remediation.",
+  "changed_files": [
+    "internal/rolebindingadmission/validator_test.go"
+  ],
+  "validation": [
+    "Reviewer inspected exact clean head 14c3f7c2c380183c2306805030d13484b0027338 against base 26e4b12e3932d7eb97cc1e78f90110fb03034827 and the complete feature spec.",
+    "Implementation's shared CREATE/DELETE dev fence, grant environment check, UPDATE denial, canonical-shape checks, disabled defaults, break glass, and supply-chain non-change were found correct.",
+    "Reviewer passed go test ./..., race, vet, chart contract, and diff checks.",
+    "No edit, push, PR, release, deployment, enablement, or live-system mutation occurred."
+  ],
+  "blockers": [
+    "REV1-001 MEDIUM: Add explicit DELETE regression cases proving unlisted and production namespaces deny, while canonical revoked cleanup remains limited to an allowed dev namespace."
+  ],
+  "next_action": "Add the two spec-mandated DELETE negative tests only, rerun focused and aggregate validation, then obtain a fresh exact-head review.",
+  "route_to": "code",
+  "risk_level": "high",
+  "issues": [
+    {
+      "id": "REV1-001",
+      "title": "Unlisted and prod DELETE fence lacks regression coverage",
+      "severity": "medium",
+      "details": "Implementation is correct; tests must cover REQ-002/REQ-005/AC-004 explicitly.",
+      "owner_stage": "code"
+    }
+  ]
+}

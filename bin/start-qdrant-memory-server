@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+CODEX_HOME="${CODEX_HOME:-/home/rickebo/.codex}"
+QDRANT_BIN="${QDRANT_MEMORY_QDRANT_BIN:-$CODEX_HOME/qdrant-memory/bin/qdrant}"
+DATA_DIR="${QDRANT_MEMORY_DATA_DIR:-$CODEX_HOME/data/qdrant-memory}"
+RUN_DIR="$CODEX_HOME/qdrant-memory/run"
+LOG_DIR="$CODEX_HOME/qdrant-memory/logs"
+PID_FILE="$RUN_DIR/qdrant.pid"
+QDRANT_URL="${QDRANT_URL:-http://127.0.0.1:6333}"
+SYSTEMD_UNIT="${QDRANT_MEMORY_SYSTEMD_UNIT:-codex-qdrant-memory.service}"
+
+mkdir -p "$DATA_DIR" "$RUN_DIR" "$LOG_DIR"
+
+if curl -fsS "$QDRANT_URL/healthz" >/dev/null 2>&1; then
+  exit 0
+fi
+
+if command -v systemctl >/dev/null 2>&1 && systemctl --user list-unit-files "$SYSTEMD_UNIT" >/dev/null 2>&1; then
+  systemctl --user start "$SYSTEMD_UNIT"
+  for _ in {1..100}; do
+    curl -fsS "$QDRANT_URL/healthz" >/dev/null 2>&1 && exit 0
+    sleep 0.1
+  done
+  echo "Qdrant did not become healthy via $SYSTEMD_UNIT." >&2
+  systemctl --user status "$SYSTEMD_UNIT" --no-pager >&2 || true
+  exit 1
+fi
+
+if [[ -f "$PID_FILE" ]] && kill -0 "$(cat "$PID_FILE")" 2>/dev/null; then
+  for _ in {1..50}; do
+    curl -fsS "$QDRANT_URL/healthz" >/dev/null 2>&1 && exit 0
+    sleep 0.1
+  done
+fi
+
+QDRANT__STORAGE__STORAGE_PATH="$DATA_DIR" \
+QDRANT__SERVICE__HOST=127.0.0.1 \
+QDRANT__SERVICE__HTTP_PORT=6333 \
+QDRANT__SERVICE__GRPC_PORT=6334 \
+  "$QDRANT_BIN" --disable-telemetry >"$LOG_DIR/qdrant.log" 2>&1 &
+
+printf '%s\n' "$!" > "$PID_FILE"
+
+for _ in {1..100}; do
+  curl -fsS "$QDRANT_URL/healthz" >/dev/null 2>&1 && exit 0
+  sleep 0.1
+done
+
+echo "Qdrant did not become healthy. See $LOG_DIR/qdrant.log" >&2
+exit 1

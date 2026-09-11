@@ -1,0 +1,34 @@
+{
+  "stage": "validation",
+  "status": "fail",
+  "summary": "Validation cannot authorize merge because protected main advanced to 74defd205658b8db4b90a80cc7f8aa05dfe8a193 through PR #103 after PR #102's successful CI. PR #102 remains at head 51ddb1a with original base d3565f5 and is BEHIND. The changes do not overlap, but strict required-check policy requires exact new-base validation. v0.6.13 remains unpublished and Automatic Release 32822275362 on new main failed closed.",
+  "changed_files": [],
+  "validation": [
+    "Pipeline state is current_stage=validation, loop_count=3, done=false; no pipeline transition was executed.",
+    "Live refs/heads/main is 74defd205658b8db4b90a80cc7f8aa05dfe8a193 from PR #103; PR #102 head is 51ddb1a4e2b7142bc356f39bc600ac4c9166dca0.",
+    "GitHub reports PR #102 open, mergeable, and mergeStateStatus/mergeable_state BEHIND with original base d3565f534b2f64585c3e15e35d8d645449f4f09d.",
+    "PR #102's original test, lint, chart, integration, and supply-chain checks all completed successfully on its prior-base result.",
+    "Active ruleset 21317510 requires those five GitHub Actions checks with strict up-to-date status, so prior-base successes cannot authorize merge.",
+    "Live compare shows PR #102 changes four release-policy paths while d3565f5..74defd changes sixteen controller, chart, README, runtime, and persistence paths; the path intersection is empty.",
+    "Automatic Release 32822275362/1 ran on new main 74defd and failed closed at Resolve exact successful candidate CI run; handoff/publication was skipped.",
+    "The Automatic Release failure was 'unpublished tag coordinator run is not exact completed success'; no manual workflow action is authorized by this report.",
+    "v0.6.13 remains a direct immutable tag at ad52dfcbc45d71eccad1d49fbd905161af7a44b1 with no public GitHub Release.",
+    "v0.6.14 tag/release and any new Publish Release run after Automatic Release 32822275362 are absent."
+  ],
+  "blockers": [
+    "PR #102 is behind exact protected main 74defd205658b8db4b90a80cc7f8aa05dfe8a193; strict required checks have not run on the rebased new-base result.",
+    "Although live path comparison shows no overlap with PR #103, the untested combined history must pass focused/full tests and all protected PR checks before merge."
+  ],
+  "next_action": "Route to test: rebase PR #102 onto exact main 74defd205658b8db4b90a80cc7f8aa05dfe8a193, rerun focused and full tests, then require fresh test/lint/chart/integration/supply-chain PR checks before returning to validation.",
+  "route_to": "test",
+  "risk_level": "high",
+  "issues": [
+    {
+      "id": "GH-93",
+      "title": "Pending v0.6.13 Release Verify to Publish Release handoff",
+      "severity": "high",
+      "details": "PR #102 remains the issue-linked recovery change but must be rebased onto 74defd and fully retested because strict protected-main checks were recorded against the prior base. No manual workflow or release action should be used.",
+      "owner_stage": "test"
+    }
+  ]
+}

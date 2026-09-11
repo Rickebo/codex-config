@@ -1,0 +1,109 @@
+{
+  "version": 1,
+  "created_at": "2026-08-21T03:27:59.347Z",
+  "updated_at": "2026-08-21T04:28:09.941Z",
+  "task": "Issue #132: reconcile canonical README, release status, and stale rollout trackers in codicarium/agent-orchestrator",
+  "policy_path": "/home/rickebo/.codex/pipeline/transitions.json",
+  "approval_rules_path": "/home/rickebo/.codex/pipeline/approval-rules.json",
+  "initial_stage": "spec",
+  "current_stage": "validation",
+  "pipeline_profile": "lite",
+  "done": false,
+  "max_loops": 4,
+  "loop_count": 1,
+  "approval_required_count": 1,
+  "approvals": [
+    {
+      "at": "2026-08-21T03:39:16.649Z",
+      "approver": "Codex manager",
+      "note": "Approved low-risk #132 spec after independent contradiction mapping, desired-state version sourcing, explicit no-overclaim boundaries, and regression-test coverage.",
+      "gate": "spec_to_code",
+      "reason": "Spec pass requires explicit approval before implementation starts.",
+      "risk_level": "low",
+      "from_stage": "spec",
+      "next_stage": "code",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-21T03-27-59-346Z/reports/2026-08-21T03-39-16-632Z_spec_pass.json"
+    }
+  ],
+  "awaiting_approval": null,
+  "spec_gate": {
+    "passed": true,
+    "passed_at": "2026-08-21T03:39:16.649Z",
+    "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-21T03-27-59-346Z/issue-132-spec.json",
+    "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-08-21T03-27-59-346Z/issue-132-spec-check.json",
+    "council_file": "/home/rickebo/.codex/pipeline/runs/2026-08-21T03-27-59-346Z/issue-132-spec.json"
+  },
+  "council_policy": {
+    "required": "risk_or_multilane",
+    "risk_threshold": "medium"
+  },
+  "history": [
+    {
+      "at": "2026-08-21T03:39:16.632Z",
+      "event": "approval_required",
+      "stage": "spec",
+      "status": "pass",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-21T03-27-59-346Z/reports/2026-08-21T03-39-16-632Z_spec_pass.json",
+      "requested_next_stage": "code",
+      "gate": "spec_to_code",
+      "reason": "Spec pass requires explicit approval before implementation starts.",
+      "risk_level": "low",
+      "spec_gate": {
+        "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-21T03-27-59-346Z/issue-132-spec.json",
+        "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-08-21T03-27-59-346Z/issue-132-spec-check.json",
+        "council_file": "/home/rickebo/.codex/pipeline/runs/2026-08-21T03-27-59-346Z/issue-132-spec.json",
+        "checked_at": "2026-08-21T03:39:05.826Z"
+      }
+    },
+    {
+      "at": "2026-08-21T03:39:16.649Z",
+      "event": "approved_transition",
+      "stage": "spec",
+      "status": "pass",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-21T03-27-59-346Z/reports/2026-08-21T03-39-16-632Z_spec_pass.json",
+      "approver": "Codex manager",
+      "note": "Approved low-risk #132 spec after independent contradiction mapping, desired-state version sourcing, explicit no-overclaim boundaries, and regression-test coverage.",
+      "next_stage": "code"
+    },
+    {
+      "at": "2026-08-21T03:58:21.385Z",
+      "event": "transition",
+      "stage": "code",
+      "status": "ready_for_review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-21T03-27-59-346Z/reports/2026-08-21T03-58-21-385Z_code_ready_for_review.json",
+      "next_stage": "review"
+    },
+    {
+      "at": "2026-08-21T04:11:24.890Z",
+      "event": "transition",
+      "stage": "review",
+      "status": "fail",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-21T03-27-59-346Z/reports/2026-08-21T04-11-24-884Z_review_fail.json",
+      "next_stage": "code"
+    },
+    {
+      "at": "2026-08-21T04:21:44.977Z",
+      "event": "transition",
+      "stage": "code",
+      "status": "ready_for_review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-21T03-27-59-346Z/reports/2026-08-21T04-21-44-976Z_code_ready_for_review.json",
+      "next_stage": "review"
+    },
+    {
+      "at": "2026-08-21T04:28:09.926Z",
+      "event": "transition",
+      "stage": "review",
+      "status": "pass",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-21T03-27-59-346Z/reports/2026-08-21T04-28-09-926Z_review_pass.json",
+      "next_stage": "test"
+    },
+    {
+      "at": "2026-08-21T04:28:09.941Z",
+      "event": "transition",
+      "stage": "test",
+      "status": "pass",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-21T03-27-59-346Z/reports/2026-08-21T04-28-09-941Z_test_pass.json",
+      "next_stage": "validation"
+    }
+  ]
+}

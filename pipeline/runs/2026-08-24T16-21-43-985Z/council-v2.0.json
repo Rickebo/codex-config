@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "run_dir": "/home/rickebo/.codex/pipeline/runs/2026-08-24T16-21-43-985Z",
+  "generated_at": "2026-08-25T21:10:21Z",
+  "risk_level": "critical",
+  "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T16-21-43-985Z/feature-spec.v2.0.draft.json",
+  "spec_sha256": "21135d88172a6aca570bd85f307ac0d6336f874ebc3e9d225a2d5e6319a95cf3",
+  "annex_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T16-21-43-985Z/feature-spec.v2.0.annex.json",
+  "annex_sha256": "78baef3c66701ba6c49a3dd352bd705da10d81260e4e7d559348f9536b28ebd0",
+  "shared_validation": {
+    "determinism": "PASS: two root regenerations preserved one combined artifact digest de5a9e6886bc9f44f1de6e7c5bc27c1bdf77acf13d483d8640714ebd9557df6c.",
+    "strict_spec_check": "PASS: 36 MUST requirements, 18 acceptance criteria, 18 tests, and 36 trace rows with zero errors or warnings.",
+    "fixture_validation": "PASS: 35 duplicate-key-safe JSON documents, 13 Draft 2020-12 schemas, 14 positive schema validations, and 66 verified Ed25519 signatures.",
+    "journal_validation": "PASS: 45 journal entries, 22 operation-evidence records, 20 signed publication receipts, and 19 mutations.",
+    "pipeline_run_check": "PASS for the exact active run; the global 503-run strict scan remains red only because 224 unrelated historical runs are incomplete.",
+    "activation": "BLOCKED_PREACTIVATION with seven declared prerequisites."
+  },
+  "perspectives": [
+    {
+      "role": "planner",
+      "decision": "NO-GO",
+      "blocking_findings": [
+        "Live MUSTs use generic fixture/manual tests instead of exact live probes, evidence schemas, freshness rules, owners, and pass/fail predicates.",
+        "The cross-repository rollout order is prose rather than a machine-checkable dependency DAG binding PostgreSQL, Vault, infra, runner, journal, and claim gates."
+      ],
+      "residual_risks": [
+        "Live identity discovery and protected-check handoff remain manual.",
+        "The seven blockers fail closed but are not yet executable acceptance gates."
+      ]
+    },
+    {
+      "role": "security",
+      "decision": "NO-GO",
+      "blocking_findings": [
+        "Mutation receipts accept writer-supplied readback digests instead of independently collected canonical target state.",
+        "Legacy retirement omits cancellation and credential/session quiescence for queued or running old workflows.",
+        "Grant replacement lacks a durable epoch/CAS fence acknowledged by every concurrent writer.",
+        "Untrusted archive extraction lacks entry, path, expanded-byte, ratio, CPU, memory, and deadline ceilings."
+      ],
+      "residual_risks": [
+        "All live infrastructure and signing prerequisites remain unmaterialized.",
+        "Proxy nonce uniqueness must be atomic over token JTI and Pod UID."
+      ]
+    },
+    {
+      "role": "tech_lead_devops",
+      "decision": "NO-GO",
+      "blocking_findings": [
+        "deployment-controller, vault-config, and app-config moved after freeze, invalidating REQ-001 and requiring focused re-audit.",
+        "The seven preactivation blockers are prose rather than stable evidence-producing controller-consumed gates.",
+        "The grant migration cannot both use current post-retirement absence semantics and preserve occupied Application UIDs; no adoption contract exists.",
+        "The new profile does not enumerate exact apiGroup/kind authority, and standard NetworkPolicy cannot enforce the claimed ServiceAccount identity.",
+        "The named CNPG bootstrap Secret is not produced by the current chart, and verify-full CA distribution and rotation are unspecified."
+      ],
+      "residual_risks": [
+        "The cluster still lacks workers, Kata, N-1 evidence, proxy, and exact Vault connectivity.",
+        "Frozen resourceVersions must be refreshed immediately before migration."
+      ]
+    },
+    {
+      "role": "tech_lead_qa",
+      "decision": "GO",
+      "blocking_findings": [],
+      "residual_risks": [
+        "The fixture corpus is internally consistent but intentionally synthetic.",
+        "Seven live-evidence prerequisites remain mandatory before activation."
+      ]
+    }
+  ],
+  "consensus": {
+    "decision": "rejected_return_to_spec",
+    "summary": "QA verified internal fixture consistency, but planner, security, and DevOps found stale baselines plus non-executable live gates, independent-readback, retirement-quiescence, migration-fencing/adoption, exact authorization, PostgreSQL TLS/bootstrap, and archive-resource gaps.",
+    "implementation_allowed": false
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "stage": "validation",
+  "status": "blocked",
+  "summary": "PR #154 exact head 3cb2262094b1165438bc625ba7921f88df8fded9 passed hosted validation and all delegated local gates, but protected main blocks merge pending one approving review.",
+  "changed_files": [],
+  "validation": [
+    "Hosted run 32453971906 and validate check 96687591887 passed on exact head",
+    "Independent exact-head review GO",
+    "Independent exact-head QA PASS",
+    "PR mergeable=true but mergeable_state=blocked under Protect main"
+  ],
+  "blockers": [
+    "PR #154 has zero approving reviews.",
+    "Current GitHub user auth is Rickebo, the PR author, so self-approval is not appropriate and was not attempted.",
+    "Previously verified App installation 153488919 has effective pull_requests:read; no independent App-authenticated write path is currently available."
+  ],
+  "next_action": "Grant and refresh effective pull_requests:write for the installed App or obtain an independent approving reviewer; then merge normally and perform post-merge rollout validation.",
+  "route_to": "validation"
+}

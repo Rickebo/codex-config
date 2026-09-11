@@ -1,0 +1,15 @@
+{
+  "stage": "validation",
+  "status": "fail",
+  "summary": "PR CI reached the Codicarium runner but failed because the workflow's syntax-validator fallback found neither actionlint nor Ruby.",
+  "changed_files": [".github/workflows/ci.yml"],
+  "validation": [
+    "PR run 32388665426 attempt 2: checkout, shared convco actions, uv setup, and locked dependency installation passed",
+    "PR run 32388665426 attempt 2: Validate workflows and Markdown failed before Python, Docker, or systemd checks"
+  ],
+  "blockers": ["Codicarium runner image has no actionlint or Ruby executable for workflow syntax validation."],
+  "next_action": "Add a verified actionlint binary fallback, validate the workflow locally, then rerun review, test, and PR CI.",
+  "route_to": "code",
+  "risk_level": "medium",
+  "independent_lanes": ["workflow syntax validation"]
+}

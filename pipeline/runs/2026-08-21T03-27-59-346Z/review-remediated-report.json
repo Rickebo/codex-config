@@ -1,0 +1,19 @@
+{
+  "stage": "review",
+  "status": "pass",
+  "summary": "Fresh exact-head review GO: the prior chart-version consistency weakness is fixed and all four maintained document declarations are parsed and compared authoritatively.",
+  "changed_files": [],
+  "validation": [
+    "Exact-head review at eecf1df77283b961733884dad6b8c13a3db5ae75",
+    "make docs-check",
+    "72 focused unit tests",
+    "Stale plus unrelated-current-version probes for all four documents",
+    "git diff --check"
+  ],
+  "blockers": [],
+  "next_action": "Advance to exact-head QA evidence and then publish hosted validation.",
+  "route_to": "test",
+  "risk_level": "low",
+  "commit": "eecf1df77283b961733884dad6b8c13a3db5ae75",
+  "review": "GO"
+}

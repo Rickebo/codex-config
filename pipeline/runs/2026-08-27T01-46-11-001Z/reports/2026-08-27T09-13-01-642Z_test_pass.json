@@ -1,0 +1,30 @@
+{
+  "stage": "test",
+  "status": "pass",
+  "summary": "Formal final testing passes on clean HEAD 55f096d from immutable archive /tmp/workspace-manager-ac005-final-55f096d-1O70YX. Focused AC-005, complete FastSystem, Knowledge runtime/domain/integration, Model integration, Release builds, generated fixtures, specifications, Python static checks, scoped formatting, diff, secret scan, coredump, process, and explicit Docker-context cleanup checks are green.",
+  "changed_files": [],
+  "validation": [
+    "Focused AC-005 passed 1/1; TRX SHA-256 5b4d0ce91e9141835eccac1f0970234dde39ecf7d5034bdae04e5fa37421e5d6",
+    "Complete Category=FastSystem passed 77/77; TRX SHA-256 1a8c3e5f822fccc263f2000c14482c77c03156b15d326cedac9b27e9870334fe",
+    "Knowledge Python runtime passed 9/9 and compileall plus Ruff passed",
+    "Knowledge domain passed 19/19; TRX SHA-256 163bce3cebdf90bcc583ded05c7849e7c40c322f88dd750ea077d2f3985653f7",
+    "Knowledge integration passed 120/120; TRX SHA-256 a985171115c49f8789d2978fd18e69c32a2b3615552011476c8cb9c825e7ba61",
+    "Model integration passed 7/7; TRX SHA-256 9a28c2a55d9ea1cf7d8ebaf02b81c6fc6b4aff2a3c41b89f09a45478683e6f05",
+    "Knowledge, Model, and SystemTests Release builds passed with 0 warnings and 0 errors",
+    "generate-system-fixtures.py --check and validate-specs.py passed",
+    "Scoped Knowledge, Model, and System formatting plus git diff --check origin/main...HEAD passed",
+    "Immutable git archive SHA-256 is 70530924bf01dba31e745ed653194ca41ae75303da9decbd701c9d373cc679f2",
+    "Evidence secret scan, explicit Docker context default resource audit, process audit, and post-07:45 UTC coredump audit were clean",
+    "Category=System was not executed because all twelve required digest-pinned WM_*_IMAGE values are absent; this remains issue #26 scope"
+  ],
+  "blockers": [],
+  "next_action": "Advance to final requirement validation, trace issue #28 acceptance against the immutable evidence, and retain Category=System as an explicit parent-#26 exclusion.",
+  "route_to": "validation",
+  "risk_level": "high",
+  "independent_lanes": [
+    "immutable-archive service and FastSystem tests",
+    "build, contract, generated-fixture, and static gates",
+    "environment, redaction, and cleanup evidence"
+  ],
+  "requires_council": false
+}

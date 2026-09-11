@@ -1,0 +1,45 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Independent review of PR #522 at commit 9f419860 found five high-severity blockers: fixture failure, disconnected Kopia repository, incomplete graph-artifacts capture, missing Kopia identity readback, and incomplete disposable-PVC cleanup.",
+  "changed_files": [
+    "PR #522 commit 9f419860",
+    "tests/test_workspace_context_llm_proxy_gitops.py",
+    "workspace-context/tests/static.sh",
+    "workspace-context/templates/backup.yaml",
+    "workspace-context/templates/gated.yaml",
+    "workspace-context/templates/storage.yaml",
+    "llm-proxy/templates/database-backup.yaml",
+    "llm-proxy/templates/restore.yaml",
+    "apps/workspace-context.yaml",
+    "apps/llm-proxy.yaml"
+  ],
+  "validation": [
+    "Independent review scope: PR #522 commit 9f419860.",
+    "Existing current-run pipeline CI was inspected before report submission.",
+    "Review findings are limited to target-only GitOps code and test evidence; no deployment, restore, sync, or secret values were used."
+  ],
+  "blockers": [
+    "Static dedicatedPath fixture fails: workspace-context/tests/static.sh and tests/test_workspace_context_llm_proxy_gitops.py do not provide a passing dedicatedPath fixture for the enabled backup/restore path.",
+    "Kopia Secret/repository is not connected: workspace-context/templates/backup.yaml and apps/workspace-context.yaml do not connect the rendered Kopia Secret and repository to the backup/restore workload.",
+    "Actual graph-artifacts PVC bytes are not bundled: workspace-context/templates/gated.yaml and workspace-context/templates/storage.yaml reference graph artifacts, but the produced bundle does not include the bytes from the actual graph-artifacts PVC.",
+    "No Kopia restore/readback identity: workspace-context/templates/backup.yaml, workspace-context/templates/gated.yaml, and llm-proxy/templates/restore.yaml do not prove a Kopia restore followed by readback under the target identity.",
+    "Disposable PVC cleanup is incomplete: workspace-context/templates/gated.yaml, workspace-context/templates/storage.yaml, and apps/workspace-context.yaml do not guarantee cleanup of the disposable restore PVC and dependent resources after the check."
+  ],
+  "next_action": "Route to CODE to fix all five PR #522 findings, add deterministic enabled-path fixtures and readback/cleanup assertions, then rerun independent review and current-run CI; do not approve.",
+  "route_to": "code",
+  "risk_level": "high",
+  "requires_council": true,
+  "independent_lanes": [
+    "Review PR #522 commit 9f419860 fixture and static guard behavior.",
+    "Review Kopia Secret/repository wiring and restore/readback identity.",
+    "Review graph-artifacts PVC byte bundling and disposable PVC cleanup."
+  ],
+  "issues": [
+    {"id":"REVIEW-522-DEDICATEDPATH-FIXTURE","title":"Static dedicatedPath fixture fails","severity":"high","details":"PR #522 commit 9f419860: workspace-context/tests/static.sh and tests/test_workspace_context_llm_proxy_gitops.py lack a passing dedicatedPath fixture for the enabled backup/restore path.","owner_stage":"code"},
+    {"id":"REVIEW-522-KOPIA-CONNECTION","title":"Kopia Secret and repository are not connected","severity":"high","details":"PR #522 commit 9f419860: workspace-context/templates/backup.yaml and apps/workspace-context.yaml do not connect the rendered Kopia Secret and repository to the backup/restore workload.","owner_stage":"code"},
+    {"id":"REVIEW-522-GRAPH-BYTES","title":"Actual graph-artifacts PVC bytes are not bundled","severity":"high","details":"PR #522 commit 9f419860: workspace-context/templates/gated.yaml and workspace-context/templates/storage.yaml reference graph artifacts, but the bundle does not include bytes from the actual graph-artifacts PVC.","owner_stage":"code"},
+    {"id":"REVIEW-522-KOPIA-READBACK","title":"Kopia restore/readback identity is unproven","severity":"high","details":"PR #522 commit 9f419860: workspace-context/templates/backup.yaml, workspace-context/templates/gated.yaml, and llm-proxy/templates/restore.yaml do not prove Kopia restore followed by readback under the target identity.","owner_stage":"code"},
+    {"id":"REVIEW-522-DISPOSABLE-CLEANUP","title":"Disposable PVC cleanup is incomplete","severity":"high","details":"PR #522 commit 9f419860: workspace-context/templates/gated.yaml, workspace-context/templates/storage.yaml, and apps/workspace-context.yaml do not guarantee cleanup of the disposable restore PVC and dependent resources.","owner_stage":"code"}
+  ]
+}

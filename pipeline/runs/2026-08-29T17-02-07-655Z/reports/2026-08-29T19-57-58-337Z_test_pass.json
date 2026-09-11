@@ -1,0 +1,25 @@
+{
+  "stage": "test",
+  "status": "pass",
+  "summary": "All five protected CI checks passed at PR #153 unchanged exact head ce2272d0c10170369ef0fd27682061785c18c094, including the supply-chain archive guard and final image build.",
+  "changed_files": [
+    "Dockerfile",
+    "hack/verify-oci-archive.py",
+    "hack/test-release-image-flow.py"
+  ],
+  "validation": [
+    "chart passed in 17 seconds",
+    "integration passed in 2m15s",
+    "lint passed in 4m31s",
+    "supply-chain passed in 7m0s",
+    "test passed in 8m53s",
+    "Exact PR head remained ce2272d0c10170369ef0fd27682061785c18c094"
+  ],
+  "blockers": [],
+  "next_action": "Perform exact-head merge-readiness validation, squash merge without bypass, then verify main CI and a new immutable release publication.",
+  "independent_lanes": [
+    "infra PR #1272 protected ARC queue",
+    "read-only live deployment-controller health diagnosis"
+  ],
+  "risk_level": "critical"
+}

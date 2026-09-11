@@ -1,0 +1,35 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Implemented the strict official-pricing watcher, canonical chart catalog, production loader check, scheduled PR workflow, Astra rows, documentation, and tests in commit 709a37f.",
+  "changed_files": [
+    ".github/workflows/update-pricing-catalog.yml",
+    "charts/codex-stats/files/pricing.json",
+    "charts/codex-stats/templates/pricing-configmap.yaml",
+    "charts/codex-stats/templates/deployment.yaml",
+    "charts/codex-stats/values.yaml",
+    "charts/codex-stats/tests/test-external-secret.sh",
+    "cmd/codex-stats-pricing/main.go",
+    "docs/pricing.md",
+    "scripts/update_pricing_catalog.py",
+    "scripts/test_update_pricing_catalog.py"
+  ],
+  "validation": [
+    "Focused Python parser tests: 3 passed",
+    "Live official-source dry-run: passed with 8 generated rows",
+    "go test ./..., go test -race ./..., and go vet ./... passed",
+    "Dashboard tests: 44 passed",
+    "Helm lint/template and rendered catalog byte comparison passed",
+    "actionlint, shell contracts, changed-artifact tests, jq, and diff checks passed"
+  ],
+  "blockers": [],
+  "next_action": "Independently review commit 709a37f against the approved spec, with special focus on parser ambiguity, effective dating, workflow credentials, and chart rollout behavior.",
+  "route_to": "review",
+  "risk_level": "high",
+  "independent_lanes": [
+    "parser and historical catalog correctness",
+    "workflow permission and mutation safety",
+    "Helm packaging and runtime loader compatibility"
+  ],
+  "requires_council": false
+}

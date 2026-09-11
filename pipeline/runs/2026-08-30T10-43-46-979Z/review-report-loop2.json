@@ -1,0 +1,59 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Independent Luna review rejected exact head 01d104cc. Captured bytes are still authorized by a mutable checkout manifest, the external GitHub evidence step proves only endpoint strings, the protected workflow never runs the full filesystem verifier, and capability-ledger initialization can mutate through a symlink before rejection.",
+  "changed_files": [
+    "platform/authority-runner/artifact-seal-v1/install.sh",
+    ".github/workflows/verify-codicarium-artifact-seal-boundary.yml",
+    "tests/test-authority-runner-contract.py",
+    "scripts/harden-codicarium-artifact-ownership.py"
+  ],
+  "validation": [
+    "Reviewed full exact-base efb9faac..01d104cc consolidation against REQ-001..REQ-012 and AC-001..AC-008.",
+    "Contract unit tests, package consistency/syntax, Python compilation, shell syntax, and terraform-plan byte identity: PASS.",
+    "Immutable independently trusted package authorization: FAIL.",
+    "Live read-only REST proof for runner 6252/group 6/exact selected workflow: FAIL; current step only prints endpoints.",
+    "Protected workflow invocation of full descriptor-relative verifier and generated-root adversarial coverage: FAIL.",
+    "No-follow capability-ledger creation before metadata mutation: FAIL.",
+    "Root-capable lifecycle, live host convergence, external API evidence, and exact-head GitHub gates remain unverified."
+  ],
+  "blockers": [
+    "HIGH: Mutable checkout manifest can authorize a malicious captured generation.",
+    "HIGH: API evidence step performs no API request or evidence verification.",
+    "HIGH: Protected workflow never invokes the complete installed-root verifier; generated canonical-root/adversarial tests are missing.",
+    "MEDIUM: Capability-root chown/chmod occurs before no-follow validation and can mutate a symlink target."
+  ],
+  "next_action": "Return to Luna code remediation: establish independently trusted package admission, implement a separate least-privilege REST evidence producer/verifier, gate live/generated roots with the full verifier, and create the capability ledger descriptor-relatively before metadata mutation.",
+  "route_to": "code",
+  "risk_level": "critical",
+  "issues": [
+    {
+      "id": "REV2-001",
+      "title": "Checkout manifest remains mutable installation authority",
+      "severity": "high",
+      "details": "install.sh copies the manifest and source files from the same runner-controlled workspace, so an attacker can replace both before capture and pass the captured digest check.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV2-002",
+      "title": "External GitHub API evidence is declared but never verified",
+      "severity": "high",
+      "details": "The workflow asserts and prints endpoint strings but proves neither runner 6252 nor group 6 membership nor the exact selected-workflow restriction.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV2-003",
+      "title": "Full verifier is absent from protected and generated-root gates",
+      "severity": "high",
+      "details": "Schema-only validation and shell checks do not exercise exact package inventory, systemd bytes/state, workspace, sudo policy, or adversarial filesystem behavior.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV2-004",
+      "title": "Capability ledger mutates before no-follow validation",
+      "severity": "medium",
+      "details": "A pre-existing symlink at the ledger root can receive root chown/chmod before the later no-follow open rejects it.",
+      "owner_stage": "code"
+    }
+  ]
+}

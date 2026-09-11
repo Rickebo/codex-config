@@ -1,0 +1,1 @@
+Bounded cross-repo activation contract repair: infra PR #1078 exact head 6dd8f3b6d5be342f8c49d01d8f77b3edad385aaf and runner-config PR #44 current 729ad180 line; evidence/network schema alignment, mutation rejection, protected secretless isolated candidate validation, safe pins/handoffs, full checks and push without merge/deploy/secret/cluster mutation.

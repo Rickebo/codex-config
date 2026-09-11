@@ -1,0 +1,25 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Implemented independent bind/allowlist configuration and optional static bearer authentication with focused config and transport coverage.",
+  "changed_files": [
+    "src/agent_mcp/config.py",
+    "src/agent_mcp/cli.py",
+    "src/agent_mcp/server.py",
+    "tests/test_config.py",
+    "tests/integration/test_http_transports.py",
+    "README.md",
+    "deploy/systemd/agent-mcp.env.example"
+  ],
+  "validation": [
+    "Worker reports 91 tests passed",
+    "Worker reports Ruff passed",
+    "Worker reports mypy passed",
+    "git diff --check passed"
+  ],
+  "blockers": [],
+  "next_action": "Perform independent security and correctness review of the complete diff.",
+  "route_to": "review",
+  "risk_level": "high",
+  "independent_lanes": ["configuration and CLI", "ASGI authentication and transport policy", "tests and operational documentation"]
+}

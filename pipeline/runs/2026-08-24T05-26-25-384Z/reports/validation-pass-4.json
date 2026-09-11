@@ -1,0 +1,21 @@
+{
+  "stage": "validation",
+  "status": "pass",
+  "summary": "Final validation passed at exact f0fb77b: current protected main remains the reviewed base, cumulative diff and fixtures are exact, schema exceptions are narrow, all spec evidence is green, and live v0.6.4 residual states still match the fail-closed migration model.",
+  "changed_files": [],
+  "validation": [
+    "HEAD f0fb77b642c3b1f2e19eb24bad05db3945df3b30 clean; base ad52dfc is ancestor; 29-file diff and diff check pass",
+    "GitHub main remains exact base ad52dfc; feature branch absent; no PR exists",
+    "Required checks test/lint/chart are strict; admins enforced; zero required approvals",
+    "v0.6.4 fixtures byte-identical to commit 17688f7 and chart/config CRD parity passes",
+    "optionalOldSelf limited to the two exact legacy ReconciliationRequest CEL exceptions",
+    "No secret material found in changed files",
+    "Exact-head review and unit/race/vet/integration/generated/schema/docs/tidy evidence all pass",
+    "Pinned codicarium-dev server verified as https://10.99.0.21:6443; controller remains healthy v0.6.4",
+    "Terminal Prepare+Issued Lease, terminal Activate+Consumed absent Lease, and ambiguous nonterminal Activate states remain compatible with fail-closed migration"
+  ],
+  "blockers": [],
+  "next_action": "Complete the implementation pipeline, then push exact f0fb77b and open the protected issue #90 PR for required CI without merging until exact-head checks and independent PR review pass.",
+  "route_to": "done",
+  "risk_level": "critical"
+}

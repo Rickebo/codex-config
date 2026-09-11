@@ -1,0 +1,40 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Clean committed HEAD 098a4da closes all three fresh review blockers. Insights duplicate predecessor redelivery now re-drains durable pending successors; process exit is published only after its bounded diagnostic marker; shared async resource cleanup retries failures without re-disposing successes, serializes concurrent disposal, and redacts every injected dependency credential. Deterministic red/green tests, complete Insights suites, FastSystem, formatting, cleanup, and independent focused reviews are green.",
+  "changed_files": [
+    "services/insights-service/src/InsightsService.Worker/SourceEventOffsetPolicy.cs",
+    "services/insights-service/src/InsightsService.Worker/Workers.cs",
+    "tests/insights-service/InsightsService.IntegrationTests/PostgresInsightsStoreTests.cs",
+    "tests/system/WorkspaceManager.SystemTests/Infrastructure/AsyncResourceSet.cs",
+    "tests/system/WorkspaceManager.SystemTests/Infrastructure/LocalDotNetProcess.cs",
+    "tests/system/WorkspaceManager.SystemTests/Infrastructure/RealServiceContainerResources.cs",
+    "tests/system/WorkspaceManager.SystemTests/Infrastructure/SystemContainerResources.cs",
+    "tests/system/WorkspaceManager.SystemTests/AsyncResourceSetTests.cs",
+    "tests/system/WorkspaceManager.SystemTests/LocalDotNetProcessTests.cs",
+    "tests/system/WorkspaceManager.SystemTests/RealServiceContainerResourcesTests.cs"
+  ],
+  "validation": [
+    "Insights stranded-successor regression: RED 0/1 before fix, GREEN 1/1 after duplicate-redelivery drain policy",
+    "Insights complete unit 12/12 and integration 18/18; central rerun TRX files stored under successor evidence/code-loop-0",
+    "Exit-marker deterministic regression: RED 0/1 then GREEN 1/1; full class 8/8 plus five repeats 40/40",
+    "Cleanup retry, concurrent serialization, and dependency credential redaction focused tests 3/3",
+    "Combined rebuilt process/resource/system-fixture subset passed 14/14 centrally and in owner lane",
+    "FastSystem passed 77/77 with WM_DOCKER_CONTEXT=default and DOCKER_HOST=unix:///var/run/docker.sock",
+    "InfrastructureContainerLifecycle passed 1/1; RealServiceReadiness correctly did not start without twelve required digest-pinned image variables",
+    "Insights and all ten changed system files pass dotnet format --verify-no-changes; git diff --check clean",
+    "No Testcontainers-labeled containers, networks, volumes, testhost, supervisor, or child processes remain",
+    "Independent exit-order and resource-cleanup reviews found no blocking findings",
+    "Workspace Context revision dba39f36 analyzed clean 98-path HEAD against verified 72728d baseline; digest 4ce01169022015ecc0d623e16478a7d53352c8b6904cf24109c1cf68c10527db"
+  ],
+  "blockers": [],
+  "next_action": "Advance to fresh formal review of clean HEAD 098a4da, explicitly recheck the three closed blockers and the settled 98-path issue #28 change set before opening formal test.",
+  "route_to": "review",
+  "risk_level": "high",
+  "independent_lanes": [
+    "Insights ordering, offsets, durable recovery, and idempotency",
+    "system process diagnostics and lifecycle cleanup semantics",
+    "cross-service acceptance trace and residual-scope classification"
+  ],
+  "requires_council": false
+}

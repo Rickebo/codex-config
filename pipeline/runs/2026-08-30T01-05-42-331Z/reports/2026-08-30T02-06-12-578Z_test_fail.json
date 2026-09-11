@@ -1,0 +1,21 @@
+{
+  "stage": "test",
+  "status": "fail",
+  "summary": "Exact-head validation cannot pass because infra main advanced after the reviewed push. PR #1155 head fc75180f is now BEHIND canonical main 09e6e540, while the protected ARC preparation job remains queued without a runner.",
+  "changed_files": [],
+  "validation": [
+    "PR head remains fc75180f233f5068f2843ee6c8329d5628f600e5",
+    "Canonical infra main advanced from 4096b5da32b4e734e05552a8ede7dc58dd01deaf to 09e6e5405d799446354d531ae76c314374576e74",
+    "The one intervening main commit changes only publish-github-revalidation-kubeconfigs workflow and its test",
+    "Prepare fixed ARC validation inputs in run 33286644306 remains QUEUED",
+    "GitHub reports PR #1155 mergeStateStatus BEHIND"
+  ],
+  "blockers": [
+    "Reviewed head is stale against canonical main and must be refreshed with an exact-lease push",
+    "Protected ARC validation has no completed exact-head evidence",
+    "Phase 0 live identity and break-glass acceptance gates remain unproven"
+  ],
+  "next_action": "Route to code for a Luna-owned minimal refresh onto canonical main, then repeat independent exact-head review and protected CI without live authorization mutation.",
+  "route_to": "code",
+  "risk_level": "critical"
+}

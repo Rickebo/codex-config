@@ -1,0 +1,36 @@
+{
+  "run_dir": "/home/rickebo/.codex/pipeline/runs/2026-08-21T20-20-56-579Z",
+  "stage": "spec",
+  "generated_at": "2026-08-22T15:00:00Z",
+  "risk_level": "high",
+  "decision": "pass",
+  "perspectives": [
+    {
+      "role": "planner",
+      "status": "pass",
+      "summary": "The feature spec, acceptance criteria, tests, and traceability now authorize only target-only GitOps code/manifests/tooling at spec; downstream evidence and activation gates are sequenced explicitly."
+    },
+    {
+      "role": "homelab_devops",
+      "status": "pass_with_downstream_gates",
+      "summary": "The approved storage decisions are recorded: DBs 5Gi local-path RWO, runtimes 1Gi, artifacts 20Gi static NFS RWX Retain, scratch 5Gi temporary/NFS, temporary restore, no new Longhorn, and 70/85% alerts with tested logical migration. NAS and restore proofs remain later gates."
+    },
+    {
+      "role": "reviewer",
+      "status": "pass_with_downstream_gates",
+      "summary": "Provider common-cutoff/WAL/artifact SHA evidence is required before restore/migration/cutover; ExternalSecret refs and least-privilege RBAC may be coded without values; fresh credentials/reauthentication are required before enablement. Historical PVCs are forbidden targets."
+    }
+  ],
+  "consensus_summary": "PASS spec gate. Proceed to code for target-only GitOps code, manifests, policies, and tooling only. Do not sync Argo, restore, mutate source, activate credentials, enable workloads, inspect/reuse/delete/mutate historical PVCs, or switch local Codex until downstream gates pass.",
+  "downstream_gates": [
+    "Provider common-cutoff/WAL and complete artifact SHA/reference closure before restore, logical migration, or cutover.",
+    "NAS ACL/capacity, backup, disposable restore, retention/deletion protection, and logical migration evidence at test/validation/deployment gates.",
+    "Fresh target credential material and reauthentication before workload enablement.",
+    "Argo sync, restore, source mutation, credential activation, and local Codex switch remain prohibited until their gates pass."
+  ],
+  "excluded_targets": [
+    "Historical and retained PVCs: do not inspect, reuse, delete, or mutate.",
+    "Codicarium resources, credentials, source provider state, and existing central-connected worker."
+  ],
+  "open_questions": []
+}

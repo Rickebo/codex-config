@@ -1,0 +1,6 @@
+{
+  "state": "BLOCKED_PREACTIVATION",
+  "live_gate_count": 0,
+  "refresh_required_before_mutation": true,
+  "synthetic_evidence_authorizes": false
+}

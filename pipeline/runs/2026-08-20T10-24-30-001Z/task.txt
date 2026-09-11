@@ -1,0 +1,1 @@
+Execute IMPLEMENTATION_PLAN.md for codicarium/agent-mcp issue #1 sequentially from Stage 0 through Stage 8, with required worktree/PR workflow and validation gates

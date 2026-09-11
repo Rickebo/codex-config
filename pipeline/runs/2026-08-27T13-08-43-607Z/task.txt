@@ -1,0 +1,1 @@
+Complete Workspace Manager Milestone 4 issue #26: cross-service consumer reliability (#46/#54), Knowledge lifecycle (#23), Source follow-ups (#18/#20/#19), full digest-pinned Category=System fault/deletion/audit/browser acceptance, merged PRs, issue closure, and cleanup

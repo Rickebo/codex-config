@@ -1,0 +1,23 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "PR #177 makes release-validation tooling changes execute the validation gate and adds an explicit manual release dispatch path.",
+  "changed_files": [
+    ".github/workflows/release.yml",
+    "tools/test_check_main_protection.py"
+  ],
+  "validation": [
+    "Exact head is cd365d751864e68fa45b64f4e0cf088f9d217228.",
+    "Hosted validate run 32570841508 passed at the exact head.",
+    "Local actionlint, workflow parser, protection-contract tests, compileall, and diff checks passed.",
+    "validation_changed covers Makefile, tools/, and release workflow edits; gate_changed provisions and runs make ci.",
+    "Image/chart publication and deployment-bump conditions remain artifact-only.",
+    "workflow_dispatch sets both artifact flags true for an authorized full release rerun."
+  ],
+  "blockers": [
+    "Independent exact-head review and QA must clear before merge."
+  ],
+  "next_action": "Complete independent review and QA, then merge PR #177 normally and monitor the validation-only push run.",
+  "route_to": "review",
+  "risk_level": "low"
+}

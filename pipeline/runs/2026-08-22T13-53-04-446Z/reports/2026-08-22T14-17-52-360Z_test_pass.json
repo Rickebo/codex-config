@@ -1,0 +1,28 @@
+{
+  "stage": "test",
+  "status": "pass",
+  "summary": "The complete local suite passed, including dependency lock/build, strict lint, rendered contract assertions, negative schema validation, direct upstream identity comparison, and packaged-chart rendering.",
+  "changed_files": [],
+  "validation": [
+    "helm dependency build . passed with Chart.lock redpanda 5.10.2",
+    "helm lint . --strict --values values.yaml passed",
+    "ruby scripts/validate.rb rendered 19 Kubernetes documents and passed YAML/JSON, identity, TLS, readiness, PVC, and resource assertions",
+    "Invalid redpanda.statefulset.replicas=2 override failed schema validation as expected",
+    "values root/nesting test passed: exactly one top-level redpanda key and no nested redpanda key",
+    "Direct upstream chart and wrapper both rendered redpanda/deployment-controller, serviceName redpanda, datadir claim template, PVC identity datadir-redpanda-0, and image v25.1.2",
+    "helm package plus packaged-chart render passed"
+  ],
+  "blockers": [],
+  "next_action": "Commit the reviewed files, push feat/redpanda-config, open the pull request, and use the PR checks plus final repository inspection as the validation gate.",
+  "spec_file": "/tmp/kafka-config-feature-spec.json",
+  "spec_check_file": "/tmp/kafka-config-feature-spec-check.json",
+  "council_file": "/tmp/kafka-config-council.json",
+  "requires_council": true,
+  "independent_lanes": [
+    "Local Helm and rendered-manifest test suite",
+    "Argo-shaped direct-vs-wrapper migration identity test"
+  ],
+  "route_to": "validation",
+  "risk_level": "high",
+  "issues": []
+}

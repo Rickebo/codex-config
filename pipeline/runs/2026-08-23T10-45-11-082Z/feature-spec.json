@@ -1,0 +1,277 @@
+{
+  "meta": {
+    "id": "SPEC-YOUTARR-GOOGLE-OAUTH-20260823",
+    "title": "Activate VPN-only Youtarr v0.3.27 Google OAuth",
+    "author": "codex-spec-council",
+    "created_at": "2026-08-23T11:05:00Z",
+    "version": "1.0.0"
+  },
+  "feature": {
+    "problem_statement": "Youtarr v0.3.27 already contains a gated controller-only Google OAuth listener and ExternalSecret, but the production gate is disabled. The homelab needs OAuth activated at the VPN-only hostname youtarr.arr.rickebo.com using the three existing Bitwarden items, while retaining strict network isolation, exact Google callback wiring, and reviewable GitOps rollout evidence.",
+    "goals": [
+      "Activate the existing Youtarr v0.3.27 controller public setup listener and Google ExternalSecret through a PR-based GitOps change, without placing secret values in Git or evidence.",
+      "Serve the setup listener at https://youtarr.arr.rickebo.com over TLS and the established VPN/homelab allowlist only, with no public ExternalDNS record or public internet exposure.",
+      "Prove Google login, OAuth callback completion, and the configured Youtarr account subscription synchronization end to end with Playwright, while verifying Argo and workload health using explicit targets."
+    ],
+    "non_goals": [
+      "Creating, rotating, exporting, or printing Google OAuth or Bitwarden credentials.",
+      "Changing the Google Cloud project/client or registering a callback; registration is a preflight dependency.",
+      "Publishing a public DNS record, broadening the VPN allowlist, or exposing Youtarr's private admin listener or worker listener.",
+      "Direct kubectl apply, ad-hoc cluster mutation, or changes to unrelated Servarr applications."
+    ],
+    "scope_in": [
+      "Youtarr chart values/templates/tests and focused documentation needed to enable the existing v0.3.27 OAuth gate.",
+      "The three Bitwarden remote-key references: youtarr-google-oauth-client-id, youtarr-google-oauth-client-secret, and youtarr-google-oauth-token-key, mapped to client_id, client_secret, and token_key.",
+      "Internal TLS ingress, Traefik VPN allowlist, controller-only public service on port 8082, and removal/absence of ExternalDNS annotations.",
+      "PR/worktree validation, explicit Argo Application argocd/youtarr sync, and redacted post-sync OAuth/account validation evidence."
+    ],
+    "scope_out": [
+      "Google Cloud credential provisioning or inspection that requires exposing secret values.",
+      "Any public ingress, public ExternalDNS controller target, or alternate callback/hostname.",
+      "Changes to Youtarr data, media, backup, migration, worker behavior, or unrelated applications."
+    ]
+  },
+  "requirements": [
+    {
+      "id": "REQ-001",
+      "priority": "MUST",
+      "statement": "The rollout MUST use Youtarr v0.3.27 with the repository's immutable image reference and MUST render only the existing controller-only public setup listener on port 8082; the private admin listener on 8080 and worker listener MUST remain separately scoped.",
+      "rationale": "The requested OAuth flow is implemented by v0.3.27 and must not accidentally expose bearer-token or worker surfaces."
+    },
+    {
+      "id": "REQ-002",
+      "priority": "MUST",
+      "statement": "The chart MUST enable the existing youtarr-google-oauth ExternalSecret and map client_id, client_secret, and token_key only to the existing Bitwarden remote items youtarr-google-oauth-client-id, youtarr-google-oauth-client-secret, and youtarr-google-oauth-token-key; no secret value may appear in Git, command output, browser evidence, or pipeline artifacts.",
+      "rationale": "Runtime secret resolution is required while preserving credential confidentiality and avoiding newly created credentials."
+    },
+    {
+      "id": "REQ-003",
+      "priority": "MUST",
+      "statement": "Before any enabling PR is merged or synchronized, a preflight MUST verify that the pre-existing Google Web OAuth client is configured with the exact authorized callback https://youtarr.arr.rickebo.com/api/setup/google/callback. If registration cannot be verified without exposing client values, the run MUST write a redacted blocker naming the verification paths and leave activation unsynchronized.",
+      "rationale": "Google rejects callback mismatches, and secret-safe operation forbids guessing or printing client material."
+    },
+    {
+      "id": "REQ-004",
+      "priority": "MUST",
+      "statement": "The enabled setup route MUST use host youtarr.arr.rickebo.com, TLS, and the established VPN/homelab source allowlist; it MUST have no external-dns.alpha.kubernetes.io annotations or other public DNS automation, and it MUST not expose the route outside VPN-authorized sources.",
+      "rationale": "The user explicitly requires VPN-only access and no public ExternalDNS exposure."
+    },
+    {
+      "id": "REQ-005",
+      "priority": "MUST",
+      "statement": "All repository changes MUST be made in a dedicated worktree/branch and delivered by a PR with rendered-manifest, Helm, focused-test, and secret-scan evidence; no direct production manifest mutation is permitted.",
+      "rationale": "PR-based GitOps keeps the security-sensitive activation reviewable and reversible."
+    },
+    {
+      "id": "REQ-006",
+      "priority": "MUST",
+      "statement": "The rollout MUST explicitly synchronize Argo Application youtarr in namespace argocd, then verify its Synced/Healthy state and Youtarr readiness. Every kubectl command used for workload checks MUST set KUBECONFIG=/home/rickebo/.kube/homelab.yaml, use --context default, and specify --namespace servarr; Argo commands MUST target argocd/youtarr explicitly.",
+      "rationale": "The repository policy forbids relying on active CLI defaults and the user supplied an exact cluster/context and application boundary."
+    },
+    {
+      "id": "REQ-007",
+      "priority": "MUST",
+      "statement": "A Playwright-only browser test MUST demonstrate VPN-reachable Youtarr setup login, Google authorization, return through the exact callback, and an authenticated setup session without recording credentials, authorization codes, tokens, or cookies.",
+      "rationale": "OAuth correctness depends on the real browser redirect/session flow, not only rendered YAML or health probes."
+    },
+    {
+      "id": "REQ-008",
+      "priority": "MUST",
+      "statement": "After OAuth login, a Playwright-only browser test MUST verify that Youtarr's configured account identity rickebo completes account/subscription synchronization and that the resulting authenticated state is visible and stable; failures MUST be captured with redacted diagnostics.",
+      "rationale": "The requested outcome includes account sync, not merely a successful Google redirect."
+    },
+    {
+      "id": "REQ-009",
+      "priority": "MUST",
+      "statement": "The rollout MUST include a fail-closed rollback plan that restores the gated-disabled revision and confirms that the public ExternalSecret, public service, and setup route are absent or disabled after rollback.",
+      "rationale": "OAuth and ingress activation changes affect an authentication boundary and require a recoverable operational path."
+    }
+  ],
+  "acceptance_criteria": [
+    {
+      "id": "AC-001",
+      "requirement_ids": ["REQ-001", "REQ-003"],
+      "scenario": "Given the preflight is run before PR merge, when the Google Cloud Web OAuth client is checked, then it is confirmed to authorize exactly https://youtarr.arr.rickebo.com/api/setup/google/callback. If that exact registration cannot be verified without client values, then the evidence names the Google Cloud Console/API and Bitwarden-item verification paths as remaining blockers, no values are printed, and Argo remains unsynchronized."
+    },
+    {
+      "id": "AC-002",
+      "requirement_ids": ["REQ-001", "REQ-002"],
+      "scenario": "Given a placeholder-only Helm render of the activation values, when manifests are inspected, then the controller uses the immutable v0.3.27 image, youtarr-google-oauth ExternalSecret has the three exact remote keys, only the controller receives the OAuth environment references, and no secret value occurs in output."
+    },
+    {
+      "id": "AC-003",
+      "requirement_ids": ["REQ-004"],
+      "scenario": "Given the activation values are enabled, when the rendered ingress, service, middleware, and NetworkPolicy are reviewed, then the route host is youtarr.arr.rickebo.com, callback is exact, TLS is enabled, backend is the controller public port 8082, source ranges are VPN/homelab-only, and no ExternalDNS annotation or public DNS automation is present."
+    },
+    {
+      "id": "AC-004",
+      "requirement_ids": ["REQ-005", "REQ-006"],
+      "scenario": "Given the PR checks pass and the PR is merged, when Argo Application argocd/youtarr is explicitly synchronized, then the application reports Synced/Healthy, controller and worker are ready, and every workload kubectl evidence line uses KUBECONFIG=/home/rickebo/.kube/homelab.yaml --context default --namespace servarr."
+    },
+    {
+      "id": "AC-005",
+      "requirement_ids": ["REQ-004", "REQ-007"],
+      "scenario": "Given a VPN-connected Playwright project and a non-VPN control project, when the setup URL is opened, then the VPN project can reach the TLS route while the non-VPN project cannot reach it, and the browser evidence contains no OAuth secrets, codes, tokens, or session cookies."
+    },
+    {
+      "id": "AC-006",
+      "requirement_ids": ["REQ-003", "REQ-007"],
+      "scenario": "Given the exact callback preflight passed, when a Playwright browser completes Google authorization from Youtarr setup, then it returns to https://youtarr.arr.rickebo.com/api/setup/google/callback and shows an authenticated Youtarr setup state without a redirect_uri_mismatch or state/PKCE failure."
+    },
+    {
+      "id": "AC-007",
+      "requirement_ids": ["REQ-008"],
+      "scenario": "Given an authenticated Google-linked browser session, when Youtarr's account synchronization is triggered or its configured interval is observed, then account identity rickebo reaches the expected synchronized state and the browser-visible account/subscription result is verified with redacted evidence."
+    },
+    {
+      "id": "AC-008",
+      "requirement_ids": ["REQ-009"],
+      "scenario": "Given the activation revision is reverted through GitOps, when Argo synchronizes the rollback revision, then the application is Healthy and the OAuth ExternalSecret/public service/setup route are disabled or absent, with no public DNS resource created."
+    }
+  ],
+  "test_plan": [
+    {
+      "id": "TST-001",
+      "type": "manual",
+      "requirement_ids": ["REQ-001", "REQ-003"],
+      "approach": "Run a secret-safe preflight before enabling. Inspect Youtarr v0.3.27 provenance and the existing immutable image reference. Use Playwright for any Google Cloud Console browser verification, or an approved metadata/API path that never emits client values, and compare the registered callback byte-for-byte. If it cannot be verified without values, write the redacted blocker and stop before merge/sync."
+    },
+    {
+      "id": "TST-002",
+      "type": "integration",
+      "requirement_ids": ["REQ-001", "REQ-002", "REQ-004"],
+      "approach": "In the PR worktree, run helm lint and helm template with placeholder remote-key names only, then parse manifests to assert v0.3.27, controller-only secretKeyRefs, exact callback/host, port 8082, VPN allowlist, TLS, and absence of all ExternalDNS annotations. Run a redacted repository/render secret scan."
+    },
+    {
+      "id": "TST-003",
+      "type": "integration",
+      "requirement_ids": ["REQ-005"],
+      "approach": "Run focused Youtarr Helm render tests and repository CI from the dedicated branch/PR, inspect the diff for only scoped files, and record the PR/commit plus check results without exposing secret material."
+    },
+    {
+      "id": "TST-004",
+      "type": "manual",
+      "requirement_ids": ["REQ-006"],
+      "approach": "Explicitly run argocd app sync youtarr with app namespace argocd and verify argocd/youtarr Synced/Healthy. For workload checks use only commands that set KUBECONFIG=/home/rickebo/.kube/homelab.yaml, --context default, and --namespace servarr; record rollout and ExternalSecret readiness with values redacted."
+    },
+    {
+      "id": "TST-005",
+      "type": "e2e",
+      "requirement_ids": ["REQ-004", "REQ-007"],
+      "approach": "Use Playwright projects with explicit VPN and non-VPN egress to open https://youtarr.arr.rickebo.com, verify TLS/setup reachability only from VPN, and assert the non-VPN control path is denied or unreachable. Persist only status, URL path, and redacted screenshots/traces; disable request/response body and cookie capture where credentials could appear."
+    },
+    {
+      "id": "TST-006",
+      "type": "e2e",
+      "requirement_ids": ["REQ-003", "REQ-007"],
+      "approach": "Use Playwright to start Youtarr setup, complete the Google Web OAuth authorization in the approved test account, assert the exact callback URL and successful state/PKCE/session completion, and redact all query secrets, codes, tokens, and cookies from traces and reports."
+    },
+    {
+      "id": "TST-007",
+      "type": "e2e",
+      "requirement_ids": ["REQ-008"],
+      "approach": "Using the same isolated Playwright browser context after login, observe or trigger the Youtarr account sync, assert identity rickebo and the expected synchronized subscription/account result in the UI, and retain only redacted assertions and timestamps."
+    },
+    {
+      "id": "TST-008",
+      "type": "manual",
+      "requirement_ids": ["REQ-009"],
+      "approach": "Revert the GitOps revision in a controlled rollback path, explicitly sync argocd/youtarr, verify readiness with the required explicit kubeconfig/context/namespace command contract, and assert the gated public ExternalSecret/service/route are disabled or absent and no public DNS record was created."
+    }
+  ],
+  "traceability": [
+    {
+      "requirement_id": "REQ-001",
+      "acceptance_ids": ["AC-002"],
+      "test_ids": ["TST-001", "TST-002"],
+      "review_checks": ["Confirm v0.3.27 immutable image and controller-only listener wiring; confirm admin and worker listeners are not routed through the OAuth ingress."],
+      "validation_checks": ["Helm render and focused tests show the expected immutable image and port 8082 manifests."]
+    },
+    {
+      "requirement_id": "REQ-002",
+      "acceptance_ids": ["AC-002"],
+      "test_ids": ["TST-002"],
+      "review_checks": ["Compare all three ExternalSecret remote keys and secret key names against the approved Bitwarden item names; reject plaintext or worker secret references."],
+      "validation_checks": ["Rendered output and secret scan contain references only, never credential values; ExternalSecret readiness is checked redacted."]
+    },
+    {
+      "requirement_id": "REQ-003",
+      "acceptance_ids": ["AC-001", "AC-006"],
+      "test_ids": ["TST-001", "TST-006"],
+      "review_checks": ["Exact callback string is present in values, docs, tests, Google preflight, and browser assertion; any unverifiable registration is an explicit blocker."],
+      "validation_checks": ["Preflight evidence proves exact registration or records the named remaining blocker and prevents sync; Playwright sees the exact callback without redirect mismatch."]
+    },
+    {
+      "requirement_id": "REQ-004",
+      "acceptance_ids": ["AC-003", "AC-005"],
+      "test_ids": ["TST-002", "TST-005"],
+      "review_checks": ["Ingress host, TLS, allowlist, service port, and NetworkPolicy are VPN-only; no ExternalDNS annotation or public controller target is present."],
+      "validation_checks": ["Rendered manifest and two Playwright egress projects demonstrate VPN reachability and non-VPN denial/unreachability."]
+    },
+    {
+      "requirement_id": "REQ-005",
+      "acceptance_ids": ["AC-004"],
+      "test_ids": ["TST-003"],
+      "review_checks": ["PR diff is limited to scoped Youtarr files and includes no direct cluster mutation or secret values."],
+      "validation_checks": ["PR checks, Helm tests, secret scan, and recorded commit/PR evidence pass."]
+    },
+    {
+      "requirement_id": "REQ-006",
+      "acceptance_ids": ["AC-004"],
+      "test_ids": ["TST-004", "TST-008"],
+      "review_checks": ["Argo application identity is exactly argocd/youtarr; every kubectl workload command carries the required kubeconfig, context, and servarr namespace."],
+      "validation_checks": ["Explicit Argo sync reports Synced/Healthy and explicit-context workload checks report readiness before browser testing."]
+    },
+    {
+      "requirement_id": "REQ-007",
+      "acceptance_ids": ["AC-005", "AC-006"],
+      "test_ids": ["TST-005", "TST-006"],
+      "review_checks": ["Browser tests use Playwright only, isolate the test context, and configure redaction/no credential capture."],
+      "validation_checks": ["VPN-only reachability, exact callback, successful Google login, and no OAuth failure are evidenced by redacted Playwright assertions."]
+    },
+    {
+      "requirement_id": "REQ-008",
+      "acceptance_ids": ["AC-007"],
+      "test_ids": ["TST-007"],
+      "review_checks": ["Account identity and synchronization result are asserted without assuming a successful login alone proves sync."],
+      "validation_checks": ["Playwright observes the expected rickebo synchronized account/subscription state with redacted evidence."]
+    },
+    {
+      "requirement_id": "REQ-009",
+      "acceptance_ids": ["AC-008"],
+      "test_ids": ["TST-008"],
+      "review_checks": ["Rollback revision, gated defaults, and absence of public DNS automation are documented and reversible."],
+      "validation_checks": ["Post-rollback Argo/workload state is healthy and public OAuth resources are disabled/absent."]
+    }
+  ],
+  "quality_gates": {
+    "spec_review_required": true,
+    "testability_required": true,
+    "traceability_required": true
+  },
+  "council": {
+    "perspectives": [
+      {
+        "role": "planner",
+        "summary": "Sequence a hard preflight (exact Google callback registration) before the PR gate, then secret-safe Helm/render checks, PR merge, explicit argocd/youtarr sync, and Playwright-only VPN/login/account-sync validation. Keep the default gated-disabled revision as rollback."
+      },
+      {
+        "role": "reviewer",
+        "summary": "The main risks are callback drift, accidentally retaining the scaffolding's public ExternalDNS annotations, routing admin/worker traffic through the public port, and printing credentials in traces. The spec makes hostname, callback, port, allowlist, no-ExternalDNS, and redaction hard checks."
+      },
+      {
+        "role": "tech_lead_qa",
+        "summary": "Coverage must prove rendered manifest contracts, secret references, explicit Argo/workload targeting, VPN versus non-VPN reachability, browser OAuth state/PKCE completion, and account synchronization independently. A successful HTTP health check is insufficient."
+      },
+      {
+        "role": "security_devops",
+        "summary": "Use only the three existing Bitwarden item names as remote references, never values. Keep the route on the VPN allowlist with no ExternalDNS, require explicit kubeconfig/context/namespace for kubectl, and stop before sync if Google client registration cannot be verified safely."
+      }
+    ],
+    "consensus_summary": "Approve a minimal activation of the existing v0.3.27 controller-only OAuth gate, but only after exact callback preflight and secret-safe PR checks. The route is internal/VPN-only at youtarr.arr.rickebo.com, must not use ExternalDNS, and must be validated through explicit Argo/workload targets followed by Playwright login and account-sync evidence.",
+    "open_questions": [
+      "Can the exact Google Web OAuth callback be verified through an approved Google Cloud Console/API path without exposing client ID, client secret, or token key? If not, the preflight blocker must be written and the pipeline must not sync.",
+      "Which approved VPN and non-VPN Playwright projects provide the two egress perspectives while preserving redaction and no cookie/token capture?"
+    ]
+  }
+}

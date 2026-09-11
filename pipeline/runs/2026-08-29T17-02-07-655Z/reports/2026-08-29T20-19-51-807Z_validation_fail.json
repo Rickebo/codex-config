@@ -1,0 +1,25 @@
+{
+  "stage": "validation",
+  "status": "fail",
+  "summary": "PR #153 merged and main CI passed, but the immutable release coordinator resumed unpublished v0.14.0 at old source 7b5a96b instead of creating a corrected version. The fixed Dockerfile at f3b72a7 cannot enter that tuple, so publication cannot succeed safely.",
+  "changed_files": [],
+  "validation": [
+    "PR #153 merged as f3b72a747c268e0d783c8b74671954e83985daa7",
+    "Post-merge main CI run 33272280105 passed all five jobs",
+    "Automatic Release run 33272716563 dispatched Release Verify 33272738427 for immutable v0.14.0 at 7b5a96b",
+    "Release verifier checks out inputs.tag and cannot include the f3b72a7 size fix",
+    "Planner test explicitly resumes unpublished ancestors even after fix follow-ups",
+    "No safe manual dispatch, retag, deletion, overwrite, or cap increase path exists"
+  ],
+  "blockers": [
+    "Release planner lacks authenticated terminal-failed-candidate retirement needed to mint v0.14.1",
+    "Usable immutable publication remains incomplete; issues #150 and #152 must stay open"
+  ],
+  "next_action": "Implement and test a narrow failed-candidate retirement proof that preserves normal resume behavior and allows a corrected protected-main descendant to mint a new immutable patch version.",
+  "route_to": "code",
+  "independent_lanes": [
+    "infra PR #1272 protected ARC queue remains independent and unmerged",
+    "Phase 0 SSO evidence remains blocked by no connected browser"
+  ],
+  "risk_level": "critical"
+}

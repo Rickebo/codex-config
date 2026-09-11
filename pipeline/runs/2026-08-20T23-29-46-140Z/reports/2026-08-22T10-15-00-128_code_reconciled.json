@@ -1,0 +1,37 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Issue #128 reconciled head 261b69f5dedf720880b448695cbb264183860dd5 is based on current main d17e9b9 and preserves #124 supply-chain controls while retaining real-container smoke remediation.",
+  "changed_files": [
+    ".github/workflows/release.yml",
+    "Dockerfile",
+    "Makefile",
+    "api/runtime-routes.txt",
+    "apps/web/index.html",
+    "docs/deployment.md",
+    "migrations/manifest.json",
+    "tools/check_migration_assets.py",
+    "tools/check_migration_manifest.py",
+    "tools/check_openapi/main.go",
+    "tools/check_openapi/main_test.go",
+    "tools/docker_migration.sh",
+    "tools/docker_smoke.sh",
+    "tools/test_check_migration_assets.py",
+    "tools/test_docker_smoke.py"
+  ],
+  "validation": [
+    "Rebased cleanly onto origin/main d17e9b9",
+    "Full make ci passed with Go 1.26.7",
+    "Real Docker build/smoke and migration cleanup passed",
+    "21 focused contract/supply-chain tests passed",
+    "Race tests, vet, OpenAPI, Helm, actionlint, workflow parser, and diff checks passed",
+    "Exact-head review GO and QA PASS completed"
+  ],
+  "blockers": [
+    "Hosted validation is required for the reconciled head before merge.",
+    "Release workflow currently declares and verifies linux/amd64 only; no arm64 publication is claimed.",
+    "Published release artifact and DEV rollout evidence remain post-merge external gates."
+  ],
+  "next_action": "Advance to exact-head review/test records, then complete hosted validation and normal merge evaluation.",
+  "route_to": "review"
+}

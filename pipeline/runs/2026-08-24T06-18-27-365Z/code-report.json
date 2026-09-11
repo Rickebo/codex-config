@@ -1,0 +1,28 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Implemented a serialized trusted Automatic Release coordinator, dispatch-only exact-SHA Release Verify entry, preserved Publish Release handoff, conventional SemVer planner, immutable rerun handling, documentation, and focused security/flow tests.",
+  "changed_files": [
+    ".github/workflows/automatic-release.yaml",
+    ".github/workflows/release.yaml",
+    ".github/workflows/publish-release.yaml",
+    "hack/release-plan.py",
+    "hack/test-release-plan.py",
+    "hack/release-provenance.py",
+    "hack/test-release-graph.py",
+    "hack/test-release-image-flow.py",
+    "Makefile",
+    "docs/README.md",
+    "docs/releasing.md"
+  ],
+  "validation": [
+    "python3 hack/test-release-plan.py: 10 tests passed",
+    "python3 hack/test-release-graph.py: 38 tests passed",
+    "python3 hack/test-release-image-flow.py: 26 tests passed",
+    "make test-release-flow: passed",
+    "actionlint on Automatic Release, Release Verify, and Publish Release: passed",
+    "git diff --check: passed"
+  ],
+  "blockers": [],
+  "next_action": "Perform an independent exact-diff review against the approved trust, SemVer, concurrency, idempotence, and release-chain requirements."
+}

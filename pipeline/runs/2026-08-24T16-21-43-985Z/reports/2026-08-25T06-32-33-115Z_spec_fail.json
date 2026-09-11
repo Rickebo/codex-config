@@ -1,0 +1,47 @@
+{
+  "stage": "spec",
+  "status": "fail",
+  "summary": "Exact-hash v1.9 passed structure, schema, cryptographic, archive, and trace checks. Planner and QA returned GO, but security and DevOps rejected implementation because claim/receipt atomicity, recovery-workflow fencing, immutable DeploymentGrant migration, and enforceable ingress/egress paths remain underspecified.",
+  "changed_files": [
+    "/home/rickebo/.codex/pipeline/runs/2026-08-24T16-21-43-985Z/build-v1.9-spec.mjs",
+    "/home/rickebo/.codex/pipeline/runs/2026-08-24T16-21-43-985Z/validate-v1.9.py",
+    "/home/rickebo/.codex/pipeline/runs/2026-08-24T16-21-43-985Z/feature-spec.v1.9.draft.json",
+    "/home/rickebo/.codex/pipeline/runs/2026-08-24T16-21-43-985Z/feature-spec.v1.9.annex.json",
+    "/home/rickebo/.codex/pipeline/runs/2026-08-24T16-21-43-985Z/spec-check.v1.9.draft.json",
+    "/home/rickebo/.codex/pipeline/runs/2026-08-24T16-21-43-985Z/council-v1.9.json"
+  ],
+  "validation": [
+    "Spec SHA-256 a8bb4b5135ef30bdd654e7adbb54a32fce4c2fd70bacf1462288ca64c11b1ce6.",
+    "Annex SHA-256 2ff5d493d9d9b424ad16cdb24f68f06c004a0f68ed96956ad8dd407f52308ec7.",
+    "Strict check passed 32 MUSTs, 16 acceptance criteria, 16 tests, and 32 trace rows without warnings.",
+    "Five Draft 2020-12 schemas and six fixtures validated with duplicate-key rejection.",
+    "Three Ed25519 signatures, all 18 manifest hashes, and canonical tar/zstd bytes verified.",
+    "The 1,000-suite horizon terminates UNKNOWN_MANUAL with zero mutations.",
+    "All six recorded remote main SHAs matched immediately before council.",
+    "Planner and QA returned GO; security and DevOps returned NO-GO.",
+    "Live codicarium-dev remains two-node with the control node NoSchedule; no cluster mutation occurred.",
+    "No repository, GitHub, workflow, registry, Vault, release, or cluster mutation occurred."
+  ],
+  "blockers": [
+    "Add an atomic durable first-side-effect claim reservation keyed by exact release identity; Check Runs are observation only.",
+    "Define an immutable atomic reservation/commit ledger for every mutation receipt with independent signer and writer roles.",
+    "Disable, delete, or strictly replace both recovery workflows before v0.6.14 so neither can sign or mutate that release.",
+    "Define a safe migration from the immutable existing runner-config-dev grant/profile or use a non-conflicting new grant contract.",
+    "Add exact central resource scopes for broker Service, NetworkPolicy, PDB, monitoring, and internal certificate objects.",
+    "Define broker ingress, runner GitHub control/action traffic, monitoring traffic, and enforceable broker egress through exact policy.",
+    "Add raw handoff/dispatch payload fixtures and machine-bind live tests to the exact codicarium-dev kubeconfig/context."
+  ],
+  "next_action": "Revise to v2.0 with atomic coordination journal, complete workflow retirement, deployable grant migration, and enforceable network paths; then rerun the exact-hash four-lane council.",
+  "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T16-21-43-985Z/feature-spec.v1.9.draft.json",
+  "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T16-21-43-985Z/spec-check.v1.9.draft.json",
+  "council_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T16-21-43-985Z/council-v1.9.json",
+  "requires_council": true,
+  "independent_lanes": [
+    "atomic release claim and mutation receipt journal",
+    "recovery workflow and reusable authority retirement",
+    "DeploymentGrant/Profile migration and resource allowlists",
+    "runner, broker, monitoring, Vault, and egress connectivity"
+  ],
+  "route_to": "spec",
+  "risk_level": "critical"
+}

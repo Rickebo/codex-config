@@ -1,0 +1,50 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Independent Luna re-review of PR #1293 head 64e8ce15 remains NO-GO: unprefixed sudoers grants can escape inventory, a symlinked snapshot-root ancestor is resolved before no-follow validation, and the positive fixture depends on a commit absent from a normal PR checkout.",
+  "changed_files": [],
+  "validation": [
+    "Exact PR head 64e8ce15479c9b1c500427bd98cf2d85426a4f1d reviewed against base efb9faac0606e02b7cac8e36e716f1ede9a50fb6.",
+    "Verifier, contract, and tests were reviewed against the prior five findings and the high-risk acceptance matrix.",
+    "PR Validate, Legacy Freeze Guard, and ARC classifier currently pass; the trusted ARC producer job remains queued and is not merge evidence."
+  ],
+  "blockers": [
+    "Inventory every sudoers.d file or fail closed when any undeclared file can grant the agent additional authority; add an unprefixed sudo-policy mutation test.",
+    "Validate the user-supplied snapshot root component-by-component before any resolve operation so symlinked ancestors cannot bypass no-follow guarantees.",
+    "Make the positive fixture self-contained in a normal PR checkout rather than requiring an unfetched diverged commit.",
+    "Add focused fail-closed tests for missing and permission-denied roots, malformed service state, and service/workspace metadata races."
+  ],
+  "next_action": "Return to the Luna code owner for focused remediation, then independently re-review the new exact head before entering test stage.",
+  "route_to": "code",
+  "risk_level": "high",
+  "issues": [
+    {
+      "id": "REV-1290-006",
+      "title": "Unprefixed sudoers grants escape privileged inventory",
+      "severity": "high",
+      "details": "The verifier ignores unprefixed files in sudoers.d, so an undeclared file can broaden the agent's root command boundary without detection.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV-1290-007",
+      "title": "Snapshot-root symlinked ancestors resolve before validation",
+      "severity": "high",
+      "details": "Resolving the supplied root before validating its original component chain permits a symlinked ancestor to bypass the intended no-follow trust check.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV-1290-008",
+      "title": "Positive fixture is not portable to normal PR checkout",
+      "severity": "high",
+      "details": "The fixture reads blobs from a diverged immutable commit that the PR workflow does not fetch, causing setup failure before verifier behavior is exercised.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV-1290-009",
+      "title": "Remaining fail-closed acceptance paths lack focused coverage",
+      "severity": "medium",
+      "details": "Missing-root, permission, malformed service state, and metadata race cases require deterministic adversarial tests.",
+      "owner_stage": "code"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Checker is hardened at 656ed43: CI must contain only validate with job-level read permissions, and unsupported/wrapped make invocations fail closed.",
+  "changed_files": [
+    ".github/workflows/ci.yml",
+    "tools/workflowtrust/main.go",
+    "tools/workflowtrust/main_test.go"
+  ],
+  "validation": [
+    "commit 656ed43 pushed and worktree clean",
+    "make ci-pr and make ci passed",
+    "Go tests/vet, actionlint, workflow parser, trust checker, and git diff --check passed"
+  ],
+  "blockers": [
+    "External dedicated release runner provisioning, fork canary, VM teardown, cleanup, Docker isolation, and egress evidence remain required before issue closure."
+  ],
+  "next_action": "Repeat independent exact-head security review at 656ed43.",
+  "route_to": "review",
+  "risk_level": "critical",
+  "independent_lanes": [
+    "Exact CI job and permission shape",
+    "Conservative shell command parser"
+  ],
+  "requires_council": true
+}

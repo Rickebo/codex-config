@@ -1,0 +1,32 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Luna completed loop-5 remediation on PR #1293 at exact head 4a840233: contract JSON is bounded, special files are rejected before opening, and arbitrary systemd inference was removed in favor of an explicit exact managed-runner scope.",
+  "changed_files": [
+    "contracts/authority-runner-ownership.json",
+    "docs/authority-runner-ownership-runbook.md",
+    "scripts/verify-authority-runner-contract.py",
+    "tests/fixtures/authority-runner/actions.runner.codicarium.external-linux-400-4.service",
+    "tests/fixtures/authority-runner/check-codicarium-artifacts.py",
+    "tests/fixtures/authority-runner/codicarium-artifact-seal-v1",
+    "tests/fixtures/authority-runner/codicarium-artifact-seal-v1-cleanup",
+    "tests/fixtures/authority-runner/codicarium-artifact-seal-v1-preflight",
+    "tests/test-authority-runner-contract.py"
+  ],
+  "validation": [
+    "Twenty focused positive and adversarial tests passed in the Luna implementation lane.",
+    "Python compilation, contract JSON validation, and git diff --check passed.",
+    "Contract JSON reads are capped at 64 KiB with deterministic object_oversize failure.",
+    "FIFO, device, socket, and other non-regular inventory entries are rejected via no-follow metadata checks before any blocking open.",
+    "Systemd scope is explicitly limited to exact managed runner-prefix units; unrelated root-managed services and root compromise are documented out of scope.",
+    "Worktree is clean and remote branch matches exact head 4a840233d2497b15a00a9a1872c797c64b862de5; exact-head Validate is in progress and protected ARC producer remains queued.",
+    "No live host, cluster, workflow dispatch, merge, secret access, or PR #1246 action occurred."
+  ],
+  "blockers": [],
+  "next_action": "Perform a fresh independent Luna security review of exact head 4a840233 with bounded static/tests, then enter test stage only if no blocking findings remain.",
+  "route_to": "review",
+  "risk_level": "high",
+  "independent_lanes": [
+    "final authority-runner contract/verifier security review before test stage"
+  ]
+}

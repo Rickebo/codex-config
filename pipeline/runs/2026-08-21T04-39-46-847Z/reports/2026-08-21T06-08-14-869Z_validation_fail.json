@@ -1,0 +1,26 @@
+{
+  "stage": "validation",
+  "status": "fail",
+  "summary": "Hosted PR #154 validation run 32452881913 failed at exact head 12d02f7bef8e9f4dacb727ae6c4a2caec514e0f6 in govulncheck before workflow parsing.",
+  "changed_files": [
+    ".github/workflows/ci.yml",
+    ".github/workflows/release.yml",
+    "Dockerfile",
+    "Makefile",
+    "go.mod",
+    "go.sum",
+    "tools/generate_release_metadata.py"
+  ],
+  "validation": [
+    "PR #154 created at exact remediation head",
+    "Hosted validate check 96684472443 started and reached govulncheck",
+    "Protected main ruleset correctly required validate and one approving review"
+  ],
+  "blockers": [
+    "Hosted govulncheck reports 19 Go 1.26 standard-library vulnerabilities including GO-2026-6089; local govulncheck passed but hosted evidence is authoritative until toolchain/version discrepancy is resolved.",
+    "Workflow parser did not run because hosted CI stopped at vulnerability validation.",
+    "Nexus OCI referrer/signing support and admission enforcement remain external unverified prerequisites."
+  ],
+  "next_action": "Inspect hosted logs and toolchain versions, remediate the Go vulnerability gate or pin an evidenced fixed toolchain, then rerun exact-head review/QA and hosted validation.",
+  "route_to": "code"
+}

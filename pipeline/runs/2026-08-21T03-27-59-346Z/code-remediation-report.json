@@ -1,0 +1,18 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Remediated the review finding by parsing each maintained document's explicit chart declaration and comparing it to .codicarium/dev/deploy.yaml, with stale-declaration regression coverage.",
+  "changed_files": ["tools/check_docs_consistency.py", "tools/test_check_docs_consistency.py"],
+  "validation": [
+    "Exact head eecf1df77283b961733884dad6b8c13a3db5ae75",
+    "5 documentation consistency tests passed",
+    "67 operator quickstart tests passed",
+    "Full make ci IMAGE_TAG=issue-132 passed",
+    "git diff --check passed"
+  ],
+  "blockers": [],
+  "next_action": "Repeat independent exact-head review and QA, then publish only the remediated head.",
+  "route_to": "review",
+  "risk_level": "low",
+  "commit": "eecf1df77283b961733884dad6b8c13a3db5ae75"
+}

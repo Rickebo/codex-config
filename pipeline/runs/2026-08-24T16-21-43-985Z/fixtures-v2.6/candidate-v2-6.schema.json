@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://codicarium.local/v2.6/candidate.v2.6",
+  "title": "candidate.v2.6",
+  "type": "object",
+  "required": [
+    "media_type",
+    "byte_length",
+    "sha256",
+    "sandbox"
+  ],
+  "properties": {
+    "media_type": {
+      "type": "string",
+      "minLength": 1
+    },
+    "byte_length": {
+      "type": "integer"
+    },
+    "sha256": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sandbox": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "additionalProperties": false
+}

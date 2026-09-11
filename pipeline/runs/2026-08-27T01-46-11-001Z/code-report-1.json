@@ -1,0 +1,28 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Committed HEAD e016f54 closes TEST0-MODEL-001 without production changes. The Model workspace-deletion integration test now observes committed offsets through a scoped read-only consumer rather than an AdminClient OffsetFetch path that intermittently crashed librdkafka 2.15. Three consecutive complete candidate suites pass 7/7, candidate and clean-main isolated comparisons pass, and no new cores or run-owned resources remain.",
+  "changed_files": [
+    "tests/model-service/ModelService.IntegrationTests/WorkspaceDeletionConsumerTests.cs"
+  ],
+  "validation": [
+    "Original candidate suite produced two SIGSEGV cores in rd_kafka_cgrp_op -> rd_kafka_handle_OffsetFetch -> ListConsumerGroupOffsetsResponse_parse",
+    "Candidate isolated WorkspaceDeletionConsumerTests passed 1/1; clean-main identical filter passed 1/1",
+    "Three consecutive complete candidate Model integration runs passed 7/7 with exits 0,0,0",
+    "Release build passed with 0 warnings/errors; scoped dotnet format and git diff --check passed",
+    "No coredumps appeared after 2026-08-27 02:35:42 UTC through the completed validation window",
+    "No Testcontainers containers, networks, volumes, Model testhost, or integration processes remained",
+    "Independent reviewer confirmed Committed is read-only, does not join/rebalance/commit, and has bounded lifecycle",
+    "Evidence retained under evidence/code-loop-1/model-native-fix with five checksummed TRX files",
+    "Workspace Context revision dba39f36 analyzed clean 99-path HEAD against 72728d; digest 92a20b8e16fc750dfceb8e6ffe6454de1283abb7b48314e1b0e980ce0b4a18cf"
+  ],
+  "blockers": [],
+  "next_action": "Advance to fresh formal review of committed HEAD e016f54, focusing on the test-only consumer observer lifecycle and confirming the prior 99-path issue #28 review remains valid.",
+  "route_to": "review",
+  "risk_level": "high",
+  "independent_lanes": [
+    "Model Kafka offset-observer lifecycle and native crash closure",
+    "full issue #28 cross-service regression review"
+  ],
+  "requires_council": false
+}

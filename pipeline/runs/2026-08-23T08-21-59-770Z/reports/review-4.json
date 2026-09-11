@@ -1,0 +1,18 @@
+{
+  "stage": "review",
+  "status": "pass",
+  "summary": "Independent security and QA rebase-equivalence review passed: new head 1d91033 is a byte-identical approved patch on current main, with no upstream overlap and clean focused/upstream validation.",
+  "changed_files": [],
+  "validation": [
+    "Old/new diff SHA-256 identical at 2d67b5ebf2ef0075d2590ae3f6bf1a68b234bd45b8b8a212bdd1f5e9025dc0b0; stable patch-id 30fa8b767df6baad3a8dc27d62c9ed8a9865becb.",
+    "Security review found no blocking findings or upstream interaction.",
+    "QA passed 11/11 RBAC suite, checker, topology, bootstrap/polling, syntax, actionlint, ruff, and diff checks; worktree clean."
+  ],
+  "blockers": ["Exact Argo v3.4.4 semantic evidence must be rebound to head 1d91033 before PR."],
+  "next_action": "Repeat the deterministic exact chart v3.4.4 render/validation/matrix on the new immutable head, then retry PR creation with a fresh base check.",
+  "requires_council": false,
+  "independent_lanes": ["security equivalence review","QA equivalence review"],
+  "route_to": "test",
+  "risk_level": "critical",
+  "issues": [{"id":"validation-base-drift","title":"Reviewed branch base is stale","severity":"high","details":"Closed by approved byte-identical rebase equivalence.","owner_stage":"test"}]
+}

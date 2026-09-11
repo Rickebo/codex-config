@@ -1,0 +1,20 @@
+{
+  "stage": "validation",
+  "status": "fail",
+  "summary": "PR creation stopped safely because origin/main advanced to 87eb61d. Read-only comparison found three unrelated deployment-controller import commits, zero path overlap, and a conflict-free merge simulation.",
+  "changed_files": [],
+  "validation": [
+    "Worktree remained clean and no branch, PR, workflow, or live mutation occurred.",
+    "Three-tree merge simulation passed without conflicts or diff-check errors.",
+    "Upstream changes touch only deployment-controller import workflow/docs/scripts/tests; Phase 0 paths are disjoint."
+  ],
+  "blockers": ["Reviewed Phase 0 commits are based on stale origin/main and must be rebased before push.","Post-rebase SHA-specific focused and upstream tests must pass before review/PR retry."],
+  "next_action": "Rebase the clean Phase 0 branch onto origin/main 87eb61d, rerun Phase 0 plus upstream deployment-controller tests and workflow syntax, then repeat review/test validation on the new immutable head.",
+  "requires_council": false,
+  "independent_lanes": ["remote-main freshness gate","three-tree overlap/conflict analysis"],
+  "route_to": "code",
+  "risk_level": "critical",
+  "issues": [
+    {"id":"validation-base-drift","title":"Reviewed branch base is stale","severity":"high","details":"origin/main advanced without path overlap; clean rebase and SHA-specific rerun required.","owner_stage":"code"}
+  ]
+}

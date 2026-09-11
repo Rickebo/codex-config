@@ -1,0 +1,20 @@
+{
+  "stage": "spec",
+  "status": "pass",
+  "summary": "Accepted the minimal transport-security and bearer-auth contract with explicit scope, testability, traceability, and three council perspectives.",
+  "changed_files": [],
+  "validation": [
+    "pipeline-spec-check.mjs returned ok=true",
+    "6 MUST requirements, 4 Given/When/Then acceptance criteria, 3 tests, and 6 traceability rows validated",
+    "Issue #13 created and Stage 0 progress comment recorded"
+  ],
+  "blockers": [],
+  "next_action": "Delegate implementation in the dedicated feature worktree.",
+  "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-22T13-02-44-524Z/transport-security-auth.spec.json",
+  "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-08-22T13-02-44-524Z/spec-check.json",
+  "council_file": "/home/rickebo/.codex/pipeline/runs/2026-08-22T13-02-44-524Z/council.json",
+  "requires_council": true,
+  "independent_lanes": ["backend configuration and ASGI transport middleware", "focused tests and docs"],
+  "route_to": "code",
+  "risk_level": "high"
+}

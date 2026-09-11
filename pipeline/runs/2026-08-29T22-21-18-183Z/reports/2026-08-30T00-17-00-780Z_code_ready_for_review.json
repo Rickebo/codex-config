@@ -1,0 +1,26 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Luna amended issue #158 to exact head 91080852320997f19ff268b65b85fb7f0d0ef5bc, resolving DC158-TEST-WIRING with exact assertions for the complete Plan env mapping, heredoc invocation, and merged-state handoff while retaining runtime JSON cases.",
+  "changed_files": [
+    ".github/workflows/automatic-release.yaml",
+    "hack/test-release-graph.py"
+  ],
+  "validation": [
+    "make test-release-flow passed with 49 release-graph tests",
+    "./hack/validate-repository.sh passed",
+    "actionlint passed",
+    "Python and Node syntax checks passed",
+    "git diff --check passed",
+    "Worktree clean at 91080852320997f19ff268b65b85fb7f0d0ef5bc"
+  ],
+  "blockers": [],
+  "next_action": "Obtain fresh independent Luna review of exact amended head before push or PR creation.",
+  "route_to": "review",
+  "risk_level": "critical",
+  "independent_lanes": [
+    "release workflow JSON behavior",
+    "env and shell wiring regression coverage"
+  ],
+  "requires_council": false
+}

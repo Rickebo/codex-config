@@ -1,0 +1,30 @@
+{
+  "run_dir": "/home/rickebo/.codex/pipeline/runs/2026-08-21T20-20-56-579Z",
+  "stage": "spec",
+  "risk_level": "high",
+  "generated_at": "2026-08-22T08:18:44Z",
+  "perspectives": [
+    {
+      "role": "codicarium_devops",
+      "status": "blocked",
+      "summary": "Healthy per-database backups do not prove a shared cutoff, WAL continuity, or graph artifact object/SHA closure; D-001 remains open."
+    },
+    {
+      "role": "tech_lead_devops",
+      "status": "blocked",
+      "summary": "Target Longhorn is overscheduled with a NotReady data disk, no safe unbound RWX path exists, no target restore drill exists, and target OIDC provisioning is invalid; D-002/D-003 remain open."
+    },
+    {
+      "role": "github_operator",
+      "status": "blocked",
+      "summary": "Issues #482/#483 contain the existing technical gates; a sanitized current handoff was added to #489 and no implementation PR exists."
+    }
+  ],
+  "consensus_summary": "All independent lanes confirm that only read-only preflight can continue. Do not enter code, reuse bound volumes, mutate Codicarium, or deploy until D-001 through D-003 are resolved and D-004 remains respected.",
+  "open_questions": [
+    "Can an authorized provider supply sanitized Barman/S3 cutoff and artifact SHA evidence?",
+    "Which distinct target-owned artifact backend is approved and proven recoverable?",
+    "Is the narrow target Authentik mapping and fresh target-only credential policy approved?",
+    "What separate authorized review will address the two secret-adjacent output incidents?"
+  ]
+}

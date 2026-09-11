@@ -1,0 +1,27 @@
+{
+  "stage": "review",
+  "status": "pass",
+  "summary": "Independent Luna review of PR #153 exact head ce2272d0c10170369ef0fd27682061785c18c094 found no blocking findings, release-path bypass, or SBOM/provenance weakening.",
+  "changed_files": [
+    "Dockerfile",
+    "hack/verify-oci-archive.py",
+    "hack/test-release-image-flow.py"
+  ],
+  "validation": [
+    "Reviewer verified all five binaries use deterministic -buildid= -s -w flags",
+    "Reviewer verified archive size rejection is exact and executes before archive parsing/publication",
+    "Reviewer ran 28 focused release-image tests successfully",
+    "Reviewer confirmed Python/shell syntax and amd64/arm64 builds for every binary",
+    "Protected chart, integration, lint, and supply-chain checks passed at unchanged exact head"
+  ],
+  "blockers": [
+    "Protected test check is still completing its image-build step"
+  ],
+  "next_action": "Advance to protected exact-head test evidence; merge only after every required check passes unchanged.",
+  "independent_lanes": [
+    "PR #153 protected test check",
+    "infra PR #1272 protected ARC queue",
+    "read-only live deployment-controller health diagnosis"
+  ],
+  "risk_level": "critical"
+}

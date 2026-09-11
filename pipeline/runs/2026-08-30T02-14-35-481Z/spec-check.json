@@ -1,0 +1,21 @@
+{
+  "ok": true,
+  "checked_at": "2026-08-30T02:38:01.592Z",
+  "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-30T02-14-35-481Z/feature-spec.json",
+  "quality_gates": {
+    "requirements_present": true,
+    "acceptance_gherkin_present": true,
+    "traceability_complete": true,
+    "must_requirements_testable": true,
+    "council_coverage_min_3": true
+  },
+  "summary": {
+    "requirements_total": 7,
+    "must_total": 7,
+    "acceptance_total": 4,
+    "tests_total": 4,
+    "trace_rows_total": 7
+  },
+  "errors": [],
+  "warnings": []
+}

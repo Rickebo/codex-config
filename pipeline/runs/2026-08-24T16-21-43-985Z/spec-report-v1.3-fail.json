@@ -1,0 +1,47 @@
+{
+  "stage": "spec",
+  "status": "fail",
+  "summary": "Independent security and QA reviews rejected v1.3: origin/main advanced through PR #95, fresh v0.6.13 execution proved the immutable tag cannot reach the new handoff, and several signed-schema, retry, incident, and CI contracts remain underspecified.",
+  "changed_files": [
+    "/home/rickebo/.codex/pipeline/runs/2026-08-24T16-21-43-985Z/feature-spec.json",
+    "/home/rickebo/.codex/pipeline/runs/2026-08-24T16-21-43-985Z/spec-check.json"
+  ],
+  "validation": [
+    "Strict spec checker passed v1.3 with 19 MUSTs, 9 acceptance criteria, 10 tests, and complete traceability.",
+    "Security council returned NO-GO against final spec SHA f208d01c26538ccf3404e7c99067ca613bf6b4e132e1e95bb0c6723dc0d03ad8.",
+    "QA council independently returned NO-GO against the same final spec SHA.",
+    "Current origin/main is 6053f97326157807c4323c44e0d14f3ee65c09bf after PR #95, not the specified ad52dfc baseline.",
+    "Release Verify 32768847731 succeeded from immutable v0.6.13 but selected the old one-job workflow; no Publish Release run or v0.6.13 release exists."
+  ],
+  "blockers": [
+    "Rebase specification evidence and design onto current main 6053f973 and reconcile PR #95's recovery changes.",
+    "Define exact nested authorization, ruleset, receipt, release-binding, manifest, allowlist, and incident schemas and fixtures.",
+    "Use a raw versioned dispatch request for return_run_details and define exact run-attempt, rerun, object-key, and bounded-poll semantics.",
+    "Define creator/retry identity, accepted-at boundaries, byte closure, and durable evidence-only post-publication incident transport.",
+    "Wire hermetic tests into supply-chain while keeping credentialed forward-release validation post-merge."
+  ],
+  "next_action": "Revise to v1.4 on current main, retire unreachable v0.6.13 recovery, regenerate strict checks, and obtain fresh independent security and QA GO decisions.",
+  "route_to": "spec",
+  "risk_level": "critical",
+  "requires_council": true,
+  "independent_lanes": [
+    "current-main release contract mapping",
+    "signed authorization and dispatch protocol",
+    "release state-machine and incident evidence",
+    "hermetic and post-merge validation"
+  ],
+  "issues": [
+    {
+      "id": "SPEC-BASE-STALE",
+      "title": "Specification evidence base changed during review",
+      "severity": "critical",
+      "details": "PR #95 advanced main and changed 15 release workflow/helper files; v1.3 cannot authorize implementation against the old base."
+    },
+    {
+      "id": "SPEC-CONTRACT-INCOMPLETE",
+      "title": "Signed and release-state contracts are not machine-complete",
+      "severity": "high",
+      "details": "Nested schemas, receipt/rerun semantics, release closure, and post-publication incident transport require exact definitions before code."
+    }
+  ]
+}

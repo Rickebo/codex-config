@@ -1,0 +1,30 @@
+{
+  "stage": "spec",
+  "status": "pass",
+  "summary": "This emergency successor preserves the already checked issue #28 specification and narrows implementation to three fresh formal-review blockers: Insights pending-drain recovery, process-exit diagnostic ordering, and retryable system-resource cleanup. Four independent review perspectives agree on scope, regression requirements, and the unchanged final test/validation gates.",
+  "changed_files": [
+    "/home/rickebo/.codex/pipeline/runs/2026-08-27T01-46-11-001Z/council.json",
+    "/home/rickebo/.codex/pipeline/runs/2026-08-25T06-10-48-539Z/feature-spec.json",
+    "/home/rickebo/.codex/pipeline/runs/2026-08-25T06-10-48-539Z/spec-check.json"
+  ],
+  "validation": [
+    "Original pipeline spec check remains ok=true with 8 MUST requirements, 7 acceptance criteria, 7 tests, and 8 complete trace rows",
+    "Fresh four-lane formal review supplied backend, cross-service, QA, and system-reliability scope consensus",
+    "All three blockers are introduced or exercised by the issue #28 integration branch and have bounded deterministic fixes",
+    "Parent #26 full permanent-gap FastSystem coverage, #23 lifecycle administration, #46 deletion replay, and #54 poison validation remain excluded"
+  ],
+  "blockers": [],
+  "next_action": "Approve spec-to-code, implement only the three review blockers with focused regressions, then repeat clean-head formal review.",
+  "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-25T06-10-48-539Z/feature-spec.json",
+  "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-08-25T06-10-48-539Z/spec-check.json",
+  "council_file": "/home/rickebo/.codex/pipeline/runs/2026-08-27T01-46-11-001Z/council.json",
+  "route_to": "code",
+  "risk_level": "high",
+  "independent_lanes": [
+    "Insights durable recovery semantics",
+    "system process diagnostics ordering",
+    "system resource cleanup retryability",
+    "post-fix independent review and full acceptance validation"
+  ],
+  "requires_council": true
+}

@@ -1,0 +1,276 @@
+{
+  "schema": "codicarium.pre-council-bundle/v2.6",
+  "generated_at": "2026-08-26T12:00:00Z",
+  "files": [
+    {
+      "path": "build-v2.6-spec.mjs",
+      "byte_length": 33044,
+      "sha256": "5159222b978d754499c7cf397ee16f4584e89e305caf049724154f40e4666f7a"
+    },
+    {
+      "path": "feature-spec.v2.6.annex.json",
+      "byte_length": 40806,
+      "sha256": "4e3a02265a1767db25dc3fc5f596c1b4041ef7ae50f8f52997cafbeb6514b0ce"
+    },
+    {
+      "path": "feature-spec.v2.6.draft.json",
+      "byte_length": 56518,
+      "sha256": "113191a557520fe6eec3e0b4a3e6203c92ed133c069881f93ddca8a46ae825b2"
+    },
+    {
+      "path": "fixtures-v2.6/activation-contract-v2.6.json",
+      "byte_length": 149,
+      "sha256": "776d408de0f4d69092bac8b63ec47e6b8f9c9eb77d98887d00af05d9c734113e"
+    },
+    {
+      "path": "fixtures-v2.6/activation-v2-6.schema.json",
+      "byte_length": 626,
+      "sha256": "f7667be12707be73f566b52b53e9c78f60f604b098be01f6bee631596908ac4b"
+    },
+    {
+      "path": "fixtures-v2.6/admin-contracts-v2.6.json",
+      "byte_length": 766,
+      "sha256": "1d20db9977229acaec967a4c0ad58a55a897da1a25528a9754e02981b5ee4844"
+    },
+    {
+      "path": "fixtures-v2.6/admin-v2-6.schema.json",
+      "byte_length": 1114,
+      "sha256": "8007190c3cc7e99c3c57294ac4a7748ce61684b5e69641fab4c99bf83f80e013"
+    },
+    {
+      "path": "fixtures-v2.6/app-bootstrap-v2-6.schema.json",
+      "byte_length": 1063,
+      "sha256": "11174ac01ce2a2e5a5091518ef1da58d85777e990a5946e18656117dc5baecf5"
+    },
+    {
+      "path": "fixtures-v2.6/app-config-bootstrap-v2.6.json",
+      "byte_length": 7369,
+      "sha256": "c7c6dfa874e61e0c1531668c382c30fbbd7a88f07f31e023792eadd791ea17b5"
+    },
+    {
+      "path": "fixtures-v2.6/asset-source-01.bin",
+      "byte_length": 37,
+      "sha256": "bc4c580705c4f4a83c5a5f9aa60eb45b337d864e813c878b8df186ca03e8ef10"
+    },
+    {
+      "path": "fixtures-v2.6/asset-source-02.bin",
+      "byte_length": 34,
+      "sha256": "8d847c50ad8dd0dfaa5d2631c48e8cf3c5b8f2396830863ae0afe2c183c13393"
+    },
+    {
+      "path": "fixtures-v2.6/asset-source-03.bin",
+      "byte_length": 44,
+      "sha256": "23f37a829bef81e4d5da728888e40db0fcbf19aa4fbdcce1a0a539cc31a3ca90"
+    },
+    {
+      "path": "fixtures-v2.6/asset-source-04.bin",
+      "byte_length": 34,
+      "sha256": "c234896f371ccac7b8f261cbb7c8de6cf3b7d5f14d38696fdf4ff019b773764d"
+    },
+    {
+      "path": "fixtures-v2.6/asset-source-05.bin",
+      "byte_length": 45,
+      "sha256": "9289ca68d0fe62a187a34fa273d7983915727ad23c352f310f7c858bf9c009c9"
+    },
+    {
+      "path": "fixtures-v2.6/asset-source-06.bin",
+      "byte_length": 46,
+      "sha256": "cdbcf8a8f6a10b154c9dc0867a648b7189ddbda2bb2636ffe008bd9f8caaa342"
+    },
+    {
+      "path": "fixtures-v2.6/asset-source-07.bin",
+      "byte_length": 36,
+      "sha256": "193d181bd6968b2ba7a9359cc8e6219d192302661fbf2143e5c1a911903e7d90"
+    },
+    {
+      "path": "fixtures-v2.6/asset-source-08.bin",
+      "byte_length": 38,
+      "sha256": "bcbfc033389ad5df01b98aa216ec8838a973cef631b48c593399c0c68d9cc63c"
+    },
+    {
+      "path": "fixtures-v2.6/asset-source-09.bin",
+      "byte_length": 40,
+      "sha256": "61f91d50a6951d2dbce5ad5161cf35e298a8f309b50e5022bf353ea89567accc"
+    },
+    {
+      "path": "fixtures-v2.6/asset-source-10.bin",
+      "byte_length": 46,
+      "sha256": "b79f40cf1db3125a2916791e1faaa3cb70ccf18220a1a6e011860c2b50143b06"
+    },
+    {
+      "path": "fixtures-v2.6/asset-source-11.bin",
+      "byte_length": 43,
+      "sha256": "bb2f6e2140429626e0bb610b4786d412fd24000653d7bdcb2cc3d8f161ccee3e"
+    },
+    {
+      "path": "fixtures-v2.6/asset-source-12.bin",
+      "byte_length": 43,
+      "sha256": "a01aef85e1b9f18ed6f3de664d4041ced454974073ab11c192ed13e104939540"
+    },
+    {
+      "path": "fixtures-v2.6/asset-source-13.bin",
+      "byte_length": 44,
+      "sha256": "edc39f9c331d1bc364307bfd145d931d446b31a46d49afd19737a0ba96032170"
+    },
+    {
+      "path": "fixtures-v2.6/asset-source-14.bin",
+      "byte_length": 40,
+      "sha256": "b351a7b241a6c219a4640f67cdddfdda7a91147869a46699107800799880b094"
+    },
+    {
+      "path": "fixtures-v2.6/assets-v2.6.json",
+      "byte_length": 6877,
+      "sha256": "d788cd395a47594d6c77a80f9575c7648cec0c8f91c7956cd9a28e052b70b580"
+    },
+    {
+      "path": "fixtures-v2.6/base-contracts-v2.6.json",
+      "byte_length": 8909,
+      "sha256": "05caafb739ac4320800c7370c773247ed0178db57e1d80de923eefd2f3bd5cf9"
+    },
+    {
+      "path": "fixtures-v2.6/candidate-contract-v2.6.json",
+      "byte_length": 182,
+      "sha256": "1bac6c419d0abacde2e30ee8787396215d5af3320f1f553d793d2f41829d941c"
+    },
+    {
+      "path": "fixtures-v2.6/candidate-v2-6.schema.json",
+      "byte_length": 572,
+      "sha256": "68b3d6fe8f91b421e3ec63a50b958b784ba19a97c8ada86b9277033bf1ad03c7"
+    },
+    {
+      "path": "fixtures-v2.6/closure-v2-6.schema.json",
+      "byte_length": 1391,
+      "sha256": "77d01a73a2bc99785fdc624e434b43aaff07f5da70eb48c40a1241f4f0ce9ffa"
+    },
+    {
+      "path": "fixtures-v2.6/cnpg-contract-v2.6.json",
+      "byte_length": 141,
+      "sha256": "1a2a9caf329a87b6bf829122fa8c40359ee31e00c1ebe9b8152895119e3f0f43"
+    },
+    {
+      "path": "fixtures-v2.6/cnpg-v2-6.schema.json",
+      "byte_length": 599,
+      "sha256": "da463e4402f00b6de5627c2f5e41e911f025449e5943cdfb37be75be968d7ce3"
+    },
+    {
+      "path": "fixtures-v2.6/command-catalog-v2.6.json",
+      "byte_length": 35656,
+      "sha256": "efee0c06b0e47ca7ae503e4ebb26a782f5f3739ad388443435230ecf54f519a9"
+    },
+    {
+      "path": "fixtures-v2.6/command-v2-6.schema.json",
+      "byte_length": 561,
+      "sha256": "0fccaab5c6bb25e42a7cc87d59cdc2c47ce90038aa75e0f4595c1ca59b82bc09"
+    },
+    {
+      "path": "fixtures-v2.6/executable-negative-vectors-v2.6.json",
+      "byte_length": 12220,
+      "sha256": "627fba375bbb251ca628115db0d4c6dc0111f909f35e6f29fa738dec86a87b33"
+    },
+    {
+      "path": "fixtures-v2.6/fsm-v2-6.schema.json",
+      "byte_length": 715,
+      "sha256": "ecd712629de3bcf3ae7e3d987d69da2c48c2a795a2d2a58890082f2f08eff072"
+    },
+    {
+      "path": "fixtures-v2.6/harness-self-tests-v2.6.json",
+      "byte_length": 364,
+      "sha256": "cd2474473875726651b8c5d37bd710fe9b3aacd573a6864ec121a461624ae1cd"
+    },
+    {
+      "path": "fixtures-v2.6/mutation-v2-6.schema.json",
+      "byte_length": 569,
+      "sha256": "c2405af80e71b275c03464292f86f10036c01ba9493ef7f967fedc4922671a7d"
+    },
+    {
+      "path": "fixtures-v2.6/payload-v2-6.schema.json",
+      "byte_length": 2392,
+      "sha256": "7d230daa9e07cb2970ac6d0db42a7a8c5d3af9a84e451acfc784ba1bf7fc2920"
+    },
+    {
+      "path": "fixtures-v2.6/pipeline-spec-check-v2.6.json",
+      "byte_length": 558,
+      "sha256": "e64015e59f7fd3de9bb7a76922a508ec584c1fed3d8b16532ec6a11990decc72"
+    },
+    {
+      "path": "fixtures-v2.6/proxy-contract-v2.6.json",
+      "byte_length": 250,
+      "sha256": "e49c32201d77bf841655784ccada0151d082454b9306bd070bcd25e49b6ac320"
+    },
+    {
+      "path": "fixtures-v2.6/proxy-v2-6.schema.json",
+      "byte_length": 726,
+      "sha256": "f47ac2071bb931678232328e0e8d888a47fa6883dfcb87bbef034eee35c4a468"
+    },
+    {
+      "path": "fixtures-v2.6/recovery-contract-v2.6.json",
+      "byte_length": 277,
+      "sha256": "e4b147876a53e2f1127b9d2b505a03f3f1af89aad5ba764b099168c99f39db35"
+    },
+    {
+      "path": "fixtures-v2.6/recovery-v2-6.schema.json",
+      "byte_length": 546,
+      "sha256": "471bdf5fb16368e9a78b9a1c0ade25c454a7962a45d419b9eb40f7e1e522fc30"
+    },
+    {
+      "path": "fixtures-v2.6/replay-ledger-v2.6.sqlite",
+      "byte_length": 12288,
+      "sha256": "92508d9120fe8a939947e2227eee29faba50883754ebe8d9678dfc3ef8d0ede7"
+    },
+    {
+      "path": "fixtures-v2.6/replay-race-results-v2.6.json",
+      "byte_length": 211,
+      "sha256": "825301c52031265d398ab9b5f4b8d8ba564cec076f0a7f5b17e6c9c7f984f362"
+    },
+    {
+      "path": "fixtures-v2.6/replay-race-v2.6.sqlite",
+      "byte_length": 12288,
+      "sha256": "2d54bf8764aa29470f0d1e8512a1ee49e246ed6be2d114d68ef0d8fe513d303f"
+    },
+    {
+      "path": "fixtures-v2.6/rollout-dag-v2.6.json",
+      "byte_length": 67380,
+      "sha256": "6179b9502c8dc1f4f7e6f562d63b659fb79bd8426ad9c01c5570b40bb4cf0816"
+    },
+    {
+      "path": "fixtures-v2.6/semver-snapshot-v2.6.json",
+      "byte_length": 4134,
+      "sha256": "15a7297e87ee6e1331205c7142c501bd190b93f2d9bd87c61be01f91f4b77798"
+    },
+    {
+      "path": "fixtures-v2.6/semver-v2-6.schema.json",
+      "byte_length": 695,
+      "sha256": "41f189bd8cf221a2160a8b08c878fdcb3d60485d418503bed878ccf26cc1dee4"
+    },
+    {
+      "path": "fixtures-v2.6/signature-v2-6.schema.json",
+      "byte_length": 644,
+      "sha256": "6d82fe73665dd834d1042ec50590dfd9fdf6b463b6ac7f4c6343057339d64c45"
+    },
+    {
+      "path": "fixtures-v2.6/signed-command-evidence-positive-v2.6.json",
+      "byte_length": 279131,
+      "sha256": "44087990097a99ddd3475042d95cf0bd5d9ce4a1a900c9910390884ed3fc93d6"
+    },
+    {
+      "path": "fixtures-v2.6/typed-payload-schemas-v2.6.json",
+      "byte_length": 17647,
+      "sha256": "f17296d2639d7a8c12e42dabdd9c565d0507f1741ccee5382627bc0ac4dc335c"
+    },
+    {
+      "path": "fixtures-v2.6/vault-contract-v2.6.json",
+      "byte_length": 223,
+      "sha256": "7b0d26e702af2208b8cdee0196027abe7b440eb157d49c7c1311af3531acd442"
+    },
+    {
+      "path": "fixtures-v2.6/vault-v2-6.schema.json",
+      "byte_length": 582,
+      "sha256": "264b3da1e117935070b5527067c8f9581d864550d0face7c1d7f60a712ba8254"
+    },
+    {
+      "path": "validate-v2.6.py",
+      "byte_length": 20719,
+      "sha256": "8aaa86b8fff41bac7aa6ad713020b573bef74f5df9cc6c0cd62e66fdebf0e81b"
+    }
+  ]
+}

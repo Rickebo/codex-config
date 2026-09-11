@@ -1,0 +1,17 @@
+{
+  "stage": "validation",
+  "status": "fail",
+  "summary": "Requirement mapping passed implementation and tests but found one documentation gap: the repository docs did not explicitly record why the prior tag-first verifier/publisher chain could not release main merges.",
+  "changed_files": [],
+  "validation": [
+    "Mapped all 11 numbered requirements and acceptance prerequisites",
+    "Confirmed latest release remains v0.6.12 and no v0.6.13 tag or release exists",
+    "Confirmed planner selects patch v0.6.13 from current Kafka-fix history",
+    "Confirmed issue #91 and isolated branch/worktree exist"
+  ],
+  "blockers": [
+    "docs/releasing.md lacks explicit old-flow diagnosis: main CI had no tag creator, Release Verify required a pre-existing tag push, and Publish Release only followed it"
+  ],
+  "next_action": "Add the concise root-cause documentation, then re-review and re-test the final snapshot.",
+  "route_to": "code"
+}

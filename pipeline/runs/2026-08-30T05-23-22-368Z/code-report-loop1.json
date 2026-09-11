@@ -1,0 +1,24 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Luna remediated all five review findings on PR #1293 at exact head 64e8ce15: immutable constants are executable policy, errors are sanitized, complete no-follow chains and privileged inventory are enforced, and positive/adversarial coverage expanded to 12 tests.",
+  "changed_files": [
+    "contracts/authority-runner-ownership.json",
+    "scripts/verify-authority-runner-contract.py",
+    "tests/test-authority-runner-contract.py"
+  ],
+  "validation": [
+    "Twelve focused positive and adversarial tests passed.",
+    "Python compilation, JSON validation, and git diff checks passed.",
+    "Exact reviewed GitHub IDs/metadata, workflow boundary, source/upstream revisions, systemd unit, workspace values, helper digests, and sudo policy are now enforced.",
+    "Complete no-follow root/ancestor checks and bounded privileged-directory inventories were added.",
+    "Root, stat, resolve, permission, Unicode, and race errors now map to deterministic sanitized evidence.",
+    "Worktree clean and PR mergeable at exact head 64e8ce15479c9b1c500427bd98cf2d85426a4f1d.",
+    "No host access, live action, dispatch, merge, sudo/systemctl execution, or secret access occurred."
+  ],
+  "blockers": [],
+  "next_action": "Independently re-review exact head 64e8ce15 against all prior findings before entering QA test stage.",
+  "route_to": "review",
+  "risk_level": "high",
+  "independent_lanes": ["security review remediation for verifier and contract"]
+}

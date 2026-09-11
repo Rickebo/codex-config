@@ -1,0 +1,24 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Implemented deployment-controller issue #90 at f9a51c05 on current protected-main base 989799c. The patch adds an exact v0.6.4 legacy pre-approval quarantine before modern activation handling, with status-only terminalization and zero-write rejection. Infra activation ca72 remains dormant until the new controller release is published and repinned.",
+  "changed_files": [
+    "docs/operations.md",
+    "internal/controller/activation/legacy_preapproval.go",
+    "internal/controller/activation/legacy_preapproval_test.go",
+    "internal/controller/activation/reconciler.go"
+  ],
+  "validation": [
+    "Red focused Prepare/Activate tests failed against strict modern handling as expected",
+    "Focused activation and runtime suites passed",
+    "Full go test ./... passed",
+    "go test -race for activation/runtime passed",
+    "go vet for activation/runtime passed",
+    "Repository, chart/CRD, docs-link, and git diff checks passed"
+  ],
+  "blockers": [],
+  "next_action": "Independently review f9a51c05 for exact classification, zero-write failure, proof/audit preservation, idempotence, and missing API-upgrade coverage before push.",
+  "route_to": "review",
+  "risk_level": "critical",
+  "issues": []
+}

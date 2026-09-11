@@ -1,0 +1,27 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Luna amended the unpushed parser-test commit at exact head fc75180f233f5068f2843ee6c8329d5628f600e5: CI now explicitly runs all revocation suites and installs checksum-verified kubectl v1.31.14 for exact-template parsing.",
+  "changed_files": [
+    ".github/workflows/legacy-freeze-guard.yml",
+    "tests/test-revoke-legacy-metamcp-argocd-credentials-kubectl.py"
+  ],
+  "validation": [
+    "All six original PR commits remain identical plus one amended parser-test commit",
+    "2 parser, 7 contract, 2 transaction, 12 RBAC, and 16 typed-kubeconfig tests passed",
+    "Checksum-mismatch parser invocation fails closed",
+    "RBAC, break-glass, and management-topology guards passed",
+    "actionlint, shell syntax, Python compilation, and diff checks passed",
+    "Canonical main remains ancestor; worktree clean; remote PR head unchanged"
+  ],
+  "blockers": [],
+  "next_action": "Obtain fresh independent Luna review of exact amended head before exact-lease push.",
+  "route_to": "review",
+  "risk_level": "critical",
+  "independent_lanes": [
+    "CI suite invocation",
+    "pinned kubectl supply chain",
+    "full Phase 0 security delta"
+  ],
+  "requires_council": false
+}

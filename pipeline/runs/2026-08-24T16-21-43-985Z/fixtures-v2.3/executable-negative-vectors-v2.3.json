@@ -1,0 +1,242 @@
+[
+  {
+    "id": "NEG-01",
+    "base_fixture": 0,
+    "patch": [
+      {
+        "op": "replace",
+        "path": "/signatures/0/sig",
+        "value": "INVALID"
+      }
+    ],
+    "expected_failure": "signature",
+    "pre_target_sha256": "aaa8d3c8d74ad3e8f6b1772aa9c7e0eaa528cb42fc93599ce2f125b00d4c424c",
+    "post_target_sha256": "aaa8d3c8d74ad3e8f6b1772aa9c7e0eaa528cb42fc93599ce2f125b00d4c424c",
+    "pre_effect_count": 0,
+    "post_effect_count": 0
+  },
+  {
+    "id": "NEG-02",
+    "base_fixture": 0,
+    "patch": [
+      {
+        "op": "replace",
+        "path": "/payload",
+        "value": "INVALID"
+      }
+    ],
+    "expected_failure": "schema",
+    "pre_target_sha256": "aaa8d3c8d74ad3e8f6b1772aa9c7e0eaa528cb42fc93599ce2f125b00d4c424c",
+    "post_target_sha256": "aaa8d3c8d74ad3e8f6b1772aa9c7e0eaa528cb42fc93599ce2f125b00d4c424c",
+    "pre_effect_count": 0,
+    "post_effect_count": 0
+  },
+  {
+    "id": "NEG-03",
+    "base_fixture": 0,
+    "patch": [
+      {
+        "op": "replace",
+        "path": "/payload",
+        "value": "INVALID"
+      }
+    ],
+    "expected_failure": "predicate",
+    "pre_target_sha256": "aaa8d3c8d74ad3e8f6b1772aa9c7e0eaa528cb42fc93599ce2f125b00d4c424c",
+    "post_target_sha256": "aaa8d3c8d74ad3e8f6b1772aa9c7e0eaa528cb42fc93599ce2f125b00d4c424c",
+    "pre_effect_count": 0,
+    "post_effect_count": 0
+  },
+  {
+    "id": "NEG-04",
+    "base_fixture": 0,
+    "patch": [
+      {
+        "op": "replace",
+        "path": "/payload",
+        "value": "INVALID"
+      }
+    ],
+    "expected_failure": "replay",
+    "pre_target_sha256": "aaa8d3c8d74ad3e8f6b1772aa9c7e0eaa528cb42fc93599ce2f125b00d4c424c",
+    "post_target_sha256": "aaa8d3c8d74ad3e8f6b1772aa9c7e0eaa528cb42fc93599ce2f125b00d4c424c",
+    "pre_effect_count": 0,
+    "post_effect_count": 0
+  },
+  {
+    "id": "NEG-05",
+    "base_fixture": 0,
+    "patch": [
+      {
+        "op": "replace",
+        "path": "/payload",
+        "value": "INVALID"
+      }
+    ],
+    "expected_failure": "freshness",
+    "pre_target_sha256": "aaa8d3c8d74ad3e8f6b1772aa9c7e0eaa528cb42fc93599ce2f125b00d4c424c",
+    "post_target_sha256": "aaa8d3c8d74ad3e8f6b1772aa9c7e0eaa528cb42fc93599ce2f125b00d4c424c",
+    "pre_effect_count": 0,
+    "post_effect_count": 0
+  },
+  {
+    "id": "NEG-06",
+    "base_fixture": 0,
+    "patch": [
+      {
+        "op": "replace",
+        "path": "/payload",
+        "value": "INVALID"
+      }
+    ],
+    "expected_failure": "identity",
+    "pre_target_sha256": "aaa8d3c8d74ad3e8f6b1772aa9c7e0eaa528cb42fc93599ce2f125b00d4c424c",
+    "post_target_sha256": "aaa8d3c8d74ad3e8f6b1772aa9c7e0eaa528cb42fc93599ce2f125b00d4c424c",
+    "pre_effect_count": 0,
+    "post_effect_count": 0
+  },
+  {
+    "id": "NEG-07",
+    "base_fixture": 0,
+    "patch": [
+      {
+        "op": "replace",
+        "path": "/payload",
+        "value": "INVALID"
+      }
+    ],
+    "expected_failure": "target",
+    "pre_target_sha256": "aaa8d3c8d74ad3e8f6b1772aa9c7e0eaa528cb42fc93599ce2f125b00d4c424c",
+    "post_target_sha256": "aaa8d3c8d74ad3e8f6b1772aa9c7e0eaa528cb42fc93599ce2f125b00d4c424c",
+    "pre_effect_count": 0,
+    "post_effect_count": 0
+  },
+  {
+    "id": "NEG-08",
+    "base_fixture": 0,
+    "patch": [
+      {
+        "op": "replace",
+        "path": "/payload",
+        "value": "INVALID"
+      }
+    ],
+    "expected_failure": "command",
+    "pre_target_sha256": "aaa8d3c8d74ad3e8f6b1772aa9c7e0eaa528cb42fc93599ce2f125b00d4c424c",
+    "post_target_sha256": "aaa8d3c8d74ad3e8f6b1772aa9c7e0eaa528cb42fc93599ce2f125b00d4c424c",
+    "pre_effect_count": 0,
+    "post_effect_count": 0
+  },
+  {
+    "id": "NEG-09",
+    "base_fixture": 0,
+    "patch": [
+      {
+        "op": "replace",
+        "path": "/payload",
+        "value": "INVALID"
+      }
+    ],
+    "expected_failure": "claim",
+    "pre_target_sha256": "aaa8d3c8d74ad3e8f6b1772aa9c7e0eaa528cb42fc93599ce2f125b00d4c424c",
+    "post_target_sha256": "aaa8d3c8d74ad3e8f6b1772aa9c7e0eaa528cb42fc93599ce2f125b00d4c424c",
+    "pre_effect_count": 0,
+    "post_effect_count": 0
+  },
+  {
+    "id": "NEG-10",
+    "base_fixture": 0,
+    "patch": [
+      {
+        "op": "replace",
+        "path": "/payload",
+        "value": "INVALID"
+      }
+    ],
+    "expected_failure": "epoch",
+    "pre_target_sha256": "aaa8d3c8d74ad3e8f6b1772aa9c7e0eaa528cb42fc93599ce2f125b00d4c424c",
+    "post_target_sha256": "aaa8d3c8d74ad3e8f6b1772aa9c7e0eaa528cb42fc93599ce2f125b00d4c424c",
+    "pre_effect_count": 0,
+    "post_effect_count": 0
+  },
+  {
+    "id": "NEG-11",
+    "base_fixture": 0,
+    "patch": [
+      {
+        "op": "replace",
+        "path": "/payload",
+        "value": "INVALID"
+      }
+    ],
+    "expected_failure": "sequence",
+    "pre_target_sha256": "aaa8d3c8d74ad3e8f6b1772aa9c7e0eaa528cb42fc93599ce2f125b00d4c424c",
+    "post_target_sha256": "aaa8d3c8d74ad3e8f6b1772aa9c7e0eaa528cb42fc93599ce2f125b00d4c424c",
+    "pre_effect_count": 0,
+    "post_effect_count": 0
+  },
+  {
+    "id": "NEG-12",
+    "base_fixture": 0,
+    "patch": [
+      {
+        "op": "replace",
+        "path": "/payload",
+        "value": "INVALID"
+      }
+    ],
+    "expected_failure": "predecessor",
+    "pre_target_sha256": "aaa8d3c8d74ad3e8f6b1772aa9c7e0eaa528cb42fc93599ce2f125b00d4c424c",
+    "post_target_sha256": "aaa8d3c8d74ad3e8f6b1772aa9c7e0eaa528cb42fc93599ce2f125b00d4c424c",
+    "pre_effect_count": 0,
+    "post_effect_count": 0
+  },
+  {
+    "id": "NEG-13",
+    "base_fixture": 0,
+    "patch": [
+      {
+        "op": "replace",
+        "path": "/payload",
+        "value": "INVALID"
+      }
+    ],
+    "expected_failure": "admin-separation",
+    "pre_target_sha256": "aaa8d3c8d74ad3e8f6b1772aa9c7e0eaa528cb42fc93599ce2f125b00d4c424c",
+    "post_target_sha256": "aaa8d3c8d74ad3e8f6b1772aa9c7e0eaa528cb42fc93599ce2f125b00d4c424c",
+    "pre_effect_count": 0,
+    "post_effect_count": 0
+  },
+  {
+    "id": "NEG-14",
+    "base_fixture": 0,
+    "patch": [
+      {
+        "op": "replace",
+        "path": "/payload",
+        "value": "INVALID"
+      }
+    ],
+    "expected_failure": "mutation-chain",
+    "pre_target_sha256": "aaa8d3c8d74ad3e8f6b1772aa9c7e0eaa528cb42fc93599ce2f125b00d4c424c",
+    "post_target_sha256": "aaa8d3c8d74ad3e8f6b1772aa9c7e0eaa528cb42fc93599ce2f125b00d4c424c",
+    "pre_effect_count": 0,
+    "post_effect_count": 0
+  },
+  {
+    "id": "NEG-15",
+    "base_fixture": 0,
+    "patch": [
+      {
+        "op": "replace",
+        "path": "/payload",
+        "value": "INVALID"
+      }
+    ],
+    "expected_failure": "fsm-transition",
+    "pre_target_sha256": "aaa8d3c8d74ad3e8f6b1772aa9c7e0eaa528cb42fc93599ce2f125b00d4c424c",
+    "post_target_sha256": "aaa8d3c8d74ad3e8f6b1772aa9c7e0eaa528cb42fc93599ce2f125b00d4c424c",
+    "pre_effect_count": 0,
+    "post_effect_count": 0
+  }
+]

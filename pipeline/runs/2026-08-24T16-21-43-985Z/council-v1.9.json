@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "run_dir": "/home/rickebo/.codex/pipeline/runs/2026-08-24T16-21-43-985Z",
+  "generated_at": "2026-08-25T06:30:26Z",
+  "risk_level": "critical",
+  "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T16-21-43-985Z/feature-spec.v1.9.draft.json",
+  "spec_sha256": "a8bb4b5135ef30bdd654e7adbb54a32fce4c2fd70bacf1462288ca64c11b1ce6",
+  "annex_file": "/home/rickebo/.codex/pipeline/runs/2026-08-24T16-21-43-985Z/feature-spec.v1.9.annex.json",
+  "annex_sha256": "2ff5d493d9d9b424ad16cdb24f68f06c004a0f68ed96956ad8dd407f52308ec7",
+  "baselines": {
+    "codicarium/deployment-controller": "d3565f534b2f64585c3e15e35d8d645449f4f09d",
+    "codicarium/codicarium-actions": "9545b5a66498f67667e57d021507ac060fd016b6",
+    "codicarium/runner-config": "9625e442a12c721e89250812f3d079b09833ccb0",
+    "codicarium/vault-config": "2ddfb54f75cfdbf21529433e105880bec5fc1b1e",
+    "codicarium/app-config": "e085a399bedc830b537431e3bcd5e41b677c2812",
+    "codicarium/infra": "40073c068a9cf8ff4c1e625b97e09fda31b40637"
+  },
+  "shared_validation": {
+    "strict_spec_check": "PASS: 32 MUST requirements, 16 acceptance criteria, 16 tests, 32 complete trace rows, no errors or warnings.",
+    "fixture_validation": "PASS: 17 duplicate-key-safe JSON documents, five Draft 2020-12 schemas, six schema-valid fixtures, three verified Ed25519 signatures, and 18 exact manifest records.",
+    "history_horizon": "PASS: 1,000 distinct suites terminate UNKNOWN_MANUAL with zero mutations.",
+    "canonical_archive": {
+      "tar_sha256": "fb7a260f46a361d9b90bf6371824f0b62dcabf99be09ab984a4fb6fcaeebda31",
+      "zstd_sha256": "5858457a000d6f7334053b51ba4f1106f1ee1e683ffc6bcf461af0fe9b3dc64b"
+    },
+    "live_cluster": "codicarium-dev has two nodes; the control node is NoSchedule. The three-eligible-node/N-1 capacity requirement is correctly a future prerequisite."
+  },
+  "perspectives": [
+    {
+      "role": "planner",
+      "decision": "GO",
+      "blocking_findings": [],
+      "residual_risks": [
+        "Keep runner/chart preparation non-activating until infra proves the three-node capacity gate.",
+        "Unsupported backend-native atomic create-if-absent must stop at UNKNOWN_MANUAL rather than alter the protocol.",
+        "Re-read all exact remote baselines before each branch because the Workspace Context graph excludes several participating repositories."
+      ]
+    },
+    {
+      "role": "security",
+      "decision": "NO-GO",
+      "blocking_findings": [
+        "REQ-020 and REQ-022 use a GitHub Check Run as a claim without an atomic durable first-side-effect conditional reservation keyed by exact release identity; duplicate deliveries or runs can both dispatch.",
+        "REQ-021 has no atomic reservation/commit ledger for append-only mutation receipt sequencing; Check Run creation is neither unique nor immutable.",
+        "recover-release-v068.yaml retains contents:write plus id-token:write until after v0.6.14, while recover-release-attestations.yaml retains id-token:write and has no retirement fence. Both require exact removal or proof they cannot sign or mutate v0.6.14 before publication."
+      ],
+      "residual_risks": [
+        "Live Vault signer binding, broker egress identity, rulesets, runners, and network enforcement remain implementation gates."
+      ]
+    },
+    {
+      "role": "tech_lead_qa",
+      "decision": "GO",
+      "blocking_findings": [],
+      "residual_risks": [
+        "Negative and fault suites are specified but remain to be executed during implementation.",
+        "The raw 697-byte handoff and 436-byte dispatch payloads are not separate fixture files and must be added for byte-level implementation validation."
+      ]
+    },
+    {
+      "role": "tech_lead_devops",
+      "decision": "NO-GO",
+      "blocking_findings": [
+        "Live DeploymentGrant runner-config-dev already uses immutable profile arc-path-helm and permits only controller and scale-set components. Reusing that grant name with artifact-capability-path-helm is not deployable without an explicit migration or new-grant contract.",
+        "The current profile lacks the broker resource scopes for Service, NetworkPolicy, PDB, ServiceMonitor, PrometheusRule, and cert-manager resources.",
+        "Broker ingress is undefined for candidate and monitoring traffic, and the candidate runner control/log/action path to GitHub is undefined despite general egress denial.",
+        "Standard NetworkPolicy cannot enforce hostname-only OVH S3 and GitHub OIDC/JWKS broker egress without exact CIDRs or a centrally controlled egress proxy/gateway contract."
+      ],
+      "residual_risks": [
+        "kata-clh-runtime-rs and the two new namespaces are absent and require ordered infrastructure work.",
+        "Vault transit signing policy, service-account JWT audience, internal CA distribution, and monitoring ingress need exact contracts.",
+        "TST-013 must machine-bind the accepted kubeconfig and context to codicarium-dev."
+      ]
+    }
+  ],
+  "consensus": {
+    "decision": "rejected_return_to_spec",
+    "summary": "Planner and QA returned GO, but security and DevOps found atomic coordination, recovery-authority, immutable DeploymentGrant migration, and enforceable network-path gaps. v1.9 cannot authorize implementation.",
+    "implementation_allowed": false
+  }
+}

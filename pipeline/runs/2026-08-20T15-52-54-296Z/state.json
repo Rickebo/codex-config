@@ -1,0 +1,453 @@
+{
+  "version": 1,
+  "created_at": "2026-08-20T15:52:54.297Z",
+  "updated_at": "2026-08-20T20:37:53.379Z",
+  "task": "Issue #123: isolate pull-request validation from trusted release infrastructure in codicarium/agent-orchestrator",
+  "policy_path": "/home/rickebo/.codex/pipeline/transitions.json",
+  "approval_rules_path": "/home/rickebo/.codex/pipeline/approval-rules.json",
+  "initial_stage": "spec",
+  "current_stage": "validation",
+  "pipeline_profile": "full",
+  "done": false,
+  "max_loops": 6,
+  "loop_count": 4,
+  "approval_required_count": 13,
+  "approvals": [
+    {
+      "at": "2026-08-20T16:04:45.836Z",
+      "approver": "Codex manager",
+      "note": "Approved critical spec: repository workflow hardening proceeds; external runner/teardown/network evidence remains a validation prerequisite and issue closure gate.",
+      "gate": "spec_to_code",
+      "reason": "Spec pass requires explicit approval before implementation starts.",
+      "risk_level": "critical",
+      "from_stage": "spec",
+      "next_stage": "code",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T15-52-54-296Z/reports/2026-08-20T16-04-27-436Z_spec_pass.json"
+    },
+    {
+      "at": "2026-08-20T19:17:18.235Z",
+      "approver": "Codex manager",
+      "note": "Implementation is scoped to repository-enforceable workflow contracts; independent security review must challenge runner/ref/permission and coverage assumptions before testing.",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "from_stage": "code",
+      "next_stage": "review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T15-52-54-296Z/reports/2026-08-20T19-16-59-476Z_code_ready_for_review.json"
+    },
+    {
+      "at": "2026-08-20T19:24:01.251Z",
+      "approver": "Codex manager",
+      "note": "Review findings are concrete and fixable; implementation returns to code before any test or merge gate.",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "from_stage": "review",
+      "next_stage": "code",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T15-52-54-296Z/reports/2026-08-20T19-23-41-655Z_review_fail.json"
+    },
+    {
+      "at": "2026-08-20T19:38:20.519Z",
+      "approver": "Codex manager",
+      "note": "Second implementation pass addresses all prior security review findings; rerun exact-head review before test stage.",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "from_stage": "code",
+      "next_stage": "review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T15-52-54-296Z/reports/2026-08-20T19-38-01-664Z_code_ready_for_review.json"
+    },
+    {
+      "at": "2026-08-20T19:42:19.429Z",
+      "approver": "Codex manager",
+      "note": "Second review found two conservative checker gaps; route back to code before test stage.",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "from_stage": "review",
+      "next_stage": "code",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T15-52-54-296Z/reports/2026-08-20T19-42-08-179Z_review_fail.json"
+    },
+    {
+      "at": "2026-08-20T20:01:13.956Z",
+      "approver": "Codex manager",
+      "note": "Third code iteration closes extra-job and parser bypasses; rerun exact-head review before test stage.",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "from_stage": "code",
+      "next_stage": "review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T15-52-54-296Z/reports/2026-08-20T20-01-05-616Z_code_ready_for_review.json"
+    },
+    {
+      "at": "2026-08-20T20:04:05.132Z",
+      "approver": "Codex manager",
+      "note": "Third review found remaining quoted-target and extra-release-job bypasses; route to code before test stage.",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "from_stage": "review",
+      "next_stage": "code",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T15-52-54-296Z/reports/2026-08-20T20-03-55-937Z_review_fail.json"
+    },
+    {
+      "at": "2026-08-20T20:11:01.994Z",
+      "approver": "Codex manager",
+      "note": "Fourth implementation pass is fail-closed for indirect command and extra-job paths; exact-head review determines test readiness.",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "from_stage": "code",
+      "next_stage": "review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T15-52-54-296Z/reports/2026-08-20T20-10-53-547Z_code_ready_for_review.json"
+    },
+    {
+      "at": "2026-08-20T20:12:48.877Z",
+      "approver": "Codex manager",
+      "note": "Fourth review identifies a final shell-indirection gap; exact run-step allowlisting is the bounded fix.",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "from_stage": "review",
+      "next_stage": "code",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T15-52-54-296Z/reports/2026-08-20T20-12-39-929Z_review_fail.json"
+    },
+    {
+      "at": "2026-08-20T20:21:29.693Z",
+      "approver": "Codex manager",
+      "note": "Exact PR command allowlist is now enforced; proceed to final review before QA.",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "from_stage": "code",
+      "next_stage": "review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T15-52-54-296Z/reports/2026-08-20T20-21-17-293Z_code_ready_for_review.json"
+    },
+    {
+      "at": "2026-08-20T20:23:48.201Z",
+      "approver": "Codex manager",
+      "note": "Repository-side security review GO; test exact head and explicitly capture the external evidence gap.",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "from_stage": "review",
+      "next_stage": "test",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T15-52-54-296Z/reports/2026-08-20T20-23-38-135Z_review_pass.json"
+    },
+    {
+      "at": "2026-08-20T20:33:08.833Z",
+      "approver": "Codex manager",
+      "note": "Repository and hosted QA are green; validation must explicitly record absent platform attestation and gate issue closure.",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "from_stage": "test",
+      "next_stage": "validation",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T15-52-54-296Z/reports/2026-08-20T20-32-59-810Z_test_pass.json"
+    }
+  ],
+  "awaiting_approval": {
+    "created_at": "2026-08-20T20:37:53.379Z",
+    "stage": "validation",
+    "status": "fail",
+    "requested_next_stage": "test",
+    "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T15-52-54-296Z/reports/2026-08-20T20-37-53-379Z_validation_fail.json",
+    "reason": "Risk level critical meets or exceeds threshold high.",
+    "gate": "risk_threshold",
+    "risk_level": "critical",
+    "spec_gate": null
+  },
+  "spec_gate": {
+    "passed": true,
+    "passed_at": "2026-08-20T16:04:45.837Z",
+    "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T15-52-54-296Z/issue-123-spec.json",
+    "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T15-52-54-296Z/issue-123-spec-check.json",
+    "council_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T15-52-54-296Z/issue-123-council.json"
+  },
+  "council_policy": {
+    "required": "always"
+  },
+  "history": [
+    {
+      "at": "2026-08-20T16:04:27.437Z",
+      "event": "approval_required",
+      "stage": "spec",
+      "status": "pass",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T15-52-54-296Z/reports/2026-08-20T16-04-27-436Z_spec_pass.json",
+      "requested_next_stage": "code",
+      "gate": "spec_to_code",
+      "reason": "Spec pass requires explicit approval before implementation starts.",
+      "risk_level": "critical",
+      "spec_gate": {
+        "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T15-52-54-296Z/issue-123-spec.json",
+        "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T15-52-54-296Z/issue-123-spec-check.json",
+        "council_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T15-52-54-296Z/issue-123-council.json",
+        "checked_at": "2026-08-20T16:04:02.538Z"
+      }
+    },
+    {
+      "at": "2026-08-20T16:04:45.837Z",
+      "event": "approved_transition",
+      "stage": "spec",
+      "status": "pass",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T15-52-54-296Z/reports/2026-08-20T16-04-27-436Z_spec_pass.json",
+      "approver": "Codex manager",
+      "note": "Approved critical spec: repository workflow hardening proceeds; external runner/teardown/network evidence remains a validation prerequisite and issue closure gate.",
+      "next_stage": "code"
+    },
+    {
+      "at": "2026-08-20T19:16:59.476Z",
+      "event": "approval_required",
+      "stage": "code",
+      "status": "ready_for_review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T15-52-54-296Z/reports/2026-08-20T19-16-59-476Z_code_ready_for_review.json",
+      "requested_next_stage": "review",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "spec_gate": null
+    },
+    {
+      "at": "2026-08-20T19:17:18.235Z",
+      "event": "approved_transition",
+      "stage": "code",
+      "status": "ready_for_review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T15-52-54-296Z/reports/2026-08-20T19-16-59-476Z_code_ready_for_review.json",
+      "approver": "Codex manager",
+      "note": "Implementation is scoped to repository-enforceable workflow contracts; independent security review must challenge runner/ref/permission and coverage assumptions before testing.",
+      "next_stage": "review"
+    },
+    {
+      "at": "2026-08-20T19:23:41.659Z",
+      "event": "approval_required",
+      "stage": "review",
+      "status": "fail",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T15-52-54-296Z/reports/2026-08-20T19-23-41-655Z_review_fail.json",
+      "requested_next_stage": "code",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "spec_gate": null
+    },
+    {
+      "at": "2026-08-20T19:24:01.251Z",
+      "event": "approved_transition",
+      "stage": "review",
+      "status": "fail",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T15-52-54-296Z/reports/2026-08-20T19-23-41-655Z_review_fail.json",
+      "approver": "Codex manager",
+      "note": "Review findings are concrete and fixable; implementation returns to code before any test or merge gate.",
+      "next_stage": "code"
+    },
+    {
+      "at": "2026-08-20T19:38:01.665Z",
+      "event": "approval_required",
+      "stage": "code",
+      "status": "ready_for_review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T15-52-54-296Z/reports/2026-08-20T19-38-01-664Z_code_ready_for_review.json",
+      "requested_next_stage": "review",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "spec_gate": null
+    },
+    {
+      "at": "2026-08-20T19:38:20.519Z",
+      "event": "approved_transition",
+      "stage": "code",
+      "status": "ready_for_review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T15-52-54-296Z/reports/2026-08-20T19-38-01-664Z_code_ready_for_review.json",
+      "approver": "Codex manager",
+      "note": "Second implementation pass addresses all prior security review findings; rerun exact-head review before test stage.",
+      "next_stage": "review"
+    },
+    {
+      "at": "2026-08-20T19:42:08.179Z",
+      "event": "approval_required",
+      "stage": "review",
+      "status": "fail",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T15-52-54-296Z/reports/2026-08-20T19-42-08-179Z_review_fail.json",
+      "requested_next_stage": "code",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "spec_gate": null
+    },
+    {
+      "at": "2026-08-20T19:42:19.429Z",
+      "event": "approved_transition",
+      "stage": "review",
+      "status": "fail",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T15-52-54-296Z/reports/2026-08-20T19-42-08-179Z_review_fail.json",
+      "approver": "Codex manager",
+      "note": "Second review found two conservative checker gaps; route back to code before test stage.",
+      "next_stage": "code"
+    },
+    {
+      "at": "2026-08-20T20:01:05.617Z",
+      "event": "approval_required",
+      "stage": "code",
+      "status": "ready_for_review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T15-52-54-296Z/reports/2026-08-20T20-01-05-616Z_code_ready_for_review.json",
+      "requested_next_stage": "review",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "spec_gate": null
+    },
+    {
+      "at": "2026-08-20T20:01:13.956Z",
+      "event": "approved_transition",
+      "stage": "code",
+      "status": "ready_for_review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T15-52-54-296Z/reports/2026-08-20T20-01-05-616Z_code_ready_for_review.json",
+      "approver": "Codex manager",
+      "note": "Third code iteration closes extra-job and parser bypasses; rerun exact-head review before test stage.",
+      "next_stage": "review"
+    },
+    {
+      "at": "2026-08-20T20:03:55.938Z",
+      "event": "approval_required",
+      "stage": "review",
+      "status": "fail",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T15-52-54-296Z/reports/2026-08-20T20-03-55-937Z_review_fail.json",
+      "requested_next_stage": "code",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "spec_gate": null
+    },
+    {
+      "at": "2026-08-20T20:04:05.133Z",
+      "event": "approved_transition",
+      "stage": "review",
+      "status": "fail",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T15-52-54-296Z/reports/2026-08-20T20-03-55-937Z_review_fail.json",
+      "approver": "Codex manager",
+      "note": "Third review found remaining quoted-target and extra-release-job bypasses; route to code before test stage.",
+      "next_stage": "code"
+    },
+    {
+      "at": "2026-08-20T20:10:53.547Z",
+      "event": "approval_required",
+      "stage": "code",
+      "status": "ready_for_review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T15-52-54-296Z/reports/2026-08-20T20-10-53-547Z_code_ready_for_review.json",
+      "requested_next_stage": "review",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "spec_gate": null
+    },
+    {
+      "at": "2026-08-20T20:11:01.994Z",
+      "event": "approved_transition",
+      "stage": "code",
+      "status": "ready_for_review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T15-52-54-296Z/reports/2026-08-20T20-10-53-547Z_code_ready_for_review.json",
+      "approver": "Codex manager",
+      "note": "Fourth implementation pass is fail-closed for indirect command and extra-job paths; exact-head review determines test readiness.",
+      "next_stage": "review"
+    },
+    {
+      "at": "2026-08-20T20:12:39.929Z",
+      "event": "approval_required",
+      "stage": "review",
+      "status": "fail",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T15-52-54-296Z/reports/2026-08-20T20-12-39-929Z_review_fail.json",
+      "requested_next_stage": "code",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "spec_gate": null
+    },
+    {
+      "at": "2026-08-20T20:12:48.877Z",
+      "event": "approved_transition",
+      "stage": "review",
+      "status": "fail",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T15-52-54-296Z/reports/2026-08-20T20-12-39-929Z_review_fail.json",
+      "approver": "Codex manager",
+      "note": "Fourth review identifies a final shell-indirection gap; exact run-step allowlisting is the bounded fix.",
+      "next_stage": "code"
+    },
+    {
+      "at": "2026-08-20T20:21:17.294Z",
+      "event": "approval_required",
+      "stage": "code",
+      "status": "ready_for_review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T15-52-54-296Z/reports/2026-08-20T20-21-17-293Z_code_ready_for_review.json",
+      "requested_next_stage": "review",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "spec_gate": null
+    },
+    {
+      "at": "2026-08-20T20:21:29.693Z",
+      "event": "approved_transition",
+      "stage": "code",
+      "status": "ready_for_review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T15-52-54-296Z/reports/2026-08-20T20-21-17-293Z_code_ready_for_review.json",
+      "approver": "Codex manager",
+      "note": "Exact PR command allowlist is now enforced; proceed to final review before QA.",
+      "next_stage": "review"
+    },
+    {
+      "at": "2026-08-20T20:23:38.136Z",
+      "event": "approval_required",
+      "stage": "review",
+      "status": "pass",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T15-52-54-296Z/reports/2026-08-20T20-23-38-135Z_review_pass.json",
+      "requested_next_stage": "test",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "spec_gate": null
+    },
+    {
+      "at": "2026-08-20T20:23:48.201Z",
+      "event": "approved_transition",
+      "stage": "review",
+      "status": "pass",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T15-52-54-296Z/reports/2026-08-20T20-23-38-135Z_review_pass.json",
+      "approver": "Codex manager",
+      "note": "Repository-side security review GO; test exact head and explicitly capture the external evidence gap.",
+      "next_stage": "test"
+    },
+    {
+      "at": "2026-08-20T20:32:59.810Z",
+      "event": "approval_required",
+      "stage": "test",
+      "status": "pass",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T15-52-54-296Z/reports/2026-08-20T20-32-59-810Z_test_pass.json",
+      "requested_next_stage": "validation",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "spec_gate": null
+    },
+    {
+      "at": "2026-08-20T20:33:08.833Z",
+      "event": "approved_transition",
+      "stage": "test",
+      "status": "pass",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T15-52-54-296Z/reports/2026-08-20T20-32-59-810Z_test_pass.json",
+      "approver": "Codex manager",
+      "note": "Repository and hosted QA are green; validation must explicitly record absent platform attestation and gate issue closure.",
+      "next_stage": "validation"
+    },
+    {
+      "at": "2026-08-20T20:37:53.379Z",
+      "event": "approval_required",
+      "stage": "validation",
+      "status": "fail",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T15-52-54-296Z/reports/2026-08-20T20-37-53-379Z_validation_fail.json",
+      "requested_next_stage": "test",
+      "gate": "risk_threshold",
+      "reason": "Risk level critical meets or exceeds threshold high.",
+      "risk_level": "critical",
+      "spec_gate": null
+    }
+  ]
+}

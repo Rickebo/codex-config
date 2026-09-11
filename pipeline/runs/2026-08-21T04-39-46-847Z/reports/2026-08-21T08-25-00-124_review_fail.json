@@ -1,0 +1,21 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Independent exact-head review identified three P1 metadata-integrity gaps in release SBOM/provenance generation.",
+  "changed_files": [
+    "tools/generate_release_metadata.py",
+    ".github/workflows/release.yml"
+  ],
+  "validation": [
+    "Exact-head review completed against 09c9fc23bf70837f1c679272bedb0e7ae9b7e7af",
+    "Action and image pinning was otherwise reviewed as immutable",
+    "Documentation correctly avoids unsupported Nexus/signing/Argo claims"
+  ],
+  "blockers": [
+    "SBOM hashes the checkout chart tree instead of the mutated release chart workspace, so published chart contents are not fully bound.",
+    "SBOM parser only reads the first Go require block and omits indirect modules present in go.mod.",
+    "SBOM/provenance omit the resolved immutable migration image subject/component embedded in the published chart."
+  ],
+  "next_action": "Remediate all three P1 findings, add focused regression tests, then repeat exact-head review and QA.",
+  "route_to": "code"
+}

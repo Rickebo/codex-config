@@ -1,0 +1,1902 @@
+{
+  "schema": "codicarium.signed-command-evidence/v2.4",
+  "base_command": {
+    "payload": {
+      "command_id": "cmd.publish.tag",
+      "signer_kind": "offline_fixture",
+      "authority": false,
+      "nonce": "nonce-positive-v2.4",
+      "issued_at": "2026-08-26T12:00:00Z",
+      "schema_id": "payload.v2.4",
+      "target_digest": "79f2022b31c75535fdc0d915fa59cca54b185e597e88f9670d82b329d349e232",
+      "argv": [
+        "codex-v2.4",
+        "publish",
+        "tag"
+      ],
+      "signature": "RKZ2X47gJUEzY0g5YHy+WguP05Q3OAbMmqV/65p+IsKlK4aoQXgf/+NUyV1QJQS4h8VEgFfdM6Qm4+Z/G+l1DQ==",
+      "record_hash": "fa9cce3e4878068b9d64d59e64673ee1804b56b394abc80e977a70a8f9e63c2d",
+      "sequence": 1,
+      "previous_hash": "GENESIS-v2.4",
+      "identity": "offline.fixture.writer",
+      "approval_ttl_seconds": 600,
+      "credential_use": false,
+      "fsm_transition": "X41->M01",
+      "app_config_scope": "bootstrap-wiring-only",
+      "release_version": "NEXT_SEMVER",
+      "asset_media_type": "application/json",
+      "asset_source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "destination_binding": "github://codicarium/deployment-controller/releases/NEXT_SEMVER",
+      "revoked": false,
+      "live_evidence": false,
+      "allowed_transitions": [
+        "X41->M01"
+      ]
+    },
+    "public_key": "MCowBQYDK2VwAyEAA6EHv/POEL4dcN0Y50vAmWfk1jCbpQ1fHdyGZBJVMbg="
+  },
+  "mutations": [
+    {
+      "mutation_id": "M01",
+      "nonce": "nonce-M01-v2.4",
+      "records": [
+        {
+          "mutation_id": "M01",
+          "kind": "intent",
+          "sequence": 1,
+          "nonce": "nonce-M01-v2.4",
+          "role": "writer",
+          "identity": "offline.fixture.writer",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M01"
+          },
+          "target_digest": "127b00d42c6895c6ce714223e2a1352ff9e50943ed01984082e9f358e72711f3",
+          "previous_hash": "GENESIS-v2.4",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEAANBaHR6iUTltVXr71FiLPG2Z2+uXL+0QoyVi6ibc3Po=",
+          "signature": "x7qvpAV0NeaH2Dsm9YB7ckEhjNomXdF5D1hHbAp3Rt3swktOhWOobblJnhw9R5R6ASCbzEV3EDVq+0iIBnSTBg==",
+          "record_hash": "7382e37e79b008af9b7b74d4a2ae5d1ec8fa3b9435a82f8852f150cae6870ebe"
+        },
+        {
+          "mutation_id": "M01",
+          "kind": "readback",
+          "sequence": 1,
+          "nonce": "nonce-M01-v2.4",
+          "role": "collector",
+          "identity": "offline.fixture.collector",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M01"
+          },
+          "target_digest": "127b00d42c6895c6ce714223e2a1352ff9e50943ed01984082e9f358e72711f3",
+          "previous_hash": "7382e37e79b008af9b7b74d4a2ae5d1ec8fa3b9435a82f8852f150cae6870ebe",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEAULKen6Y4iPgSsbvJqMaExXgA2F8+UEsuE0aFJaUNlR4=",
+          "signature": "0ZnfBMJZ71hHmbg5HdZlsuLZFskxNty5YAW9rRgwyDo2hIBuL24r4CruXNME04QKbdGbYPUYnvb0KdPJSX3oDw==",
+          "record_hash": "83fe0af631cc80098580a532d5b19554f30e75e957bdee9d957af207d3816620"
+        },
+        {
+          "mutation_id": "M01",
+          "kind": "signature",
+          "sequence": 1,
+          "nonce": "nonce-M01-v2.4",
+          "role": "vault-transit-signer",
+          "identity": "offline.fixture.vault-transit-signer",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M01"
+          },
+          "target_digest": "127b00d42c6895c6ce714223e2a1352ff9e50943ed01984082e9f358e72711f3",
+          "previous_hash": "83fe0af631cc80098580a532d5b19554f30e75e957bdee9d957af207d3816620",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEAbcadRy9/QPR2nq2xWbMu2uabBymjMneYDQdDZTEfTXc=",
+          "signature": "UP3/ULMjJUgbmV37VhvoaL6gIZrGuxW0VtvAw+Q7ilLmFXtXjgUY4TOTHDHfxyp/C7UBD4dkHJQKwDXUHAGkDQ==",
+          "record_hash": "c1111b26c6a712b0bc54486bb8d8ff2456f7fcde91824b60015c261b5918e773"
+        },
+        {
+          "mutation_id": "M01",
+          "kind": "commit",
+          "sequence": 1,
+          "nonce": "nonce-M01-v2.4",
+          "role": "append-only-committer",
+          "identity": "offline.fixture.append-only-committer",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M01"
+          },
+          "target_digest": "127b00d42c6895c6ce714223e2a1352ff9e50943ed01984082e9f358e72711f3",
+          "previous_hash": "c1111b26c6a712b0bc54486bb8d8ff2456f7fcde91824b60015c261b5918e773",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEAGbIGyROMTpk09WvO40Tf9BvGzbc6q9NkJr2XpQ43gx4=",
+          "signature": "mbtIzOapfseDhDVrE5yEHR/LJcFDcP1ngQOjQFC8XidAiyZ5spKuiDc7L5Doqaxnf6PxW+4XtDk37bPuLLW+Aw==",
+          "record_hash": "25747d0d020f6c99c4b1d6afa83187d57a6bf6d1022cf175d83bbd0e4746d0ad"
+        }
+      ]
+    },
+    {
+      "mutation_id": "M02",
+      "nonce": "nonce-M02-v2.4",
+      "records": [
+        {
+          "mutation_id": "M02",
+          "kind": "intent",
+          "sequence": 2,
+          "nonce": "nonce-M02-v2.4",
+          "role": "writer",
+          "identity": "offline.fixture.writer",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M02"
+          },
+          "target_digest": "d0315dc0a3975f44408a04c0ad7ef2734df3adacf259bfd75e25441449dd334a",
+          "previous_hash": "25747d0d020f6c99c4b1d6afa83187d57a6bf6d1022cf175d83bbd0e4746d0ad",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEAS93uVQ73NMrgTu5CrmOjedMRK2unOvU1aI1yyZqChGA=",
+          "signature": "h/QPoSx0tTfEwfAYirbXsA9d1pA1BrVj6QfLoac18XpDuMIEkFSYzodLXf5nkrhrc5dDBuJZNaj4GOOlxraxBA==",
+          "record_hash": "3182358ad4a02693672d8afd3e91fbd160b408d43c312dcd8a838ec2714743d0"
+        },
+        {
+          "mutation_id": "M02",
+          "kind": "readback",
+          "sequence": 2,
+          "nonce": "nonce-M02-v2.4",
+          "role": "collector",
+          "identity": "offline.fixture.collector",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M02"
+          },
+          "target_digest": "d0315dc0a3975f44408a04c0ad7ef2734df3adacf259bfd75e25441449dd334a",
+          "previous_hash": "3182358ad4a02693672d8afd3e91fbd160b408d43c312dcd8a838ec2714743d0",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEAVCgh6VKd0a0kO/3/XGQKZRlLSBaYemUN6GHXzp5BemM=",
+          "signature": "/kkYlEb+bObu3J22g/WiojsIcgYs8RLvyhnmwSg7TsPZejHbrPKV9mkwZjsFhZZGbkWRzc0PAEDa7/FuA0I6BQ==",
+          "record_hash": "d0af5f7fd1b57d9325e75fc54b98f36a96ec978623a906e330b2be99ffe7def3"
+        },
+        {
+          "mutation_id": "M02",
+          "kind": "signature",
+          "sequence": 2,
+          "nonce": "nonce-M02-v2.4",
+          "role": "vault-transit-signer",
+          "identity": "offline.fixture.vault-transit-signer",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M02"
+          },
+          "target_digest": "d0315dc0a3975f44408a04c0ad7ef2734df3adacf259bfd75e25441449dd334a",
+          "previous_hash": "d0af5f7fd1b57d9325e75fc54b98f36a96ec978623a906e330b2be99ffe7def3",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEAGbIGyROMTpk09WvO40Tf9BvGzbc6q9NkJr2XpQ43gx4=",
+          "signature": "3uWlAo+182EPNORUJD3wTqsuR6JzXtePji/ifBuJSCAc896qz5vKQ673lUieO0UR5YU9jGhqa0qOFvyDf8eODg==",
+          "record_hash": "9c00c7c6e8d1193cee2b95c8121fc52d8cab590d3e72dab8947317f8e6b41e6c"
+        },
+        {
+          "mutation_id": "M02",
+          "kind": "commit",
+          "sequence": 2,
+          "nonce": "nonce-M02-v2.4",
+          "role": "append-only-committer",
+          "identity": "offline.fixture.append-only-committer",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M02"
+          },
+          "target_digest": "d0315dc0a3975f44408a04c0ad7ef2734df3adacf259bfd75e25441449dd334a",
+          "previous_hash": "9c00c7c6e8d1193cee2b95c8121fc52d8cab590d3e72dab8947317f8e6b41e6c",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEAfjDhMgb8f7hMQiOevSW+p5nVYN5eup/8YSOrnyDSR40=",
+          "signature": "yiQC5TQ4h7JtKBuMnlmPYvuwOdbWvxhJJKh2rOSYD96k0Ev9dn4alZiu/iOXz7ppUokryrlJGXfiTs5vR2teCw==",
+          "record_hash": "0be1e7b6d62fd7a7f5cfce7850041b8ada0805cd3c1789d239152d079d7eae30"
+        }
+      ]
+    },
+    {
+      "mutation_id": "M03",
+      "nonce": "nonce-M03-v2.4",
+      "records": [
+        {
+          "mutation_id": "M03",
+          "kind": "intent",
+          "sequence": 3,
+          "nonce": "nonce-M03-v2.4",
+          "role": "writer",
+          "identity": "offline.fixture.writer",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M03"
+          },
+          "target_digest": "79a64fd10ca44fea4589fa9180a54d30389c05ee8a24de380936c51f47a6cbbf",
+          "previous_hash": "0be1e7b6d62fd7a7f5cfce7850041b8ada0805cd3c1789d239152d079d7eae30",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEAZ37dnHpvuqXWCdxwBc6AEdVOAxSs+JyhcgV7wUDt5io=",
+          "signature": "/BGu44jkzhU9pvQufKu9/mdyLQ/1yTdNQhVDrbxSoyPPSqaKHcPY7AnoptyT6ZMlMkavpIzCxhxJ/1eVyQ7OCA==",
+          "record_hash": "6caaf64075bfdc5954e30f2b9dc96ecddf925956fc5640ae2a82f98458f498ab"
+        },
+        {
+          "mutation_id": "M03",
+          "kind": "readback",
+          "sequence": 3,
+          "nonce": "nonce-M03-v2.4",
+          "role": "collector",
+          "identity": "offline.fixture.collector",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M03"
+          },
+          "target_digest": "79a64fd10ca44fea4589fa9180a54d30389c05ee8a24de380936c51f47a6cbbf",
+          "previous_hash": "6caaf64075bfdc5954e30f2b9dc96ecddf925956fc5640ae2a82f98458f498ab",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEAVwoDAITInq3A0YjJ1kea7sZwjildZ9ct+yzR3Mw5c7M=",
+          "signature": "W33mZdEte5vNlU2krrx4efG2F4eiblCHvs1WwtvLu8+DK1REG1fPk7k/InLOVus0hVVr+SCjP4eK8SqDDznKDA==",
+          "record_hash": "aa6e1c15dbf279f84dd89e7dfd76b307cdb59fff650b719bdd5ef889840ebd54"
+        },
+        {
+          "mutation_id": "M03",
+          "kind": "signature",
+          "sequence": 3,
+          "nonce": "nonce-M03-v2.4",
+          "role": "vault-transit-signer",
+          "identity": "offline.fixture.vault-transit-signer",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M03"
+          },
+          "target_digest": "79a64fd10ca44fea4589fa9180a54d30389c05ee8a24de380936c51f47a6cbbf",
+          "previous_hash": "aa6e1c15dbf279f84dd89e7dfd76b307cdb59fff650b719bdd5ef889840ebd54",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEAfjDhMgb8f7hMQiOevSW+p5nVYN5eup/8YSOrnyDSR40=",
+          "signature": "T60XHEwQ2ls+D1j3HU3e4LThT8ZdgC/jCarkZa1Qh0CpIgJr6+KmlHIqNLHQLLNHDWYiMUodTh4p2WGVSu2HDA==",
+          "record_hash": "6d5d65eeb5d5e0afff413f8c59536b4aaa17e17b73d75100492d920435f34f09"
+        },
+        {
+          "mutation_id": "M03",
+          "kind": "commit",
+          "sequence": 3,
+          "nonce": "nonce-M03-v2.4",
+          "role": "append-only-committer",
+          "identity": "offline.fixture.append-only-committer",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M03"
+          },
+          "target_digest": "79a64fd10ca44fea4589fa9180a54d30389c05ee8a24de380936c51f47a6cbbf",
+          "previous_hash": "6d5d65eeb5d5e0afff413f8c59536b4aaa17e17b73d75100492d920435f34f09",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEAWyk7Vnlaq74tsCcWzpr68ykUK+8vV0nJ3J4b42cavHQ=",
+          "signature": "Vy72DFoh/FzyHJ25kQvCjwoQSkOKUz1qy9nr+50PhHod8MBv3KVQCBT8ESeSqGrJIzokZ7pryLmjgdBB2KzrBw==",
+          "record_hash": "607a491310fd8c26252498de59fd15a85af276592be12d150215f1c87b2e2ffc"
+        }
+      ]
+    },
+    {
+      "mutation_id": "M04",
+      "nonce": "nonce-M04-v2.4",
+      "records": [
+        {
+          "mutation_id": "M04",
+          "kind": "intent",
+          "sequence": 4,
+          "nonce": "nonce-M04-v2.4",
+          "role": "writer",
+          "identity": "offline.fixture.writer",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M04"
+          },
+          "target_digest": "98aec99adff4e545fbe3bb34d43a10a5f2b8847fbd01b84f3a59ef17605ff69e",
+          "previous_hash": "607a491310fd8c26252498de59fd15a85af276592be12d150215f1c87b2e2ffc",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEAULKen6Y4iPgSsbvJqMaExXgA2F8+UEsuE0aFJaUNlR4=",
+          "signature": "Kaif2rQktOuvassCthUzPWecalcP6Cm8yP+oHKlDYI2BkgYfgKN18Wc489P2zeFFZm+8dzIYHd8V3sJMnWvNDw==",
+          "record_hash": "fcab683712e14b936ee64ccc5d4a0038f2a9cf8d73e85fcd6a05277677e7320a"
+        },
+        {
+          "mutation_id": "M04",
+          "kind": "readback",
+          "sequence": 4,
+          "nonce": "nonce-M04-v2.4",
+          "role": "collector",
+          "identity": "offline.fixture.collector",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M04"
+          },
+          "target_digest": "98aec99adff4e545fbe3bb34d43a10a5f2b8847fbd01b84f3a59ef17605ff69e",
+          "previous_hash": "fcab683712e14b936ee64ccc5d4a0038f2a9cf8d73e85fcd6a05277677e7320a",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEAdjOo53NQFlWEYdSa08g7y+hcobw5wdD2aVi+2gdysCc=",
+          "signature": "y1pRHKflyPkKBa0FikzMpy9FMa/p8Zh/+NYF22CAJpq2rWanzMdXth9mkSA74IKHnnhFt7qvx9MjwHFQWAYPBQ==",
+          "record_hash": "322c40fda3f9690c3a7c0a179673c9c49ba1e9d4726fb80c61e29371334441f5"
+        },
+        {
+          "mutation_id": "M04",
+          "kind": "signature",
+          "sequence": 4,
+          "nonce": "nonce-M04-v2.4",
+          "role": "vault-transit-signer",
+          "identity": "offline.fixture.vault-transit-signer",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M04"
+          },
+          "target_digest": "98aec99adff4e545fbe3bb34d43a10a5f2b8847fbd01b84f3a59ef17605ff69e",
+          "previous_hash": "322c40fda3f9690c3a7c0a179673c9c49ba1e9d4726fb80c61e29371334441f5",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEAWyk7Vnlaq74tsCcWzpr68ykUK+8vV0nJ3J4b42cavHQ=",
+          "signature": "wBmlGNHnwjoGv4qrzkTGOpVdfRp21H+KFnonkwdrBSXYnjhNLpqLvWGn0tYMUDjuMB7YE43KOwd9qJPgmAO3Ag==",
+          "record_hash": "bd35d88b15b56955b0eb4e249770250f935cf94cc8f115081aab77ed7d811f41"
+        },
+        {
+          "mutation_id": "M04",
+          "kind": "commit",
+          "sequence": 4,
+          "nonce": "nonce-M04-v2.4",
+          "role": "append-only-committer",
+          "identity": "offline.fixture.append-only-committer",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M04"
+          },
+          "target_digest": "98aec99adff4e545fbe3bb34d43a10a5f2b8847fbd01b84f3a59ef17605ff69e",
+          "previous_hash": "bd35d88b15b56955b0eb4e249770250f935cf94cc8f115081aab77ed7d811f41",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEAbl5Fj/eVoIgHkx/aBrWMX0hCtGvK/7X1NcZztSJeRxY=",
+          "signature": "JKbccyzmAdR0UFIydJtSYn5YxNzrw5dUFtk+b77BfkRMnTgQrH3+j3XUdcvNnwZNEvEohl+59/XCQnzRdP/DDw==",
+          "record_hash": "e5ee009da05fdb20668d497b0fa1a5b93f6c82ce1d1e76a1aa41be8a652136ee"
+        }
+      ]
+    },
+    {
+      "mutation_id": "M05",
+      "nonce": "nonce-M05-v2.4",
+      "records": [
+        {
+          "mutation_id": "M05",
+          "kind": "intent",
+          "sequence": 5,
+          "nonce": "nonce-M05-v2.4",
+          "role": "writer",
+          "identity": "offline.fixture.writer",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M05"
+          },
+          "target_digest": "0ff44f0759fb9109b71b5d39811ddeb6ce97946db505da5ba7ec20db37bde894",
+          "previous_hash": "e5ee009da05fdb20668d497b0fa1a5b93f6c82ce1d1e76a1aa41be8a652136ee",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEAVCgh6VKd0a0kO/3/XGQKZRlLSBaYemUN6GHXzp5BemM=",
+          "signature": "3oK4MkyL0qChJFLQjiNtlFMnr0UjfpHKGJA4KrN1Yfn4O5tKvgMZ6VMAVvVPAVPbUPmxHurE0P+XTr+h8tS6AA==",
+          "record_hash": "82391566ca4efa974c60f31fb18b0ed2b2bd2c8d7199fec8d7540611f972a91c"
+        },
+        {
+          "mutation_id": "M05",
+          "kind": "readback",
+          "sequence": 5,
+          "nonce": "nonce-M05-v2.4",
+          "role": "collector",
+          "identity": "offline.fixture.collector",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M05"
+          },
+          "target_digest": "0ff44f0759fb9109b71b5d39811ddeb6ce97946db505da5ba7ec20db37bde894",
+          "previous_hash": "82391566ca4efa974c60f31fb18b0ed2b2bd2c8d7199fec8d7540611f972a91c",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEAl/Wje2WwsR4wDjZQfXYQq/Nrn//G8he7OeUZT57hbos=",
+          "signature": "ZOwkLVrrg5cUYB7YoYAt+shuZ6R5LvjgtQrhVC0cft9Q1vvDwyz5V0Mf9xunXYZ8/kgTSu6GI89vayti+Y9TBg==",
+          "record_hash": "e6702a7800f0be3f357cdf5efa4b01d3e433c5ab473b9b91b5a638f875f9713a"
+        },
+        {
+          "mutation_id": "M05",
+          "kind": "signature",
+          "sequence": 5,
+          "nonce": "nonce-M05-v2.4",
+          "role": "vault-transit-signer",
+          "identity": "offline.fixture.vault-transit-signer",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M05"
+          },
+          "target_digest": "0ff44f0759fb9109b71b5d39811ddeb6ce97946db505da5ba7ec20db37bde894",
+          "previous_hash": "e6702a7800f0be3f357cdf5efa4b01d3e433c5ab473b9b91b5a638f875f9713a",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEAbl5Fj/eVoIgHkx/aBrWMX0hCtGvK/7X1NcZztSJeRxY=",
+          "signature": "0Y7z7maAy2xSMWWkXMtVDaqb/+hA5biWdzb6RWjHs+FsHhvnsQHOsKwL1PnO/FvbY5ffEldKJAiFvXG8v5qlAQ==",
+          "record_hash": "25aad72b75ce2ab8c2817c38031a8d3270b927820af6eae7b48efffba22ac10d"
+        },
+        {
+          "mutation_id": "M05",
+          "kind": "commit",
+          "sequence": 5,
+          "nonce": "nonce-M05-v2.4",
+          "role": "append-only-committer",
+          "identity": "offline.fixture.append-only-committer",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M05"
+          },
+          "target_digest": "0ff44f0759fb9109b71b5d39811ddeb6ce97946db505da5ba7ec20db37bde894",
+          "previous_hash": "25aad72b75ce2ab8c2817c38031a8d3270b927820af6eae7b48efffba22ac10d",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEAXKd3x9nZef9JEnzAUZbJSgcPq1pebH7IuC5vjyb9AWg=",
+          "signature": "tiC0rzs4xlh32hAMzjy0iS09i+BpalQhHSEl4o4yfuwkFWmlsn8BmE+dTj67PJRubsvQvdp6OnOEj+nIdZ+8BA==",
+          "record_hash": "e82e35b868c244edd7087ed978b8a2903742e06f06e11ecafb98a246c5011853"
+        }
+      ]
+    },
+    {
+      "mutation_id": "M06",
+      "nonce": "nonce-M06-v2.4",
+      "records": [
+        {
+          "mutation_id": "M06",
+          "kind": "intent",
+          "sequence": 6,
+          "nonce": "nonce-M06-v2.4",
+          "role": "writer",
+          "identity": "offline.fixture.writer",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M06"
+          },
+          "target_digest": "675ac57cdab3da37b91d0c30d66db4cfdffd52c03b15c5087b82806581ac3588",
+          "previous_hash": "e82e35b868c244edd7087ed978b8a2903742e06f06e11ecafb98a246c5011853",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEAVwoDAITInq3A0YjJ1kea7sZwjildZ9ct+yzR3Mw5c7M=",
+          "signature": "hORCumnTio5TKo2rlOC0btlE4WtDiNbs9abDur43aBSsq/GnLp6NT0bY0zh6huyvBajUIDqGRkKqiYJN/tbiCg==",
+          "record_hash": "7100ad8fc4ff2907db069307067151c3abfb0e1ad035e0b854dbce749f615103"
+        },
+        {
+          "mutation_id": "M06",
+          "kind": "readback",
+          "sequence": 6,
+          "nonce": "nonce-M06-v2.4",
+          "role": "collector",
+          "identity": "offline.fixture.collector",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M06"
+          },
+          "target_digest": "675ac57cdab3da37b91d0c30d66db4cfdffd52c03b15c5087b82806581ac3588",
+          "previous_hash": "7100ad8fc4ff2907db069307067151c3abfb0e1ad035e0b854dbce749f615103",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEALikNvOMIe8hj9TtmFHQ8YA9YCjXjm2xxJHh5oeM70eM=",
+          "signature": "V0Q+fZNyPdAZJnVFEHgcZH2KJwMwqnB/MnCD9CiQxggP+bXYyKco4oDkXfNpT3eaMsOSoDOPLnw8kBWHaFwGCA==",
+          "record_hash": "5c2e9524309f1e40c912a6b399a0b26b7df37663df33faa5d9998b5c14ee466f"
+        },
+        {
+          "mutation_id": "M06",
+          "kind": "signature",
+          "sequence": 6,
+          "nonce": "nonce-M06-v2.4",
+          "role": "vault-transit-signer",
+          "identity": "offline.fixture.vault-transit-signer",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M06"
+          },
+          "target_digest": "675ac57cdab3da37b91d0c30d66db4cfdffd52c03b15c5087b82806581ac3588",
+          "previous_hash": "5c2e9524309f1e40c912a6b399a0b26b7df37663df33faa5d9998b5c14ee466f",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEAXKd3x9nZef9JEnzAUZbJSgcPq1pebH7IuC5vjyb9AWg=",
+          "signature": "hCiMf2ob4igKxlw6hceF1d2rB1QQsD/r/A6c8Oez1352D9Tm58ZioGVnvzG0ArpE/+YTmnnIMmvNepsRnH3YDw==",
+          "record_hash": "83dfed2db0b4b4acfc2ffc7f868e06228038e8eb61812bd641042706f82da782"
+        },
+        {
+          "mutation_id": "M06",
+          "kind": "commit",
+          "sequence": 6,
+          "nonce": "nonce-M06-v2.4",
+          "role": "append-only-committer",
+          "identity": "offline.fixture.append-only-committer",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M06"
+          },
+          "target_digest": "675ac57cdab3da37b91d0c30d66db4cfdffd52c03b15c5087b82806581ac3588",
+          "previous_hash": "83dfed2db0b4b4acfc2ffc7f868e06228038e8eb61812bd641042706f82da782",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEAS50q/q6on9zQANzRnvVAXJ87UmtaexeIy0pJ/1mGJp8=",
+          "signature": "H36rlkZs+L1U3yv9l4J4LLNtLpty+hrFcjW9LJcKeZUD/JrYjblZjHOM3YZP1AXuiiJR31a/omcVh+r6B+CkDg==",
+          "record_hash": "ebb04e1de7fd028fcf7160b6f445792c987afb70161714dcca18d634f8cb6439"
+        }
+      ]
+    },
+    {
+      "mutation_id": "M07",
+      "nonce": "nonce-M07-v2.4",
+      "records": [
+        {
+          "mutation_id": "M07",
+          "kind": "intent",
+          "sequence": 7,
+          "nonce": "nonce-M07-v2.4",
+          "role": "writer",
+          "identity": "offline.fixture.writer",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M07"
+          },
+          "target_digest": "52ad860d3717fc1710800ca379c7dffd344b2c6f2f91b51b46fc672c9dba37af",
+          "previous_hash": "ebb04e1de7fd028fcf7160b6f445792c987afb70161714dcca18d634f8cb6439",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEAdjOo53NQFlWEYdSa08g7y+hcobw5wdD2aVi+2gdysCc=",
+          "signature": "qFnAYkD91/ff023RCnpW/N2fUwSaouZp9C7PYxYPjfzXSpYo17xWJF8aUsCC/387joVd1AIGtPI1L+91r1uUBQ==",
+          "record_hash": "1f5b29425bb63e4581847dc27cf943f8d82bcd6ee58b7a2116e435919370007c"
+        },
+        {
+          "mutation_id": "M07",
+          "kind": "readback",
+          "sequence": 7,
+          "nonce": "nonce-M07-v2.4",
+          "role": "collector",
+          "identity": "offline.fixture.collector",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M07"
+          },
+          "target_digest": "52ad860d3717fc1710800ca379c7dffd344b2c6f2f91b51b46fc672c9dba37af",
+          "previous_hash": "1f5b29425bb63e4581847dc27cf943f8d82bcd6ee58b7a2116e435919370007c",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEAd3bocLkzVPKgskwj8qNsxOgOIjIYwbl5Jv3QGDlqK5s=",
+          "signature": "AUk+mj5p8joTHvMQKo6Lg/yfWz/8l8CQtwbhbvwArob030OHeo+iWva7OqI6qzsoYf8Uv47A8JTKpc8nla5SAg==",
+          "record_hash": "cdc1996759504f72aba3ccf02ebf7dc9d36c65bf2318db2324de3d8d5c944291"
+        },
+        {
+          "mutation_id": "M07",
+          "kind": "signature",
+          "sequence": 7,
+          "nonce": "nonce-M07-v2.4",
+          "role": "vault-transit-signer",
+          "identity": "offline.fixture.vault-transit-signer",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M07"
+          },
+          "target_digest": "52ad860d3717fc1710800ca379c7dffd344b2c6f2f91b51b46fc672c9dba37af",
+          "previous_hash": "cdc1996759504f72aba3ccf02ebf7dc9d36c65bf2318db2324de3d8d5c944291",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEAS50q/q6on9zQANzRnvVAXJ87UmtaexeIy0pJ/1mGJp8=",
+          "signature": "f/Ul05geHYMe3WFrFFSutAxiu0i/+y5aNuhx5VIEPKnyJzclaaBKFJTvbr6Xqg6cJlsFTgOB0fc9fiBpdRzRBw==",
+          "record_hash": "1d7a9445eb26fa06f95604fde276dd32eac7f7dd4ec471d4fe03547bae8d4458"
+        },
+        {
+          "mutation_id": "M07",
+          "kind": "commit",
+          "sequence": 7,
+          "nonce": "nonce-M07-v2.4",
+          "role": "append-only-committer",
+          "identity": "offline.fixture.append-only-committer",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M07"
+          },
+          "target_digest": "52ad860d3717fc1710800ca379c7dffd344b2c6f2f91b51b46fc672c9dba37af",
+          "previous_hash": "1d7a9445eb26fa06f95604fde276dd32eac7f7dd4ec471d4fe03547bae8d4458",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEAqNKQR+OFhtQC9B+ZBqLG3cJYn99k6bc9q9I9Nbx81B0=",
+          "signature": "Uy6/3lUGlNXCjt9tTBgdPC4qTY3taOY5W1Be0ZvzB7pzzDKdQaCmfSNiGuVWxUsGeWSmwsJSqXxMedWXRTiqDg==",
+          "record_hash": "f6f7f78dfc9c6287f4a64498cb892c9e4418f485b877b84085c21191901e2ba9"
+        }
+      ]
+    },
+    {
+      "mutation_id": "M08",
+      "nonce": "nonce-M08-v2.4",
+      "records": [
+        {
+          "mutation_id": "M08",
+          "kind": "intent",
+          "sequence": 8,
+          "nonce": "nonce-M08-v2.4",
+          "role": "writer",
+          "identity": "offline.fixture.writer",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M08"
+          },
+          "target_digest": "327ab1d3deca510ebfdfbe6dc5e35d01facba78327cd88ce094de4da1f701084",
+          "previous_hash": "f6f7f78dfc9c6287f4a64498cb892c9e4418f485b877b84085c21191901e2ba9",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEAl/Wje2WwsR4wDjZQfXYQq/Nrn//G8he7OeUZT57hbos=",
+          "signature": "AwEPCUqNDMZl2C/dF/2dauum2a1tbBggc/ZJxxshi+FTU4x5ZjlkL0qOgG0Zz9Wj4r8jSuoNDPZ7WPX7Z6QLCg==",
+          "record_hash": "d50f603914a1dcaea5d799974c398c8af871dd2ee438ed3474bd8ce6d6b2321d"
+        },
+        {
+          "mutation_id": "M08",
+          "kind": "readback",
+          "sequence": 8,
+          "nonce": "nonce-M08-v2.4",
+          "role": "collector",
+          "identity": "offline.fixture.collector",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M08"
+          },
+          "target_digest": "327ab1d3deca510ebfdfbe6dc5e35d01facba78327cd88ce094de4da1f701084",
+          "previous_hash": "d50f603914a1dcaea5d799974c398c8af871dd2ee438ed3474bd8ce6d6b2321d",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEA7VSln7GsOlEjk1E2KUG4aOhaYOPXskhdgogh3Hppwnk=",
+          "signature": "Xv+ClrgjTCCmQjkGBQ54gfFAkc5F+ktucb1SNWuQIh7DHzf3mX+02Xivdi1DwyEIH/UICuCFn9GrvcN6KA8UCA==",
+          "record_hash": "5878bde75ebdc2f8640c06c2bed2ce396b5c3a5c971ca1128a5644b44c92585a"
+        },
+        {
+          "mutation_id": "M08",
+          "kind": "signature",
+          "sequence": 8,
+          "nonce": "nonce-M08-v2.4",
+          "role": "vault-transit-signer",
+          "identity": "offline.fixture.vault-transit-signer",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M08"
+          },
+          "target_digest": "327ab1d3deca510ebfdfbe6dc5e35d01facba78327cd88ce094de4da1f701084",
+          "previous_hash": "5878bde75ebdc2f8640c06c2bed2ce396b5c3a5c971ca1128a5644b44c92585a",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEAqNKQR+OFhtQC9B+ZBqLG3cJYn99k6bc9q9I9Nbx81B0=",
+          "signature": "0xqJe49QgT8lCy2hcppe3kdPeQ9ZGw4gtwqBju8nDYiO2Vm07JPgju/hX1SIxBOpmetDzwOyG1H0NEcBgAVMCg==",
+          "record_hash": "34efea68e173d65f6a2cbb115165d3a85ac5a1073b54f457d646d6809d04ea0f"
+        },
+        {
+          "mutation_id": "M08",
+          "kind": "commit",
+          "sequence": 8,
+          "nonce": "nonce-M08-v2.4",
+          "role": "append-only-committer",
+          "identity": "offline.fixture.append-only-committer",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M08"
+          },
+          "target_digest": "327ab1d3deca510ebfdfbe6dc5e35d01facba78327cd88ce094de4da1f701084",
+          "previous_hash": "34efea68e173d65f6a2cbb115165d3a85ac5a1073b54f457d646d6809d04ea0f",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEAJRjbF7ZB+jBaCtcdgk4N58QTreN/0sg3+nPu2csv8r8=",
+          "signature": "DUIEx0iA5u6oQ4aI1507r/sLucWMaB8DFAxn633qWAVv0Yg8iLjPiFGqyEpGrVPLdrLHqeRF7hwDkLbo8eMnAg==",
+          "record_hash": "b9663cff3d45ab7aff615a24ff67042400b86c83a3c9474f082f8b6120acfa57"
+        }
+      ]
+    },
+    {
+      "mutation_id": "M09",
+      "nonce": "nonce-M09-v2.4",
+      "records": [
+        {
+          "mutation_id": "M09",
+          "kind": "intent",
+          "sequence": 9,
+          "nonce": "nonce-M09-v2.4",
+          "role": "writer",
+          "identity": "offline.fixture.writer",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M09"
+          },
+          "target_digest": "c680f673f9ad02bdfce29a98f56a079914d1483e6df56998171e503c22834817",
+          "previous_hash": "b9663cff3d45ab7aff615a24ff67042400b86c83a3c9474f082f8b6120acfa57",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEALikNvOMIe8hj9TtmFHQ8YA9YCjXjm2xxJHh5oeM70eM=",
+          "signature": "WlRmUuGk8QbJwHemw5Q+pjBrMW25T5Nt31Bd9ZTpzztEbB/Aur3A5hc08Af30veD19kI2uZg5pG/R/St46cwCg==",
+          "record_hash": "656fb38d01801ccb7dce82c81aa25ac40ba0d79d500a1381944d2287ed419ed9"
+        },
+        {
+          "mutation_id": "M09",
+          "kind": "readback",
+          "sequence": 9,
+          "nonce": "nonce-M09-v2.4",
+          "role": "collector",
+          "identity": "offline.fixture.collector",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M09"
+          },
+          "target_digest": "c680f673f9ad02bdfce29a98f56a079914d1483e6df56998171e503c22834817",
+          "previous_hash": "656fb38d01801ccb7dce82c81aa25ac40ba0d79d500a1381944d2287ed419ed9",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEAJStmpkJmHIfTyHmfJxp+/c8uFGd20KgEqj7wag9RM+E=",
+          "signature": "tN06b5x7eyf3+H1odyFJZLLgJtSSEPD5Cnv3f+fnCwOjfb1u8DLz9+IHKi9As4SvsKURhwELolBt7RpUOzypCA==",
+          "record_hash": "fb6195e81cf10289d243600e64d76c9fb2a34a7512978c27eef2853da373d8c2"
+        },
+        {
+          "mutation_id": "M09",
+          "kind": "signature",
+          "sequence": 9,
+          "nonce": "nonce-M09-v2.4",
+          "role": "vault-transit-signer",
+          "identity": "offline.fixture.vault-transit-signer",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M09"
+          },
+          "target_digest": "c680f673f9ad02bdfce29a98f56a079914d1483e6df56998171e503c22834817",
+          "previous_hash": "fb6195e81cf10289d243600e64d76c9fb2a34a7512978c27eef2853da373d8c2",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEAJRjbF7ZB+jBaCtcdgk4N58QTreN/0sg3+nPu2csv8r8=",
+          "signature": "uPJLkXvwU2m1LI1Wv4JjiiBRYKtKQCgwQuWAhZyJ/wAaikICOYMm9J+/HR+t1GEi9sUYkMiUX4QILtLcuqeWBQ==",
+          "record_hash": "f20ae6ef3f15c40cc587f9f2e581e8f287dd527d83f55a50035f8fffc6f77c8b"
+        },
+        {
+          "mutation_id": "M09",
+          "kind": "commit",
+          "sequence": 9,
+          "nonce": "nonce-M09-v2.4",
+          "role": "append-only-committer",
+          "identity": "offline.fixture.append-only-committer",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M09"
+          },
+          "target_digest": "c680f673f9ad02bdfce29a98f56a079914d1483e6df56998171e503c22834817",
+          "previous_hash": "f20ae6ef3f15c40cc587f9f2e581e8f287dd527d83f55a50035f8fffc6f77c8b",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEAJhgXlhiNV8KxHOA0iEuxtH0Vx0TVq/ZWQsSeQl3Is0Q=",
+          "signature": "EIMW5rNPE8vXdpDGQP2O2zcCVV38ssafSSJXG6L5b4XfaOKuR2jtsULzALyxxWg11RxS7q0RXwB+euBXkStkDQ==",
+          "record_hash": "e74c58cd6659712c05ef225284e5bd8f7cc6b174800f419779f6c2a498e8db7b"
+        }
+      ]
+    },
+    {
+      "mutation_id": "M10",
+      "nonce": "nonce-M10-v2.4",
+      "records": [
+        {
+          "mutation_id": "M10",
+          "kind": "intent",
+          "sequence": 10,
+          "nonce": "nonce-M10-v2.4",
+          "role": "writer",
+          "identity": "offline.fixture.writer",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M10"
+          },
+          "target_digest": "f31252c7ab29aa0c75f34e4cacaf43ce456a6caabb1ff444c491a533ed9f1556",
+          "previous_hash": "e74c58cd6659712c05ef225284e5bd8f7cc6b174800f419779f6c2a498e8db7b",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEAd3bocLkzVPKgskwj8qNsxOgOIjIYwbl5Jv3QGDlqK5s=",
+          "signature": "VNbC1BVfl0zouGxwqIp61Gr+vtimNtGVpcCiBhO/JE/djFtMmZZNPzK4AbnhaNx5rkLDmy5keB4wYYS6lRYYDg==",
+          "record_hash": "ab3c225e5162c7d13e07872f46b031d8abbabf597ac15a918b65614a3d574b9a"
+        },
+        {
+          "mutation_id": "M10",
+          "kind": "readback",
+          "sequence": 10,
+          "nonce": "nonce-M10-v2.4",
+          "role": "collector",
+          "identity": "offline.fixture.collector",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M10"
+          },
+          "target_digest": "f31252c7ab29aa0c75f34e4cacaf43ce456a6caabb1ff444c491a533ed9f1556",
+          "previous_hash": "ab3c225e5162c7d13e07872f46b031d8abbabf597ac15a918b65614a3d574b9a",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEAQai7EAb+DZc7+8G/RoQ6GlgppORN62OywdbkI+dWtgY=",
+          "signature": "Rn04ymhK6QooZG5k0WkS55UhQRVLWQn8N2b0ja/d/3O14iOyUJVTtub2dLqGVLDTx/EiLxJMuUhsqy67ySD0Bw==",
+          "record_hash": "3afda017c79c6bda8fb9e5be71f6f11df95ff8cf37e17d7c52343c3ada6404a0"
+        },
+        {
+          "mutation_id": "M10",
+          "kind": "signature",
+          "sequence": 10,
+          "nonce": "nonce-M10-v2.4",
+          "role": "vault-transit-signer",
+          "identity": "offline.fixture.vault-transit-signer",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M10"
+          },
+          "target_digest": "f31252c7ab29aa0c75f34e4cacaf43ce456a6caabb1ff444c491a533ed9f1556",
+          "previous_hash": "3afda017c79c6bda8fb9e5be71f6f11df95ff8cf37e17d7c52343c3ada6404a0",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEAJhgXlhiNV8KxHOA0iEuxtH0Vx0TVq/ZWQsSeQl3Is0Q=",
+          "signature": "sED1HRafIg2Xm812kklG9f9p9iIfoXzZLNgPIi/sFQDcbjwgxRgANHPPrdCLSceK9/Sc+201rvbr+Seu4RMOAw==",
+          "record_hash": "5d10ea778d36f8de481470b22f1b8b9a5e9d94fad657438e71deac8275a5d9aa"
+        },
+        {
+          "mutation_id": "M10",
+          "kind": "commit",
+          "sequence": 10,
+          "nonce": "nonce-M10-v2.4",
+          "role": "append-only-committer",
+          "identity": "offline.fixture.append-only-committer",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M10"
+          },
+          "target_digest": "f31252c7ab29aa0c75f34e4cacaf43ce456a6caabb1ff444c491a533ed9f1556",
+          "previous_hash": "5d10ea778d36f8de481470b22f1b8b9a5e9d94fad657438e71deac8275a5d9aa",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEArz0gJk+cJu8IW1zlN/QX1CQDegljpjhv9tBQ5b93NxQ=",
+          "signature": "uI7vPrQp1MmnAUAbrkyQhAbhOot1y/3Q47oDhABsYiD8MYS4AIM8PuRjeg8G9o46YqBXun8op0/++DtB5SCHAw==",
+          "record_hash": "bd2f56aa2f90243a6719bf95ed6d0054720cb2813e71c66b8ad21e54e65e0580"
+        }
+      ]
+    },
+    {
+      "mutation_id": "M11",
+      "nonce": "nonce-M11-v2.4",
+      "records": [
+        {
+          "mutation_id": "M11",
+          "kind": "intent",
+          "sequence": 11,
+          "nonce": "nonce-M11-v2.4",
+          "role": "writer",
+          "identity": "offline.fixture.writer",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M11"
+          },
+          "target_digest": "ab70e5121118eb4f42c819b500706dd2138e84528f37be5f9908d3a25022386e",
+          "previous_hash": "bd2f56aa2f90243a6719bf95ed6d0054720cb2813e71c66b8ad21e54e65e0580",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEA7VSln7GsOlEjk1E2KUG4aOhaYOPXskhdgogh3Hppwnk=",
+          "signature": "dmbX4//b91AZj4Y/a4430Z8pGWEXbC2aE81xYyvIFTQOe3XaSl50qkQ6iSIKWPQVO8g/2gAiS4OkMYObjYQCDg==",
+          "record_hash": "068c9077c983abdda67868360f54d85882f9129911b0b83e7482a47568556f45"
+        },
+        {
+          "mutation_id": "M11",
+          "kind": "readback",
+          "sequence": 11,
+          "nonce": "nonce-M11-v2.4",
+          "role": "collector",
+          "identity": "offline.fixture.collector",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M11"
+          },
+          "target_digest": "ab70e5121118eb4f42c819b500706dd2138e84528f37be5f9908d3a25022386e",
+          "previous_hash": "068c9077c983abdda67868360f54d85882f9129911b0b83e7482a47568556f45",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEAYNoA5eHPh3+o0yGfWvq4bQGoZpyF7/e+we0wks06Tq0=",
+          "signature": "VLZa5sX4yVrHqIOIq5rGQVu6C058aVAz5QkeJndUgCgE3kBfdOYW0MM7j77cdAbcqfNHZyzKBVHVD944QzhOCQ==",
+          "record_hash": "5e09e0499e7b17fa27b0e285968f59af1b04652b05628eb3fff07f60d695276c"
+        },
+        {
+          "mutation_id": "M11",
+          "kind": "signature",
+          "sequence": 11,
+          "nonce": "nonce-M11-v2.4",
+          "role": "vault-transit-signer",
+          "identity": "offline.fixture.vault-transit-signer",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M11"
+          },
+          "target_digest": "ab70e5121118eb4f42c819b500706dd2138e84528f37be5f9908d3a25022386e",
+          "previous_hash": "5e09e0499e7b17fa27b0e285968f59af1b04652b05628eb3fff07f60d695276c",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEArz0gJk+cJu8IW1zlN/QX1CQDegljpjhv9tBQ5b93NxQ=",
+          "signature": "3zkRkLGjL9RyI2w1rEZbN6/wMmIzlyI0APwbuuzlT9i6eXhlVVhiPXkqBGY1+kZ2h0Jn5wukucKOwMsUc/SpAg==",
+          "record_hash": "70a15fbba9d015f863193014536e55673cddb01eb0418bcdb097091168205b2f"
+        },
+        {
+          "mutation_id": "M11",
+          "kind": "commit",
+          "sequence": 11,
+          "nonce": "nonce-M11-v2.4",
+          "role": "append-only-committer",
+          "identity": "offline.fixture.append-only-committer",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M11"
+          },
+          "target_digest": "ab70e5121118eb4f42c819b500706dd2138e84528f37be5f9908d3a25022386e",
+          "previous_hash": "70a15fbba9d015f863193014536e55673cddb01eb0418bcdb097091168205b2f",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEAKay64UG8yvCyLhqU000LxzYeUm0L/hLIl5S8kyKWbdc=",
+          "signature": "Grbvvfqznr6jLV8Gbbg+XCeAhHf80nOtcG/XdEOa3canPWgh1So/MmubOnawjeYBdrQk2zFQliydLYcJhNaaDw==",
+          "record_hash": "47efc3ae0fc409073a4f995aa84a03ff130ce83bdbdbdc298c6e065e8878c57c"
+        }
+      ]
+    },
+    {
+      "mutation_id": "M12",
+      "nonce": "nonce-M12-v2.4",
+      "records": [
+        {
+          "mutation_id": "M12",
+          "kind": "intent",
+          "sequence": 12,
+          "nonce": "nonce-M12-v2.4",
+          "role": "writer",
+          "identity": "offline.fixture.writer",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M12"
+          },
+          "target_digest": "f44863091e53eb4fabd05e5e51596764350976d94d8be761a3577990c2bf2c76",
+          "previous_hash": "47efc3ae0fc409073a4f995aa84a03ff130ce83bdbdbdc298c6e065e8878c57c",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEAJStmpkJmHIfTyHmfJxp+/c8uFGd20KgEqj7wag9RM+E=",
+          "signature": "KYL5o7DYdwtl85FumyOC8kgvM+4zI/S63w5qwTAUA5Z4p2TAqf5JQUXuGZdKSQQHKCgZuFL7I33RF2L3D8z0Bg==",
+          "record_hash": "5a198f9f0865e20a0062b427386f3656316c4a2bed176d999b70049dcdf80de6"
+        },
+        {
+          "mutation_id": "M12",
+          "kind": "readback",
+          "sequence": 12,
+          "nonce": "nonce-M12-v2.4",
+          "role": "collector",
+          "identity": "offline.fixture.collector",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M12"
+          },
+          "target_digest": "f44863091e53eb4fabd05e5e51596764350976d94d8be761a3577990c2bf2c76",
+          "previous_hash": "5a198f9f0865e20a0062b427386f3656316c4a2bed176d999b70049dcdf80de6",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEAbcadRy9/QPR2nq2xWbMu2uabBymjMneYDQdDZTEfTXc=",
+          "signature": "xPEv4P3tPb+MWXvOSFpETjS0VCIRtzwApQEciKW7H7UgsFN7+Gjx3tz1uv0kut6c/h0Y2dIbf0zPz+stkoVWAg==",
+          "record_hash": "4b6499b70103ac6d743503f8f30869dbe1f9839b3297b2c2c04605ddfd7f4d09"
+        },
+        {
+          "mutation_id": "M12",
+          "kind": "signature",
+          "sequence": 12,
+          "nonce": "nonce-M12-v2.4",
+          "role": "vault-transit-signer",
+          "identity": "offline.fixture.vault-transit-signer",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M12"
+          },
+          "target_digest": "f44863091e53eb4fabd05e5e51596764350976d94d8be761a3577990c2bf2c76",
+          "previous_hash": "4b6499b70103ac6d743503f8f30869dbe1f9839b3297b2c2c04605ddfd7f4d09",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEAKay64UG8yvCyLhqU000LxzYeUm0L/hLIl5S8kyKWbdc=",
+          "signature": "JvcMJE2l8Eg3eRFIsFdaQw4wtkFJ0mS0UkGTCZpqLTq1YuWSQXJN1GhUy7UiL92F5Ytsa1e9dKWYasID53qlBQ==",
+          "record_hash": "adab7b4989e57a1164d2064c32451881cc7a5b6e4ad14d8e3098d777f6b2041f"
+        },
+        {
+          "mutation_id": "M12",
+          "kind": "commit",
+          "sequence": 12,
+          "nonce": "nonce-M12-v2.4",
+          "role": "append-only-committer",
+          "identity": "offline.fixture.append-only-committer",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M12"
+          },
+          "target_digest": "f44863091e53eb4fabd05e5e51596764350976d94d8be761a3577990c2bf2c76",
+          "previous_hash": "adab7b4989e57a1164d2064c32451881cc7a5b6e4ad14d8e3098d777f6b2041f",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEA5/FioQvsVZr+oZXk3OhLaVaNXSywlj60RsBoXisX8vA=",
+          "signature": "qyxhu1jR1cMz4xZWd52QdcriMHE3qXNGQknqFs0V1av3gfZczTJKhUaVkPyuNt9suNlrXP6nLCqK1P4XhbRaCg==",
+          "record_hash": "43fb6b02f2e09bfd8f46ee3285a5302c0ac036ba9e8859bd7f74a15d365e369b"
+        }
+      ]
+    },
+    {
+      "mutation_id": "M13",
+      "nonce": "nonce-M13-v2.4",
+      "records": [
+        {
+          "mutation_id": "M13",
+          "kind": "intent",
+          "sequence": 13,
+          "nonce": "nonce-M13-v2.4",
+          "role": "writer",
+          "identity": "offline.fixture.writer",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M13"
+          },
+          "target_digest": "87ce2f552ce20ba2b1dca3e656ed2690a616ef12e0322bb3192bc21df7fe4f7f",
+          "previous_hash": "43fb6b02f2e09bfd8f46ee3285a5302c0ac036ba9e8859bd7f74a15d365e369b",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEAQai7EAb+DZc7+8G/RoQ6GlgppORN62OywdbkI+dWtgY=",
+          "signature": "lA3THxm3TQJEBJX33USpHhTN1PGrzWzxv9nveYwfZ/QW8yE7XpPjVSf571FkooHYNn36QPR6CRZ14JjICVXuAQ==",
+          "record_hash": "d6fcea15e21f45d241b36865eddfcdc601be80e2e8d20ec10e4e89f343818b3a"
+        },
+        {
+          "mutation_id": "M13",
+          "kind": "readback",
+          "sequence": 13,
+          "nonce": "nonce-M13-v2.4",
+          "role": "collector",
+          "identity": "offline.fixture.collector",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M13"
+          },
+          "target_digest": "87ce2f552ce20ba2b1dca3e656ed2690a616ef12e0322bb3192bc21df7fe4f7f",
+          "previous_hash": "d6fcea15e21f45d241b36865eddfcdc601be80e2e8d20ec10e4e89f343818b3a",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEAGbIGyROMTpk09WvO40Tf9BvGzbc6q9NkJr2XpQ43gx4=",
+          "signature": "2jWk/oXc1T0dJunlp7Q5c98F+kOO1FeyadayCAqAj1mjTIyTUBy8Ym1/fdfGe/+G42H144bLUqgZeILk8MxqCw==",
+          "record_hash": "1d80d3530bb26d9feab4c0c30be3fdbf3a4dbc6a903cb1a54937d4ebff825532"
+        },
+        {
+          "mutation_id": "M13",
+          "kind": "signature",
+          "sequence": 13,
+          "nonce": "nonce-M13-v2.4",
+          "role": "vault-transit-signer",
+          "identity": "offline.fixture.vault-transit-signer",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M13"
+          },
+          "target_digest": "87ce2f552ce20ba2b1dca3e656ed2690a616ef12e0322bb3192bc21df7fe4f7f",
+          "previous_hash": "1d80d3530bb26d9feab4c0c30be3fdbf3a4dbc6a903cb1a54937d4ebff825532",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEA5/FioQvsVZr+oZXk3OhLaVaNXSywlj60RsBoXisX8vA=",
+          "signature": "NP0AuM3l1e6J3V0TYBdlA/vJXpYWh9DkRa/+Uko9kNhto4NjzdA6IJjSYiQGSqYqJw8aGAiUcyhlmhYcSCM4CA==",
+          "record_hash": "7b625e7d677b3ceff57d8f3a042bd8f568b97695fe86642bb598b85f6eb6b97c"
+        },
+        {
+          "mutation_id": "M13",
+          "kind": "commit",
+          "sequence": 13,
+          "nonce": "nonce-M13-v2.4",
+          "role": "append-only-committer",
+          "identity": "offline.fixture.append-only-committer",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M13"
+          },
+          "target_digest": "87ce2f552ce20ba2b1dca3e656ed2690a616ef12e0322bb3192bc21df7fe4f7f",
+          "previous_hash": "7b625e7d677b3ceff57d8f3a042bd8f568b97695fe86642bb598b85f6eb6b97c",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEAr0kn22CjuKsBoNFa1HVpmTWYLEmj0ZwTd5V0+pS+yYU=",
+          "signature": "pvTN1ElB49vqwe9KlnCwgx/GnTKwjBBjBjd1V9NHSZ5GssXM3g8OXr6V6ae0ECXk8e3+Myeji76RR59j2KZsBg==",
+          "record_hash": "b23f2113f74997522d97b880eceb6d9dfa7d46b5631b4cab065071889132963b"
+        }
+      ]
+    },
+    {
+      "mutation_id": "M14",
+      "nonce": "nonce-M14-v2.4",
+      "records": [
+        {
+          "mutation_id": "M14",
+          "kind": "intent",
+          "sequence": 14,
+          "nonce": "nonce-M14-v2.4",
+          "role": "writer",
+          "identity": "offline.fixture.writer",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M14"
+          },
+          "target_digest": "e5cf44e4def4228fed0849441dacb028fc64ca9a80d5e7c2b34b7c5586bbc383",
+          "previous_hash": "b23f2113f74997522d97b880eceb6d9dfa7d46b5631b4cab065071889132963b",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEAYNoA5eHPh3+o0yGfWvq4bQGoZpyF7/e+we0wks06Tq0=",
+          "signature": "HfxotKh0B0ql8A+A60WLZrTTpmH3YelvJ7hZf2zCppTjaUWkO5m2QoKsowiWZ4fnoNdpeXhTVrUlkuzZVP6UCw==",
+          "record_hash": "4c91feb6e5a00ee0cb2d9a3344fefcdf55037393eabf759f817bfd66b96ab726"
+        },
+        {
+          "mutation_id": "M14",
+          "kind": "readback",
+          "sequence": 14,
+          "nonce": "nonce-M14-v2.4",
+          "role": "collector",
+          "identity": "offline.fixture.collector",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M14"
+          },
+          "target_digest": "e5cf44e4def4228fed0849441dacb028fc64ca9a80d5e7c2b34b7c5586bbc383",
+          "previous_hash": "4c91feb6e5a00ee0cb2d9a3344fefcdf55037393eabf759f817bfd66b96ab726",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEAfjDhMgb8f7hMQiOevSW+p5nVYN5eup/8YSOrnyDSR40=",
+          "signature": "E7EToHWuKTVbVTfZoniKTZhke94i7E9WmaAa6qoBCjASjiBKduHiXDvVRqcB5o6rPxuVPtRLxjnRf2gNj04FBw==",
+          "record_hash": "8f65a41d9883028671ae25f15349112cafcacaaf9711341aa4454f7128966632"
+        },
+        {
+          "mutation_id": "M14",
+          "kind": "signature",
+          "sequence": 14,
+          "nonce": "nonce-M14-v2.4",
+          "role": "vault-transit-signer",
+          "identity": "offline.fixture.vault-transit-signer",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M14"
+          },
+          "target_digest": "e5cf44e4def4228fed0849441dacb028fc64ca9a80d5e7c2b34b7c5586bbc383",
+          "previous_hash": "8f65a41d9883028671ae25f15349112cafcacaaf9711341aa4454f7128966632",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEAr0kn22CjuKsBoNFa1HVpmTWYLEmj0ZwTd5V0+pS+yYU=",
+          "signature": "xoeOQvj+7uIliY7qU9Qfu2pkr+XWCMu4vCrEYIfqN+ub8fx33EjkbH9qg1mqmb8+s2VYGGWPAIlvelOHtmKoCQ==",
+          "record_hash": "6948db283663c91fbf7172eff51e83c5691d7b58da603e8745a3ca861ba040f9"
+        },
+        {
+          "mutation_id": "M14",
+          "kind": "commit",
+          "sequence": 14,
+          "nonce": "nonce-M14-v2.4",
+          "role": "append-only-committer",
+          "identity": "offline.fixture.append-only-committer",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M14"
+          },
+          "target_digest": "e5cf44e4def4228fed0849441dacb028fc64ca9a80d5e7c2b34b7c5586bbc383",
+          "previous_hash": "6948db283663c91fbf7172eff51e83c5691d7b58da603e8745a3ca861ba040f9",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEAmICLHAX7jt87KQEfmmhPdtjoFg5n/a8m2UDhGtxgEj0=",
+          "signature": "gn2H5UrTODl5jIFvTs9VZLzv/MFi0ZlWJhFYRFLDRt9SSBnvGkfWz6RvEYFK5P8S4OoIV4ixwRdmAg97OLhNBg==",
+          "record_hash": "6522f2cb7aeaf183b01dd368af705b1e1fe6b3454f2f3411dae90d5f72aaef58"
+        }
+      ]
+    },
+    {
+      "mutation_id": "M15",
+      "nonce": "nonce-M15-v2.4",
+      "records": [
+        {
+          "mutation_id": "M15",
+          "kind": "intent",
+          "sequence": 15,
+          "nonce": "nonce-M15-v2.4",
+          "role": "writer",
+          "identity": "offline.fixture.writer",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M15"
+          },
+          "target_digest": "c7212aca83656b676beb2a6c6001393c64014f0b03a9ab06769688e3bcea8664",
+          "previous_hash": "6522f2cb7aeaf183b01dd368af705b1e1fe6b3454f2f3411dae90d5f72aaef58",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEAbcadRy9/QPR2nq2xWbMu2uabBymjMneYDQdDZTEfTXc=",
+          "signature": "Q8g1NmgQe27GL0RsmX3TKnW0WCRqvjBZ9oqshm1fMtgfJEWxoGcC4APPjRBbv0lYRjCezCAEoapNJYwo8j+ZBA==",
+          "record_hash": "859f2c5f6c519d016821006d23008307d8d4647bec6501dfd3fb0c92f6cb67cb"
+        },
+        {
+          "mutation_id": "M15",
+          "kind": "readback",
+          "sequence": 15,
+          "nonce": "nonce-M15-v2.4",
+          "role": "collector",
+          "identity": "offline.fixture.collector",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M15"
+          },
+          "target_digest": "c7212aca83656b676beb2a6c6001393c64014f0b03a9ab06769688e3bcea8664",
+          "previous_hash": "859f2c5f6c519d016821006d23008307d8d4647bec6501dfd3fb0c92f6cb67cb",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEAWyk7Vnlaq74tsCcWzpr68ykUK+8vV0nJ3J4b42cavHQ=",
+          "signature": "jjh3pJRyD+Y7wVpBE0L3rWv6opYIpejJPYj2Oj5fsq8qTOmG8MqB5W1dQVtLDgsTHbRtM1TLcpIkoKRyhlwoCg==",
+          "record_hash": "c161ee617c6abf49aeb6bd10b640382efa0a9f4b7d2f11d32c7608debcfd4128"
+        },
+        {
+          "mutation_id": "M15",
+          "kind": "signature",
+          "sequence": 15,
+          "nonce": "nonce-M15-v2.4",
+          "role": "vault-transit-signer",
+          "identity": "offline.fixture.vault-transit-signer",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M15"
+          },
+          "target_digest": "c7212aca83656b676beb2a6c6001393c64014f0b03a9ab06769688e3bcea8664",
+          "previous_hash": "c161ee617c6abf49aeb6bd10b640382efa0a9f4b7d2f11d32c7608debcfd4128",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEAmICLHAX7jt87KQEfmmhPdtjoFg5n/a8m2UDhGtxgEj0=",
+          "signature": "ER0jh/cNk3iImeMKM7byqA00pXAaPA64udzeT0GyYBjdITES9QpVUhWs5SMaf3SfYrTXztWM3nTu9C6bb3tQDQ==",
+          "record_hash": "a5b9fef13ba6b02b848b98062d6c1d87dbe0dc6daf3d7d35d0851f7a81998f52"
+        },
+        {
+          "mutation_id": "M15",
+          "kind": "commit",
+          "sequence": 15,
+          "nonce": "nonce-M15-v2.4",
+          "role": "append-only-committer",
+          "identity": "offline.fixture.append-only-committer",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M15"
+          },
+          "target_digest": "c7212aca83656b676beb2a6c6001393c64014f0b03a9ab06769688e3bcea8664",
+          "previous_hash": "a5b9fef13ba6b02b848b98062d6c1d87dbe0dc6daf3d7d35d0851f7a81998f52",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEAj2FI0nKkrBFJY7UKDQJYhAOTCfAOBUyiby169temW3Q=",
+          "signature": "CEJQVfAGIg5sOpYgQNk472XyPLBb8I7KYssA0MI7SgZ+pmE3O43mkVCTdUbODzf1HAsHnqx5ObjOiGkvgaXSBw==",
+          "record_hash": "30aaa0171f08a879170d2d2591bf1e7a0e58dcdfd4f1d9a986544c5dab64f6ce"
+        }
+      ]
+    },
+    {
+      "mutation_id": "M16",
+      "nonce": "nonce-M16-v2.4",
+      "records": [
+        {
+          "mutation_id": "M16",
+          "kind": "intent",
+          "sequence": 16,
+          "nonce": "nonce-M16-v2.4",
+          "role": "writer",
+          "identity": "offline.fixture.writer",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M16"
+          },
+          "target_digest": "e3b49ea7628c146003375720c2ddaf05c14d3e982796feb11f248ba6e8f0f812",
+          "previous_hash": "30aaa0171f08a879170d2d2591bf1e7a0e58dcdfd4f1d9a986544c5dab64f6ce",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEAGbIGyROMTpk09WvO40Tf9BvGzbc6q9NkJr2XpQ43gx4=",
+          "signature": "x7n3uzyWDGKGBV+SH7LWG/MgWU+1aSDXJj3BX7fucQi51YH6ARoGsrN1V9NkKaePfBYex2ezBUV0tD1S/sRyCA==",
+          "record_hash": "8d162802fe1c329ccb9f4b9060c68c71debc7c87928097580ea4402565c5f34d"
+        },
+        {
+          "mutation_id": "M16",
+          "kind": "readback",
+          "sequence": 16,
+          "nonce": "nonce-M16-v2.4",
+          "role": "collector",
+          "identity": "offline.fixture.collector",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M16"
+          },
+          "target_digest": "e3b49ea7628c146003375720c2ddaf05c14d3e982796feb11f248ba6e8f0f812",
+          "previous_hash": "8d162802fe1c329ccb9f4b9060c68c71debc7c87928097580ea4402565c5f34d",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEAbl5Fj/eVoIgHkx/aBrWMX0hCtGvK/7X1NcZztSJeRxY=",
+          "signature": "NAE/iATP81sih2nSHOoG2k1qWbXD447fPlhTbdDDnemmL7sZtsFBz5HkDFYpXp6iEezAE6vlvsd5H5sSPDyMCw==",
+          "record_hash": "a46dc26b478469feb8d807a53f35d203961fb75c8a2ce3cf82fb156f22de9a26"
+        },
+        {
+          "mutation_id": "M16",
+          "kind": "signature",
+          "sequence": 16,
+          "nonce": "nonce-M16-v2.4",
+          "role": "vault-transit-signer",
+          "identity": "offline.fixture.vault-transit-signer",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M16"
+          },
+          "target_digest": "e3b49ea7628c146003375720c2ddaf05c14d3e982796feb11f248ba6e8f0f812",
+          "previous_hash": "a46dc26b478469feb8d807a53f35d203961fb75c8a2ce3cf82fb156f22de9a26",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEAj2FI0nKkrBFJY7UKDQJYhAOTCfAOBUyiby169temW3Q=",
+          "signature": "rOHYePGtEkKIJiujD36o514rUdan+KburWROPFx4txTSfZ+OCf81E7xwQUUnE5ayu8cdj8P0gLZj3J6TBd0/BA==",
+          "record_hash": "a99e9d3797ca020e5dd0ec9ceb00570d56f9b8e5de6f4ed29781b5dd4edd07c2"
+        },
+        {
+          "mutation_id": "M16",
+          "kind": "commit",
+          "sequence": 16,
+          "nonce": "nonce-M16-v2.4",
+          "role": "append-only-committer",
+          "identity": "offline.fixture.append-only-committer",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M16"
+          },
+          "target_digest": "e3b49ea7628c146003375720c2ddaf05c14d3e982796feb11f248ba6e8f0f812",
+          "previous_hash": "a99e9d3797ca020e5dd0ec9ceb00570d56f9b8e5de6f4ed29781b5dd4edd07c2",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEA8SzPJ25P2swCzk8BGncmLQVzWeftCk9MmqQdAIwMky8=",
+          "signature": "ME/NnVRJopMwuX9pDQL7fb4icQo6r2KIbBH7gB5okEnSVUytaqPnqtd63iRj3YPd35ITJbLrvWMNG8M+vdVqAA==",
+          "record_hash": "37466116e693b444d4610feb5fb390a5ee1b106d84b349aed186cf997ba4976c"
+        }
+      ]
+    },
+    {
+      "mutation_id": "M17",
+      "nonce": "nonce-M17-v2.4",
+      "records": [
+        {
+          "mutation_id": "M17",
+          "kind": "intent",
+          "sequence": 17,
+          "nonce": "nonce-M17-v2.4",
+          "role": "writer",
+          "identity": "offline.fixture.writer",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M17"
+          },
+          "target_digest": "8142450666b5999e67fe3bc4b1da069147bcba0cef039bdb3d89b166afc8bdc3",
+          "previous_hash": "37466116e693b444d4610feb5fb390a5ee1b106d84b349aed186cf997ba4976c",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEAfjDhMgb8f7hMQiOevSW+p5nVYN5eup/8YSOrnyDSR40=",
+          "signature": "xHAM8WUlijD1utWETy50U2r/vDs7KQpamX+VX8z2hU2+r7+DwQvByZXXwN2YizNdy67QrZl78Ht43dh9i+KHAg==",
+          "record_hash": "67cf991037a7806a030fe1da6b7f831ba312ed72db8835877b859db1cf215d50"
+        },
+        {
+          "mutation_id": "M17",
+          "kind": "readback",
+          "sequence": 17,
+          "nonce": "nonce-M17-v2.4",
+          "role": "collector",
+          "identity": "offline.fixture.collector",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M17"
+          },
+          "target_digest": "8142450666b5999e67fe3bc4b1da069147bcba0cef039bdb3d89b166afc8bdc3",
+          "previous_hash": "67cf991037a7806a030fe1da6b7f831ba312ed72db8835877b859db1cf215d50",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEAXKd3x9nZef9JEnzAUZbJSgcPq1pebH7IuC5vjyb9AWg=",
+          "signature": "T7HUI69U3OjzX0zdlzWFufzz1iPf2sVHajph0pl7ON9Z1MnppWgMeHJARHCXTjty7HWyO1IbQkCkwl4yl13iBQ==",
+          "record_hash": "2f4ba5ed490b9300f30253d5deaa4b3693796f7f5b1acf9db5e03b9e458872c9"
+        },
+        {
+          "mutation_id": "M17",
+          "kind": "signature",
+          "sequence": 17,
+          "nonce": "nonce-M17-v2.4",
+          "role": "vault-transit-signer",
+          "identity": "offline.fixture.vault-transit-signer",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M17"
+          },
+          "target_digest": "8142450666b5999e67fe3bc4b1da069147bcba0cef039bdb3d89b166afc8bdc3",
+          "previous_hash": "2f4ba5ed490b9300f30253d5deaa4b3693796f7f5b1acf9db5e03b9e458872c9",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEA8SzPJ25P2swCzk8BGncmLQVzWeftCk9MmqQdAIwMky8=",
+          "signature": "Gf7aoHIJ6hs8C4sU4lOOqQAWnmd1jDKRQRyMzlQ+TZMdJ7xbilrbjeFosA2q1fdd/TSEndgBrKERXZdvhmwvAA==",
+          "record_hash": "8e44ced3f9061bf434bd4d83f9ed8792e143df6807c4592f4c19c853743e42fa"
+        },
+        {
+          "mutation_id": "M17",
+          "kind": "commit",
+          "sequence": 17,
+          "nonce": "nonce-M17-v2.4",
+          "role": "append-only-committer",
+          "identity": "offline.fixture.append-only-committer",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M17"
+          },
+          "target_digest": "8142450666b5999e67fe3bc4b1da069147bcba0cef039bdb3d89b166afc8bdc3",
+          "previous_hash": "8e44ced3f9061bf434bd4d83f9ed8792e143df6807c4592f4c19c853743e42fa",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEALvEr/UswWnXw4UzJODa1PPzvu8+vE4LDR+U43KKWJu0=",
+          "signature": "bqQesJvo5QU5AOGnE39ej5jqnfPczNiQCytLQaMHVMQ9RGgiKZ+udGNfgG11SVOjTKVJJs9dnqbGS2TCng05Bg==",
+          "record_hash": "bbc2f9d5e1b3347eb1261ed0cdf2cf85cc96cf1dd18edf643d38663373ad59f2"
+        }
+      ]
+    },
+    {
+      "mutation_id": "M18",
+      "nonce": "nonce-M18-v2.4",
+      "records": [
+        {
+          "mutation_id": "M18",
+          "kind": "intent",
+          "sequence": 18,
+          "nonce": "nonce-M18-v2.4",
+          "role": "writer",
+          "identity": "offline.fixture.writer",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M18"
+          },
+          "target_digest": "f8e95e74f2099161faa380811982a1f6a2725285a1b5addfd59624758f51c4ac",
+          "previous_hash": "bbc2f9d5e1b3347eb1261ed0cdf2cf85cc96cf1dd18edf643d38663373ad59f2",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEAWyk7Vnlaq74tsCcWzpr68ykUK+8vV0nJ3J4b42cavHQ=",
+          "signature": "ZBFldtCwQKbBjVPIyFush7M9Vsp9CA+USNocvvZNIzwxukysRGCE/yQn5leDD6vtfrSe6dflv1p4mEdW2N7PCg==",
+          "record_hash": "8d5b5f09cee0cb171cdb71a650053d82ed5bae3e0e76467b0b82d04036739265"
+        },
+        {
+          "mutation_id": "M18",
+          "kind": "readback",
+          "sequence": 18,
+          "nonce": "nonce-M18-v2.4",
+          "role": "collector",
+          "identity": "offline.fixture.collector",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M18"
+          },
+          "target_digest": "f8e95e74f2099161faa380811982a1f6a2725285a1b5addfd59624758f51c4ac",
+          "previous_hash": "8d5b5f09cee0cb171cdb71a650053d82ed5bae3e0e76467b0b82d04036739265",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEAS50q/q6on9zQANzRnvVAXJ87UmtaexeIy0pJ/1mGJp8=",
+          "signature": "7kwe8DmfuFgxYq8xTUINktO0wL7IviwN5nvxjKCpGC302KO+X7RHHUJvT0M4OoMy9zLAVdXb55pn16FLf0OABA==",
+          "record_hash": "fa98f148267fbd5219d3bd4128342f0490342430fe594abf8a81dac39a11f2cf"
+        },
+        {
+          "mutation_id": "M18",
+          "kind": "signature",
+          "sequence": 18,
+          "nonce": "nonce-M18-v2.4",
+          "role": "vault-transit-signer",
+          "identity": "offline.fixture.vault-transit-signer",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M18"
+          },
+          "target_digest": "f8e95e74f2099161faa380811982a1f6a2725285a1b5addfd59624758f51c4ac",
+          "previous_hash": "fa98f148267fbd5219d3bd4128342f0490342430fe594abf8a81dac39a11f2cf",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEALvEr/UswWnXw4UzJODa1PPzvu8+vE4LDR+U43KKWJu0=",
+          "signature": "z5zVkC+Ua6iFPU0garszAWC6jJ64hRxMkiozZAH6E3QtlD9dHNitePhUeiqKJHsE6m9sJFwyanmBMOrAb2GvCQ==",
+          "record_hash": "9c63cc2554bf78d9fcf195ca1348d160fc91d9d5a3a72902ad15df675c04e832"
+        },
+        {
+          "mutation_id": "M18",
+          "kind": "commit",
+          "sequence": 18,
+          "nonce": "nonce-M18-v2.4",
+          "role": "append-only-committer",
+          "identity": "offline.fixture.append-only-committer",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M18"
+          },
+          "target_digest": "f8e95e74f2099161faa380811982a1f6a2725285a1b5addfd59624758f51c4ac",
+          "previous_hash": "9c63cc2554bf78d9fcf195ca1348d160fc91d9d5a3a72902ad15df675c04e832",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEAD1jAZpCQF2p71WOgyYsIFYcTnYx+CaqtNFXMlwYM+aM=",
+          "signature": "baUauMAWcjVkE38w0db/Nk0luELQZ8FMR/2mKJKSMqReJXPRR5H5Gxt+JhD6ce5Y1InJDLycSN3egQSyV5lpAQ==",
+          "record_hash": "72f30080399cd637be6b6d8caae3efab5e60c82e15fd2199ea7852dce644db81"
+        }
+      ]
+    },
+    {
+      "mutation_id": "M19",
+      "nonce": "nonce-M19-v2.4",
+      "records": [
+        {
+          "mutation_id": "M19",
+          "kind": "intent",
+          "sequence": 19,
+          "nonce": "nonce-M19-v2.4",
+          "role": "writer",
+          "identity": "offline.fixture.writer",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M19"
+          },
+          "target_digest": "614e512db2bf6332b3de7938f8fa57d45f621f777423e4d831fc15e04314b8e9",
+          "previous_hash": "72f30080399cd637be6b6d8caae3efab5e60c82e15fd2199ea7852dce644db81",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEAbl5Fj/eVoIgHkx/aBrWMX0hCtGvK/7X1NcZztSJeRxY=",
+          "signature": "jKaYMl7uQ52bPIDYj+VItZsW/DSEPilPUlC6pfIkFcxRrEIVqM4wYjArILWIxn5lI7IKZHQ5VEFfiEHv0FdXBg==",
+          "record_hash": "416213e7a187e14228a608bca42044ba4a8def2855f43d4c926ff422cc0063d7"
+        },
+        {
+          "mutation_id": "M19",
+          "kind": "readback",
+          "sequence": 19,
+          "nonce": "nonce-M19-v2.4",
+          "role": "collector",
+          "identity": "offline.fixture.collector",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M19"
+          },
+          "target_digest": "614e512db2bf6332b3de7938f8fa57d45f621f777423e4d831fc15e04314b8e9",
+          "previous_hash": "416213e7a187e14228a608bca42044ba4a8def2855f43d4c926ff422cc0063d7",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEAqNKQR+OFhtQC9B+ZBqLG3cJYn99k6bc9q9I9Nbx81B0=",
+          "signature": "K0vu8IZmrHCN7Kf5vpEdWCWMVRJoHCgg+Ke22jgkVA8yUoD3qqBsrm9CnlNQhl5DXYl01WVQApXiJGjxYk9tAw==",
+          "record_hash": "d4788f44698f64378f07ee0a13b12650fbc276c663a55f0b2c8de79e12c04bcd"
+        },
+        {
+          "mutation_id": "M19",
+          "kind": "signature",
+          "sequence": 19,
+          "nonce": "nonce-M19-v2.4",
+          "role": "vault-transit-signer",
+          "identity": "offline.fixture.vault-transit-signer",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M19"
+          },
+          "target_digest": "614e512db2bf6332b3de7938f8fa57d45f621f777423e4d831fc15e04314b8e9",
+          "previous_hash": "d4788f44698f64378f07ee0a13b12650fbc276c663a55f0b2c8de79e12c04bcd",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEAD1jAZpCQF2p71WOgyYsIFYcTnYx+CaqtNFXMlwYM+aM=",
+          "signature": "ZYsKxnbpEZX+LeJp5nfjVJWDoJIbjMvPIHKNTyOYtHcNaantYjVEbvi1h3sTAxh2gsPT+AnoCL88yTdBLRXzDg==",
+          "record_hash": "31fd2efe3306824e90348308c823a7b215d325a05ae71985b45f1046abbc2f13"
+        },
+        {
+          "mutation_id": "M19",
+          "kind": "commit",
+          "sequence": 19,
+          "nonce": "nonce-M19-v2.4",
+          "role": "append-only-committer",
+          "identity": "offline.fixture.append-only-committer",
+          "target": {
+            "repository_id": "repo-deployment-controller",
+            "repository": "codicarium/deployment-controller",
+            "ref": "refs/tags/NEXT_SEMVER",
+            "target_uid": "release-target-v2.4",
+            "operation": "M19"
+          },
+          "target_digest": "614e512db2bf6332b3de7938f8fa57d45f621f777423e4d831fc15e04314b8e9",
+          "previous_hash": "31fd2efe3306824e90348308c823a7b215d325a05ae71985b45f1046abbc2f13",
+          "signer_kind": "offline_fixture",
+          "authority": false,
+          "issued_at": "2026-08-26T12:00:00Z",
+          "public_key": "MCowBQYDK2VwAyEAiOR2lURJQLw8airG/1LqCPq+vNh8WdWK1Lkw1genYNE=",
+          "signature": "uj/FXdEGXuBh3LGov8XmeN3sYWN8sQfLj7Aefv6wlpOtsxDlgZ7mys9KLOQLQ79jGySF9yUxy7ElDMZPCQJIBg==",
+          "record_hash": "81d101357cfa08d06f1b8f703cbc829de45d17114d625388ba1f1e8e6b907211"
+        }
+      ]
+    }
+  ]
+}

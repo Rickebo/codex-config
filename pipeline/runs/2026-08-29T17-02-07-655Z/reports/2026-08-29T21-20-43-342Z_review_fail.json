@@ -1,0 +1,46 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Independent Luna security review of PR #156 exact head 8e27b77544ab66da77f3f71ffce73697dd8f279e found two blockers: incomplete authentication of referenced coordinator/verifier proof state and a stale-state race before corrected tag creation.",
+  "changed_files": [
+    ".github/workflows/automatic-release.yaml",
+    ".github/workflows/publish-release.yaml",
+    "hack/release-failure-policy.js",
+    "hack/release-plan.py",
+    "hack/test-release-failure-policy.js",
+    "hack/test-release-graph.py",
+    "hack/test-release-plan.py"
+  ],
+  "validation": [
+    "All five protected PR checks passed at unchanged exact head",
+    "Reviewer confirmed local policy/planner/graph tests pass",
+    "P1: referenced coordinator and Release Verify runs/checks are not dereferenced and fully authenticated",
+    "P1: github-actions app identity alone is insufficient to prove the exact trusted workflow/tuple/failure path",
+    "P2: planner consumes stale release state after proof creation without a final tag/release-shell recheck",
+    "P2: concurrent shell creation or tag mutation can race corrected tag creation"
+  ],
+  "blockers": [
+    "Authenticate every referenced run/check and exact external-ID tuple before retirement",
+    "Add shared coordination/lock semantics and final exact API recheck immediately before tag creation"
+  ],
+  "next_action": "Luna must add full proof-chain dereferencing and fail-closed final state revalidation with adversarial replay/concurrency tests, then republish a new exact PR head for review.",
+  "route_to": "code",
+  "independent_lanes": [
+    "infra PR #1272 protected ARC queue remains unmerged"
+  ],
+  "risk_level": "critical",
+  "issues": [
+    {
+      "id": "DC156-P1",
+      "title": "Retirement proof does not authenticate referenced coordinator and verifier state",
+      "severity": "critical",
+      "owner_stage": "code"
+    },
+    {
+      "id": "DC156-P2",
+      "title": "Stale release state permits a concurrent shell or tag race",
+      "severity": "high",
+      "owner_stage": "code"
+    }
+  ]
+}

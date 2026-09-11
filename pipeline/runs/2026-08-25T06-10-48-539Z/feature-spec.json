@@ -1,0 +1,248 @@
+{
+  "meta": {
+    "id": "SPEC-workspace-manager-28",
+    "title": "Production Knowledge generation resolution and cross-service acceptance",
+    "author": "manager",
+    "created_at": "2026-08-25T06:32:15Z",
+    "version": "1.0.0"
+  },
+  "feature": {
+    "problem_statement": "A real Source snapshot cannot reach a production Knowledge build because Knowledge does not yet resolve and persist one exact processing generation from Source-owned snapshot facts, a version-consistent Workspace snapshot, and canonical Model configuration through public service contracts.",
+    "goals": [
+      "Wire a production Knowledge resolver that preserves service ownership and fails closed.",
+      "Make lifecycle, retry, replay, authentication, and concurrency behavior safe under at-least-once delivery.",
+      "Prove a real Source snapshot event reaches one Knowledge build through the documented whole-system flow."
+    ],
+    "non_goals": [
+      "Backward-compatibility shims for pre-v1 or undocumented resolver contracts.",
+      "Moving processor, model, guidance, or workspace-setting ownership into Source.",
+      "Broad Knowledge build/retract/cancel administration and retention lifecycle tracked by issue #23.",
+      "Durable deletion-consumer DLQ/replay tracked by issue #46.",
+      "Completing every remaining fault, audit, browser, and release-matrix scenario in parent issue #26."
+    ],
+    "scope_in": [
+      "Producer-owned Workspace and Model v1 contract additions required by the resolver, with matching runtime behavior.",
+      "Knowledge HTTP resolver, workload-proof client, event consumers, persistence, retry/DLQ policy, and generation fencing.",
+      "Model workload authentication and nonce persistence migration.",
+      "Knowledge, Model, Workspace contract, and system integration tests needed for issue #28 acceptance.",
+      "Documentation and validation evidence for the production resolver path."
+    ],
+    "scope_out": [
+      "Unrelated service refactors or compatibility layers.",
+      "Source schema fields that transfer Knowledge generation ownership.",
+      "Milestone 5 migration or deployment work."
+    ]
+  },
+  "requirements": [
+    {
+      "id": "REQ-001",
+      "priority": "MUST",
+      "statement": "Knowledge MUST resolve the exact Source snapshot, one version-consistent Workspace guidance/settings snapshot, and the canonical Model configuration through producer-owned v1 public/internal service contracts before accepting desired state.",
+      "rationale": "Issue #28 and the Knowledge specification require exact, authorized, version-consistent generation inputs and prohibit cross-service database access."
+    },
+    {
+      "id": "REQ-002",
+      "priority": "MUST",
+      "statement": "Knowledge MUST deterministically compute and persist processing_generation locally from validated source configuration, guidance, settings, processor contract, and canonical model identity; Source MUST NOT own or publish those downstream inputs.",
+      "rationale": "Processing ownership belongs to Knowledge and externally visible results must identify the producing contract."
+    },
+    {
+      "id": "REQ-003",
+      "priority": "MUST",
+      "statement": "Resolution MUST fail closed on missing, stale, mismatched, malformed, unauthorized, unavailable, or partially resolved inputs, and workload authentication MUST use a workspace- and request-bound HMAC proof with bounded timestamp skew and an atomically persisted single-use nonce.",
+      "rationale": "Generation acceptance and credential selection are security-sensitive and cannot rely on stale or replayable authorization evidence."
+    },
+    {
+      "id": "REQ-004",
+      "priority": "MUST",
+      "statement": "Knowledge consumers MUST completely validate Source, Workspace, and Model CloudEvents; preserve partition ordering; apply bounded cancellation-aware dependency retries; and commit a poison record offset only after successful durable DLQ publication.",
+      "rationale": "At-least-once delivery must not silently lose poison records, skip ordering, or spin without bounds."
+    },
+    {
+      "id": "REQ-005",
+      "priority": "MUST",
+      "statement": "Workspace guidance and relevant Model policy/configuration lifecycle changes MUST create or reconcile generations for active heads with explicit generation fencing so a stale concurrent resolution cannot overwrite newer desired state.",
+      "rationale": "Issue #28 requires invalidation/reconciliation and concurrent lifecycle changes must not publish mixed generations."
+    },
+    {
+      "id": "REQ-006",
+      "priority": "MUST",
+      "statement": "Duplicate, delayed, out-of-order, and replayed events MUST remain idempotent, upstream outages MUST leave no partially accepted generation, and recovery MUST process the pending exact snapshot without duplicate build, model use, or publication.",
+      "rationale": "The repository's shared contracts require replay tolerance and issue #28 explicitly names duplicate, replay, outage, and recovery cases."
+    },
+    {
+      "id": "REQ-007",
+      "priority": "MUST",
+      "statement": "A repeatable FastSystem scenario MUST prove that a real Source fixture/API emits a conforming snapshot event, the real Knowledge worker resolves real Workspace and Model endpoints, and one persisted Knowledge build is created; the scenario MUST also cover duplicate replay plus bounded upstream outage and recovery.",
+      "rationale": "Issue #28 explicitly requires a documented whole-system Source-to-Knowledge build proof; stubbed HTTP handlers are not system evidence."
+    },
+    {
+      "id": "REQ-008",
+      "priority": "MUST",
+      "statement": "Producer contracts, runtime behavior, empty-database migration, documentation, builds, formatting, and validation scripts MUST agree, and no credentials, proofs, prompts, responses, or source content may leak through events, logs, audit, diagnostics, or test artifacts.",
+      "rationale": "The shared delivery and security contracts make compatibility, clean migration, and secret-free evidence release gates."
+    }
+  ],
+  "acceptance_criteria": [
+    {
+      "id": "AC-001",
+      "requirement_ids": ["REQ-001", "REQ-002"],
+      "scenario": "Given matching Source, Workspace, and Model v1 responses, when Knowledge receives the Source snapshot event, then it computes one stable processing_generation and persists desired state/build for the exact snapshot without Source carrying downstream-owned inputs."
+    },
+    {
+      "id": "AC-002",
+      "requirement_ids": ["REQ-003"],
+      "scenario": "Given each missing, stale, mismatched, malformed, unauthorized, unavailable, or partial dependency response and each forged, expired, cross-workspace, wrong-route, or replayed proof, When resolution or authentication is attempted, Then it is rejected before accepted desired state while one fresh valid proof succeeds exactly once."
+    },
+    {
+      "id": "AC-003",
+      "requirement_ids": ["REQ-004"],
+      "scenario": "Given a malformed or terminal poison CloudEvent and transient dependency failures, When the consumer processes the partition, Then retries remain bounded and cancellation-aware, later offsets do not overtake the failing record, and its offset is committed only after successful durable DLQ publication."
+    },
+    {
+      "id": "AC-004",
+      "requirement_ids": ["REQ-005"],
+      "scenario": "Given a snapshot resolution in flight, When guidance or canonical Model configuration changes, Then the stale result cannot overwrite the newer fence and the active head is reconciled to the new generation exactly once."
+    },
+    {
+      "id": "AC-005",
+      "requirement_ids": ["REQ-006"],
+      "scenario": "Given duplicate, delayed, out-of-order, and replayed events plus an upstream outage, When the dependency recovers, Then sequence and idempotency are preserved and the exact pending snapshot completes without a partial generation or duplicate build, model use, or publication."
+    },
+    {
+      "id": "AC-006",
+      "requirement_ids": ["REQ-007"],
+      "scenario": "Given a clean FastSystem run with real Source, Knowledge, Workspace, and Model processes, When the Source fixture/API produces a snapshot event and duplicate plus outage/recovery subcases are exercised, Then the real Knowledge worker uses real endpoints and creates one observable persisted build with bounded diagnostics."
+    },
+    {
+      "id": "AC-007",
+      "requirement_ids": ["REQ-008"],
+      "scenario": "Given a clean rebased branch and explicit Docker endpoint, When contracts/spec validation, Release builds, formatting, empty-database migrations, complete relevant suites, diff checks, redaction scans, and cleanup audits run, Then every gate passes with no prohibited data or leaked run resources."
+    }
+  ],
+  "test_plan": [
+    {
+      "id": "TST-001",
+      "type": "integration",
+      "requirement_ids": ["REQ-001", "REQ-002", "REQ-003"],
+      "approach": "Run focused Knowledge HTTP resolver and generation tests for valid inputs and every fail-closed dependency/authentication class, asserting exact persisted generation inputs."
+    },
+    {
+      "id": "TST-002",
+      "type": "integration",
+      "requirement_ids": ["REQ-003", "REQ-008"],
+      "approach": "Run Model API and PostgreSQL migration tests for fresh, forged, expired, cross-workspace, wrong-route, and replayed proofs, including concurrent single-use nonce consumption and empty-database migration."
+    },
+    {
+      "id": "TST-003",
+      "type": "integration",
+      "requirement_ids": ["REQ-004", "REQ-006"],
+      "approach": "Run Kafka consumer tests for complete CloudEvent validation, bounded retries, cancellation, poison DLQ success/failure, offset commit, duplicates, gaps, out-of-order delivery, and outage recovery."
+    },
+    {
+      "id": "TST-004",
+      "type": "integration",
+      "requirement_ids": ["REQ-005", "REQ-006"],
+      "approach": "Run repository/lifecycle concurrency tests that race snapshot resolution against Workspace and Model generation changes and assert fence-safe exactly-once reconciliation."
+    },
+    {
+      "id": "TST-005",
+      "type": "e2e",
+      "requirement_ids": ["REQ-001", "REQ-002", "REQ-003", "REQ-005", "REQ-006", "REQ-007"],
+      "approach": "Add and run a FastSystem scenario using real Source, Knowledge, Workspace, and Model processes/contracts to prove Source event to persisted Knowledge build, duplicate replay, dependency outage, and recovery with bounded eventual assertions."
+    },
+    {
+      "id": "TST-006",
+      "type": "non_functional",
+      "requirement_ids": ["REQ-004", "REQ-006", "REQ-008"],
+      "approach": "Run relevant complete Source, Knowledge, Model, and FastSystem suites sequentially with explicit Docker endpoint; classify Model test-host SIGSEGV by identical clean-main and branch isolated runs and record coredump/resource evidence."
+    },
+    {
+      "id": "TST-007",
+      "type": "manual",
+      "requirement_ids": ["REQ-008"],
+      "approach": "Review producer-owned OpenAPI/runtime/migration/docs consistency, run validate-specs, Release builds, formatting and diff checks, scan evidence for prohibited data, and audit Testcontainers cleanup."
+    }
+  ],
+  "traceability": [
+    {
+      "requirement_id": "REQ-001",
+      "acceptance_ids": ["AC-001", "AC-006"],
+      "test_ids": ["TST-001", "TST-005"],
+      "review_checks": ["Verify all dependency calls use producer-owned v1 contracts and no cross-service SQL or implementation reference exists."],
+      "validation_checks": ["Inspect persisted exact snapshot, Workspace version, and canonical Model identity in focused and FastSystem evidence."]
+    },
+    {
+      "requirement_id": "REQ-002",
+      "acceptance_ids": ["AC-001", "AC-006"],
+      "test_ids": ["TST-001", "TST-005"],
+      "review_checks": ["Verify deterministic generation composition is Knowledge-owned and Source contracts carry no processor/model/guidance inputs."],
+      "validation_checks": ["Repeat identical input and assert stable generation plus one desired state/build."]
+    },
+    {
+      "requirement_id": "REQ-003",
+      "acceptance_ids": ["AC-002", "AC-006"],
+      "test_ids": ["TST-001", "TST-002", "TST-005"],
+      "review_checks": ["Review fail-closed paths, constant-time HMAC verification, method/path/workspace/audience binding, skew bound, nonce entropy, and atomic single-use persistence."],
+      "validation_checks": ["All negative response/proof cases reject without accepted generation; one valid proof succeeds once only."]
+    },
+    {
+      "requirement_id": "REQ-004",
+      "acceptance_ids": ["AC-003", "AC-007"],
+      "test_ids": ["TST-003", "TST-006", "TST-007"],
+      "review_checks": ["Trace every consumer outcome to retry, successful processing, successful DLQ, cancellation, and offset commit semantics."],
+      "validation_checks": ["Directly force DLQ publication failure and prove the poison offset remains uncommitted and later partition records do not overtake it."]
+    },
+    {
+      "requirement_id": "REQ-005",
+      "acceptance_ids": ["AC-004", "AC-006"],
+      "test_ids": ["TST-004", "TST-005"],
+      "review_checks": ["Review generation fence read/write transaction boundaries and bounded re-resolution under concurrent lifecycle updates."],
+      "validation_checks": ["Deterministically race lifecycle change against resolution and assert stale state never becomes active."]
+    },
+    {
+      "requirement_id": "REQ-006",
+      "acceptance_ids": ["AC-005", "AC-006"],
+      "test_ids": ["TST-003", "TST-004", "TST-005", "TST-006"],
+      "review_checks": ["Verify inbox/desired-state uniqueness, sequence handling, retry recovery, and no repeated model use."],
+      "validation_checks": ["Count builds, model requests, and publications across duplicate/replay/outage/recovery subcases."]
+    },
+    {
+      "requirement_id": "REQ-007",
+      "acceptance_ids": ["AC-006"],
+      "test_ids": ["TST-005"],
+      "review_checks": ["Confirm the system scenario launches real service processes and does not substitute resolver dependencies with stub HTTP handlers."],
+      "validation_checks": ["Run the documented FastSystem filter from a clean checkout and retain bounded event/build diagnostics."]
+    },
+    {
+      "requirement_id": "REQ-008",
+      "acceptance_ids": ["AC-007"],
+      "test_ids": ["TST-002", "TST-006", "TST-007"],
+      "review_checks": ["Compare OpenAPI, runtime routes, migration grants/constraints, README configuration, and logs/artifacts for prohibited data."],
+      "validation_checks": ["All static/full gates pass and cleanup audit reports no run-owned leaks."]
+    }
+  ],
+  "quality_gates": {
+    "spec_review_required": true,
+    "testability_required": true,
+    "traceability_required": true
+  },
+  "council": {
+    "perspectives": [
+      {
+        "role": "planner_architecture",
+        "summary": "Bound #28 to public-contract generation resolution and its required real system proof; defer broad lifecycle and remaining milestone work to their tracked issues."
+      },
+      {
+        "role": "tech_lead_qa",
+        "summary": "Require focused, complete, and real FastSystem evidence plus a controlled clean-main/branch SIGSEGV classification protocol."
+      },
+      {
+        "role": "tech_lead_backend",
+        "summary": "Make proof replay prevention, generation fencing, bounded retry/DLQ offset safety, and complete CloudEvent validation merge-blocking invariants."
+      }
+    ],
+    "consensus_summary": "Proceed without compatibility shims using producer-owned v1 contracts. Code may advance only if the real Source-to-Knowledge FastSystem proof, DLQ publish-failure semantics, authentication nonce migration, generation fencing, complete event validation, and crash classification remain explicit review/test/validation gates.",
+    "open_questions": []
+  }
+}

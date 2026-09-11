@@ -1,0 +1,31 @@
+{
+  "run_dir": "/home/rickebo/.codex/pipeline/runs/2026-08-21T20-20-56-579Z",
+  "stage": "spec",
+  "risk_level": "high",
+  "generated_at": "2026-08-21T21:23:22Z",
+  "perspectives": [
+    {
+      "role": "codicarium_devops",
+      "status": "blocked",
+      "summary": "Candidate cutoff 2026-08-21T02:47:22Z and 1,353 database-side graph revisions are identified, but exact Barman WAL continuity and S3 object/SHA metadata remain unproven without narrowly scoped read-only access."
+    },
+    {
+      "role": "homelab_devops",
+      "status": "blocked",
+      "summary": "Target BackupTarget is available, but Longhorn capacity/RWX health is unsafe or unproven, no retained-volume backup or restore drill exists, and retained PVCs remain ownerless and detached/unknown."
+    },
+    {
+      "role": "reviewer",
+      "status": "blocked",
+      "summary": "OIDC mapping, Data Protection/backend preservation, target runtime and key recreation, transient-state sanitation, and target secret provisioning require explicit target-only decisions before mutation."
+    }
+  ],
+  "consensus_summary": "Keep the full pipeline at spec. The current plan document is structurally canonical, while older generated snapshots contain stale malformed-text and backup-target narratives. No code, restore, reconciliation, live apply, source export, or Codicarium mutation is authorized by this re-audit.",
+  "open_questions": [
+    "Can a narrowly scoped read-only source path prove Barman WAL continuity to 2026-08-21T02:47:22Z?",
+    "Can narrowly scoped read-only S3 metadata access close existence and SHA evidence for all 1,353 referenced graph artifacts without payload persistence?",
+    "Which target-owned artifact storage path has proven 100Gi RWX capacity, retention, off-node backup, and restoreability?",
+    "Is target-only recreation of OIDC, Data Protection-wrapped backends, runtime authentication, and gateway/MCP keys approved?",
+    "What evidence supports preserving or safely ignoring the two retained ownerless llm-proxy PVCs?"
+  ]
+}

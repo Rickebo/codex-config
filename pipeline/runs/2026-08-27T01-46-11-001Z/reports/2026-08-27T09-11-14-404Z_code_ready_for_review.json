@@ -1,0 +1,36 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Clean committed HEAD 55f096d closes VAL0-AC005-MODEL-USE-001 and the resulting cross-service findings. AC-005 now proves zero provider calls before processor release, exactly one authenticated provider inference, one build, one active publication, and successful configured-Model resolution before and after replay. Knowledge also accepts valid Graphify 0.9.37 external nodes, propagates the configured model_id, and classifies malformed processor artifacts permanently.",
+  "changed_files": [
+    "tests/system/WorkspaceManager.SystemTests/KnowledgeGenerationSystemTests.cs",
+    "tests/system/WorkspaceManager.SystemTests/Infrastructure/KnowledgeGenerationSystemFixture.cs",
+    "services/knowledge-service/src/KnowledgeService.Infrastructure/ProcessorAndSourceAdapters.cs",
+    "services/knowledge-service/graphify_worker/graphify_worker/processing.py",
+    "services/model-service/src/ModelService.Api/Program.cs",
+    "tests/contracts/fixtures/model-openapi.json",
+    "tests/contracts/fixtures/manifest.json"
+  ],
+  "validation": [
+    "Focused AC-005 passed 1/1 from immutable git archive 70530924bf01dba31e745ed653194ca41ae75303da9decbd701c9d373cc679f2",
+    "Complete Category=FastSystem passed 77/77; exact provider and successful configured-Model resolution assertions passed",
+    "Knowledge Python runtime passed 9/9; Knowledge domain passed 19/19; Knowledge integration passed 120/120",
+    "Model integration passed 7/7; Knowledge, Model, and SystemTests Release builds passed with 0 warnings/errors",
+    "generate-system-fixtures.py --check, validate-specs.py, compileall, Ruff, scoped formatting, and git diff --check passed",
+    "Three independent final reviews reported no blocking findings on HEAD 55f096d",
+    "No matching explicit-context Docker resources, processes, recent coredumps, or evidence secret-scan matches remained",
+    "Evidence retained under evidence/code-loop-3/final-55f096d with TRX SHA-256 checksums",
+    "Workspace Context revision dba39f36 impact analysis covers 101 paths; digest ba75462f7c39a59e688f825a070e633ad986bcc81214451e73ec257dcdea56f9",
+    "Category=System was not run because all twelve digest-pinned WM_*_IMAGE values are absent; it remains parent issue #26 scope"
+  ],
+  "blockers": [],
+  "next_action": "Advance clean HEAD 55f096d to formal review of the final AC-005, Graphify, configured-model, malformed-artifact, startup-boundary, and regenerated-fixture deltas.",
+  "route_to": "review",
+  "risk_level": "high",
+  "independent_lanes": [
+    "AC-005 real provider and replay acceptance",
+    "Knowledge, Model, and Graphify contract correctness",
+    "final evidence and generated-fixture integrity"
+  ],
+  "requires_council": false
+}

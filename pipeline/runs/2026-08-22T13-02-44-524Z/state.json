@@ -1,0 +1,233 @@
+{
+  "version": 1,
+  "created_at": "2026-08-22T13:02:44.528Z",
+  "updated_at": "2026-08-22T13:46:17.858Z",
+  "task": "Implement configurable bind addresses, allowed hosts/origins, bearer-token authentication, and validate private dev-VM MetaMCP deployment for codicarium/agent-mcp issue #13",
+  "policy_path": "/home/rickebo/.codex/pipeline/transitions.json",
+  "approval_rules_path": "/home/rickebo/.codex/pipeline/approval-rules.json",
+  "initial_stage": "spec",
+  "current_stage": "validation",
+  "pipeline_profile": "full",
+  "done": false,
+  "max_loops": 6,
+  "loop_count": 1,
+  "approval_required_count": 6,
+  "approvals": [
+    {
+      "at": "2026-08-22T13:05:19.736Z",
+      "approver": "codex-manager",
+      "note": "Approved after spec gate: explicit bind/allowlist separation, static bearer auth with constant-time comparison, health exemption, focused tests, private deployment validation, and no public exposure.",
+      "gate": "spec_to_code",
+      "reason": "Spec pass requires explicit approval before implementation starts.",
+      "risk_level": "high",
+      "from_stage": "spec",
+      "next_stage": "code",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-22T13-02-44-524Z/reports/2026-08-22T13-05-11-404Z_spec_pass.json"
+    },
+    {
+      "at": "2026-08-22T13:19:35.101Z",
+      "approver": "codex-manager",
+      "note": "Code lane completed with 91 tests, Ruff, mypy, and diff-check evidence; independent read-only reviewer assigned for auth and transport boundary review.",
+      "gate": "risk_threshold",
+      "reason": "Risk level high meets or exceeds threshold high.",
+      "risk_level": "high",
+      "from_stage": "code",
+      "next_stage": "review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-22T13-02-44-524Z/reports/2026-08-22T13-19-25-510Z_code_ready_for_review.json"
+    },
+    {
+      "at": "2026-08-22T13:26:31.097Z",
+      "approver": "codex-manager",
+      "note": "Review findings are concrete and bounded: fix delimiter/URI compatibility, non-ASCII token handling, and CLI secret exposure before re-review.",
+      "gate": "risk_threshold",
+      "reason": "Risk level high meets or exceeds threshold high.",
+      "risk_level": "high",
+      "from_stage": "review",
+      "next_stage": "code",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-22T13-02-44-524Z/reports/2026-08-22T13-26-19-843Z_review_fail.json"
+    },
+    {
+      "at": "2026-08-22T13:32:56.830Z",
+      "approver": "codex-manager",
+      "note": "Correction validation passed: URI-safe comma allowlists, safe token validation/rejection, no CLI token option, 93 full tests, Ruff, mypy src, and diff-check.",
+      "gate": "risk_threshold",
+      "reason": "Risk level high meets or exceeds threshold high.",
+      "risk_level": "high",
+      "from_stage": "code",
+      "next_stage": "review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-22T13-02-44-524Z/reports/2026-08-22T13-32-48-353Z_code_ready_for_review.json"
+    },
+    {
+      "at": "2026-08-22T13:41:57.997Z",
+      "approver": "codex-manager",
+      "note": "Review pass accepted: the only additional report was resolved against the existing MCP v2 httpx2 lock dependency and full test evidence.",
+      "gate": "risk_threshold",
+      "reason": "Risk level high meets or exceeds threshold high.",
+      "risk_level": "high",
+      "from_stage": "review",
+      "next_stage": "test",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-22T13-02-44-524Z/reports/2026-08-22T13-41-44-961Z_review_pass.json"
+    },
+    {
+      "at": "2026-08-22T13:46:17.858Z",
+      "approver": "codex-manager",
+      "note": "Test stage passed independently: 93 pytest, Ruff, mypy src, diff-check, CLI surface, and URI-safe config probes. Proceed to release and private deployment validation.",
+      "gate": "risk_threshold",
+      "reason": "Risk level high meets or exceeds threshold high.",
+      "risk_level": "high",
+      "from_stage": "test",
+      "next_stage": "validation",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-22T13-02-44-524Z/reports/2026-08-22T13-45-58-169Z_test_pass.json"
+    }
+  ],
+  "awaiting_approval": null,
+  "spec_gate": {
+    "passed": true,
+    "passed_at": "2026-08-22T13:05:19.737Z",
+    "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-22T13-02-44-524Z/transport-security-auth.spec.json",
+    "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-08-22T13-02-44-524Z/spec-check.json",
+    "council_file": "/home/rickebo/.codex/pipeline/runs/2026-08-22T13-02-44-524Z/council.json"
+  },
+  "council_policy": {
+    "required": "always"
+  },
+  "history": [
+    {
+      "at": "2026-08-22T13:05:11.405Z",
+      "event": "approval_required",
+      "stage": "spec",
+      "status": "pass",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-22T13-02-44-524Z/reports/2026-08-22T13-05-11-404Z_spec_pass.json",
+      "requested_next_stage": "code",
+      "gate": "spec_to_code",
+      "reason": "Spec pass requires explicit approval before implementation starts.",
+      "risk_level": "high",
+      "spec_gate": {
+        "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-22T13-02-44-524Z/transport-security-auth.spec.json",
+        "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-08-22T13-02-44-524Z/spec-check.json",
+        "council_file": "/home/rickebo/.codex/pipeline/runs/2026-08-22T13-02-44-524Z/council.json",
+        "checked_at": "2026-08-22T13:04:43.173Z"
+      }
+    },
+    {
+      "at": "2026-08-22T13:05:19.737Z",
+      "event": "approved_transition",
+      "stage": "spec",
+      "status": "pass",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-22T13-02-44-524Z/reports/2026-08-22T13-05-11-404Z_spec_pass.json",
+      "approver": "codex-manager",
+      "note": "Approved after spec gate: explicit bind/allowlist separation, static bearer auth with constant-time comparison, health exemption, focused tests, private deployment validation, and no public exposure.",
+      "next_stage": "code"
+    },
+    {
+      "at": "2026-08-22T13:19:25.511Z",
+      "event": "approval_required",
+      "stage": "code",
+      "status": "ready_for_review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-22T13-02-44-524Z/reports/2026-08-22T13-19-25-510Z_code_ready_for_review.json",
+      "requested_next_stage": "review",
+      "gate": "risk_threshold",
+      "reason": "Risk level high meets or exceeds threshold high.",
+      "risk_level": "high",
+      "spec_gate": null
+    },
+    {
+      "at": "2026-08-22T13:19:35.101Z",
+      "event": "approved_transition",
+      "stage": "code",
+      "status": "ready_for_review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-22T13-02-44-524Z/reports/2026-08-22T13-19-25-510Z_code_ready_for_review.json",
+      "approver": "codex-manager",
+      "note": "Code lane completed with 91 tests, Ruff, mypy, and diff-check evidence; independent read-only reviewer assigned for auth and transport boundary review.",
+      "next_stage": "review"
+    },
+    {
+      "at": "2026-08-22T13:26:19.844Z",
+      "event": "approval_required",
+      "stage": "review",
+      "status": "fail",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-22T13-02-44-524Z/reports/2026-08-22T13-26-19-843Z_review_fail.json",
+      "requested_next_stage": "code",
+      "gate": "risk_threshold",
+      "reason": "Risk level high meets or exceeds threshold high.",
+      "risk_level": "high",
+      "spec_gate": null
+    },
+    {
+      "at": "2026-08-22T13:26:31.097Z",
+      "event": "approved_transition",
+      "stage": "review",
+      "status": "fail",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-22T13-02-44-524Z/reports/2026-08-22T13-26-19-843Z_review_fail.json",
+      "approver": "codex-manager",
+      "note": "Review findings are concrete and bounded: fix delimiter/URI compatibility, non-ASCII token handling, and CLI secret exposure before re-review.",
+      "next_stage": "code"
+    },
+    {
+      "at": "2026-08-22T13:32:48.353Z",
+      "event": "approval_required",
+      "stage": "code",
+      "status": "ready_for_review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-22T13-02-44-524Z/reports/2026-08-22T13-32-48-353Z_code_ready_for_review.json",
+      "requested_next_stage": "review",
+      "gate": "risk_threshold",
+      "reason": "Risk level high meets or exceeds threshold high.",
+      "risk_level": "high",
+      "spec_gate": null
+    },
+    {
+      "at": "2026-08-22T13:32:56.830Z",
+      "event": "approved_transition",
+      "stage": "code",
+      "status": "ready_for_review",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-22T13-02-44-524Z/reports/2026-08-22T13-32-48-353Z_code_ready_for_review.json",
+      "approver": "codex-manager",
+      "note": "Correction validation passed: URI-safe comma allowlists, safe token validation/rejection, no CLI token option, 93 full tests, Ruff, mypy src, and diff-check.",
+      "next_stage": "review"
+    },
+    {
+      "at": "2026-08-22T13:41:44.961Z",
+      "event": "approval_required",
+      "stage": "review",
+      "status": "pass",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-22T13-02-44-524Z/reports/2026-08-22T13-41-44-961Z_review_pass.json",
+      "requested_next_stage": "test",
+      "gate": "risk_threshold",
+      "reason": "Risk level high meets or exceeds threshold high.",
+      "risk_level": "high",
+      "spec_gate": null
+    },
+    {
+      "at": "2026-08-22T13:41:57.997Z",
+      "event": "approved_transition",
+      "stage": "review",
+      "status": "pass",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-22T13-02-44-524Z/reports/2026-08-22T13-41-44-961Z_review_pass.json",
+      "approver": "codex-manager",
+      "note": "Review pass accepted: the only additional report was resolved against the existing MCP v2 httpx2 lock dependency and full test evidence.",
+      "next_stage": "test"
+    },
+    {
+      "at": "2026-08-22T13:45:58.169Z",
+      "event": "approval_required",
+      "stage": "test",
+      "status": "pass",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-22T13-02-44-524Z/reports/2026-08-22T13-45-58-169Z_test_pass.json",
+      "requested_next_stage": "validation",
+      "gate": "risk_threshold",
+      "reason": "Risk level high meets or exceeds threshold high.",
+      "risk_level": "high",
+      "spec_gate": null
+    },
+    {
+      "at": "2026-08-22T13:46:17.858Z",
+      "event": "approved_transition",
+      "stage": "test",
+      "status": "pass",
+      "report_file": "/home/rickebo/.codex/pipeline/runs/2026-08-22T13-02-44-524Z/reports/2026-08-22T13-45-58-169Z_test_pass.json",
+      "approver": "codex-manager",
+      "note": "Test stage passed independently: 93 pytest, Ruff, mypy src, diff-check, CLI surface, and URI-safe config probes. Proceed to release and private deployment validation.",
+      "next_stage": "validation"
+    }
+  ]
+}

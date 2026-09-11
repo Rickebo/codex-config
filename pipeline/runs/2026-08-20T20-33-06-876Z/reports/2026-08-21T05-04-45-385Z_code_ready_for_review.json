@@ -1,0 +1,29 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "PR #451 replaces timing-based overlap detection with a test-level lock and FIFO startup barrier while retaining the exact Kubernetes child lock regression coverage.",
+  "changed_files": [
+    "scripts/metamcp/bootstrap.sql",
+    "scripts/metamcp/tests/test-kubernetes-child-startup.sh"
+  ],
+  "validation": [
+    "bash -n, focused execution, and git diff --check pass.",
+    "Five serial runs pass and 40 concurrent test processes pass with zero failures.",
+    "FIFO synchronization requires two distinct persistent children to announce startup before either is released; no sleep-based overlap assertion remains.",
+    "The test-level flock serializes separate test processes while the two child invocations remain concurrent inside each test.",
+    "Remote test bytes at PR #451 head 37c5265 match the locally validated file by SHA-256 and remain executable.",
+    "Unrelated graphify-out worktree changes remain uncommitted and preserved."
+  ],
+  "blockers": [
+    "Independent final review of PR #450 and PR #451 is required before merge."
+  ],
+  "next_action": "Run final independent review, then proceed through test and live validation gates.",
+  "route_to": "review",
+  "risk_level": "critical",
+  "independent_lanes": [
+    "Bootstrap SQL command contract",
+    "Deterministic Kubernetes child startup regression coverage"
+  ],
+  "requires_council": true,
+  "issues": []
+}

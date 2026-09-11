@@ -1,0 +1,41 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Final issue-128 implementation is complete at 3d82e34c157b4b5f7aa5b06fce48b2846231b084; review and exact-head QA are GO/PASS after all release-fidelity remediations.",
+  "changed_files": [
+    ".github/workflows/release.yml",
+    "Dockerfile",
+    "Makefile",
+    "api/runtime-routes.txt",
+    "apps/web/index.html",
+    "docs/deployment.md",
+    "migrations/manifest.json",
+    "tools/check_migration_assets.py",
+    "tools/check_migration_manifest.py",
+    "tools/check_openapi/main.go",
+    "tools/check_openapi/main_test.go",
+    "tools/docker_migration.sh",
+    "tools/docker_smoke.sh",
+    "tools/test_check_migration_assets.py",
+    "tools/test_docker_smoke.py"
+  ],
+  "validation": [
+    "DOCKER_CONTEXT=default make ci passed",
+    "go test -race ./... and go vet ./... passed",
+    "Focused smoke/migration tests passed 16/16",
+    "Migration manifest/parity, OpenAPI, Helm, actionlint, workflow, shell, and diff checks passed",
+    "Real immutable app and migration image smoke passed with separate PostgreSQL server and SIGTERM cleanup fixtures"
+  ],
+  "blockers": [
+    "No hosted PR check or published release artifact exists at this exact head yet."
+  ],
+  "next_action": "Open PR #128 at the exact head, run hosted validate, then verify the published release image through the release workflow.",
+  "route_to": "review",
+  "risk_level": "high",
+  "independent_lanes": [
+    "Hosted exact-head validation",
+    "Release workflow/published digest evidence",
+    "GitHub issue/project/PR tracking"
+  ],
+  "requires_council": true
+}

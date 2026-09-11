@@ -1,0 +1,202 @@
+[
+  {
+    "id": "CMD-001-REPOSITORY-READ",
+    "executor": "github-rest",
+    "operation": "GET /repos/codicarium/release-platform-config",
+    "arguments": {
+      "profile": "cmd-001-repository-read",
+      "activation_side_effect": false
+    },
+    "output_schema": "codicarium.repository-binding/v1"
+  },
+  {
+    "id": "CMD-002-BASELINE-READ",
+    "executor": "github-graphql",
+    "operation": "read exact default branch object IDs for seven repositories",
+    "arguments": {
+      "profile": "cmd-002-baseline-read",
+      "activation_side_effect": false
+    },
+    "output_schema": "codicarium.baseline-heads/v1"
+  },
+  {
+    "id": "CMD-003-NAMESPACE-READ",
+    "executor": "kubernetes-api",
+    "operation": "GET four exact central Namespace objects",
+    "arguments": {
+      "profile": "cmd-003-namespace-read",
+      "activation_side_effect": false
+    },
+    "output_schema": "codicarium.namespace-state/v1"
+  },
+  {
+    "id": "CMD-004-ADMISSION-READ",
+    "executor": "kubernetes-api",
+    "operation": "GET named ValidatingAdmissionPolicy and Binding",
+    "arguments": {
+      "profile": "cmd-004-admission-read",
+      "activation_side_effect": false
+    },
+    "output_schema": "codicarium.admission-state/v1"
+  },
+  {
+    "id": "CMD-005-VAULT-READ",
+    "executor": "vault-http",
+    "operation": "GET exact auth role transit key and KV metadata",
+    "arguments": {
+      "profile": "cmd-005-vault-read",
+      "activation_side_effect": false
+    },
+    "output_schema": "codicarium.vault-state/v1"
+  },
+  {
+    "id": "CMD-006-CNPG-READ",
+    "executor": "kubernetes-api",
+    "operation": "GET postgresql.cnpg.io/v1 runner-platform-journal Cluster",
+    "arguments": {
+      "profile": "cmd-006-cnpg-read",
+      "activation_side_effect": false
+    },
+    "output_schema": "codicarium.cnpg-state/v1"
+  },
+  {
+    "id": "CMD-007-SECRET-METADATA-READ",
+    "executor": "kubernetes-api",
+    "operation": "GET metadata only for runner-platform-journal-app and runner-platform-journal-ca",
+    "arguments": {
+      "profile": "cmd-007-secret-metadata-read",
+      "activation_side_effect": false
+    },
+    "output_schema": "codicarium.secret-metadata/v1"
+  },
+  {
+    "id": "CMD-008-POSTGRES-TLS-RBAC",
+    "executor": "postgres-wire",
+    "operation": "verify-full connection and closed SQL assertion set",
+    "arguments": {
+      "profile": "cmd-008-postgres-tls-rbac",
+      "activation_side_effect": false
+    },
+    "output_schema": "codicarium.postgres-tls-rbac/v1"
+  },
+  {
+    "id": "CMD-009-NODE-LOSS",
+    "executor": "cnpg-evidence-controller",
+    "operation": "single-node loss write continuity synchronous replica and reseed exercise",
+    "arguments": {
+      "profile": "cmd-009-node-loss",
+      "activation_side_effect": false
+    },
+    "output_schema": "codicarium.cnpg-n-minus-one/v1"
+  },
+  {
+    "id": "CMD-010-NETWORK-VERIFY",
+    "executor": "network-conformance-controller",
+    "operation": "run exact positive and negative flow matrix",
+    "arguments": {
+      "profile": "cmd-010-network-verify",
+      "activation_side_effect": false
+    },
+    "output_schema": "codicarium.network-conformance/v2"
+  },
+  {
+    "id": "CMD-011-INDEPENDENT-READBACK",
+    "executor": "release-readback-controller",
+    "operation": "authenticated canonical target GET by read-only identity",
+    "arguments": {
+      "profile": "cmd-011-independent-readback",
+      "activation_side_effect": false
+    },
+    "output_schema": "codicarium.independent-readback/v1"
+  },
+  {
+    "id": "CMD-012-EPOCH-CAS",
+    "executor": "postgres-wire",
+    "operation": "serializable writer epoch acknowledgement and stale-writer rejection",
+    "arguments": {
+      "profile": "cmd-012-epoch-cas",
+      "activation_side_effect": false
+    },
+    "output_schema": "codicarium.writer-epoch/v1"
+  },
+  {
+    "id": "CMD-013-LEGACY-RUNS-READ",
+    "executor": "github-rest",
+    "operation": "GET all runs for five retired workflow IDs",
+    "arguments": {
+      "profile": "cmd-013-legacy-runs-read",
+      "activation_side_effect": false
+    },
+    "output_schema": "codicarium.legacy-runs/v1"
+  },
+  {
+    "id": "CMD-014-LEGACY-RUN-CANCEL",
+    "executor": "github-rest",
+    "operation": "POST cancel for each queued or in-progress retired run",
+    "arguments": {
+      "profile": "cmd-014-legacy-run-cancel",
+      "activation_side_effect": false
+    },
+    "output_schema": "codicarium.legacy-cancellation/v1"
+  },
+  {
+    "id": "CMD-015-QUIESCENCE-READ",
+    "executor": "authority-inventory-controller",
+    "operation": "read revoked credentials sessions environments and runner routes",
+    "arguments": {
+      "profile": "cmd-015-quiescence-read",
+      "activation_side_effect": false
+    },
+    "output_schema": "codicarium.quiescence/v1"
+  },
+  {
+    "id": "CMD-016-ARCHIVE-VERIFY",
+    "executor": "sandbox-archive-verifier",
+    "operation": "run bounded streaming archive negative vectors",
+    "arguments": {
+      "profile": "cmd-016-archive-verify",
+      "activation_side_effect": false
+    },
+    "output_schema": "codicarium.archive-bounds/v1"
+  },
+  {
+    "id": "CMD-017-REPLAY-VERIFY",
+    "executor": "replay-ledger-controller",
+    "operation": "run atomic thirty-two-attempt replay race",
+    "arguments": {
+      "profile": "cmd-017-replay-verify",
+      "activation_side_effect": false
+    },
+    "output_schema": "codicarium.replay-race/v1"
+  },
+  {
+    "id": "CMD-018-CHECKS-READ",
+    "executor": "github-rest",
+    "operation": "GET exact five check runs at one head",
+    "arguments": {
+      "profile": "cmd-018-checks-read",
+      "activation_side_effect": false
+    },
+    "output_schema": "codicarium.protected-checks/v1"
+  },
+  {
+    "id": "CMD-019-RELEASE-READBACK",
+    "executor": "release-readback-controller",
+    "operation": "read canonical tag release image chart and fourteen assets",
+    "arguments": {
+      "profile": "cmd-019-release-readback",
+      "activation_side_effect": false
+    },
+    "output_schema": "codicarium.release-live/v1"
+  },
+  {
+    "id": "CMD-020-GATE-AGGREGATE",
+    "executor": "gate-controller",
+    "operation": "aggregate fresh live GATE-001 through GATE-014 without activation",
+    "arguments": {
+      "profile": "cmd-020-gate-aggregate",
+      "activation_side_effect": false
+    },
+    "output_schema": "codicarium.activation-authorization/v1"
+  }
+]

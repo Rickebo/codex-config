@@ -1,0 +1,26 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Third security review found quoted or indirect make targets can still hide make ci, and extra release jobs can inherit publication authority outside the checked job.",
+  "changed_files": [],
+  "validation": [
+    "Exact head 656ed43 reviewed",
+    "Prior CI job/permission and wrapper-option findings were resolved"
+  ],
+  "blockers": [
+    "Reject quoted or variable make targets rather than ignoring them.",
+    "Require the release workflow job map to contain exactly release."
+  ],
+  "next_action": "Harden the parser and release job shape, add tests, then repeat review.",
+  "route_to": "code",
+  "risk_level": "critical",
+  "independent_lanes": [
+    "Quoted/indirect shell target rejection",
+    "Exact release job set"
+  ],
+  "requires_council": true,
+  "issues": [
+    {"id":"REV-123-007","title":"Quoted or indirect make target bypasses parser","severity":"high","details":"make ci-pr followed by make \"ci\" or make \"$target\" can execute privileged ci while parser ignores quoted target; reject unsupported quoted/indirect targets.","owner_stage":"code"},
+    {"id":"REV-123-008","title":"Extra release jobs inherit publication permissions","severity":"medium","details":"Require release jobs map to contain exactly release so added jobs cannot execute with top-level write authority unchecked.","owner_stage":"code"}
+  ]
+}

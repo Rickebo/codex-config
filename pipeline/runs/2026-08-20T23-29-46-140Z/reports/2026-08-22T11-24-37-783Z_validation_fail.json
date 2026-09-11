@@ -1,0 +1,21 @@
+{
+  "stage": "validation",
+  "status": "fail",
+  "summary": "Post-merge release run succeeded but skipped all artifact publication and DEV rollout steps for merge commit 7ec0431ed0a47d7d1ef988f0851be41ceb66f669.",
+  "changed_files": [
+    ".github/workflows/release.yml"
+  ],
+  "validation": [
+    "PR #175 merged normally at 7ec0431ed0a47d7d1ef988f0851be41ceb66f669.",
+    "Release run 32569959518 completed success.",
+    "Determine changed artifact inputs marked chart_changed=false and image_changed=false.",
+    "Release validation, image publication, immutable smoke, chart, SBOM, and Bump dev deployment descriptor were skipped."
+  ],
+  "blockers": [
+    "The remediation contract suite was not exercised by the real release workflow after merge.",
+    "No new app/migration immutable digests, chart, SBOM metadata, or DEV rollout evidence exists for PR #175."
+  ],
+  "next_action": "Update release change detection or add an authorized release rerun mechanism so release-validation tooling changes execute the release path, then review, test, merge, and monitor again.",
+  "route_to": "code",
+  "risk_level": "low"
+}

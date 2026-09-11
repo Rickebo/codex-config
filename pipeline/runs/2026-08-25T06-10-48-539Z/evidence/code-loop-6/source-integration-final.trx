@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="9bb9a8f9-38a3-4209-905f-dd58200d3313" name="@RICKEBO 2026-08-27 02:24:56" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2026-08-27T02:24:56.9134859+02:00" queuing="2026-08-27T02:24:56.9134860+02:00" start="2026-08-27T02:24:50.4382814+02:00" finish="2026-08-27T02:25:00.0429271+02:00" />
+  <TestSettings name="default" id="b5fa3503-3ce4-422e-b860-2e0289f15c4b">
+    <Deployment runDeploymentRoot="_RICKEBO_2026-08-27_02_24_56" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="3ba8735d-97b5-44e9-9a3c-4a3c57b0278c" testId="b3bf3354-cf53-3c11-18e4-43133902f29f" testName="SourceService.Integration.Tests.ApiSmokeTests.Host_migrates_reports_ready_serves_openapi_and_returns_problem_details" computerName="RICKEBO" duration="00:00:05.6009831" startTime="2026-08-27T02:24:51.9760932+02:00" endTime="2026-08-27T02:24:57.5808418+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="3ba8735d-97b5-44e9-9a3c-4a3c57b0278c" />
+    <UnitTestResult executionId="163e0fd5-cb18-4fbd-bf34-9b1752f520e9" testId="f3a65dde-cfd4-fbe6-1177-69b8d40649d8" testName="SourceService.Integration.Tests.PostgreSqlIntegrationTests.Migration_webhook_outbox_and_inbox_are_durable_atomic_and_idempotent" computerName="RICKEBO" duration="00:00:04.9174220" startTime="2026-08-27T02:24:51.9760935+02:00" endTime="2026-08-27T02:24:56.8973210+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="163e0fd5-cb18-4fbd-bf34-9b1752f520e9" />
+    <UnitTestResult executionId="ddab3406-a719-4b2e-bfbd-b6db79986c95" testId="cd6c40a8-6c28-ce7e-09d6-c3479ca95281" testName="SourceService.Integration.Tests.SourcePlaneIntegrationTests.Fake_provider_webhooks_materialize_every_commit_and_preserve_force_delete_recreate_history" computerName="RICKEBO" duration="00:00:05.7526029" startTime="2026-08-27T02:24:51.9760930+02:00" endTime="2026-08-27T02:24:57.7324567+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ddab3406-a719-4b2e-bfbd-b6db79986c95" />
+    <UnitTestResult executionId="540109fe-afa4-408a-906a-bde7b5a71935" testId="a6a435ac-a186-5a67-0be7-adca35d1183f" testName="SourceService.Integration.Tests.S3ArtifactStoreIntegrationTests.Upload_is_content_addressed_verified_deduplicated_and_deletable" computerName="RICKEBO" duration="00:00:03.8365414" startTime="2026-08-27T02:24:51.9760940+02:00" endTime="2026-08-27T02:24:55.8183085+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="540109fe-afa4-408a-906a-bde7b5a71935" />
+    <UnitTestResult executionId="42d58cdb-db16-4c04-98ff-17a4f7581e05" testId="b6d55168-8834-6023-a616-b3b142e34d42" testName="SourceService.Integration.Tests.ApiSmokeTests.Consumer_read_routes_scope_metadata_and_redeem_exact_artifact_lease_once" computerName="RICKEBO" duration="00:00:02.4074024" startTime="2026-08-27T02:24:57.5812368+02:00" endTime="2026-08-27T02:24:59.9886992+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="42d58cdb-db16-4c04-98ff-17a4f7581e05" />
+    <UnitTestResult executionId="f9f6a2cb-48b5-44a9-ab91-75f9ac402279" testId="77f8eb1b-e711-d9ab-b300-bd23c61673f1" testName="SourceService.Integration.Tests.PostgreSqlIntegrationTests.Workload_proof_nonce_is_workspace_bound_and_single_use_under_concurrency" computerName="RICKEBO" duration="00:00:01.8854645" startTime="2026-08-27T02:24:56.8979486+02:00" endTime="2026-08-27T02:24:58.7834955+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f9f6a2cb-48b5-44a9-ab91-75f9ac402279" />
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="SourceService.Integration.Tests.PostgreSqlIntegrationTests.Workload_proof_nonce_is_workspace_bound_and_single_use_under_concurrency" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/source-service/sourceservice.integration.tests/bin/release/net10.0/sourceservice.integration.tests.dll" id="77f8eb1b-e711-d9ab-b300-bd23c61673f1">
+      <Execution id="f9f6a2cb-48b5-44a9-ab91-75f9ac402279" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/source-service/SourceService.Integration.Tests/bin/Release/net10.0/SourceService.Integration.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="SourceService.Integration.Tests.PostgreSqlIntegrationTests" name="Workload_proof_nonce_is_workspace_bound_and_single_use_under_concurrency" />
+    </UnitTest>
+    <UnitTest name="SourceService.Integration.Tests.ApiSmokeTests.Host_migrates_reports_ready_serves_openapi_and_returns_problem_details" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/source-service/sourceservice.integration.tests/bin/release/net10.0/sourceservice.integration.tests.dll" id="b3bf3354-cf53-3c11-18e4-43133902f29f">
+      <Execution id="3ba8735d-97b5-44e9-9a3c-4a3c57b0278c" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/source-service/SourceService.Integration.Tests/bin/Release/net10.0/SourceService.Integration.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="SourceService.Integration.Tests.ApiSmokeTests" name="Host_migrates_reports_ready_serves_openapi_and_returns_problem_details" />
+    </UnitTest>
+    <UnitTest name="SourceService.Integration.Tests.ApiSmokeTests.Consumer_read_routes_scope_metadata_and_redeem_exact_artifact_lease_once" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/source-service/sourceservice.integration.tests/bin/release/net10.0/sourceservice.integration.tests.dll" id="b6d55168-8834-6023-a616-b3b142e34d42">
+      <Execution id="42d58cdb-db16-4c04-98ff-17a4f7581e05" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/source-service/SourceService.Integration.Tests/bin/Release/net10.0/SourceService.Integration.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="SourceService.Integration.Tests.ApiSmokeTests" name="Consumer_read_routes_scope_metadata_and_redeem_exact_artifact_lease_once" />
+    </UnitTest>
+    <UnitTest name="SourceService.Integration.Tests.S3ArtifactStoreIntegrationTests.Upload_is_content_addressed_verified_deduplicated_and_deletable" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/source-service/sourceservice.integration.tests/bin/release/net10.0/sourceservice.integration.tests.dll" id="a6a435ac-a186-5a67-0be7-adca35d1183f">
+      <Execution id="540109fe-afa4-408a-906a-bde7b5a71935" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/source-service/SourceService.Integration.Tests/bin/Release/net10.0/SourceService.Integration.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="SourceService.Integration.Tests.S3ArtifactStoreIntegrationTests" name="Upload_is_content_addressed_verified_deduplicated_and_deletable" />
+    </UnitTest>
+    <UnitTest name="SourceService.Integration.Tests.PostgreSqlIntegrationTests.Migration_webhook_outbox_and_inbox_are_durable_atomic_and_idempotent" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/source-service/sourceservice.integration.tests/bin/release/net10.0/sourceservice.integration.tests.dll" id="f3a65dde-cfd4-fbe6-1177-69b8d40649d8">
+      <Execution id="163e0fd5-cb18-4fbd-bf34-9b1752f520e9" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/source-service/SourceService.Integration.Tests/bin/Release/net10.0/SourceService.Integration.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="SourceService.Integration.Tests.PostgreSqlIntegrationTests" name="Migration_webhook_outbox_and_inbox_are_durable_atomic_and_idempotent" />
+    </UnitTest>
+    <UnitTest name="SourceService.Integration.Tests.SourcePlaneIntegrationTests.Fake_provider_webhooks_materialize_every_commit_and_preserve_force_delete_recreate_history" storage="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/source-service/sourceservice.integration.tests/bin/release/net10.0/sourceservice.integration.tests.dll" id="cd6c40a8-6c28-ce7e-09d6-c3479ca95281">
+      <Execution id="ddab3406-a719-4b2e-bfbd-b6db79986c95" />
+      <TestMethod codeBase="/mnt/rickebo-p/workspace-manager/.worktrees/workspace-manager-fix_knowledge-production-generation-resolver/tests/source-service/SourceService.Integration.Tests/bin/Release/net10.0/SourceService.Integration.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="SourceService.Integration.Tests.SourcePlaneIntegrationTests" name="Fake_provider_webhooks_materialize_every_commit_and_preserve_force_delete_recreate_history" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="b3bf3354-cf53-3c11-18e4-43133902f29f" executionId="3ba8735d-97b5-44e9-9a3c-4a3c57b0278c" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="f3a65dde-cfd4-fbe6-1177-69b8d40649d8" executionId="163e0fd5-cb18-4fbd-bf34-9b1752f520e9" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="cd6c40a8-6c28-ce7e-09d6-c3479ca95281" executionId="ddab3406-a719-4b2e-bfbd-b6db79986c95" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="a6a435ac-a186-5a67-0be7-adca35d1183f" executionId="540109fe-afa4-408a-906a-bde7b5a71935" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="b6d55168-8834-6023-a616-b3b142e34d42" executionId="42d58cdb-db16-4c04-98ff-17a4f7581e05" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="77f8eb1b-e711-d9ab-b300-bd23c61673f1" executionId="f9f6a2cb-48b5-44a9-ab91-75f9ac402279" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Completed">
+    <Counters total="6" executed="6" passed="6" failed="0" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v3.1.5+1b188a7b0a (64-bit .NET 10.0.11)
+[xUnit.net 00:00:00.58]   Discovering: SourceService.Integration.Tests
+[xUnit.net 00:00:00.69]   Discovered:  SourceService.Integration.Tests
+[xUnit.net 00:00:00.78]   Starting:    SourceService.Integration.Tests
+[xUnit.net 00:00:08.84]   Finished:    SourceService.Integration.Tests (ID = '06dd392f73dd766546ef20ac004a9a7bd0caf3d6f22af91d50b6e32a5d6c5a8d')
+</StdOut>
+    </Output>
+  </ResultSummary>
+</TestRun>

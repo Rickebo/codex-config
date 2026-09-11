@@ -1,0 +1,23 @@
+{
+  "stage": "validation",
+  "status": "fail",
+  "summary": "The prior #128 validation record covered stale head 3d82e34; PR #151 conflicted with main after #124 merged, so validation must restart on reconciled head 261b69f.",
+  "changed_files": [
+    ".github/workflows/ci.yml",
+    ".github/workflows/release.yml",
+    "Dockerfile",
+    "Makefile",
+    "tools/docker_smoke.sh",
+    "tools/test_docker_smoke.py"
+  ],
+  "validation": [
+    "PR #151 was conflicting against main at the prior head",
+    "Rebase completed onto origin/main d17e9b9294c6e2bead194ae15dc9b03cec63108c",
+    "Fresh exact-head review and QA are independently GO/PASS"
+  ],
+  "blockers": [
+    "Hosted validation must be rerun for reconciled head 261b69f5dedf720880b448695cbb264183860dd5."
+  ],
+  "next_action": "Run the exact-head review/test/hosted validation sequence on 261b69f5.",
+  "route_to": "code"
+}

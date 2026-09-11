@@ -1,0 +1,1 @@
+Fix old-tag Release Verify handoff by having trusted Automatic Release poll exact verifier completion and explicitly dispatch Publish Release, then automatically publish pending v0.6.13 without manual actions

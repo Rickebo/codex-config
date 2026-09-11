@@ -1,0 +1,153 @@
+{
+  "payload": {
+    "command_id": "cmd.M01",
+    "schema_id": "mutation.v2.5",
+    "signer_kind": "offline_fixture",
+    "authority": false,
+    "nonce": "nonce-M01-v2.5",
+    "outer_nonce": "outer-M01-v2.5",
+    "inner_nonce": "inner-M01-v2.5",
+    "issued_at": "2026-08-26T12:00:00Z",
+    "not_before": "2026-08-26T12:00:00Z",
+    "expires_at": "2026-08-26T12:30:00Z",
+    "target_digest": "5149e3d3df1b746e8e0b04b183ec61058a317f511c286721934327d29ca5b1bb",
+    "identity": "offline.writer.M01",
+    "mutation_id": "M01",
+    "sequence": 1,
+    "previous_hash": "GENESIS-v2.5",
+    "role": "writer",
+    "key_fingerprint": "28abea2585cef7bd4bd79cf1775c77f93656a337ea869af6ae282c8c61770cc0",
+    "target_bytes_sha256": "5149e3d3df1b746e8e0b04b183ec61058a317f511c286721934327d29ca5b1bb",
+    "request_hash": "1132b695340618aa5e1434fc52bbfde4cf841c16ca1960401025e40dc825adb8",
+    "readback_hash": "3e2f09c95ef4fbc06e17a97aa96e0b8ade83b10d47660cbbcb464737d3991716",
+    "commit_hash": "11e5fa1970dd7585a0a8c5a17d50d9d7651a21a88649a4746c7785c78c679ab2",
+    "signature": "WH/1Nl0NLaelvg6/XnDrhn270lFgSZTGWSBntizyrjDqvcPNdEwVJ3tZ5Ocod4XgvIuzFfuz66jEarzzvoEyAg==",
+    "live_evidence": false,
+    "app_config_path": ".codicarium/dev/bootstrap-release.yaml",
+    "release_version": "NEXT_SEMVER"
+  },
+  "public_key": "MCowBQYDK2VwAyEAPCOhQdvNvybPyk1iLpqxm7q4BZMPYlmLhddjSJkBzd4=",
+  "target_before": {
+    "repository_id": "repo-deployment-controller",
+    "repository": "codicarium/deployment-controller",
+    "ref": "refs/tags/NEXT_SEMVER",
+    "uid": "release-target-v2.5"
+  },
+  "contracts": {
+    "candidate": {
+      "media_type": "application/gzip",
+      "byte_length": 64,
+      "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "sandbox": "destroyed-no-network-kata"
+    },
+    "proxy": {
+      "listener": "release-proxy.internal:8443",
+      "host": "api.github.com",
+      "audience": "release-platform",
+      "sni": "api.github.com",
+      "operations": [
+        "create-tag",
+        "draft-release",
+        "upload-release-asset",
+        "readback-release"
+      ]
+    },
+    "vault": {
+      "role": "release-platform-v2.5",
+      "principal": "system:serviceaccount:release-platform:controller",
+      "transit_key_fingerprint": "8359accb9e128b9d49e63767dc9621aa7ccdc1d8e2c65c210a690e1ad93d830d",
+      "revoked": false
+    },
+    "cnpg": {
+      "instances": 3,
+      "synchronous": true,
+      "tls_sni": "postgres-rw.postgres.svc.cluster.local",
+      "rpo_seconds": 0,
+      "rto_seconds": 120
+    },
+    "admin": {
+      "normal": {
+        "requester": "admin.requester.v2.5",
+        "approver": "admin.approver.v2.5",
+        "executor": "admin.executor.v2.5",
+        "approval_ttl_seconds": 1800,
+        "credential_ttl_seconds": 600,
+        "one_use": true,
+        "audit_required": true,
+        "revocation_required": true
+      },
+      "break_glass": {
+        "requester": "breakglass.requester.v2.5",
+        "approver_one": "breakglass.one.v2.5",
+        "approver_two": "breakglass.two.v2.5",
+        "executor": "breakglass.executor.v2.5",
+        "approval_ttl_seconds": 900,
+        "credential_ttl_seconds": 300,
+        "one_use": true,
+        "audit_required": true,
+        "revocation_required": true,
+        "forbidden_operations": [
+          "publish",
+          "mint-candidate",
+          "mutate-admission",
+          "clear-unknown"
+        ]
+      }
+    },
+    "activation": {
+      "state": "BLOCKED_PREACTIVATION",
+      "live_gate_count": 0,
+      "refresh_required_before_mutation": true,
+      "synthetic_evidence_authorizes": false
+    },
+    "recovery": {
+      "nodes": [
+        "U00",
+        "U01",
+        "U02",
+        "U03",
+        "U04",
+        "U05",
+        "U06",
+        "U07",
+        "U08"
+      ],
+      "commands": [
+        "fence",
+        "cancel",
+        "quarantine",
+        "classify",
+        "repair",
+        "successor",
+        "audit",
+        "reconcile",
+        "terminal"
+      ]
+    },
+    "semver": {
+      "verified_tags": [
+        {
+          "tag": "v0.7.1",
+          "verified": true,
+          "source": "frozen-read-only-tag-snapshot",
+          "commit": "2724b4f1663e705871656c1f0626cdd0773f130aad5b2b13e54c5348a29a9f5e"
+        },
+        {
+          "tag": "v0.7.5",
+          "verified": true,
+          "source": "frozen-read-only-tag-snapshot",
+          "commit": "0a73d951a4f9a178b79ff36a6fd89ee27532c60c2ccb1cd2d0217a20d6f6483d"
+        },
+        {
+          "tag": "v0.8.0",
+          "verified": true,
+          "source": "frozen-read-only-tag-snapshot",
+          "commit": "cf7e01d12b432dc13b6ec03bbd566fb70f92d1a604902f5bb27ca2228415b13b"
+        }
+      ],
+      "frozen_next_semver": "v0.8.1",
+      "freeze_node": "X39",
+      "refresh_required_before_mutation": true
+    }
+  }
+}

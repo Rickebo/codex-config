@@ -1,0 +1,1 @@
+Automate official OpenAI pricing catalog refreshes, include Astra, release, and deploy to homelab

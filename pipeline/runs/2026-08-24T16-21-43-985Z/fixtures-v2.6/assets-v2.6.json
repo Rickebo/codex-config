@@ -1,0 +1,131 @@
+{
+  "release_version": "v0.7.7",
+  "assets": [
+    {
+      "filename": "release-notes.md",
+      "media_type": "text/markdown",
+      "source_fixture": "fixtures-v2.6/asset-source-01.bin",
+      "source_bytes_base64": "djIuNi1hc3NldC0xfHJlbGVhc2Utbm90ZXMubWR8djAuNy43Cg==",
+      "source_sha256": "bc4c580705c4f4a83c5a5f9aa60eb45b337d864e813c878b8df186ca03e8ef10",
+      "destination_binding": "github://codicarium/deployment-controller/releases/v0.7.7/assets/release-notes.md",
+      "release_version": "v0.7.7"
+    },
+    {
+      "filename": "sbom.cdx.json",
+      "media_type": "application/vnd.cyclonedx+json",
+      "source_fixture": "fixtures-v2.6/asset-source-02.bin",
+      "source_bytes_base64": "djIuNi1hc3NldC0yfHNib20uY2R4Lmpzb258djAuNy43Cg==",
+      "source_sha256": "8d847c50ad8dd0dfaa5d2631c48e8cf3c5b8f2396830863ae0afe2c183c13393",
+      "destination_binding": "github://codicarium/deployment-controller/releases/v0.7.7/assets/sbom.cdx.json",
+      "release_version": "v0.7.7"
+    },
+    {
+      "filename": "provenance.intoto.jsonl",
+      "media_type": "application/x-ndjson",
+      "source_fixture": "fixtures-v2.6/asset-source-03.bin",
+      "source_bytes_base64": "djIuNi1hc3NldC0zfHByb3ZlbmFuY2UuaW50b3RvLmpzb25sfHYwLjcuNwo=",
+      "source_sha256": "23f37a829bef81e4d5da728888e40db0fcbf19aa4fbdcce1a0a539cc31a3ca90",
+      "destination_binding": "github://codicarium/deployment-controller/releases/v0.7.7/assets/provenance.intoto.jsonl",
+      "release_version": "v0.7.7"
+    },
+    {
+      "filename": "checksums.txt",
+      "media_type": "text/plain",
+      "source_fixture": "fixtures-v2.6/asset-source-04.bin",
+      "source_bytes_base64": "djIuNi1hc3NldC00fGNoZWNrc3Vtcy50eHR8djAuNy43Cg==",
+      "source_sha256": "c234896f371ccac7b8f261cbb7c8de6cf3b7d5f14d38696fdf4ff019b773764d",
+      "destination_binding": "github://codicarium/deployment-controller/releases/v0.7.7/assets/checksums.txt",
+      "release_version": "v0.7.7"
+    },
+    {
+      "filename": "deployment-manifest.json",
+      "media_type": "application/json",
+      "source_fixture": "fixtures-v2.6/asset-source-05.bin",
+      "source_bytes_base64": "djIuNi1hc3NldC01fGRlcGxveW1lbnQtbWFuaWZlc3QuanNvbnx2MC43LjcK",
+      "source_sha256": "9289ca68d0fe62a187a34fa273d7983915727ad23c352f310f7c858bf9c009c9",
+      "destination_binding": "github://codicarium/deployment-controller/releases/v0.7.7/assets/deployment-manifest.json",
+      "release_version": "v0.7.7"
+    },
+    {
+      "filename": "helm-values.snapshot.yaml",
+      "media_type": "application/yaml",
+      "source_fixture": "fixtures-v2.6/asset-source-06.bin",
+      "source_bytes_base64": "djIuNi1hc3NldC02fGhlbG0tdmFsdWVzLnNuYXBzaG90LnlhbWx8djAuNy43Cg==",
+      "source_sha256": "cdbcf8a8f6a10b154c9dc0867a648b7189ddbda2bb2636ffe008bd9f8caaa342",
+      "destination_binding": "github://codicarium/deployment-controller/releases/v0.7.7/assets/helm-values.snapshot.yaml",
+      "release_version": "v0.7.7"
+    },
+    {
+      "filename": "api-schema.json",
+      "media_type": "application/json",
+      "source_fixture": "fixtures-v2.6/asset-source-07.bin",
+      "source_bytes_base64": "djIuNi1hc3NldC03fGFwaS1zY2hlbWEuanNvbnx2MC43LjcK",
+      "source_sha256": "193d181bd6968b2ba7a9359cc8e6219d192302661fbf2143e5c1a911903e7d90",
+      "destination_binding": "github://codicarium/deployment-controller/releases/v0.7.7/assets/api-schema.json",
+      "release_version": "v0.7.7"
+    },
+    {
+      "filename": "migration-plan.md",
+      "media_type": "text/markdown",
+      "source_fixture": "fixtures-v2.6/asset-source-08.bin",
+      "source_bytes_base64": "djIuNi1hc3NldC04fG1pZ3JhdGlvbi1wbGFuLm1kfHYwLjcuNwo=",
+      "source_sha256": "bcbfc033389ad5df01b98aa216ec8838a973cef631b48c593399c0c68d9cc63c",
+      "destination_binding": "github://codicarium/deployment-controller/releases/v0.7.7/assets/migration-plan.md",
+      "release_version": "v0.7.7"
+    },
+    {
+      "filename": "rollback-runbook.md",
+      "media_type": "text/markdown",
+      "source_fixture": "fixtures-v2.6/asset-source-09.bin",
+      "source_bytes_base64": "djIuNi1hc3NldC05fHJvbGxiYWNrLXJ1bmJvb2subWR8djAuNy43Cg==",
+      "source_sha256": "61f91d50a6951d2dbce5ad5161cf35e298a8f309b50e5022bf353ea89567accc",
+      "destination_binding": "github://codicarium/deployment-controller/releases/v0.7.7/assets/rollback-runbook.md",
+      "release_version": "v0.7.7"
+    },
+    {
+      "filename": "license-report.spdx.json",
+      "media_type": "application/spdx+json",
+      "source_fixture": "fixtures-v2.6/asset-source-10.bin",
+      "source_bytes_base64": "djIuNi1hc3NldC0xMHxsaWNlbnNlLXJlcG9ydC5zcGR4Lmpzb258djAuNy43Cg==",
+      "source_sha256": "b79f40cf1db3125a2916791e1faaa3cb70ccf18220a1a6e011860c2b50143b06",
+      "destination_binding": "github://codicarium/deployment-controller/releases/v0.7.7/assets/license-report.spdx.json",
+      "release_version": "v0.7.7"
+    },
+    {
+      "filename": "test-report.junit.xml",
+      "media_type": "application/xml",
+      "source_fixture": "fixtures-v2.6/asset-source-11.bin",
+      "source_bytes_base64": "djIuNi1hc3NldC0xMXx0ZXN0LXJlcG9ydC5qdW5pdC54bWx8djAuNy43Cg==",
+      "source_sha256": "bb2f6e2140429626e0bb610b4786d412fd24000653d7bdcb2cc3d8f161ccee3e",
+      "destination_binding": "github://codicarium/deployment-controller/releases/v0.7.7/assets/test-report.junit.xml",
+      "release_version": "v0.7.7"
+    },
+    {
+      "filename": "coverage-summary.json",
+      "media_type": "application/json",
+      "source_fixture": "fixtures-v2.6/asset-source-12.bin",
+      "source_bytes_base64": "djIuNi1hc3NldC0xMnxjb3ZlcmFnZS1zdW1tYXJ5Lmpzb258djAuNy43Cg==",
+      "source_sha256": "a01aef85e1b9f18ed6f3de664d4041ced454974073ab11c192ed13e104939540",
+      "destination_binding": "github://codicarium/deployment-controller/releases/v0.7.7/assets/coverage-summary.json",
+      "release_version": "v0.7.7"
+    },
+    {
+      "filename": "slsa-verification.json",
+      "media_type": "application/json",
+      "source_fixture": "fixtures-v2.6/asset-source-13.bin",
+      "source_bytes_base64": "djIuNi1hc3NldC0xM3xzbHNhLXZlcmlmaWNhdGlvbi5qc29ufHYwLjcuNwo=",
+      "source_sha256": "edc39f9c331d1bc364307bfd145d931d446b31a46d49afd19737a0ba96032170",
+      "destination_binding": "github://codicarium/deployment-controller/releases/v0.7.7/assets/slsa-verification.json",
+      "release_version": "v0.7.7"
+    },
+    {
+      "filename": "release-index.json",
+      "media_type": "application/json",
+      "source_fixture": "fixtures-v2.6/asset-source-14.bin",
+      "source_bytes_base64": "djIuNi1hc3NldC0xNHxyZWxlYXNlLWluZGV4Lmpzb258djAuNy43Cg==",
+      "source_sha256": "b351a7b241a6c219a4640f67cdddfdda7a91147869a46699107800799880b094",
+      "destination_binding": "github://codicarium/deployment-controller/releases/v0.7.7/assets/release-index.json",
+      "release_version": "v0.7.7"
+    }
+  ]
+}

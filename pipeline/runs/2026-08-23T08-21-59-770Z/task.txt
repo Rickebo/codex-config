@@ -1,0 +1,1 @@
+Phase 0: safely change Codicarium Argo CD authenticated default access from global readonly to deny-by-default, preserve explicit admin access, add regression tests, merge through PR, and verify live admin and non-admin isolation before proceeding to authorization inventory

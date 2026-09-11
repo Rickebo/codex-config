@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://codicarium.local/v2.6/activation.v2.6",
+  "title": "activation.v2.6",
+  "type": "object",
+  "required": [
+    "state",
+    "live_gate_count",
+    "refresh_required_before_mutation",
+    "synthetic_evidence_authorizes"
+  ],
+  "properties": {
+    "state": {
+      "type": "string",
+      "minLength": 1
+    },
+    "live_gate_count": {
+      "type": "integer"
+    },
+    "refresh_required_before_mutation": {
+      "type": "boolean"
+    },
+    "synthetic_evidence_authorizes": {
+      "type": "boolean"
+    }
+  },
+  "additionalProperties": false
+}

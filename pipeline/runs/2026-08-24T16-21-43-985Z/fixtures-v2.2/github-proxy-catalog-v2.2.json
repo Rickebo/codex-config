@@ -1,0 +1,34 @@
+{
+  "schema": "codicarium.github-proxy-operation-catalog/v2",
+  "default": "DENY",
+  "listener_binding": [
+    "TokenReview audience",
+    "Pod UID/name/namespace",
+    "ServiceAccount UID/name",
+    "listener ID",
+    "nonce",
+    "expiry",
+    "SNI",
+    "API version"
+  ],
+  "operations": [
+    "GET exact repository",
+    "GET exact ref/tree/blob",
+    "GET exact workflow run/checks",
+    "POST exact workflow dispatch with return_run_details=true",
+    "POST exact tag ref create",
+    "POST exact draft release create",
+    "POST exact named asset upload",
+    "PATCH exact release finalize",
+    "POST exact listed run cancel"
+  ],
+  "denials": [
+    "generic POST",
+    "redirect",
+    "encoded path trick",
+    "host change",
+    "direct GitHub egress",
+    "unlisted asset name",
+    "unbound listener"
+  ]
+}

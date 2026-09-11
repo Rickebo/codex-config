@@ -1,0 +1,9 @@
+{
+  "status": "consensus",
+  "perspectives": {
+    "architecture": "Generated chart asset, strict updater, production-loader check, scheduled PR, normal release and GitOps promotion.",
+    "safety": "Exact official source and semantic table contract; append-only history; atomic failure; least-privilege token after validation; no auto-merge.",
+    "quality": "Fixture, no-op, malformed-source, chart, workflow, repository, release, and live telemetry gates."
+  },
+  "decision": "Proceed test-first with a generated immutable catalog and scheduled reviewable updates; do not add runtime pricing egress."
+}

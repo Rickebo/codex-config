@@ -1,0 +1,295 @@
+{
+  "meta": {
+    "id": "SPEC-deployment-controller-v0.6.13-release-handoff",
+    "title": "Trusted coordinator handoff for pending v0.6.13 publication",
+    "author": "planner",
+    "created_at": "2026-08-24T20:26:23Z",
+    "version": "1.0.0"
+  },
+  "feature": {
+    "problem_statement": "The immutable v0.6.13 tag at ad52dfcbc45d71eccad1d49fbd905161af7a44b1 has successful Release Verify evidence but remains unpublished because Release Verify owns an in-workflow publish dispatch that did not produce a Publish Release run. The trusted Automatic Release coordinator must instead capture and authenticate the exact verifier run, create one deterministic publish handoff, and explicitly dispatch the unchanged publisher without any manual tag, workflow, or release action.",
+    "goals": [
+      "Automatically resume pending v0.6.13 from the successful exact-main CI run of the corrective merge without allocating v0.6.14.",
+      "Bind verification and publication to the immutable v0.6.13 source, exact CI identity, exact coordinator identity, exact verifier run and initial attempt, deterministic handoff check, and current protected-main publisher revision.",
+      "Make Automatic Release the only workflow authorized to dispatch the verifier, create the publish handoff check, and dispatch the publisher.",
+      "Preserve the existing verifier evidence production and the unchanged publisher as the sole release/package mutation path."
+    ],
+    "non_goals": [
+      "Changing, moving, recreating, or deleting v0.6.13 or any other release tag.",
+      "Creating v0.6.14 while v0.6.13 remains a recoverable pending release.",
+      "Changing publish-release.yaml behavior, its input contract, its artifact graph, or its mutation authority.",
+      "Providing a manual fallback for tag creation, workflow dispatch, release creation, or package publication.",
+      "Adding backwards-compatibility branches for the verifier-side dispatch design."
+    ],
+    "scope_in": [
+      "Update .github/workflows/automatic-release.yaml to use a 35-minute coordinator timeout, request return_run_details=true when dispatching tag-bound release.yaml, accept its direct positive workflow_run_id, immediately GET and validate that exact run to capture its positive initial run_attempt, poll only that run ID/attempt, create or reuse the deterministic handoff check, and dispatch publish-release.yaml from current protected main.",
+      "Update .github/workflows/release.yaml to remove the dispatch-publish job and all verifier-side actions/checks write permissions while retaining verification, artifacts, provenance, attestations, and required read/OIDC permissions.",
+      "Update the release handoff policy/helper and executable fake-GitHub tests for strict identity, deadline, handoff, ordering, idempotency, and recovery behavior.",
+      "Exercise the repository release-flow and CI gates, merge through a PR linked to existing issue #93, observe automatic v0.6.13 recovery, collect run/release/artifact URLs and digests, and clean the merged branch/worktree."
+    ],
+    "scope_out": [
+      "Any direct mutation of GitHub releases, packages, tags, or workflow runs outside the merged workflows.",
+      "Any deployment, Kubernetes, cloud, or GitOps desired-state change.",
+      "Any edit to .github/workflows/publish-release.yaml except an explicit separately approved correction if testing proves the existing publisher contract itself is broken."
+    ]
+  },
+  "requirements": [
+    {
+      "id": "REQ-001",
+      "priority": "MUST",
+      "statement": "A successful trusted Automatic Release run for the corrective merge's exact protected-main CI event MUST re-read release state, select the recoverable pending v0.6.13 tuple, and MUST NOT allocate or dispatch v0.6.14 while v0.6.13 is pending.",
+      "rationale": "Recovery must be automatic and forward state must not skip the already immutable, unpublished release."
+    },
+    {
+      "id": "REQ-002",
+      "priority": "MUST",
+      "statement": "Automatic Release MUST dispatch .github/workflows/release.yaml at ref v0.6.13 with the existing tag/source/CI/coordinator tuple and return_run_details=true, accept only a direct response containing a positive workflow_run_id, immediately GET that exact run ID and validate its identity before capturing its positive initial run_attempt, and MUST NOT use workflow-run listing or correlation as a fallback.",
+      "rationale": "The API-returned workflow_run_id unambiguously identifies the verifier the coordinator created, while the immediate exact-ID GET supplies and authenticates the initial attempt used for all later polling."
+    },
+    {
+      "id": "REQ-003",
+      "priority": "MUST",
+      "statement": "With coordinate.timeout-minutes set to 35, Automatic Release MUST immediately GET only the directly returned workflow_run_id, validate the exact verifier identity, capture that GET response's positive initial run_attempt, and then poll only the same run ID and captured attempt against an explicit 30-minute wall-clock deadline; on the initial GET and every poll it MUST validate run ID, run attempt, workflow name Release Verify, workflow path .github/workflows/release.yaml, workflow_dispatch event, repository, tag/head branch, and immutable source SHA, and it MUST fail closed on malformed data, identity drift, attempt rollover, API error, unsupported status, terminal non-success, or deadline expiry.",
+      "rationale": "Strict repeated validation prevents run substitution and leaves five minutes for the authenticated handoff after bounded verification."
+    },
+    {
+      "id": "REQ-004",
+      "priority": "MUST",
+      "statement": "Only after the exact verifier attempt completes successfully, Automatic Release MUST resolve the then-current protected refs/heads/main commit as publisher_revision and create or exactly reuse one successful GitHub Actions check named Release Verify Publish Handoff on the tagged source. Its deterministic external_id MUST bind verifier run/attempt, tag, source SHA, CI run/attempt, coordinator run/attempt, coordinator check-run ID, and publisher revision; its details_url MUST identify the exact verifier run attempt. Zero existing matches permits one create, one exact successful match permits reuse, and duplicates or any mismatched/forged candidate MUST fail closed.",
+      "rationale": "The handoff is the publisher's durable authorization and must be unique, tamper-evident, and auditable."
+    },
+    {
+      "id": "REQ-005",
+      "priority": "MUST",
+      "statement": "After successful verifier polling, protected-main resolution, and exact handoff creation/reuse, Automatic Release MUST explicitly dispatch the existing .github/workflows/publish-release.yaml at current main with the full existing inputs: tag, source_revision, ci_run_id, ci_run_attempt, coordinator_run, coordinator_check_run_id, release_verify_run_id, release_verify_run_attempt, release_verify_check_run_id, and publisher_revision.",
+      "rationale": "The unchanged publisher already validates this complete chain and must receive it only after verification succeeds."
+    },
+    {
+      "id": "REQ-006",
+      "priority": "MUST",
+      "statement": "Release Verify MUST remove the dispatch-publish job and MUST have no actions: write or checks: write permission at workflow or job scope; verifier read and OIDC permissions needed for exact verification, artifact upload, provenance, and attestations MUST remain available.",
+      "rationale": "Only the trusted current-main coordinator should possess handoff and workflow-dispatch authority."
+    },
+    {
+      "id": "REQ-007",
+      "priority": "MUST",
+      "statement": ".github/workflows/publish-release.yaml MUST remain unchanged and MUST remain the sole path that creates or publishes the GitHub Release, Helm chart, container image, release manifest, provenance, attestations, and related package mutations; verifier stages and their existing evidence outputs MUST remain intact.",
+      "rationale": "The correction changes authorization transport, not verified subjects or publication semantics."
+    },
+    {
+      "id": "REQ-008",
+      "priority": "MUST",
+      "statement": "The corrective flow MUST preserve immutable-tag validation, exact-SHA successful-main CI binding, global serialized Automatic Release concurrency, exact reuse on safe retries, and fail-closed handling of duplicate/racing tags, releases, coordinator checks, verifier handoff checks, and dispatch identities.",
+      "rationale": "Retries and concurrent external state changes must not create duplicate or cross-bound releases."
+    },
+    {
+      "id": "REQ-009",
+      "priority": "MUST",
+      "statement": "Executable fake-GitHub policy tests MUST cover valid and malformed direct dispatch responses containing workflow_run_id but no run_attempt; immediate exact-ID GET identity validation and positive initial-attempt capture; queued, in-progress, and successful polls; failure, cancelled, timed_out, API error, and deadline expiry; every verifier identity-field mismatch and attempt rollover; handoff create, exact reuse, duplicates, forgery, tuple/details_url binding; dispatch ordering; idempotent retry and race candidates; no v0.6.14 while v0.6.13 is pending; and exact source/CI binding.",
+      "rationale": "The security properties depend on negative-path behavior that must be executable and deterministic without live mutations."
+    },
+    {
+      "id": "REQ-010",
+      "priority": "MUST",
+      "statement": "The implementation MUST be delivered through an issue-linked PR whose required checks pass; after merge, its successful exact-main CI MUST automatically produce successful Release Verify and Publish Release runs for v0.6.13 at ad52dfcbc45d71eccad1d49fbd905161af7a44b1, whose source is verified as a descendant of Kafka fix 989799cc99a4e9577bfd100dde320a71f7e7fb9f, and publication evidence MUST include the GitHub Release, Helm, image, manifest source SHA, provenance/attestation results, URLs, and digests before issue closure and branch/worktree cleanup.",
+      "rationale": "Repository tests alone cannot prove the original production handoff failure is corrected end to end."
+    }
+  ],
+  "acceptance_criteria": [
+    {
+      "id": "AC-001",
+      "requirement_ids": ["REQ-001"],
+      "scenario": "Given v0.6.13 exists at the immutable unpublished source and no public v0.6.13 release exists, when the corrective PR merge's exact-main CI succeeds, then Automatic Release selects resume for v0.6.13 and does not create or dispatch v0.6.14."
+    },
+    {
+      "id": "AC-002",
+      "requirement_ids": ["REQ-002"],
+      "scenario": "Given the exact v0.6.13 tuple, when Automatic Release dispatches Release Verify, then the request is tag-bound with return_run_details=true, the direct response supplies a positive workflow_run_id but no assumed run_attempt, and processing continues only after an immediate GET of that exact ID validates the verifier identity and supplies a positive initial run_attempt."
+    },
+    {
+      "id": "AC-003",
+      "requirement_ids": ["REQ-003"],
+      "scenario": "Given a directly returned verifier workflow_run_id and an immediate exact-ID GET that validates the verifier and captures its positive initial run_attempt, when later exact-ID polls observe queued then in_progress then completed success with that same identity inside 30 minutes, then handoff processing begins; when the initial GET or any poll has an invalid identity field, changed attempt, API error, terminal non-success, or expired deadline, then no handoff or publisher dispatch occurs."
+    },
+    {
+      "id": "AC-004",
+      "requirement_ids": ["REQ-004"],
+      "scenario": "Given the exact verifier attempt completed successfully, when current protected main is resolved, then exactly one successful Release Verify Publish Handoff check with the full deterministic external tuple and exact-attempt details_url is created or exactly reused, while duplicates and forged candidates stop the flow."
+    },
+    {
+      "id": "AC-005",
+      "requirement_ids": ["REQ-005"],
+      "scenario": "Given successful exact verification and one authenticated handoff, when the coordinator dispatches Publish Release, then it uses current main and supplies every existing publisher input with the authenticated values in order after verifier success."
+    },
+    {
+      "id": "AC-006",
+      "requirement_ids": ["REQ-006"],
+      "scenario": "Given the corrected release.yaml, when workflow structure and effective permissions are inspected, then dispatch-publish is absent, actions/checks write permissions are absent, and the verify job retains only required read and OIDC capabilities."
+    },
+    {
+      "id": "AC-007",
+      "requirement_ids": ["REQ-007"],
+      "scenario": "Given the implementation diff, when publication contracts are reviewed, then publish-release.yaml is byte-for-byte unchanged, verifier evidence stages remain, and all release/package mutations still occur only in Publish Release."
+    },
+    {
+      "id": "AC-008",
+      "requirement_ids": ["REQ-008"],
+      "scenario": "Given retries or racing external state, when the same authenticated tuple is processed again, then exact successful state is reused without duplicate mutation and any conflicting or duplicate state fails closed."
+    },
+    {
+      "id": "AC-009",
+      "requirement_ids": ["REQ-009"],
+      "scenario": "Given the fake-GitHub fixture matrix, when the release handoff policy test target runs, then every positive path passes and every malformed, mismatched, duplicate, forged, reordered, failed, or timed-out case is rejected before publish dispatch."
+    },
+    {
+      "id": "AC-010",
+      "requirement_ids": ["REQ-010"],
+      "scenario": "Given the corrective PR is merged and required exact-main CI succeeds, when the automatic release flow settles without manual action, then Release Verify and Publish Release both succeed for v0.6.13, the public release/Helm/image/manifest and attestations bind source ad52dfcbc45d71eccad1d49fbd905161af7a44b1, the Kafka-fix ancestry is proven, URLs and digests are recorded, issue #93 is closed, and the merged branch/worktree are removed."
+    }
+  ],
+  "test_plan": [
+    {
+      "id": "TST-001",
+      "type": "unit",
+      "requirement_ids": ["REQ-002", "REQ-003"],
+      "approach": "Extend the Node fake-GitHub policy harness to inject direct dispatch responses containing workflow_run_id and optional URLs but no run_attempt, followed by getWorkflowRun results; assert positive run-ID extraction, immediate exact-ID identity validation and positive initial-attempt capture, no run-list fallback, same-ID/attempt polling, every name/path/event/repository/tag/SHA/ID/attempt mismatch, attempt rollover, API rejection, all terminal conclusions, and an injected monotonic 30-minute deadline."
+    },
+    {
+      "id": "TST-002",
+      "type": "unit",
+      "requirement_ids": ["REQ-004", "REQ-005", "REQ-008"],
+      "approach": "Use a stateful fake checks/actions API to prove one handoff create, exact reuse, duplicate and forged rejection, deterministic external_id and details_url, protected-main resolution only after verifier success, publisher dispatch only after handoff, full tuple preservation, retry idempotence, and candidate race behavior."
+    },
+    {
+      "id": "TST-003",
+      "type": "integration",
+      "requirement_ids": ["REQ-001", "REQ-006", "REQ-007", "REQ-008", "REQ-009"],
+      "approach": "Run make test-release-flow and structural workflow assertions proving resume/no-v0.6.14 planning, coordinator 35-minute timeout and return_run_details contract, absence of verifier dispatch/write permissions, preservation of verifier evidence stages, serialized concurrency, and no diff to publish-release.yaml."
+    },
+    {
+      "id": "TST-004",
+      "type": "integration",
+      "requirement_ids": ["REQ-007", "REQ-009"],
+      "approach": "Run make verify-supply-chain plus existing release graph, manifest, asset, image, chart, provenance, attestation, and publisher subject-evidence tests to detect regressions in verified artifacts and publisher authority."
+    },
+    {
+      "id": "TST-005",
+      "type": "non_functional",
+      "requirement_ids": ["REQ-003", "REQ-006", "REQ-008"],
+      "approach": "Review the workflow threat boundary and effective permissions: only the protected-main coordinator has actions/checks writes, every polling read is exact and fail-closed, deadlines are bounded, and tag/publisher inputs remain immutable and serialized."
+    },
+    {
+      "id": "TST-006",
+      "type": "e2e",
+      "requirement_ids": ["REQ-001", "REQ-005", "REQ-010"],
+      "approach": "After PR merge, observe the successful exact-main CI-triggered Automatic Release without dispatching anything manually; capture successful Automatic Release, Release Verify, and Publish Release run/attempt URLs and verify no v0.6.14 tag or run was created."
+    },
+    {
+      "id": "TST-007",
+      "type": "e2e",
+      "requirement_ids": ["REQ-007", "REQ-010"],
+      "approach": "Validate public v0.6.13 release assets, Helm OCI digest/archive, multi-architecture image digests, manifest source_revision, provenance and Sigstore attestations against ad52dfcbc45d71eccad1d49fbd905161af7a44b1; record URLs/digests and verify Kafka-fix ancestry with Git."
+    },
+    {
+      "id": "TST-008",
+      "type": "manual",
+      "requirement_ids": ["REQ-010"],
+      "approach": "Confirm required PR checks passed, issue #93 contains the final evidence, the PR merged, the issue closed, the remote feature branch was deleted, and the local .worktrees entry was removed only after merge."
+    }
+  ],
+  "traceability": [
+    {
+      "requirement_id": "REQ-001",
+      "acceptance_ids": ["AC-001"],
+      "test_ids": ["TST-003", "TST-006"],
+      "review_checks": ["Review planner state handling for pending v0.6.13 and prove no next-version allocation path is reached."],
+      "validation_checks": ["Observe v0.6.13 automatic recovery and absence of v0.6.14 after merge CI."]
+    },
+    {
+      "requirement_id": "REQ-002",
+      "acceptance_ids": ["AC-002"],
+      "test_ids": ["TST-001"],
+      "review_checks": ["Confirm tag-bound dispatch sets return_run_details=true, accepts only its direct positive workflow_run_id, immediately GETs that exact ID for identity/attempt, and has no listWorkflowRuns fallback."],
+      "validation_checks": ["Fake API proves the dispatch response need not contain run_attempt and processing continues only after an exact-ID GET validates the verifier and yields a positive initial run_attempt."]
+    },
+    {
+      "requirement_id": "REQ-003",
+      "acceptance_ids": ["AC-003"],
+      "test_ids": ["TST-001", "TST-005"],
+      "review_checks": ["Confirm the 35/30-minute timeout budget, immediate exact-ID GET attempt capture, and all identity fields checked on that GET and every later exact-ID poll."],
+      "validation_checks": ["Negative fixtures fail before handoff for drift, rollover, API errors, terminal failures, and deadline expiry."]
+    },
+    {
+      "requirement_id": "REQ-004",
+      "acceptance_ids": ["AC-004"],
+      "test_ids": ["TST-002"],
+      "review_checks": ["Compare external_id and details_url construction with the publisher's existing validation contract."],
+      "validation_checks": ["Stateful fake checks API proves exact create/reuse and rejects duplicates, mismatches, and forgery."]
+    },
+    {
+      "requirement_id": "REQ-005",
+      "acceptance_ids": ["AC-005"],
+      "test_ids": ["TST-002", "TST-006"],
+      "review_checks": ["Confirm protected main is resolved after verifier success and every existing publisher input is passed unchanged."],
+      "validation_checks": ["Fake call order and live Actions runs prove Publish Release dispatch follows successful exact handoff."]
+    },
+    {
+      "requirement_id": "REQ-006",
+      "acceptance_ids": ["AC-006"],
+      "test_ids": ["TST-003", "TST-005"],
+      "review_checks": ["Inspect workflow/job permissions and removal of the entire dispatch-publish job."],
+      "validation_checks": ["Structural tests reject any verifier actions/checks write permission or publish dispatch call."]
+    },
+    {
+      "requirement_id": "REQ-007",
+      "acceptance_ids": ["AC-007"],
+      "test_ids": ["TST-003", "TST-004", "TST-007"],
+      "review_checks": ["Require no publish-release.yaml diff and map retained verifier/publisher evidence stages."],
+      "validation_checks": ["Supply-chain tests and published v0.6.13 evidence verify unchanged artifact, provenance, and attestation behavior."]
+    },
+    {
+      "requirement_id": "REQ-008",
+      "acceptance_ids": ["AC-008"],
+      "test_ids": ["TST-002", "TST-003", "TST-005"],
+      "review_checks": ["Review concurrency group, immutable-ref checks, exact reuse rules, and all duplicate/race fail-closed branches."],
+      "validation_checks": ["Retry/race fixtures prove one authorized handoff and no duplicate release/package mutation."]
+    },
+    {
+      "requirement_id": "REQ-009",
+      "acceptance_ids": ["AC-009"],
+      "test_ids": ["TST-001", "TST-002", "TST-003", "TST-004"],
+      "review_checks": ["QA reviews the fixture matrix against every named council failure mode and confirms assertions precede dispatch."],
+      "validation_checks": ["All release-flow and supply-chain targets pass with positive and negative fixture coverage."]
+    },
+    {
+      "requirement_id": "REQ-010",
+      "acceptance_ids": ["AC-010"],
+      "test_ids": ["TST-006", "TST-007", "TST-008"],
+      "review_checks": ["Verify PR linkage to issue #93, required checks, exact source and Kafka-fix ancestry, and no manual recovery instructions."],
+      "validation_checks": ["Record live run/release/artifact evidence, close issue #93 only after success, then remove merged branch/worktree."]
+    }
+  ],
+  "quality_gates": {
+    "spec_review_required": true,
+    "testability_required": true,
+    "traceability_required": true
+  },
+  "council": {
+    "perspectives": [
+      {
+        "role": "planner",
+        "summary": "Use the protected-main Automatic Release run as the serialized authority. Budget 35 minutes for coordination and 30 minutes for exact verifier polling, consume only the directly returned workflow_run_id, immediately GET and validate that ID to capture its initial attempt, resolve publisher main after success, then create/reuse the tuple-bound handoff and dispatch the unchanged publisher."
+      },
+      {
+        "role": "security",
+        "summary": "Remove verifier actions/checks writes and its dispatch job; accept only the direct verifier ID, capture the initial attempt from an immediate identity-validating exact-ID GET, revalidate ID/attempt/workflow/repository/tag/SHA every poll, fail closed on every drift/error/non-success, bind handoff external_id and details_url, and keep release/package writes solely in the publisher."
+      },
+      {
+        "role": "tech_lead_qa",
+        "summary": "Require executable fake-GitHub coverage for dispatch response parsing, all poll states and identity mismatches, attempt rollover, timeout/API errors, handoff create/reuse/duplicates/forgery, ordering/idempotence/races, no v0.6.14, exact SHA, plus live post-merge v0.6.13 evidence."
+      }
+    ],
+    "consensus_summary": "Proceed with a high-risk minimal workflow correction: move the existing publish handoff and dispatch from Release Verify into Automatic Release after consuming the direct workflow_run_id, capturing its initial attempt through an immediate identity-validating exact-ID GET, and polling only that same ID/attempt; leave publish-release.yaml unchanged; prove all fail-closed paths in fake APIs before merging; and let the corrective merge's successful exact-main CI automatically recover v0.6.13 without manual actions.",
+    "open_questions": []
+  }
+}

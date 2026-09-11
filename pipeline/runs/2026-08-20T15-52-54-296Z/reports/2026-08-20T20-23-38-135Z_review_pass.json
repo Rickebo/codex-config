@@ -1,0 +1,22 @@
+{
+  "stage": "review",
+  "status": "pass",
+  "summary": "Independent security review is GO for repository-side code at 612446f; the checker and workflows are fail-closed for the reviewed trust-boundary paths.",
+  "changed_files": [],
+  "validation": [
+    "Exact head 612446f reviewed",
+    "No blocking repository-side findings",
+    "Hosted validate check passes"
+  ],
+  "blockers": [
+    "External platform evidence for ephemeral runners, fork canary, cleanup, egress, and trusted release-pool isolation is still required before issue closure."
+  ],
+  "next_action": "Run independent QA and hosted validation at exact head 612446f.",
+  "route_to": "test",
+  "risk_level": "critical",
+  "independent_lanes": [
+    "Security workflow review",
+    "External platform evidence audit"
+  ],
+  "requires_council": true
+}

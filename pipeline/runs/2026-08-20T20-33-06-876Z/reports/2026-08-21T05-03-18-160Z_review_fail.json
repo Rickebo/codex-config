@@ -1,0 +1,34 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "The retained Kubernetes startup test was functionally correct but flaky under concurrent test processes because it shared the production lock path and used timing-based overlap detection.",
+  "changed_files": [
+    "scripts/metamcp/bootstrap.sql",
+    "scripts/metamcp/tests/test-kubernetes-child-startup.sh"
+  ],
+  "validation": [
+    "Independent review passed wrapper, argv, environment, prefetch-failure, and serial checks.",
+    "Independent review observed 11 failures in 40 concurrent test runs.",
+    "The live cluster was not mutated by this review."
+  ],
+  "blockers": [
+    "Replace sleep-based overlap detection with deterministic synchronization and isolate concurrent test processes before approval."
+  ],
+  "next_action": "Route to code: add a test-level lock and FIFO barrier so both persistent children announce startup before release, then rerun serial and concurrent tests.",
+  "route_to": "code",
+  "risk_level": "critical",
+  "independent_lanes": [
+    "Bootstrap SQL command contract",
+    "Deterministic Kubernetes child startup regression coverage"
+  ],
+  "requires_council": true,
+  "issues": [
+    {
+      "id": "REV-K8S-FLAKE",
+      "title": "Startup regression test is flaky under concurrent invocations",
+      "severity": "high",
+      "details": "The test used sleeps and the production global lock path, allowing separate test processes to interfere. A FIFO barrier and test-level serialization are required.",
+      "owner_stage": "code"
+    }
+  ]
+}

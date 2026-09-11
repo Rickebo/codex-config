@@ -1,0 +1,41 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Issue #125 implementation is complete on d70f580: ProjectV2 writes use the persisted board-owner App installation provider, static projection-token plumbing is removed, and refresh/rate-limit/replay tests are included.",
+  "changed_files": [
+    ".codicarium/dev/values.yaml",
+    "README.md",
+    "cmd/orchestrator-server/main.go",
+    "docs/deployment.md",
+    "docs/operator-quickstart.md",
+    "internal/githubproject/app_token.go",
+    "internal/githubproject/client.go",
+    "internal/githubproject/client_test.go",
+    "internal/githubproject/installation_projection_test.go",
+    "internal/server/config.go",
+    "internal/server/github_observer.go",
+    "internal/server/github_projector.go",
+    "internal/server/github_projector_owner_test.go",
+    "internal/store/github_projects.go",
+    "tools/check_operator_quickstart.py"
+  ],
+  "validation": [
+    "Focused and full Go tests passed",
+    "Go race tests and go vet passed",
+    "OpenAPI, Helm lint/contract/validate, docs checks, and static-token scan passed",
+    "Full make ci passed on exact commit d70f580"
+  ],
+  "blockers": [
+    "Independent review must confirm the permission allowlist, retry classifications, and board-owner fail-closed behavior.",
+    "Live App permission and DEV write/readback evidence remains required before closure."
+  ],
+  "next_action": "Open a draft PR from fix/125-installation-projection-token and run independent review against the exact head.",
+  "route_to": "review",
+  "risk_level": "high",
+  "independent_lanes": [
+    "Provider/client auth and retry review",
+    "Server board-owner resolution and replay review",
+    "Rendered deployment and static-token validation"
+  ],
+  "requires_council": true
+}

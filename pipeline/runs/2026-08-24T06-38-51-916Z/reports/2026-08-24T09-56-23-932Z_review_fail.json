@@ -1,0 +1,35 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Prior CSRF and forged-cookie findings are fixed. One poll/cancel expiry race can recreate a per-flow limiter entry after cleanup, allowing gradual unbounded growth. Current head CI is green.",
+  "changed_files": [],
+  "validation": [
+    "Login now requires strict bootstrap CSRF, same-origin Origin, and JSON content type before credentials are accepted.",
+    "Quick Connect status is POST-only with strict CSRF/origin; GET cannot reach authentication or create a session.",
+    "Invalid cookies are looked up before per-flow limiter allocation and terminal paths delete limiter entries.",
+    "Current head checks are all green; the earlier discovery timeout was unrelated and the identical-SHA PR run passed."
+  ],
+  "blockers": [
+    "A poll can pass get(), then cancel/prune removes the flow, then AllowWith allocates its limiter key before beginPoll() returns nil. That nil path does not delete the key, defeating central cleanup under concurrent requests.",
+    "Current head checks pass. Earlier run 32710591919 had an unrelated discovery timeout; identical-SHA run 32710595535 passed."
+  ],
+  "next_action": "Route to code: delete the limiter key when beginPoll returns nil and add a concurrent cancel/expiry poll regression test; then proceed to test.",
+  "route_to": "code",
+  "risk_level": "high",
+  "issues": [
+    {
+      "id": "REV-004",
+      "title": "Poll/cancel race recreates cleaned limiter key",
+      "severity": "high",
+      "details": "quickConnectStatus calls get(), then AllowWith(), then beginPoll(). If cancel or prune removes the flow between those calls, beginPoll returns nil but the newly allocated quick_connect_poll:<idHash> entry remains. Repeated concurrent abandon/poll races grow limiter memory. Delete on the nil path and test concurrency.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REV-005",
+      "title": "Earlier race timeout was unrelated",
+      "severity": "low",
+      "details": "Current head b1b55c1 has all checks passing. Earlier push run 32710591919 timed out in internal/discovery; identical-SHA PR run 32710595535 passed, so no current CI blocker remains.",
+      "owner_stage": "test"
+    }
+  ]
+}

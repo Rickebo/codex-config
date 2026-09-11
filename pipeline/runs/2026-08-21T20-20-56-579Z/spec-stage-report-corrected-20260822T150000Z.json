@@ -1,0 +1,34 @@
+{
+  "stage": "spec",
+  "status": "pass",
+  "summary": "Corrected spec sequencing passes strict checks and authorizes target-only GitOps code, manifests, policies, and tooling; downstream restore, migration, validation, deployment, credential, and local-switch gates remain enforced.",
+  "changed_files": [
+    "feature-spec.json",
+    "spec-check-corrected-20260822T150000Z.json",
+    "council-consensus-corrected-20260822T150000Z.json",
+    "spec-stage-report-corrected-20260822T150000Z.json"
+  ],
+  "validation": [
+    "Strict feature-spec checker passed with no errors or warnings.",
+    "Requirements=14, MUST=12, acceptance criteria=8, tests=12, traceability rows=14.",
+    "Council has three required perspectives and consensus decision pass.",
+    "Spec pass scope is target-only GitOps code/manifests/tooling; ExternalSecret refs and least-privilege RBAC may be coded without values.",
+    "Provider common-cutoff/WAL/artifact SHA evidence is sequenced before restore/migration/cutover.",
+    "NAS ACL/capacity, disposable restore, 70/85% alerts, logical migration, fresh credentials, and reauthentication remain downstream gates.",
+    "Historical PVCs are explicitly excluded and forbidden to inspect, reuse, delete, or mutate."
+  ],
+  "blockers": [],
+  "next_action": "Proceed to code for target-only GitOps artifacts; do not approve spec_to_code until the required high-risk gate is approved.",
+  "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-21T20-20-56-579Z/feature-spec.json",
+  "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-08-21T20-20-56-579Z/spec-check-corrected-20260822T150000Z.json",
+  "council_file": "/home/rickebo/.codex/pipeline/runs/2026-08-21T20-20-56-579Z/council-consensus-corrected-20260822T150000Z.json",
+  "risk_level": "high",
+  "requires_council": true,
+  "independent_lanes": [
+    "target-only GitOps code/manifests/tooling",
+    "provider and restore evidence before downstream data gates",
+    "NAS/storage/backup/validation gates",
+    "identity/RBAC and fresh credential enablement gates"
+  ],
+  "route_to": "code"
+}

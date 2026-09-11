@@ -1,0 +1,30 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Security review found a release tag-push authentication regression and workflow-trust checker gaps that could accept unsafe permission, checkout, or indirect command changes.",
+  "changed_files": [],
+  "validation": [
+    "Exact head f5afaaa reviewed",
+    "Hosted PR creation verified as draft #149"
+  ],
+  "blockers": [
+    "Release tag pushes need explicit temporary authentication after persist-credentials=false.",
+    "Trust checker must validate release permissions, every checkout, and actual PR make target commands rather than text/comments."
+  ],
+  "next_action": "Fix the review findings in the implementation worktree and return to review.",
+  "route_to": "code",
+  "risk_level": "critical",
+  "independent_lanes": [
+    "Release tag authentication",
+    "Release permission allowlist",
+    "All-checkout credential enforcement",
+    "Structured PR command enforcement"
+  ],
+  "requires_council": true,
+  "issues": [
+    {"id":"REV-123-001","title":"Tag pushes lose authentication with credential persistence disabled","severity":"high","details":"Release pushes tags with plain git push after checkout persist-credentials=false; use explicit temporary token auth and cleanup.","owner_stage":"code"},
+    {"id":"REV-123-002","title":"Release permission map is not checked","severity":"medium","details":"Trust checker must enforce exact release permissions and reject additional authority.","owner_stage":"code"},
+    {"id":"REV-123-003","title":"Only first checkout is checked","severity":"medium","details":"Require every checkout to disable credential persistence or reject multiple checkouts.","owner_stage":"code"},
+    {"id":"REV-123-004","title":"PR command check is textual and bypassable","severity":"medium","details":"Parse run steps and enforce actual make ci-pr target, rejecting indirect privileged ci invocation and comment-only matches.","owner_stage":"code"}
+  ]
+}

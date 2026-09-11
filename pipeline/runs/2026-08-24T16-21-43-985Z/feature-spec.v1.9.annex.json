@@ -1,0 +1,312 @@
+{
+  "schema": "codicarium.issue93-spec-annex/v1",
+  "generated_at": "2026-08-25T05:30:00Z",
+  "baselines": {
+    "codicarium/deployment-controller": "d3565f534b2f64585c3e15e35d8d645449f4f09d",
+    "codicarium/codicarium-actions": "9545b5a66498f67667e57d021507ac060fd016b6",
+    "codicarium/runner-config": "9625e442a12c721e89250812f3d079b09833ccb0",
+    "codicarium/vault-config": "2ddfb54f75cfdbf21529433e105880bec5fc1b1e",
+    "codicarium/app-config": "e085a399bedc830b537431e3bcd5e41b677c2812",
+    "codicarium/infra": "40073c068a9cf8ff4c1e625b97e09fda31b40637"
+  },
+  "capability_protocol": {
+    "base_url": "https://artifact-capability.artifact-capability.svc.cluster.local:8443",
+    "oidc_issuer": "https://token.actions.githubusercontent.com",
+    "mint_audience": "codicarium-artifact-capability",
+    "token_audience": "codicarium-artifact-capability-api",
+    "endpoints": {
+      "mint": {
+        "method": "POST",
+        "path": "/v1/capabilities",
+        "request_schema": "artifact-capability-api-v1.schemas.json#/$defs/mint_request",
+        "response_schema": "artifact-capability-api-v1.schemas.json#/$defs/mint_response"
+      },
+      "upload": {
+        "method": "PUT",
+        "path": "/v1/object",
+        "operation": "create",
+        "required_headers": {
+          "If-None-Match": "*",
+          "Content-Type": "application/zstd",
+          "X-Codicarium-Object-Key": "exact token object_key",
+          "Content-Length": "exact decimal bytes"
+        },
+        "success_status": 201
+      },
+      "read": {
+        "method": "GET",
+        "path": "/v1/object",
+        "operation": "read",
+        "ranges": false,
+        "redirects": false
+      },
+      "readback": {
+        "method": "POST",
+        "path": "/v1/object/readback",
+        "operation": "readback",
+        "response_schema": "artifact-capability-api-v1.schemas.json#/$defs/readback_response"
+      }
+    },
+    "token_ttl_seconds": 1800,
+    "oidc_max_age_seconds": 300,
+    "clock_skew_seconds": 30,
+    "jwks_cache_max_seconds": 60,
+    "purpose_limits": {
+      "deployment-controller-verified-image": {
+        "max_compressed_bytes": "1073741824",
+        "max_uncompressed_bytes": "4294967296"
+      },
+      "deployment-controller-verified-chart": {
+        "max_compressed_bytes": "67108864",
+        "max_uncompressed_bytes": "268435456"
+      },
+      "deployment-controller-signed-authorization": {
+        "max_compressed_bytes": "67108864",
+        "max_uncompressed_bytes": "268435456"
+      }
+    },
+    "conditional_create": "A durable linearizable jti reservation and backend-native atomic create-if-absent are both required; HEAD followed by unconditional PUT is forbidden.",
+    "ambiguity": "Any unprovable mint, reserve, create, readback, dispatch, or receipt write is UNKNOWN_MANUAL; no automatic second mint, upload, dispatch, overwrite, delete, retag, or replacement is allowed.",
+    "key_rotation": "Ed25519 only; kid is RFC 7638 public-JWK thumbprint; one minting key; publish new verification key >=300 seconds before issuance; retain retired verification key until 30 seconds after greatest exp; unknown kid gets one JWKS refresh then fails; emergency revocation stops mint and redemption."
+  },
+  "archive_profile": {
+    "tar": "Single POSIX ustar stream; root ASCII regular files only; unsigned-byte path sort; mode 0644; uid/gid/mtime 0; empty uname/gname/link/prefix; typeflag 0; canonical octal/checksum; 512-byte zero padding; exactly two zero EOF blocks; no trailing bytes, links, directories, devices, FIFOs, sockets, sparse, PAX/GNU extensions, duplicate, absolute, traversal, backslash, control, or non-ASCII names.",
+    "zstd": "One zstd frame, level 19, single-threaded, content size and frame checksum present, no dictionary, skippable frame, concatenated frame, or trailing bytes. Shared implementation pins codec source and OCI digest and must reproduce the checked-in byte fixture.",
+    "fixture_tar": {
+      "byte_length": 3072,
+      "sha256": "fb7a260f46a361d9b90bf6371824f0b62dcabf99be09ab984a4fb6fcaeebda31"
+    },
+    "fixture_tar_zst": {
+      "byte_length": 102,
+      "sha256": "5858457a000d6f7334053b51ba4f1106f1ee1e683ffc6bcf461af0fe9b3dc64b"
+    },
+    "fixture_generator": {
+      "tar": "GNU tar 1.35 canonical flags",
+      "zstd": "zstd 1.5.7 -19 -T1 --check --content-size",
+      "local_zstd_sha256": "6b799c822798547e33f3d928d04492ca4814d4b45088786b73d700f0cc0d905a"
+    }
+  },
+  "history_contract": {
+    "terminations": [
+      "EXHAUSTED",
+      "CHECK_SUITE_HORIZON",
+      "MALFORMED"
+    ],
+    "decision": "More than one exact external_id is FAIL_DUPLICATE. One exact valid row is PASS. Zero exact rows plus >=1000 distinct check_suite.id values is UNKNOWN_MANUAL/CHECK_SUITE_HORIZON with zero mutations. Zero exact rows plus <1000 suites and exhausted pagination is PASS_ABSENT.",
+    "every_request": "filter=all&per_page=100; sequential pagination; repeated IDs or inconsistent duplicate rows are MALFORMED."
+  },
+  "old_workflow_retirement": {
+    "old_workflows": [
+      {
+        "id": "341194538",
+        "name": "Automatic Release",
+        "path": ".github/workflows/automatic-release.yaml"
+      },
+      {
+        "id": "318365668",
+        "name": "Release Verify",
+        "path": ".github/workflows/release.yaml"
+      },
+      {
+        "id": "318365667",
+        "name": "Publish Release",
+        "path": ".github/workflows/publish-release.yaml"
+      }
+    ],
+    "pre_merge_fence": [
+      "Disable all three old workflow IDs.",
+      "Remove deployment-controller access to CODICARIUM_PACKAGE_REGISTRY_USERNAME, CODICARIUM_PACKAGE_REGISTRY_PASSWORD, NEXUS_USERNAME, NEXUS_PASSWORD, ACTIONS_STORAGE_OVH_ACCESS_KEY_ID, and ACTIONS_STORAGE_OVH_ACCESS_KEY_SECRET; revoke the underlying old identities.",
+      "Remove deployment-controller from the general codicarium runner group and bind new CI/release runner groups to exact new workflow paths.",
+      "Restrict all new Vault/OIDC audiences and roles to the v2 workflow paths, refs/heads/main, repository ID 1303901324, and the recorded runner-group IDs."
+    ],
+    "merge_change": "Delete the three old workflow paths from default main and add the three v2 paths; old IDs remain disabled.",
+    "proof": "GitHub API reports disabled_manually for old IDs, old paths are absent at main, old secrets are unavailable to the repository, old general runner routing is absent, bounded negative dispatch and rerun calls cannot create an executing run, and no old output is accepted."
+  },
+  "platform_ownership": {
+    "codicarium/codicarium-actions": [
+      "artifact-capability/openapi.yaml",
+      "artifact-capability/schemas/",
+      "artifact-capability/client/",
+      "artifact-capability/archive/",
+      "tests/artifact-capability-test.sh"
+    ],
+    "codicarium/vault-config": [
+      "config/jwt-dev-auth.json role codicarium-dev-artifact-capability",
+      "config/policies/codicarium-dev-artifact-capability-read.hcl",
+      "exact paths codicarium/dev/artifact-capability/object-store-access-key-id and object-store-secret-access-key",
+      "non-exportable signing or transit key policy",
+      "new v2 publisher short-lived Nexus role"
+    ],
+    "codicarium/runner-config": [
+      "deployment-charts/artifact-capability/",
+      "Runner Platform v2 scale set codicarium-v2-artifact-capability",
+      "runner group codicarium-ci-artifact-capability",
+      ".codicarium/dev/deploy.yaml component artifact-capability",
+      "internal ClusterIP/TLS/standard NetworkPolicy/ServiceMonitor/PrometheusRule/PDB/placement"
+    ],
+    "codicarium/app-config": [
+      "bootstrap Application wiring only if the deployment-controller materializer cannot activate the runner-config component; no workload chart, values, descriptor, or secret ownership"
+    ],
+    "codicarium/infra": [
+      "centrally owned DeploymentProfile artifact-capability-path-helm",
+      "DeploymentGrant runner-config-dev component artifact-capability for repository ID 1303372884",
+      "exact namespace/application/release/chart-path authorization and admission policy",
+      "at least three eligible schedulable nodes with verified N-1 capacity before broker three-replica rollout"
+    ],
+    "organization administration": [
+      "dedicated runner-group IDs and exact workflow allowlist",
+      "old workflow disablement",
+      "legacy organization-secret repository visibility removal"
+    ],
+    "codicarium/deployment-controller": [
+      "v2 workflows and helpers",
+      "exact full-SHA shared-client pin",
+      "candidate evidence semantic validator",
+      "retirement guards",
+      "live-evidence validator"
+    ]
+  },
+  "service_runtime": {
+    "namespace": "artifact-capability",
+    "application": "artifact-capability-codicarium",
+    "release": "artifact-capability",
+    "service": "artifact-capability",
+    "app_project": "repo-runner-config-dev",
+    "deployment_profile": "artifact-capability-path-helm",
+    "deployment_grant": "runner-config-dev",
+    "component_id": "artifact-capability",
+    "chart_path": "deployment-charts/artifact-capability",
+    "endpoint": "https://artifact-capability.artifact-capability.svc.cluster.local:8443",
+    "exposure_class": "no-ingress",
+    "service_type": "ClusterIP only; no Ingress, HTTPRoute, LoadBalancer, NodePort, external-DNS, or externally resolvable hostname",
+    "tls": "cert-manager internal certificate with DNS SAN artifact-capability.artifact-capability.svc.cluster.local; TLS 1.3 preferred and TLS 1.2 minimum; no plaintext listener",
+    "infrastructure_prerequisite": "Before three replicas, PDB or N-1 validation, infra MUST provide at least three eligible schedulable nodes and prove enough allocatable capacity on the remaining two after loss of any one node; release traffic remains disabled until this passes.",
+    "replicas": 3,
+    "placement": "required hostname anti-affinity and topologySpreadConstraints maxSkew=1 DoNotSchedule",
+    "pdb": "minAvailable=2",
+    "network": "Standard Kubernetes NetworkPolicy default deny. Candidate namespace arc-runners-v2-untrusted egress allows DNS TCP/UDP 53 only to ipBlock 10.43.0.10/32 and TCP 8443 only through one NetworkPolicy to peer containing both namespaceSelector kubernetes.io/metadata.name=artifact-capability and podSelector app.kubernetes.io/name=artifact-capability. Separate namespace-only or pod-only peers are forbidden because peer entries are ORed. All other candidate egress is denied, including other pods in the artifact-capability namespace, same-labeled pods in other namespaces, Nexus, public Internet, other RFC1918, CGNAT, metadata, link-local, multicast and reserved destinations; no implementation-specific FQDN policy or resolved-IP exception is allowed. Broker egress is separately limited to DNS, Vault, the exact OVH S3 endpoint, GitHub OIDC/JWKS and required Kubernetes API identity only; no general Internet or registry egress.",
+    "candidate_runner": {
+      "namespace": "arc-runners-v2-untrusted",
+      "scale_set": "codicarium-v2-artifact-capability",
+      "runner_group": "codicarium-ci-artifact-capability",
+      "labels": [
+        "self-hosted",
+        "Linux",
+        "X64",
+        "artifact-capability",
+        "codicarium-v2-artifact-capability"
+      ],
+      "runtime_class": "kata-clh-runtime-rs",
+      "min_runners": 0,
+      "max_runners": 1
+    },
+    "observability": "ServiceMonitor plus alerts for mint/redeem/read errors, UNKNOWN_MANUAL, replay, pending ledger age, storage latency/error, key expiry, JWKS refresh, saturation, replica availability, and certificate expiry; audit log records why without tokens or credentials.",
+    "availability": "Only after the three-node/capacity prerequisite passes, three replicas use hard node separation and PDB minAvailable=2; node-loss conformance proves two ready replicas, mint/read continuity, no token reuse, no pending-state promotion, and documented RTO/RPO.",
+    "rollback": "Fail closed: disable v2 workflows and revert Git desired state to the last reviewed runner-config chart. Never re-enable old workflows, restore old credentials, or resume v0.6.13."
+  },
+  "follow_up_order": [
+    "issue-93-corrective-pr-merged-and-old-workflows-retired",
+    "v0.6.14-public-release-and-full-live-evidence-verified",
+    "issue-98-v0.6.8-recovery-success-and-eight-assets-read-back",
+    "pr-99-rebased-on-current-main",
+    "pr-99-five-checks-at-one-head",
+    "pr-99-merged",
+    "recover-release-v068.yaml-absent-at-pr-99-merge-sha",
+    "issue-98-closed",
+    "pr-94-rebased-on-resulting-main",
+    "pr-94-five-checks-at-one-head",
+    "pr-94-merged"
+  ],
+  "files": [
+    {
+      "path": "fixtures-v1.9/artifact-capability-api-v1.schemas.json",
+      "byte_length": 10626,
+      "sha256": "4bd321fb68e8f0c6bc3f965b202554bd73c6c2cecc0649acbe33be2c23a855a1"
+    },
+    {
+      "path": "fixtures-v1.9/candidate-evidence-v1.schema.json",
+      "byte_length": 8921,
+      "sha256": "390a309d45636080a71ddd137476a1165c1aac7636ee621aedea4b7bfa05d684"
+    },
+    {
+      "path": "fixtures-v1.9/publisher-dispatch-receipt-v1.schema.json",
+      "byte_length": 4529,
+      "sha256": "81116d79371de84be178e68f3873c090410e4df21c479d3768ccd60e03a61ee2"
+    },
+    {
+      "path": "fixtures-v1.9/publisher-mutation-receipt-v1.schema.json",
+      "byte_length": 14359,
+      "sha256": "3bc5c3ab56dcf6cb7d66afcf84de105c41df05e79ad6728809586a32a8ab8835"
+    },
+    {
+      "path": "fixtures-v1.9/release-live-evidence-v1.schema.json",
+      "byte_length": 31867,
+      "sha256": "3623b563ec444b430cfb5bd499f9b2cd300fa2816b5f0fb3caff8733f86e12e3"
+    },
+    {
+      "path": "fixtures-v1.9/workflow-permissions-v1.json",
+      "byte_length": 12254,
+      "sha256": "8048b3ddccdda2d1edb212dcaf0a9f8abc4cbd20c281d1caacd791f2b720cf20"
+    },
+    {
+      "path": "fixtures-v1.9/history-horizon-1000.json",
+      "byte_length": 36043,
+      "sha256": "20a4899fa5a001b9a45dca99122a31843a64b6c8542ca287d9299a1297a80a15"
+    },
+    {
+      "path": "fixtures-v1.9/canonical-identity-fixtures-v1.json",
+      "byte_length": 1735,
+      "sha256": "c2f42c8bd8fac08c385a7a570d52bd02ef7a5e836654652dccb3ba82a0c205a1"
+    },
+    {
+      "path": "fixtures-v1.9/artifact-capability-jws-v1.fixture.json",
+      "byte_length": 5125,
+      "sha256": "60adbdd526c48959526583c3433406d1ad2a2c6b6124411e8b2bf587f064ec1c"
+    },
+    {
+      "path": "fixtures-v1.9/candidate-evidence-v1.fixture.json",
+      "byte_length": 2574,
+      "sha256": "028ab25e001d3088f777f0d08eaea88198257569e10fdd22c142c1f81c636464"
+    },
+    {
+      "path": "fixtures-v1.9/publisher-dispatch-receipt-v1.fixture.json",
+      "byte_length": 1713,
+      "sha256": "fc5d1ea0669655c54243c9449a1a9a32eb63f72ecc752a9c26262a167d2a260f"
+    },
+    {
+      "path": "fixtures-v1.9/publisher-mutation-receipt-v1.fixture.json",
+      "byte_length": 1624,
+      "sha256": "badb14fa9b63047b6a55eb81b9b20c09d8f18e3e9d836fa4d7092602cf0ce029"
+    },
+    {
+      "path": "fixtures-v1.9/release-live-evidence-v1.fixture.json",
+      "byte_length": 18724,
+      "sha256": "158a5775111990db7dc1598fe5d63c1cb32c01e4bb6f7e9fedd54bd945079f4a"
+    },
+    {
+      "path": "fixtures-v1.9/follow-up-order-v1.json",
+      "byte_length": 689,
+      "sha256": "33c509fe37cc2972121462ad593efacbf20572192b8ae947df8ef154f8e0914f"
+    },
+    {
+      "path": "fixtures-v1.9/canonical-archive-v1.tar",
+      "byte_length": 3072,
+      "sha256": "fb7a260f46a361d9b90bf6371824f0b62dcabf99be09ab984a4fb6fcaeebda31"
+    },
+    {
+      "path": "fixtures-v1.9/canonical-archive-v1.tar.zst",
+      "byte_length": 102,
+      "sha256": "5858457a000d6f7334053b51ba4f1106f1ee1e683ffc6bcf461af0fe9b3dc64b"
+    },
+    {
+      "path": "fixtures-v1.9/archive-input/alpha.txt",
+      "byte_length": 6,
+      "sha256": "b6a98d9ce9a2d9149288fa3df42d377c3e42737afdcdaf714e33c0a100b51060"
+    },
+    {
+      "path": "fixtures-v1.9/archive-input/beta.txt",
+      "byte_length": 5,
+      "sha256": "f2c82decdd7181cf98945929a62598db7e6b477e11f6e0eb0ae97020eff151ad"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Luna implemented access-controller#92 at exact local head b61bb76d. Metrics scrape existing Runner.Health LastSuccessAt and Elector Leader state directly, add no competing lifecycle state, and remain label-free and deployment-inert.",
+  "changed_files": [
+    "README.md",
+    "docs/observability.md",
+    "internal/metrics/metrics.go",
+    "internal/metrics/metrics_test.go",
+    "internal/runtime/runtime.go",
+    "internal/runtime/runtime_test.go"
+  ],
+  "validation": [
+    "go test ./... -count=1 passed",
+    "go test -race ./... -count=1 passed",
+    "go vet ./... passed",
+    "Focused metrics and runtime tests repeated 20 times passed",
+    "Diff and scope checks passed; worktree is clean",
+    "No chart, .codicarium, ServiceMonitor, PrometheusRule, provider, authorization, deployment, or live change exists"
+  ],
+  "blockers": [
+    "Exact local head requires independent Luna correctness/security review before push"
+  ],
+  "next_action": "Route b61bb76d57bc3ecbab244108fb6fcc74af142e1d to independent Luna review against e3acec42; do not push yet.",
+  "route_to": "review",
+  "risk_level": "medium"
+}

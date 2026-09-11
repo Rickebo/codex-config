@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://codicarium.local/v2.5/admin.v2.5",
+  "title": "admin.v2.5",
+  "type": "object",
+  "required": [
+    "requester",
+    "executor",
+    "one_use",
+    "audit_required",
+    "revocation_required"
+  ],
+  "properties": {
+    "requester": {
+      "type": "string",
+      "minLength": 1
+    },
+    "approver": {
+      "type": "string",
+      "minLength": 1
+    },
+    "approver_one": {
+      "type": "string",
+      "minLength": 1
+    },
+    "approver_two": {
+      "type": "string",
+      "minLength": 1
+    },
+    "executor": {
+      "type": "string",
+      "minLength": 1
+    },
+    "approval_ttl_seconds": {
+      "type": "integer"
+    },
+    "credential_ttl_seconds": {
+      "type": "integer"
+    },
+    "one_use": {
+      "type": "boolean"
+    },
+    "audit_required": {
+      "type": "boolean"
+    },
+    "revocation_required": {
+      "type": "boolean"
+    },
+    "forbidden_operations": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
+  "additionalProperties": false
+}

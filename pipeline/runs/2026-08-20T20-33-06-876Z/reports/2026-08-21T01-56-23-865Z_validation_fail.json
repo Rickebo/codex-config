@@ -1,0 +1,41 @@
+{
+  "stage": "validation",
+  "status": "fail",
+  "summary": "MetaMCP 2.4.22, PostgreSQL, registry bootstrap, OAuth endpoint configuration, and five child-server lanes validate, but Loki and Kubernetes do not expose tools in the live homelab endpoint.",
+  "changed_files": [],
+  "validation": [
+    "PR #440 merged as c7f409922f85efc900b27f61f20ac1a355380771; Argo metamcp is Synced/Healthy and PostgreSQL runs the verified amd64 digest.",
+    "Protected bootstrap completed successfully and the seven requested servers are registered with ACTIVE Observability mappings.",
+    "Streamable HTTP initialize and tools/list succeeded with 72 tools; ArgoCD, GitHub-p, GitHub-p_Actions, Prometheus, and Tempo prefixes are present.",
+    "Prometheus health_check returned healthy with homelab URL http://prometheus.observability.svc.cluster.local:80.",
+    "Safe calls succeeded for Tempo attribute discovery, ArgoCD application listing, GitHub identity, and GitHub Actions workflow listing.",
+    "Loki is absent because grafana-mcp is not deployed; Kubernetes is absent because its child reports no current kube context despite projected read-only RBAC.",
+    "Argo Application grafana-mcp is now present but InvalidSpec because default AppProject does not allow https://grafana-community.github.io/helm-charts."
+  ],
+  "blockers": [
+    "A durable GitOps fix is required for the Grafana Helm repository allowlist and Kubernetes child environment/in-cluster startup.",
+    "Public mcp.rickebo.com and auth.rickebo.com DNS are unresolved from this workstation; ChatGPT OAuth cannot be externally verified until DNS/AuthentiK exposure is live."
+  ],
+  "next_action": "Route to code for the minimal child-server/AppProject remediation, merge and reconcile it, then rerun all seven server discovery and safe-call checks before completing OAuth validation.",
+  "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T20-33-06-876Z/spec.json",
+  "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T20-33-06-876Z/spec-check.json",
+  "council_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T20-33-06-876Z/council.json",
+  "requires_council": true,
+  "independent_lanes": [
+    "Grafana MCP AppProject and service reconciliation",
+    "Kubernetes child in-cluster startup",
+    "MCP safe-call validation",
+    "Public OAuth DNS and Authentik boundary"
+  ],
+  "route_to": "code",
+  "risk_level": "critical",
+  "issues": [
+    {
+      "id": "#441",
+      "title": "Restore homelab Loki and Kubernetes MetaMCP child discovery",
+      "severity": "high",
+      "details": "The requested child servers are registered but do not contribute tools in the live endpoint; the issue tracks the durable GitOps remediation.",
+      "owner_stage": "code"
+    }
+  ]
+}

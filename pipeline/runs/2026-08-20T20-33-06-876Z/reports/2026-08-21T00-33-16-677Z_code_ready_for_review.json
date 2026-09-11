@@ -1,0 +1,67 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Homelab MetaMCP GitOps changes are implemented and locally validated; the runtime-only credential transfer, merge/reconcile, OAuth redirect update, and live seven-server protocol checks remain for later pipeline stages.",
+  "changed_files": [
+    "charts/metamcp/values.yaml",
+    "charts/metamcp/templates/networkpolicy.yaml",
+    "argocd/apps/metamcp-app.yaml",
+    "argocd/apps/grafana-mcp-app.yaml",
+    "charts/grafana-mcp/values.yaml",
+    "observability/values.yaml",
+    "scripts/metamcp/bootstrap.sql",
+    "scripts/metamcp/README.md"
+  ],
+  "validation": [
+    "Commit b8460fd pins MetaMCP 2.4.22 and PostgreSQL to immutable digests.",
+    "helm lint passed for charts/metamcp and observability.",
+    "MetaMCP render contains the Traefik-only NetworkPolicy and immutable images.",
+    "Grafana MCP 0.20.0 render uses image 1.1.0, the runtime token Secret, and --disable-write.",
+    "Tempo render enables query_frontend.mcp_server.enabled and Grafana targets the live Tempo service.",
+    "Disposable PostgreSQL bootstrap passed twice with protected environment variables and redacted output.",
+    "git diff --check and the scoped credential-pattern scan passed; graphify-out remains unstaged.",
+    "Draft PR #439 references issue #435 and contains no runtime credentials."
+  ],
+  "blockers": [
+    "Runtime-only Grafana Viewer, ArgoCD readonly, and GitHub credential transfer still need live provisioning after review.",
+    "The PR must merge and explicit homelab Argo reconciliation must complete before live protocol validation.",
+    "AuthentiK needs the public MetaMCP callback URI and the public DNS/OAuth metadata flow still needs end-to-end proof.",
+    "Per-server discovery, tool lists, safe calls, and target-isolation checks are pending the live registry bootstrap."
+  ],
+  "next_action": "Review the committed GitOps diff and then proceed through the pipeline review and test stages before live credential provisioning and reconciliation.",
+  "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T20-33-06-876Z/spec.json",
+  "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T20-33-06-876Z/spec-check.json",
+  "council_file": "/home/rickebo/.codex/pipeline/runs/2026-08-20T20-33-06-876Z/council.json",
+  "requires_council": true,
+  "independent_lanes": [
+    "Homelab GitOps and immutable workload release",
+    "Secret-safe MetaMCP registry and target matrix",
+    "Public OAuth and ChatGPT protocol readiness",
+    "Per-server live discovery and safe-call validation"
+  ],
+  "route_to": "review",
+  "risk_level": "critical",
+  "issues": [
+    {
+      "id": "RUNTIME-SECRETS-001",
+      "title": "Provision runtime-only MCP credentials after review",
+      "severity": "high",
+      "details": "The GitOps diff deliberately contains no bearer values; Grafana, ArgoCD, and GitHub values must be transferred through protected runtime paths.",
+      "owner_stage": "validation"
+    },
+    {
+      "id": "RUNTIME-OAUTH-001",
+      "title": "Complete public AuthentiK and MCP OAuth validation",
+      "severity": "high",
+      "details": "The public ingress is declared, but the callback registration, public DNS, metadata, PKCE challenge, and ChatGPT connection still require live proof.",
+      "owner_stage": "validation"
+    },
+    {
+      "id": "#433",
+      "title": "Existing observability dry-run references grafana-test ServiceAccount",
+      "severity": "medium",
+      "details": "The issue is pre-existing and does not block the MetaMCP or Tempo render; it should remain tracked separately.",
+      "owner_stage": "test"
+    }
+  ]
+}

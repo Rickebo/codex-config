@@ -1,0 +1,42 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Salvaged the isolated validation-fix lane and committed target-only NAS storage, synthetic PostgreSQL restore verification, Kopia readback, identity coverage, and immutable-image tests.",
+  "changed_files": [
+    "apps/llm-proxy.yaml",
+    "apps/workspace-context.yaml",
+    "docs/workspace-context-llm-proxy.md",
+    "llm-proxy/templates/database-backup.yaml",
+    "llm-proxy/templates/restore.yaml",
+    "llm-proxy/values.yaml",
+    "tests/test_workspace_context_llm_proxy_gitops.py",
+    "tests/fixtures/workspace_context_restore/run.sh",
+    "tests/fixtures/workspace_context_restore/README.md",
+    "workspace-context/templates/backup.yaml",
+    "workspace-context/templates/gated.yaml",
+    "workspace-context/templates/storage.yaml",
+    "workspace-context/values.yaml"
+  ],
+  "validation": [
+    "pytest -q tests/test_workspace_context_llm_proxy_gitops.py: 11 passed, 1 skipped; skip explicitly reports missing initdb.",
+    "helm lint workspace-context and helm lint llm-proxy passed.",
+    "Default and enabled Helm render matrices plus rendered YAML parsing passed.",
+    "Tracked application/value YAML parsing, fixture bash -n, and git diff --check passed.",
+    "Docker daemon is available but the required PostgreSQL image is not cached; no pull or package install was performed.",
+    "graphify-out/* was restored path-specifically and is clean; protected paths were not changed.",
+    "Branch pushed and PR #522 opened referencing #482, #483, and #489."
+  ],
+  "blockers": [
+    "Review and current-run CI remain pending; no approval or merge was performed.",
+    "Live NAS, cluster, Argo, source, deployment, and secret-value evidence was intentionally not exercised."
+  ],
+  "next_action": "Route commit 9f419860b3f39302a42253d564a7dde74e010b37 and PR #522 to independent review, then run the current pipeline test/validation stages without approving this report.",
+  "route_to": "review",
+  "risk_level": "high",
+  "requires_council": false,
+  "independent_lanes": [
+    "Helm and GitOps review",
+    "Fixture and restore test review",
+    "Current-run CI"
+  ]
+}

@@ -1,0 +1,119 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+vm_name="${GVM_CODEX_VM_NAME:-gvm-win}"
+repo_root="${GVM_REPO_ROOT:-/home/rickebo/p/gvm}"
+libvirt_uri="${GVM_LIBVIRT_URI:-qemu:///system}"
+windows_user="${GVM_WINDOWS_SSH_USER:-Rickebo}"
+ssh_key="${GVM_WINDOWS_SSH_KEY:-$HOME/.ssh/gvm-win_ed25519}"
+auth_file="${CODEX_HOME:-$HOME/.codex}/auth.json"
+guest_config="${GVM_CODEX_GUEST_CONFIG:-${CODEX_HOME:-$HOME/.codex}/etc/gvm-codex-guest.config.toml}"
+wait_seconds="${GVM_CODEX_MCP_WAIT_SECONDS:-300}"
+poll_seconds="${GVM_CODEX_MCP_POLL_SECONDS:-3}"
+
+# shellcheck source=/home/rickebo/p/gvm/host/guest-network.sh
+source "$repo_root/host/guest-network.sh"
+
+ssh_opts=(
+  -i "$ssh_key"
+  -o IdentitiesOnly=yes
+  -o BatchMode=yes
+  -o ConnectTimeout=8
+  -o ServerAliveInterval=15
+  -o ServerAliveCountMax=4
+  -o LogLevel=ERROR
+  -o StrictHostKeyChecking=accept-new
+)
+
+log() {
+  printf 'provision-gvm-codex-guest: %s\n' "$*" >&2
+}
+
+vm_state() {
+  timeout --kill-after=2 12 virsh -c "$libvirt_uri" domstate "$vm_name" 2>/dev/null || true
+}
+
+ensure_vm_running() {
+  local state
+
+  state="$(vm_state)"
+  case "$state" in
+    running)
+      return 0
+      ;;
+    pmsuspended)
+      log "waking VM $vm_name from pmsuspended state"
+      virsh -c "$libvirt_uri" dompmwakeup "$vm_name" 1>&2
+      return 0
+      ;;
+    paused)
+      log "resuming paused VM $vm_name"
+      virsh -c "$libvirt_uri" resume "$vm_name" 1>&2
+      return 0
+      ;;
+  esac
+
+  log "starting VM $vm_name through sudo gvmctl start-vm"
+  sudo -n gvmctl start-vm 1>&2
+}
+
+guest_host() {
+  gvm_windows_ssh_host "$vm_name" "$libvirt_uri"
+}
+
+guest_ssh_ready() {
+  local host="$1"
+
+  ssh "${ssh_opts[@]}" "${windows_user}@${host}" \
+    'powershell -NoProfile -ExecutionPolicy Bypass -Command "$PSVersionTable.PSVersion | Out-Null"' \
+    </dev/null >/dev/null
+}
+
+wait_for_guest_ssh() {
+  local deadline host
+
+  deadline=$((SECONDS + wait_seconds))
+  while (( SECONDS <= deadline )); do
+    host="$(guest_host)"
+    if [[ -n "$host" ]] && guest_ssh_ready "$host"; then
+      printf '%s\n' "$host"
+      return 0
+    fi
+    sleep "$poll_seconds"
+  done
+
+  log "timed out waiting ${wait_seconds}s for Windows SSH on $vm_name"
+  return 1
+}
+
+ensure_vm_running
+host="$(wait_for_guest_ssh)"
+
+if [[ ! -f "$guest_config" ]]; then
+  log "guest config template not found at $guest_config"
+  exit 1
+fi
+
+log "installing or updating OpenAI Codex in the guest"
+ssh "${ssh_opts[@]}" "${windows_user}@${host}" \
+  'powershell -NoProfile -ExecutionPolicy Bypass -Command "winget install --exact --id OpenAI.Codex --silent --accept-package-agreements --accept-source-agreements | Out-Host; codex --version"'
+
+log "writing minimal guest Codex config"
+ssh "${ssh_opts[@]}" "${windows_user}@${host}" \
+  'cmd /c if not exist "%USERPROFILE%\.codex" mkdir "%USERPROFILE%\.codex"'
+scp "${ssh_opts[@]}" "$guest_config" "${windows_user}@${host}:C:/Users/${windows_user}/.codex/config.toml" >/dev/null
+
+log "disabling guest AC sleep timeouts"
+ssh "${ssh_opts[@]}" "${windows_user}@${host}" \
+  'powershell -NoProfile -ExecutionPolicy Bypass -Command "powercfg /change standby-timeout-ac 0; powercfg /change hibernate-timeout-ac 0; powercfg /change monitor-timeout-ac 0"'
+
+if [[ -f "$auth_file" ]]; then
+  log "copying local Codex auth into the guest user profile"
+  scp "${ssh_opts[@]}" "$auth_file" "${windows_user}@${host}:C:/Users/${windows_user}/.codex/auth.json" >/dev/null
+else
+  log "local auth file not found at $auth_file; guest Codex will need an interactive login"
+fi
+
+log "guest Codex MCP server help check"
+ssh "${ssh_opts[@]}" "${windows_user}@${host}" \
+  'codex mcp-server --help'

@@ -1,0 +1,30 @@
+{
+  "stage": "spec",
+  "status": "pass",
+  "summary": "Feature specification, council evidence, and strict spec checks are complete for VPN-only Youtarr v0.3.27 Google OAuth activation.",
+  "changed_files": [
+    "/home/rickebo/.codex/pipeline/runs/2026-08-23T10-45-11-082Z/feature-spec.json",
+    "/home/rickebo/.codex/pipeline/runs/2026-08-23T10-45-11-082Z/council.json",
+    "/home/rickebo/.codex/pipeline/runs/2026-08-23T10-45-11-082Z/spec-check.json",
+    "/home/rickebo/.codex/pipeline/runs/2026-08-23T10-45-11-082Z/spec-stage-report.json"
+  ],
+  "validation": [
+    "pipeline-spec-check --strict passed with 9 requirements, 8 acceptance criteria, 8 tests, and 9 complete traceability rows.",
+    "Specification explicitly enforces exact callback https://youtarr.arr.rickebo.com/api/setup/google/callback and reports a secret-safe preflight blocker path.",
+    "Specification covers VPN-only ingress, no ExternalDNS, Bitwarden item references, explicit argocd/youtarr sync, Playwright OAuth, and account-sync validation."
+  ],
+  "blockers": [],
+  "next_action": "Route to code stage to implement the approved PR-based GitOps changes, preserving the preflight gate before any Argo synchronization.",
+  "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-08-23T10-45-11-082Z/feature-spec.json",
+  "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-08-23T10-45-11-082Z/spec-check.json",
+  "council_file": "/home/rickebo/.codex/pipeline/runs/2026-08-23T10-45-11-082Z/council.json",
+  "requires_council": true,
+  "independent_lanes": [
+    "planner",
+    "reviewer",
+    "tech_lead_qa",
+    "security_devops"
+  ],
+  "route_to": "code",
+  "risk_level": "high"
+}

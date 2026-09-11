@@ -1,0 +1,29 @@
+{
+  "stage": "validation",
+  "status": "fail",
+  "summary": "PR #1155 is open at reviewed head 1d91033; required Validate and policy guards pass, but trusted ARC producer validation is indefinitely queued because live runner-config is pinned before the producer and the protected recovery/activation contract cannot be safely executed.",
+  "changed_files": [],
+  "validation": [
+    "Required Validate, Legacy Freeze Guard, hosted-runner guard, and ARC classification passed on the exact PR head.",
+    "Exact chart 10.1.2 / Argo v3.4.4 offline render, policy validation, and 20/20 authorization matrix passed.",
+    "Live explicit codicarium-dev inspection proves no matching producer ASRS and Argo runner-config apps pinned ff89bc56 vs desired 16b02bbd.",
+    "Recovery preflight is NO-GO: grant ActivationNotPrepared, absent current-topology evidence, all-zero handoff digest, and inconsistent activation runbook/API semantics."
+  ],
+  "blockers": [
+    "Queued job 97183761901 has no assignable codicarium-app-config-validation-producer runner.",
+    "Terraform exact no-unrelated-change plan is absent from current PR checks.",
+    "Real SSO admin and ordinary-user live sessions are unavailable.",
+    "Undeclared live g, metamcp, role:admin must be replaced by least privilege or removal proven safe.",
+    "Runner recovery requires a reviewed infra#1105 recovery-contract/current-topology migration; direct reconciliation is unsafe."
+  ],
+  "next_action": "Await explicit scope approval to implement and validate infra#1105 recovery-contract/topology migration; otherwise leave PR #1155 open and unmerged.",
+  "requires_council": true,
+  "independent_lanes": ["GitHub CI observation","explicit-cluster ARC diagnosis","runner-config desired-state mapping","recovery-contract/API review"],
+  "route_to": "code",
+  "risk_level": "critical",
+  "issues": [
+    {"id":"infra-1105","title":"Repair runner-config recovery contract for current topology","severity":"critical","details":"Required before safely reconciling runner-config main and unblocking trusted producer CI.","owner_stage":"code"},
+    {"id":"infra-1146","title":"Undeclared MetaMCP Argo administrator drift","severity":"critical","details":"Hard Phase 0 merge/deployment blocker.","owner_stage":"validation"},
+    {"id":"runner-config-26","title":"Dedicated app-config validation producer","severity":"high","details":"Desired state merged but not reconciled live; blocks PR job.","owner_stage":"validation"}
+  ]
+}

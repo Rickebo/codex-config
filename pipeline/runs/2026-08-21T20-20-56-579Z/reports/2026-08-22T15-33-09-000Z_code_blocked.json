@@ -1,0 +1,69 @@
+{
+  "stage": "code",
+  "status": "blocked",
+  "summary": "Target-only chart commits are integrated and static checks pass, but CODE acceptance is incomplete; app/chart wiring and required LLM Proxy safety coverage need another bounded CODE pass.",
+  "changed_files": [
+    "apps/llm-proxy.yaml",
+    "apps/workspace-context.yaml",
+    "docs/workspace-context-llm-proxy.md",
+    "llm-proxy/charts/llm-proxy-0.3.19-r.1.homelab.1.tgz",
+    "llm-proxy/templates/database-backup.yaml",
+    "llm-proxy/templates/oidc-secret-replication.yaml",
+    "llm-proxy/templates/target-gates.yaml",
+    "llm-proxy/values.yaml",
+    "llm-proxy/vendor/llm-proxy/templates/deployment-api.yaml",
+    "llm-proxy/vendor/llm-proxy/templates/deployment-web.yaml",
+    "tests/test_workspace_context_llm_proxy_gitops.py",
+    "workspace-context/Chart.yaml",
+    "workspace-context/templates/_helpers.tpl",
+    "workspace-context/templates/alerts.yaml",
+    "workspace-context/templates/gated.yaml",
+    "workspace-context/templates/networkpolicy.yaml",
+    "workspace-context/templates/storage.yaml",
+    "workspace-context/templates/workload.yaml",
+    "workspace-context/tests/static.sh",
+    "workspace-context/values.yaml"
+  ],
+  "validation": [
+    "helm lint and helm template passed for workspace-context.",
+    "workspace-context/tests/static.sh passed, including storage, gates, checksum/manifest, and no-Longhorn checks.",
+    "helm lint and default helm template passed for llm-proxy; default render has no Deployment or Job and no rendered Longhorn reference.",
+    "Repository unittest passed: 5 tests; Python compilation passed.",
+    "Application YAML, explicit Kubernetes destination, and no automated Argo sync checks passed.",
+    "git diff --check passed for produced commits; protected worker/bridge files and graphify-out were absent from implementation commits.",
+    "kubeconform, kubeval, and conftest are unavailable in the environment; no cluster or Argo validation was run."
+  ],
+  "blockers": [
+    "apps/workspace-context.yaml uses className/accessMode/nas keys rather than the chart's storageClassName/accessModes/storage.graphArtifacts.nfs keys, so its effective Argo override does not explicitly wire the approved NAS layout.",
+    "apps/llm-proxy.yaml contains abstract unused gates/identity fields including sourceNamespace/sourceSecretName and does not match the chart's targetGates and nested llm-proxy value paths; application-level safety and identity overrides are therefore not trustworthy.",
+    "The committed LLM Proxy chart has no 70% warning/85% critical PrometheusRule for its local-path PostgreSQL claim; only Workspace Context storage alerts are present.",
+    "The committed LLM Proxy backup scratch remains local-path rather than the approved temporary/NFS scratch path, and its worker static guard was ignored by *.sh and is absent from the commit.",
+    "Workspace Context evidence tooling references /scratch and /graph-artifacts but the committed gated job does not mount the configured scratch/artifact PVCs, so the consistency bundle is not executable when enabled."
+  ],
+  "next_action": "Route back to CODE to align Argo values with chart schemas, add the missing LLM Proxy storage/NFS safety coverage and committed static guard, wire the Workspace Context consistency volumes, then rerun static validation; do not sync or deploy.",
+  "route_to": "code",
+  "risk_level": "high",
+  "issues": [
+    {
+      "id": "CODE-APP-VALUE-WIRING",
+      "title": "Align target Argo value blocks with chart schemas",
+      "severity": "high",
+      "details": "Current committed app overrides do not target the values consumed by the two charts and include stale source-secret reference fields.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "CODE-LLM-STORAGE-ALERTS",
+      "title": "Add LLM Proxy local-path storage alerts and NFS scratch",
+      "severity": "high",
+      "details": "The LLM Proxy database lacks the required 70/85 capacity rules and its backup scratch is not the approved temporary/NFS layout.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "CODE-CONSISTENCY-BUNDLE-WIRING",
+      "title": "Make graph and logical dump evidence tooling runnable",
+      "severity": "high",
+      "details": "The Workspace Context gated evidence job needs explicit configured PVC mounts before it can produce the coupled database/artifact checksum bundle.",
+      "owner_stage": "code"
+    }
+  ]
+}

@@ -25,10 +25,16 @@ Boundaries:
 - Do not edit GitOps or deployment configuration.
 - Keep unrelated files untouched.
 
-Output:
-- Lead with confirmed observations and the resulting fix.
-- Include route, viewport, reproduction steps, DOM targets, screenshot status, console/network findings, changed files, and validation.
-- Separate confirmed facts from likely causes.
+Strict Completion Contract (Report to Tech Lead):
+Your final completion report MUST be strictly <= 12 lines (under 200 tokens):
+- task: <task-name>
+- status: completed | blocked
+- worktree: path to .worktrees/<repo>-<branch>
+- commit_or_pr: SHA or PR #
+- validation: Exact commands executed and concise pass/fail summary
+- blockers: Present only if blocked
+- next_action: Ready for integration
+DO NOT paste raw diffs, screenshot binary data, or long browser logs.
 """
 
 [mcp_servers.qdrant_memory]

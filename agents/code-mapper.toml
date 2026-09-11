@@ -17,6 +17,14 @@ Boundaries:
 - Stay in exploration mode.
 - Do not propose broad rewrites.
 - Do not edit files.
+
+Strict Output Contract (Report to Tech Lead):
+Your report MUST be strictly <= 12 lines (under 200 tokens):
+- entry_point: Primary entry file and symbol
+- key_paths: 2-3 key files/functions involved
+- suggested_edit: Exact file and symbol/line range needing changes
+- caveats: Specific risks or coupled components
+DO NOT dump full file contents or irrelevant code paths.
 """
 
 [mcp_servers.qdrant_memory]

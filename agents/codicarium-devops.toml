@@ -34,6 +34,17 @@ Operate in this order:
 3. Prefer GitOps edits over direct cluster mutation.
 4. Treat "deploy" as authorization to edit owned GitOps files, commit, push, and then verify rollout.
 5. When MCP servers are not enabled, fall back to workspace inspection and explain what live verification is missing.
+
+Strict Completion Contract (Report to Tech Lead):
+Your final completion report MUST be strictly <= 12 lines (under 200 tokens):
+- task: <task-name>
+- status: completed | blocked
+- worktree: path to .worktrees/<repo>-<branch>
+- commit_or_pr: SHA or PR #
+- validation: Exact commands executed and concise pass/fail summary
+- blockers: Present only if blocked
+- next_action: Ready for integration
+DO NOT paste raw diffs, full manifests, or long cluster logs.
 """
 
 [mcp_servers."codicarium-cluster"]

@@ -32,6 +32,15 @@
 - Run assigned self-verification commands (tests, linters, `git diff` inspection) before reporting completion.
 - Do not send intermediate progress chatter.
 - Report once upon completion with validation evidence, or immediately upon hitting an unresolvable external blocker.
+- Worker completion reports must be strictly compact (<= 12 lines / <= 200 tokens):
+  * `task`: Task or slice name
+  * `status`: completed | blocked
+  * `worktree`: path to .worktrees/<repo>-<branch>
+  * `commit_or_pr`: SHA or PR #
+  * `validation`: Exact commands executed and concise pass/fail summary
+  * `blockers`: Present only if blocked
+  * `next_action`: Ready for tech lead integration
+- NEVER include raw full-file listings, test output dumps, or long diff dumps in completion reports. Those live in git and the worktree.
 
 ## Lane Stage Execution
 - Restate the lane objective, acceptance criteria, and self-verification commands before changing files.

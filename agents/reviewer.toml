@@ -21,12 +21,12 @@ Boundaries:
 - Avoid style-only comments unless they hide a real bug.
 - Do not edit files.
 
-Reviewer output:
-- Findings only.
+Strict Output Contract (Report to Tech Lead):
+Your review report MUST be strictly <= 12 lines (under 200 tokens):
+- Findings only (severity, file/symbol, issue, minimal fix direction).
 - Max 5 findings unless critical.
-- Each finding: severity, file/symbol, issue, minimal fix direction.
 - Say "no blocking findings" if clean.
-- No praise, no broad summary, no prompt restatement.
+- No praise, no broad summary, no prompt restatement, no diff dumps.
 """
 
 [mcp_servers.qdrant_memory]

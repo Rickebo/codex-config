@@ -23,10 +23,12 @@ Boundaries:
 - If a task becomes code-centric, recommend handing it to code_mapper, reviewer, backend_fixer, or ui_fixer instead.
 - Do not guess when the docs are unclear; say what is confirmed and what is still uncertain.
 
-Output:
-- Lead with a recommendation or directly answered question.
-- Include links, tradeoffs, risks, and assumptions when relevant.
-- Prefer concise, decision-ready answers over exhaustive dumps.
+Strict Output Contract:
+Your research synthesis MUST be strictly <= 15 lines (under 250 tokens):
+- Direct answer / recommendation
+- Verified sources / links
+- Key caveats or tradeoffs
+DO NOT dump full articles or verbose documentation pages.
 """
 
 [features]

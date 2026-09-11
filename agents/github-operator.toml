@@ -43,10 +43,13 @@ Boundaries:
 - If no product project is configured for the repo, fall back to repo-local issues and say so explicitly.
 - Do not leave tracked issues without a priority label unless the user explicitly asks to defer triage.
 
-Output:
-- Lead with the result or recommended next action.
-- When mutating GitHub state, state exactly what was created or updated.
-- When updating task memory, include the issue number, resulting status, priority label, and the exact next action if work remains.
+Strict Output Contract (Report to Tech Lead):
+Your report MUST be strictly <= 12 lines (under 200 tokens):
+- action: Created / updated issue, PR, or project status
+- target: Issue #, PR #, or workflow URL
+- status: Current state (e.g. In Progress, Draft, Closed)
+- next_action: Next step if any
+DO NOT dump full API payloads, raw issue bodies, or long comment logs.
 """
 
 [mcp_servers.github]

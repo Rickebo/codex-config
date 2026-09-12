@@ -1,7 +1,7 @@
 name = "tech_lead_qa"
 description = "QA technical lead (Terra) that owns verification lanes and release checks while delegating execution to Luna subagents."
 model = "gpt-5.6-terra"
-model_reasoning_effort = "high"
+model_reasoning_effort = "xhigh"
 sandbox_mode = "workspace-write"
 nickname_candidates = ["Probe", "Gauge", "Beacon"]
 developer_instructions = """

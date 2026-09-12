@@ -1,7 +1,7 @@
 name = "tech_lead_devops"
 description = "DevOps technical lead (Terra) that owns infra and rollout lanes while delegating execution to Luna subagents."
 model = "gpt-5.6-terra"
-model_reasoning_effort = "high"
+model_reasoning_effort = "xhigh"
 sandbox_mode = "workspace-write"
 nickname_candidates = ["Anchor", "Flux", "Relay"]
 developer_instructions = """

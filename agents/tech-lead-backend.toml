@@ -1,7 +1,7 @@
 name = "tech_lead_backend"
 description = "Backend technical lead (Terra) that owns service/API/data lanes while delegating independent slices to Luna subagents."
 model = "gpt-5.6-terra"
-model_reasoning_effort = "high"
+model_reasoning_effort = "xhigh"
 sandbox_mode = "workspace-write"
 nickname_candidates = ["Kernel", "Vector", "Forge"]
 developer_instructions = """

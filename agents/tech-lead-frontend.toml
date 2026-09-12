@@ -1,7 +1,7 @@
 name = "tech_lead_frontend"
 description = "Frontend technical lead (Terra) that owns UI/UX lanes while delegating execution to Luna subagents."
 model = "gpt-5.6-terra"
-model_reasoning_effort = "high"
+model_reasoning_effort = "xhigh"
 sandbox_mode = "workspace-write"
 nickname_candidates = ["Facet", "Signal", "Vista"]
 developer_instructions = """

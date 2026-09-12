@@ -99,8 +99,8 @@ That launcher reads the bearer token from `HOMELAB_OBSERVABILITY_TOKEN` or `/hom
 
 Hierarchical routing is strictly enforced across three tiers:
 - **Tier 0 (Root Manager)**: `gpt-5.6-sol` project manager. Pure orchestration, goal decomposition, workstream routing, and compact synthesis. Never directly executes code, inspects files, or queries memory.
-- **Tier 1 (Tech Leads)**: `gpt-5.6-terra` (`tech_lead_backend`, `tech_lead_devops`, `tech_lead_frontend`, `tech_lead_qa`, `planner`) with `medium` or `high` reasoning. Own domain lanes end-to-end, manage Luna workers, synthesize results, and report back compactly.
-- **Tier 2 (Workers / Coders / Reviewers / DevOps)**: `gpt-5.6-luna` (`backend_fixer`, `ui_fixer`, `code_mapper`, `homelab_devops`, `codicarium_devops`, `reviewer`) with `medium` reasoning (or `low` reasoning for simple search and code-path mapping). Narrow implementation in `.worktrees/<repo>-<branch>`.
+- **Tier 1 (Tech Leads)**: `gpt-5.6-terra` (`tech_lead_backend`, `tech_lead_devops`, `tech_lead_frontend`, `tech_lead_qa`, `planner`) with `xhigh` reasoning by default. Own domain lanes end-to-end, manage Luna workers, synthesize results, and report back compactly.
+- **Tier 2 (Workers / Coders / Reviewers / DevOps)**: `gpt-5.6-luna` (`backend_fixer`, `ui_fixer`, `code_mapper`, `homelab_devops`, `codicarium_devops`, `reviewer`) with `xhigh` reasoning by default (or `max` reasoning for difficult cases, and `low` reasoning for simple search and code-path mapping). Narrow implementation in `.worktrees/<repo>-<branch>`.
 
 ## Delegation Policy
 

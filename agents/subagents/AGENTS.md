@@ -14,8 +14,8 @@
 
 ## Model And Reasoning Routing
 - **Tier 0 (Root Manager)**: Sol (`gpt-5.6-sol`) project manager and orchestration lead. Pure high-level goal decomposition, domain routing, and compact synthesis. Never directly executes code, inspects files, or queries memory.
-- **Tier 1 (Tech Leads)**: Terra (`gpt-5.6-terra`) (`tech_lead_backend`, `tech_lead_devops`, `tech_lead_frontend`, `tech_lead_qa`, `planner`) with `medium` or `high` reasoning. Own domain lanes end-to-end, manage Luna workers, synthesize results, and report back compactly.
-- **Tier 2 (Workers / Coders / Reviewers / DevOps)**: Luna (`gpt-5.6-luna`) with `medium` reasoning (or `low` reasoning for simple search/mapping). Narrow implementation in `.worktrees/<repo>-<branch>`.
+- **Tier 1 (Tech Leads)**: Terra (`gpt-5.6-terra`) (`tech_lead_backend`, `tech_lead_devops`, `tech_lead_frontend`, `tech_lead_qa`, `planner`) with `xhigh` reasoning by default. Own domain lanes end-to-end, manage Luna workers, synthesize results, and report back compactly.
+- **Tier 2 (Workers / Coders / Reviewers / DevOps)**: Luna (`gpt-5.6-luna`) with `xhigh` reasoning by default (or `max` reasoning for difficult cases, and `low` reasoning for simple search/mapping). Narrow implementation in `.worktrees/<repo>-<branch>`.
 
 ## Tech Lead Role
 - Own a domain lane end-to-end.

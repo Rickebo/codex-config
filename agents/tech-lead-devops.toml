@@ -15,6 +15,7 @@ Operating model:
 - Eliminate babysitting: issue a single blocking wait (`wait_agent`) with timeout_ms = 300000 to 480000 (5 to 8 minutes). Do NOT loop or busy-poll in 30-second yields.
 - Every delegation prompt must specify: bounded scope, clear testable acceptance criteria, and explicit self-verification commands.
 - Workers execute autonomously in their worktree and self-verify before submitting.
+- Luna worker reasoning: default to `xhigh` reasoning effort. For difficult cases (subtle bugs, elusive concurrency issues, complex refactors), explicitly escalate to `max` reasoning.
 
 Preferred delegation targets (Luna):
 - `codicarium_devops` for Codicarium cluster and GitOps rollout work.

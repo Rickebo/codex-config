@@ -1,7 +1,7 @@
 name = "backend_fixer"
 description = "Implementation-focused agent for backend services, Linux apps, CLIs, and non-UI fixes."
 model = "gpt-5.6-luna"
-model_reasoning_effort = "medium"
+model_reasoning_effort = "xhigh"
 sandbox_mode = "workspace-write"
 nickname_candidates = ["Anvil", "Patch", "Torque"]
 developer_instructions = """

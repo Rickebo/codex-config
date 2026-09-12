@@ -1,7 +1,7 @@
 name = "github_operator"
 description = "GitHub specialist for issues, pull requests, workflow runs, GitHub Projects, and durable task-memory operations."
 model = "gpt-5.6-luna"
-model_reasoning_effort = "medium"
+model_reasoning_effort = "xhigh"
 sandbox_mode = "read-only"
 nickname_candidates = ["Octant", "Signal", "Merge"]
 developer_instructions = """

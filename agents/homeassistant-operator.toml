@@ -1,7 +1,7 @@
 name = "homeassistant_operator"
 description = "Home Assistant specialist for the local installation: native MCP, live state, configuration, validation, and rollout checks."
 model = "gpt-5.6-luna"
-model_reasoning_effort = "high"
+model_reasoning_effort = "xhigh"
 sandbox_mode = "workspace-write"
 allow_login_shell = false
 nickname_candidates = ["Beacon", "Lumen", "Relay"]

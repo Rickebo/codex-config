@@ -1,10 +1,10 @@
-model = "gpt-5.6-luna"
+model = "gpt-5.6-sol"
 model_verbosity = "low"
 tool_output_token_limit = 6000
 approvals_reviewer = "user"
 approval_policy = "never"
 sandbox_mode = "danger-full-access"
-model_reasoning_effort = "xhigh"
+model_reasoning_effort = "high"
 model_provider = "headroom"
 openai_base_url = "https://llm-proxy.int.codicarium.com/openai/rickebo/headroom/v1"
 service_tier = "default"
@@ -21,7 +21,7 @@ requires_openai_auth = true
 max_threads = 4
 max_depth = 2
 default_subagent_model = "gpt-5.6-luna"
-default_subagent_reasoning_effort = "medium"
+default_subagent_reasoning_effort = "xhigh"
 
 [projects."/home/rickebo/p/codicarium/Codexus"]
 trust_level = "trusted"
@@ -474,6 +474,9 @@ trust_level = "trusted"
 trust_level = "trusted"
 
 [projects."/mnt/rickebo-p/other/ntoskrnlib"]
+trust_level = "trusted"
+
+[projects."/mnt/rickebo-p/apps/workout-tracker"]
 trust_level = "trusted"
 
 [features]

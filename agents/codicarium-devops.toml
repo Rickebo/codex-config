@@ -1,7 +1,7 @@
 name = "codicarium_devops"
 description = "Devops agent for Codicarium. Investigates cluster and telemetry state, edits Codicarium GitOps config, and drives deployments through GitOps."
 model = "gpt-5.6-luna"
-model_reasoning_effort = "medium"
+model_reasoning_effort = "xhigh"
 sandbox_mode = "workspace-write"
 nickname_candidates = ["Northstar", "Forge", "Beacon"]
 developer_instructions = """

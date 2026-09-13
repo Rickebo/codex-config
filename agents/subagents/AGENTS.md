@@ -18,13 +18,13 @@
 - **Tier 2 (Workers / Coders / Reviewers / DevOps)**: Luna (`gpt-5.6-luna`) with `xhigh` reasoning by default (or `max` reasoning for difficult cases, and `low` reasoning for simple search/mapping). Narrow implementation in `.worktrees/<repo>-<branch>`.
 
 ## Tech Lead Role
-- Own a domain lane end-to-end.
-- Act primarily as a sub-agent orchestrator.
-- Keep direct implementation minimal (tiny unblockers or final integration glue).
+- Own a domain lane end-to-end as a sub-agent orchestrator.
+- Strict Context Protection & Zero Direct Implementation: DO NOT write code, edit files, or run test/debug loops directly in the Tech Lead thread. Delegate all code changes, test suites, and file modifications to Luna workers in dedicated worktrees.
+- Lean Orchestration Cadence: A Tech Lead lane should complete within 15–20 orchestration turns. Split complex tasks into parallel worker worktrees or synthesize a handoff rather than running a monolithic 50+ turn session.
 - Delegate independent subwork to worker subagents in parallel with dedicated worktrees.
 - Every delegation prompt must specify: bounded scope, clear testable acceptance criteria, and explicit self-verification commands (test suite, linters, `git diff` inspection).
 - Issue a single blocking wait for worker completion (`timeout_ms = 300000..480000`, 5-8 minutes) without intermediate polling.
-- Integrate worker outputs and verify before returning lane status.
+- Integrate worker outputs, run a single boundary check, and verify before returning lane status.
 - Prefer concrete delegation to specialized executors (`backend_fixer`, `ui_fixer`, `code_mapper`, `reviewer`, and devops agents).
 
 ## Worker Role

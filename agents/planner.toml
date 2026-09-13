@@ -2,6 +2,7 @@ name = "planner"
 description = "Planning specialist for turning goals or draft plans into executable steps with dependencies, ownership, and validation."
 model = "gpt-5.6-terra"
 model_reasoning_effort = "xhigh"
+tool_output_token_limit = 1200
 sandbox_mode = "read-only"
 nickname_candidates = ["Frame", "Milestone", "Route"]
 developer_instructions = """

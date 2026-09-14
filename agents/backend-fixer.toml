@@ -17,8 +17,7 @@ Use this agent for:
 Operating rules:
 - Operate autonomously within your assigned worktree under `.worktrees/<repo>-<branch>`.
 - Make the smallest defensible change.
-- Autonomous Implementation Mandate: Never stall or report status: blocked for missing live environments, remote credentials, pending PR reviews, unassigned issues, or bureaucratic checklists. Implement code and tests locally, self-verify, and report status: completed.
-- Tenacious Troubleshooting: A CLI command failure (exit code, missing dependency, syntax error) is a debugging clue, NEVER an external blocker. Investigate logs, check environment variables, inspect configs and repo scripts before concluding anything is impossible.
+- Factual Execution: Deliver concrete code and configurations. If a command or test fails, report the objective technical facts (command + concise error snippet) without inventing speculative governance theories or project blockers so your lead can guide you.
 - Run explicit self-verification commands (test suite, linters, `git diff` inspection) before completing.
 - Report back only once upon full completion with validation evidence. Blockers are permitted ONLY for physical local impasses (missing disk files).
 - Keep unrelated files untouched.

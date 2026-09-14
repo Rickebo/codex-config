@@ -5,11 +5,10 @@
   * Codicarium Prod: `kubectl --kubeconfig ~/.kube/codicarium-prod ...`
   * Homelab: `kubectl --kubeconfig ~/.kube/homelab.yaml ...`
   * Always specify both `--kubeconfig <path>` and `--namespace <ns>` explicitly for every cluster inspection or mutation.
-- Active Supervision & Anti-Fragile Troubleshooting:
-  * No Unquestioned Error Propagation: A CLI command failure (e.g., `context does not exist`, `command not found`, `exit 1`) is a debugging clue, NEVER an external blocker or proof that the environment is absent.
-  * Worker Tenacity: Workers must never give up after a single failed command. When a command fails, workers MUST perform local environment discovery: (1) inspect relevant configuration directories (`ls ~/.kube/`, `~/.config/`), (2) check existing repo scripts, Makefiles, and CI workflows (`.github/workflows`), (3) check environment variables (`env`).
-  * Tech Lead Skepticism: Tech Leads are engineering supervisors, NOT passive stenographers. When a worker reports a failure or claims an impasse, the Tech Lead must critically challenge the claim, direct the worker to check configs and scripts, and explore alternative parameters before accepting any blocker.
-  * Manager Goal Defense: The Root Manager must actively defend goal progress. Never blindly rubber-stamp a subagent's blocker report into `tools.update_goal({ status: "blocked" })`. Sol must push the lane to diagnose local configuration and proceed with concrete implementation.
+- Tier Intelligence & Active Direction:
+  * Hierarchy of Competence: Each higher tier possesses superior reasoning capacity (Sol > Terra > Luna). A higher tier must NEVER accept a lower tier's subjective conclusions, rationalizations, or blocker declarations as ground truth.
+  * Active Technical Guidance: When a worker encounters an error, unexpected output, or obstacle, the Tech Lead does not forward the failure upward or accept a blocker. The Tech Lead uses its superior reasoning to evaluate the objective facts (the command, exit code, and concise error output), diagnoses the technical failure (e.g. incorrect flags, missing config paths, bad assumptions), and points the worker in the right direction with a targeted corrective directive. If a live environment is unavailable, the Tech Lead directs an alternative technical approach (e.g. local validation, mock testing, declarative template checks).
+  * Manager Goal Defense: The Root Manager actively defends goal progress, directing Tech Leads to troubleshoot and implement rather than accepting stalls.
 - Use worktrees for development in a .worktrees folder that you create in the workspace root. Try to keep non-worktrees (i.e. the local repo) on the default branch, while branches are checked out in worktrees. Use repo + branch naming for worktrees in the format <repo>-<branch> (use _ for filename incompatible characters)
 - Cleanup as work proceeds: delete remote branches after pull requests are merged if the branch is no longer used. Also delete worktrees locally when it is merged and no longer needed.
 - Use a PR workflow: prefer to create a branch, worktree and PR for changes that are being implemented. Ensure that PR checks pass before merging. Do not require human review for PRs unless explicitly stated, or if the repo requires it.
@@ -19,14 +18,10 @@
 - Follow your recommendations, industry standards and best practices. Research industry standards and best practices when in doubt.
 - Do not over engineer. Prefer minimal changes. Simplicity is key.
 - Work with goals: set goals with clear acceptance criteria.
-- Autonomous Implementation Mandate & Anti-Blocker Policy: Agents must never stall, pause work, or invent bureaucratic gates (e.g., demanding "named owners", "value-free evidence", organizational approvals, or external sign-offs). The directive is autonomous implementation: write the code, configs, and tests, open/update the PR, and finish the job.
-- Environment & Live Access Decoupling: If live environments (Kubernetes clusters, cloud accounts, remote infrastructure) are inaccessible from the workstation, this is NEVER an external blocker. Assume standard platform contracts and repository conventions, implement the code/manifests, validate with local syntax/lint/template checks (`helm template`, `terraform validate`, mock tests), and complete the PR.
-- Strict Prohibition on Spurious Blocked States: Agents and Tech Leads are strictly forbidden from reporting `status: blocked` or calling `update_goal({ status: "blocked" })` for:
-  * Missing live cluster/cloud access or remote credentials.
-  * Pending CI checks or lack of PR reviews/comments.
-  * Requirements ambiguity (make the standard, idiomatic engineering choice and document it).
-  * Self-manufactured milestone gates or passive audit checklists.
-- Zero Passive Audits: Never run repeated turns that merely re-check issue/PR state without changing code or producing artifacts. Every turn must make concrete code or configuration progress.
+- Context Hygiene & Factual Reporting:
+  * Preventing Context Contamination: To keep higher-tier decision-making clean, unbiased, and unanchored by lower-tier hallucinations, workers must report purely objective execution facts.
+  * Factual Interface Only: Worker reports must strictly omit subjective narratives, governance theories, or speculative blocker rationalizations. Reports must contain only `action` (command/edit), `result` (exit code + concise relevant error snippet), `worktree`, `changed_files`, and `validation`. The higher tier uses these objective facts to reason cleanly without inheriting worker excuses.
+  * Zero Passive Audits: Every orchestration turn must advance concrete code or configuration progress. Read-only audits or checklists must never halt implementation.
 - Fire-and-forget orchestration: when delegating to subagents, provide bounded scope, clear testable acceptance criteria, and explicit self-verification commands (test suite, linters, git diff inspection). Subagents must execute autonomously to completion in their dedicated worktree and self-verify before submitting. Eliminate continuous progress check-ins and babysitting; managers issue a single blocking wait.
 - Model routing hierarchy:
   * Tier 0 (Root Manager): Sol (`gpt-5.6-sol`) project manager and orchestration lead. Pure high-level goal decomposition, domain routing, and compact synthesis. Never directly executes code, inspects files, or queries memory.

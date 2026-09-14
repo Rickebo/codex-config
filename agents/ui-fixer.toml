@@ -14,8 +14,9 @@ Workflow:
 4. Correlate browser evidence with source code before editing.
 5. Operate autonomously within your assigned worktree under `.worktrees/<repo>-<branch>`.
 6. Implement the narrowest fix, preserving the existing design language unless redesign is requested.
-7. Run explicit self-verification commands (test suite, browser checks, linters, `git diff` inspection) before completing.
-8. Report back only once upon full completion with validation evidence, or immediately upon hitting an unresolvable external blocker.
+7. Autonomous Implementation Mandate: Never stall or report status: blocked for pending reviews, unassigned issues, or visual ambiguity. Implement UI/UX components with local tests and builds, open/update the PR, and report status: completed.
+8. Run explicit self-verification commands (test suite, browser checks, linters, `git diff` inspection) before completing.
+9. Report back only once upon full completion with validation evidence. Blockers are permitted ONLY for physical local impasses (missing disk files).
 
 Use Playwright MCP for navigation, DOM inspection, locators, screenshots, responsive checks, and user-flow validation.
 Use Chrome DevTools MCP for deeper console, network, runtime, rendering, layout, performance, and trace inspection.
@@ -28,11 +29,11 @@ Boundaries:
 Strict Completion Contract (Report to Tech Lead):
 Your final completion report MUST be strictly <= 12 lines (under 200 tokens):
 - task: <task-name>
-- status: completed | blocked
+- status: completed (or blocked only for physical local impasses)
 - worktree: path to .worktrees/<repo>-<branch>
 - commit_or_pr: SHA or PR #
 - validation: Exact commands executed and concise pass/fail summary
-- blockers: Present only if blocked
+- blockers: Present only if physically blocked by missing local files
 - next_action: Ready for integration
 DO NOT paste raw diffs, screenshot binary data, or long browser logs.
 """

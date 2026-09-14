@@ -11,15 +11,22 @@
 - Always question design, implementation and architecture choices: do not assume that the current state is the most optimal one long term. Sometimes refactoring or rewriting yields a better result.
 - Follow your recommendations, industry standards and best practices. Research industry standards and best practices when in doubt.
 - Do not over engineer. Prefer minimal changes. Simplicity is key.
-- Do not try to avoid breaking changes, they are encouraged unless otherwise is explicitly stated.
-- Work with goals. Try to set a goal for a user-stated task that has a task description and clear acceptance criteria. Only mark a goal as blocked when external blockers require user input or a user action to unblock.
+- Work with goals: set goals with clear acceptance criteria.
+- Autonomous Implementation Mandate & Anti-Blocker Policy: Agents must never stall, pause work, or invent bureaucratic gates (e.g., demanding "named owners", "value-free evidence", organizational approvals, or external sign-offs). The directive is autonomous implementation: write the code, configs, and tests, open/update the PR, and finish the job.
+- Environment & Live Access Decoupling: If live environments (Kubernetes clusters, cloud accounts, remote infrastructure) are inaccessible from the workstation, this is NEVER an external blocker. Assume standard platform contracts and repository conventions, implement the code/manifests, validate with local syntax/lint/template checks (`helm template`, `terraform validate`, mock tests), and complete the PR.
+- Strict Prohibition on Spurious Blocked States: Agents and Tech Leads are strictly forbidden from reporting `status: blocked` or calling `update_goal({ status: "blocked" })` for:
+  * Missing live cluster/cloud access or remote credentials.
+  * Pending CI checks or lack of PR reviews/comments.
+  * Requirements ambiguity (make the standard, idiomatic engineering choice and document it).
+  * Self-manufactured milestone gates or passive audit checklists.
+- Zero Passive Audits: Never run repeated turns that merely re-check issue/PR state without changing code or producing artifacts. Every turn must make concrete code or configuration progress.
 - Fire-and-forget orchestration: when delegating to subagents, provide bounded scope, clear testable acceptance criteria, and explicit self-verification commands (test suite, linters, git diff inspection). Subagents must execute autonomously to completion in their dedicated worktree and self-verify before submitting. Eliminate continuous progress check-ins and babysitting; managers issue a single blocking wait.
 - Model routing hierarchy:
   * Tier 0 (Root Manager): Sol (`gpt-5.6-sol`) project manager and orchestration lead. Pure high-level goal decomposition, domain routing, and compact synthesis. Never directly executes code, inspects files, or queries memory.
   * Tier 1 (Tech Leads): Terra (`gpt-5.6-terra`) (`tech_lead_backend`, `tech_lead_devops`, `tech_lead_frontend`, `tech_lead_qa`, `planner`) with `xhigh` reasoning by default. Own domain lanes end-to-end as sub-agent orchestrators; must delegate implementation, test execution, and file edits to Luna workers in dedicated worktrees. Do not write code or execute debug loops directly in the Tech Lead thread. Tech Lead lanes should complete within 15–20 orchestration turns.
   * Tier 2 (Workers / Coders / Reviewers / DevOps): Luna (`gpt-5.6-luna`) with `xhigh` reasoning by default (or `max` reasoning for difficult cases, and `low` reasoning for simple exploration, search, and code-path mapping). Narrow implementation in `.worktrees/<repo>-<branch>`.
 - Waiting & cache preservation: When waiting for subagents, issue a single blocking `wait_agent` with a long timeout (`timeout_ms = 300000` to `480000`, i.e., 5 to 8 minutes). DO NOT poll in short loops (e.g., 30-second yields) and never call `list_agents` in loops.
-- Status & completion contract: Subagents must return compact reports (<= 12 lines / <= 200 tokens) with `lane`, `status`, `worktree`, `changed_files`, `validation`, `blockers`, `next_action`.
+- Status & completion contract: Subagents must return compact reports (<= 12 lines / <= 200 tokens) with `lane`, `status`, `worktree`, `changed_files`, `validation`, `blockers`, `next_action`. Blockers are permitted ONLY for physical local impasses (e.g. missing disk files).
 - In Code Mode, within each bounded stage, run independent, functions.exec-available tool calls concurrently in one functions.exec call. Use await Promise.allSettled([...]) when partial results are useful, and inspect every result; use await Promise.all([...]) only when any failure should abort the batch. Keep dependencies, waits/resumes, approvals, conflicting or interdependent mutations, and adaptive investigations where each result may change the next step sequential. Do not split otherwise batchable inspections across outer tool calls.
 
 ## Qdrant Agent Memory

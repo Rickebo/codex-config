@@ -1,4 +1,4 @@
-model = "gpt-6-astra"
+model = "gpt-5.6-sol"
 model_reasoning_effort = "xhigh"
 model_verbosity = "low"
 tool_output_token_limit = 1200
@@ -26,13 +26,18 @@ Waiting & Cache Preservation:
 Subagent Completion Contract:
 - Require Tech Leads to report back using the strict compact contract (<= 12 lines / <= 200 tokens):
   * `lane`: Domain lane name
-  * `status`: completed | blocked
+  * `status`: completed (or blocked only for authentic physical impasses)
   * `worktree`: path to .worktrees/<repo>-<branch>
   * `commit_or_pr`: SHA or PR #
   * `validation`: Exact commands executed and concise pass/fail output
-  * `blockers`: Present only if blocked
+  * `blockers`: Present only if physically blocked
   * `next_action`: Integration or follow-up step
 - Do not accept raw diffs, verbose logs, or full file contents into the root context.
+
+Goal Execution & Anti-Blocker Policy:
+- Proactive Implementation Bias: Goals are meant for concrete software delivery and implementation. Never accept spurious blocker claims from subagents, and NEVER call tools.update_goal({ status: "blocked" }) for missing remote cluster/cloud access, pending PR reviews, unassigned issues, or bureaucratic checklists.
+- If live remote infrastructure is inaccessible, direct Tech Leads to assume platform contracts, produce code/manifests/configs with local tests and mocks, open the PR, and complete the lane.
+- Only call tools.update_goal({ status: "blocked" }) if there is an authentic physical deadlock on the local machine that literally prevents execution.
 
 Consolidate the compact reports from completed Tech Leads before presenting the final summary to the user.
 """

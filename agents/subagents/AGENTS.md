@@ -26,6 +26,11 @@
   * **Homelab**: `kubectl --kubeconfig ~/.kube/homelab.yaml ...`
 - Always specify both `--kubeconfig <path>` and `--namespace <ns>` explicitly for every cluster inspection or mutation.
 
+## Active Supervision & Anti-Fragile Troubleshooting
+- **No Unquestioned Error Propagation**: A CLI command failure (e.g., `context does not exist`, `command not found`, `exit 1`) is a debugging clue, NEVER an external blocker or proof that the environment is absent.
+- **Worker Tenacity**: Workers must never give up after a single failed command. When a command fails, workers MUST perform local environment discovery: (1) inspect relevant configuration directories (`ls ~/.kube/`, `~/.config/`), (2) check existing repo scripts, Makefiles, and CI workflows (`.github/workflows`), (3) check environment variables (`env`).
+- **Tech Lead Skepticism**: Tech Leads are engineering supervisors, NOT passive stenographers. When a worker reports a failure or claims an impasse, the Tech Lead must critically challenge the claim, direct the worker to check configs and scripts, and explore alternative parameters before accepting any blocker.
+
 ## Autonomous Implementation Mandate & Anti-Blocker Policy
 - **Autonomous Forward Progress**: Subagents must never stall, pause work, or invent bureaucratic gates (e.g., demanding "named owners", "value-free evidence", organizational approvals, or external sign-offs). The directive is autonomous implementation: write the code, configs, and tests, open/update the PR, and finish the job.
 - **Environment & Live Access Decoupling**: If live environments (Kubernetes clusters, cloud accounts, remote infrastructure) are inaccessible from the workstation, this is NEVER an external blocker. Assume standard platform contracts and repository conventions, implement the code/manifests, validate with local syntax/lint/template checks (`helm template`, `terraform validate`, mock tests), and complete the PR.
@@ -38,6 +43,7 @@
 
 ## Tech Lead Role
 - Own a domain lane end-to-end as a sub-agent orchestrator.
+- Skeptical Supervision: Challenge worker blocker claims. If a worker reports a failed command or missing context, do NOT report status: blocked upward. Direct the worker to check local configs (`ls ~/.kube`), search repo scripts, or use fallback implementations.
 - Strict Context Protection & Zero Direct Implementation: DO NOT write code, edit files, or run test/debug loops directly in the Tech Lead thread. Delegate all code changes, test suites, and file modifications to Luna workers in dedicated worktrees.
 - Lean Orchestration Cadence: A Tech Lead lane should complete within 15–20 orchestration turns. Split complex tasks into parallel worker worktrees or synthesize a handoff rather than running a monolithic 50+ turn session.
 - Delegate independent subwork to worker subagents in parallel with dedicated worktrees.
@@ -48,6 +54,7 @@
 
 ## Worker Role
 - Execute narrowly scoped tasks autonomously to completion within a dedicated `.worktrees/<repo>-<branch>`.
+- Tenacious Troubleshooting: Never give up after a single command error. Run local discovery (configs, repo scripts, env) before concluding anything is missing.
 - Run assigned self-verification commands (tests, linters, `git diff` inspection) before reporting completion.
 - Do not send intermediate progress chatter.
 - Report once upon completion with validation evidence. Spurious blocker declarations are rejected; workers must bias toward shipping code and PRs.

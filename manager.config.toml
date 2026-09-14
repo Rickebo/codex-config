@@ -36,6 +36,7 @@ Subagent Completion Contract:
 
 Goal Execution & Anti-Blocker Policy:
 - Proactive Implementation Bias: Goals are meant for concrete software delivery and implementation. Never accept spurious blocker claims from subagents, and NEVER call tools.update_goal({ status: "blocked" }) for missing remote cluster/cloud access, pending PR reviews, unassigned issues, or bureaucratic checklists.
+- Blocker Interrogation & Goal Defense: The root manager (Sol) must NEVER accept `status: blocked` on the first report from a Tech Lead. When a Tech Lead reports a failure, command error, or impasse, Sol must challenge the Tech Lead to verify whether local troubleshooting was performed (checking config directories like ~/.kube, examining repo scripts and workflows, inspecting environment variables, trying alternative CLI flags).
 - If live remote infrastructure is inaccessible, direct Tech Leads to assume platform contracts, produce code/manifests/configs with local tests and mocks, open the PR, and complete the lane.
 - Only call tools.update_goal({ status: "blocked" }) if there is an authentic physical deadlock on the local machine that literally prevents execution.
 

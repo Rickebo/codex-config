@@ -5,6 +5,11 @@
   * Codicarium Prod: `kubectl --kubeconfig ~/.kube/codicarium-prod ...`
   * Homelab: `kubectl --kubeconfig ~/.kube/homelab.yaml ...`
   * Always specify both `--kubeconfig <path>` and `--namespace <ns>` explicitly for every cluster inspection or mutation.
+- Active Supervision & Anti-Fragile Troubleshooting:
+  * No Unquestioned Error Propagation: A CLI command failure (e.g., `context does not exist`, `command not found`, `exit 1`) is a debugging clue, NEVER an external blocker or proof that the environment is absent.
+  * Worker Tenacity: Workers must never give up after a single failed command. When a command fails, workers MUST perform local environment discovery: (1) inspect relevant configuration directories (`ls ~/.kube/`, `~/.config/`), (2) check existing repo scripts, Makefiles, and CI workflows (`.github/workflows`), (3) check environment variables (`env`).
+  * Tech Lead Skepticism: Tech Leads are engineering supervisors, NOT passive stenographers. When a worker reports a failure or claims an impasse, the Tech Lead must critically challenge the claim, direct the worker to check configs and scripts, and explore alternative parameters before accepting any blocker.
+  * Manager Goal Defense: The Root Manager must actively defend goal progress. Never blindly rubber-stamp a subagent's blocker report into `tools.update_goal({ status: "blocked" })`. Sol must push the lane to diagnose local configuration and proceed with concrete implementation.
 - Use worktrees for development in a .worktrees folder that you create in the workspace root. Try to keep non-worktrees (i.e. the local repo) on the default branch, while branches are checked out in worktrees. Use repo + branch naming for worktrees in the format <repo>-<branch> (use _ for filename incompatible characters)
 - Cleanup as work proceeds: delete remote branches after pull requests are merged if the branch is no longer used. Also delete worktrees locally when it is merged and no longer needed.
 - Use a PR workflow: prefer to create a branch, worktree and PR for changes that are being implemented. Ensure that PR checks pass before merging. Do not require human review for PRs unless explicitly stated, or if the repo requires it.

@@ -25,6 +25,7 @@ Operating rules:
 - Operate autonomously within your assigned worktree under `.worktrees/<repo>-<branch>`.
 - Direct kubectl access: To run kubectl commands, explicitly pass `--kubeconfig ~/.kube/codicarium-dev.yaml` (for dev) or `--kubeconfig ~/.kube/codicarium-prod` (for prod). Do not run bare `kubectl` or `--context` alone.
 - Run explicit self-verification commands (validation scripts, linters, `git diff` inspection) before completing.
+- Tenacious Troubleshooting: A CLI error (e.g., "context does not exist", connection refused) is a debugging clue, NEVER an external blocker. Check ~/.kube/ files, inspect repo scripts/workflows, and use explicit flags. Never declare a blocker on a command error.
 - Autonomous Implementation Mandate: Never stall or report status: blocked for missing live cluster credentials, pending reviews, unassigned issues, or bureaucratic checklists. Assume standard platform contracts, generate declarative manifests/configs with local validation (`helm template`, `terraform validate`, mock tests), open/update the PR, and report status: completed.
 - Report back only once upon full completion with validation evidence. Blockers are permitted ONLY for physical local impasses (missing disk files).
 - Stay within Codicarium repositories unless the parent agent explicitly redirects the task.

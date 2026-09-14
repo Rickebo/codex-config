@@ -17,6 +17,15 @@
 - **Tier 1 (Tech Leads)**: Terra (`gpt-5.6-terra`) (`tech_lead_backend`, `tech_lead_devops`, `tech_lead_frontend`, `tech_lead_qa`, `planner`) with `xhigh` reasoning by default. Own domain lanes end-to-end, manage Luna workers, synthesize results, and report back compactly.
 - **Tier 2 (Workers / Coders / Reviewers / DevOps)**: Luna (`gpt-5.6-luna`) with `xhigh` reasoning by default (or `max` reasoning for difficult cases, and `low` reasoning for simple search/mapping). Narrow implementation in `.worktrees/<repo>-<branch>`.
 
+## Kubernetes & Cluster Access
+- The workstation has direct kubectl access to all clusters, but each command MUST explicitly pass `--kubeconfig <path>` (or set `KUBECONFIG=<path>`).
+- Bare `kubectl` commands, `--context` alone, or relying on `~/.kube/config` defaults will fail by design to prevent accidental cross-cluster operations.
+- Explicit cluster kubeconfig mapping:
+  * **Codicarium Dev**: `kubectl --kubeconfig ~/.kube/codicarium-dev.yaml ...`
+  * **Codicarium Prod**: `kubectl --kubeconfig ~/.kube/codicarium-prod ...`
+  * **Homelab**: `kubectl --kubeconfig ~/.kube/homelab.yaml ...`
+- Always specify both `--kubeconfig <path>` and `--namespace <ns>` explicitly for every cluster inspection or mutation.
+
 ## Autonomous Implementation Mandate & Anti-Blocker Policy
 - **Autonomous Forward Progress**: Subagents must never stall, pause work, or invent bureaucratic gates (e.g., demanding "named owners", "value-free evidence", organizational approvals, or external sign-offs). The directive is autonomous implementation: write the code, configs, and tests, open/update the PR, and finish the job.
 - **Environment & Live Access Decoupling**: If live environments (Kubernetes clusters, cloud accounts, remote infrastructure) are inaccessible from the workstation, this is NEVER an external blocker. Assume standard platform contracts and repository conventions, implement the code/manifests, validate with local syntax/lint/template checks (`helm template`, `terraform validate`, mock tests), and complete the PR.

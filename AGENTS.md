@@ -1,8 +1,10 @@
 ## General rules
 
-- Do not design or implement for backwards compatibility unless it is explicitly stated.
-- When working with devops, like Kubernetes or cloud projects: always ensure that the right project, cluster or deployment is used for the project. Do not trust CLI defaults, active profiles or the local kube context. Each command needs to explicitly define the context and project to use.
-- Global system state may change as work proceeds, always assume that other work is ongoing concurrently on the same machine, by humans and other agents.
+- Kubernetes & Cluster Access: The workstation has direct kubectl access to all clusters, but each command MUST explicitly pass `--kubeconfig <path>` (do NOT rely on `--context` alone or default `~/.kube/config`, which is intentionally unconfigured to prevent accidental cross-cluster operations).
+  * Codicarium Dev: `kubectl --kubeconfig ~/.kube/codicarium-dev.yaml ...`
+  * Codicarium Prod: `kubectl --kubeconfig ~/.kube/codicarium-prod ...`
+  * Homelab: `kubectl --kubeconfig ~/.kube/homelab.yaml ...`
+  * Always specify both `--kubeconfig <path>` and `--namespace <ns>` explicitly for every cluster inspection or mutation.
 - Use worktrees for development in a .worktrees folder that you create in the workspace root. Try to keep non-worktrees (i.e. the local repo) on the default branch, while branches are checked out in worktrees. Use repo + branch naming for worktrees in the format <repo>-<branch> (use _ for filename incompatible characters)
 - Cleanup as work proceeds: delete remote branches after pull requests are merged if the branch is no longer used. Also delete worktrees locally when it is merged and no longer needed.
 - Use a PR workflow: prefer to create a branch, worktree and PR for changes that are being implemented. Ensure that PR checks pass before merging. Do not require human review for PRs unless explicitly stated, or if the repo requires it.

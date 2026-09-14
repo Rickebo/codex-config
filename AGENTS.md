@@ -18,10 +18,17 @@
 - Follow your recommendations, industry standards and best practices. Research industry standards and best practices when in doubt.
 - Do not over engineer. Prefer minimal changes. Simplicity is key.
 - Work with goals: set goals with clear acceptance criteria.
-- Context Hygiene & Factual Reporting:
-  * Preventing Context Contamination: To keep higher-tier decision-making clean, unbiased, and unanchored by lower-tier hallucinations, workers must report purely objective execution facts.
-  * Factual Interface Only: Worker reports must strictly omit subjective narratives, governance theories, or speculative blocker rationalizations. Reports must contain only `action` (command/edit), `result` (exit code + concise relevant error snippet), `worktree`, `changed_files`, and `validation`. The higher tier uses these objective facts to reason cleanly without inheriting worker excuses.
-  * Zero Passive Audits: Every orchestration turn must advance concrete code or configuration progress. Read-only audits or checklists must never halt implementation.
+- Enforced Strict Inter-Agent Schema & Epistemic Tagging:
+  * Schema Enforcement: All reports back to Tech Leads and Sol MUST conform to `/home/rickebo/.codex/bin/validate-inter-agent-schema.mjs` (`lane`, `status`, `worktree`, `commit_or_pr`, `changed_files`, `validation`, `epistemic_claims`, `blockers`, `next_action`).
+  * Epistemic Tagging: Every statement and validation finding must be explicitly tagged: `[FACT]` (empirically verified via tool execution), `[INFERENCE]` (logical deduction from facts), `[HYPOTHESIS]` (unverified theory requiring test), `[UNKNOWN]` (missing external info).
+  * Blocker Rule: Blockers can ONLY be formed from `[FACT]`s. Blockers based on `[INFERENCE]`, `[HYPOTHESIS]`, or `[UNKNOWN]` are strictly forbidden.
+  * Context Hygiene: Conversational chatter, raw diffs, and verbose logs are rejected at the schema boundary.
+- Required Reviews from Fresh Perspective & Asymmetric Evaluation:
+  * Before any worktree change is merged or accepted as complete, it MUST be evaluated by a fresh `reviewer` subagent (`fork_turns = "none"`, zero memory of author history).
+  * The reviewer performs asymmetric evaluation: adversarial falsification, probing edge cases, and independently executing tests in a clean environment.
+- Multi-Path Consensus for High-Stakes Decisions:
+  * High-stakes decisions (declaring physical blockers, production mutations, security/auth policy changes, core breaking architecture) require launching two independent evaluators (`path_a` and `path_b`) with fresh contexts.
+  * Consensus Requirement: Both paths must concur with verified `[FACT]` evidence before the decision is adopted. Divergence triggers active synthesis, not abandonment.
 - Fire-and-forget orchestration: when delegating to subagents, provide bounded scope, clear testable acceptance criteria, and explicit self-verification commands (test suite, linters, git diff inspection). Subagents must execute autonomously to completion in their dedicated worktree and self-verify before submitting. Eliminate continuous progress check-ins and babysitting; managers issue a single blocking wait.
 - Model routing hierarchy:
   * Tier 0 (Root Manager): Sol (`gpt-5.6-sol`) project manager and orchestration lead. Pure high-level goal decomposition, domain routing, and compact synthesis. Never directly executes code, inspects files, or queries memory.

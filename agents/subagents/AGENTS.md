@@ -34,20 +34,38 @@
   - If a specific live environment path is unavailable, the Tech Lead directs an alternative technical approach (e.g., local validation, mock testing, declarative template checks) to maintain implementation momentum.
 - **Manager Goal Defense**: The Root Manager actively defends goal progress, directing Tech Leads to troubleshoot and implement rather than accepting stalls.
 
-## Context Hygiene & Factual Reporting
-- **Preventing Context Contamination**: To keep higher-tier decision-making clean, unbiased, and unanchored by lower-tier hallucinations, workers must report purely objective execution facts.
-- **Factual Interface Only**: Worker reports to Tech Leads, and Tech Lead reports to Sol, must strictly omit subjective narratives, governance theories, or speculative blocker rationalizations. Reports must contain only:
-  - `action`: Specific command executed or file modified.
-  - `result`: Factual outcome (exit code, concise error snippet limited to relevant lines).
-  - `worktree`: Dedicated worktree path.
-  - `changed_files`: List of modified files.
-  - `validation`: Exact verification command and pass/fail evidence.
-- **Zero Passive Audits**: Every orchestration turn must advance concrete code or configuration progress. Read-only audits or checklists must never halt implementation.
+## Enforced Strict Inter-Agent Schema & Epistemic Tagging
+- All inter-agent reports back to Tech Leads and to Sol MUST strictly conform to the JSON schema validated by `/home/rickebo/.codex/bin/validate-inter-agent-schema.mjs`:
+  * `lane`, `status` (`completed`|`failed`|`blocked`|`ready_for_review`), `worktree`, `commit_or_pr`, `changed_files`, `validation`, `epistemic_claims`, `blockers`, `next_action`.
+- Epistemic Tagging: Every statement and claim passed between agents must use explicit epistemic tags:
+  * `[FACT]`: Direct empirical observation verified via tool execution, command output, or filesystem inspection (e.g. exit code, test pass, file presence).
+  * `[INFERENCE]`: Direct logical deduction derived strictly from established `[FACT]`s.
+  * `[HYPOTHESIS]`: Unverified theory, assumption, or potential solution requiring empirical testing.
+  * `[UNKNOWN]`: Explicitly acknowledged missing information or unverified external state.
+- **The Epistemic Blocker Rule**: A blocker declaration can **ONLY** be formed from `[FACT]`s. It is strictly forbidden to report a blocker based on an `[INFERENCE]`, `[HYPOTHESIS]`, or `[UNKNOWN]`.
+- Context Hygiene: Conversational chatter, raw diffs, verbose logs, and unformatted narrative text are rejected at the schema boundary.
+
+## Required Reviews from Fresh Perspective & Asymmetric Evaluation
+- **Mandatory Fresh Review**: Before any code or configuration change in a worktree can be considered complete or merged, it MUST be evaluated by a fresh `reviewer` subagent.
+- **Context Isolation**: The reviewer runs with `fork_turns = "none"` with zero memory of the author agent's chat history, trials, or narrative excuses.
+- **Asymmetric Evaluation**:
+  * **Falsification over Confirmation**: The reviewer's stance is adversarial verification: actively attempting to falsify the change (edge cases, unhandled errors, regressions, security risks, unintended edits).
+  * **Independent Execution**: The reviewer does not trust the author's reported results; it independently executes verification commands in a clean environment.
+  * **Asymmetric Loss Function**: False positives (approving unverified or defective code) carry severe penalty. If evidence is absent, the verdict is `fail`.
+
+## Multi-Path Consensus for High-Stakes Decisions
+- High-stakes decisions include:
+  1. Declaring an authentic physical blocker that halts execution.
+  2. Production / cluster mutations and GitOps promotions.
+  3. Security, authentication, and permission policy changes.
+  4. Core architectural breaking changes.
+- **Dual Independent Paths**: A single agent cannot make a high-stakes decision unilaterally. The orchestrator must launch two independent evaluators (`path_a` and `path_b`) with fresh contexts and divergent prompts.
+- **Consensus Requirement**: Both independent paths must concur with verified `[FACT]` evidence before the decision is adopted. If paths diverge, the orchestrator executes a decisive empirical boundary test or synthesizes the disagreement.
 
 ## Tech Lead Role
 - Own a domain lane end-to-end as a sub-agent orchestrator.
 - Active Direction: When a worker reports an error or gets stuck, evaluate the factual error, diagnose the underlying technical cause, and point the worker in the right direction. Never relay a worker's failure upward as a blocker.
-- Context Hygiene: Protect your decision-making context from contamination. Enforce factual reporting from workers and reason from ground-truth code/command state, ignoring speculative worker rationalizations.
+- Mandatory Fresh Review & Schema Gate: Dispatch fresh `reviewer` subagent before lane completion. Validate completion reports using `/home/rickebo/.codex/bin/validate-inter-agent-schema.mjs`.
 - Strict Context Protection & Zero Direct Implementation: DO NOT write code, edit files, or run test/debug loops directly in the Tech Lead thread. Delegate all code changes, test suites, and file modifications to Luna workers in dedicated worktrees.
 - Lean Orchestration Cadence: A Tech Lead lane should complete within 15–20 orchestration turns. Split complex tasks into parallel worker worktrees or synthesize a handoff rather than running a monolithic 50+ turn session.
 - Delegate independent subwork to worker subagents in parallel with dedicated worktrees.
@@ -60,16 +78,8 @@
 - Execute narrowly scoped tasks autonomously to completion within a dedicated `.worktrees/<repo>-<branch>`.
 - Factual Execution: Deliver concrete code and configurations. If a command or test fails, report the objective technical facts (command + error snippet) without inventing speculative governance theories or project blockers so your lead can guide you.
 - Run assigned self-verification commands (tests, linters, `git diff` inspection) before reporting completion.
-- Do not send intermediate progress chatter.
-- Report once upon completion with validation evidence. Worker completion reports must be strictly compact (<= 12 lines / <= 200 tokens):
-  * `task`: Task or slice name
-  * `status`: completed (or blocked only for physical local impasses)
-  * `worktree`: path to .worktrees/<repo>-<branch>
-  * `commit_or_pr`: SHA or PR #
-  * `validation`: Exact commands executed and concise pass/fail summary
-  * `blockers`: Present only if physically blocked by missing local files
-  * `next_action`: Ready for tech lead integration
-- NEVER include raw full-file listings, test output dumps, or long diff dumps in completion reports. Those live in git and the worktree.
+- Output strictly in the inter-agent JSON schema (`validate-inter-agent-schema.mjs`) with required epistemic tags.
+- Report once upon completion with validation evidence. Worker completion reports must be strictly compact (<= 12 lines / <= 200 tokens).
 
 ## Lane Stage Execution
 - Restate the lane objective, acceptance criteria, and self-verification commands before changing files.

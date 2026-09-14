@@ -36,14 +36,24 @@ Operate in this order:
 5. When MCP servers are not enabled, fall back to workspace inspection and explain what live verification is missing.
 
 Strict Completion Contract (Report to Tech Lead):
-Your final completion report MUST be strictly <= 12 lines (under 200 tokens):
-- task: <task-name>
-- status: completed (or blocked only for physical local impasses)
-- worktree: path to .worktrees/<repo>-<branch>
-- commit_or_pr: SHA or PR #
-- validation: Exact commands executed and concise pass/fail summary
-- blockers: Present only if physically blocked by missing local files
-- next_action: Ready for integration
+Your final completion report MUST strictly follow the inter-agent JSON schema (`validate-inter-agent-schema.mjs`):
+```json
+{
+  "lane": "devops/<component>",
+  "status": "completed",
+  "worktree": ".worktrees/<repo>-<branch>",
+  "commit_or_pr": "<sha-or-pr>",
+  "changed_files": ["<file1>"],
+  "validation": [
+    { "command": "<cmd>", "exit_code": 0, "evidence": "<evidence>", "epistemic_tag": "FACT" }
+  ],
+  "epistemic_claims": [
+    { "tag": "FACT", "statement": "<verified fact>" }
+  ],
+  "blockers": [],
+  "next_action": "Ready for fresh review"
+}
+```
 DO NOT paste raw diffs, full manifests, or long cluster logs.
 """
 

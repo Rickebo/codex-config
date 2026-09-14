@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rickebo.local/codex/inter-agent-report.schema.json",
+  "title": "Codex Strict Inter-Agent Report",
+  "type": "object",
+  "required": [
+    "lane",
+    "status",
+    "worktree",
+    "changed_files",
+    "validation",
+    "epistemic_claims",
+    "blockers",
+    "next_action"
+  ],
+  "properties": {
+    "lane": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 120
+    },
+    "status": {
+      "type": "string",
+      "enum": ["completed", "failed", "blocked", "ready_for_review"]
+    },
+    "worktree": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200
+    },
+    "commit_or_pr": {
+      "type": "string",
+      "maxLength": 80
+    },
+    "changed_files": {
+      "type": "array",
+      "maxItems": 20,
+      "items": {
+        "type": "string",
+        "maxLength": 240
+      }
+    },
+    "validation": {
+      "type": "array",
+      "maxItems": 8,
+      "items": {
+        "type": "object",
+        "required": ["command", "exit_code", "evidence", "epistemic_tag"],
+        "properties": {
+          "command": { "type": "string", "maxLength": 240 },
+          "exit_code": { "type": "integer" },
+          "evidence": { "type": "string", "maxLength": 280 },
+          "epistemic_tag": { "type": "string", "enum": ["FACT"] }
+        },
+        "additionalProperties": false
+      }
+    },
+    "epistemic_claims": {
+      "type": "array",
+      "maxItems": 6,
+      "items": {
+        "type": "object",
+        "required": ["tag", "statement"],
+        "properties": {
+          "tag": {
+            "type": "string",
+            "enum": ["FACT", "INFERENCE", "HYPOTHESIS", "UNKNOWN"]
+          },
+          "statement": { "type": "string", "minLength": 1, "maxLength": 240 }
+        },
+        "additionalProperties": false
+      }
+    },
+    "blockers": {
+      "type": "array",
+      "maxItems": 3,
+      "items": {
+        "type": "object",
+        "required": ["epistemic_tag", "command_or_resource", "error_snippet"],
+        "properties": {
+          "epistemic_tag": { "type": "string", "enum": ["FACT"] },
+          "command_or_resource": { "type": "string", "minLength": 1, "maxLength": 240 },
+          "error_snippet": { "type": "string", "minLength": 1, "maxLength": 280 }
+        },
+        "additionalProperties": false
+      }
+    },
+    "next_action": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200
+    }
+  },
+  "additionalProperties": false
+}

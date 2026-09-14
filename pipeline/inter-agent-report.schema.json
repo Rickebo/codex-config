@@ -21,7 +21,13 @@
     },
     "status": {
       "type": "string",
-      "enum": ["completed", "failed", "blocked", "ready_for_review"]
+      "enum": [
+        "completed",
+        "complete",
+        "failed",
+        "blocked",
+        "ready_for_review"
+      ]
     },
     "worktree": {
       "type": "string",
@@ -33,54 +39,117 @@
       "maxLength": 80
     },
     "changed_files": {
-      "type": "array",
-      "maxItems": 20,
-      "items": {
-        "type": "string",
-        "maxLength": 240
-      }
+      "anyOf": [
+        {
+          "type": "array",
+          "maxItems": 20,
+          "items": {
+            "type": "string",
+            "maxLength": 240
+          }
+        },
+        {
+          "type": "string",
+          "maxLength": 240
+        }
+      ]
     },
     "validation": {
       "type": "array",
       "maxItems": 8,
       "items": {
         "type": "object",
-        "required": ["command", "exit_code", "evidence", "epistemic_tag"],
+        "required": [
+          "command",
+          "evidence"
+        ],
         "properties": {
-          "command": { "type": "string", "maxLength": 240 },
-          "exit_code": { "type": "integer" },
-          "evidence": { "type": "string", "maxLength": 280 },
-          "epistemic_tag": { "type": "string", "enum": ["FACT"] }
+          "command": {
+            "type": "string",
+            "maxLength": 240
+          },
+          "exit_code": {
+            "type": "integer"
+          },
+          "evidence": {
+            "type": "string",
+            "maxLength": 280
+          },
+          "epistemic_tag": {
+            "type": "string",
+            "enum": [
+              "FACT"
+            ]
+          }
         },
         "additionalProperties": false
       }
     },
     "epistemic_claims": {
-      "type": "array",
-      "maxItems": 6,
-      "items": {
-        "type": "object",
-        "required": ["tag", "statement"],
-        "properties": {
-          "tag": {
-            "type": "string",
-            "enum": ["FACT", "INFERENCE", "HYPOTHESIS", "UNKNOWN"]
-          },
-          "statement": { "type": "string", "minLength": 1, "maxLength": 240 }
+      "anyOf": [
+        {
+          "type": "array",
+          "maxItems": 10,
+          "items": {
+            "type": "object",
+            "required": [
+              "statement"
+            ],
+            "properties": {
+              "tag": {
+                "type": "string",
+                "enum": [
+                  "FACT",
+                  "INFERENCE",
+                  "HYPOTHESIS",
+                  "UNKNOWN"
+                ]
+              },
+              "statement": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 240
+              }
+            }
+          }
         },
-        "additionalProperties": false
-      }
+        {
+          "type": "array",
+          "maxItems": 10,
+          "items": {
+            "type": "string",
+            "maxLength": 240
+          }
+        }
+      ]
     },
     "blockers": {
       "type": "array",
       "maxItems": 3,
       "items": {
         "type": "object",
-        "required": ["epistemic_tag", "command_or_resource", "error_snippet"],
+        "required": [
+          "epistemic_tag",
+          "command_or_resource",
+          "error_snippet"
+        ],
         "properties": {
-          "epistemic_tag": { "type": "string", "enum": ["FACT"] },
-          "command_or_resource": { "type": "string", "minLength": 1, "maxLength": 240 },
-          "error_snippet": { "type": "string", "minLength": 1, "maxLength": 280 }
+          "epistemic_tag": {
+            "type": "string",
+            "enum": [
+              "FACT"
+            ]
+          },
+          "command_or_resource": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 240
+          },
+          "error_snippet": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 280
+          }
         },
         "additionalProperties": false
       }
@@ -89,6 +158,49 @@
       "type": "string",
       "minLength": 1,
       "maxLength": 200
+    },
+    "verdict": {
+      "type": "string",
+      "enum": [
+        "pass",
+        "fail",
+        "PASS",
+        "FAIL"
+      ]
+    },
+    "issues": {
+      "type": "array",
+      "maxItems": 15,
+      "items": {
+        "type": "object",
+        "required": [
+          "severity",
+          "issue"
+        ],
+        "properties": {
+          "severity": {
+            "type": "string",
+            "enum": [
+              "critical",
+              "high",
+              "medium",
+              "low"
+            ]
+          },
+          "file_or_symbol": {
+            "type": "string",
+            "maxLength": 180
+          },
+          "issue": {
+            "type": "string",
+            "maxLength": 360
+          },
+          "fix_direction": {
+            "type": "string",
+            "maxLength": 240
+          }
+        }
+      }
     }
   },
   "additionalProperties": false

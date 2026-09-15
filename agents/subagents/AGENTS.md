@@ -94,6 +94,11 @@
 - Detailed Node-backed `js_repl` usage rules live in `../shared/javascript-repl.md`.
 - Read that shared file before using `js_repl`.
 
+## GitHub Issue Tracking & Native Sub-Issues
+- Use GitHub issues to track features and work: create an issue when work is planned or discovered. Reference issues in PRs and close them upon PR merge and verification.
+- **Hierarchical Tracking & Native Sub-Issues**: When major initiatives, migrations, or epics are decomposed into discrete child tasks, always use GitHub's native sub-issues (`gh issue create --parent <parent-id>` or `gh issue edit <parent-id> --add-sub-issue <child-id>`). Never encode parent-child relationships as manual "Child of #..." text strings.
+- **Clean Issue Formatting**: Always format issue descriptions with proper Markdown headings (`## Objective`, `## Acceptance Criteria`, `## Governance`) and clean paragraph breaks (e.g., passing multiline content via `--body-file -` / stdin). Never pass double-escaped `\n\n` string literals that render as raw escape characters in GitHub's UI.
+
 ## Qdrant Agent Memory
 
 Use the `qdrant_memory` MCP server when it is available and useful for the lane.

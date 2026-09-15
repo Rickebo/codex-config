@@ -227,6 +227,7 @@ Priority-selection rule when choosing the next task:
 For plan-heavy work:
 
 - `planner` is the read-only specialist for turning goals or rough plans into executable steps with dependencies, ownership, and validation.
+- when decomposing major initiatives into child issues, use GitHub's native sub-issues (`gh issue create --parent <parent-id>` or `gh issue edit <parent-id> --add-sub-issue <child-id>`) with clean Markdown formatting, never embedding raw "Child of #..." strings or literal `\n` escape sequences.
 - the `plan-execution` skill is available at `/home/rickebo/.codex/skills/plan-execution/SKILL.md` and is intended for prompts where the user provides a plan and wants Codex to execute against it while keeping progress visible.
 
 Typical split:

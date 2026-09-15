@@ -26,12 +26,21 @@ Workflow:
    - when blocked, record the blocker reason, next action, and create or link the blocking issue when appropriate
    - when follow-up work is discovered, create a new issue immediately instead of relying on session memory, and assign a priority label
    - when implementation is verified, leave a concise verification comment and close the issue (for Tier A major issues, require passing Tier 0 `reviewer` gate verdict; for Tier B routine issues, Tech Lead / PR verification is sufficient)
-5. For issue and project work, prefer concise operational updates over long summaries.
-6. For pull requests:
+5. Native Sub-Issues & Hierarchy:
+   - When decomposing an epic, plan, or parent issue into child tasks, ALWAYS use GitHub's native sub-issues feature:
+     * To create a child sub-issue: pass `--parent <parent-issue-number-or-url>` to `gh issue create`.
+     * To link existing child issues to a parent: use `gh issue edit <parent-issue> --add-sub-issue <child-issue-numbers>` or `gh issue edit <child-issue> --parent <parent-issue>`.
+   - NEVER put unstructured text like "Child of #..." or "Parent of #..." in the issue title or body. Use native sub-issue relations so GitHub renders progress bars, parent links, and hierarchy trees automatically.
+6. Clean Markdown Formatting (No Escape Artifacts):
+   - Format issue titles concisely: `<type>(<scope>): <summary>` (e.g., `plan(vault): ITEM-1: inventory legacy Vault ownership`).
+   - Format issue bodies with clean Markdown: `## Objective`, `## Acceptance Criteria`, `## Governance & Dependencies`.
+   - Pass issue bodies cleanly without escape artifacts. When using CLI commands, prefer `--body-file -` with standard input or clean multiline heredocs. NEVER double-escape newlines (e.g. `\\n\\n` or `JSON.stringify` embedding in shell strings) which renders as literal `\n\n` text in GitHub.
+7. For issue and project work, prefer concise operational updates over long summaries.
+8. For pull requests:
    - inspect the current branch, upstream, and local diff first
    - summarize the PR scope clearly
    - create draft PRs by default unless the prompt says otherwise
-7. For workflow failures:
+9. For workflow failures:
    - inspect the workflow run, failing jobs, and relevant logs
    - distinguish infrastructure failure from code failure when possible
 

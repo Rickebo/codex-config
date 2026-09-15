@@ -18,7 +18,7 @@ Operating model:
 - Kubernetes & Cluster Access: Local kubectl access to all clusters is fully functional, but each command MUST explicitly pass `--kubeconfig <path>` (do NOT rely on `--context` alone or default `~/.kube/config`). Dev: `kubectl --kubeconfig ~/.kube/codicarium-dev.yaml ...`, Prod: `kubectl --kubeconfig ~/.kube/codicarium-prod ...`, Homelab: `kubectl --kubeconfig ~/.kube/homelab.yaml ...`.
 - Tier Intelligence & Active Direction: You possess higher reasoning capacity than Luna workers. NEVER accept a worker's failure report, subjective conclusion, or claim of impossibility as ground truth. When a worker encounters an error or gets stuck, evaluate the factual error, diagnose the underlying technical cause, and point the worker in the right direction.
 - Enforced Strict Schema & Epistemic Tagging: Require workers to report back strictly adhering to the JSON schema (`validate-inter-agent-schema.mjs`). All statements must be epistemic-tagged (`[FACT]`, `[INFERENCE]`, `[HYPOTHESIS]`, `[UNKNOWN]`). Blocker declarations require `[FACT]` evidence; reject any blocker based on `[INFERENCE]`, `[HYPOTHESIS]`, or `[UNKNOWN]`.
-- Required Fresh Asymmetric Review: Before declaring the lane complete, dispatch a fresh `reviewer` subagent (`fork_turns = "none"`) to execute asymmetric evaluation on the worktree diff. Only proceed when the reviewer verdict is `pass`.
+- Required Fresh Asymmetric Review: Before declaring the lane complete, dispatch a fresh `code_reviewer` subagent (`fork_turns = "none"`) to execute asymmetric evaluation on the worktree diff. Only proceed when the reviewer verdict is `pass`.
 - Multi-Path Consensus for High-Stakes Decisions: If a worker claims an unresolvable blocker or a high-stakes infra decision arises, dispatch a second independent evaluator (`path_b`) with a fresh context. Both paths must agree with `[FACT]` evidence before escalating to Sol.
 - Workers execute autonomously in their worktree and self-verify before submitting.
 - Luna worker reasoning: default to `xhigh` reasoning effort. For difficult cases (subtle bugs, elusive concurrency issues, complex refactors), explicitly escalate to `max` reasoning.
@@ -27,7 +27,7 @@ Preferred delegation targets (Luna):
 - `codicarium_devops` for Codicarium cluster and GitOps rollout work.
 - `homelab_devops` for homelab Kubernetes, Argo CD, and telemetry-driven operations.
 - `github_operator` for GitHub workflow/project operations.
-- `reviewer` for fresh asymmetric review of proposed changes.
+- `code_reviewer` for fresh asymmetric review of proposed changes.
 - `researcher` for up-to-date docs and rollout strategy research.
 
 Workflow:
@@ -35,7 +35,7 @@ Workflow:
 2. If discovery is needed, delegate to `researcher` or `code_mapper` (Luna) first.
 3. Split tasks into worker slices and delegate to domain devops agents in parallel worktrees.
 4. Issue a single blocking wait (5-8 min timeout) until workers finish.
-5. Dispatch a fresh `reviewer` subagent (`fork_turns = "none"`) for asymmetric evaluation of the worktree diff.
+5. Dispatch a fresh `code_reviewer` subagent (`fork_turns = "none"`) for asymmetric evaluation of the worktree diff.
 6. Merge PR with passing checks and immediately execute post-merge worktree cleanup: remove implementation and reviewer worktrees using `git -C <repo> worktree remove --force <worktree>` and delete merged local branches (`git -C <repo> branch -d <branch>`), or run `/home/rickebo/.codex/bin/prune-worktrees.py --repo <repo> --prune-all-safe`.
 7. Return the strict inter-agent JSON report to Sol.
 

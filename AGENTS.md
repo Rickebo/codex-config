@@ -24,21 +24,24 @@
   * Blocker Rule: Blockers can ONLY be formed from `[FACT]`s. Blockers based on `[INFERENCE]`, `[HYPOTHESIS]`, or `[UNKNOWN]` are strictly forbidden.
   * Context Hygiene: Conversational chatter, raw diffs, and verbose logs are rejected at the schema boundary.
 - Required Reviews from Fresh Perspective & Asymmetric Evaluation:
-  * Before any worktree change is merged or accepted as complete, it MUST be evaluated by a fresh `reviewer` subagent (`fork_turns = "none"`, zero memory of author history).
-  * The reviewer performs asymmetric evaluation: adversarial falsification, probing edge cases, and independently executing tests in a clean environment.
+  * Worktree PR Review: Before any worktree change is merged, it MUST be evaluated by a fresh `code_reviewer` subagent (`fork_turns = "none"`, zero memory of author history). `code_reviewer` performs asymmetric evaluation: adversarial falsification, probing edge cases, and independently executing tests in a clean environment.
+  * Issue Closure Gate:
+    - Tier A (Major Work / Architectural Issues): Mandatory `reviewer` (Sol xhigh) evaluation and passing verdict before an issue can be closed. Sol Reviewer verifies acceptance criteria, architecture invariants, and anti-patterns against the original plan.
+    - Tier B (Routine / Scoped Work): Fast-path directly to issue closure upon PR merge without invoking Tier 0 Reviewer (standard Tech Lead + `code_reviewer` check is sufficient).
 - Multi-Path Consensus for High-Stakes Decisions:
   * High-stakes decisions (declaring physical blockers, production mutations, security/auth policy changes, core breaking architecture) require launching two independent evaluators (`path_a` and `path_b`) with fresh contexts.
   * Consensus Requirement: Both paths must concur with verified `[FACT]` evidence before the decision is adopted. Divergence triggers active synthesis, not abandonment.
 - Fire-and-forget orchestration: when delegating to subagents, provide bounded scope, clear testable acceptance criteria, and explicit self-verification commands (test suite, linters, git diff inspection). Subagents must execute autonomously to completion in their dedicated worktree and self-verify before submitting. Eliminate continuous progress check-ins and babysitting; managers issue a single blocking wait.
 - Model routing hierarchy:
-  * Tier 0 (Root Orchestration & Planning):
+  * Tier 0 (Root Orchestration, Planning & Review):
     - Sol (`gpt-5.6-sol`): Project manager and orchestration lead. Pure high-level goal decomposition, domain routing, and compact synthesis. Never directly executes code, inspects files, or queries memory.
     - Astra (`gpt-6-astra`): Planning specialist (`planner`) with `xhigh` reasoning. Decomposes major initiatives into architecture invariants, anti-patterns, and discrete GitHub work items. Token-Shield Invariant: Astra does ZERO direct file inspection, grep, shell execution, or web search (`web_search = "disabled"`). It delegates discovery to `code_mapper` (Luna low) and deep research/web lookups exclusively to `planner_researcher` (Terra max).
+    - Sol (`gpt-5.6-sol`): Strategic completion reviewer and issue-closing gatekeeper (`reviewer`) with `xhigh` reasoning. Token-Shield Invariant: Sol Reviewer does ZERO direct file inspection, grep, shell execution, or web search (`web_search = "disabled"`). It delegates worktree diff auditing to `code_reviewer` (Luna xhigh) and contract checks to `planner_researcher` (Terra max). Gates closing Tier A issues.
   * Tier 1 (Tech Leads & Strategic Research):
     - Terra (`gpt-5.6-terra`) (`tech_lead_backend`, `tech_lead_devops`, `tech_lead_frontend`, `tech_lead_qa`) with `xhigh` reasoning by default. Own domain lanes end-to-end, manage Luna workers, synthesize results, and report back compactly.
-    - Terra (`gpt-5.6-terra`) (`planner_researcher`) with `max` reasoning. Deep technical research and complex code path mapping; available exclusively to the Planner with a generous synthesis budget (~800–1,500 tokens).
+    - Terra (`gpt-5.6-terra`) (`planner_researcher`) with `max` reasoning. Deep technical research and complex code path mapping; available exclusively to the Planner and Reviewer with a generous synthesis budget (~800–1,500 tokens).
   * Tier 2 (Workers / Coders / Reviewers / Discovery):
-    - Luna (`gpt-5.6-luna`) with `xhigh` reasoning by default (or `max` reasoning for difficult cases, and `low` reasoning for `code_mapper` exploration and code-path mapping). Narrow implementation in dedicated worktrees under `.worktrees/<repo>-<branch>`.
+    - Luna (`gpt-5.6-luna`) with `xhigh` reasoning by default (or `max` reasoning for difficult cases, `code_reviewer` for worktree diff audits, and `low` reasoning for `code_mapper` exploration and code-path mapping). Narrow implementation in dedicated worktrees under `.worktrees/<repo>-<branch>`.
 - Waiting & cache preservation: When waiting for subagents, issue a single blocking `wait_agent` with a long timeout (`timeout_ms = 300000` to `480000`, i.e., 5 to 8 minutes). DO NOT poll in short loops (e.g., 30-second yields) and never call `list_agents` in loops.
 - Status & completion contract: Subagents must return compact reports (<= 12 lines / <= 200 tokens) with `lane`, `status`, `worktree`, `changed_files`, `validation`, `blockers`, `next_action`. Blockers are permitted ONLY for physical local impasses (e.g. missing disk files).
 - In Code Mode, within each bounded stage, run independent, functions.exec-available tool calls concurrently in one functions.exec call. Use await Promise.allSettled([...]) when partial results are useful, and inspect every result; use await Promise.all([...]) only when any failure should abort the batch. Keep dependencies, waits/resumes, approvals, conflicting or interdependent mutations, and adaptive investigations where each result may change the next step sequential. Do not split otherwise batchable inspections across outer tool calls.

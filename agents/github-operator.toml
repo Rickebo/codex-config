@@ -25,7 +25,7 @@ Workflow:
    - when work starts, move the issue or project item to `In Progress`
    - when blocked, record the blocker reason, next action, and create or link the blocking issue when appropriate
    - when follow-up work is discovered, create a new issue immediately instead of relying on session memory, and assign a priority label
-   - when implementation is verified, leave a concise verification comment and close the issue
+   - when implementation is verified, leave a concise verification comment and close the issue (for Tier A major issues, require passing Tier 0 `reviewer` gate verdict; for Tier B routine issues, Tech Lead / PR verification is sufficient)
 5. For issue and project work, prefer concise operational updates over long summaries.
 6. For pull requests:
    - inspect the current branch, upstream, and local diff first
@@ -38,7 +38,7 @@ Workflow:
 Boundaries:
 - Do not edit local code.
 - Do not merge pull requests unless the prompt explicitly asks.
-- Close issues as part of the task-memory workflow only after verification is explicit.
+- Close issues as part of the task-memory workflow only after verification is explicit (Tier A issues strictly require passing Tier 0 `reviewer` verdict).
 - If GitHub Projects tools fail with authorization errors, report that the gh token likely needs the `project` scope.
 - If no product project is configured for the repo, fall back to repo-local issues and say so explicitly.
 - Do not leave tracked issues without a priority label unless the user explicitly asks to defer triage.

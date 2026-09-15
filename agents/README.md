@@ -87,26 +87,32 @@ That launcher reads the bearer token from `HOMELAB_OBSERVABILITY_TOKEN` or `/hom
 - `tech_lead_devops`: infra/deploy lane ownership, coordination, and delegated environment operations
 - `tech_lead_qa`: verification lane ownership, risk review coordination, and delegated validation
 - `planner`: strategic architecture, invariant design, step decomposition, and GitHub work item planning (Astra xhigh reasoning; zero direct code inspection or web search)
-- `planner_researcher`: deep technical lookups, cross-repo code tracing, external web/docs research, and architecture tradeoffs (Terra max reasoning; exclusive to Planner with generous token budget)
+- `reviewer`: strategic completion review and issue-closing gatekeeper (Sol xhigh reasoning; zero direct code inspection or web search)
+- `planner_researcher`: deep technical lookups, cross-repo code tracing, external web/docs research, and architecture tradeoffs (Terra max reasoning; exclusive to Planner and Reviewer with generous token budget)
 - `researcher`: docs lookup, web research, strategy, planning, and current-knowledge synthesis through Perplexity/Context7/OpenAI docs plus live web search
 - `homeassistant_operator`: Home Assistant-focused inspection, configuration, and validation through the local Home Assistant MCP surface
 - `github_operator`: GitHub-focused issue, PR, workflow, and Projects operations through the GitHub MCP surface
-- `code_mapper`: read-only code path mapping
+- `code_mapper`: read-only code path mapping (Luna low reasoning)
+- `code_reviewer`: adversarial worktree diff auditing and clean-environment test validation (Luna xhigh reasoning)
 - `backend_fixer`: backend, CLI, Linux app, and non-UI implementation work
 - `ui_fixer`: unified frontend reproduction, browser debugging, visual/layout diagnosis, and implementation work
-- `reviewer`: read-only review
 
 ## Model Routing Policy
 
 Hierarchical routing is strictly enforced across three tiers:
-- **Tier 0 (Root Orchestration & Planning)**:
+- **Tier 0 (Root Orchestration, Strategic Planning & Review)**:
   * Sol (`gpt-5.6-sol`): Project manager and orchestration lead. Pure high-level goal decomposition, domain routing, and compact synthesis. Never directly executes code, inspects files, or queries memory.
   * Astra (`gpt-6-astra`): Planning specialist (`planner`) with `xhigh` reasoning. Decomposes major initiatives into architecture invariants, anti-patterns, and discrete GitHub work items. Token-Shield Invariant: Astra does ZERO direct file inspection, grep, shell execution, or web search (`web_search = "disabled"`). It delegates discovery to `code_mapper` (Luna low) and deep research/web lookups exclusively to `planner_researcher` (Terra max).
+  * Sol (`gpt-5.6-sol`): Strategic completion reviewer and issue-closing gatekeeper (`reviewer`) with `xhigh` reasoning. Token-Shield Invariant: Sol Reviewer does ZERO direct file inspection, grep, shell execution, or web search (`web_search = "disabled"`). It delegates diff auditing to `code_reviewer` (Luna xhigh) and contract checks to `planner_researcher` (Terra max). Gates closing Tier A issues.
 - **Tier 1 (Tech Leads & Strategic Research)**:
   * Terra (`gpt-5.6-terra`) (`tech_lead_backend`, `tech_lead_devops`, `tech_lead_frontend`, `tech_lead_qa`) with `xhigh` reasoning by default. Own domain lanes end-to-end, manage Luna workers, synthesize results, and report back compactly.
-  * Terra (`gpt-5.6-terra`) (`planner_researcher`) with `max` reasoning. Deep technical research and complex code path mapping; available exclusively to the Planner with a generous synthesis budget (~800–1,500 tokens).
+  * Terra (`gpt-5.6-terra`) (`planner_researcher`) with `max` reasoning. Deep technical research and complex code path mapping; available exclusively to the Planner and Reviewer with a generous synthesis budget (~800–1,500 tokens).
 - **Tier 2 (Workers / Coders / Reviewers / Discovery)**:
-  * Luna (`gpt-5.6-luna`) (`backend_fixer`, `ui_fixer`, `code_mapper`, `homelab_devops`, `codicarium_devops`, `reviewer`) with `xhigh` reasoning by default (or `max` reasoning for difficult cases, and `low` reasoning for `code_mapper` exploration and code-path mapping). Narrow implementation in dedicated worktrees under `.worktrees/<repo>-<branch>`.
+  * Luna (`gpt-5.6-luna`) (`backend_fixer`, `ui_fixer`, `code_mapper`, `homelab_devops`, `codicarium_devops`, `code_reviewer`) with `xhigh` reasoning by default (or `max` reasoning for difficult cases, `code_reviewer` for worktree diff audits, and `low` reasoning for `code_mapper` exploration and code-path mapping). Narrow implementation in dedicated worktrees under `.worktrees/<repo>-<branch>`.
+
+### Fast-Path Gating Rules
+- **Planner Fast-Path**: Tier A tasks (major architecture, cross-repo, migrations, security, high ambiguity) require `planner` (Astra xhigh) before implementation starts. Tier B tasks (single-repo bug fixes, minor bumps, routine chores) fast-path past `planner` directly to Tech Leads.
+- **Reviewer Fast-Path**: Tier A issues require `reviewer` (Sol xhigh) approval (`verdict = "pass"`) before the issue can be closed. Tier B issues fast-path directly to closure upon PR merge without invoking Tier 0 `reviewer` (standard Tech Lead + `code_reviewer` checks are sufficient).
 
 ## Delegation Policy
 

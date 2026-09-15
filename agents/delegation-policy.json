@@ -71,7 +71,14 @@
       "triggers": ["cross-repo", "multi-service", "migration", "new architecture", "spiffe", "vault-migration", "kata", "storage redesign", "high ambiguity"],
       "plan": ["planner"],
       "max_agents": 4,
-      "notes": "Root Sol must engage Tier 0 Astra Planner (xhigh) before spawning Tech Leads. Planner delegates deep research exclusively to planner_researcher (Terra max) and code_mapper (Luna low), then emits work items for GitHub issues."
+      "notes": "Root Sol must engage Tier 0 Astra Planner (xhigh) before spawning Tech Leads. Planner delegates deep research to planner_researcher (Terra max) and code_mapper (Luna low), then emits work items for GitHub issues."
+    },
+    {
+      "task_shape": "major_issue_closure_gate",
+      "triggers": ["close issue", "issue closure", "completion gate", "verify and close", "ready to close"],
+      "plan": ["reviewer"],
+      "max_agents": 3,
+      "notes": "Root Sol must engage Tier 0 Sol Reviewer (xhigh) to gate closing Tier A issues. Reviewer delegates diff auditing to code_reviewer (Luna xhigh) and contract checks to planner_researcher (Terra max)."
     },
     {
       "task_shape": "security_ci_release_high_risk",

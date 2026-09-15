@@ -13,9 +13,9 @@
 - Repository roots remain on their default branch; clean up worktrees locally after merge or completion.
 
 ## Model And Reasoning Routing
-- **Tier 0 (Root Manager)**: Sol (`gpt-5.6-sol`) project manager and orchestration lead. Pure high-level goal decomposition, domain routing, and compact synthesis. Never directly executes code, inspects files, or queries memory.
-- **Tier 1 (Tech Leads)**: Terra (`gpt-5.6-terra`) (`tech_lead_backend`, `tech_lead_devops`, `tech_lead_frontend`, `tech_lead_qa`, `planner`) with `xhigh` reasoning by default. Own domain lanes end-to-end, manage Luna workers, synthesize results, and report back compactly.
-- **Tier 2 (Workers / Coders / Reviewers / DevOps)**: Luna (`gpt-5.6-luna`) with `xhigh` reasoning by default (or `max` reasoning for difficult cases, and `low` reasoning for simple search/mapping). Narrow implementation in `.worktrees/<repo>-<branch>`.
+- **Tier 0 (Root Manager, Planning & Review)**: Sol (`gpt-5.6-sol`) project manager and orchestration lead. Pure high-level goal decomposition, domain routing, and compact synthesis. Never directly executes code, inspects files, or queries memory. Astra (`gpt-6-astra`) (`planner`, xhigh) for planning; Sol (`gpt-5.6-sol`) (`reviewer`, xhigh) for issue-closing review gate.
+- **Tier 1 (Tech Leads)**: Terra (`gpt-5.6-terra`) (`tech_lead_backend`, `tech_lead_devops`, `tech_lead_frontend`, `tech_lead_qa`) with `xhigh` reasoning by default. Own domain lanes end-to-end, manage Luna workers, synthesize results, and report back compactly. Terra (`planner_researcher`, max) for deep research and complex code mapping.
+- **Tier 2 (Workers / Coders / Reviewers / DevOps)**: Luna (`gpt-5.6-luna`) with `xhigh` reasoning by default (or `max` reasoning for difficult cases, `code_reviewer` for worktree diff audits, and `low` reasoning for simple search/mapping). Narrow implementation in `.worktrees/<repo>-<branch>`.
 
 ## Kubernetes & Cluster Access
 - The workstation has direct kubectl access to all clusters, but each command MUST explicitly pass `--kubeconfig <path>` (or set `KUBECONFIG=<path>`).
@@ -46,12 +46,13 @@
 - Context Hygiene: Conversational chatter, raw diffs, verbose logs, and unformatted narrative text are rejected at the schema boundary.
 
 ## Required Reviews from Fresh Perspective & Asymmetric Evaluation
-- **Mandatory Fresh Review**: Before any code or configuration change in a worktree can be considered complete or merged, it MUST be evaluated by a fresh `reviewer` subagent.
+- **Mandatory Fresh Review**: Before any code or configuration change in a worktree can be considered complete or merged, it MUST be evaluated by a fresh `code_reviewer` subagent.
 - **Context Isolation**: The reviewer runs with `fork_turns = "none"` with zero memory of the author agent's chat history, trials, or narrative excuses.
 - **Asymmetric Evaluation**:
-  * **Falsification over Confirmation**: The reviewer's stance is adversarial verification: actively attempting to falsify the change (edge cases, unhandled errors, regressions, security risks, unintended edits).
-  * **Independent Execution**: The reviewer does not trust the author's reported results; it independently executes verification commands in a clean environment.
+  * **Falsification over Confirmation**: The `code_reviewer`'s stance is adversarial verification: actively attempting to falsify the change (edge cases, unhandled errors, regressions, security risks, unintended edits).
+  * **Independent Execution**: The `code_reviewer` does not trust the author's reported results; it independently executes verification commands in a clean environment.
   * **Asymmetric Loss Function**: False positives (approving unverified or defective code) carry severe penalty. If evidence is absent, the verdict is `fail`.
+- **Issue Closure Gate**: Tier A major issues require independent gate verification from Tier 0 `reviewer` (Sol xhigh) against original plan invariants before GitHub issue closure. Tier B issues close directly on PR merge and Tech Lead sign-off.
 
 ## Multi-Path Consensus for High-Stakes Decisions
 - High-stakes decisions include:
@@ -65,14 +66,14 @@
 ## Tech Lead Role
 - Own a domain lane end-to-end as a sub-agent orchestrator.
 - Active Direction: When a worker reports an error or gets stuck, evaluate the factual error, diagnose the underlying technical cause, and point the worker in the right direction. Never relay a worker's failure upward as a blocker.
-- Mandatory Fresh Review & Schema Gate: Dispatch fresh `reviewer` subagent before lane completion. Validate completion reports using `/home/rickebo/.codex/bin/validate-inter-agent-schema.mjs`.
+- Mandatory Fresh Review & Schema Gate: Dispatch fresh `code_reviewer` subagent before lane completion. Validate completion reports using `/home/rickebo/.codex/bin/validate-inter-agent-schema.mjs`.
 - Strict Context Protection & Zero Direct Implementation: DO NOT write code, edit files, or run test/debug loops directly in the Tech Lead thread. Delegate all code changes, test suites, and file modifications to Luna workers in dedicated worktrees.
 - Lean Orchestration Cadence: A Tech Lead lane should complete within 15–20 orchestration turns. Split complex tasks into parallel worker worktrees or synthesize a handoff rather than running a monolithic 50+ turn session.
 - Delegate independent subwork to worker subagents in parallel with dedicated worktrees.
 - Every delegation prompt must specify: bounded scope, clear testable acceptance criteria, and explicit self-verification commands (test suite, linters, `git diff` inspection).
 - Issue a single blocking wait for worker completion (`timeout_ms = 300000..480000`, 5-8 minutes) without intermediate polling.
 - Integrate worker outputs, run a single boundary check, and verify before returning lane status.
-- Prefer concrete delegation to specialized executors (`backend_fixer`, `ui_fixer`, `code_mapper`, `reviewer`, and devops agents).
+- Prefer concrete delegation to specialized executors (`backend_fixer`, `ui_fixer`, `code_mapper`, `code_reviewer`, and devops agents).
 
 ## Worker Role
 - Execute narrowly scoped tasks autonomously to completion within a dedicated `.worktrees/<repo>-<branch>`.

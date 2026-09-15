@@ -1,0 +1,40 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Independent review fails agent-harness PR #121 head 105574b because charts/trust-service/values.schema.json IPv6 validation accepts malformed `::::/128` and mapped `0:0:0:0:0:ffff:0:1/128`; direct Draft-7 validation passes but is insufficient for semantic address correctness.",
+  "changed_files": [
+    "agent-harness PR #121 @ 105574b: charts/trust-service/values.schema.json IPv6 pattern validation"
+  ],
+  "validation": [
+    "FAIL: values.schema.json accepts malformed IPv6 `::::/128`.",
+    "FAIL: values.schema.json accepts IPv4-mapped IPv6 `0:0:0:0:0:ffff:0:1/128`.",
+    "PASS but insufficient: direct Draft-7 schema validation succeeds while semantic IPv6 parsing remains unvalidated.",
+    "No repository, GitHub, cluster, credential, merge, or direct mutation was performed by this pipeline action."
+  ],
+  "blockers": [
+    "Return PR #121 to code with strict IPv6 parsing/normalization that rejects malformed and IPv4-mapped ranges, plus focused schema/semantic tests."
+  ],
+  "next_action": "Route review failure to code; fix values.schema.json validation and tests, rerun full checks and independent review before test-stage consideration.",
+  "independent_lanes": [
+    "agent-harness trust-service values schema IPv6 semantic validation",
+    "agent-harness focused malformed/mapped IPv6 tests"
+  ],
+  "route_to": "code",
+  "risk_level": "high",
+  "issues": [
+    {
+      "id": "REVIEW-009",
+      "title": "Malformed IPv6 accepted by values schema",
+      "severity": "high",
+      "details": "charts/trust-service/values.schema.json accepts `::::/128`; Draft-7 syntax validation does not provide semantic IPv6 correctness.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REVIEW-010",
+      "title": "IPv4-mapped IPv6 range accepted by values schema",
+      "severity": "high",
+      "details": "charts/trust-service/values.schema.json accepts `0:0:0:0:0:ffff:0:1/128`; normalize and reject mapped addresses for the trust-service endpoint policy.",
+      "owner_stage": "code"
+    }
+  ]
+}

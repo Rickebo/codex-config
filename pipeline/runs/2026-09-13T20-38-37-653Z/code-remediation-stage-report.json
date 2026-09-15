@@ -1,0 +1,33 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Post-remediation code evidence: agent-harness PR #121 now at b487599 adds trusted-anchor startup fail-close and narrows explicit egress; local suite and release checks pass. vault-config PR #722 remains at 81a296c with independent review and exact-head CI passing; merge is pending.",
+  "changed_files": [
+    "agent-harness PR #121 @ b487599: trusted-anchor startup fail-close and narrowed explicit egress",
+    "vault-config PR #722 @ 81a296c: unchanged; independent review and exact-head CI pass, merge pending"
+  ],
+  "validation": [
+    "agent-harness: local 931 passed; Ruff PASS; MyPy PASS; schema PASS; Helm lint PASS; Helm template PASS; Docker build/run PASS; YAML PASS; diff checks PASS.",
+    "vault-config: commit 81a296c unchanged; independent review PASS; exact-head CI PASS; merge pending.",
+    "No repository, GitHub, cluster, credential, merge, or direct mutation was performed by this pipeline action."
+  ],
+  "blockers": [
+    "vault-config PR #722 merge remains pending despite independent review and exact-head CI PASS."
+  ],
+  "next_action": "Advance code to independent review; verify agent-harness b487599 and vault-config 81a296c at the recorded PR heads before test-stage consideration.",
+  "independent_lanes": [
+    "agent-harness trust service at PR #121 head b487599",
+    "vault-config Transit/JWT bootstrap at PR #722 head 81a296c"
+  ],
+  "route_to": "review",
+  "risk_level": "high",
+  "issues": [
+    {
+      "id": "PENDING-VAULT-MERGE",
+      "title": "Vault-config merge pending",
+      "severity": "medium",
+      "details": "PR #722 exact-head CI and independent review pass, but the merge is not yet complete.",
+      "owner_stage": "review"
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Post-hardening code evidence: agent-harness PR #121 is now head 28c6019 with normalized CIDR coverage validation rejecting IPv4/IPv6 all-address and split-union coverage, plus startup key-ID/public-key anchor mismatch tests. Vault PR #722 remains 81a296c with review and CI PASS.",
+  "changed_files": [
+    "agent-harness PR #121 @ 28c6019: normalized CIDR coverage validation and startup anchor mismatch tests",
+    "vault-config PR #722 @ 81a296c: unchanged; independent review and exact-head CI PASS"
+  ],
+  "validation": [
+    "agent-harness: local 946 passed, 7 skipped, 1 xfailed; Ruff PASS; MyPy PASS; schema PASS; Helm lint PASS; Helm render PASS; rendered-CIDR checks PASS; Docker PASS; diff checks PASS.",
+    "vault-config: commit 81a296c unchanged; independent review PASS; exact-head CI PASS.",
+    "No repository, GitHub, cluster, credential, merge, or direct mutation was performed by this pipeline action."
+  ],
+  "blockers": [
+    "vault-config PR #722 merge remains pending despite independent review and exact-head CI PASS."
+  ],
+  "next_action": "Advance code to independent review; verify agent-harness 28c6019 and vault-config 81a296c at the recorded PR heads before test-stage consideration.",
+  "independent_lanes": [
+    "agent-harness normalized CIDR broad-coverage validation at PR #121 head 28c6019",
+    "agent-harness startup public-key/key-ID anchor mismatch tests",
+    "vault-config Transit/JWT bootstrap at PR #722 head 81a296c"
+  ],
+  "route_to": "review",
+  "risk_level": "high",
+  "issues": [
+    {
+      "id": "PENDING-VAULT-MERGE",
+      "title": "Vault-config merge pending",
+      "severity": "medium",
+      "details": "PR #722 exact-head CI and independent review pass, but merge remains pending.",
+      "owner_stage": "review"
+    }
+  ]
+}

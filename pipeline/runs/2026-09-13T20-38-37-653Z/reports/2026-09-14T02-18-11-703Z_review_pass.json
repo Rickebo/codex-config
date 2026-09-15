@@ -1,0 +1,23 @@
+{
+  "stage": "review",
+  "status": "pass",
+  "summary": "Independent IPv6 review PASS for agent-harness PR #121 head a51c66b: direct Draft-7 plus Helm normal and skip-schema paths reject malformed and IPv4-mapped IPv6 while valid narrow endpoint form renders correctly; trust tests, Ruff, and MyPy are clean.",
+  "changed_files": [
+    "agent-harness PR #121 @ a51c66b: IPv6 schema/preflight and rendered-policy review evidence"
+  ],
+  "validation": [
+    "PASS: direct Draft-7 validation rejects malformed and IPv4-mapped IPv6 inputs.",
+    "PASS: Helm normal and skip-schema paths reject malformed and IPv4-mapped IPv6; valid narrow single-host form renders.",
+    "PASS: trust tests 91; Ruff PASS; MyPy PASS.",
+    "No repository, GitHub, cluster, credential, merge, or direct mutation was performed by this pipeline action."
+  ],
+  "blockers": [],
+  "next_action": "Advance to test stage and execute the independent test gate; retain the passing review evidence for the pipeline audit trail.",
+  "independent_lanes": [
+    "agent-harness IPv6 schema and Helm render review",
+    "agent-harness trust test/Ruff/MyPy review"
+  ],
+  "route_to": "test",
+  "risk_level": "high",
+  "issues": []
+}

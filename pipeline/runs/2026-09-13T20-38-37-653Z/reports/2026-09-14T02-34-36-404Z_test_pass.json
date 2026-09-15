@@ -1,0 +1,35 @@
+{
+  "stage": "test",
+  "status": "pass",
+  "summary": "Test gate PASS: agent-harness PR #121 a51c66b exact-head CI and trust/full suites pass with lint, type, schema, Helm, Docker, and fail-closed runtime evidence; vault-config PR #722 81a296c exact CI and focused Transit/generator checks pass. Protected live Vault integration and local Terraform remain deferred.",
+  "changed_files": [
+    "agent-harness PR #121 @ a51c66b: exact-head CI/test evidence",
+    "vault-config PR #722 @ 81a296c: exact-head CI/focused Transit/generator evidence"
+  ],
+  "validation": [
+    "agent-harness #121: exact-head CI PASS; trust 91/full 979 PASS; Ruff PASS; MyPy PASS; schema PASS; diff PASS; Helm direct/preflight PASS; Docker build PASS; no-env runtime fail-closed PASS.",
+    "vault-config #722: exact-head CI PASS; focused Transit 7 PASS; generator render/JSON/workflow checks PASS.",
+    "Deferred: Terraform local validation unavailable; protected live Vault integration deferred to protected validation.",
+    "No repository, GitHub, cluster, credential, merge, or direct mutation was performed by this pipeline action."
+  ],
+  "blockers": [
+    "Protected validation must execute live Vault integration and any required Terraform gate before final validation completion."
+  ],
+  "next_action": "Advance to validation; perform protected live Vault/Terraform checks with explicit dev targeting, then record validation pass or fail.",
+  "independent_lanes": [
+    "agent-harness PR #121 exact-head test evidence",
+    "vault-config PR #722 exact-head Transit/generator test evidence",
+    "protected Vault integration and Terraform validation"
+  ],
+  "route_to": "validation",
+  "risk_level": "high",
+  "issues": [
+    {
+      "id": "PENDING-PROTECTED-VAULT",
+      "title": "Protected Vault integration deferred",
+      "severity": "high",
+      "details": "Live Vault integration and local-unavailable Terraform checks remain for protected validation; no native run is authorized by this test gate.",
+      "owner_stage": "validation"
+    }
+  ]
+}

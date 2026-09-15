@@ -1,0 +1,44 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Independent final review fails PR #121 head b487599 on one high-risk NetworkPolicy broad-coverage bypass and one medium startup-anchor test gap. The policy rejects only literal /0 and can permit expanded IPv6 /0 or CIDR unions covering all addresses; startup anchor coverage omits public-key-byte and key-ID mismatch cases. CI validation remains in progress.",
+  "changed_files": [
+    "agent-harness PR #121 @ b487599: charts/trust-service/templates/networkpolicy.yaml:10",
+    "agent-harness PR #121 @ b487599: startup anchor test coverage for public-key-byte/key-ID mismatch"
+  ],
+  "validation": [
+    "FAIL HIGH: NetworkPolicy validation rejects only literal /0; normalized expanded IPv6 /0 and CIDR unions covering all addresses remain admissible. Require normalized broad-coverage rejection and tests.",
+    "FAIL MEDIUM: startup anchor test lacks public-key-byte mismatch and key-ID mismatch cases; add both fail-closed tests.",
+    "PENDING: CI validation is in progress.",
+    "No repository, GitHub, cluster, credential, merge, or direct mutation was performed by this pipeline action."
+  ],
+  "blockers": [
+    "Return PR #121 to code for normalized broad-coverage NetworkPolicy rejection, including expanded IPv6 /0 and CIDR-union tests.",
+    "Return PR #121 to code for startup anchor public-key-byte mismatch and key-ID mismatch tests with fail-closed assertions.",
+    "Await CI validation completion before re-review."
+  ],
+  "next_action": "Route review failure to code; remediate both PR #121 findings, complete CI, then rerun independent review before test-stage consideration.",
+  "independent_lanes": [
+    "agent-harness NetworkPolicy normalized broad-coverage validation",
+    "agent-harness startup anchor mismatch tests",
+    "agent-harness CI validation"
+  ],
+  "route_to": "code",
+  "risk_level": "high",
+  "issues": [
+    {
+      "id": "REVIEW-003",
+      "title": "NetworkPolicy broad-coverage bypass",
+      "severity": "high",
+      "details": "charts/trust-service/templates/networkpolicy.yaml:10 rejects only literal /0, allowing expanded IPv6 /0 or CIDR unions that cover every address; normalize and reject broad coverage.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REVIEW-004",
+      "title": "Startup anchor mismatch tests incomplete",
+      "severity": "medium",
+      "details": "Startup anchor tests omit public-key-byte mismatch and key-ID mismatch cases; add explicit fail-closed assertions.",
+      "owner_stage": "code"
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "stage": "spec",
+  "status": "pass",
+  "profile": "full",
+  "requires_council": true,
+  "perspectives": [
+    {
+      "role": "security and cryptography",
+      "decision": "pass",
+      "focus": "REQ-003 now requires committed schemas/prereg.v1.schema.json with additionalProperties:false, provider-free allowlist, RFC8785/JCS UTF-8, SHA-256/golden fixtures, 256-bit nonce/expiry, protected independent prereg merge, CI provenance, and exact-byte signer verification. REQ-006 binds TokenReview audience/pod UID, Pod GET UID, namespace, fixed SA, Job UID/name, image/status imageID digest, and rejects absent/mismatch/replay/external calls."
+    },
+    {
+      "role": "reliability and storage",
+      "decision": "pass",
+      "focus": "Persistence is one ceph-rbd-replicated evidence PVC with primary Delete only, a namespaced six-hour snapshot CronJob using csi-rbdplugin-snapclass Retain and minimal VolumeSnapshot RBAC, plus signed-chain tamper evidence and export. Velero dev-cluster-resources (17 */6 * * *, TTL 168h, PVC snapshots false) is not claimed as protection; no WORM or physical immutability is asserted."
+    },
+    {
+      "role": "platform and GitOps",
+      "decision": "pass",
+      "focus": "The amended slices name agent-harness paths and trust-service-only packaging, app-config ad34fbac paths and Helm-OCI multi-source chart, vault-config 6ec510e7 Terraform/bootstrap paths and controlled rollout, deployment-policy ./scripts/validate.sh/no dev grant, and codicarium-local-root default-project/namespace-creation evidence with child-owned trust-service-dev."
+    },
+    {
+      "role": "verification and operations",
+      "decision": "pass",
+      "focus": "REQ-014 now states assets, attackers, concrete mitigations, and the residual admin deletion/key-misuse boundary; exact lint/schema/unit/integration/render/policy/live positive-negative/rollback commands, fresh merged prereg gate, explicit target identity, and stop-on-rejection behavior are required."
+    }
+  ],
+  "open_questions": [
+    "Resolve the exact source branch/ref and evidence for the fresh independently approved preregistration merge under CODEOWNERS and branch protection.",
+    "Verify app-config ad34fbac and vault-config 6ec510e7 exact refs and complete the controlled Vault bootstrap rollout.",
+    "Verify deployment-policy ./scripts/validate.sh admission with no dev grant and record explicit Kubernetes/Argo context, project, server, application, and destination.",
+    "Verify ceph-rbd-replicated and csi-rbdplugin-snapclass Retain artifacts and document that Velero dev-cluster-resources PVC snapshots are false."
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "stage": "validation",
+  "status": "fail",
+  "summary": "Validation fails cross-repository Vault JWT identity alignment: vault-config PR #722 head 525c7e0 binds the Transit JWT role to trust-service-signer, while agent-harness PR #121 chart server uses trust-service; the service cannot authenticate to Vault with these names.",
+  "changed_files": [
+    "vault-config PR #722 @ 525c7e0: Transit JWT role binds trust-service-signer",
+    "agent-harness PR #121: chart server uses trust-service"
+  ],
+  "validation": [
+    "FAIL: Vault JWT role ServiceAccount binding is trust-service-signer at PR #722 525c7e0, but the PR #121 chart server ServiceAccount is trust-service.",
+    "FAIL: Service-to-Vault login cannot succeed while the role and chart ServiceAccount identities differ; align the authoritative identity and rerun protected validation.",
+    "No repository, GitHub, cluster, credential, merge, or direct mutation was performed by this pipeline action."
+  ],
+  "blockers": [
+    "Correct the cross-repository ServiceAccount/JWT role identity mismatch between vault-config 525c7e0 and the agent-harness PR #121 chart.",
+    "Rerun protected Vault login, policy, and cross-repository rendered-manifest validation after alignment."
+  ],
+  "next_action": "Route validation failure to code; align the fixed ServiceAccount identity, then rerun code/review/test and protected validation gates.",
+  "independent_lanes": [
+    "agent-harness chart ServiceAccount identity",
+    "vault-config Transit JWT role binding",
+    "protected cross-repository Vault login validation"
+  ],
+  "route_to": "code",
+  "risk_level": "high",
+  "issues": [
+    {
+      "id": "VALIDATION-001",
+      "title": "Vault JWT ServiceAccount identity mismatch",
+      "severity": "high",
+      "details": "vault-config 525c7e0 binds trust-service-signer while agent-harness PR #121 chart server uses trust-service; Vault login is impossible until the exact identity is aligned.",
+      "owner_stage": "code"
+    }
+  ]
+}

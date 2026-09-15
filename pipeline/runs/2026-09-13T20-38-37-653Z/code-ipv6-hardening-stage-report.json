@@ -1,0 +1,33 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Loop-4 code evidence: agent-harness PR #121 head a51c66b implements strict semantic IPv6 schema hardening; focused and full tests plus all listed quality/render checks pass. Vault-config PR #722 remains 81a296c with review and CI passing.",
+  "changed_files": [
+    "agent-harness PR #121 @ a51c66b: strict semantic IPv6 schema hardening",
+    "vault-config PR #722 @ 81a296c: unchanged; independent review and exact-head CI PASS"
+  ],
+  "validation": [
+    "agent-harness: focused 38 passed; full 979 passed; schema PASS; Ruff PASS; MyPy PASS; Helm PASS; rendered/preflight PASS; package PASS; diff PASS.",
+    "vault-config: commit 81a296c unchanged; independent review PASS; exact-head CI PASS.",
+    "No repository, GitHub, cluster, credential, merge, or direct mutation was performed by this pipeline action."
+  ],
+  "blockers": [
+    "vault-config PR #722 merge remains pending despite review and CI PASS."
+  ],
+  "next_action": "Advance code to independent review; verify PR #121 a51c66b and PR #722 81a296c at recorded heads before test-stage consideration.",
+  "independent_lanes": [
+    "agent-harness strict semantic IPv6 schema at PR #121 head a51c66b",
+    "vault-config Transit/JWT bootstrap at PR #722 head 81a296c"
+  ],
+  "route_to": "review",
+  "risk_level": "high",
+  "issues": [
+    {
+      "id": "PENDING-VAULT-MERGE",
+      "title": "Vault-config merge pending",
+      "severity": "medium",
+      "details": "PR #722 exact-head CI and independent review pass, but merge remains pending.",
+      "owner_stage": "review"
+    }
+  ]
+}

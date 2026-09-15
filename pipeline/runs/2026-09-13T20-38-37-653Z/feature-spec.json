@@ -1,0 +1,327 @@
+{
+  "meta": {
+    "id": "SPEC-TRUST-SERVICE-31-116",
+    "title": "Minimal provider-free trust-service prerequisite for bootstrap",
+    "author": "Terra Tech Lead",
+    "created_at": "2026-09-13T21:42:30.626Z",
+    "version": "1.0.0"
+  },
+  "feature": {
+    "problem_statement": "Issue #116 needs a minimal trust-service prerequisite linked to #31 bootstrap: a provider-free, workload-bound Ed25519 signing path for preregistration evidence in dev, with durable verifiable evidence and explicit GitOps and security gates. Vault is healthy, but no application role currently exists.",
+    "goals": [
+      "Implement a minimal trust-service inside codicarium/agent-harness for provider-free preregistration signing.",
+      "Permit signing only for the approved digest-pinned GitOps Job in trust-service-dev after independently merged canonical preregistration bytes.",
+      "Use a non-exportable Vault Transit Ed25519 key, workload-bound identity checks, signed hash-chained evidence, and offline verification.",
+      "Deliver only a dev-only Argo application from app-config and enforce internal-only least-privilege access and recoverable durability.",
+      "Define artifact, threat-model, focused/full, render/policy, live, and rollback gates before any native GitOps execution."
+    ],
+    "non_goals": [
+      "Deploy an agent-harness workload.",
+      "Expose a direct external or local signing endpoint.",
+      "Claim WORM storage or physical immutability.",
+      "Create a production Argo application or an alternate signing backend."
+    ],
+    "scope_in": [
+      "agent-harness implementation slice: src/agent_harness/trust_service/, schemas/prereg.v1.schema.json, golden fixtures/tests, Dockerfile.trust-service, charts/trust-service, image/chart release workflow, and .codicarium/dev/{deploy.yaml,values.yaml}; package only trust-service, never an agent-harness workload.",
+      "app-config ad34fbac slice: argocd/apps/dev-config-apps.yaml and generated argocd/self-service-dev-apps/generated/dev-trust-service.yaml using the documented multi-source Helm-OCI values convention and chart charts.nexus.int.codicarium.com/codicarium.",
+      "vault-config 6ec510e7 slice: terraform/stacks/vault-vps/{variables.tf,locals.tf,templates/vault-bootstrap.env.tftpl,templates/bootstrap-vault-host.sh} for the non-exportable Transit key/policy and namespace+ServiceAccount JWT role, followed by its controlled bootstrap rollout.",
+      "deployment-policy slice: no dev grant; run ./scripts/validate.sh and stop if admission rejects.",
+      "TokenReview, pod identity, ServiceAccount, owner Job UID/name, image/status imageID digest, preregistration digest, nonce, expiry, and exact-byte checks.",
+      "Internal ClusterIP, least-privilege NetworkPolicy/RBAC, one ceph-rbd-replicated evidence PVC, Retain CSI snapshots, Velero limitation evidence, signed hash-chain export, offline verifier, public-key revision anchor, lifecycle recovery, and rollback evidence.",
+      "Issue #116 service-prerequisite linkage to #31 bootstrap, codicarium-local-root app-config evidence, and artifact-before-GitOps gates."
+    ],
+    "scope_out": [
+      "Any agent-harness workload deployment or unrelated application deployment.",
+      "Any external, local, or unauthenticated signing API.",
+      "WORM or physical-immutability guarantees beyond signed tamper evidence, retained snapshots, and export.",
+      "Native cluster or GitOps changes before exact slices, destination, policy, durability artifacts, and a fresh merged preregistration are resolved."
+    ]
+  },
+  "requirements": [
+    {
+      "id": "REQ-001",
+      "priority": "MUST",
+      "statement": "The implementation MUST define trust-service as the minimal service prerequisite for issue #116 and link that prerequisite to the #31 bootstrap scope.",
+      "rationale": "The service is a narrowly bounded dependency and must remain traceable to the bootstrap work without expanding application scope."
+    },
+    {
+      "id": "REQ-002",
+      "priority": "MUST",
+      "statement": "app-config MUST supply only a dev-only Argo application for trust-service and MUST NOT deploy an agent-harness workload.",
+      "rationale": "Argo ownership and environment scope must be explicit, while the requested service must not be confused with an agent-harness workload deployment."
+    },
+    {
+      "id": "REQ-003",
+      "priority": "MUST",
+      "statement": "The service MUST require a committed codicarium/agent-harness/schemas/prereg.v1.schema.json with additionalProperties:false, an explicit required provider-free fact allowlist, RFC8785/JCS UTF-8 canonical bytes, exact SHA-256 digest matching, golden canonical-byte and digest fixtures, a 256-bit nonce, and expiry. A preregistration PR MUST be independently approved and merged under CODEOWNERS and branch protection before a separate GitOps PR; CI MUST reject absent or mismatched source commit/ref/digest/reviewer proof, and the signer MUST verify the exact submitted bytes.",
+      "rationale": "A committed closed schema and byte-level fixtures make preregistration deterministic; independent protected merges and CI provenance prevent a GitOps change from authorizing unreviewed or altered facts."
+    },
+    {
+      "id": "REQ-004",
+      "priority": "MUST",
+      "statement": "Only a digest-pinned GitOps Job running in namespace trust-service-dev MAY request signing; the service MUST reject direct external and local signing requests.",
+      "rationale": "The caller boundary is GitOps-controlled workload identity, not a publicly reachable or operator-local endpoint."
+    },
+    {
+      "id": "REQ-005",
+      "priority": "MUST",
+      "statement": "vault-config MUST provision a non-exportable Vault Transit Ed25519 key and a JWT role bound to the trust-service-dev namespace and approved ServiceAccount; it MUST account for the currently absent application role.",
+      "rationale": "Vault is healthy, but key use cannot be authorized until the application-specific role and non-exportable signing key exist."
+    },
+    {
+      "id": "REQ-006",
+      "priority": "MUST",
+      "statement": "Before signing, the service MUST require a TokenReview with the expected audience and bound pod UID; GET the Pod and require an exact UID match; require namespace trust-service-dev, the fixed ServiceAccount, and the owning Job UID and name; and require every Job container image and status imageID to equal the exact pinned digest. It MUST reject absent, mismatched, replayed, or external requests and fail closed.",
+      "rationale": "Authentication must bind the request to one live pod and its exact immutable Job lineage, not merely to a bearer token or namespace."
+    },
+    {
+      "id": "REQ-007",
+      "priority": "MUST",
+      "statement": "The service MUST require the request preregistration digest to match the independently merged canonical digest and MUST reject nonce reuse or replay.",
+      "rationale": "Digest binding protects the input and nonce replay defense prevents reusing an otherwise valid authorization."
+    },
+    {
+      "id": "REQ-008",
+      "priority": "MUST",
+      "statement": "Accepted operations MUST produce a single-writer, fsynced, signed hash-chained evidence record with deterministic linkage to the prior record and no silent truncation or rewrite.",
+      "rationale": "The audit trail must expose tampering and preserve a durable order of signing decisions."
+    },
+    {
+      "id": "REQ-009",
+      "priority": "MUST",
+      "statement": "Evidence MUST be exportable and verifiable offline with the public key and an explicit Vault key revision anchor.",
+      "rationale": "Independent verification must remain possible without access to the service, Vault, or a live cluster."
+    },
+    {
+      "id": "REQ-010",
+      "priority": "MUST",
+      "statement": "The service MUST be reachable only through an internal Kubernetes ClusterIP and MUST expose no direct external or local signing endpoint.",
+      "rationale": "Network reachability must enforce the workload-bound trust boundary."
+    },
+    {
+      "id": "REQ-011",
+      "priority": "MUST",
+      "statement": "Kubernetes RBAC and NetworkPolicy MUST grant only the minimum permissions required for TokenReview, the approved workload path, Vault authentication, evidence persistence, and observability.",
+      "rationale": "Least privilege limits blast radius if the service, Job, or a neighboring workload is compromised."
+    },
+    {
+      "id": "REQ-012",
+      "priority": "MUST",
+      "statement": "The service MUST use exactly one ceph-rbd-replicated evidence PVC with Delete reclaim for the primary PVC only. A namespaced six-hour snapshot CronJob MUST use VolumeSnapshotClass csi-rbdplugin-snapclass with Retain and minimal VolumeSnapshot RBAC. The current Velero dev-cluster-resources schedule (17 */6 * * *, TTL 168h) has PVC snapshots false and MUST NOT be claimed as protection. Claims are limited to signed hash-chain tamper evidence plus retained snapshots and export, never WORM or physical immutability.",
+      "rationale": "The specified PVC and retained CSI snapshots support recovery while accurately acknowledging that the current Velero schedule does not snapshot PVCs and that neither mechanism is WORM."
+    },
+    {
+      "id": "REQ-013",
+      "priority": "MUST",
+      "statement": "Key provisioning, rotation, revocation, and recovery MUST preserve the public-key revision anchor, fail closed on revoked or unavailable revisions, and document evidence recovery without exporting private key material.",
+      "rationale": "Key lifecycle events must not invalidate historical verification or permit signing during an unsafe transition."
+    },
+    {
+      "id": "REQ-014",
+      "priority": "MUST",
+      "statement": "The threat boundary MUST name assets (Transit key/sign authority, preregistration, chain/PVC/snapshots, and public anchor), attackers (local runner, replaying caller, compromised namespace pod, GitOps author, and cluster/Vault/backup admin), and concrete mitigations: closed schema and exact JCS/SHA-256 bytes, 256-bit nonce/expiry, protected independent prereg merge, CI commit/ref/digest/reviewer proof, TokenReview audience and pod UID plus Pod GET/owner/imageID checks, fixed namespace/ServiceAccount/Job, ClusterIP/NetworkPolicy/RBAC, non-exportable Transit key, fsynced signed chain, retained snapshots/export, offline revision anchor, and tested lifecycle recovery. The residual boundary MUST state that admin deletion or key misuse is detectable and recoverable only; evidence is never WORM or physically immutable. Artifact-before-GitOps gates MUST require those threat/key artifacts, all exact implementation paths, adversarial and focused/full tests, render/policy checks, explicit destination preflight, live positive and negative proof, a fresh merged preregistration, and rollback proof before native execution.",
+      "rationale": "Explicit assets, attacker capabilities, mitigations, and residual limits make the high-risk trust boundary reviewable and prevent durability or administrator-resistance claims that the design cannot support."
+    }
+  ],
+  "acceptance_criteria": [
+    {
+      "id": "AC-001",
+      "requirement_ids": ["REQ-001", "REQ-002"],
+      "scenario": "Given issue #116 is recorded as the service prerequisite linked to #31 bootstrap, when app-config ownership is reviewed, then codicarium-local-root in argocd has namespace creation true and the default project, trust-service-dev is absent or precreated only by the child Application, the two app-config paths are the owned slices, and no agent-harness workload deployment is introduced."
+    },
+    {
+      "id": "AC-002",
+      "requirement_ids": ["REQ-003", "REQ-004"],
+      "scenario": "Given schemas/prereg.v1.schema.json is committed with additionalProperties:false, provider-free required-fact allowlist, RFC8785/JCS UTF-8 bytes, SHA-256, golden bytes/digest fixtures, 256-bit nonce, and expiry, when CODEOWNERS/branch protection independently approves and merges the prereg PR before a separate GitOps PR, then CI proves source commit/ref/digest/reviewer agreement and only the exact digest-pinned trust-service-dev Job is eligible; the signer still verifies exact bytes and rejects external or local requests."
+    },
+    {
+      "id": "AC-003",
+      "requirement_ids": ["REQ-005", "REQ-013"],
+      "scenario": "Given Vault is healthy but has no application role, when the controlled vault-config 6ec510e7 bootstrap rollout is applied and lifecycle procedures are exercised, then a non-exportable Transit Ed25519 key/policy and namespace/ServiceAccount-bound JWT role are provisioned, rotated, revocable, recoverable, and never export private key material."
+    },
+    {
+      "id": "AC-004",
+      "requirement_ids": ["REQ-006", "REQ-007"],
+      "scenario": "Given a request has a TokenReview with expected audience and bound pod UID, an exact GET Pod UID, namespace trust-service-dev, fixed ServiceAccount, owning Job UID/name, every Job image and status imageID at the pinned digest, preregistration digest, 256-bit nonce, and expiry, when any field is absent, mismatched, replayed, or external, then the service fails closed and emits no signing evidence."
+    },
+    {
+      "id": "AC-005",
+      "requirement_ids": ["REQ-008", "REQ-009"],
+      "scenario": "Given an authorized signing operation succeeds, when its evidence is exported and checked without the service or cluster, then the signed hash chain and public-key revision anchor verify offline and tampering, reordering, or an invalid signature fails verification."
+    },
+    {
+      "id": "AC-006",
+      "requirement_ids": ["REQ-010", "REQ-011", "REQ-012"],
+      "scenario": "Given the rendered dev deployment is inspected, when network, RBAC, storage, snapshot, and backup policies are evaluated, then one ceph-rbd-replicated evidence PVC uses Delete for the primary only, a namespaced six-hour snapshot CronJob uses csi-rbdplugin-snapclass Retain with minimal VolumeSnapshot RBAC, current Velero dev-cluster-resources (17 */6 * * *, TTL 168h, PVC snapshots false) is not claimed as protection, access is internal ClusterIP and least privilege, and no WORM or physical-immutability claim exists."
+    },
+    {
+      "id": "AC-007",
+      "requirement_ids": ["REQ-014"],
+      "scenario": "Given all exact source, chart, config, deployment-policy, threat-model, and key-lifecycle artifacts are independently merged and a fresh preregistration merge is present, when adversarial, focused/full, render, policy, explicit live positive/negative destination, and rollback checks complete, then the artifact-before-GitOps gate passes or native execution remains blocked."
+    }
+  ],
+  "test_plan": [
+    {
+      "id": "TST-001",
+      "type": "manual",
+      "requirement_ids": ["REQ-001", "REQ-005", "REQ-012", "REQ-013", "REQ-014"],
+      "approach": "Review the threat boundary assets/attackers/mitigations/residuals, issue linkage, exact artifact ownership, Vault key provisioning/rotation/revocation/recovery runbook, Retain and Velero limitation evidence, and artifact-before-GitOps checklist; no native command may run before deployment artifacts and a fresh merged preregistration exist."
+    },
+    {
+      "id": "TST-002",
+      "type": "unit",
+      "requirement_ids": ["REQ-003", "REQ-004", "REQ-006", "REQ-007", "REQ-008", "REQ-009"],
+      "approach": "Run `uv run ruff format --check .`, `uv run ruff check .`, `uv run mypy src`, `uv run pytest`, and the focused adversarial suite under tests/trust_service/ for provider-free prereg.v1 bytes, additionalProperties:false schema, RFC8785/JCS UTF-8, SHA-256, golden fixtures, 256-bit nonce/expiry, TokenReview identity/owner/image checks, replay, fail-closed authorization, signed chaining, revision anchors, and offline verification."
+    },
+    {
+      "id": "TST-003",
+      "type": "integration",
+      "requirement_ids": ["REQ-003", "REQ-005", "REQ-006", "REQ-007", "REQ-008", "REQ-009"],
+      "approach": "Run `uv run pytest tests/trust_service/` for focused and full service integration coverage with Vault Transit and Kubernetes identity fixtures; require positive approved digest-pinned Job signing, negative absent/mismatched/replayed/external callers, key revisions, durable evidence writes, export, and offline verification."
+    },
+    {
+      "id": "TST-004",
+      "type": "non_functional",
+      "requirement_ids": ["REQ-001", "REQ-002", "REQ-010", "REQ-011", "REQ-014"],
+      "approach": "Run `uv run python scripts/generate_schemas.py --check`, `helm template trust-service charts/trust-service --namespace trust-service-dev --values .codicarium/dev/values.yaml`, and the exact deployment-policy `./scripts/validate.sh`; reject render/policy output for wrong Argo destination, any agent-harness workload, external Service, excess RBAC/NetworkPolicy, mutable image, or missing gate."
+    },
+    {
+      "id": "TST-005",
+      "type": "e2e",
+      "requirement_ids": ["REQ-002", "REQ-004", "REQ-010", "REQ-012", "REQ-013", "REQ-014"],
+      "approach": "After explicit `kubectl --context <DEV_CONTEXT>` and `argocd --server <ARGO_SERVER> app get <APP> --project <ARGO_PROJECT>` preflight, and only after deployment plus a fresh merged preregistration, run dev-only positive approved signing and negative absent/mismatched/replayed/external requests, evidence export, snapshot/Velero recovery, key revocation, and GitOps rollback; record exact target identity and stop on mismatch or deployment-policy admission rejection."
+    }
+  ],
+  "traceability": [
+    {
+      "requirement_id": "REQ-001",
+      "acceptance_ids": ["AC-001"],
+      "test_ids": ["TST-001", "TST-004"],
+      "review_checks": ["Confirm issue #116 service prerequisite is explicitly linked to #31 bootstrap and scope remains minimal."],
+      "validation_checks": ["Verify the resolved source and app-config ownership artifacts before implementation." ]
+    },
+    {
+      "requirement_id": "REQ-002",
+      "acceptance_ids": ["AC-001"],
+      "test_ids": ["TST-004", "TST-005"],
+      "review_checks": ["Inspect app-config for a dev-only Argo application and absence of an agent-harness workload deployment."],
+      "validation_checks": ["Render and explicitly inspect Argo destination, namespace, and workload ownership." ]
+    },
+    {
+      "requirement_id": "REQ-003",
+      "acceptance_ids": ["AC-002"],
+      "test_ids": ["TST-002", "TST-003"],
+      "review_checks": ["Review prereg.v1 field contract, provider-free canonical bytes, JCS serialization, and independent digest merge gate."],
+      "validation_checks": ["Run canonicalization and digest mismatch tests with exact byte fixtures." ]
+    },
+    {
+      "requirement_id": "REQ-004",
+      "acceptance_ids": ["AC-002"],
+      "test_ids": ["TST-002", "TST-003"],
+      "review_checks": ["Confirm only the digest-pinned trust-service-dev GitOps Job is an eligible signer caller."],
+      "validation_checks": ["Exercise direct external and local request rejection and approved Job acceptance." ]
+    },
+    {
+      "requirement_id": "REQ-005",
+      "acceptance_ids": ["AC-003"],
+      "test_ids": ["TST-001", "TST-003"],
+      "review_checks": ["Review Vault Transit Ed25519 non-exportability and namespace/ServiceAccount-bound JWT role provisioning."],
+      "validation_checks": ["Verify Vault role and key artifacts exist before any GitOps authorization." ]
+    },
+    {
+      "requirement_id": "REQ-006",
+      "acceptance_ids": ["AC-004"],
+      "test_ids": ["TST-002", "TST-003"],
+      "review_checks": ["Check fail-closed TokenReview, pod, namespace, ServiceAccount, owner, and image-digest binding."],
+      "validation_checks": ["Run adversarial identity substitution and stale image-digest fixtures." ]
+    },
+    {
+      "requirement_id": "REQ-007",
+      "acceptance_ids": ["AC-004"],
+      "test_ids": ["TST-002", "TST-003"],
+      "review_checks": ["Review exact preregistration digest comparison and nonce lifecycle/replay policy."],
+      "validation_checks": ["Run wrong-digest, modified-bytes, duplicate-nonce, and replay rejection tests." ]
+    },
+    {
+      "requirement_id": "REQ-008",
+      "acceptance_ids": ["AC-005"],
+      "test_ids": ["TST-002", "TST-003"],
+      "review_checks": ["Inspect single-writer ordering, fsync boundary, signed record, and hash-chain linkage."],
+      "validation_checks": ["Test tamper, reorder, truncation, restart, and concurrent-write behavior." ]
+    },
+    {
+      "requirement_id": "REQ-009",
+      "acceptance_ids": ["AC-005"],
+      "test_ids": ["TST-002", "TST-003"],
+      "review_checks": ["Confirm exported evidence carries public key and immutable Vault key revision anchor for offline use."],
+      "validation_checks": ["Run the offline verifier against valid and tampered exported evidence." ]
+    },
+    {
+      "requirement_id": "REQ-010",
+      "acceptance_ids": ["AC-006"],
+      "test_ids": ["TST-004", "TST-005"],
+      "review_checks": ["Inspect Service and ingress policy for internal ClusterIP only and no direct signing endpoint."],
+      "validation_checks": ["Render and live-check reachability from approved and unapproved network identities." ]
+    },
+    {
+      "requirement_id": "REQ-011",
+      "acceptance_ids": ["AC-006"],
+      "test_ids": ["TST-004"],
+      "review_checks": ["Review minimum RBAC verbs/resources and deny-by-default NetworkPolicy paths."],
+      "validation_checks": ["Run render/policy enforcement and permission-negative checks." ]
+    },
+    {
+      "requirement_id": "REQ-012",
+      "acceptance_ids": ["AC-006"],
+      "test_ids": ["TST-001", "TST-005"],
+      "review_checks": ["Confirm snapshot Retain and Velero six-hour cadence/168-hour retention without WORM language."],
+      "validation_checks": ["Verify backup/restore evidence and accurately report residual durability limits." ]
+    },
+    {
+      "requirement_id": "REQ-013",
+      "acceptance_ids": ["AC-003", "AC-007"],
+      "test_ids": ["TST-001", "TST-005"],
+      "review_checks": ["Review key rotation, revocation, recovery, revision anchoring, and private-material handling."],
+      "validation_checks": ["Perform live or controlled lifecycle rollback checks and prove revoked revisions cannot sign." ]
+    },
+    {
+      "requirement_id": "REQ-014",
+      "acceptance_ids": ["AC-007"],
+      "test_ids": ["TST-001", "TST-004", "TST-005"],
+      "review_checks": ["Confirm every source, chart, config, policy, threat-model, and key artifact is independently merged before GitOps."],
+      "validation_checks": ["Require adversarial, focused/full, render, policy, explicit live-target, and rollback validation evidence." ]
+    }
+  ],
+  "quality_gates": {
+    "spec_review_required": true,
+    "testability_required": true,
+    "traceability_required": true
+  },
+  "council": {
+    "perspectives": [
+      {
+        "role": "security and cryptography",
+        "summary": "Pass: exact provider-free canonical bytes, Ed25519 Transit non-exportability, TokenReview identity binding, nonce replay defense, least privilege, and explicit non-WORM residual risk are specified."
+      },
+      {
+        "role": "reliability and storage",
+        "summary": "Pass: single-writer fsynced signed hash chain, Retain snapshots, Velero six-hour cadence, 168-hour retention, recovery, and offline evidence verification are specified."
+      },
+      {
+        "role": "platform and GitOps",
+        "summary": "Pass: dev-only app-config ownership, digest-pinned Job, internal destination, artifact-before-GitOps gates, and no agent-harness workload deployment are explicit."
+      },
+      {
+        "role": "verification and operations",
+        "summary": "Pass: threat model, adversarial/focused/full, render/policy, live destination, key lifecycle, evidence, and rollback checks are measurable prerequisites."
+      }
+    ],
+    "consensus_summary": "Implementation-ready for planning only; native execution remains unauthorized until source/chart ownership, deployment policy, exact dev destination, Retain class, key provisioning, and Velero restore artifacts are resolved.",
+    "open_questions": [
+      "Resolve exact source repository and chart path for codicarium/agent-harness trust-service.",
+      "Resolve deployment-policy repository/path and approved DeploymentProfile/DeploymentGrant.",
+      "Resolve explicit dev context, Argo server/project/application/destination, and trust-service-dev namespace ownership.",
+      "Resolve Retain StorageClass, Vault key provisioning artifact, and Velero backup/restore artifact."
+    ]
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Independent review fails agent-harness PR #121 at head 5d61543 on two trust-boundary defects: release workflow proof is not bound to the checked-out GITHUB_SHA, and Vault Transit key-version rotation is not verified against the returned version. Vault-config PR #722 review is PASS, with CI still pending.",
+  "changed_files": [
+    "agent-harness PR #121 @ 5d61543: .github/workflows/release-trust-service.yml",
+    "agent-harness PR #121 @ 5d61543: src/agent_harness/trust_service/vault.py:sign",
+    "vault-config PR #722 @ 81a296c: review PASS; CI pending"
+  ],
+  "validation": [
+    "FAIL: .github/workflows/release-trust-service.yml does not bind prereg source_commit/path to checked-out GITHUB_SHA, allowing stale proof to be used with new code.",
+    "FAIL: src/agent_harness/trust_service/vault.py:sign strips vault:vN: and labels the configured revision without checking returned Vault key version N, breaking offline verification on rotation.",
+    "PASS: vault-config PR #722 review; Terraform/CI validation remains pending.",
+    "No repository, GitHub, cluster, credential, merge, or direct mutation was performed by this pipeline action."
+  ],
+  "blockers": [
+    "Return agent-harness PR #121 to code to bind prereg source_commit/path to the checked-out GITHUB_SHA and reject stale proof.",
+    "Return agent-harness PR #121 to code to parse and compare the Vault Transit returned key version N with the signed key revision before accepting the signature.",
+    "Vault-config PR #722 CI validation remains pending."
+  ],
+  "next_action": "Route review failure to code for both fixes, then rerun focused tests and independent review; do not advance to test until review passes.",
+  "independent_lanes": [
+    "agent-harness release workflow provenance binding",
+    "agent-harness Vault Transit returned-version verification",
+    "vault-config CI validation (PR #722)"
+  ],
+  "route_to": "code",
+  "risk_level": "high",
+  "issues": [
+    {
+      "id": "REVIEW-001",
+      "title": "Release proof is not bound to checked-out GITHUB_SHA",
+      "severity": "high",
+      "details": "release-trust-service.yml permits prereg source_commit/path to describe stale proof while a different commit is checked out.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REVIEW-002",
+      "title": "Vault Transit returned key version is ignored",
+      "severity": "high",
+      "details": "vault.py sign strips vault:vN: and labels configured revision without comparing returned Vault version N, making rotation evidence unverifiable offline.",
+      "owner_stage": "code"
+    }
+  ]
+}

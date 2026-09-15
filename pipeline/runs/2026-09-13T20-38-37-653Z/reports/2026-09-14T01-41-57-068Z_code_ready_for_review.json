@@ -1,0 +1,33 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Final code-gate evidence: agent-harness PR #121 head 105574b completes IPv4-mapped range rejection, direct Helm fail-closed single-host endpoint contract, verified Vault metadata identity, and running pod/container requirements. Vault PR #722 remains unchanged at 81a296c with review and CI PASS.",
+  "changed_files": [
+    "agent-harness PR #121 @ 105574b: IPv4-mapped rejection, Helm endpoint fail-closed contract, Vault metadata identity, running pod/container enforcement",
+    "vault-config PR #722 @ 81a296c: unchanged; independent review and exact-head CI PASS"
+  ],
+  "validation": [
+    "agent-harness: full pytest PASS; Ruff PASS; MyPy PASS; schema PASS; Helm PASS; preflight PASS; Docker PASS; diff PASS.",
+    "vault-config: commit 81a296c unchanged; independent review PASS; exact-head CI PASS.",
+    "CI validation is pending for the new PR #121 head; no repository, GitHub, cluster, credential, merge, or direct mutation was performed by this pipeline action."
+  ],
+  "blockers": [
+    "PR #121 CI validation is pending for head 105574b before review completion."
+  ],
+  "next_action": "Advance code to independent review; verify PR #121 head 105574b and PR #722 head 81a296c, and require CI completion before test-stage consideration.",
+  "independent_lanes": [
+    "agent-harness final trust-service fixes at PR #121 head 105574b",
+    "vault-config Transit/JWT bootstrap at PR #722 head 81a296c"
+  ],
+  "route_to": "review",
+  "risk_level": "high",
+  "issues": [
+    {
+      "id": "PENDING-PR121-CI",
+      "title": "PR #121 CI validation pending",
+      "severity": "medium",
+      "details": "Local checks pass for 105574b, but CI validation for the new head is not yet complete.",
+      "owner_stage": "review"
+    }
+  ]
+}

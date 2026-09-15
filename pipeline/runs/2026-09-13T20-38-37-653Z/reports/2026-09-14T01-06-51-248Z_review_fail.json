@@ -1,0 +1,63 @@
+{
+  "stage": "review",
+  "status": "fail",
+  "summary": "Independent review fails agent-harness PR #121 head 28c6019 on two high-severity CIDR-policy bypasses and two medium startup/identity checks: IPv4-mapped IPv6 coverage is accepted, direct Helm/Argo rendering bypasses Python preflight, fetch_anchor trusts configured key_id, and KubernetesAuthorizer permits terminated/non-running identities.",
+  "changed_files": [
+    "agent-harness PR #121 @ 28c6019: validate_cidrs IPv4-mapped IPv6 coverage",
+    "agent-harness PR #121 @ 28c6019: direct Helm/Argo rendering path bypassing Python preflight",
+    "agent-harness PR #121 @ 28c6019: fetch_anchor configured key_id versus Vault metadata",
+    "agent-harness PR #121 @ 28c6019: KubernetesAuthorizer terminated/non-running pod/container identity"
+  ],
+  "validation": [
+    "FAIL HIGH: validate_cidrs accepts IPv4-mapped ::ffff:0:0/96; normalize mapped IPv6 and reject all-address/broad coverage.",
+    "FAIL HIGH: direct Helm/Argo rendering bypasses Python preflight and permits 0.0.0.0/0; all render paths must enforce the normalized policy gate.",
+    "FAIL MEDIUM: fetch_anchor reuses configured key_id without verifying Vault metadata identity; require exact metadata key-ID/anchor match.",
+    "FAIL MEDIUM: KubernetesAuthorizer permits terminated/non-running pod/container identities; require active pod and container identity checks.",
+    "PENDING: CI validation is in progress; no repository, GitHub, cluster, credential, merge, or direct mutation was performed."
+  ],
+  "blockers": [
+    "Return PR #121 to code for mapped-IPv6 normalization and broad-coverage rejection tests.",
+    "Return PR #121 to code so Helm/Argo rendering cannot bypass Python preflight and rejects 0.0.0.0/0.",
+    "Return PR #121 to code for Vault metadata key-ID/public-anchor identity verification.",
+    "Return PR #121 to code for active pod/container enforcement in KubernetesAuthorizer; await CI."
+  ],
+  "next_action": "Route review failure to code; remediate all four findings, complete CI, and rerun independent review before test-stage consideration.",
+  "independent_lanes": [
+    "agent-harness CIDR normalization and broad-coverage policy",
+    "agent-harness Helm/Argo preflight enforcement",
+    "agent-harness Vault anchor metadata identity verification",
+    "agent-harness KubernetesAuthorizer active identity checks"
+  ],
+  "route_to": "code",
+  "risk_level": "high",
+  "issues": [
+    {
+      "id": "REVIEW-005",
+      "title": "IPv4-mapped IPv6 broad-coverage bypass",
+      "severity": "high",
+      "details": "validate_cidrs accepts IPv4-mapped ::ffff:0:0/96; normalize address families and reject all-address/broad coverage.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REVIEW-006",
+      "title": "Direct Helm/Argo render bypasses Python preflight",
+      "severity": "high",
+      "details": "Direct rendering paths permit 0.0.0.0/0 without normalized policy validation; gate every render path.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REVIEW-007",
+      "title": "Vault anchor configured key-ID is not verified",
+      "severity": "medium",
+      "details": "fetch_anchor reuses configured key_id rather than checking Vault metadata identity and exact public anchor.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "REVIEW-008",
+      "title": "Terminated pod/container identity is authorized",
+      "severity": "medium",
+      "details": "KubernetesAuthorizer permits non-running or terminated pod/container identities; active identity state must be required.",
+      "owner_stage": "code"
+    }
+  ]
+}

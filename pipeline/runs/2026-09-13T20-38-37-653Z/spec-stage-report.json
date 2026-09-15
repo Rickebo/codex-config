@@ -1,0 +1,60 @@
+{
+  "stage": "spec",
+  "status": "pass",
+  "summary": "Amended issue #116 trust-service prerequisite linked to #31 with concrete prereg.v1 schema/provenance, TokenReview pod/Job/image binding, threat boundary, exact implementation slices, app-config root evidence, Ceph snapshot limits, Velero PVC-snapshot caveat, command-level tests, live negatives/positives, and rollback gates. Native execution remains blocked until exact artifacts and a fresh merged preregistration exist.",
+  "changed_files": [
+    "/home/rickebo/.codex/pipeline/runs/2026-09-13T20-38-37-653Z/feature-spec.json",
+    "/home/rickebo/.codex/pipeline/runs/2026-09-13T20-38-37-653Z/spec-council.json",
+    "/home/rickebo/.codex/pipeline/runs/2026-09-13T20-38-37-653Z/spec-stage-report.json",
+    "/home/rickebo/.codex/pipeline/runs/2026-09-13T20-38-37-653Z/spec-check.json"
+  ],
+  "validation": [
+    "node /home/rickebo/.codex/bin/pipeline-spec-check.mjs --spec /home/rickebo/.codex/pipeline/runs/2026-09-13T20-38-37-653Z/feature-spec.json --out /home/rickebo/.codex/pipeline/runs/2026-09-13T20-38-37-653Z/spec-check.json --strict (PASS: exit 0, no errors or warnings)",
+    "python jsonschema Draft202012Validator against /home/rickebo/.codex/pipeline/feature-spec.schema.json (PASS)",
+    "python jsonschema Draft202012Validator against /home/rickebo/.codex/pipeline/stage-report.schema.json (PASS)",
+    "node /home/rickebo/.codex/bin/pipeline-controller.mjs status --run-dir /home/rickebo/.codex/pipeline/runs/2026-09-13T20-38-37-653Z (PASS: stage spec, full profile, council always; not advanced)",
+    "Implementation, render, policy, cluster, live, and rollback commands remain prohibited in this spec stage."
+  ],
+  "blockers": [
+    "code slice: feature-spec names agent-harness trust_service/, prereg schema, fixtures/tests, Dockerfile.trust-service, charts/trust-service, release workflow, and .codicarium/dev files; package only trust-service; fresh prereg merge first.",
+    "app/config slice: app-config ad34fbac must update the two named dev Argo paths and root evidence; vault-config 6ec510e7 must update the four named Terraform/bootstrap files and complete controlled rollout.",
+    "policy/live slice: deployment-policy has no dev grant but requires ./scripts/validate.sh; explicit context/project/server/destination, Ceph Retain snapshot, and Velero restore evidence are required before native execution."
+  ],
+  "next_action": "Keep the run at spec pending root-manager review; resolve the exact slices and fresh merged preregistration, then advance through the controller only after policy and destination evidence are present.",
+  "spec_file": "/home/rickebo/.codex/pipeline/runs/2026-09-13T20-38-37-653Z/feature-spec.json",
+  "spec_check_file": "/home/rickebo/.codex/pipeline/runs/2026-09-13T20-38-37-653Z/spec-check.json",
+  "council_file": "/home/rickebo/.codex/pipeline/runs/2026-09-13T20-38-37-653Z/spec-council.json",
+  "requires_council": true,
+  "independent_lanes": [
+    "agent-harness service/schema/fixtures/chart/dev overlay",
+    "app-config Argo root and generated child application",
+    "vault-config key/policy/JWT role controlled bootstrap",
+    "deployment-policy validation and no-grant admission",
+    "storage snapshot/backup and explicit live rollback evidence"
+  ],
+  "route_to": "code",
+  "risk_level": "high",
+  "issues": [
+    {
+      "id": "BLOCK-001",
+      "title": "Exact implementation slices and fresh prereg merge are pending",
+      "severity": "high",
+      "details": "The spec now names all required agent-harness paths, schema/fixture/provenance gates, and release artifacts, but no source mutation is authorized in this recovery lane; code work must stop until a fresh independently approved preregistration merge is evidenced.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "BLOCK-002",
+      "title": "App-config and Vault controlled rollout evidence is pending",
+      "severity": "high",
+      "details": "app-config commit ad34fbac and vault-config commit 6ec510e7 paths are specified, including codicarium-local-root/default-project/namespace-creation evidence and the controlled Vault bootstrap; verify exact refs before GitOps authorization.",
+      "owner_stage": "code"
+    },
+    {
+      "id": "BLOCK-003",
+      "title": "Policy, destination, and durability proof is pending",
+      "severity": "high",
+      "details": "Run deployment-policy ./scripts/validate.sh with no dev grant and stop on admission rejection; then prove explicit destination, one ceph-rbd-replicated PVC, Retain csi-rbdplugin-snapclass snapshots, and restore limits because Velero dev-cluster-resources has PVC snapshots false.",
+      "owner_stage": "validation"
+    }
+  ]
+}

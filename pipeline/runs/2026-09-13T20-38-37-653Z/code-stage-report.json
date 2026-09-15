@@ -1,0 +1,34 @@
+{
+  "stage": "code",
+  "status": "ready_for_review",
+  "summary": "Code work is ready for independent review across disjoint agent-harness and vault-config slices. agent-harness commit 5d61543 / PR #121 has 918 pytest tests passing with Ruff, MyPy, schema, Helm lint/template, Docker build/run, and clean diff/status. vault-config commit 81a296c / PR #722 has 2348 tests passed with 20 skipped, focused suite 29 passed, Ruff/bash/JSON/render/diff checks passing; Terraform is unavailable locally and requires CI.",
+  "changed_files": [
+    "/mnt/rickebo-p/agent-harness/.worktrees/agent-harness-issue116-trust-service (commit 5d61543, PR #121)",
+    "/mnt/rickebo-p/agent-harness/.worktrees/vault-config-issue116-trust-transit (commit 81a296c, PR #722)"
+  ],
+  "validation": [
+    "agent-harness: pytest 918 passed; Ruff PASS; MyPy PASS; schema checks PASS; Helm lint PASS; Helm template PASS; Docker build/run PASS; git diff/status clean.",
+    "vault-config: 2348 passed, 20 skipped; focused 29 passed; Ruff PASS; Bash PASS; JSON PASS; render PASS; diff checks PASS.",
+    "vault-config Terraform validation unavailable locally; CI Terraform validation is required before review completion.",
+    "No repository, GitHub, cluster, credential, merge, or approval action was performed by this gate agent."
+  ],
+  "blockers": [
+    "Terraform tooling/validation is unavailable in the local vault-config environment; require the CI Terraform gate before final review acceptance."
+  ],
+  "next_action": "Advance to independent review; verify both PRs at the recorded commits and require CI Terraform validation for vault-config before proceeding to test.",
+  "independent_lanes": [
+    "agent-harness service/schema/fixtures/chart at 5d61543 / PR #121",
+    "vault-config Transit/JWT bootstrap at 81a296c / PR #722"
+  ],
+  "route_to": "review",
+  "risk_level": "high",
+  "issues": [
+    {
+      "id": "BLOCK-VAULT-TERRAFORM",
+      "title": "Terraform validation unavailable locally",
+      "severity": "medium",
+      "details": "vault-config Terraform checks could not run locally; CI must execute and pass the Terraform gate before review completion.",
+      "owner_stage": "review"
+    }
+  ]
+}

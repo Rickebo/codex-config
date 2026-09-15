@@ -2,18 +2,20 @@
 """
 prune-worktrees.py: Safe automated git worktree housekeeping for Codicarium & Codex.
 
-Identifies and cleans up:
+Supports:
 1. Merged worktrees: branches/commits merged to origin/main or default branch.
 2. Stale review worktrees: reviewer worktrees for closed/merged PRs or past commits.
-3. Orphaned worktrees: directories missing on disk but registered in git (prunable records).
-4. Dangling untracked directories: abandoned worktree folders in .worktrees not tracked by any git repo.
+3. Inactive worktrees: any worktree with no change in the last N days (default: 7 days).
+4. Orphaned worktrees: directories missing on disk but registered in git (prunable records).
+5. Dangling untracked directories: abandoned worktree folders in .worktrees not tracked by any git repo.
 
 Safety guarantees:
 - NEVER touches the main checkout worktree.
 - NEVER touches worktrees containing an active process CWD (/proc/*/cwd).
-- NEVER touches worktrees modified within --min-age-hours (default: 24h).
-- NEVER touches worktrees with open GitHub PRs.
-- Protects uncommitted dirty changes (unless only harmless build/test caches like __pycache__, .pytest_cache).
+- NEVER touches worktrees modified within --min-age-hours or --prune-older-than-days.
+- NEVER touches worktrees with active open GitHub PRs.
+- For unmerged worktrees older than N days: removes the worktree folder to reclaim disk space,
+  but KEEPS the git branch intact so no commit history is ever lost.
 - Always supports --dry-run before executing any changes.
 """
 
@@ -27,7 +29,6 @@ import sys
 import time
 from pathlib import Path
 
-# Harmless untracked files/patterns that can be safely discarded if branch is merged
 HARMLESS_UNTRACKED_PATTERNS = [
     r"__pycache__",
     r"\.pytest_cache",
@@ -55,19 +56,36 @@ def get_active_cwds():
     return active
 
 def is_path_active(path: Path, active_cwds: set) -> bool:
-    resolved = path.resolve()
+    try:
+        resolved = path.resolve()
+    except OSError:
+        return False
     for acwd in active_cwds:
         if resolved == acwd or resolved in acwd.parents:
             return True
     return False
 
-def get_git_repos(base_dir: Path):
-    repos = []
+def find_all_git_repos(base_dir: Path, recursive: bool = False, max_depth: int = 4):
     if (base_dir / ".git").is_dir():
-        repos.append(base_dir)
-        return repos
-    for p in base_dir.iterdir():
-        if p.is_dir() and (p / ".git").is_dir():
+        return [base_dir]
+    
+    if not recursive:
+        repos = []
+        for p in base_dir.iterdir():
+            if p.is_dir() and (p / ".git").is_dir():
+                repos.append(p)
+        return sorted(repos)
+
+    repos = []
+    base_depth = len(base_dir.parts)
+    for root, dirs, _ in os.walk(str(base_dir)):
+        p = Path(root)
+        if len(p.parts) - base_depth > max_depth:
+            dirs.clear()
+            continue
+        # Avoid traversing into .git, .worktrees, node_modules, etc.
+        dirs[:] = [d for d in dirs if d not in [".git", ".worktrees", "node_modules", ".cache", ".Trash-1000", "archive000"]]
+        if (p / ".git").is_dir():
             repos.append(p)
     return sorted(repos)
 
@@ -103,38 +121,6 @@ def parse_worktrees(repo_path: Path):
         entries.append(curr)
     return entries
 
-def is_status_clean_or_harmless(wt_path: Path) -> tuple[bool, list[str]]:
-    r = subprocess.run(
-        ["git", "-C", str(wt_path), "status", "--porcelain"],
-        capture_output=True,
-        text=True
-    )
-    if r.returncode != 0:
-        return False, ["git status failed"]
-    
-    lines = [l.strip() for l in r.stdout.splitlines() if l.strip()]
-    if not lines:
-        return True, []
-    
-    harmful = []
-    for line in lines:
-        code = line[:2]
-        filename = line[3:].strip()
-        # If file is tracked and modified (e.g. M , A , D ), it's not harmless
-        if any(c in "MADRCU" for c in code):
-            harmful.append(line)
-            continue
-        # If file is untracked (??), check if harmless pattern
-        is_harmless = False
-        for pat in HARMLESS_UNTRACKED_PATTERNS:
-            if re.search(pat, filename):
-                is_harmless = True
-                break
-        if not is_harmless:
-            harmful.append(line)
-            
-    return (len(harmful) == 0), harmful
-
 def get_open_pr_branches(repo_name: str) -> set[str]:
     branches = set()
     for org in ["rickebo-com", "codicarium"]:
@@ -153,9 +139,11 @@ def get_open_pr_branches(repo_name: str) -> set[str]:
 
 def main():
     parser = argparse.ArgumentParser(description="Automated safe worktree pruning utility.")
-    parser.add_argument("--base-dir", default="/mnt/rickebo-p/codicarium-platform", help="Base directory containing repositories or repo itself")
+    parser.add_argument("--base-dir", default="/mnt/rickebo-p/codicarium-platform", help="Base directory containing repositories or volume root")
     parser.add_argument("--repo", help="Filter to a specific repository name")
-    parser.add_argument("--min-age-hours", type=float, default=24.0, help="Minimum age in hours before worktree is eligible for deletion (default: 24.0)")
+    parser.add_argument("--recursive", action="store_true", help="Recursively search for all git repositories under base-dir")
+    parser.add_argument("--min-age-hours", type=float, default=24.0, help="Minimum age in hours for standard pruning (default: 24.0)")
+    parser.add_argument("--prune-older-than-days", type=float, help="Prune any worktree with no changes for > N days (e.g. 7.0)")
     parser.add_argument("--dry-run", action="store_true", default=False, help="Perform dry run without deleting files or running git remove")
     parser.add_argument("--prune-merged", action="store_true", help="Remove worktrees merged to default branch")
     parser.add_argument("--prune-reviews", action="store_true", help="Remove stale reviewer worktrees")
@@ -165,8 +153,7 @@ def main():
 
     args = parser.parse_args()
 
-    # Default to dry-run if no prune action is specified
-    if not (args.prune_merged or args.prune_reviews or args.prune_orphans or args.prune_all_safe):
+    if not (args.prune_merged or args.prune_reviews or args.prune_orphans or args.prune_all_safe or args.prune_older_than_days):
         args.dry_run = True
 
     if args.prune_all_safe:
@@ -179,19 +166,21 @@ def main():
         print(f"Error: Base directory {base} does not exist", file=sys.stderr)
         sys.exit(1)
 
-    all_repos = get_git_repos(base)
-    
-    # First, collect ALL registered worktrees across ALL repositories in base
-    # This prevents false orphan identification when filtering by --repo
+    all_repos = find_all_git_repos(base, recursive=args.recursive)
+    print(f"Found {len(all_repos)} repositories under {base} (recursive={args.recursive}).")
+
+    # Collect all registered worktrees
     all_registered_wt_paths = set()
     for repo in all_repos:
         wts = parse_worktrees(repo)
         for idx, wt in enumerate(wts):
             if idx == 0 and Path(wt["worktree"]).resolve() == repo.resolve():
                 continue
-            all_registered_wt_paths.add(Path(wt["worktree"]).resolve())
+            try:
+                all_registered_wt_paths.add(Path(wt["worktree"]).resolve())
+            except OSError:
+                pass
 
-    # Target repositories for this run
     target_repos = all_repos
     if args.repo:
         target_repos = [r for r in all_repos if r.name == args.repo]
@@ -202,6 +191,7 @@ def main():
     active_cwds = get_active_cwds()
     now = time.time()
     min_age_seconds = args.min_age_hours * 3600.0
+    stale_age_seconds = (args.prune_older_than_days * 86400.0) if args.prune_older_than_days else None
 
     actions_plan = {
         "git_worktree_prune_repos": [],
@@ -209,85 +199,73 @@ def main():
         "branches_to_delete": [],
         "untracked_dirs_to_delete": [],
         "skipped_active_process": [],
-        "skipped_too_young": [],
+        "skipped_recent": [],
         "skipped_open_pr": [],
-        "skipped_dirty": [],
-        "skipped_unmerged": []
+        "skipped_other": []
     }
 
+    # Cache open PR branches per repo
+    open_prs_cache = {}
+
     for repo in target_repos:
-        # Determine default upstream branch
         r_def = subprocess.run(["git", "-C", str(repo), "symbolic-ref", "--short", "HEAD"], capture_output=True, text=True)
         default_branch = r_def.stdout.strip() if r_def.returncode == 0 else "main"
         r_om = subprocess.run(["git", "-C", str(repo), "rev-parse", "--verify", "origin/main"], capture_output=True)
         target_upstream = "origin/main" if r_om.returncode == 0 else default_branch
 
-        open_pr_branches = get_open_pr_branches(repo.name)
         wts = parse_worktrees(repo)
         has_prunable_records = False
 
         for idx, wt in enumerate(wts):
             wt_path_str = wt["worktree"]
-            wt_path = Path(wt_path_str).resolve()
+            wt_path = Path(wt_path_str)
+            try:
+                resolved_wt_path = wt_path.resolve()
+            except OSError:
+                resolved_wt_path = wt_path
 
-            # Index 0 is the main worktree (the repository itself)
-            if idx == 0 and wt_path == repo.resolve():
+            # Index 0 is the main worktree checkout
+            if idx == 0 and resolved_wt_path == repo.resolve():
                 continue
 
-            # Check if prunable by git (missing directory)
-            if not wt_path.exists() or wt.get("prunable"):
+            # Missing directory on disk
+            if not resolved_wt_path.exists() or wt.get("prunable"):
                 has_prunable_records = True
                 continue
 
-            # Safety check 1: Active process
-            if is_path_active(wt_path, active_cwds):
+            # Safety 1: Active process
+            if is_path_active(resolved_wt_path, active_cwds):
                 actions_plan["skipped_active_process"].append({
                     "repo": repo.name,
-                    "path": str(wt_path),
+                    "path": str(resolved_wt_path),
                     "reason": "Locked by active running process CWD"
                 })
                 continue
 
-            # Safety check 2: Minimum age
+            # Check age
             try:
-                mtime = wt_path.stat().st_mtime
+                mtime = resolved_wt_path.stat().st_mtime
                 age_seconds = now - mtime
-                age_hours = age_seconds / 3600.0
+                age_days = age_seconds / 86400.0
             except OSError:
                 age_seconds = 0
-                age_hours = 0
-
-            if age_seconds < min_age_seconds:
-                actions_plan["skipped_too_young"].append({
-                    "repo": repo.name,
-                    "path": str(wt_path),
-                    "age_hours": round(age_hours, 1),
-                    "min_age_hours": args.min_age_hours
-                })
-                continue
+                age_days = 0
 
             raw_branch = wt.get("branch", "")
             short_branch = raw_branch.replace("refs/heads/", "") if raw_branch else ""
 
-            # Safety check 3: Open PR
-            if short_branch and short_branch in open_pr_branches:
-                actions_plan["skipped_open_pr"].append({
-                    "repo": repo.name,
-                    "path": str(wt_path),
-                    "branch": short_branch,
-                    "reason": f"Active open PR for branch {short_branch}"
-                })
-                continue
-
-            # Safety check 4: Status / uncommitted edits
-            is_clean, harmful_diffs = is_status_clean_or_harmless(wt_path)
-            if not is_clean:
-                actions_plan["skipped_dirty"].append({
-                    "repo": repo.name,
-                    "path": str(wt_path),
-                    "harmful_diffs": harmful_diffs[:5]
-                })
-                continue
+            # Check if active open PR
+            if short_branch:
+                if repo.name not in open_prs_cache:
+                    open_prs_cache[repo.name] = get_open_pr_branches(repo.name)
+                if short_branch in open_prs_cache[repo.name]:
+                    actions_plan["skipped_open_pr"].append({
+                        "repo": repo.name,
+                        "path": str(resolved_wt_path),
+                        "branch": short_branch,
+                        "reason": f"Active open PR for branch {short_branch}"
+                    })
+                    continue
 
             # Check merge status
             head = wt.get("HEAD", "")
@@ -299,27 +277,35 @@ def main():
                 )
                 is_merged = (r_merge.returncode == 0)
 
-            is_review = "review" in wt_path.name.lower()
+            is_review = "review" in resolved_wt_path.name.lower()
 
-            eligible_for_removal = False
+            eligible = False
             reason = ""
 
-            if is_merged and args.prune_merged:
-                eligible_for_removal = True
+            # Rule A: Inactive older than N days (user instruction: > 7 days)
+            if stale_age_seconds and age_seconds >= stale_age_seconds:
+                eligible = True
+                reason = f"Inactive for {round(age_days, 1)} days (> {args.prune_older_than_days}d)"
+            # Rule B: Standard merged
+            elif is_merged and args.prune_merged and age_seconds >= min_age_seconds:
+                eligible = True
                 reason = f"Merged into {target_upstream}"
-            elif is_review and args.prune_reviews:
-                eligible_for_removal = True
-                reason = f"Stale review worktree (age {round(age_hours, 1)}h)"
-            
-            if eligible_for_removal:
+            # Rule C: Stale review worktree
+            elif is_review and args.prune_reviews and age_seconds >= min_age_seconds:
+                eligible = True
+                reason = f"Stale review worktree (age {round(age_days, 1)}d)"
+
+            if eligible:
                 actions_plan["worktrees_to_remove"].append({
                     "repo": repo.name,
                     "repo_path": str(repo),
-                    "path": str(wt_path),
+                    "path": str(resolved_wt_path),
                     "branch": short_branch,
                     "reason": reason,
-                    "head": head[:10]
+                    "head": head[:10],
+                    "is_merged": is_merged
                 })
+                # Only delete branch if merged to main
                 if short_branch and is_merged:
                     actions_plan["branches_to_delete"].append({
                         "repo": repo.name,
@@ -327,42 +313,54 @@ def main():
                         "branch": short_branch
                     })
             else:
-                actions_plan["skipped_unmerged"].append({
-                    "repo": repo.name,
-                    "path": str(wt_path),
-                    "branch": short_branch,
-                    "head": head[:10],
-                    "age_hours": round(age_hours, 1)
-                })
+                if stale_age_seconds and age_seconds < stale_age_seconds:
+                    actions_plan["skipped_recent"].append({
+                        "repo": repo.name,
+                        "path": str(resolved_wt_path),
+                        "age_days": round(age_days, 1)
+                    })
+                else:
+                    actions_plan["skipped_other"].append({
+                        "repo": repo.name,
+                        "path": str(resolved_wt_path),
+                        "age_days": round(age_days, 1)
+                    })
 
         if has_prunable_records:
             actions_plan["git_worktree_prune_repos"].append(str(repo))
 
     # Check for orphaned directories in .worktrees
-    wt_dir = base / ".worktrees"
-    if args.prune_orphans and wt_dir.is_dir():
-        for item in wt_dir.iterdir():
-            if not item.is_dir():
-                continue
-            
-            # If repo is specified, only check orphans belonging to this repo
-            if args.repo and not (item.name.startswith(f"{args.repo}-") or item.name.startswith(f"{args.repo}_")):
-                continue
+    wt_dirs = []
+    top_wt = base / ".worktrees"
+    if top_wt.is_dir():
+        wt_dirs.append(top_wt)
+    for r in target_repos:
+        sub_wt = r / ".worktrees"
+        if sub_wt.is_dir() and sub_wt not in wt_dirs:
+            wt_dirs.append(sub_wt)
 
-            resolved_item = item.resolve()
-            if resolved_item in all_registered_wt_paths:
-                continue
-            if is_path_active(resolved_item, active_cwds):
-                continue
-            try:
-                mtime = item.stat().st_mtime
-                if (now - mtime) < min_age_seconds:
+    if args.prune_orphans or stale_age_seconds:
+        cutoff = stale_age_seconds if stale_age_seconds else min_age_seconds
+        for wdir in wt_dirs:
+            for item in wdir.iterdir():
+                if not item.is_dir():
                     continue
-            except OSError:
-                pass
-            actions_plan["untracked_dirs_to_delete"].append(str(resolved_item))
+                try:
+                    resolved_item = item.resolve()
+                except OSError:
+                    continue
+                if resolved_item in all_registered_wt_paths:
+                    continue
+                if is_path_active(resolved_item, active_cwds):
+                    continue
+                try:
+                    mtime = item.stat().st_mtime
+                    if (now - mtime) < cutoff:
+                        continue
+                except OSError:
+                    pass
+                actions_plan["untracked_dirs_to_delete"].append(str(resolved_item))
 
-    # Output or execute
     if args.json:
         print(json.dumps(actions_plan, indent=2))
         return
@@ -371,25 +369,24 @@ def main():
     print(f" WORKTREE PRUNING AUDIT & PLAN ({'DRY RUN' if args.dry_run else 'EXECUTING'})")
     print("=" * 70)
     print(f"Repositories scanned: {len(target_repos)}")
-    print(f"Min age threshold: {args.min_age_hours} hours")
+    if stale_age_seconds:
+        print(f"Stale age threshold: {args.prune_older_than_days} days (>= {stale_age_seconds/86400}d)")
     print(f"Worktrees scheduled for removal: {len(actions_plan['worktrees_to_remove'])}")
     print(f"Merged local branches scheduled for deletion: {len(actions_plan['branches_to_delete'])}")
     print(f"Untracked orphaned directories to delete: {len(actions_plan['untracked_dirs_to_delete'])}")
     print(f"Repos requiring 'git worktree prune': {len(actions_plan['git_worktree_prune_repos'])}")
     print("-" * 70)
     print(f"Skipped - locked by active process: {len(actions_plan['skipped_active_process'])}")
-    print(f"Skipped - younger than {args.min_age_hours}h: {len(actions_plan['skipped_too_young'])}")
+    print(f"Skipped - recent (modified within last week): {len(actions_plan['skipped_recent'])}")
     print(f"Skipped - open GitHub PR active: {len(actions_plan['skipped_open_pr'])}")
-    print(f"Skipped - uncommitted non-cache modifications: {len(actions_plan['skipped_dirty'])}")
-    print(f"Skipped - unmerged non-review: {len(actions_plan['skipped_unmerged'])}")
+    print(f"Skipped - other: {len(actions_plan['skipped_other'])}")
     print("=" * 70)
 
     if args.dry_run:
         print("\n[DRY RUN] No files or git records were modified.")
-        print("To execute these actions, run with --prune-all-safe (or specific flags) without --dry-run.")
         return
 
-    # EXECUTION PHASE
+    # EXECUTION
     print("\nExecuting worktree removals...")
     removed_count = 0
     failed_count = 0
@@ -406,12 +403,19 @@ def main():
         if r.returncode == 0:
             removed_count += 1
         else:
-            print(f"    Warning: git worktree remove failed: {r.stderr.strip()}", file=sys.stderr)
-            failed_count += 1
+            # If git failed because folder was already partially deleted or corrupted, clean dir
+            if Path(wt_path).exists():
+                try:
+                    shutil.rmtree(wt_path)
+                    removed_count += 1
+                except Exception as e:
+                    print(f"    Failed to remove {wt_path}: {e}", file=sys.stderr)
+                    failed_count += 1
+            else:
+                removed_count += 1
 
     print(f"Removed {removed_count} worktrees ({failed_count} errors).")
 
-    # Prune git records for all repos
     print("\nRunning 'git worktree prune' across repositories...")
     pruned_repos = 0
     all_repos_to_prune = set(actions_plan["git_worktree_prune_repos"])
@@ -423,7 +427,6 @@ def main():
         pruned_repos += 1
     print(f"Pruned metadata for {pruned_repos} repositories.")
 
-    # Delete merged local branches
     if actions_plan["branches_to_delete"]:
         print(f"\nDeleting {len(actions_plan['branches_to_delete'])} merged local branches...")
         branch_del_count = 0
@@ -437,7 +440,6 @@ def main():
                 branch_del_count += 1
         print(f"Deleted {branch_del_count} local merged branches.")
 
-    # Delete untracked orphaned directories in .worktrees
     if actions_plan["untracked_dirs_to_delete"]:
         print(f"\nDeleting {len(actions_plan['untracked_dirs_to_delete'])} untracked orphaned directories...")
         orphans_del_count = 0

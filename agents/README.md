@@ -18,13 +18,13 @@ Most MCP servers are agent-scoped:
 - `qdrant_memory`: configured globally for the root session and on planning, mapping, review, research, GitHub, lead, and implementation agents that benefit from durable memory; the launcher supervises its MCP adapter and terminates it if the owning Codex parent exits
 - `playwright`: configured globally with isolated, headless Chrome sessions and transient output under `/tmp/codex-playwright-mcp`; `ui_fixer` repeats the pinned configuration explicitly
 - `chrome_devtools`: disabled on `ui_fixer`; Playwright is the browser path
-- `context7`: configured on `researcher`
+- `context7`: configured on `researcher` and `planner_researcher`
 - `homeassistant`: configured on `homeassistant_operator`
 - `homelab-obs`: configured on `homelab_devops`
 - `codicarium-cluster`: configured on `codicarium_devops`
 - `codicarium-telemetry`: configured on `codicarium_devops`
 - `github`: configured on `github_operator`
-- `perplexity`: configured on `researcher`
+- `perplexity`: configured on `researcher` and `planner_researcher`
 
 ## Qdrant Agent Memory
 
@@ -86,7 +86,8 @@ That launcher reads the bearer token from `HOMELAB_OBSERVABILITY_TOKEN` or `/hom
 - `tech_lead_backend`: backend lane ownership, coordination, and delegated service execution
 - `tech_lead_devops`: infra/deploy lane ownership, coordination, and delegated environment operations
 - `tech_lead_qa`: verification lane ownership, risk review coordination, and delegated validation
-- `planner`: plan generation, plan review, step decomposition, and validation design
+- `planner`: strategic architecture, invariant design, step decomposition, and GitHub work item planning (Astra xhigh reasoning; zero direct code inspection)
+- `planner_researcher`: deep technical lookups, cross-repo code tracing, and architecture tradeoffs (Terra max reasoning; exclusive to Planner with generous token budget)
 - `researcher`: docs lookup, web research, strategy, planning, and current-knowledge synthesis through Perplexity/Context7/OpenAI docs plus live web search
 - `homeassistant_operator`: Home Assistant-focused inspection, configuration, and validation through the local Home Assistant MCP surface
 - `github_operator`: GitHub-focused issue, PR, workflow, and Projects operations through the GitHub MCP surface
@@ -98,9 +99,14 @@ That launcher reads the bearer token from `HOMELAB_OBSERVABILITY_TOKEN` or `/hom
 ## Model Routing Policy
 
 Hierarchical routing is strictly enforced across three tiers:
-- **Tier 0 (Root Manager)**: `gpt-5.6-sol` project manager. Pure orchestration, goal decomposition, workstream routing, and compact synthesis. Never directly executes code, inspects files, or queries memory.
-- **Tier 1 (Tech Leads)**: `gpt-5.6-terra` (`tech_lead_backend`, `tech_lead_devops`, `tech_lead_frontend`, `tech_lead_qa`, `planner`) with `xhigh` reasoning by default. Own domain lanes end-to-end, manage Luna workers, synthesize results, and report back compactly.
-- **Tier 2 (Workers / Coders / Reviewers / DevOps)**: `gpt-5.6-luna` (`backend_fixer`, `ui_fixer`, `code_mapper`, `homelab_devops`, `codicarium_devops`, `reviewer`) with `xhigh` reasoning by default (or `max` reasoning for difficult cases, and `low` reasoning for simple search and code-path mapping). Narrow implementation in `.worktrees/<repo>-<branch>`.
+- **Tier 0 (Root Orchestration & Planning)**:
+  * Sol (`gpt-5.6-sol`): Project manager and orchestration lead. Pure high-level goal decomposition, domain routing, and compact synthesis. Never directly executes code, inspects files, or queries memory.
+  * Astra (`gpt-6-astra`): Planning specialist (`planner`) with `xhigh` reasoning. Decomposes major initiatives into architecture invariants, anti-patterns, and discrete GitHub work items. Token-Shield Invariant: Astra does ZERO direct file inspection, grep, or shell execution. It delegates discovery to `code_mapper` (Luna low) and deep research to `planner_researcher` (Terra max).
+- **Tier 1 (Tech Leads & Strategic Research)**:
+  * Terra (`gpt-5.6-terra`) (`tech_lead_backend`, `tech_lead_devops`, `tech_lead_frontend`, `tech_lead_qa`) with `xhigh` reasoning by default. Own domain lanes end-to-end, manage Luna workers, synthesize results, and report back compactly.
+  * Terra (`gpt-5.6-terra`) (`planner_researcher`) with `max` reasoning. Deep technical research and complex code path mapping; available exclusively to the Planner with a generous synthesis budget (~800–1,500 tokens).
+- **Tier 2 (Workers / Coders / Reviewers / Discovery)**:
+  * Luna (`gpt-5.6-luna`) (`backend_fixer`, `ui_fixer`, `code_mapper`, `homelab_devops`, `codicarium_devops`, `reviewer`) with `xhigh` reasoning by default (or `max` reasoning for difficult cases, and `low` reasoning for `code_mapper` exploration and code-path mapping). Narrow implementation in dedicated worktrees under `.worktrees/<repo>-<branch>`.
 
 ## Delegation Policy
 
@@ -110,7 +116,7 @@ Machine-readable routing lives in:
 
 Defaults:
 
-- Root Sol delegates all tasks exclusively to Terra Tech Leads (`tech_lead_*` or `planner`)
+- Root Sol engages Tier 0 Astra Planner (`planner`) for major architectural initiatives, then delegates implementation lanes exclusively to Terra Tech Leads (`tech_lead_*`)
 - Terra Tech Leads delegate implementation to Luna workers in dedicated git worktrees
 - No direct code writing or command execution in the root manager session
 - Blocking wait with 5–8 minute timeout (`timeout_ms = 300000..480000`) to preserve cache warmth and prevent polling loops

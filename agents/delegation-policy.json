@@ -67,6 +67,13 @@
       "notes": "Root Sol delegates to tech_lead_devops; lead coordinates environment devops agents or Luna workers."
     },
     {
+      "task_shape": "major_architectural_initiative",
+      "triggers": ["cross-repo", "multi-service", "migration", "new architecture", "spiffe", "vault-migration", "kata", "storage redesign", "high ambiguity"],
+      "plan": ["planner"],
+      "max_agents": 4,
+      "notes": "Root Sol must engage Tier 0 Astra Planner (xhigh) before spawning Tech Leads. Planner delegates deep research exclusively to planner_researcher (Terra max) and code_mapper (Luna low), then emits work items for GitHub issues."
+    },
+    {
       "task_shape": "security_ci_release_high_risk",
       "triggers": ["security", ".github/workflows", "release", "migration", "data loss risk"],
       "plan": ["planner", "tech_lead_devops", "tech_lead_qa"],

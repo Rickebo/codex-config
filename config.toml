@@ -479,6 +479,9 @@ trust_level = "trusted"
 [projects."/mnt/rickebo-p/apps/workout-tracker"]
 trust_level = "trusted"
 
+[projects."/mnt/rickebo-p/workspace-manager/workspace-manager"]
+trust_level = "trusted"
+
 [features]
 use_linux_sandbox_bwrap = true
 multi_agent = true

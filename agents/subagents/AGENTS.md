@@ -94,18 +94,6 @@
 - Detailed Node-backed `js_repl` usage rules live in `../shared/javascript-repl.md`.
 - Read that shared file before using `js_repl`.
 
-## graphify
-
-Projects may have a repo-local graphify knowledge graph at `graphify-out/`.
-
-Rules:
-- Prefer the nearest repo or worktree `graphify-out/` as primary context.
-- Do not use multi-repo workspace-root graphs as primary context.
-- Use merged/workspace graphs only for explicit cross-repo questions.
-- Before answering architecture or codebase questions, read `graphify-out/GRAPH_REPORT.md` when present; otherwise build or update graphify from the repo or worktree root before relying on graph context.
-- If `graphify-out/wiki/index.md` exists, use it before reading raw files.
-- After modifying code files in a repo or worktree with graphify state, run `graphify update .` from that repo or worktree root to keep the graph current.
-
 ## Qdrant Agent Memory
 
 Use the `qdrant_memory` MCP server when it is available and useful for the lane.

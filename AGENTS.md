@@ -33,7 +33,7 @@
 - Model routing hierarchy:
   * Tier 0 (Root Orchestration & Planning):
     - Sol (`gpt-5.6-sol`): Project manager and orchestration lead. Pure high-level goal decomposition, domain routing, and compact synthesis. Never directly executes code, inspects files, or queries memory.
-    - Astra (`gpt-6-astra`): Planning specialist (`planner`) with `xhigh` reasoning. Decomposes major initiatives into architecture invariants, anti-patterns, and discrete GitHub work items. Token-Shield Invariant: Astra does ZERO direct file inspection, grep, or shell execution. It delegates discovery to `code_mapper` (Luna low) and deep research to `planner_researcher` (Terra max).
+    - Astra (`gpt-6-astra`): Planning specialist (`planner`) with `xhigh` reasoning. Decomposes major initiatives into architecture invariants, anti-patterns, and discrete GitHub work items. Token-Shield Invariant: Astra does ZERO direct file inspection, grep, shell execution, or web search (`web_search = "disabled"`). It delegates discovery to `code_mapper` (Luna low) and deep research/web lookups exclusively to `planner_researcher` (Terra max).
   * Tier 1 (Tech Leads & Strategic Research):
     - Terra (`gpt-5.6-terra`) (`tech_lead_backend`, `tech_lead_devops`, `tech_lead_frontend`, `tech_lead_qa`) with `xhigh` reasoning by default. Own domain lanes end-to-end, manage Luna workers, synthesize results, and report back compactly.
     - Terra (`gpt-5.6-terra`) (`planner_researcher`) with `max` reasoning. Deep technical research and complex code path mapping; available exclusively to the Planner with a generous synthesis budget (~800–1,500 tokens).

@@ -86,8 +86,8 @@ That launcher reads the bearer token from `HOMELAB_OBSERVABILITY_TOKEN` or `/hom
 - `tech_lead_backend`: backend lane ownership, coordination, and delegated service execution
 - `tech_lead_devops`: infra/deploy lane ownership, coordination, and delegated environment operations
 - `tech_lead_qa`: verification lane ownership, risk review coordination, and delegated validation
-- `planner`: strategic architecture, invariant design, step decomposition, and GitHub work item planning (Astra xhigh reasoning; zero direct code inspection)
-- `planner_researcher`: deep technical lookups, cross-repo code tracing, and architecture tradeoffs (Terra max reasoning; exclusive to Planner with generous token budget)
+- `planner`: strategic architecture, invariant design, step decomposition, and GitHub work item planning (Astra xhigh reasoning; zero direct code inspection or web search)
+- `planner_researcher`: deep technical lookups, cross-repo code tracing, external web/docs research, and architecture tradeoffs (Terra max reasoning; exclusive to Planner with generous token budget)
 - `researcher`: docs lookup, web research, strategy, planning, and current-knowledge synthesis through Perplexity/Context7/OpenAI docs plus live web search
 - `homeassistant_operator`: Home Assistant-focused inspection, configuration, and validation through the local Home Assistant MCP surface
 - `github_operator`: GitHub-focused issue, PR, workflow, and Projects operations through the GitHub MCP surface
@@ -101,7 +101,7 @@ That launcher reads the bearer token from `HOMELAB_OBSERVABILITY_TOKEN` or `/hom
 Hierarchical routing is strictly enforced across three tiers:
 - **Tier 0 (Root Orchestration & Planning)**:
   * Sol (`gpt-5.6-sol`): Project manager and orchestration lead. Pure high-level goal decomposition, domain routing, and compact synthesis. Never directly executes code, inspects files, or queries memory.
-  * Astra (`gpt-6-astra`): Planning specialist (`planner`) with `xhigh` reasoning. Decomposes major initiatives into architecture invariants, anti-patterns, and discrete GitHub work items. Token-Shield Invariant: Astra does ZERO direct file inspection, grep, or shell execution. It delegates discovery to `code_mapper` (Luna low) and deep research to `planner_researcher` (Terra max).
+  * Astra (`gpt-6-astra`): Planning specialist (`planner`) with `xhigh` reasoning. Decomposes major initiatives into architecture invariants, anti-patterns, and discrete GitHub work items. Token-Shield Invariant: Astra does ZERO direct file inspection, grep, shell execution, or web search (`web_search = "disabled"`). It delegates discovery to `code_mapper` (Luna low) and deep research/web lookups exclusively to `planner_researcher` (Terra max).
 - **Tier 1 (Tech Leads & Strategic Research)**:
   * Terra (`gpt-5.6-terra`) (`tech_lead_backend`, `tech_lead_devops`, `tech_lead_frontend`, `tech_lead_qa`) with `xhigh` reasoning by default. Own domain lanes end-to-end, manage Luna workers, synthesize results, and report back compactly.
   * Terra (`gpt-5.6-terra`) (`planner_researcher`) with `max` reasoning. Deep technical research and complex code path mapping; available exclusively to the Planner with a generous synthesis budget (~800–1,500 tokens).
